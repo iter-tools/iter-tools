@@ -12,10 +12,6 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var _marked = [wrap, zip].map(_regenerator2.default.mark);
 
-function isExausted(item) {
-  return item.done;
-}
-
 function wrap(iter) {
   var _iterator, _isArray, _i, _ref, item;
 
@@ -77,7 +73,6 @@ function zip() {
   var next,
       i,
       zipped,
-      isExausted,
       iters,
       _args2 = arguments;
   return _regenerator2.default.wrap(function zip$(_context2) {
