@@ -12,11 +12,11 @@ describe('range', function () {
       });
 
       it('return simple range with start/end', function () {
-        assert.deepEqual(Array.from(range(3, 6)), [3, 4, 5]);
+        assert.deepEqual(Array.from(range({ start: 3, end: 6 })), [3, 4, 5]);
       });
 
       it('return simple range with start/end and step', function () {
-        assert.deepEqual(Array.from(range(3, 6, 2)), [3, 5]);
+        assert.deepEqual(Array.from(range({ start: 3, end: 6, step: 2 })), [3, 5]);
       });
 
       it('return empty array for negative end', function () {
@@ -24,11 +24,11 @@ describe('range', function () {
       });
 
       it('return empty array for negative end', function () {
-        assert.deepEqual(Array.from(range(-2, -5)), []);
+        assert.deepEqual(Array.from(range({ start: -2, end: -5 })), []);
       });
 
       it('return backward count', function () {
-        assert.deepEqual(Array.from(range(-2, -5, -1)), [-2, -3, -4]);
+        assert.deepEqual(Array.from(range({ start: -2, end: -5, step: -1 })), [-2, -3, -4]);
       });
     });
   });

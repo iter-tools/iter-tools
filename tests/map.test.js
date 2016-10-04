@@ -14,13 +14,13 @@ describe('map', function () {
       });
 
       it('return mapped iterable from iterable', function () {
-        var iter = map(function (item) { return item * 2; }, range(1, 4));
+        var iter = map(function (item) { return item * 2; }, range({ start: 1, end: 4 }));
         assert.deepEqual(Array.from(iter), [2, 4, 6]);
       });
 
       it('return mapped iterable (curried version)', function () {
         var iter = map(function (item) { return item * 2; });
-        assert.deepEqual(Array.from(iter(range(1, 4))), [2, 4, 6]);
+        assert.deepEqual(Array.from(iter(range({ start: 1, end: 4 }))), [2, 4, 6]);
       });
     });
   });

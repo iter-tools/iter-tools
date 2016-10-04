@@ -14,13 +14,13 @@ describe('filter', function () {
       });
 
       it('return filtered iterable from iterable', function () {
-        var iter = filter(function (item) { return item % 2 === 0; }, range(1, 7));
+        var iter = filter(function (item) { return item % 2 === 0; }, range({ start: 1, end: 7 }));
         assert.deepEqual(Array.from(iter), [2, 4, 6]);
       });
 
       it('return filtered iterable (curried version)', function () {
         var iter = filter(function (item) { return item % 2 === 0; });
-        assert.deepEqual(Array.from(iter(range(1, 7))), [2, 4, 6]);
+        assert.deepEqual(Array.from(iter(range({ start: 1, end: 7 }))), [2, 4, 6]);
       });
     });
   });

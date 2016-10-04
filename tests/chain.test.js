@@ -9,7 +9,7 @@ describe('cycle', function () {
   [chain_es6, chain_es5].forEach(function (chain, i) {
     describe(esversion[i], function () {
       it('chains iterables', function () {
-        var iter = chain(range(1, 4), [4, 5, 6]);
+        var iter = chain(range({ start: 1, end: 4 }), [4, 5, 6]);
         assert.deepEqual(Array.from(iter), [1, 2, 3, 4, 5, 6]);
       });
     });

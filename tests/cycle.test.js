@@ -3,7 +3,7 @@ var cycle_es6 = require('../lib/cycle');
 var cycle_es5 = require('../es5/cycle');
 
 var esversion = ['es6', 'es5'];
-
+var range = require('../lib/range');
 describe('cycle', function () {
   [cycle_es6, cycle_es5].forEach(function (cycle, i) {
     describe(esversion[i], function () {
@@ -16,6 +16,17 @@ describe('cycle', function () {
         assert.equal(iter.next().value, 2);
         assert.equal(iter.next().value, 3);
         assert.equal(iter.next().value, 1);
+      });
+
+      it('return infinite cycle (from iterator)', function () {
+        var iter = cycle(range(3));
+        assert.equal(iter.next().value, 0);
+        assert.equal(iter.next().value, 1);
+        assert.equal(iter.next().value, 2);
+        assert.equal(iter.next().value, 0);
+        assert.equal(iter.next().value, 1);
+        assert.equal(iter.next().value, 2);
+        assert.equal(iter.next().value, 0);
       });
     });
   });

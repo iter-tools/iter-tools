@@ -14,12 +14,12 @@ describe('zip', function () {
       });
 
       it('zips using iterables', function () {
-        var iter = zip(range(1, 4), range(4, 7), [7, 8, 9]);
+        var iter = zip(range({ start: 1, end: 4 }), range({ start: 4, end: 7 }), [7, 8, 9]);
         assert.deepEqual(Array.from(iter), [[1, 4, 7], [2, 5, 8], [3, 6, 9] ]);
       });
 
       it('zips stopping early', function () {
-        var iter = zip(range(1, 4), range(4, 7), [7, 8]);
+        var iter = zip(range({ start: 1, end: 4 }), range({ start: 4, end: 7 }), [7, 8]);
         assert.deepEqual(Array.from(iter), [[1, 4, 7], [2, 5, 8] ]);
       });
     });
