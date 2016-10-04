@@ -5,7 +5,7 @@ var range = require('../lib/range');
 
 var esversion = ['es6', 'es5'];
 
-describe('cycle', function () {
+describe('chain', function () {
   [chain_es6, chain_es5].forEach(function (chain, i) {
     describe(esversion[i], function () {
       it('chains iterables', function () {
