@@ -24,6 +24,7 @@
   "license": "MIT",
   "dependencies": {
     "babel-runtime": "^6.11.6",
+    "dequeue": "^1.0.5",
     "require-all": "^2.0.0"
   },
   "devDependencies": {

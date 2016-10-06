@@ -12,13 +12,16 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var range = require('./range');
 var map = require('./map');
+var iter = require('./iter');
+var Dequeue = require('dequeue');
 
 function tee(iterable, number) {
   var _marked = [teeGen].map(_regenerator2.default.mark);
 
   number = number || 2;
+  iterable = iter(iterable);
   var arrays = (0, _from2.default)(map(function () {
-    return [];
+    return new Dequeue();
   }, range(number)));
   var done = false;
   function teeGen(a) {
