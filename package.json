@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "npm run build && mocha tests/**/*.js",
+    "benchmark": "node benchmarks",
     "watch": "npm run test -- -w",
     "lint": "./node_modules/.bin/eslint --ext .js ./src ./tests",
     "build": "babel --plugins transform-runtime lib -d es5",
@@ -23,6 +24,7 @@
   "author": "Maurizio Lupo <maurizio.lupo@gmail.com>",
   "license": "MIT",
   "dependencies": {
+    "async-deco": "^7.0.0",
     "babel-runtime": "^6.11.6",
     "dequeue": "^1.0.5",
     "require-all": "^2.0.0"
@@ -34,6 +36,7 @@
     "chai": "^3.5.0",
     "eslint": "^3.6.1",
     "husky": "^0.11.8",
+    "measure-speed": "0.0.2",
     "mocha": "^3.1.0",
     "npm-release": "^1.0.0"
   }

@@ -1,7 +1,6 @@
 todo
 
-test iter composition
-https://docs.python.org/2/library/itertools.html#itertools.compress
+sorter/shuffler
 
 apply iter everywhere
 
