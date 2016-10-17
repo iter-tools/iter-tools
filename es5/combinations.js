@@ -4,10 +4,6 @@ var _regenerator = require('babel-runtime/regenerator');
 
 var _regenerator2 = _interopRequireDefault(_regenerator);
 
-var _set = require('babel-runtime/core-js/set');
-
-var _set2 = _interopRequireDefault(_set);
-
 var _getIterator2 = require('babel-runtime/core-js/get-iterator');
 
 var _getIterator3 = _interopRequireDefault(_getIterator2);
@@ -18,18 +14,27 @@ var _from2 = _interopRequireDefault(_from);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var _marked = [permutations].map(_regenerator2.default.mark);
+var _marked = [combinations].map(_regenerator2.default.mark);
 
-var iter = require('./iter');
 var map = require('./map');
 var range = require('./range');
-var tee = require('./tee');
-var product = require('./product');
+var permutations = require('./permutations');
 
-function permutations(iterable, r) {
+function isSorted(arr) {
+  if (arr.length < 2) return true;
+
+  for (var i = 1; i < arr.length; i++) {
+    if (arr[i - 1] > arr[i]) {
+      return false;
+    }
+  }
+  return true;
+}
+
+function combinations(iterable, r) {
   var arr, mapToIndex, n, _iterator, _isArray, _i, _ref, indices;
 
-  return _regenerator2.default.wrap(function permutations$(_context) {
+  return _regenerator2.default.wrap(function combinations$(_context) {
     while (1) {
       switch (_context.prev = _context.next) {
         case 0:
@@ -38,66 +43,55 @@ function permutations(iterable, r) {
             return arr[i];
           });
           n = arr.length;
+          _iterator = permutations(range(n), r), _isArray = Array.isArray(_iterator), _i = 0, _iterator = _isArray ? _iterator : (0, _getIterator3.default)(_iterator);
 
-          r = r || n;
-
-          if (!(r > n)) {
-            _context.next = 6;
-            break;
-          }
-
-          return _context.abrupt('return');
-
-        case 6:
-          _iterator = product.apply(undefined, tee(range(n), r)), _isArray = Array.isArray(_iterator), _i = 0, _iterator = _isArray ? _iterator : (0, _getIterator3.default)(_iterator);
-
-        case 7:
+        case 4:
           if (!_isArray) {
-            _context.next = 13;
-            break;
-          }
-
-          if (!(_i >= _iterator.length)) {
             _context.next = 10;
             break;
           }
 
-          return _context.abrupt('break', 23);
+          if (!(_i >= _iterator.length)) {
+            _context.next = 7;
+            break;
+          }
 
-        case 10:
+          return _context.abrupt('break', 20);
+
+        case 7:
           _ref = _iterator[_i++];
-          _context.next = 17;
+          _context.next = 14;
           break;
 
-        case 13:
+        case 10:
           _i = _iterator.next();
 
           if (!_i.done) {
-            _context.next = 16;
+            _context.next = 13;
             break;
           }
 
-          return _context.abrupt('break', 23);
+          return _context.abrupt('break', 20);
 
-        case 16:
+        case 13:
           _ref = _i.value;
 
-        case 17:
+        case 14:
           indices = _ref;
 
-          if (!(new _set2.default(indices).size === r)) {
-            _context.next = 21;
+          if (!isSorted(indices)) {
+            _context.next = 18;
             break;
           }
 
-          _context.next = 21;
+          _context.next = 18;
           return (0, _from2.default)(mapToIndex(indices));
 
-        case 21:
-          _context.next = 7;
+        case 18:
+          _context.next = 4;
           break;
 
-        case 23:
+        case 20:
         case 'end':
           return _context.stop();
       }
@@ -105,4 +99,4 @@ function permutations(iterable, r) {
   }, _marked[0], this);
 }
 
-module.exports = permutations;
+module.exports = combinations;
