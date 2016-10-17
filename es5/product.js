@@ -149,7 +149,6 @@ function product() {
       var it = _ref3;
 
       currentIter = multiply(currentIter, (0, _from2.default)(it));
-      //  currentIter = multiply(currentIter, it);
     }
     return currentIter;
   }

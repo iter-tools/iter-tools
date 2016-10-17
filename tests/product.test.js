@@ -2,6 +2,7 @@ var assert = require('chai').assert;
 var product_es6 = require('../lib/product');
 var product_es5 = require('../es5/product');
 var range = require('../lib/range');
+var tee = require('../lib/tee');
 
 var esversion = ['es6', 'es5'];
 
@@ -21,6 +22,11 @@ describe('product', function () {
       it('returns double', function () {
         var iter = product([1, 2], [3, 4]);
         assert.deepEqual(Array.from(iter), [[1, 3], [1, 4], [2, 3], [2, 4]]);
+      });
+
+      it('returns with repeat', function () {
+        var iter = product(...tee([1, 2], 2));
+        assert.deepEqual(Array.from(iter), [[1, 1], [1, 2], [2, 1], [2, 2]]);
       });
 
       it('returns triple', function () {
