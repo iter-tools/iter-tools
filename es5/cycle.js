@@ -1,16 +1,18 @@
-"use strict";
+'use strict';
 
-var _regenerator = require("babel-runtime/regenerator");
+var _regenerator = require('babel-runtime/regenerator');
 
 var _regenerator2 = _interopRequireDefault(_regenerator);
 
-var _getIterator2 = require("babel-runtime/core-js/get-iterator");
+var _getIterator2 = require('babel-runtime/core-js/get-iterator');
 
 var _getIterator3 = _interopRequireDefault(_getIterator2);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var _marked = [cycle].map(_regenerator2.default.mark);
+
+var iter = require('./iter');
 
 function cycle(iterable) {
   var copy, _iterator, _isArray, _i, _ref, item;
@@ -30,7 +32,7 @@ function cycle(iterable) {
             break;
           }
 
-          return _context.delegateYield(iterable, "t0", 3);
+          return _context.delegateYield(iterable, 't0', 3);
 
         case 3:
           _context.next = 1;
@@ -42,7 +44,7 @@ function cycle(iterable) {
 
         case 7:
           copy = [];
-          _iterator = iterable, _isArray = Array.isArray(_iterator), _i = 0, _iterator = _isArray ? _iterator : (0, _getIterator3.default)(_iterator);
+          _iterator = iter(iterable), _isArray = Array.isArray(_iterator), _i = 0, _iterator = _isArray ? _iterator : (0, _getIterator3.default)(_iterator);
 
         case 9:
           if (!_isArray) {
@@ -55,7 +57,7 @@ function cycle(iterable) {
             break;
           }
 
-          return _context.abrupt("break", 25);
+          return _context.abrupt('break', 25);
 
         case 12:
           _ref = _iterator[_i++];
@@ -70,7 +72,7 @@ function cycle(iterable) {
             break;
           }
 
-          return _context.abrupt("break", 25);
+          return _context.abrupt('break', 25);
 
         case 18:
           _ref = _i.value;
@@ -87,10 +89,10 @@ function cycle(iterable) {
           break;
 
         case 25:
-          return _context.delegateYield(cycle(copy), "t1", 26);
+          return _context.delegateYield(cycle(copy), 't1', 26);
 
         case 26:
-        case "end":
+        case 'end':
           return _context.stop();
       }
     }

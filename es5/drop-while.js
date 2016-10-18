@@ -1,14 +1,16 @@
-"use strict";
+'use strict';
 
-var _regenerator = require("babel-runtime/regenerator");
+var _regenerator = require('babel-runtime/regenerator');
 
 var _regenerator2 = _interopRequireDefault(_regenerator);
 
-var _getIterator2 = require("babel-runtime/core-js/get-iterator");
+var _getIterator2 = require('babel-runtime/core-js/get-iterator');
 
 var _getIterator3 = _interopRequireDefault(_getIterator2);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var iter = require('./iter');
 
 function dropWhile(func, iterable) {
   var _marked = [curriedDropWhile].map(_regenerator2.default.mark);
@@ -21,7 +23,7 @@ function dropWhile(func, iterable) {
         switch (_context.prev = _context.next) {
           case 0:
             drop = true;
-            _iterator = i, _isArray = Array.isArray(_iterator), _i = 0, _iterator = _isArray ? _iterator : (0, _getIterator3.default)(_iterator);
+            _iterator = iter(i), _isArray = Array.isArray(_iterator), _i = 0, _iterator = _isArray ? _iterator : (0, _getIterator3.default)(_iterator);
 
           case 2:
             if (!_isArray) {
@@ -34,7 +36,7 @@ function dropWhile(func, iterable) {
               break;
             }
 
-            return _context.abrupt("break", 24);
+            return _context.abrupt('break', 24);
 
           case 5:
             _ref = _iterator[_i++];
@@ -49,7 +51,7 @@ function dropWhile(func, iterable) {
               break;
             }
 
-            return _context.abrupt("break", 24);
+            return _context.abrupt('break', 24);
 
           case 11:
             _ref = _i.value;
@@ -85,7 +87,7 @@ function dropWhile(func, iterable) {
             break;
 
           case 24:
-          case "end":
+          case 'end':
             return _context.stop();
         }
       }

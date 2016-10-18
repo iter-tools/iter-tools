@@ -10,6 +10,8 @@ var _getIterator3 = _interopRequireDefault(_getIterator2);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+var iter = require('./iter');
+
 function slice(opts, iterable) {
   var _marked = [curriedSlice].map(_regenerator2.default.mark);
 
@@ -17,8 +19,8 @@ function slice(opts, iterable) {
   opts = typeof opts === 'number' ? { end: opts, start: 0 } : opts;
 
   step = typeof opts.step === 'undefined' ? 1 : opts.step;
-  end = typeof opts.end === 'undefined' ? Infinity : opts.end;
-  start = typeof opts.start === 'undefined' ? 0 : opts.start;
+  end = typeof opts.end === 'undefined' ? step > 0 ? Infinity : -Infinity : opts.end;
+  start = opts.start ? opts.start : 0;
 
   function curriedSlice(iterable) {
     var currentPos, nextValidPos, _iterator, _isArray, _i, _ref, item;
@@ -29,7 +31,7 @@ function slice(opts, iterable) {
           case 0:
             currentPos = 0;
             nextValidPos = start;
-            _iterator = iterable, _isArray = Array.isArray(_iterator), _i = 0, _iterator = _isArray ? _iterator : (0, _getIterator3.default)(_iterator);
+            _iterator = iter(iterable), _isArray = Array.isArray(_iterator), _i = 0, _iterator = _isArray ? _iterator : (0, _getIterator3.default)(_iterator);
 
           case 3:
             if (!_isArray) {

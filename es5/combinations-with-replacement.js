@@ -20,6 +20,7 @@ var map = require('./map');
 var range = require('./range');
 var product = require('./product');
 var tee = require('./tee');
+var iter = require('./iter');
 
 function isSorted(arr) {
   if (arr.length < 2) return true;
@@ -39,7 +40,7 @@ function combinationsWithReplacement(iterable, r) {
     while (1) {
       switch (_context.prev = _context.next) {
         case 0:
-          arr = (0, _from2.default)(iterable);
+          arr = (0, _from2.default)(iter(iterable));
           mapToIndex = map(function (i) {
             return arr[i];
           });

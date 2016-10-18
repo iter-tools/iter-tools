@@ -1,12 +1,14 @@
-"use strict";
+'use strict';
 
-var _regenerator = require("babel-runtime/regenerator");
+var _regenerator = require('babel-runtime/regenerator');
 
 var _regenerator2 = _interopRequireDefault(_regenerator);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var _marked = [chain].map(_regenerator2.default.mark);
+
+var iter = require('./iter');
 
 function chain() {
   var i,
@@ -23,7 +25,7 @@ function chain() {
             break;
           }
 
-          return _context.delegateYield(_args[i], "t0", 3);
+          return _context.delegateYield(iter(_args[i]), 't0', 3);
 
         case 3:
           i++;
@@ -31,7 +33,7 @@ function chain() {
           break;
 
         case 6:
-        case "end":
+        case 'end':
           return _context.stop();
       }
     }

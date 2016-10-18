@@ -17,8 +17,8 @@ function range(opts) {
           opts = typeof opts === 'number' ? { end: opts, start: 0 } : opts;
 
           step = typeof opts.step === 'undefined' ? 1 : opts.step;
-          end = typeof opts.end === 'undefined' ? opts.start : opts.end;
-          start = typeof opts.end === 'undefined' ? 0 : opts.start;
+          end = typeof opts.end === 'undefined' ? step > 0 ? Infinity : -Infinity : opts.end;
+          start = opts.start ? opts.start : 0;
 
           i = start;
 
