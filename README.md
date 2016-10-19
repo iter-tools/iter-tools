@@ -1,27 +1,28 @@
 Iter-tools
 ==========
-iter-tools is an utility toolbox that allows you to unleash the power and expressiveness of iterators.
+iter-tools is an utility toolbox that allows you to unleash the power and expressiveness of iterators and generators.
 
 Create iterators
 * [Range](#range)
+* [Count](#count)
 * [Repeat](#repeat)
+* [Cycle](#cycle)
 
-Transform a single iterator
+Transform a single iterable
 * [Map](#map)
 * [Filter](#filter)
 * [Take While](#take-while)
 * [Drop while](#drop-while)
 * [Slice](#slice)
 
-Combine multiple iterators
+Combine multiple iterables
 * [Chain](#chain)
 * [Zip](#zip)
 * [Zip Longest](#zip-longest)
 * [Enumerate](#enumerate)
-
-Utilities returning one of multiple iterators
 * [Compress](#compress)
-* [Cycle](#cycle)
+
+Utilities returning multiple iterators
 * [GroupBy](#groupby)
 * [Tee](#tee)
 
@@ -29,11 +30,17 @@ Utilities
 * [Reduce](#reduce)
 * [Iter](#iter)
 
-Combinatory iterators
+Combinatory generators
 * [Products](#products)
 * [Permutations](#permutations)
 * [Combinations with replacement](#combinations-with-replacement)
 * [Combinations](#combinations)
+
+##Definitions
+This should help clarify the documentation. You can also get more informations here: https://developer.mozilla.org/en/docs/Web/JavaScript/Guide/Iterators_and_Generators
+* Iterator: an object implementing the iterator protocol (the method next etc.)
+* generator: a function returning an iterator
+* iterable: a generator function or any object with a generator function under the attribute Symbol.iterator
 
 ##Design principles
 #### Pay only what you eat
@@ -48,7 +55,7 @@ iterTools.chain(iterable1, iterable2);
 ```
 
 #### ESX - ES5 compatible
-Every module is available from 2 different folders 'lib' and 'es5'. The latter contains already transpiled code, ready to be used in older browsers (or version of node).
+Every module is available from 2 different folders 'lib' and 'es5'. The latter contains already transpiled code, ready to be used in older browsers (or versions of node).
 ```js
 const chain_es6 = require('iter-tools/lib/chain');
 ```
@@ -80,12 +87,18 @@ const count = require('iter-tools/lib/count');
 Create an iterator that returns the same value n times
 ```js
 const repeat = require('iter-tools/lib/repeat');
-repeat('x', 3); // n, n, n
-repeat('x'); // n, n, n .... forever
+repeat('x', 3); // 'x', 'x', 'x'
+repeat('x'); // 'x', 'x', 'x' .... forever
+```
+##Cycle
+It cycles the same iterable forever.
+```js
+const cycle = require('iter-tools/lib/cycle');
+cycle(range(3)); // 0, 1, 2, 0, 1, 2, 0, 1, 2 ....
 ```
 
 #Transform a single iterator
-These series of iterators takes as first argument a function and as a second an iterable. If the second argument is omitted it is automatically returnes a curried function. These functions can be composed:
+These series of generators take as first argument a function and as a second an iterable. If the second argument is omitted it is automatically returnes a curried function. These functions can be composed:
 ```js
 const compose = require('async-deco/utils/compose');
 
@@ -95,17 +108,17 @@ iterator([ ...... ]);
 This is more efficient of using array methods as it doesn't require to build intermediate arrays.
 
 ##Map
-The equivalent of the array map function. But runs on an iterable and returns another iterable.
+The equivalent of the array "map" function. But runs on an iterable and returns another iterable.
 ```js
 const map = require('iter-tools/lib/map');
 map(power2, range(4)); // 0, 1, 4, 9
 ```
 
 ##Filter
-The equivalent of the array filter function. But runs on an iterable and returns another iterable.
+The equivalent of the array "filter" function. But runs on an iterable and returns another iterable.
 ```js
 const filter = require('iter-tools/lib/filter');
-map(isEven, range(4)); // 0, 2
+filter(isEven, range(4)); // 0, 2
 ```
 
 ##Take While
@@ -116,14 +129,14 @@ takeWhile(isEven, range(4)); // 0
 ```
 
 ##Drop While
-It starts returning values when the function is false. Then it keep going until the iterator is exausted.
+It starts returning values when the function is false. Then it keeps going until the iterator is exausted.
 ```js
 const dropWhile = require('iter-tools/lib/drop-while');
 dropWhile(isEven, range(4)); // 1, 2, 3
 ```
 
 ##Slice
-It returns a slice of an iterable.
+It returns an iterator that returns a slice of an iterable.
 ```js
 const slice = require('iter-tools/lib/slice');
 slice(3, range(10)); // 0, 1, 2
@@ -162,24 +175,17 @@ const enumerate = require('iter-tools/lib/enumerate');
 enumerate(repeat('x')); // [0, 'x'] [1, 'x'] [2, 'x'] ...
 ```
 
-#Utilities returning one of multiple iterators
-
 ##Compress
-This removes items from an iterable when the second iterable, at the same index, contains a falsy value.
+This returns an iterable omitting items when the second iterable, at the same index, contains a falsy value.
 ```js
 const compress = require('iter-tools/lib/compress');
 compress(range(5), [0, 0, 1, 1]); // 2, 3
 ```
 
-##Cycle
-It cycles the same iterable forever.
-```js
-const cycle = require('iter-tools/lib/cycle');
-cycle(range(3)); // 0, 1, 2, 0, 1, 2, 0, 1, 2 ....
-```
+#Utilities returning multiple iterators
 
 ##GroupBy
-On any iteration it returns a key and a sub-iterator of items with that key.
+On each iteration it returns a key and a sub-iterator of items with that key.
 You can pass a function that returns a key, by default an identity function will be used.
 When you iterate over the next group, the previous sub-iterator items will not be available anymore.
 ```js
@@ -215,14 +221,14 @@ reduce(range(4), (acc, v) => acc += v, 0); // returns 6
 ```
 
 ##Iter
-This tries to return a generator from a value. This is useful for 2 reasons:
-* you can consume the generator using the "next" method without worrying if it is a string, array or an iterable etc.
+This tries to return an iterator from a value. This is useful for 2 reasons:
+* you can consume the iterator using the "next" method without worrying if it is a string, array or an iterable etc.
 * allows to iterate over a simple object
 
-If the value is an object with a "Symbol.iterator" attribute: it initialise and return the generator (arrays, maps, sets and strings for example).
-If the value is already a generator, it returns the generator itself.
-If the value is an iterators, it initialises and returns the generator.
-If the value is an object, it returns a generator iterating over attributes/values.
+If the value is an object with a "Symbol.iterator" attribute: it initialise and return the iterator (arrays, maps, sets and strings for example).
+If the value is already an iterator, it returns the generator itself.
+If the value is a generator, it initialises it and returns the iterator.
+If the value is an object, it returns an iterator iterating over attribute/value pairs.
 ```js
 const iter = require('iter-tools/lib/iter');
 iter([1, 2, 3]); // 1, 2, 3
@@ -231,7 +237,7 @@ iter(range(4)); // 0, 1, 2, 3
 iter({p1: 1, p2: 2}); // ['p1', 1] ['p2', 2]
 ```
 
-#Combinatory iterators
+#Combinatory generators
 
 ##Product
 This returns the cartesian product of 2 or more iterables. It is equivalent to a nested loop for every iterable.
@@ -309,8 +315,9 @@ combinationsWithReplacement([1, 2, 3, 4], 2);
 
 ##Issues and limitations
 There are a couple of limitations that you need to be aware of.
-First of all, when you consume an iterator object (using next or for..of) you are mutating the object for good. Many of these tools rely on making an in memory copy of the output. For example: cycle, product or tee. They do that in a efficient lazy way. Still you need to consider that.
-Also with the iterator protocol you can create infinite iterables (repeat, cycle, count etc.). These iterables can't be used by all generators. For example combinatory iterators require a finite iterables.
+First of all, when you consume an iterator object (using next or for..of) you are mutating the object for good.
+Many of these tools rely on making an in memory copy of the output. For example: cycle, product or tee. They do that in a efficient lazy way. Still you need to consider that.
+Also with the iterator protocol you can create infinite iterables (repeat, cycle, count etc.). These iterables can't be used by all generators. For example combinatory generators require finite iterables.
 
 ##Acknowledgements
 Of course I give a lot of credit to the great itertools Python library.

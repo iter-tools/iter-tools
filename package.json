@@ -20,7 +20,7 @@
     "itertools",
     "generators"
   ],
-  "repository": "git@github.com:sithmel/async-deco.git",
+  "repository": "git@github.com:sithmel/iter-tools.git",
   "author": "Maurizio Lupo <maurizio.lupo@gmail.com>",
   "license": "MIT",
   "dependencies": {
