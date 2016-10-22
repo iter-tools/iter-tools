@@ -4,6 +4,10 @@ var _regenerator = require('babel-runtime/regenerator');
 
 var _regenerator2 = _interopRequireDefault(_regenerator);
 
+var _typeof2 = require('babel-runtime/helpers/typeof');
+
+var _typeof3 = _interopRequireDefault(_typeof2);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var _marked = [range].map(_regenerator2.default.mark);
@@ -14,8 +18,7 @@ function range(opts) {
     while (1) {
       switch (_context.prev = _context.next) {
         case 0:
-          opts = typeof opts === 'number' ? { end: opts, start: 0 } : opts;
-
+          opts = typeof opts === 'number' ? { end: opts, start: 0 } : (typeof opts === 'undefined' ? 'undefined' : (0, _typeof3.default)(opts)) === 'object' ? opts : {};
           step = typeof opts.step === 'undefined' ? 1 : opts.step;
           end = typeof opts.end === 'undefined' ? step > 0 ? Infinity : -Infinity : opts.end;
           start = opts.start ? opts.start : 0;
