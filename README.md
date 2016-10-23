@@ -8,6 +8,10 @@ Create iterators
 * [Repeat](#repeat)
 * [Cycle](#cycle)
 
+Create iterators from string
+* [Regexp Exec](regexp-exec)
+* [Regexp split](regexp-split)
+
 Transform a single iterable
 * [Map](#map)
 * [Filter](#filter)
@@ -96,6 +100,35 @@ It cycles the same iterable forever.
 const cycle = require('iter-tools/lib/cycle');
 cycle(range(3)); // 0, 1, 2, 0, 1, 2, 0, 1, 2 ....
 ```
+
+#Create iterators from string
+These series of generators take as first argument a regular expression and as a second an iterable. If the second argument is omitted it is automatically returnes a curried function.
+
+##Regexp Exec
+It runs a regular expression on a string. Every iteration returns a new match (use global regular expressions or the iterator will return only the first match). The returned object is the same one returned by the "RegExp.prototype.exec" method (https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp/exec).
+```js
+const regexpExec = require('iter-tools/lib/regexp-exec');
+regexpExec(/[0-9]{4}/g, '10/2/2013, 03/03/2015 12/4/1997');
+for (let [match] of iter) {
+  console.log(match); // '2013', '2015', '1997'
+}
+```
+Note:
+* global regular expressions are mutable, you can't reuse the same object more than once
+* the destructuring expression [match] extract only the first match
+
+##Regexp Split
+It splits a string. You can split by regular expression or string.
+```js
+const regexpSplit = require('iter-tools/lib/regexp-split');
+regexpExec(/\s+/g, 'ab s   d');
+for (let section of iter) {
+  console.log(section); // ab, s, d
+}
+```
+Note:
+* the regular expression is automatically converted to "global"
+* you can use a string (it will be internally transformed to global regExp)
 
 #Transform a single iterator
 These series of generators take as first argument a function and as a second an iterable. If the second argument is omitted it is automatically returnes a curried function. These functions can be composed:
