@@ -1,6 +1,6 @@
 {
   "name": "iter-tools",
-  "version": "1.0.4",
+  "version": "1.1.0",
   "description": "The iterator toolbox",
   "main": "index.js",
   "scripts": {
