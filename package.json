@@ -12,7 +12,7 @@
     "release:major": "./node_modules/.bin/npm-release major",
     "release:minor": "./node_modules/.bin/npm-release minor",
     "release:patch": "./node_modules/.bin/npm-release patch",
-    "precommit": "npm run lint",
+    "precommit": "npm run build && npm run lint",
     "prepush": "npm run test"
   },
   "keywords": [
