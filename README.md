@@ -9,8 +9,8 @@ Create iterators
 * [Cycle](#cycle)
 
 Create iterators from string
-* [Regexp Exec](regexp-exec)
-* [Regexp split](regexp-split)
+* [Regexp Exec](#regexp-exec)
+* [Regexp split](#regexp-split)
 
 Transform a single iterable
 * [Map](#map)
