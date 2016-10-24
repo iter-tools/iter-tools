@@ -8,7 +8,7 @@ Create iterators
 * [Repeat](#repeat)
 * [Cycle](#cycle)
 
-Create iterators from string
+Create iterators from strings
 * [Regexp Exec](#regexp-exec)
 * [Regexp split](#regexp-split)
 
@@ -18,6 +18,7 @@ Transform a single iterable
 * [Take While](#take-while)
 * [Drop while](#drop-while)
 * [Slice](#slice)
+* [Reduce Iter](#reduce-iter)
 
 Combine multiple iterables
 * [Chain](#chain)
@@ -101,11 +102,15 @@ const cycle = require('iter-tools/lib/cycle');
 cycle(range(3)); // 0, 1, 2, 0, 1, 2, 0, 1, 2 ....
 ```
 
-#Create iterators from string
-These series of generators take as first argument a regular expression and as a second an iterable. If the second argument is omitted it is automatically returnes a curried function.
+#Create iterators from strings
+These generators take as a first argument a regular expression and as a second an iterable. If the second argument is omitted it automatically returns a curried function.
 
 ##Regexp Exec
-It runs a regular expression on a string. Every iteration returns a new match (use global regular expressions or the iterator will return only the first match). The returned object is the same one returned by the "RegExp.prototype.exec" method (https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp/exec).
+It runs a regular expression on a string. Every iteration returns a new match. You should use a "global" regular expression to return multiple matches. The returned object type is the same one returned by the "RegExp.prototype.exec" method (https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp/exec).
+* [0] the full string matching the reg exp
+* [1] ... [n] the matching groups
+* index: the 0 based index of the match
+* input: the original string
 ```js
 const regexpExec = require('iter-tools/lib/regexp-exec');
 regexpExec(/[0-9]{4}/g, '10/2/2013, 03/03/2015 12/4/1997');
@@ -176,6 +181,15 @@ slice(3, range(10)); // 0, 1, 2
 slice({start: 2}, range(10)); // 2, 3, 4, 5, 6, 7, 8, 9
 slice({start: 2, end: 6}, range(10)); // 2, 3, 4, 5
 slice({start: 2, end: 6, step: 2}, range(10)); // 2, 4
+```
+
+##Reduce Iter
+It returns an iterator that returns the original items and the progressively reduced value.
+```js
+const reduceIter = require('iter-tools/lib/reduce-iter');
+reduceIter(function (acc, x) {
+  return acc + x;
+}, 0, [0, 1, 2, 3]); // [0, 0], [1, 1], [2, 3], [3, 6]
 ```
 
 #Combine multiple iterators
