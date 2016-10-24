@@ -16,71 +16,72 @@ function takeWhile(func, iterable) {
   var _marked = [curriedTakeWhile].map(_regenerator2.default.mark);
 
   function curriedTakeWhile(i) {
-    var take, _iterator, _isArray, _i, _ref, item;
+    var take, c, _iterator, _isArray, _i, _ref, item;
 
     return _regenerator2.default.wrap(function curriedTakeWhile$(_context) {
       while (1) {
         switch (_context.prev = _context.next) {
           case 0:
             take = true;
+            c = 0;
             _iterator = iter(i), _isArray = Array.isArray(_iterator), _i = 0, _iterator = _isArray ? _iterator : (0, _getIterator3.default)(_iterator);
 
-          case 2:
+          case 3:
             if (!_isArray) {
-              _context.next = 8;
+              _context.next = 9;
               break;
             }
 
             if (!(_i >= _iterator.length)) {
-              _context.next = 5;
+              _context.next = 6;
               break;
             }
 
-            return _context.abrupt('break', 22);
+            return _context.abrupt('break', 23);
 
-          case 5:
+          case 6:
             _ref = _iterator[_i++];
-            _context.next = 12;
+            _context.next = 13;
             break;
 
-          case 8:
+          case 9:
             _i = _iterator.next();
 
             if (!_i.done) {
-              _context.next = 11;
+              _context.next = 12;
               break;
             }
 
-            return _context.abrupt('break', 22);
-
-          case 11:
-            _ref = _i.value;
+            return _context.abrupt('break', 23);
 
           case 12:
+            _ref = _i.value;
+
+          case 13:
             item = _ref;
 
-            take = func(item);
+            take = func(item, c++);
 
             if (!take) {
-              _context.next = 19;
+              _context.next = 20;
               break;
             }
 
-            _context.next = 17;
+            _context.next = 18;
             return item;
 
-          case 17:
-            _context.next = 20;
+          case 18:
+            _context.next = 21;
             break;
-
-          case 19:
-            return _context.abrupt('break', 22);
 
           case 20:
-            _context.next = 2;
+            return _context.abrupt('break', 23);
+
+          case 21:
+            _context.next = 3;
             break;
 
-          case 22:
+          case 23:
           case 'end':
             return _context.stop();
         }

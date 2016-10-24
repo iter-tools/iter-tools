@@ -16,61 +16,62 @@ function filter(func, iterable) {
   var _marked = [curriedFilter].map(_regenerator2.default.mark);
 
   function curriedFilter(i) {
-    var _iterator, _isArray, _i, _ref, item;
+    var c, _iterator, _isArray, _i, _ref, item;
 
     return _regenerator2.default.wrap(function curriedFilter$(_context) {
       while (1) {
         switch (_context.prev = _context.next) {
           case 0:
+            c = 0;
             _iterator = iter(i), _isArray = Array.isArray(_iterator), _i = 0, _iterator = _isArray ? _iterator : (0, _getIterator3.default)(_iterator);
 
-          case 1:
+          case 2:
             if (!_isArray) {
-              _context.next = 7;
+              _context.next = 8;
               break;
             }
 
             if (!(_i >= _iterator.length)) {
-              _context.next = 4;
+              _context.next = 5;
               break;
             }
 
-            return _context.abrupt('break', 17);
+            return _context.abrupt('break', 18);
 
-          case 4:
+          case 5:
             _ref = _iterator[_i++];
-            _context.next = 11;
+            _context.next = 12;
             break;
 
-          case 7:
+          case 8:
             _i = _iterator.next();
 
             if (!_i.done) {
-              _context.next = 10;
+              _context.next = 11;
               break;
             }
 
-            return _context.abrupt('break', 17);
-
-          case 10:
-            _ref = _i.value;
+            return _context.abrupt('break', 18);
 
           case 11:
+            _ref = _i.value;
+
+          case 12:
             item = _ref;
 
-            if (!func(item)) {
-              _context.next = 15;
+            if (!func(item, c++)) {
+              _context.next = 16;
               break;
             }
 
-            _context.next = 15;
+            _context.next = 16;
             return item;
 
-          case 15:
-            _context.next = 1;
+          case 16:
+            _context.next = 2;
             break;
 
-          case 17:
+          case 18:
           case 'end':
             return _context.stop();
         }
