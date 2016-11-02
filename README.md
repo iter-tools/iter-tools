@@ -19,6 +19,7 @@ Transform a single iterable
 * [Drop while](#drop-while)
 * [Slice](#slice)
 * [Reduce Iter](#reduce-iter)
+* [Flat Map](#flat-map)
 
 Combine multiple iterables
 * [Chain](#chain)
@@ -184,12 +185,19 @@ slice({start: 2, end: 6, step: 2}, range(10)); // 2, 4
 ```
 
 ##Reduce Iter
-It returns an iterator that returns the original items and the progressively reduced value.
+It returns an iterator that returns the progressively reduced value.
 ```js
 const reduceIter = require('iter-tools/lib/reduce-iter');
 reduceIter(function (acc, x) {
   return acc + x;
 }, 0, [0, 1, 2, 3]); // [0, 0], [1, 1], [2, 3], [3, 6]
+```
+
+##Flat Map
+It maps value of an iterable and flatten them.
+```js
+const flatMap = require('iter-tools/lib/flat-map');
+flatMap(x => [x, x * x], range(4)); // 0, 0, 1, 1, 2, 4, 3, 9
 ```
 
 #Combine multiple iterators

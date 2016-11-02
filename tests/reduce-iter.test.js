@@ -12,14 +12,14 @@ describe('reduce-iter', function () {
         var seq = reduceIter(function (acc, x) {
           return acc + x;
         }, 0, [0, 1, 2, 3]);
-        assert.deepEqual(Array.from(seq), [[0, 0], [1, 1], [2, 3], [3, 6]]);
+        assert.deepEqual(Array.from(seq), [0, 1, 3, 6]);
       });
 
       it('sums a range', function () {
         var seq = reduceIter(function (acc, x) {
           return acc + x;
         }, 0, range(4));
-        assert.deepEqual(Array.from(seq), [[0, 0], [1, 1], [2, 3], [3, 6]]);
+        assert.deepEqual(Array.from(seq), [0, 1, 3, 6]);
       });
     });
   });

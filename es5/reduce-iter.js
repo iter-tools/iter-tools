@@ -62,7 +62,7 @@ function reduceIter(cb, acc, iterable) {
 
             acc = cb(acc, item, c++);
             _context.next = 17;
-            return [item, acc];
+            return acc;
 
           case 17:
             _context.next = 3;
