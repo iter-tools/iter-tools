@@ -16,7 +16,7 @@ var iter = require('./iter');
 var Dequeue = require('dequeue');
 
 function tee(iterable, number) {
-  var _marked = [teeGen].map(_regenerator2.default.mark);
+  var _marked = /*#__PURE__*/_regenerator2.default.mark(teeGen);
 
   number = number || 2;
   iterable = iter(iterable);
@@ -82,7 +82,7 @@ function tee(iterable, number) {
             return _context.stop();
         }
       }
-    }, _marked[0], this);
+    }, _marked, this);
   }
   return arrays.map(function (a) {
     return teeGen(a);

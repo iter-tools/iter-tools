@@ -29,6 +29,13 @@ describe('combinations', function () {
 
         assert.deepEqual(Array.from(iter), expected);
       });
+
+      it('returns combinations 0', function () {
+        var iter = combinations([1, 2, 3, 4], 0);
+        var expected = [];
+
+        assert.deepEqual(Array.from(iter), expected);
+      });
     });
   });
 });

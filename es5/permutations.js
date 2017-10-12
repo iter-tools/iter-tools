@@ -18,7 +18,7 @@ var _from2 = _interopRequireDefault(_from);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var _marked = [permutations].map(_regenerator2.default.mark);
+var _marked = /*#__PURE__*/_regenerator2.default.mark(permutations);
 
 var iter = require('./iter');
 var map = require('./map');
@@ -40,7 +40,7 @@ function permutations(iterable, r) {
           });
           n = arr.length;
 
-          r = r || n;
+          r = typeof r === 'undefined' ? n : r;
 
           if (!(r > n)) {
             _context.next = 6;
@@ -103,7 +103,7 @@ function permutations(iterable, r) {
           return _context.stop();
       }
     }
-  }, _marked[0], this);
+  }, _marked, this);
 }
 
 module.exports = permutations;

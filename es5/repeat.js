@@ -6,7 +6,7 @@ var _regenerator2 = _interopRequireDefault(_regenerator);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var _marked = [repeat].map(_regenerator2.default.mark);
+var _marked = /*#__PURE__*/_regenerator2.default.mark(repeat);
 
 function repeat(obj, times) {
   return _regenerator2.default.wrap(function repeat$(_context) {
@@ -33,7 +33,7 @@ function repeat(obj, times) {
           return _context.stop();
       }
     }
-  }, _marked[0], this);
+  }, _marked, this);
 }
 
 module.exports = repeat;

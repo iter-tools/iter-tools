@@ -14,7 +14,7 @@ var _from2 = _interopRequireDefault(_from);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var _marked = [combinationsWithReplacement].map(_regenerator2.default.mark);
+var _marked = /*#__PURE__*/_regenerator2.default.mark(combinationsWithReplacement);
 
 var map = require('./map');
 var range = require('./range');
@@ -98,7 +98,7 @@ function combinationsWithReplacement(iterable, r) {
           return _context.stop();
       }
     }
-  }, _marked[0], this);
+  }, _marked, this);
 }
 
 module.exports = combinationsWithReplacement;

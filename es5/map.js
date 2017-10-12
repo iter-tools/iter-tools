@@ -13,7 +13,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var iter = require('./iter');
 
 function map(func, iterable) {
-  var _marked = [curriedMap].map(_regenerator2.default.mark);
+  var _marked = /*#__PURE__*/_regenerator2.default.mark(curriedMap);
 
   function curriedMap(i) {
     var c, _iterator, _isArray, _i, _ref, item;
@@ -70,7 +70,7 @@ function map(func, iterable) {
             return _context.stop();
         }
       }
-    }, _marked[0], this);
+    }, _marked, this);
   }
   if (iterable) {
     return curriedMap(iterable);

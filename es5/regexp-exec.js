@@ -7,7 +7,7 @@ var _regenerator2 = _interopRequireDefault(_regenerator);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function regexpExec(re, str) {
-  var _marked = [iter].map(_regenerator2.default.mark);
+  var _marked = /*#__PURE__*/_regenerator2.default.mark(iter);
 
   function iter(str) {
     var match;
@@ -40,7 +40,7 @@ function regexpExec(re, str) {
             return _context.stop();
         }
       }
-    }, _marked[0], this);
+    }, _marked, this);
   }
   if (typeof str === 'undefined') {
     return iter;

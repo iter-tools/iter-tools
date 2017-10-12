@@ -6,7 +6,7 @@ var _regenerator2 = _interopRequireDefault(_regenerator);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var _marked2 = [groupby].map(_regenerator2.default.mark);
+var _marked2 = /*#__PURE__*/_regenerator2.default.mark(groupby);
 
 var iter = require('./iter');
 
@@ -59,10 +59,10 @@ function groupby(iterable, key) {
                     return _context.stop();
                 }
               }
-            }, _marked[0], this);
+            }, _marked, this);
           };
 
-          _marked = [group].map(_regenerator2.default.mark);
+          _marked = /*#__PURE__*/_regenerator2.default.mark(group);
 
           key = key || function (key) {
             return key;
@@ -114,7 +114,7 @@ function groupby(iterable, key) {
           return _context2.stop();
       }
     }
-  }, _marked2[0], this);
+  }, _marked2, this);
 }
 
 module.exports = groupby;

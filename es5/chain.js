@@ -6,7 +6,7 @@ var _regenerator2 = _interopRequireDefault(_regenerator);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var _marked = [chain].map(_regenerator2.default.mark);
+var _marked = /*#__PURE__*/_regenerator2.default.mark(chain);
 
 var iter = require('./iter');
 
@@ -37,7 +37,7 @@ function chain() {
           return _context.stop();
       }
     }
-  }, _marked[0], this);
+  }, _marked, this);
 }
 
 module.exports = chain;

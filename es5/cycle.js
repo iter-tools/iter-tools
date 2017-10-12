@@ -10,7 +10,7 @@ var _getIterator3 = _interopRequireDefault(_getIterator2);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var _marked = [cycle].map(_regenerator2.default.mark);
+var _marked = /*#__PURE__*/_regenerator2.default.mark(cycle);
 
 var iter = require('./iter');
 
@@ -96,7 +96,7 @@ function cycle(iterable) {
           return _context.stop();
       }
     }
-  }, _marked[0], this);
+  }, _marked, this);
 }
 
 module.exports = cycle;

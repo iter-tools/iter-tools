@@ -13,7 +13,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var iter = require('./iter');
 
 function slice(opts, iterable) {
-  var _marked = [curriedSlice].map(_regenerator2.default.mark);
+  var _marked = /*#__PURE__*/_regenerator2.default.mark(curriedSlice);
 
   var start, step, end;
   opts = typeof opts === 'number' ? { end: opts, start: 0 } : opts;
@@ -98,7 +98,7 @@ function slice(opts, iterable) {
             return _context.stop();
         }
       }
-    }, _marked[0], this);
+    }, _marked, this);
   }
 
   if (iterable) {

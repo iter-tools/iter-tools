@@ -9,7 +9,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var cloneRegexp = require('clone-regexp');
 
 function regexpSplit(re, str) {
-  var _marked = [iter].map(_regenerator2.default.mark);
+  var _marked = /*#__PURE__*/_regenerator2.default.mark(iter);
 
   if (re && typeof re === 'string') {
     re = new RegExp(re, 'g');
@@ -67,7 +67,7 @@ function regexpSplit(re, str) {
             return _context.stop();
         }
       }
-    }, _marked[0], this);
+    }, _marked, this);
   }
   if (typeof str === 'undefined') {
     return iter;

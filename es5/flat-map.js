@@ -13,7 +13,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var map = require('./map');
 
 function flatMap(func, iterable) {
-  var _marked = [curriedFlatMap].map(_regenerator2.default.mark);
+  var _marked = /*#__PURE__*/_regenerator2.default.mark(curriedFlatMap);
 
   var mapIter = map(func);
   function curriedFlatMap(i) {
@@ -69,7 +69,7 @@ function flatMap(func, iterable) {
             return _context.stop();
         }
       }
-    }, _marked[0], this);
+    }, _marked, this);
   }
   if (iterable) {
     return curriedFlatMap(iterable);

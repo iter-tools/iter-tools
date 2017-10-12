@@ -6,7 +6,7 @@ var _regenerator2 = _interopRequireDefault(_regenerator);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var _marked = [zip].map(_regenerator2.default.mark);
+var _marked = /*#__PURE__*/_regenerator2.default.mark(zip);
 
 var iter = require('./iter');
 
@@ -69,7 +69,7 @@ function zip() {
           return _context.stop();
       }
     }
-  }, _marked[0], this);
+  }, _marked, this);
 }
 
 module.exports = zip;

@@ -50,7 +50,7 @@ This should help clarify the documentation. You can also get more informations h
 
 ## Design principles
 #### Pay only what you eat
-This package is designed to import only what you need. So if you use them in the browser you don't need to load unneccessary code.
+This package is designed to import only what you need. So if you use one or more iterator you don't need to load the whole library (in the browser for example).
 ```js
 const chain = require('iter-tools/lib/chain');
 ```
@@ -61,7 +61,7 @@ iterTools.chain(iterable1, iterable2);
 ```
 
 #### ESX - ES5 compatible
-Every module is available from 2 different folders 'lib' and 'es5'. The latter contains already transpiled code, ready to be used in older browsers (or versions of node).
+Every module is available from 2 different folders 'lib' and 'es5'. The latter contains the same iterators but transpile to ES5, ready to be used in older browsers (or old node.js versions).
 ```js
 const chain_es6 = require('iter-tools/lib/chain');
 ```
@@ -72,7 +72,7 @@ const chain_es5 = require('iter-tools/es5/chain');
 
 # Create iterators
 ## Range
-Create an iterator returning a sequence of numbers (they can also be infinite)
+Create an iterator returning a sequence of numbers (the sequence can be infinite)
 ```js
 const range = require('iter-tools/lib/range');
 range(); // 0, 1, 2 ... Infinity

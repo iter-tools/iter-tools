@@ -10,7 +10,7 @@ var _typeof3 = _interopRequireDefault(_typeof2);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var _marked = [range].map(_regenerator2.default.mark);
+var _marked = /*#__PURE__*/_regenerator2.default.mark(range);
 
 function range(opts) {
   var start, step, end, i;
@@ -44,7 +44,7 @@ function range(opts) {
           return _context.stop();
       }
     }
-  }, _marked[0], this);
+  }, _marked, this);
 }
 
 module.exports = range;
