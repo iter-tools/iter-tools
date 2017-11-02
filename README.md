@@ -35,6 +35,7 @@ Utilities returning multiple iterators
 Utilities
 * [Reduce](#reduce)
 * [Iter](#iter)
+* [Execute](#execute)
 
 Combinatory generators
 * [Products](#products)
@@ -277,12 +278,12 @@ reduce(range(4), (acc, v) => acc += v, 0); // returns 6
 ```
 
 ## Iter
-This tries to return an iterator from a value. This is useful for 2 reasons:
-* you can consume the iterator using the "next" method without worrying if it is a string, array or an iterable etc.
+It tries to return an iterator from a value. This is useful for 2 reasons:
+* you can consume the iterator using the "next" method without worrying if it is a string, array, an iterable etc.
 * allows to iterate over a simple object
 
 If the value is an object with a "Symbol.iterator" attribute: it initialise and return the iterator (arrays, maps, sets and strings for example).
-If the value is already an iterator, it returns the generator itself.
+If the value is already an iterator, it returns itself.
 If the value is a generator, it initialises it and returns the iterator.
 If the value is an object, it returns an iterator iterating over attribute/value pairs.
 ```js
@@ -291,6 +292,13 @@ iter([1, 2, 3]); // 1, 2, 3
 iter("hello"); // h e l l o
 iter(range(4)); // 0, 1, 2, 3
 iter({p1: 1, p2: 2}); // ['p1', 1] ['p2', 2]
+```
+
+## Execute
+It returns an iterator that returns the output of a function at every iteration.
+```js
+const iter = require('iter-tools/lib/execute');
+iter(() => Math.round(Math.random() * 10) ); // 3, 5, 9 ...
 ```
 
 # Combinatory generators

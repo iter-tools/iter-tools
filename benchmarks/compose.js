@@ -1,5 +1,5 @@
 var compose = require('async-deco/utils/compose');
-var measureSpeedSync = require('measure-speed').measureSpeedSync;
+var measureSpeed = require('measure-speed');
 var range = require('../lib/range');
 var filter = require('../lib/filter');
 var map = require('../lib/map');
@@ -13,19 +13,21 @@ function isEven(x) {
 }
 
 function for_vs_while_in_iterators() {
-  var ms = measureSpeedSync(function () {
+  measureSpeed(function () {
     var a = range(2000);
     var arr = [];
     for (var i of a) {
       arr.push(i);
     }
     return arr;
-  }, { samples: 1000, discard: 10 });
+  }, { samples: 1000, discard: 10 }, function (err, ms) {
+    console.log('************ for loop iterator ************');
+    console.log(ms);
+  });
 
-  console.log(ms);
 
   var iter = compose(map(power2), filter(isEven));
-  var ms = measureSpeedSync(function () {
+  measureSpeed(function () {
     var a = range(2000);
     var next, arr = [];
     while (true) {
@@ -34,31 +36,37 @@ function for_vs_while_in_iterators() {
       arr.push(next.value);
     }
     return arr;
-  }, { samples: 1000, discard: 10 });
+  }, { samples: 1000, discard: 10 }, function (err, ms) {
+    console.log('************ while loop iterator ************');
+    console.log(ms);
+  });
 
-  console.log(ms);
 }
 
 function filter_map_array_vs_iter() {
   var a = Array.from(range(1000));
-  var ms = measureSpeedSync(function () {
+  measureSpeed(function () {
     var result = a
     .map(power2)
     .filter(isEven);
     return result;
-  }, { samples: 1000, discard: 10 });
+  }, { samples: 1000, discard: 10 }, function (err, ms) {
+    console.log('************ map/filter array ************');
+    console.log(ms);
+  });
 
-  console.log(ms);
   var a = Array.from(range(1000));
 
   var iter = compose(map(power2), filter(isEven));
 
-  var ms = measureSpeedSync(function () {
+  measureSpeed(function () {
     var result = Array.from(iter(a));
     return result;
-  }, { samples: 1000, discard: 10 });
+  }, { samples: 1000, discard: 10 }, function (err, ms) {
+    console.log('************ map/filter iter ************');
+    console.log(ms);
+  });
 
-  console.log(ms);
 }
 
 module.exports = {

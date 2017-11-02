@@ -1,5 +1,5 @@
 var compose = require('async-deco/utils/compose');
-var measureSpeedSync = require('measure-speed').measureSpeedSync;
+var measureSpeed = require('measure-speed');
 var range = require('../lib/range');
 var filter = require('../lib/filter');
 var map = require('../lib/map');
@@ -27,16 +27,17 @@ function filterNegative(numbers) {
 function lazy_regexp() {
   var csv = generateCurrentAccount(1000);
 
-  var ms = measureSpeedSync(function () {
+  measureSpeed(function () {
     var regIter = regexpExec(/^[0-9]+;[A-Z]{3}[0-9]*;([0-9.]*);([0-9.]*)/gm);
     var mapper = map(matches2numbers);
     var superIter = compose(filter(filterNegative), mapper, regIter);
     var res = reduce(superIter(csv), (acc, item) => acc + item[0] + item[1], 0);
-  }, { samples: 1000, discard: 10 });
+  }, { samples: 1000, discard: 10 }, function (err, ms) {
+    console.log('************ regexp iterator ************');
+    console.log(ms);
+  });
 
-  console.log(ms);
-
-  var ms = measureSpeedSync(function () {
+  measureSpeed(function () {
     var re = /^[0-9]+;[A-Z]{3}[0-9]*;([0-9.]*);([0-9.]*)/gm;
     var transactions = [];
     var match;
@@ -46,9 +47,10 @@ function lazy_regexp() {
     var res = transactions.map(matches2numbers)
     .filter(filterNegative)
     .reduce((acc, item) => acc + item[0] + item[1], 0);
-  }, { samples: 1000, discard: 10 });
-
-  console.log(ms);
+  }, { samples: 1000, discard: 10 }, function (err, ms) {
+    console.log('************ regexp vanilla ************');
+    console.log(ms);
+  });
 }
 
 module.exports = {

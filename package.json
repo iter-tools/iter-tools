@@ -37,7 +37,7 @@
     "chai": "^3.5.0",
     "eslint": "^3.6.1",
     "husky": "^0.11.8",
-    "measure-speed": "0.0.2",
+    "measure-speed": "^1.0.0",
     "mocha": "^3.1.0",
     "npm-release": "^1.0.0"
   }
