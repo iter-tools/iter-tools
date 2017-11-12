@@ -3,6 +3,7 @@
   "version": "1.4.0",
   "description": "The iterator toolbox",
   "main": "index.js",
+  "typings": "index.d.ts",
   "scripts": {
     "test": "npm run build && mocha tests/**/*.js",
     "benchmark": "node benchmarks",
