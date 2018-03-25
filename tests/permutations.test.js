@@ -1,26 +1,26 @@
-var assert = require('chai').assert;
-var permutations_es6 = require('../lib/permutations');
-var permutations_es5 = require('../es5/permutations');
-var range = require('../lib/range');
+/* eslint-env node, mocha */
+const assert = require('chai').assert
+const permutationsES6 = require('../lib/permutations')
+const permutationsES5 = require('../es5/permutations')
 
-var esversion = ['es6', 'es5'];
+const esversion = ['es6', 'es5']
 
 describe('permutations', function () {
-  [permutations_es6, permutations_es5].forEach(function (permutations, i) {
+  [permutationsES6, permutationsES5].forEach(function (permutations, i) {
     describe(esversion[i], function () {
       it('returns empty', function () {
-        var iter = permutations([]);
-        assert.deepEqual(Array.from(iter), []);
-      });
+        const iter = permutations([])
+        assert.deepEqual(Array.from(iter), [])
+      })
 
       it('returns permutations', function () {
-        var iter = permutations([1, 2]);
-        assert.deepEqual(Array.from(iter), [[1, 2], [2, 1]]);
-      });
+        const iter = permutations([1, 2])
+        assert.deepEqual(Array.from(iter), [[1, 2], [2, 1]])
+      })
 
       it('returns permutations', function () {
-        var iter = permutations([1, 2, 3, 4], 2);
-        var expected = [ [ 1, 2 ],
+        const iter = permutations([1, 2, 3, 4], 2)
+        const expected = [ [ 1, 2 ],
           [ 1, 3 ],
           [ 1, 4 ],
           [ 2, 1 ],
@@ -31,10 +31,10 @@ describe('permutations', function () {
           [ 3, 4 ],
           [ 4, 1 ],
           [ 4, 2 ],
-          [ 4, 3 ] ];
+          [ 4, 3 ] ]
 
-        assert.deepEqual(Array.from(iter), expected);
-      });
-    });
-  });
-});
+        assert.deepEqual(Array.from(iter), expected)
+      })
+    })
+  })
+})

@@ -15,7 +15,9 @@ var iter = require('./iter');
 function slice(opts, iterable) {
   var _marked = /*#__PURE__*/_regenerator2.default.mark(curriedSlice);
 
-  var start, step, end;
+  var start = void 0,
+      step = void 0,
+      end = void 0;
   opts = typeof opts === 'number' ? { end: opts, start: 0 } : opts;
 
   step = typeof opts.step === 'undefined' ? 1 : opts.step;

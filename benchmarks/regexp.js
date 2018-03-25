@@ -1,58 +1,58 @@
-var compose = require('async-deco/utils/compose');
-var measureSpeed = require('measure-speed');
-var range = require('../lib/range');
-var filter = require('../lib/filter');
-var map = require('../lib/map');
-var reduce = require('../lib/reduce');
-var regexpExec = require('../lib/regexp-exec');
+const compose = require('../lib/compose')
+const measureSpeed = require('measure-speed')
+const filter = require('../lib/filter')
+const map = require('../lib/map')
+const reduce = require('../lib/reduce')
+const regexpExec = require('../lib/regexp-exec')
 
-function generateCurrentAccount(nlines) {
-  var lines = [];
-  lines.push('transaction id;businness code;money in;money out');
+function generateCurrentAccount (nlines) {
+  const lines = []
+  lines.push('transaction id;businness code;money in;money out')
   for (var i = 0; i < nlines; i++) {
-    lines.push(`${i};AAA123;${(Math.random() * 1000).toFixed(2)};${(Math.random() * 1000).toFixed(2)}`);
+    lines.push(`${i};AAA123;${(Math.random() * 1000).toFixed(2)};${(Math.random() * 1000).toFixed(2)}`)
   }
-  return lines.join('\n');
+  return lines.join('\n')
 }
 
-function matches2numbers(match) {
-  return [parseFloat(match[1]), -parseFloat(match[2])];
+function matches2numbers (match) {
+  return [parseFloat(match[1]), -parseFloat(match[2])]
 }
 
-function filterNegative(numbers) {
-  return numbers[0] + numbers[1] > 0;
+function filterNegative (numbers) {
+  return numbers[0] + numbers[1] > 0
 }
 
-
-function lazy_regexp() {
-  var csv = generateCurrentAccount(1000);
+function lazyRegexp () {
+  var csv = generateCurrentAccount(1000)
 
   measureSpeed(function () {
-    var regIter = regexpExec(/^[0-9]+;[A-Z]{3}[0-9]*;([0-9.]*);([0-9.]*)/gm);
-    var mapper = map(matches2numbers);
-    var superIter = compose(filter(filterNegative), mapper, regIter);
-    var res = reduce(superIter(csv), (acc, item) => acc + item[0] + item[1], 0);
+    var regIter = regexpExec(/^[0-9]+;[A-Z]{3}[0-9]*;([0-9.]*);([0-9.]*)/gm)
+    var mapper = map(matches2numbers)
+    var superIter = compose([filter(filterNegative), mapper, regIter])
+    reduce(superIter(csv), (acc, item) => acc + item[0] + item[1], 0)
   }, { samples: 1000, discard: 10 }, function (err, ms) {
-    console.log('************ regexp iterator ************');
-    console.log(ms);
-  });
+    if (err) return console.log('Error!')
+    console.log('************ regexp iterator ************')
+    console.log(ms)
+  })
 
   measureSpeed(function () {
-    var re = /^[0-9]+;[A-Z]{3}[0-9]*;([0-9.]*);([0-9.]*)/gm;
-    var transactions = [];
-    var match;
-    while (null !== (match = re.exec(csv))) {
-      transactions.push(match);
+    var re = /^[0-9]+;[A-Z]{3}[0-9]*;([0-9.]*);([0-9.]*)/gm
+    var transactions = []
+    var match
+    while ((match = re.exec(csv)) !== null) {
+      transactions.push(match)
     }
-    var res = transactions.map(matches2numbers)
-    .filter(filterNegative)
-    .reduce((acc, item) => acc + item[0] + item[1], 0);
+    transactions.map(matches2numbers)
+      .filter(filterNegative)
+      .reduce((acc, item) => acc + item[0] + item[1], 0)
   }, { samples: 1000, discard: 10 }, function (err, ms) {
-    console.log('************ regexp vanilla ************');
-    console.log(ms);
-  });
+    if (err) return console.log('Error!')
+    console.log('************ regexp vanilla ************')
+    console.log(ms)
+  })
 }
 
 module.exports = {
-  lazy_regexp: lazy_regexp,
-};
+  lazyRegexp: lazyRegexp
+}

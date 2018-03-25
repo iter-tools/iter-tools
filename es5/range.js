@@ -18,6 +18,8 @@ function range(opts) {
     while (1) {
       switch (_context.prev = _context.next) {
         case 0:
+          start = void 0, step = void 0, end = void 0;
+
           opts = typeof opts === 'number' ? { end: opts, start: 0 } : (typeof opts === 'undefined' ? 'undefined' : (0, _typeof3.default)(opts)) === 'object' ? opts : {};
           step = typeof opts.step === 'undefined' ? 1 : opts.step;
           end = typeof opts.end === 'undefined' ? step > 0 ? Infinity : -Infinity : opts.end;
@@ -25,21 +27,21 @@ function range(opts) {
 
           i = start;
 
-        case 5:
+        case 6:
           if (!(step > 0 ? i < end : i > end)) {
-            _context.next = 11;
+            _context.next = 12;
             break;
           }
 
-          _context.next = 8;
+          _context.next = 9;
           return i;
 
-        case 8:
+        case 9:
           i += step;
-          _context.next = 5;
+          _context.next = 6;
           break;
 
-        case 11:
+        case 12:
         case 'end':
           return _context.stop();
       }

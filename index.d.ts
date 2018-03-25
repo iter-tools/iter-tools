@@ -6,6 +6,8 @@ export declare function combinations<T>(iterable: IterableLike<T>, r: number): I
 
 export declare function combinationsWithReplacement<T>(iterable: IterableLike<T>, r: number): Iterable<T>;
 
+export declare function compose<T>(fns: IterableLike<T>): T;
+
 export declare function compress<T>(iterable: IterableLike<T>, compress: IterableLike<boolean>): Iterable<T>;
 
 export declare function count(opts: number | { start: number, end?: number, step?: number }): Iterable<number>;

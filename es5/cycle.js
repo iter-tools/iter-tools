@@ -21,77 +21,79 @@ function cycle(iterable) {
     while (1) {
       switch (_context.prev = _context.next) {
         case 0:
+          copy = void 0;
+
           if (!Array.isArray(iterable)) {
-            _context.next = 7;
+            _context.next = 8;
             break;
           }
 
-        case 1:
+        case 2:
           if (!true) {
-            _context.next = 5;
+            _context.next = 6;
             break;
           }
 
-          return _context.delegateYield(iterable, 't0', 3);
+          return _context.delegateYield(iterable, 't0', 4);
 
-        case 3:
-          _context.next = 1;
+        case 4:
+          _context.next = 2;
           break;
 
-        case 5:
-          _context.next = 26;
+        case 6:
+          _context.next = 27;
           break;
 
-        case 7:
+        case 8:
           copy = [];
           _iterator = iter(iterable), _isArray = Array.isArray(_iterator), _i = 0, _iterator = _isArray ? _iterator : (0, _getIterator3.default)(_iterator);
 
-        case 9:
+        case 10:
           if (!_isArray) {
-            _context.next = 15;
+            _context.next = 16;
             break;
           }
 
           if (!(_i >= _iterator.length)) {
-            _context.next = 12;
+            _context.next = 13;
             break;
           }
 
-          return _context.abrupt('break', 25);
+          return _context.abrupt('break', 26);
 
-        case 12:
+        case 13:
           _ref = _iterator[_i++];
-          _context.next = 19;
+          _context.next = 20;
           break;
 
-        case 15:
+        case 16:
           _i = _iterator.next();
 
           if (!_i.done) {
-            _context.next = 18;
+            _context.next = 19;
             break;
           }
 
-          return _context.abrupt('break', 25);
-
-        case 18:
-          _ref = _i.value;
+          return _context.abrupt('break', 26);
 
         case 19:
+          _ref = _i.value;
+
+        case 20:
           item = _ref;
 
           copy.push(item);
-          _context.next = 23;
+          _context.next = 24;
           return item;
 
-        case 23:
-          _context.next = 9;
+        case 24:
+          _context.next = 10;
           break;
 
-        case 25:
-          return _context.delegateYield(cycle(copy), 't1', 26);
-
         case 26:
+          return _context.delegateYield(cycle(copy), 't1', 27);
+
+        case 27:
         case 'end':
           return _context.stop();
       }

@@ -15,7 +15,6 @@ var _getIterator3 = _interopRequireDefault(_getIterator2);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var iter = require('./iter');
-var map = require('./map');
 
 function product() {
   var _marked = /*#__PURE__*/_regenerator2.default.mark(multiply);

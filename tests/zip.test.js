@@ -1,27 +1,28 @@
-var assert = require('chai').assert;
-var zip_es6 = require('../lib/zip');
-var zip_es5 = require('../es5/zip');
-var range = require('../lib/range');
+/* eslint-env node, mocha */
+const assert = require('chai').assert
+const zipES6 = require('../lib/zip')
+const zipES5 = require('../es5/zip')
+const range = require('../lib/range')
 
-var esversion = ['es6', 'es5'];
+const esversion = ['es6', 'es5']
 
 describe('zip', function () {
-  [zip_es6, zip_es5].forEach(function (zip, i) {
+  [zipES6, zipES5].forEach(function (zip, i) {
     describe(esversion[i], function () {
       it('zips', function () {
-        var iter = zip([1, 2, 3], [4, 5, 6], [7, 8, 9]);
-        assert.deepEqual(Array.from(iter), [[1, 4, 7], [2, 5, 8], [3, 6, 9] ]);
-      });
+        const iter = zip([1, 2, 3], [4, 5, 6], [7, 8, 9])
+        assert.deepEqual(Array.from(iter), [[1, 4, 7], [2, 5, 8], [3, 6, 9]])
+      })
 
       it('zips using iterables', function () {
-        var iter = zip(range({ start: 1, end: 4 }), range({ start: 4, end: 7 }), [7, 8, 9]);
-        assert.deepEqual(Array.from(iter), [[1, 4, 7], [2, 5, 8], [3, 6, 9] ]);
-      });
+        const iter = zip(range({ start: 1, end: 4 }), range({ start: 4, end: 7 }), [7, 8, 9])
+        assert.deepEqual(Array.from(iter), [[1, 4, 7], [2, 5, 8], [3, 6, 9]])
+      })
 
       it('zips stopping early', function () {
-        var iter = zip(range({ start: 1, end: 4 }), range({ start: 4, end: 7 }), [7, 8]);
-        assert.deepEqual(Array.from(iter), [[1, 4, 7], [2, 5, 8] ]);
-      });
-    });
-  });
-});
+        const iter = zip(range({ start: 1, end: 4 }), range({ start: 4, end: 7 }), [7, 8])
+        assert.deepEqual(Array.from(iter), [[1, 4, 7], [2, 5, 8]])
+      })
+    })
+  })
+})

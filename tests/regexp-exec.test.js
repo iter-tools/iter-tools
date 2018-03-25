@@ -1,21 +1,22 @@
-var assert = require('chai').assert;
-var regexpExec_es6 = require('../lib/regexp-exec');
-var regexpExec_es5 = require('../es5/regexp-exec');
+/* eslint-env node, mocha */
+const assert = require('chai').assert
+const regexpExecES6 = require('../lib/regexp-exec')
+const regexpExecES5 = require('../es5/regexp-exec')
 
-var esversion = ['es6', 'es5'];
+const esversion = ['es6', 'es5']
 
 describe('regexpExec', function () {
-  [regexpExec_es6, regexpExec_es5].forEach(function (regexpExec, i) {
+  [regexpExecES6, regexpExecES5].forEach(function (regexpExec, i) {
     describe(esversion[i], function () {
       it('should find matches', function () {
-        var re = /[0-9]{4}/g;
-        var iter = regexpExec(re, '10/2/2013, 03/03/2015 12/4/1997');
-        var results = [];
+        const re = /[0-9]{4}/g
+        const iter = regexpExec(re, '10/2/2013, 03/03/2015 12/4/1997')
+        const results = []
         for (let [i] of iter) {
-          results.push(i);
+          results.push(i)
         }
-        assert.deepEqual(results, ['2013', '2015', '1997']);
-      });
-    });
-  });
-});
+        assert.deepEqual(results, ['2013', '2015', '1997'])
+      })
+    })
+  })
+})

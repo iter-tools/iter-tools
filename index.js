@@ -1,25 +1,31 @@
-var iterators = require('require-all')(__dirname + '/lib');
 
-function capitalize(string) {
-  return string.charAt(0).toUpperCase() + string.slice(1);
+module.exports = {
+  chain: require('./lib/chain'),
+  combinationsWithReplacement: require('./lib/combinations-with-replacement'),
+  combinations: require('./lib/combinations'),
+  compose: require('./lib/compose'),
+  compress: require('./lib/compress'),
+  count: require('./lib/count'),
+  cycle: require('./lib/cycle'),
+  dropWhile: require('./lib/drop-while'),
+  enumerate: require('./lib/enumerate'),
+  execute: require('./lib/execute'),
+  filter: require('./lib/filter'),
+  flatMap: require('./lib/flat-map'),
+  groupby: require('./lib/groupby'),
+  iter: require('./lib/iter'),
+  map: require('./lib/map'),
+  permutations: require('./lib/permutations'),
+  product: require('./lib/product'),
+  range: require('./lib/range'),
+  reduceIter: require('./lib/reduce-iter'),
+  reduce: require('./lib/reduce'),
+  regexpExec: require('./lib/regexp-exec'),
+  regexpSplit: require('./lib/regexp-split'),
+  repeat: require('./lib/repeat'),
+  slice: require('./lib/slice'),
+  takeWhile: require('./lib/take-while'),
+  tee: require('./lib/tee'),
+  zipLongest: require('./lib/zip-longest'),
+  zip: require('./lib/zip')
 }
-
-function toLowerCapitalize(str) { // from zip-longest to zipLongest
-  return str.split('-').map((s, index) => {
-    if (index) {
-      return capitalize(s);
-    }
-    return s;
-  })
-  .join('');
-}
-
-Object.keys(iterators)
-.forEach(function (name) {
-  var alternateName = toLowerCapitalize(name);
-  if (name !== alternateName) {
-    iterators[alternateName] = iterators[name];
-  }
-});
-
-module.exports = iterators;

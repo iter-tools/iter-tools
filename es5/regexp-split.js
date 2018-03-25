@@ -23,46 +23,48 @@ function regexpSplit(re, str) {
       while (1) {
         switch (_context.prev = _context.next) {
           case 0:
+            i = void 0;
+
             if (re) {
-              _context.next = 3;
+              _context.next = 4;
               break;
             }
 
-            return _context.delegateYield(str, 't0', 2);
-
-          case 2:
-            return _context.abrupt('return');
+            return _context.delegateYield(str, 't0', 3);
 
           case 3:
-            i = 0;
+            return _context.abrupt('return');
 
           case 4:
+            i = 0;
+
+          case 5:
             if (!re.test(str)) {
-              _context.next = 12;
+              _context.next = 13;
               break;
             }
 
-            _context.next = 7;
+            _context.next = 8;
             return str.slice(i, re.lastIndex - RegExp.lastMatch.length);
 
-          case 7:
+          case 8:
             if (re.global) {
-              _context.next = 9;
+              _context.next = 10;
               break;
             }
 
-            return _context.abrupt('break', 12);
+            return _context.abrupt('break', 13);
 
-          case 9:
+          case 10:
             i = re.lastIndex;
-            _context.next = 4;
+            _context.next = 5;
             break;
 
-          case 12:
-            _context.next = 14;
+          case 13:
+            _context.next = 15;
             return str.slice(i);
 
-          case 14:
+          case 15:
           case 'end':
             return _context.stop();
         }

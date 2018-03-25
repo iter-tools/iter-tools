@@ -25,7 +25,6 @@ var map = require('./map');
 var range = require('./range');
 var tee = require('./tee');
 var product = require('./product');
-var iter = require('./iter');
 
 function permutations(iterable, r) {
   var arr, mapToIndex, n, _iterator, _isArray, _i, _ref, indices;

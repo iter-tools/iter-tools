@@ -15,27 +15,30 @@ function regexpExec(re, str) {
       while (1) {
         switch (_context.prev = _context.next) {
           case 0:
-            if (!(null !== (match = re.exec(str)))) {
-              _context.next = 7;
+            match = void 0;
+
+          case 1:
+            if (!((match = re.exec(str)) !== null)) {
+              _context.next = 8;
               break;
             }
 
-            _context.next = 3;
+            _context.next = 4;
             return match;
 
-          case 3:
+          case 4:
             if (re.global) {
-              _context.next = 5;
+              _context.next = 6;
               break;
             }
 
             return _context.abrupt('return');
 
-          case 5:
-            _context.next = 0;
+          case 6:
+            _context.next = 1;
             break;
 
-          case 7:
+          case 8:
           case 'end':
             return _context.stop();
         }

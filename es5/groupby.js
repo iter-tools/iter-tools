@@ -69,47 +69,49 @@ function groupby(iterable, key) {
           };
           iterable = iter(iterable);
 
+          currentItem = void 0;
+          currentKey = void 0, previousKey = void 0;
           ;
 
           currentItem = iterable.next();
 
-        case 6:
+        case 8:
           if (!true) {
-            _context2.next = 19;
+            _context2.next = 21;
             break;
           }
 
           if (!currentItem.done) {
-            _context2.next = 9;
+            _context2.next = 11;
             break;
           }
 
           return _context2.abrupt('return');
 
-        case 9:
+        case 11:
           currentKey = key(currentItem.value);
 
           if (!(previousKey !== currentKey)) {
-            _context2.next = 16;
+            _context2.next = 18;
             break;
           }
 
           previousKey = currentKey;
-          _context2.next = 14;
+          _context2.next = 16;
           return [currentKey, group()];
 
-        case 14:
-          _context2.next = 17;
+        case 16:
+          _context2.next = 19;
           break;
 
-        case 16:
+        case 18:
           currentItem = iterable.next();
 
-        case 17:
-          _context2.next = 6;
+        case 19:
+          _context2.next = 8;
           break;
 
-        case 19:
+        case 21:
         case 'end':
           return _context2.stop();
       }

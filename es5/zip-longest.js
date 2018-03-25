@@ -21,13 +21,15 @@ function zipLongest(filler) {
     while (1) {
       switch (_context.prev = _context.next) {
         case 0:
-          iters = Array.prototype.slice.call(_args, 1).map(function (i) {
-            return iter(i);
+          next = void 0, i = void 0, zipped = void 0;
+          iters = Array.prototype.slice.call(_args, 1).map(function (arg) {
+            return iter(arg);
           });
+          numberOfExausted = void 0;
 
-        case 1:
+        case 3:
           if (!true) {
-            _context.next = 11;
+            _context.next = 13;
             break;
           }
 
@@ -42,21 +44,21 @@ function zipLongest(filler) {
           }
 
           if (!(iters.length === numberOfExausted)) {
-            _context.next = 7;
+            _context.next = 9;
             break;
           }
 
           return _context.abrupt('return');
 
-        case 7:
-          _context.next = 9;
+        case 9:
+          _context.next = 11;
           return zipped;
 
-        case 9:
-          _context.next = 1;
+        case 11:
+          _context.next = 3;
           break;
 
-        case 11:
+        case 13:
         case 'end':
           return _context.stop();
       }

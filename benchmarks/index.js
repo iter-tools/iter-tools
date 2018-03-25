@@ -1,7 +1,7 @@
-var benchmarks = require('require-all')(__dirname);
+const benchmarks = require('require-all')(__dirname)
 
-for (var dep in benchmarks) {
-  for (var b in benchmarks[dep]) {
-    benchmarks[dep][b]();
+for (const dep in benchmarks) {
+  for (const b in benchmarks[dep]) {
+    benchmarks[dep][b]()
   }
 }

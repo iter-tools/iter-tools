@@ -141,9 +141,9 @@ Note:
 # Transform a single iterator
 These series of generators take as first argument a function and as a second an iterable. If the second argument is omitted it is automatically returnes a curried function. These functions can be composed:
 ```js
-const compose = require('async-deco/utils/compose');
+const compose = require('iter-tools/lib/compose');
 
-const iterator = compose(map(power2), filter(isEven));
+const iterator = compose([map(power2), filter(isEven)]);
 iterator([ ...... ]);
 ```
 This is more efficient of using array methods as it doesn't require to build intermediate arrays.

@@ -30,54 +30,57 @@ function tee(iterable, number) {
       while (1) {
         switch (_context.prev = _context.next) {
           case 0:
+            newItem = void 0;
+
+          case 1:
             if (!true) {
-              _context.next = 19;
+              _context.next = 20;
               break;
             }
 
             if (!a.length) {
-              _context.next = 6;
+              _context.next = 7;
               break;
             }
 
-            _context.next = 4;
+            _context.next = 5;
             return a.shift();
 
-          case 4:
-            _context.next = 17;
+          case 5:
+            _context.next = 18;
             break;
 
-          case 6:
+          case 7:
             if (!done) {
-              _context.next = 8;
+              _context.next = 9;
               break;
             }
 
             return _context.abrupt('return');
 
-          case 8:
+          case 9:
             newItem = iterable.next();
 
             if (!newItem.done) {
-              _context.next = 14;
+              _context.next = 15;
               break;
             }
 
             done = true;
             return _context.abrupt('return');
 
-          case 14:
+          case 15:
             arrays.forEach(function (ar) {
-              ar.push(newItem.value);
+              return ar.push(newItem.value);
             });
-            _context.next = 17;
+            _context.next = 18;
             return a.shift();
 
-          case 17:
-            _context.next = 0;
+          case 18:
+            _context.next = 1;
             break;
 
-          case 19:
+          case 20:
           case 'end':
             return _context.stop();
         }
