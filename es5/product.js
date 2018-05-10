@@ -19,7 +19,11 @@ var iter = require('./iter');
 function product() {
   var _marked = /*#__PURE__*/_regenerator2.default.mark(multiply);
 
-  var iters = Array.prototype.map.call(arguments, function (i) {
+  for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+    args[_key] = arguments[_key];
+  }
+
+  var iters = args.map(function (i) {
     return iter(i);
   });
 

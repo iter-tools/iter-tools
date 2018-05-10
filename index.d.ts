@@ -14,12 +14,14 @@ export declare function count(opts: number | { start: number, end?: number, step
 
 export declare function cycle<T>(iterable: IterableLike<T>): Iterable<T>;
 
+export declare function dropWhile<T>(func: (item: T) => boolean): (iterable: IterableLike<T>) => Iterable<T>;
 export declare function dropWhile<T>(func: (item: T) => boolean, iterable: IterableLike<T>): Iterable<T>;
 
 export declare function enumerate<T>(iterable: IterableLike<T>, start?: number): Iterable<[number, T]>;
 
 export declare function execute<T>(func: (...args: any[]) => T, ...args: any[]): Iterable<T>;
 
+export declare function filter<T>(func: (item: T) => boolean): (iterable: IterableLike<T>) => Iterable<T>;
 export declare function filter<T>(func: (item: T) => boolean, iterable: IterableLike<T>): Iterable<T>;
 
 export declare function flatMap<T, O>(func: (item: T) => IterableLike<O>): (iter: IterableLike<T>) => Iterable<O>;
