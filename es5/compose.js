@@ -9,7 +9,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 function compose(fns) {
   return (0, _from2.default)(fns).reduce(function (f, g) {
     return function () {
-      return f(g.apply(this, arguments));
+      return f(g.apply(undefined, arguments));
     };
   });
 }
