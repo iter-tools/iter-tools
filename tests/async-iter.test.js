@@ -1,13 +1,13 @@
 /* eslint-env node, mocha */
 const assert = require('chai').assert
 const asyncIterES5 = require('../es5/async/async-iter')
-// const asyncIterES6 = require('../lib/async/async-iter')
+const asyncIterES6 = require('../lib/async/async-iter')
 const range = require('../lib/range')
 
-const esversion = ['es5']
+const esversion = ['es5', 'es6']
 
 describe('asyncIter', function () {
-  [asyncIterES5].forEach(function (asyncIter, i) {
+  [asyncIterES5, asyncIterES6].forEach(function (asyncIter, i) {
     describe(esversion[i], function () {
       it('transform sync iter to async', async function () {
         const iter = asyncIter(range({ start: 1, end: 4 }))

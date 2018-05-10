@@ -41,67 +41,66 @@ var asyncIterToArray = function () {
             _value = _context.sent;
 
             if (_iteratorNormalCompletion) {
-              _context.next = 20;
+              _context.next = 19;
               break;
             }
 
             item = _value;
 
-            console.log(item);
             out.push(item);
 
-          case 17:
+          case 16:
             _iteratorNormalCompletion = true;
             _context.next = 6;
             break;
 
-          case 20:
-            _context.next = 26;
+          case 19:
+            _context.next = 25;
             break;
 
-          case 22:
-            _context.prev = 22;
+          case 21:
+            _context.prev = 21;
             _context.t0 = _context['catch'](4);
             _didIteratorError = true;
             _iteratorError = _context.t0;
 
-          case 26:
+          case 25:
+            _context.prev = 25;
             _context.prev = 26;
-            _context.prev = 27;
 
             if (!(!_iteratorNormalCompletion && _iterator.return)) {
-              _context.next = 31;
+              _context.next = 30;
               break;
             }
 
-            _context.next = 31;
+            _context.next = 30;
             return _iterator.return();
 
-          case 31:
-            _context.prev = 31;
+          case 30:
+            _context.prev = 30;
 
             if (!_didIteratorError) {
-              _context.next = 34;
+              _context.next = 33;
               break;
             }
 
             throw _iteratorError;
 
+          case 33:
+            return _context.finish(30);
+
           case 34:
-            return _context.finish(31);
+            return _context.finish(25);
 
           case 35:
-            return _context.finish(26);
-
-          case 36:
             return _context.abrupt('return', out);
 
-          case 37:
+          case 36:
           case 'end':
             return _context.stop();
         }
       }
-    }, _callee, this, [[4, 22, 26, 36], [27,, 31, 35]]);
+    }, _callee, this, [[4, 21, 25, 35], [26,, 30, 34]]);
   }));
 
   return function asyncIterToArray(_x) {

@@ -2,9 +2,9 @@
 const assert = require('chai').assert
 const chainES6 = require('../lib/chain')
 const chainES5 = require('../es5/chain')
-// const asyncChainES6 = require('../lib/async/chain')
+const asyncChainES6 = require('../lib/async/chain')
 const asyncChainES5 = require('../es5/async/chain')
-// const asyncIterToArray = require('../es5/async/async-iter-to-array')
+const asyncIterToArray = require('../es5/async/async-iter-to-array')
 const range = require('../lib/range')
 
 const esversion = ['es6', 'es5']
@@ -21,16 +21,11 @@ describe('chain', function () {
 })
 
 describe('asyncChain', function () {
-  [asyncChainES5].forEach(function (chain, i) {
+  [asyncChainES5, asyncChainES6].forEach(function (chain, i) {
     describe('es5', function () {
       it('chains iterables', async function () {
         const iter = chain(range({ start: 1, end: 3 }), [3, 4])
-        // assert.deepEqual(await asyncIterToArray(iter), [1, 2, 3, 4])
-        assert.deepEqual(await iter.next(), { value: 1, done: false })
-        assert.deepEqual(await iter.next(), { value: 2, done: false })
-        assert.deepEqual(await iter.next(), { value: 3, done: false })
-        assert.deepEqual(await iter.next(), { value: 4, done: false })
-        assert.deepEqual(await iter.next(), { value: undefined, done: true })
+        assert.deepEqual(await asyncIterToArray(iter), [1, 2, 3, 4])
       })
     })
   })

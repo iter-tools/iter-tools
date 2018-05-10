@@ -18,8 +18,11 @@ var _asyncGeneratorDelegate3 = _interopRequireDefault(_asyncGeneratorDelegate2);
 
 var chain = function () {
   var _ref = _asyncGenerator3.default.wrap( /*#__PURE__*/_regenerator2.default.mark(function _callee() {
-    var i,
-        _args = arguments;
+    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+
+    var i;
     return _regenerator2.default.wrap(function _callee$(_context) {
       while (1) {
         switch (_context.prev = _context.next) {
@@ -27,12 +30,12 @@ var chain = function () {
             i = 0;
 
           case 1:
-            if (!(i < _args.length)) {
+            if (!(i < args.length)) {
               _context.next = 6;
               break;
             }
 
-            return _context.delegateYield((0, _asyncGeneratorDelegate3.default)((0, _asyncIterator3.default)(asyncIter(_args[i])), _asyncGenerator3.default.await), 't0', 3);
+            return _context.delegateYield((0, _asyncGeneratorDelegate3.default)((0, _asyncIterator3.default)(asyncIter(args[i])), _asyncGenerator3.default.await), 't0', 3);
 
           case 3:
             i++;

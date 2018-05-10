@@ -99,7 +99,7 @@ var cycle = function () {
             return _context.finish(27);
 
           case 37:
-            return _context.delegateYield((0, _asyncGeneratorDelegate3.default)((0, _asyncIterator3.default)(syncCycle(copy)), _asyncGenerator3.default.await), 't1', 38);
+            return _context.delegateYield((0, _asyncGeneratorDelegate3.default)((0, _asyncIterator3.default)(cycle(copy)), _asyncGenerator3.default.await), 't1', 38);
 
           case 38:
           case 'end':
