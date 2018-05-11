@@ -22,7 +22,7 @@ describe('execute', function () {
 })
 
 describe.skip('asyncExecute', function () {
-  [asyncExecuteES6 , asyncExecuteES5].forEach(function (asyncExecute, i) {
+  [asyncExecuteES6, asyncExecuteES5].forEach(function (asyncExecute, i) {
     describe(esversion[i], function () {
       it('execute forever', async function () {
         const iter = asyncExecute(function () { return Promise.resolve(1) })
