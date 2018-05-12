@@ -30,7 +30,6 @@ module.exports = {
   zip: require('./lib/zip'),
   asyncIterToArray: require('./lib/async/async-iter-to-array'),
   asyncIter: require('./lib/async/async-iter'),
-  asyncBatch: require('./lib/async/batch'),
   asyncChain: require('./lib/async/chain'),
   asyncCompress: require('./lib/async/compress'),
   asyncCycle: require('./lib/async/cycle'),

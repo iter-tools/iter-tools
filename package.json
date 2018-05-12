@@ -6,7 +6,7 @@
   "typings": "index.d.ts",
   "scripts": {
     "test": "npm run build && mocha tests/**/*.js",
-    "benchmark": "node benchmarks",
+    "benchmarks": "node benchmarks",
     "watch": "npm run test -- -w",
     "lint": "eslint --fix --ext .js ./lib ./tests ./benchmarks",
     "build": "babel --plugins transform-runtime lib -d es5",
