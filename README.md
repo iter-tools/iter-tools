@@ -341,13 +341,13 @@ You can pass a function that returns a key, by default an identity function will
 When you iterate over the next group, the previous sub-iterator items will not be available anymore.
 ```js
 const groupBy = require('iter-tools/lib/groupby');
-groupby([1, 1, 1, 1, -1, -1, -1, 4]);
+groupBy([1, 1, 1, 1, -1, -1, -1, 4]);
 // It will return:
 // 1, subiterator (1, 1, 1, 1)
 // -1, subiterator (-1, -1, -1)
 // 4, subiterator (4)
 
-groupby([1, 1, 1, 1, 3, 3, 3, 4], (value) => {value * value});
+groupBy([11, 1, 1, 1, -1, -1, -1, 4], (value) => {value * value});
 // It will return:
 // 1, subiterator (1, 1, 1, 1, -1, -1, -1)
 // 16, subiterator (4)
