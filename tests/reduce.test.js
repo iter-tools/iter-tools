@@ -13,17 +13,24 @@ describe('reduce', function () {
   [reduceES6, reduceES5].forEach(function (reduce, i) {
     describe(esversion[i], function () {
       it('sums an array', function () {
-        const sum = reduce([0, 1, 2, 3], function (acc, x) {
+        const sum = reduce(function (acc = 0, x) {
           return acc + x
-        }, 0)
+        }, [0, 1, 2, 3])
         assert.equal(sum, 6)
       })
 
       it('sums a range', function () {
-        const sum = reduce(range(4), function (acc, x) {
+        const sum = reduce(function (acc = 0, x) {
           return acc + x
-        }, 0)
+        }, range(4))
         assert.equal(sum, 6)
+      })
+
+      it('sums a range (using curry)', function () {
+        const sum = reduce(function (acc = 0, x) {
+          return acc + x
+        })
+        assert.equal(sum(range(4)), 6)
       })
     })
   })
@@ -33,17 +40,24 @@ describe('asyncReduce', function () {
   [asyncReduceES6, asyncReduceES5].forEach(function (asyncReduce, i) {
     describe(esversion[i], function () {
       it('sums an array', async function () {
-        const sum = await asyncReduce([0, 1, 2, 3], function (acc, x) {
+        const sum = await asyncReduce(function (acc = 0, x) {
           return acc + x
-        }, 0)
+        }, [0, 1, 2, 3])
         assert.equal(sum, 6)
       })
 
       it('sums a range', async function () {
-        const sum = await asyncReduce(range(4), function (acc, x) {
+        const sum = await asyncReduce(function (acc = 0, x) {
           return acc + x
-        }, 0)
+        }, range(4))
         assert.equal(sum, 6)
+      })
+
+      it('sums a range (using curry)', async function () {
+        const sum = asyncReduce(function (acc = 0, x) {
+          return acc + x
+        })
+        assert.equal(await sum(range(4)), 6)
       })
     })
   })

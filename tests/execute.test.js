@@ -21,11 +21,14 @@ describe('execute', function () {
   })
 })
 
+// es5 version doesn not work correctly
+// it shoudl be fixed with babel 7
+// https://github.com/babel/babel/issues/7912
 describe.skip('asyncExecute', function () {
   [asyncExecuteES6, asyncExecuteES5].forEach(function (asyncExecute, i) {
     describe(esversion[i], function () {
       it('execute forever', async function () {
-        const iter = asyncExecute(function () { return Promise.resolve(1) })
+        const iter = asyncExecute(() => Promise.resolve(1))
         assert.deepEqual(await iter.next(), { value: 1, done: false })
         assert.deepEqual(await iter.next(), { value: 1, done: false })
         assert.deepEqual(await iter.next(), { value: 1, done: false })

@@ -15,7 +15,7 @@ var _from2 = _interopRequireDefault(_from);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var range = require('../range');
-var map = require('./map');
+var map = require('../map');
 var asyncIter = require('./async-iter');
 var Dequeue = require('dequeue');
 

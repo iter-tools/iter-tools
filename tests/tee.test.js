@@ -35,27 +35,27 @@ describe('tee', function () {
   })
 })
 
-describe.skip('tee', function () {
+describe('tee', function () {
   [asyncTeeES6, asyncTeeES5].forEach(function (asyncTee, i) {
     describe(esversion[i], function () {
       it('tee iterable', async function () {
         const iters = asyncTee(range(3), 3)
         assert.equal(iters.length, 3)
-        assert.equal(iters[0].next().value, 0)
-        assert.equal(iters[0].next().value, 1)
+        assert.equal((await iters[0].next()).value, 0)
+        assert.equal((await iters[0].next()).value, 1)
 
-        assert.equal(iters[1].next().value, 0)
-        assert.equal(iters[1].next().value, 1)
-        assert.equal(iters[1].next().value, 2)
-        assert.equal(iters[1].next().done, true)
+        assert.equal((await iters[1].next()).value, 0)
+        assert.equal((await iters[1].next()).value, 1)
+        assert.equal((await iters[1].next()).value, 2)
+        assert.equal((await iters[1].next()).done, true)
 
-        assert.equal(iters[0].next().value, 2)
-        assert.equal(iters[0].next().done, true)
+        assert.equal((await iters[0].next()).value, 2)
+        assert.equal((await iters[0].next()).done, true)
 
-        assert.equal(iters[2].next().value, 0)
-        assert.equal(iters[2].next().value, 1)
-        assert.equal(iters[2].next().value, 2)
-        assert.equal(iters[2].next().done, true)
+        assert.equal((await iters[2].next()).value, 0)
+        assert.equal((await iters[2].next()).value, 1)
+        assert.equal((await iters[2].next()).value, 2)
+        assert.equal((await iters[2].next()).done, true)
       })
     })
   })
