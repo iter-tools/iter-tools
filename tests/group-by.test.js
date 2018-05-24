@@ -1,10 +1,10 @@
 /* eslint-env node, mocha */
 const assert = require('chai').assert
-const groupbyES6 = require('../lib/groupby')
-const groupbyES5 = require('../es5/groupby')
+const groupbyES6 = require('../lib/group-by')
+const groupbyES5 = require('../es5/group-by')
 
-const asyncGroupbyES6 = require('../lib/async/groupby')
-const asyncGroupbyES5 = require('../es5/async/groupby')
+const asyncGroupbyES6 = require('../lib/async/group-by')
+const asyncGroupbyES5 = require('../es5/async/group-by')
 const asyncIterToArray = require('../lib/async/async-iter-to-array')
 
 const esversion = ['es6', 'es5']
@@ -13,7 +13,24 @@ describe('groupby', function () {
   [groupbyES6, groupbyES5].forEach(function (groupby, i) {
     describe(esversion[i], function () {
       it('groupby main cursor', function () {
-        const iter = groupby('AAABBAACCCCD')
+        const iter = groupby(null, 'AAABBAACCCCD')
+        let next
+        next = iter.next()
+        assert.equal(next.value[0], 'A')
+        next = iter.next()
+        assert.equal(next.value[0], 'B')
+        next = iter.next()
+        assert.equal(next.value[0], 'A')
+        next = iter.next()
+        assert.equal(next.value[0], 'C')
+        next = iter.next()
+        assert.equal(next.value[0], 'D')
+        next = iter.next()
+        assert.equal(next.done, true)
+      })
+
+      it('groupby main cursor (curried)', function () {
+        const iter = groupby(null)('AAABBAACCCCD')
         let next
         next = iter.next()
         assert.equal(next.value[0], 'A')
@@ -30,7 +47,7 @@ describe('groupby', function () {
       })
 
       it('groupby secondary', function () {
-        const iter = groupby('AAABBAACCCCD')
+        const iter = groupby(null, 'AAABBAACCCCD')
         let next
         next = iter.next()
         assert.equal(next.value[0], 'A')
@@ -52,7 +69,7 @@ describe('groupby', function () {
       })
 
       it('groupby secondary (consume partially)', function () {
-        const iter = groupby('AAABBAACCCCD')
+        const iter = groupby(null, 'AAABBAACCCCD')
         let next
         next = iter.next()
         assert.equal(next.value[0], 'A')
@@ -72,7 +89,24 @@ describe('asyncGroupby', function () {
   [asyncGroupbyES6, asyncGroupbyES5].forEach(function (asyncGroupby, i) {
     describe(esversion[i], function () {
       it('groupby main cursor', async function () {
-        const iter = asyncGroupby('AAABBAACCCCD')
+        const iter = asyncGroupby(null, 'AAABBAACCCCD')
+        let next
+        next = await iter.next()
+        assert.equal(next.value[0], 'A')
+        next = await iter.next()
+        assert.equal(next.value[0], 'B')
+        next = await iter.next()
+        assert.equal(next.value[0], 'A')
+        next = await iter.next()
+        assert.equal(next.value[0], 'C')
+        next = await iter.next()
+        assert.equal(next.value[0], 'D')
+        next = await iter.next()
+        assert.equal(next.done, true)
+      })
+
+      it('groupby main cursor (curried)', async function () {
+        const iter = asyncGroupby(null)('AAABBAACCCCD')
         let next
         next = await iter.next()
         assert.equal(next.value[0], 'A')
@@ -89,7 +123,7 @@ describe('asyncGroupby', function () {
       })
 
       it('groupby secondary', async function () {
-        const iter = asyncGroupby('AAABBAACCCCD')
+        const iter = asyncGroupby(null, 'AAABBAACCCCD')
         let next
         next = await iter.next()
         assert.equal(next.value[0], 'A')
@@ -111,7 +145,7 @@ describe('asyncGroupby', function () {
       })
 
       it('groupby secondary (consume partially)', async function () {
-        const iter = asyncGroupby('AAABBAACCCCD')
+        const iter = asyncGroupby(null, 'AAABBAACCCCD')
         let next
         next = await iter.next()
         assert.equal(next.value[0], 'A')

@@ -8,9 +8,13 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var cloneRegexp = require('clone-regexp');
 
-function regexpSplit(re, str) {
+function regexpSplit(re, options, str) {
   var _marked = /*#__PURE__*/_regenerator2.default.mark(iter);
 
+  if (typeof options === 'undefined' || options.constructor !== Object) {
+    str = options;
+    options = {};
+  }
   if (re && typeof re === 'string') {
     re = new RegExp(re, 'g');
   }
@@ -18,12 +22,12 @@ function regexpSplit(re, str) {
     re = cloneRegexp(re, { global: true });
   }
   function iter(str) {
-    var i;
+    var i, match;
     return _regenerator2.default.wrap(function iter$(_context) {
       while (1) {
         switch (_context.prev = _context.next) {
           case 0:
-            i = void 0;
+            i = void 0, match = void 0;
 
             if (re) {
               _context.next = 4;
@@ -39,32 +43,42 @@ function regexpSplit(re, str) {
             i = 0;
 
           case 5:
-            if (!re.test(str)) {
+            if (!(match = re.exec(str))) {
+              _context.next = 16;
+              break;
+            }
+
+            lastMatchLength = options.includeMatch ? 0 : match[0].length;
+
+            if (!(options.includeMatch && i === re.lastIndex)) {
+              _context.next = 9;
+              break;
+            }
+
+            return _context.abrupt('continue', 13);
+
+          case 9:
+            _context.next = 11;
+            return str.slice(i, re.lastIndex - lastMatchLength);
+
+          case 11:
+            if (re.global) {
               _context.next = 13;
               break;
             }
 
-            _context.next = 8;
-            return str.slice(i, re.lastIndex - RegExp.lastMatch.length);
+            return _context.abrupt('break', 16);
 
-          case 8:
-            if (re.global) {
-              _context.next = 10;
-              break;
-            }
-
-            return _context.abrupt('break', 13);
-
-          case 10:
+          case 13:
             i = re.lastIndex;
             _context.next = 5;
             break;
 
-          case 13:
-            _context.next = 15;
+          case 16:
+            _context.next = 18;
             return str.slice(i);
 
-          case 15:
+          case 18:
           case 'end':
             return _context.stop();
         }

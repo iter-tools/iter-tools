@@ -337,26 +337,31 @@ const asyncCompress = require('iter-tools/lib/async/compress');
 
 ## GroupBy
 On each iteration it returns a key and a sub-iterator of items with that key.
-You can pass a function that returns a key, by default an identity function will be used.
+You can pass a function that returns a key, if you pass null or undefined an identity function will be used.
 When you iterate over the next group, the previous sub-iterator items will not be available anymore.
 ```js
-const groupBy = require('iter-tools/lib/groupby');
-groupBy([1, 1, 1, 1, -1, -1, -1, 4]);
+const groupBy = require('iter-tools/lib/group-by');
+groupBy(null, [1, 1, 1, 1, -1, -1, -1, 4]);
 // It will return:
 // 1, subiterator (1, 1, 1, 1)
 // -1, subiterator (-1, -1, -1)
 // 4, subiterator (4)
 
-groupBy([11, 1, 1, 1, -1, -1, -1, 4], (value) => {value * value});
+groupBy((value) => {value * value}, [11, 1, 1, 1, -1, -1, -1, 4]);
 // It will return:
 // 1, subiterator (1, 1, 1, 1, -1, -1, -1)
 // 16, subiterator (4)
+```
+This iterator can be curried:
+```js
+const groupBySquare = groupBy((value) => {value * value});
+groupBySquare([11, 1, 1, 1, -1, -1, -1, 4]);
 ```
 
 ## Async GroupBy
 Same as groupBy but works on both sync and async iterables.
 ```js
-const asyncGroupBy = require('iter-tools/lib/async/groupby');
+const asyncGroupBy = require('iter-tools/lib/async/group-by');
 ```
 
 ## Tee
