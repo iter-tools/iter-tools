@@ -28,7 +28,8 @@ export declare function filter<T>(func: (item: T) => boolean, iterable: Iterable
 export declare function flatMap<T, O>(func: (item: T) => IterableLike<O>): (iter: IterableLike<T>) => Iterable<O>;
 export declare function flatMap<T, O>(func: (item: T) => IterableLike<O>, iter: IterableLike<T>): Iterable<O>;
 
-export declare function groupBy<T, K>(iterable: IterableLike<T>, key?: (item: T) => K): Iterable<[K, Iterable<T>]>;
+export declare function groupBy<T, K>(key: (item: T) => K): (iterable: IterableLike<T>) => Iterable<[K, Iterable<T>]>;
+export declare function groupBy<T, K>(key: (item: T) => K, iterable: IterableLike<T>): Iterable<[K, Iterable<T>]>;
 
 export declare function iter<T>(iterable: IterableLike<T>): Iterable<T>;
 
@@ -57,6 +58,11 @@ export declare function regexpExec(re: RegExp, str: string): Iterable<string>;
 
 export declare function regexpSplit(re: RegExp): (str: string) => Iterable<string>;
 export declare function regexpSplit(re: RegExp, str: string): Iterable<string>;
+
+export declare function regexpSplitIter(re: RegExp): (iterable: IterableLike<T>) => Iterable<string>;
+export declare function regexpSplitIter(re: RegExp, iterable: IterableLike<T>): Iterable<string>;
+
+export declare function splitLines(iterable: IterableLike<T>): Iterable<string>;
 
 export declare function repeat<T>(obj: T, times?: number): Iterable<T>;
 
@@ -99,7 +105,8 @@ export declare function asyncFilter<T>(func: (item: T) => boolean, iterable: Asy
 export declare function asyncFlatmap<T, O>(func: (item: T) => AsyncIterableLike<O>): (iter: AsyncIterableLike<T>) => AsyncIterable<O>;
 export declare function asyncFlatmap<T, O>(func: (item: T) => AsyncIterableLike<O>, iter: AsyncIterableLike<T>): AsyncIterable<O>;
 
-export declare function asyncGroupBy<T, K>(iterable: AsyncIterableLike<T>, key?: (item: T) => K): AsyncIterable<[K, AsyncIterable<T>]>;
+export declare function asyncGroupBy<T, K>(key: (item: T) => K): (iterable: AsyncIterableLike<T>) => Iterable<[K, Iterable<T>]>;
+export declare function asyncGroupBy<T, K>(key: (item: T) => K, iterable: AsyncIterableLike<T>): Iterable<[K, Iterable<T>]>;
 
 export declare function asyncMap<T, O>(func: (item: T) => O): (iter: AsyncIterableLike<T>) => AsyncIterable<O>;
 export declare function asyncMap<T, O>(func: (item: T) => O, iter: AsyncIterableLike<T>): AsyncIterable<O>;
@@ -125,3 +132,8 @@ export declare function asyncZip<T, T2, T3, T4>(iterable1: AsyncIterableLike<T>[
 export declare function asyncZip<T, T2, T3, T4, T5>(iterable1: AsyncIterableLike<T>[], iterable2: AsyncIterableLike<T2>[], iterable3: AsyncIterableLike<T3>[], iterable4: AsyncIterableLike<T4>[], iterable5: AsyncIterableLike<T5>[]): AsyncIterable<[T, T2, T3, T4, T5]>;
 export declare function asyncZip<T, T2, T3, T4, T5, T6>(iterable1: AsyncIterableLike<T>[], iterable2: AsyncIterableLike<T2>[], iterable3: AsyncIterableLike<T3>[], iterable4: AsyncIterableLike<T4>[], iterable5: AsyncIterableLike<T5>[], iterable6: AsyncIterableLike<T6>[]): AsyncIterable<[T, T2, T3, T4, T5, T6]>;
 export declare function asyncZip<T>(...iterables: AsyncIterableLike<T>[]): AsyncIterable<[T]>;
+
+export declare function asyncRegexpSplitIter(re: RegExp): (iterable: AsyncIterableLike<string>) => AsyncIterableLike<string>;
+export declare function asyncRegexpSplitIter(re: RegExp, iterable: AsyncIterableLike<string>): AsyncIterableLike<string>;
+
+export declare function asyncSplitLines(iterable: AsyncIterableLike<string>) => AsyncIterableLike<string>;

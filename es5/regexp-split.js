@@ -18,12 +18,12 @@ function regexpSplit(re, str) {
     re = cloneRegexp(re, { global: true });
   }
   function iter(str) {
-    var i;
+    var i, match;
     return _regenerator2.default.wrap(function iter$(_context) {
       while (1) {
         switch (_context.prev = _context.next) {
           case 0:
-            i = void 0;
+            i = void 0, match = void 0;
 
             if (re) {
               _context.next = 4;
@@ -39,13 +39,13 @@ function regexpSplit(re, str) {
             i = 0;
 
           case 5:
-            if (!re.test(str)) {
+            if (!(match = re.exec(str))) {
               _context.next = 13;
               break;
             }
 
             _context.next = 8;
-            return str.slice(i, re.lastIndex - RegExp.lastMatch.length);
+            return str.slice(i, re.lastIndex - match[0].length);
 
           case 8:
             if (re.global) {

@@ -8,9 +8,13 @@ Create iterators
 * [Repeat](#repeat)
 * [Cycle](#cycle)
 
-Create iterators from strings
+Strings manipulation
 * [Regexp Exec](#regexp-exec)
 * [Regexp split](#regexp-split)
+* [Regexp split iter](#regexp-split-iter)
+* [Async Regexp split iter](#async-regexp-split-iter)
+* [Split lines](#split lines)
+* [Async Split lines](#async split lines)
 
 Transform a single iterable
 * [Map](#map)
@@ -57,6 +61,7 @@ This should help clarify the documentation. You can also get more informations h
 * Iterator: an object implementing the iterator protocol (the method next etc.)
 * generator: a function returning an iterator
 * iterable: a generator function or any object with a generator function under the attribute Symbol.iterator
+* async iterable: an async generator function or any object with an async generator function under the attribute Symbol.asyncIterator
 
 ## Design principles
 #### Pay only what you eat
@@ -88,6 +93,7 @@ Async iterators are a new feature introduced by ES2018. Iter-tools implements an
 Create an iterator returning a sequence of numbers (the sequence can be infinite)
 ```js
 const range = require('iter-tools/lib/range');
+// const range = require('iter-tools').range;
 range(); // 0, 1, 2 ... Infinity
 range(3); // 0, 1, 2
 range({start: 3}); // 3, 4, 5, 6, 7 ... Infinity
@@ -100,12 +106,14 @@ range({start: 9, end: 3, step: -3}); // 9, 6
 An alias of range.
 ```js
 const count = require('iter-tools/lib/count');
+// const count = require('iter-tools').count;
 ```
 
 ## Repeat
 Create an iterator that returns the same value n times
 ```js
 const repeat = require('iter-tools/lib/repeat');
+// const repeat = require('iter-tools').repeat;
 repeat('x', 3); // 'x', 'x', 'x'
 repeat('x'); // 'x', 'x', 'x' .... forever
 ```
@@ -114,11 +122,12 @@ repeat('x'); // 'x', 'x', 'x' .... forever
 It cycles the same iterable forever.
 ```js
 const cycle = require('iter-tools/lib/cycle');
+// const cycle = require('iter-tools').cycle;
 cycle(range(3)); // 0, 1, 2, 0, 1, 2, 0, 1, 2 ....
 ```
 
-# Create iterators from strings
-These generators take as a first argument a regular expression and as a second an iterable. If the second argument is omitted it automatically returns a curried function.
+# Strings Manipulation
+These generators take as a first argument a regular expression. If the second argument is omitted it automatically returns a curried function.
 
 ## Regexp Exec
 It runs a regular expression on a string. Every iteration returns a new match. You should use a "global" regular expression to return multiple matches. The returned object type is the same one returned by the "RegExp.prototype.exec" method (https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp/exec).
@@ -128,6 +137,7 @@ It runs a regular expression on a string. Every iteration returns a new match. Y
 * input: the original string
 ```js
 const regexpExec = require('iter-tools/lib/regexp-exec');
+// const regexpExec = require('iter-tools').regexpExec;
 regexpExec(/[0-9]{4}/g, '10/2/2013, 03/03/2015 12/4/1997');
 for (let [match] of iter) {
   console.log(match); // '2013', '2015', '1997'
@@ -141,6 +151,7 @@ Note:
 It splits a string. You can split by regular expression or string.
 ```js
 const regexpSplit = require('iter-tools/lib/regexp-split');
+// const regexpSplit = require('iter-tools').regexpSplit;
 regexpExec(/\s+/g, 'ab s   d');
 for (let section of iter) {
   console.log(section); // ab, s, d
@@ -150,10 +161,43 @@ Note:
 * the regular expression is automatically converted to "global"
 * you can use a string (it will be internally transformed to global regExp)
 
+## Regexp Split Iter
+It takes an iterators of strings and output an iterable split using the regular expression.
+```js
+const regexpSplit = require('iter-tools/lib/regexp-split-iter');
+// const regexpSplit = require('iter-tools').regexpSplitIter;
+regexpExecIter(/\s+/g, 'ab s   d');
+for (let section of iter) {
+  console.log(section); // ab, s, d
+}
+```
+
+## Async Regexp Split Iter
+The same as Regexp Split Iter but for async iterables.
+```js
+const asyncRegexpSplit = require('iter-tools/lib/async/regexp-split-iter');
+// const regexpSplit = require('iter-tools').asyncRegexpSplitIter;
+```
+
+## Split Lines
+It split an iterables in lines, joining fragments when there are no new line between them.
+```js
+const splitLines = require('iter-tools/lib/split-lines');
+// const splitLines = require('iter-tools').splitLines;
+```
+
+## Async Split Lines
+The same as Split Lines but for async iterables.
+```js
+const asyncSplitLines = require('iter-tools/lib/async/split-lines');
+// const asyncSplitLines = require('iter-tools').asyncSplitLines;
+```
+
 # Transform a single iterator
 These series of generators take as first argument a function and as a second an iterable. If the second argument is omitted it is automatically returnes a curried function. These functions can be composed:
 ```js
 const compose = require('iter-tools/lib/compose');
+// const compose = require('iter-tools').compose;
 
 const iterator = compose([map(power2), filter(isEven)]);
 iterator([ ...... ]);
@@ -164,6 +208,7 @@ This is more efficient of using array methods as it doesn't require to build int
 The equivalent of the array "map" function. But runs on an iterable and returns another iterable.
 ```js
 const map = require('iter-tools/lib/map');
+// const map = require('iter-tools').map;
 map(power2, range(4)); // 0, 1, 4, 9
 ```
 
@@ -172,6 +217,7 @@ Same as Map but works on both sync and async iterables.
 The equivalent of the array "map" function. But runs on an iterable and returns another iterable.
 ```js
 const asyncMap = require('iter-tools/lib/async/map');
+// const asyncMap = require('iter-tools').asyncMap;
 asyncMap(power2, range(4)); // 0, 1, 4, 9
 ```
 
@@ -179,6 +225,7 @@ asyncMap(power2, range(4)); // 0, 1, 4, 9
 The equivalent of the array "filter" function. But runs on an iterable and returns another iterable.
 ```js
 const filter = require('iter-tools/lib/filter');
+// const filter = require('iter-tools').filter;
 filter(isEven, range(4)); // 0, 2
 ```
 
@@ -186,6 +233,7 @@ filter(isEven, range(4)); // 0, 2
 Same as Filter but works on both sync and async iterables.
 ```js
 const asyncFilter = require('iter-tools/lib/async/filter');
+// const asyncFilter = require('iter-tools').asyncFilter;
 asyncFilter(isEven, range(4)); // 0, 2
 ```
 
@@ -193,6 +241,7 @@ asyncFilter(isEven, range(4)); // 0, 2
 It returns values as soon as the function is true. Then it stops.
 ```js
 const takeWhile = require('iter-tools/lib/take-while');
+// const takeWhile = require('iter-tools').takeWhile;
 takeWhile(isEven, range(4)); // 0
 ```
 
@@ -200,6 +249,7 @@ takeWhile(isEven, range(4)); // 0
 Same as Take While but works on both sync and async iterables.
 ```js
 const asyncTakeWhile = require('iter-tools/lib/async/take-while');
+// const asyncTakeWhile = require('iter-tools').asyncTakeWhile;
 asyncTakeWhile(isEven, range(4)); // 0
 ```
 
@@ -207,6 +257,7 @@ asyncTakeWhile(isEven, range(4)); // 0
 It starts returning values when the function is false. Then it keeps going until the iterator is exausted.
 ```js
 const dropWhile = require('iter-tools/lib/drop-while');
+// const dropWhile = require('iter-tools').dropWhile;
 dropWhile(isEven, range(4)); // 1, 2, 3
 ```
 
@@ -214,6 +265,7 @@ dropWhile(isEven, range(4)); // 1, 2, 3
 Same as Drop While but works on both sync and async iterables.
 ```js
 const asyncDropWhile = require('iter-tools/lib/async/drop-while');
+// const asyncDropWhile = require('iter-tools').asyncDropWhile;
 asyncDropWhile(isEven, range(4)); // 1, 2, 3
 ```
 
@@ -221,6 +273,7 @@ asyncDropWhile(isEven, range(4)); // 1, 2, 3
 It returns an iterator that returns a slice of an iterable.
 ```js
 const slice = require('iter-tools/lib/slice');
+// const slice = require('iter-tools').slice;
 slice(3, range(10)); // 0, 1, 2
 slice({start: 2}, range(10)); // 2, 3, 4, 5, 6, 7, 8, 9
 slice({start: 2, end: 6}, range(10)); // 2, 3, 4, 5
@@ -231,6 +284,7 @@ slice({start: 2, end: 6, step: 2}, range(10)); // 2, 4
 Same as slice but works on both sync and async iterables.
 ```js
 const asyncSlice = require('iter-tools/lib/async/slice');
+// const asyncSlice = require('iter-tools').asyncSlice;
 asyncSlice(3, range(10)); // 0, 1, 2
 asyncSlice({start: 2}, range(10)); // 2, 3, 4, 5, 6, 7, 8, 9
 asyncSlice({start: 2, end: 6}, range(10)); // 2, 3, 4, 5
@@ -241,6 +295,7 @@ asyncSlice({start: 2, end: 6, step: 2}, range(10)); // 2, 4
 It maps value of an iterable and flatten them.
 ```js
 const flatMap = require('iter-tools/lib/flat-map');
+// const flatMap = require('iter-tools').flatMap;
 flatMap(x => [x, x * x], range(4)); // 0, 0, 1, 1, 2, 4, 3, 9
 ```
 
@@ -248,6 +303,7 @@ flatMap(x => [x, x * x], range(4)); // 0, 0, 1, 1, 2, 4, 3, 9
 Same as flatMap but works on both sync and async iterables.
 ```js
 const asyncFlatMap = require('iter-tools/lib/async/flat-map');
+// const asyncFlatMap = require('iter-tools').async.flatMap;
 asyncFlatMap(x => [x, x * x], range(4)); // 0, 0, 1, 1, 2, 4, 3, 9
 ```
 
@@ -256,6 +312,7 @@ This is an implementation of the reduce that consumes an iterable instead of an 
 It takes as arguments a function and an iterable;
 ```js
 const reduce = require('iter-tools/lib/reduce');
+// const reduce = require('iter-tools').reduce;
 reduce((acc = 0, v) => acc += v, range(4)); // returns 6
 ```
 
@@ -263,6 +320,7 @@ reduce((acc = 0, v) => acc += v, range(4)); // returns 6
 Same as reduce but works on both sync and async iterables.
 ```js
 const asyncReduce = require('iter-tools/lib/async/reduce');
+// const asyncReduce = require('iter-tools').asyncReduce;
 asyncReduce((acc = 0, v) => acc += v, range(4)); // returns 6
 ```
 
@@ -272,6 +330,7 @@ asyncReduce((acc = 0, v) => acc += v, range(4)); // returns 6
 It chains multiple iterables in a single one.
 ```js
 const chain = require('iter-tools/lib/chain');
+// const chain = require('iter-tools').chain;
 chain([3, 5, 6], [1, 1], [10]); // 3, 5, 6, 1, 1, 10
 ```
 
@@ -279,12 +338,14 @@ chain([3, 5, 6], [1, 1], [10]); // 3, 5, 6, 1, 1, 10
 Same as chain but works on both sync and async iterables.
 ```js
 const asyncChain = require('iter-tools/lib/async/chain');
+// const asyncChain = require('iter-tools').asyncChain;
 ```
 
 ## Zip
 It zips 2 or more iterables together. The iteration stops when the shortest iterable is exausted. The first argument is the placeholder used when an iterable is exausted.
 ```js
 const zip = require('iter-tools/lib/zip');
+// const zip = require('iter-tools').zip;
 zip([1, 2], [3, 4], [5, 6, 7]); // [1, 3, 5], [2, 4, 6]
 ```
 
@@ -292,12 +353,14 @@ zip([1, 2], [3, 4], [5, 6, 7]); // [1, 3, 5], [2, 4, 6]
 Same as zip but works on both sync and async iterables.
 ```js
 const asyncZip = require('iter-tools/lib/async/zip');
+// const asyncZip = require('iter-tools').asyncZip;
 ```
 
 ## Zip longest
 It zips 2 or more iterables together. The iteration stops when the longesest iterable is exausted.
 ```js
 const zipLongest = require('iter-tools/lib/zip-longest');
+// const zipLongest = require('iter-tools').zipLongest;
 zipLongest(null, [1, 2], [3, 4], [5, 6, 7]); // [1, 3, 5], [2, 4, 6], [null, null, 7]
 ```
 
@@ -305,12 +368,14 @@ zipLongest(null, [1, 2], [3, 4], [5, 6, 7]); // [1, 3, 5], [2, 4, 6], [null, nul
 Same as zipLongest but works on both sync and async iterables.
 ```js
 const asyncZipLongest = require('iter-tools/lib/async/zip-longest');
+// const asyncZipLongest = require('iter-tools').asyncZipLongest;
 ```
 
 ## Enumerate
 It is a shorthand for zipping an index to an iterable:
 ```js
 const enumerate = require('iter-tools/lib/enumerate');
+// const enumerate = require('iter-tools').enumerate;
 enumerate(repeat('x')); // [0, 'x'] [1, 'x'] [2, 'x'] ...
 ```
 
@@ -318,12 +383,14 @@ enumerate(repeat('x')); // [0, 'x'] [1, 'x'] [2, 'x'] ...
 Same as zipLongest but works on both sync and async iterables.
 ```js
 const asyncEnumerate = require('iter-tools/lib/async/enumerate');
+// const asyncEnumerate = require('iter-tools').asyncEnumerate;
 ```
 
 ## Compress
 This returns an iterable omitting items when the second iterable, at the same index, contains a falsy value.
 ```js
 const compress = require('iter-tools/lib/compress');
+// const compress = require('iter-tools').compress;
 compress(range(5), [0, 0, 1, 1]); // 2, 3
 ```
 
@@ -331,38 +398,47 @@ compress(range(5), [0, 0, 1, 1]); // 2, 3
 Same as compress but works on both sync and async iterables.
 ```js
 const asyncCompress = require('iter-tools/lib/async/compress');
+// const asyncCompress = require('iter-tools').asyncCompress;
 ```
 
 # Utilities returning multiple iterators
 
 ## GroupBy
 On each iteration it returns a key and a sub-iterator of items with that key.
-You can pass a function that returns a key, by default an identity function will be used.
+You can pass a function that returns a key, if you pass null or undefined an identity function will be used.
 When you iterate over the next group, the previous sub-iterator items will not be available anymore.
 ```js
-const groupBy = require('iter-tools/lib/groupby');
-groupBy([1, 1, 1, 1, -1, -1, -1, 4]);
+const groupBy = require('iter-tools/lib/group-by');
+// const groupBy = require('iter-tools').groupBy;
+groupBy(null, [1, 1, 1, 1, -1, -1, -1, 4]);
 // It will return:
 // 1, subiterator (1, 1, 1, 1)
 // -1, subiterator (-1, -1, -1)
 // 4, subiterator (4)
 
-groupBy([11, 1, 1, 1, -1, -1, -1, 4], (value) => {value * value});
+groupBy((value) => {value * value}, [11, 1, 1, 1, -1, -1, -1, 4]);
 // It will return:
 // 1, subiterator (1, 1, 1, 1, -1, -1, -1)
 // 16, subiterator (4)
+```
+This iterator can be curried:
+```js
+const groupBySquare = groupBy((value) => {value * value});
+groupBySquare([11, 1, 1, 1, -1, -1, -1, 4]);
 ```
 
 ## Async GroupBy
 Same as groupBy but works on both sync and async iterables.
 ```js
-const asyncGroupBy = require('iter-tools/lib/async/groupby');
+const asyncGroupBy = require('iter-tools/lib/async/group-by');
+// const asyncGroupBy = require('iter-tools').asyncGroupBy;
 ```
 
 ## Tee
 It returns 2 or more copies of an iterable. In reality they are not copies (it is not possible) they are distinct iterables sharing the original one and caching the values when one of the copy pull a new value from the original iterator.
 ```js
 const tee = require('iter-tools/lib/tee');
+// const tee = require('iter-tools').tee;
 tee(range(3)); // [iter1, iter2]
 tee(range(3), 4); // [iter1, iter2, iter3, iter4]
 ```
@@ -371,6 +447,7 @@ tee(range(3), 4); // [iter1, iter2, iter3, iter4]
 Same as tee but works on both sync and async iterables.
 ```js
 const asyncTee = require('iter-tools/lib/async/tee');
+// const asyncTee = require('iter-tools').asyncTee;
 ```
 
 # Utilities
@@ -386,6 +463,7 @@ If the value is a generator, it initialises it and returns the iterator.
 If the value is an object, it returns an iterator iterating over attribute/value pairs.
 ```js
 const iter = require('iter-tools/lib/iter');
+// const iter = require('iter-tools').iter;
 iter([1, 2, 3]); // 1, 2, 3
 iter("hello"); // h e l l o
 iter(range(4)); // 0, 1, 2, 3
@@ -396,6 +474,7 @@ iter({p1: 1, p2: 2}); // ['p1', 1] ['p2', 2]
 It converts a synchronous iterator in an asynchronous one.
 ```js
 const asyncIter = require('iter-tools/lib/async/async-iter');
+// const asyncIter = require('iter-tools').asyncIter;
 const iter = asyncIter(range({ start: 1, end: 4 }));
 for await (const n of iter) {
   console.log(n); // 1, 2, 3
@@ -406,6 +485,7 @@ for await (const n of iter) {
 It transform an asynchronous iterator to an array:
 ```js
 const asyncIterToArray = require('iter-tools/lib/async/async-iter-to-array');
+// const asyncIterToArray = require('iter-tools').asyncIterToArray;
 const arr = await asyncIterToArray(asyncIter);
 
 ```
@@ -414,6 +494,7 @@ const arr = await asyncIterToArray(asyncIter);
 It returns an iterator that returns the output of a function at every iteration.
 ```js
 const iter = require('iter-tools/lib/execute');
+// const iter = require('iter-tools').execute;
 iter(() => Math.round(Math.random() * 10) ); // 3, 5, 9 ...
 ```
 
@@ -421,6 +502,7 @@ iter(() => Math.round(Math.random() * 10) ); // 3, 5, 9 ...
 It returns an iterator that returns the output of an asynchronous function (promise based) at every iteration.
 ```js
 const asyncIter = require('iter-tools/lib/async/execute');
+// const asyncIter = require('iter-tools').asyncIter;
 asyncIter(() => Promise.resolve(Math.round(Math.random() * 10)) ); // 3, 5, 9 ...
 ```
 
@@ -430,6 +512,7 @@ asyncIter(() => Promise.resolve(Math.round(Math.random() * 10)) ); // 3, 5, 9 ..
 This returns the cartesian product of 2 or more iterables. It is equivalent to a nested loop for every iterable.
 ```js
 const product = require('iter-tools/lib/product');
+// const product = require('iter-tools').product;
 product([1, 2], [3, 4], [5, 6]);
 // returns:
 // [1, 3, 5],
@@ -449,6 +532,7 @@ product(...tee(range(2))); // [0, 0]  [0, 1]  [1, 0]  [1, 1]
 It returns permutations of length n of an iterable. n defaults to the length of the iterable.
 ```js
 const permutations = require('iter-tools/lib/permutations');
+// const permutations = require('iter-tools').permutations;
 permutations(range(2)); // [0, 1] [1, 0]
 permutations([1, 2, 3, 4], 2);
 // returns:
@@ -470,6 +554,7 @@ permutations([1, 2, 3, 4], 2);
 It returns combinations of length n of an iterable. n defaults to the length of the iterable.
 ```js
 const combinations = require('iter-tools/lib/combinations');
+// const combinations = require('iter-tools').combinations;
 combinations(range(2)); // [0, 1]
 combinations([1, 2, 3, 4], 2);
 // returns:
@@ -485,6 +570,7 @@ combinations([1, 2, 3, 4], 2);
 It returns combinations with replacement of length n of an iterable. n defaults to the length of the iterable.
 ```js
 const combinationsWithReplacement = require('iter-tools/lib/combinations-with-replacement');
+// const combinationsWithReplacement = require('iter-tools').combinationsWithReplacement;
 combinationsWithReplacement(range(2)); // [0, 0] [0, 1] [1, 1]
 combinationsWithReplacement([1, 2, 3, 4], 2);
 // returns:
