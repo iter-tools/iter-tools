@@ -22,6 +22,8 @@ module.exports = {
   reduce: require('./lib/reduce'),
   regexpExec: require('./lib/regexp-exec'),
   regexpSplit: require('./lib/regexp-split'),
+  regexpSplitIter: require('./lib/regexp-split-iter'),
+  splitLines: require('./lib/split-lines'),
   repeat: require('./lib/repeat'),
   slice: require('./lib/slice'),
   takeWhile: require('./lib/take-while'),
@@ -47,4 +49,6 @@ module.exports = {
   asyncTee: require('./lib/async/tee'),
   asyncZipLongest: require('./lib/async/zip-longest'),
   asyncZip: require('./lib/async/zip'),
+  asyncRegexpSplitIter: require('./lib/async/regexp-split-iter'),
+  asyncSplitLines: require('./lib/async/split-lines'),
 }

@@ -6,24 +6,13 @@ const regexpSplitES5 = require('../es5/regexp-split')
 const esversion = ['es6', 'es5']
 
 describe('regexpSplit', function () {
-  [regexpSplitES6/*, regexpSplitES5 */].forEach(function (regexpSplit, i) {
-    describe.only(esversion[i], function () {
+  [regexpSplitES6, regexpSplitES5].forEach(function (regexpSplit, i) {
+    describe(esversion[i], function () {
       it('should split with global re', function () {
         const re = /\s+/g
         const iter = regexpSplit(re, 'ab s   d')
         assert.deepEqual(Array.from(iter), 'ab s   d'.split(re))
       })
-      it('should split with global re and include match', function () {
-        const re = /\s+/g
-        const iter = regexpSplit(re, { includeMatch: true }, 'ab s   d')
-        assert.deepEqual(Array.from(iter), ['ab ', 's   ', 'd'])
-      })
-      it('should split with global re and include match (2)', function () {
-        const re = /\s+/g
-        const iter = regexpSplit(re, { includeMatch: true }, 'aa b ')
-        assert.deepEqual(Array.from(iter), ['aa ', 'b '])
-      })
-
       it('can be curried', function () {
         const re = /\s+/g
         const splitter = regexpSplit(re)
