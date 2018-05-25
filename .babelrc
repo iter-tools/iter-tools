@@ -1,11 +1,27 @@
 {
-  "plugins": [
-    "transform-runtime",
-    "transform-async-generator-functions"
-  ],
-  "presets": [
-    ["env", {
-      "loose": true
-    }]
-  ]
+  "env": {
+    "es5": {
+      "plugins": [
+        "add-module-exports",
+        "transform-runtime",
+        "transform-async-generator-functions"
+      ],
+      "presets": [
+        ["env", {
+          "loose": true
+        }]
+      ]
+    },
+    "es6": {
+      "plugins": []
+    },
+    "cjs": {
+      "plugins": [
+        "syntax-async-functions",
+        "syntax-async-generators",
+        "add-module-exports",
+        "transform-es2015-modules-commonjs"
+      ]
+    }
+  }
 }

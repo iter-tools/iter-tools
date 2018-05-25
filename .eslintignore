@@ -1,2 +1,3 @@
-lib/async
+lib/
+es5/
 benchmarks/async.js

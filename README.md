@@ -75,15 +75,18 @@ const iterTools = require('iter-tools');
 iterTools.chain(iterable1, iterable2);
 ```
 
-#### ESX - ES5 compatible
-Every module is available from 2 different folders 'lib' and 'es5'. The latter contains the same iterators but transpile to ES5, ready to be used in older browsers (or old node.js versions).
+#### Supports multiple module formats
+Every module is available in 3 different formats:
+	1. A `.js` file in the es5 folder, useful for old node or browser versions which do not have native support for either iterators or generators. There is a performance cost of using these regardless of whether they are loaded into an environment with native iterator/generator support. 
+	2. A `.js` file in the root of the package, useful for modern environments which consume commonjs modules (i.e. node). Slightly more convenient than 1 since you need not specify the `es5` directory.
+	3. A `.mjs` file also in the root of the package. Most infra will prefer the `.mjs` file to the `.js` if they support es module syntax. Even more convenient that 2 since multiple methods can be imported on a line. Note that will break the pay-what-you-eat principle if you are not building your code with tools which support the es module format and tree shaking.
+Here are examples of using each:
 ```js
-const chain_es6 = require('iter-tools/lib/chain');
+const chain_es5 = require('iter-tools/es5/chain'); // 1
+const chain_es6 = require('iter-tools/chain'); // 2
+import {chain, map} from 'iter-tools'; // 3
 ```
-or
-```js
-const chain_es5 = require('iter-tools/es5/chain');
-```
+
 
 ## Async iterators
 Async iterators are a new feature introduced by ES2018. Iter-tools implements an alternate versions of many functions that works on async iterators as well as regular iterators.
