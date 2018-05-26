@@ -13,12 +13,13 @@
       ]
     },
     "es6": {
-      "plugins": []
+      "plugins": [
+        "transform-async-generator-functions"
+      ]
     },
     "cjs": {
       "plugins": [
-        "syntax-async-functions",
-        "syntax-async-generators",
+        "transform-async-generator-functions",
         "add-module-exports",
         "transform-es2015-modules-commonjs"
       ]

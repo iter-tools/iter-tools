@@ -1,2 +1,2 @@
-import { asyncIterToArray } from '../../index';
+import { asyncIterToArray } from './index';
 export = asyncIterToArray;

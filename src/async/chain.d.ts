@@ -1,2 +1,2 @@
-import { asyncChain } from '../../index';
+import { asyncChain } from './index';
 export = asyncChain;

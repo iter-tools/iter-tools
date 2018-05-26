@@ -1,2 +1,2 @@
-import { asyncReduceIter } from '../../index';
+import { asyncReduceIter } from './index';
 export = asyncReduceIter;

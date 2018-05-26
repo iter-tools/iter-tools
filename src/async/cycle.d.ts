@@ -1,2 +1,2 @@
-import { asyncCycle } from '../../index';
+import { asyncCycle } from './index';
 export = asyncCycle;
