@@ -1,6 +1,6 @@
-const range = require('../lib/range')
-const asyncFilter = require('../lib/async-filter')
-const filter = require('../lib/filter')
+const range = require('../dist/range')
+const asyncFilter = require('../dist/async-filter')
+const filter = require('../dist/filter')
 
 const measureSpeed = require('measure-speed')
 

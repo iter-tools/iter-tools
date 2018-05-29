@@ -1,9 +1,9 @@
-const compose = require('../lib/compose')
+const compose = require('../dist/compose')
 const measureSpeed = require('measure-speed')
-const filter = require('../lib/filter')
-const map = require('../lib/map')
-const reduce = require('../lib/reduce')
-const regexpExec = require('../lib/regexp-exec')
+const filter = require('../dist/filter')
+const map = require('../dist/map')
+const reduce = require('../dist/reduce')
+const regexpExec = require('../dist/regexp-exec')
 
 function generateCurrentAccount (nlines) {
   const lines = []

@@ -7,7 +7,7 @@
   "typings": "src/index.d.ts",
   "scripts": {
     "test": "npm run build && mocha tests/**/*.js",
-    "benchmarks": "node benchmarks",
+    "benchmarks": "npm run build && node benchmarks",
     "watch": "npm run test -- -w",
     "lint": "eslint --fix --ext .mjs ./src ./tests ./benchmarks",
     "clean": "rimraf dist",
