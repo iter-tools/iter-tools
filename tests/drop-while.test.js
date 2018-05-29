@@ -2,10 +2,10 @@
 const assert = require('chai').assert
 const dropWhileES6 = require('../lib/drop-while')
 const dropWhileES5 = require('../es5/drop-while')
-const asyncDropWhileES6 = require('../lib/async/drop-while')
-const asyncDropWhileES5 = require('../es5/async/drop-while')
+const asyncDropWhileES6 = require('../lib/async-drop-while')
+const asyncDropWhileES5 = require('../es5/async-drop-while')
 const range = require('../lib/range')
-const asyncIterToArray = require('../lib/async/async-iter-to-array')
+const asyncIterToArray = require('../lib/async-iter-to-array')
 
 const esversion = ['es6', 'es5']
 

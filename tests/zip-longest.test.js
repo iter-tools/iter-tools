@@ -3,9 +3,9 @@ const assert = require('chai').assert
 const zipLongestES6 = require('../lib/zip-longest')
 const zipLongestES5 = require('../es5/zip-longest')
 
-const asyncZipLongestES6 = require('../lib/async/zip-longest')
-const asyncZipLongestES5 = require('../es5/async/zip-longest')
-const asyncIterToArray = require('../lib/async/async-iter-to-array')
+const asyncZipLongestES6 = require('../lib/async-zip-longest')
+const asyncZipLongestES5 = require('../es5/async-zip-longest')
+const asyncIterToArray = require('../lib/async-iter-to-array')
 const range = require('../lib/range')
 
 const esversion = ['es6', 'es5']

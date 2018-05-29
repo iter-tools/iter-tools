@@ -1,5 +1,5 @@
-import range from '../range'
-import map from '../map'
+import range from './range'
+import map from './map'
 import asyncIter from './async-iter'
 import Dequeue from 'dequeue'
 

@@ -3,11 +3,11 @@ const assert = require('chai').assert
 const filterES6 = require('../lib/filter')
 const filterES5 = require('../es5/filter')
 
-const asyncFilterES6 = require('../lib/async/filter')
-const asyncFilterES5 = require('../es5/async/filter')
+const asyncFilterES6 = require('../lib/async-filter')
+const asyncFilterES5 = require('../es5/async-filter')
 
 const range = require('../lib/range')
-const asyncIterToArray = require('../lib/async/async-iter-to-array')
+const asyncIterToArray = require('../lib/async-iter-to-array')
 
 const esversion = ['es6', 'es5']
 

@@ -4,9 +4,9 @@ const mapES6 = require('../lib/map')
 const mapES5 = require('../es5/map')
 const range = require('../lib/range')
 
-const asyncMapES6 = require('../lib/async/map')
-const asyncMapES5 = require('../es5/async/map')
-const asyncIterToArray = require('../lib/async/async-iter-to-array')
+const asyncMapES6 = require('../lib/async-map')
+const asyncMapES5 = require('../es5/async-map')
+const asyncIterToArray = require('../lib/async-iter-to-array')
 
 const esversion = ['es6', 'es5']
 

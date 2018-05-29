@@ -3,8 +3,8 @@ const assert = require('chai').assert
 const executeES6 = require('../lib/execute')
 const executeES5 = require('../es5/execute')
 
-const asyncExecuteES6 = require('../lib/async/execute')
-const asyncExecuteES5 = require('../es5/async/execute')
+const asyncExecuteES6 = require('../lib/async-execute')
+const asyncExecuteES5 = require('../es5/async-execute')
 const esversion = ['es6', 'es5']
 
 describe('execute', function () {

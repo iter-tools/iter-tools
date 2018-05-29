@@ -2,11 +2,11 @@
 const assert = require('chai').assert
 const compressES6 = require('../lib/compress')
 const compressES5 = require('../es5/compress')
-const compressAsyncES6 = require('../lib/async/compress')
-const compressAsyncES5 = require('../es5/async/compress')
+const compressAsyncES6 = require('../lib/async-compress')
+const compressAsyncES5 = require('../es5/async-compress')
 const range = require('../lib/range')
-const asyncIter = require('../lib/async/async-iter')
-const asyncIterToArray = require('../lib/async/async-iter-to-array')
+const asyncIter = require('../lib/async-iter')
+const asyncIterToArray = require('../lib/async-iter-to-array')
 
 const esversion = ['es6', 'es5']
 

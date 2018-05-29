@@ -3,9 +3,9 @@ const assert = require('chai').assert
 const splitLinesES6 = require('../lib/split-lines')
 const splitLinesES5 = require('../es5/split-lines')
 
-const asyncSplitLinesES6 = require('../lib/async/split-lines')
-const asyncSplitLinesES5 = require('../es5/async/split-lines')
-const asyncIterToArray = require('../lib/async/async-iter-to-array')
+const asyncSplitLinesES6 = require('../lib/async-split-lines')
+const asyncSplitLinesES5 = require('../es5/async-split-lines')
+const asyncIterToArray = require('../lib/async-iter-to-array')
 
 const esversion = ['es6', 'es5']
 

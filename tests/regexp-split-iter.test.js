@@ -3,9 +3,9 @@ const assert = require('chai').assert
 const regexpSplitES6Iter = require('../lib/regexp-split-iter')
 const regexpSplitES5Iter = require('../es5/regexp-split-iter')
 
-const asyncRegexpSplitES6Iter = require('../lib/async/regexp-split-iter')
-const asyncRegexpSplitES5Iter = require('../es5/async/regexp-split-iter')
-const asyncIterToArray = require('../lib/async/async-iter-to-array')
+const asyncRegexpSplitES6Iter = require('../lib/async-regexp-split-iter')
+const asyncRegexpSplitES5Iter = require('../es5/async-regexp-split-iter')
+const asyncIterToArray = require('../lib/async-iter-to-array')
 
 const esversion = ['es6', 'es5']
 

@@ -2,8 +2,8 @@
 const assert = require('chai').assert
 const cycleES6 = require('../lib/cycle')
 const cycleES5 = require('../es5/cycle')
-const asyncCycleES6 = require('../lib/async/cycle')
-const asyncCycleES5 = require('../es5/async/cycle')
+const asyncCycleES6 = require('../lib/async-cycle')
+const asyncCycleES5 = require('../es5/async-cycle')
 
 const esversion = ['es6', 'es5']
 const range = require('../lib/range')

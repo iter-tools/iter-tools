@@ -2,9 +2,9 @@
 const assert = require('chai').assert
 const chainES6 = require('../lib/chain')
 const chainES5 = require('../es5/chain')
-const asyncChainES6 = require('../lib/async/chain')
-const asyncChainES5 = require('../es5/async/chain')
-const asyncIterToArray = require('../es5/async/async-iter-to-array')
+const asyncChainES6 = require('../lib/async-chain')
+const asyncChainES5 = require('../es5/async-chain')
+const asyncIterToArray = require('../es5/async-iter-to-array')
 const range = require('../lib/range')
 
 const esversion = ['es6', 'es5']

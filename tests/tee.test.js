@@ -3,8 +3,8 @@ const assert = require('chai').assert
 const teeES6 = require('../lib/tee')
 const teeES5 = require('../es5/tee')
 
-const asyncTeeES6 = require('../lib/async/tee')
-const asyncTeeES5 = require('../es5/async/tee')
+const asyncTeeES6 = require('../lib/async-tee')
+const asyncTeeES5 = require('../es5/async-tee')
 const range = require('../lib/range')
 
 const esversion = ['es6', 'es5']

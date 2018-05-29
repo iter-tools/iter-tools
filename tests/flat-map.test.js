@@ -3,10 +3,10 @@ const assert = require('chai').assert
 const flatMapES6 = require('../lib/flat-map')
 const flatMapES5 = require('../es5/flat-map')
 
-const asyncFlatMapES6 = require('../lib/async/flat-map')
-const asyncFlatMapES5 = require('../es5/async/flat-map')
+const asyncFlatMapES6 = require('../lib/async-flat-map')
+const asyncFlatMapES5 = require('../es5/async-flat-map')
 const range = require('../lib/range')
-const asyncIterToArray = require('../lib/async/async-iter-to-array')
+const asyncIterToArray = require('../lib/async-iter-to-array')
 
 const esversion = ['es6', 'es5']
 

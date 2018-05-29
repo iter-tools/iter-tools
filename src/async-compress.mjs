@@ -1,6 +1,6 @@
-import zip from './zip'
-import filter from './filter'
-import map from './map'
+import zip from './async-zip'
+import filter from './async-filter'
+import map from './async-map'
 
 export default function compress (iterable, compress) {
   const _map = map(function (couple) { return couple[0] })

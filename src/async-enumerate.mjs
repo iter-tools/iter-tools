@@ -1,5 +1,5 @@
-import range from '../range'
-import zip from './zip'
+import range from './range'
+import zip from './async-zip'
 
 export default function enumerate (iterable, start) {
   start = start || 0

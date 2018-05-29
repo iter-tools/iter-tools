@@ -1,4 +1,4 @@
-import regexSplit from '../regexp-split'
+import regexSplit from './regexp-split'
 
 export default function regexpSplitIter (re, iterable) {
   async function * _regexpSplitIter (iterable) {

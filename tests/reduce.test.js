@@ -3,8 +3,8 @@ const assert = require('chai').assert
 const reduceES6 = require('../lib/reduce')
 const reduceES5 = require('../es5/reduce')
 
-const asyncReduceES6 = require('../lib/async/reduce')
-const asyncReduceES5 = require('../es5/async/reduce')
+const asyncReduceES6 = require('../lib/async-reduce')
+const asyncReduceES5 = require('../es5/async-reduce')
 const range = require('../lib/range')
 
 const esversion = ['es6', 'es5']

@@ -4,9 +4,9 @@ const takeWhileES6 = require('../lib/take-while')
 const takeWhileES5 = require('../es5/take-while')
 const range = require('../lib/range')
 
-const asyncTakeWhileES6 = require('../lib/async/take-while')
-const asyncTakeWhileES5 = require('../es5/async/take-while')
-const asyncIterToArray = require('../lib/async/async-iter-to-array')
+const asyncTakeWhileES6 = require('../lib/async-take-while')
+const asyncTakeWhileES5 = require('../es5/async-take-while')
+const asyncIterToArray = require('../lib/async-iter-to-array')
 
 const esversion = ['es6', 'es5']
 

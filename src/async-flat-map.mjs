@@ -1,4 +1,4 @@
-import map from './map'
+import map from './async-map'
 
 export default function flatMap (func, iterable) {
   const mapIter = map(func)
