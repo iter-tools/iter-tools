@@ -1,2 +1,7 @@
-node_modules
-bower_components
+/package/*
+!/package/.gitkeep
+/node_modules
+/es5/**/*.js
+/lib/**/*.js
+/lib/**/*.d.ts
+/lib/**/*.mjs
