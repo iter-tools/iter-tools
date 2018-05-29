@@ -1,11 +1,11 @@
 /* eslint-env node, mocha */
 const assert = require('chai').assert
-const splitLinesES6 = require('../lib/split-lines')
-const splitLinesES5 = require('../es5/split-lines')
+const splitLinesES6 = require('../dist/split-lines')
+const splitLinesES5 = require('../dist/es5/split-lines')
 
-const asyncSplitLinesES6 = require('../lib/async-split-lines')
-const asyncSplitLinesES5 = require('../es5/async-split-lines')
-const asyncIterToArray = require('../lib/async-iter-to-array')
+const asyncSplitLinesES6 = require('../dist/async-split-lines')
+const asyncSplitLinesES5 = require('../dist/es5/async-split-lines')
+const asyncIterToArray = require('../dist/async-iter-to-array')
 
 const esversion = ['es6', 'es5']
 

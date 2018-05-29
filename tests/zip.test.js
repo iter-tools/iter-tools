@@ -1,13 +1,13 @@
 /* eslint-env node, mocha */
 const assert = require('chai').assert
-const zipES6 = require('../lib/zip')
-const zipES5 = require('../es5/zip')
+const zipES6 = require('../dist/zip')
+const zipES5 = require('../dist/es5/zip')
 
-const asyncZipES6 = require('../lib/async-zip')
-const asyncZipES5 = require('../es5/async-zip')
-const asyncIterToArray = require('../lib/async-iter-to-array')
+const asyncZipES6 = require('../dist/async-zip')
+const asyncZipES5 = require('../dist/es5/async-zip')
+const asyncIterToArray = require('../dist/async-iter-to-array')
 
-const range = require('../lib/range')
+const range = require('../dist/range')
 
 const esversion = ['es6', 'es5']
 

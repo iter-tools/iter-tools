@@ -1,11 +1,11 @@
 /* eslint-env node, mocha */
 const assert = require('chai').assert
-const dropWhileES6 = require('../lib/drop-while')
-const dropWhileES5 = require('../es5/drop-while')
-const asyncDropWhileES6 = require('../lib/async-drop-while')
-const asyncDropWhileES5 = require('../es5/async-drop-while')
-const range = require('../lib/range')
-const asyncIterToArray = require('../lib/async-iter-to-array')
+const dropWhileES6 = require('../dist/drop-while')
+const dropWhileES5 = require('../dist/es5/drop-while')
+const asyncDropWhileES6 = require('../dist/async-drop-while')
+const asyncDropWhileES5 = require('../dist/es5/async-drop-while')
+const range = require('../dist/range')
+const asyncIterToArray = require('../dist/async-iter-to-array')
 
 const esversion = ['es6', 'es5']
 

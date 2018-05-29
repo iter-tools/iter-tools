@@ -1,11 +1,11 @@
 /* eslint-env node, mocha */
 const assert = require('chai').assert
-const sliceES6 = require('../lib/slice')
-const sliceES5 = require('../es5/slice')
+const sliceES6 = require('../dist/slice')
+const sliceES5 = require('../dist/es5/slice')
 
-const asyncSliceES6 = require('../lib/async-slice')
-const asyncSliceES5 = require('../es5/async-slice')
-const asyncIterToArray = require('../lib/async-iter-to-array')
+const asyncSliceES6 = require('../dist/async-slice')
+const asyncSliceES5 = require('../dist/es5/async-slice')
+const asyncIterToArray = require('../dist/async-iter-to-array')
 
 const esversion = ['es6', 'es5']
 

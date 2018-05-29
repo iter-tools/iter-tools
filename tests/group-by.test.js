@@ -1,11 +1,11 @@
 /* eslint-env node, mocha */
 const assert = require('chai').assert
-const groupbyES6 = require('../lib/group-by')
-const groupbyES5 = require('../es5/group-by')
+const groupbyES6 = require('../dist/group-by')
+const groupbyES5 = require('../dist/es5/group-by')
 
-const asyncGroupbyES6 = require('../lib/async-group-by')
-const asyncGroupbyES5 = require('../es5/async-group-by')
-const asyncIterToArray = require('../lib/async-iter-to-array')
+const asyncGroupbyES6 = require('../dist/async-group-by')
+const asyncGroupbyES5 = require('../dist/es5/async-group-by')
+const asyncIterToArray = require('../dist/async-iter-to-array')
 
 const esversion = ['es6', 'es5']
 

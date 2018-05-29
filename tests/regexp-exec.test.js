@@ -1,7 +1,7 @@
 /* eslint-env node, mocha */
 const assert = require('chai').assert
-const regexpExecES6 = require('../lib/regexp-exec')
-const regexpExecES5 = require('../es5/regexp-exec')
+const regexpExecES6 = require('../dist/regexp-exec')
+const regexpExecES5 = require('../dist/es5/regexp-exec')
 
 const esversion = ['es6', 'es5']
 

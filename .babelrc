@@ -2,26 +2,45 @@
   "env": {
     "es5": {
       "plugins": [
-        "add-module-exports",
-        "transform-runtime",
-        "transform-async-generator-functions"
+        "@babel/plugin-transform-runtime"
       ],
       "presets": [
-        ["env", {
+        ["@babel/preset-env", {
+          "loose": true,
+          "modules": false
+        }]
+      ]
+    },
+    "es2015": {
+      "plugins": [
+        "@babel/plugin-transform-runtime",
+        "@babel/plugin-proposal-async-generator-functions"
+      ]
+    },
+    "es5-cjs": {
+      "plugins": [
+        "@babel/plugin-transform-runtime",
+        "add-module-exports"
+      ],
+      "presets": [
+        ["@babel/preset-env", {
           "loose": true
         }]
       ]
     },
-    "es6": {
+    "es2015-cjs": {
       "plugins": [
-        "transform-async-generator-functions"
+        "add-module-exports",
+        "@babel/plugin-transform-modules-commonjs",
+        "@babel/plugin-transform-runtime",
+        "@babel/plugin-proposal-async-generator-functions"
       ]
     },
     "cjs": {
       "plugins": [
-        "transform-async-generator-functions",
+        "@babel/plugin-syntax-async-generators",
         "add-module-exports",
-        "transform-es2015-modules-commonjs"
+        "@babel/plugin-transform-modules-commonjs"
       ]
     }
   }

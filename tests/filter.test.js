@@ -1,13 +1,13 @@
 /* eslint-env node, mocha */
 const assert = require('chai').assert
-const filterES6 = require('../lib/filter')
-const filterES5 = require('../es5/filter')
+const filterES6 = require('../dist/filter')
+const filterES5 = require('../dist/es5/filter')
 
-const asyncFilterES6 = require('../lib/async-filter')
-const asyncFilterES5 = require('../es5/async-filter')
+const asyncFilterES6 = require('../dist/async-filter')
+const asyncFilterES5 = require('../dist/es5/async-filter')
 
-const range = require('../lib/range')
-const asyncIterToArray = require('../lib/async-iter-to-array')
+const range = require('../dist/range')
+const asyncIterToArray = require('../dist/async-iter-to-array')
 
 const esversion = ['es6', 'es5']
 

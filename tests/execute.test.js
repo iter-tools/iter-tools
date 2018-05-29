@@ -1,10 +1,10 @@
 /* eslint-env node, mocha */
 const assert = require('chai').assert
-const executeES6 = require('../lib/execute')
-const executeES5 = require('../es5/execute')
+const executeES6 = require('../dist/execute')
+const executeES5 = require('../dist/es5/execute')
 
-const asyncExecuteES6 = require('../lib/async-execute')
-const asyncExecuteES5 = require('../es5/async-execute')
+const asyncExecuteES6 = require('../dist/async-execute')
+const asyncExecuteES5 = require('../dist/es5/async-execute')
 const esversion = ['es6', 'es5']
 
 describe('execute', function () {
@@ -21,10 +21,7 @@ describe('execute', function () {
   })
 })
 
-// es5 version doesn not work correctly
-// it shoudl be fixed with babel 7
-// https://github.com/babel/babel/issues/7912
-describe.skip('asyncExecute', function () {
+describe('asyncExecute', function () {
   [asyncExecuteES6, asyncExecuteES5].forEach(function (asyncExecute, i) {
     describe(esversion[i], function () {
       it('execute forever', async function () {

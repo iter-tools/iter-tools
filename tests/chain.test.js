@@ -1,11 +1,11 @@
 /* eslint-env node, mocha */
 const assert = require('chai').assert
-const chainES6 = require('../lib/chain')
-const chainES5 = require('../es5/chain')
-const asyncChainES6 = require('../lib/async-chain')
-const asyncChainES5 = require('../es5/async-chain')
-const asyncIterToArray = require('../es5/async-iter-to-array')
-const range = require('../lib/range')
+const chainES6 = require('../dist/chain')
+const chainES5 = require('../dist/es5/chain')
+const asyncChainES6 = require('../dist/async-chain')
+const asyncChainES5 = require('../dist/es5/async-chain')
+const asyncIterToArray = require('../dist/es5/async-iter-to-array')
+const range = require('../dist/range')
 
 const esversion = ['es6', 'es5']
 

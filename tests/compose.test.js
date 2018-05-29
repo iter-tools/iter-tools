@@ -1,8 +1,8 @@
 /* eslint-env node, mocha */
 const assert = require('chai').assert
-const compose = require('../lib/compose')
-const filter = require('../lib/filter')
-const map = require('../lib/map')
+const compose = require('../dist/compose')
+const filter = require('../dist/filter')
+const map = require('../dist/map')
 
 function power2 (x) {
   return x * x

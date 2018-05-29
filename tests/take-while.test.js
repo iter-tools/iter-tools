@@ -1,12 +1,12 @@
 /* eslint-env node, mocha */
 const assert = require('chai').assert
-const takeWhileES6 = require('../lib/take-while')
-const takeWhileES5 = require('../es5/take-while')
-const range = require('../lib/range')
+const takeWhileES6 = require('../dist/take-while')
+const takeWhileES5 = require('../dist/es5/take-while')
+const range = require('../dist/range')
 
-const asyncTakeWhileES6 = require('../lib/async-take-while')
-const asyncTakeWhileES5 = require('../es5/async-take-while')
-const asyncIterToArray = require('../lib/async-iter-to-array')
+const asyncTakeWhileES6 = require('../dist/async-take-while')
+const asyncTakeWhileES5 = require('../dist/es5/async-take-while')
+const asyncIterToArray = require('../dist/async-iter-to-array')
 
 const esversion = ['es6', 'es5']
 

@@ -1,12 +1,12 @@
 /* eslint-env node, mocha */
 const assert = require('chai').assert
-const compressES6 = require('../lib/compress')
-const compressES5 = require('../es5/compress')
-const compressAsyncES6 = require('../lib/async-compress')
-const compressAsyncES5 = require('../es5/async-compress')
-const range = require('../lib/range')
-const asyncIter = require('../lib/async-iter')
-const asyncIterToArray = require('../lib/async-iter-to-array')
+const compressES6 = require('../dist/compress')
+const compressES5 = require('../dist/es5/compress')
+const compressAsyncES6 = require('../dist/async-compress')
+const compressAsyncES5 = require('../dist/es5/async-compress')
+const range = require('../dist/range')
+const asyncIter = require('../dist/async-iter')
+const asyncIterToArray = require('../dist/async-iter-to-array')
 
 const esversion = ['es6', 'es5']
 

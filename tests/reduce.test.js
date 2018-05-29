@@ -1,11 +1,11 @@
 /* eslint-env node, mocha */
 const assert = require('chai').assert
-const reduceES6 = require('../lib/reduce')
-const reduceES5 = require('../es5/reduce')
+const reduceES6 = require('../dist/reduce')
+const reduceES5 = require('../dist/es5/reduce')
 
-const asyncReduceES6 = require('../lib/async-reduce')
-const asyncReduceES5 = require('../es5/async-reduce')
-const range = require('../lib/range')
+const asyncReduceES6 = require('../dist/async-reduce')
+const asyncReduceES5 = require('../dist/es5/async-reduce')
+const range = require('../dist/range')
 
 const esversion = ['es6', 'es5']
 

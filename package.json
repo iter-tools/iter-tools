@@ -2,17 +2,21 @@
   "name": "iter-tools",
   "version": "4.0.0",
   "description": "The iterator toolbox",
-  "main": "lib/index.js",
-  "module": "lib/index.mjs",
-  "typings": "lib/index.d.ts",
+  "main": "dist/index.js",
+  "module": "dist/index.mjs",
+  "typings": "dist/index.d.ts",
   "scripts": {
     "test": "npm run build && mocha tests/**/*.js",
     "benchmarks": "node benchmarks",
     "watch": "npm run test -- -w",
     "lint": "eslint --fix --ext .mjs ./src ./tests ./benchmarks",
-    "clean": "rm -rf lib/*.* && rm -rf es5/*.* && rm -rf package/*",
-    "build": "npm run clean && cross-env BABEL_ENV=es6 babel -x \".mjs\" src -d lib && renamer --regex --find '\\.js$' --replace '.mjs' 'lib/**' && cross-env BABEL_ENV=es5 babel -x \".mjs\" src -d es5 && cross-env BABEL_ENV=cjs babel -x \".mjs\" src -d lib && cp src/*.d.ts lib",
-    "dist": "npm run build && cp -R package.json lib/* es5 LICENSE README.md package/ && cd package && json -I -f package.json -e \"this.main='index.js';this.typings='index.d.ts';this.module='index.mjs'\" && npm publish",
+    "clean": "rimraf dist",
+    "build": "npm run clean && npm run build:cjs && npm run build:es5 && npm run build:es5-cjs && npm run build:es2015 && npm run build:es2015-cjs && cp src/*.d.ts dist",
+    "build:cjs": "cross-env BABEL_ENV=cjs babel -x \".mjs\" src -d dist && copyfiles -f src/*.mjs dist/",
+    "build:es5": "cross-env BABEL_ENV=es5 babel -x \".mjs\" src -d dist/es5 && renamer --regex --find '\\.js$' --replace '.mjs' 'dist/es5/**'",
+    "build:es5-cjs": "cross-env BABEL_ENV=es5-cjs babel -x \".mjs\" src -d dist/es5",
+    "build:es2015": "cross-env BABEL_ENV=es2015 babel -x \".mjs\" src -d dist/es2015 && renamer --regex --find '\\.js$' --replace '.mjs' 'dist/es2015/**'",
+    "build:es2015-cjs": "cross-env BABEL_ENV=es2015-cjs babel -x \".mjs\" src -d dist/es2015",
     "prepare": "#https://github.com/npm/npm/issues/19564",
     "prepack": "npm run build",
     "precommit": "npm run lint",
@@ -21,27 +25,30 @@
   "keywords": [
     "iterators",
     "itertools",
-    "generators"
+    "generators",
+    "async"
   ],
   "files": [
-    "lib",
-    "es5"
+    "dist"
   ],
   "repository": "git@github.com:sithmel/iter-tools.git",
   "author": "Maurizio Lupo <maurizio.lupo@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "babel-runtime": "^6.26.0",
+    "@babel/runtime": "^7.0.0-beta.49",
     "clone-regexp": "^1.0.1",
     "dequeue": "^1.0.5"
   },
   "devDependencies": {
-    "babel-cli": "^6.26.0",
+    "@babel/cli": "^7.0.0-beta.49",
+    "@babel/core": "^7.0.0-beta.49",
+    "@babel/plugin-proposal-async-generator-functions": "^7.0.0-beta.49",
+    "@babel/plugin-syntax-async-generators": "^7.0.0-beta.49",
+    "@babel/plugin-transform-modules-commonjs": "^7.0.0-beta.49",
+    "@babel/plugin-transform-runtime": "^7.0.0-beta.49",
+    "@babel/preset-env": "^7.0.0-beta.49",
     "babel-eslint": "^8.2.3",
     "babel-plugin-add-module-exports": "^0.2.1",
-    "babel-plugin-transform-async-generator-functions": "^6.24.1",
-    "babel-plugin-transform-runtime": "^6.23.0",
-    "babel-preset-env": "^1.6.1",
     "chai": "^4.1.2",
     "cross-env": "^5.1.6",
     "eslint": "^4.19.1",
@@ -51,13 +58,9 @@
     "eslint-plugin-promise": "^3.8.0",
     "eslint-plugin-standard": "^3.1.0",
     "husky": "^0.14.3",
-    "json": "^9.0.6",
     "measure-speed": "^1.0.0",
     "mocha": "^5.0.5",
-    "renamer": "0.5.7",
-    "require-all": "^2.2.0"
-  },
-  "engines": {
-    "node": ">= 8.0.0"
+    "require-all": "^2.2.0",
+    "rimraf": "^2.6.2"
   }
 }

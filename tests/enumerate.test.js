@@ -1,12 +1,12 @@
 /* eslint-env node, mocha */
 const assert = require('chai').assert
-const enumerateES6 = require('../lib/enumerate')
-const enumerateES5 = require('../es5/enumerate')
+const enumerateES6 = require('../dist/enumerate')
+const enumerateES5 = require('../dist/es5/enumerate')
 
-const asyncEnumerateES6 = require('../lib/async-enumerate')
-const asyncEnumerateES5 = require('../es5/async-enumerate')
-const range = require('../lib/range')
-const asyncIterToArray = require('../lib/async-iter-to-array')
+const asyncEnumerateES6 = require('../dist/async-enumerate')
+const asyncEnumerateES5 = require('../dist/es5/async-enumerate')
+const range = require('../dist/range')
+const asyncIterToArray = require('../dist/async-iter-to-array')
 
 const esversion = ['es6', 'es5']
 
