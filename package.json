@@ -2,9 +2,9 @@
   "name": "iter-tools",
   "version": "4.0.0",
   "description": "The iterator toolbox",
-  "main": "dist/index.js",
-  "module": "dist/index.mjs",
-  "typings": "dist/index.d.ts",
+  "main": "src/index.js",
+  "module": "src/index.mjs",
+  "typings": "src/index.d.ts",
   "scripts": {
     "test": "npm run build && mocha tests/**/*.js",
     "benchmarks": "node benchmarks",
@@ -18,6 +18,7 @@
     "build:es2015": "cross-env BABEL_ENV=es2015 babel -x \".mjs\" src -d dist/es2015 && renamer --regex --find '\\.js$' --replace '.mjs' 'dist/es2015/**'",
     "build:es2015-cjs": "cross-env BABEL_ENV=es2015-cjs babel -x \".mjs\" src -d dist/es2015",
     "prepare": "#https://github.com/npm/npm/issues/19564",
+    "dist": "npm run build && copyfiles -f package.json LICENSE README.md dist/ && cd dist && json -I -f package.json -e \"this.main='index.js';this.typings='index.d.ts';this.module='index.mjs'\" && npm publish",
     "prepack": "npm run build",
     "precommit": "npm run lint",
     "prepush": "npm run test"
@@ -27,9 +28,6 @@
     "itertools",
     "generators",
     "async"
-  ],
-  "files": [
-    "dist"
   ],
   "repository": "git@github.com:sithmel/iter-tools.git",
   "author": "Maurizio Lupo <maurizio.lupo@gmail.com>",
@@ -50,6 +48,7 @@
     "babel-eslint": "^8.2.3",
     "babel-plugin-add-module-exports": "^0.2.1",
     "chai": "^4.1.2",
+    "copyfiles": "^2.0.0",
     "cross-env": "^5.1.6",
     "eslint": "^4.19.1",
     "eslint-config-standard": "^11.0.0",
@@ -58,8 +57,11 @@
     "eslint-plugin-promise": "^3.8.0",
     "eslint-plugin-standard": "^3.1.0",
     "husky": "^0.14.3",
+    "json": "^9.0.6",
     "measure-speed": "^1.0.0",
+    "mkdirp": "^0.5.1",
     "mocha": "^5.0.5",
+    "renamer": "^0.6.1",
     "require-all": "^2.2.0",
     "rimraf": "^2.6.2"
   }
