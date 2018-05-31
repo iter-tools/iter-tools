@@ -45,10 +45,10 @@ Utilities returning multiple iterators
 
 Utilities
 * [Iter](#iter)
-* [Async Iter](async-iter)
-* [Async Iter to array](async-iter-to-array)
+* [Async Iter](#async-iter)
+* [Async Iter to array](#async-iter-to-array)
 * [Execute](#execute)
-* [AsyncExecute](#async-execute)
+* [AsyncExecute](#execute-async)
 
 Combinatory generators
 * [Products](#products)
