@@ -70,18 +70,6 @@ This should help clarify the documentation. You can also get more informations h
 * iterable: a generator function or any object with a generator function under the attribute Symbol.iterator
 * async iterable: an async generator function or any object with an async generator function under the attribute Symbol.asyncIterator
 
-## Design principles
-#### Pay only what you eat
-This package is designed to import only what you need. So if you use one or more iterator you don't need to load the whole library (in the browser for example).
-```js
-const chain = require('iter-tools/lib/chain');
-```
-You can also import the whole library if you find it convenient:
-```js
-const iterTools = require('iter-tools');
-iterTools.chain(iterable1, iterable2);
-```
-
 #### Javascript supports
 Every module is available in 3 javascript compatibility levels: ES5, ES2015, ES2018.
 
@@ -178,7 +166,7 @@ Note:
 ## regexp-split-iter
 It takes an iterators of strings and output an iterable split using the regular expression.
 ```js
-regexpExecIter(/\s+/g, 'ab s   d');
+regexpExecIter(/\s+/g, ['ab ', 's',' ', '  d']);
 for (let section of iter) {
   console.log(section); // ab, s, d
 }
@@ -194,12 +182,12 @@ It split an iterables in lines, joining fragments when there are no new line bet
 The same as Split Lines but for async iterables.
 
 # Transform a single iterable
-These series of generators take as first argument a function and as a second an iterable. If the second argument is omitted it is automatically returnes a curried function. These functions can be composed:
+These series of generators take as first argument a function and as a second an iterable. If the second argument is omitted it automatically returns a curried function. These functions can be composed:
 ```js
 const iterator = compose([map(power2), filter(isEven)]);
 iterator([ ...... ]);
 ```
-This is more efficient of using array methods as it doesn't require to build intermediate arrays.
+This is more memory efficient of using array methods as it doesn't require to build intermediate arrays.
 
 ## map
 The equivalent of the array "map" function. But runs on an iterable and returns another iterable.
@@ -282,7 +270,7 @@ chain([3, 5, 6], [1, 1], [10]); // 3, 5, 6, 1, 1, 10
 Same as chain but works on both sync and async iterables.
 
 ## zip
-It zips 2 or more iterables together. The iteration stops when the shortest iterable is exausted. The first argument is the placeholder used when an iterable is exausted.
+It zips 2 or more iterables together. The iteration stops when the shortest iterable is exausted.
 ```js
 zip([1, 2], [3, 4], [5, 6, 7]); // [1, 3, 5], [2, 4, 6]
 ```
@@ -291,7 +279,7 @@ zip([1, 2], [3, 4], [5, 6, 7]); // [1, 3, 5], [2, 4, 6]
 Same as zip but works on both sync and async iterables.
 
 ## zip-longest
-It zips 2 or more iterables together. The iteration stops when the longesest iterable is exausted.
+It zips 2 or more iterables together. The iteration stops when the longesest iterable is exausted. The first argument is the placeholder used when an iterable is exausted.
 ```js
 zipLongest(null, [1, 2], [3, 4], [5, 6, 7]); // [1, 3, 5], [2, 4, 6], [null, null, 7]
 ```
@@ -306,7 +294,7 @@ enumerate(repeat('x')); // [0, 'x'] [1, 'x'] [2, 'x'] ...
 ```
 
 ## async-enumerate
-Same as zipLongest but works on both sync and async iterables.
+Same as enumerate but works on both sync and async iterables.
 
 ## compress
 This returns an iterable omitting items when the second iterable, at the same index, contains a falsy value.
@@ -323,6 +311,7 @@ Same as compress but works on both sync and async iterables.
 On each iteration it returns a key and a sub-iterator of items with that key.
 You can pass a function that returns a key, if you pass null or undefined an identity function will be used.
 When you iterate over the next group, the previous sub-iterator items will not be available anymore.
+Note: it groups **adjecents** items returning the same key.
 ```js
 groupBy(null, [1, 1, 1, 1, -1, -1, -1, 4]);
 // It will return:
@@ -330,7 +319,7 @@ groupBy(null, [1, 1, 1, 1, -1, -1, -1, 4]);
 // -1, subiterator (-1, -1, -1)
 // 4, subiterator (4)
 
-groupBy((value) => {value * value}, [11, 1, 1, 1, -1, -1, -1, 4]);
+groupBy((value) => {value * value}, [1, 1, 1, 1, -1, -1, -1, 4]);
 // It will return:
 // 1, subiterator (1, 1, 1, 1, -1, -1, -1)
 // 16, subiterator (4)
@@ -338,7 +327,7 @@ groupBy((value) => {value * value}, [11, 1, 1, 1, -1, -1, -1, 4]);
 This iterator can be curried:
 ```js
 const groupBySquare = groupBy((value) => {value * value});
-groupBySquare([11, 1, 1, 1, -1, -1, -1, 4]);
+groupBySquare([1, 1, 1, 1, -1, -1, -1, 4]);
 ```
 
 ## async-group-by
@@ -474,7 +463,7 @@ combinationsWithReplacement([1, 2, 3, 4], 2);
 ## Issues and limitations
 There are a couple of limitations that you need to be aware of.
 First of all, when you consume an iterator object (using next or for..of) you are mutating the object for good.
-Many of these tools rely on making an in memory copy of the output. For example: cycle, product or tee. They do that in a efficient lazy way. Still you need to consider that.
+Some of these functions makes an in memory copy of the output. For example: cycle, product or tee. They do that in a efficient lazy way. Still you need to consider that.
 Also with the iterator protocol you can create infinite iterables (repeat, cycle, count etc.). These iterables can't be used by all generators. For example combinatory generators require finite iterables.
 
 ## Acknowledgements
