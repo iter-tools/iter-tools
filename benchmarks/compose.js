@@ -1,8 +1,8 @@
-var compose = require('../dist/compose')
+var compose = require('../dist/es2018/compose')
 var measureSpeed = require('measure-speed')
-var range = require('../dist/range')
-var filter = require('../dist/filter')
-var map = require('../dist/map')
+var range = require('../dist/es2018/range')
+var filter = require('../dist/es2018/filter')
+var map = require('../dist/es2018/map')
 
 function power2 (x) {
   return x * x
