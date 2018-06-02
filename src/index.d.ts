@@ -59,6 +59,9 @@ export declare function regexpSplit(re: RegExp, str: string): Iterable<string>;
 export declare function regexpSplitIter(re: RegExp): (iterable: IterableLike<T>) => Iterable<string>;
 export declare function regexpSplitIter(re: RegExp, iterable: IterableLike<T>): Iterable<string>;
 
+export declare function regexpExecIter(re: RegExp): (iterable: IterableLike<T>) => Iterable<string>;
+export declare function regexpExecIter(re: RegExp, iterable: IterableLike<T>): Iterable<string>;
+
 export declare function splitLines(iterable: IterableLike<T>): Iterable<string>;
 
 export declare function repeat<T>(obj: T, times?: number): Iterable<T>;
@@ -129,5 +132,8 @@ export declare function asyncZip<T>(...iterables: AsyncIterableLike<T>[]): Async
 
 export declare function asyncRegexpSplitIter(re: RegExp): (iterable: AsyncIterableLike<string>) => AsyncIterableLike<string>;
 export declare function asyncRegexpSplitIter(re: RegExp, iterable: AsyncIterableLike<string>): AsyncIterableLike<string>;
+
+export declare function asyncRegexpExecIter(re: RegExp): (iterable: AsyncIterableLike<string>) => AsyncIterableLike<string>;
+export declare function asyncRegexpExecIter(re: RegExp, iterable: AsyncIterableLike<string>): AsyncIterableLike<string>;
 
 export declare function asyncSplitLines(iterable: AsyncIterableLike<string>) => AsyncIterableLike<string>;

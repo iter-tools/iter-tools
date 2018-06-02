@@ -15,6 +15,8 @@ Strings manipulation
 * [async-regexp-split-iter](#async-regexp-split-iter)
 * [split-lines](#split-lines)
 * [async-split-lines](#async-split-lines)
+* [regexp-exec-iter](#regexp-exec-iter)
+* [async-regexp-exec-iter](#async-regexp-exec-iter)
 
 Transform a single iterable
 * [map](#map)
@@ -142,7 +144,7 @@ It runs a regular expression on a string. Every iteration returns a new match. Y
 * index: the 0 based index of the match
 * input: the original string
 ```js
-regexpExec(/[0-9]{4}/g, '10/2/2013, 03/03/2015 12/4/1997');
+const iter = regexpExec(/[0-9]{4}/g, '10/2/2013, 03/03/2015 12/4/1997');
 for (let [match] of iter) {
   console.log(match); // '2013', '2015', '1997'
 }
@@ -154,10 +156,7 @@ Note:
 ## regexp-split
 It splits a string. You can split by regular expression or string.
 ```js
-regexpExec(/\s+/g, 'ab s   d');
-for (let section of iter) {
-  console.log(section); // ab, s, d
-}
+regexpSplit(/\s+/g, 'ab s   d'); // ab, s, d
 ```
 Note:
 * the regular expression is automatically converted to "global"
@@ -166,20 +165,35 @@ Note:
 ## regexp-split-iter
 It takes an iterators of strings and output an iterable split using the regular expression.
 ```js
-regexpExecIter(/\s+/g, ['ab ', 's',' ', '  d']);
-for (let section of iter) {
-  console.log(section); // ab, s, d
-}
+regexpSplitIter(/\s+/g, ['ab ', 's',' ', '  d']); // ab, s, d
 ```
 
 ## async-regexp-split-iter
-The same as Regexp Split Iter but for async iterables.
+The same as regexpSplitIter Iter but for async iterables.
 
 ## split-lines
-It split an iterables in lines, joining fragments when there are no new line between them.
+It split an iterables in lines, joining fragments when there are no new line between them. It is compatible with any type of newline characters.
+```js
+splitLines(['a\nb', 'c\n', 'd']); // a, bc, d
+```
 
 ## async-split-lines
-The same as Split Lines but for async iterables.
+The same as splitLines but for async iterables.
+
+## regexp-exec-iter
+It takes a regular expression and an iterators of strings and output an iterable containing the matches.
+```js
+const iter = regexpExecIter(/[0-9]+/g, ['1', '23', ' 2 ex', 'amp', 'le: 34', '6']);
+for (let [match] of iter) {
+  console.log(match); // 123, 2, 346
+}
+```
+Note:
+* global regular expressions are mutable, you can't reuse the same object more than once
+* the destructuring expression [match] extract only the first match
+
+## async-regexp-exec-iter
+The same as regexpExecIter but for async iterables.
 
 # Transform a single iterable
 These series of generators take as first argument a function and as a second an iterable. If the second argument is omitted it automatically returns a curried function. These functions can be composed:
