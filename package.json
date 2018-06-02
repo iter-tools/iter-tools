@@ -7,7 +7,7 @@
   "jsnext:main": "es5/index.mjs",
   "typings": "src/index.d.ts",
   "scripts": {
-    "lint": "eslint --fix --ext .mjs ./src ./tests ./benchmarks",
+    "lint": "eslint --fix --ext .mjs ./src ./test ./benchmarks",
     "test": "npm run clean && npm run build:es2018-cjs && npm run build:es5-cjs && mocha",
     "watch": "npm run test -- -w",
     "benchmarks": "npm run clean && npm run build:es2018-cjs && node benchmarks",
