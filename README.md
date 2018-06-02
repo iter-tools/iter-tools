@@ -1,5 +1,7 @@
 Iter-tools
 ==========
+[![Build Status](https://travis-ci.org/sithmel/iter-tools.svg?branch=master)](https://travis-ci.org/sithmel/iter-tools)
+
 iter-tools is an utility toolbox that allows you to unleash the power and expressiveness of iterators and generators.
 
 Create iterators
@@ -72,14 +74,14 @@ This should help clarify the documentation. You can also get more informations h
 * iterable: a generator function or any object with a generator function under the attribute Symbol.iterator
 * async iterable: an async generator function or any object with an async generator function under the attribute Symbol.asyncIterator
 
-#### Javascript supports
-Every module is available in 3 javascript compatibility levels: ES5, ES2015, ES2018.
+#### Javascript support
+Every module is available in 3 ecmascript editions: ES5, ES2015, ES2018.
 
 * Use ES5 when you need to support old browsers (like IE11).
-* Use ES2015 when you need to support modern browser, that don't support async iterables yet. This is also the right version for node 8 and below.
-* Use ES2018 when you need to support modern browser, that support async iterables. And node 10 or above.
+* Use ES2015 when you need to support modern browsers, that don't support async iterables yet. This is also the right version for node 8 and below.
+* Use ES2018 when you need to support modern browser, that supports async iterables. Like node 10 and above.
 
-Every version is available in 2 formats, using "ES2015 modules" (import/export) and "commonjs". The "ES2015 modules" uses the extension .mjs (for a future nodejs compatibility). If you are using a bundler like webpack or rollup, you should configure it to consume the "ES2015 modules" version. This way you will benefit of the treeshaking.
+Every version is available in 2 formats, using "ES2015 modules" (import/export) and "commonjs". The "ES2015 modules" uses the extension .mjs (for nodejs compatibility). If you are using a bundler like webpack or rollup, the "ES2015 modules" version should be automatically picked up. This way you will benefit of the treeshaking.
 
 Here are some examples:
 
