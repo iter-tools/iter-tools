@@ -1,11 +1,11 @@
 /* eslint-env node, mocha */
 const assert = require('chai').assert
-const regexpSplitES6Iter = require('../dist/es2018/regexp-split-iter')
-const regexpSplitES5Iter = require('../dist/es5/regexp-split-iter')
+const regexpSplitES6Iter = require('../es2018/regexp-split-iter')
+const regexpSplitES5Iter = require('../es5/regexp-split-iter')
 
-const asyncRegexpSplitES6Iter = require('../dist/es2018/async-regexp-split-iter')
-const asyncRegexpSplitES5Iter = require('../dist/es5/async-regexp-split-iter')
-const asyncIterToArray = require('../dist/es2018/async-iter-to-array')
+const asyncRegexpSplitES6Iter = require('../es2018/async-regexp-split-iter')
+const asyncRegexpSplitES5Iter = require('../es5/async-regexp-split-iter')
+const asyncIterToArray = require('../es2018/async-iter-to-array')
 
 const esversion = ['es6', 'es5']
 

@@ -1,12 +1,12 @@
 /* eslint-env node, mocha */
 const assert = require('chai').assert
-const mapES6 = require('../dist/es2018/map')
-const mapES5 = require('../dist/es5/map')
-const range = require('../dist/es2018/range')
+const mapES6 = require('../es2018/map')
+const mapES5 = require('../es5/map')
+const range = require('../es2018/range')
 
-const asyncMapES6 = require('../dist/es2018/async-map')
-const asyncMapES5 = require('../dist/es5/async-map')
-const asyncIterToArray = require('../dist/es2018/async-iter-to-array')
+const asyncMapES6 = require('../es2018/async-map')
+const asyncMapES5 = require('../es5/async-map')
+const asyncIterToArray = require('../es2018/async-iter-to-array')
 
 const esversion = ['es6', 'es5']
 

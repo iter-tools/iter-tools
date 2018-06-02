@@ -85,7 +85,6 @@ Here are some examples:
 
 ```js
 const takeWhile = require('iter-tools').takeWhile; // ES5 is default
-const takeWhile = require('iter-tools/take-while'); // ES5 is default
 import { takeWhile } from 'iter-tools'; // ES5 is default
 
 const takeWhile = require('iter-tools/es5').takeWhile; // ES5

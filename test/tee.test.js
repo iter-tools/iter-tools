@@ -1,11 +1,11 @@
 /* eslint-env node, mocha */
 const assert = require('chai').assert
-const teeES6 = require('../dist/es2018/tee')
-const teeES5 = require('../dist/es5/tee')
+const teeES6 = require('../es2018/tee')
+const teeES5 = require('../es5/tee')
 
-const asyncTeeES6 = require('../dist/es2018/async-tee')
-const asyncTeeES5 = require('../dist/es5/async-tee')
-const range = require('../dist/es2018/range')
+const asyncTeeES6 = require('../es2018/async-tee')
+const asyncTeeES5 = require('../es5/async-tee')
+const range = require('../es2018/range')
 
 const esversion = ['es6', 'es5']
 

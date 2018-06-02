@@ -1,7 +1,7 @@
 /* eslint-env node, mocha */
 const assert = require('chai').assert
-const countES6 = require('../dist/es2018/count')
-const countES5 = require('../dist/es5/count')
+const countES6 = require('../es2018/count')
+const countES5 = require('../es5/count')
 
 const esversion = ['es6', 'es5']
 

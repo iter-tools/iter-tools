@@ -1,8 +1,8 @@
 /* eslint-env node, mocha */
 const assert = require('chai').assert
-const productES6 = require('../dist/es2018/product')
-const productES5 = require('../dist/es5/product')
-const tee = require('../dist/es2018/tee')
+const productES6 = require('../es2018/product')
+const productES5 = require('../es5/product')
+const tee = require('../es2018/tee')
 
 const esversion = ['es6', 'es5']
 

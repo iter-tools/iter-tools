@@ -1,3 +1,5 @@
 /node_modules
-/dist
+/es5
+/es2015
+/es2018
 .DS_Store

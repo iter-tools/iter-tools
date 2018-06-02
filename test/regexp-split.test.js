@@ -1,7 +1,7 @@
 /* eslint-env node, mocha */
 const assert = require('chai').assert
-const regexpSplitES6 = require('../dist/es2018/regexp-split')
-const regexpSplitES5 = require('../dist/es5/regexp-split')
+const regexpSplitES6 = require('../es2018/regexp-split')
+const regexpSplitES5 = require('../es5/regexp-split')
 
 const esversion = ['es6', 'es5']
 

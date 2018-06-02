@@ -1,7 +1,7 @@
 /* eslint-env node, mocha */
 const assert = require('chai').assert
-const combinationsES6 = require('../dist/es2018/combinations')
-const combinationsES5 = require('../dist/es5/combinations')
+const combinationsES6 = require('../es2018/combinations')
+const combinationsES5 = require('../es5/combinations')
 
 const esversion = ['es6', 'es5']
 

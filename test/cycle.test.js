@@ -1,12 +1,12 @@
 /* eslint-env node, mocha */
 const assert = require('chai').assert
-const cycleES6 = require('../dist/es2018/cycle')
-const cycleES5 = require('../dist/es5/cycle')
-const asyncCycleES6 = require('../dist/es2018/async-cycle')
-const asyncCycleES5 = require('../dist/es5/async-cycle')
+const cycleES6 = require('../es2018/cycle')
+const cycleES5 = require('../es5/cycle')
+const asyncCycleES6 = require('../es2018/async-cycle')
+const asyncCycleES5 = require('../es5/async-cycle')
 
 const esversion = ['es6', 'es5']
-const range = require('../dist/es2018/range')
+const range = require('../es2018/range')
 
 describe('cycle', function () {
   [cycleES6, cycleES5].forEach(function (cycle, i) {

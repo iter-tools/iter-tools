@@ -1,11 +1,11 @@
 /* eslint-env node, mocha */
 const assert = require('chai').assert
-const regexpExecES6Iter = require('../dist/es2018/regexp-exec-iter')
-const regexpExecES5Iter = require('../dist/es5/regexp-exec-iter')
+const regexpExecES6Iter = require('../es2018/regexp-exec-iter')
+const regexpExecES5Iter = require('../es5/regexp-exec-iter')
 
-const asyncRegexpExecES6Iter = require('../dist/es2018/async-regexp-exec-iter')
-const asyncRegexpExecES5Iter = require('../dist/es5/async-regexp-exec-iter')
-const asyncIterToArray = require('../dist/es2018/async-iter-to-array')
+const asyncRegexpExecES6Iter = require('../es2018/async-regexp-exec-iter')
+const asyncRegexpExecES5Iter = require('../es5/async-regexp-exec-iter')
+const asyncIterToArray = require('../es2018/async-iter-to-array')
 
 const getMatchesArray = (iter) => Array.from(iter).map((matches) => matches[0])
 

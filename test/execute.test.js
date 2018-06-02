@@ -1,10 +1,10 @@
 /* eslint-env node, mocha */
 const assert = require('chai').assert
-const executeES6 = require('../dist/es2018/execute')
-const executeES5 = require('../dist/es5/execute')
+const executeES6 = require('../es2018/execute')
+const executeES5 = require('../es5/execute')
 
-const asyncExecuteES6 = require('../dist/es2018/async-execute')
-const asyncExecuteES5 = require('../dist/es5/async-execute')
+const asyncExecuteES6 = require('../es2018/async-execute')
+const asyncExecuteES5 = require('../es5/async-execute')
 const esversion = ['es6', 'es5']
 
 describe('execute', function () {

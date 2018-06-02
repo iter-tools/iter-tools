@@ -1,8 +1,8 @@
 /* eslint-env node, mocha */
 const assert = require('chai').assert
-const iterES6 = require('../dist/es2018/iter')
-const iterES5 = require('../dist/es5/iter')
-const range = require('../dist/es2018/range')
+const iterES6 = require('../es2018/iter')
+const iterES5 = require('../es5/iter')
+const range = require('../es2018/range')
 
 const esversion = ['es6', 'es5']
 

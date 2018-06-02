@@ -1,7 +1,7 @@
 /* eslint-env node, mocha */
 const assert = require('chai').assert
-const permutationsES6 = require('../dist/es2018/permutations')
-const permutationsES5 = require('../dist/es5/permutations')
+const permutationsES6 = require('../es2018/permutations')
+const permutationsES5 = require('../es5/permutations')
 
 const esversion = ['es6', 'es5']
 

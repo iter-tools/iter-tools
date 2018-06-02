@@ -1,7 +1,7 @@
 /* eslint-env node, mocha */
 const assert = require('chai').assert
-const repeatES6 = require('../dist/es2018/repeat')
-const repeatES5 = require('../dist/es5/repeat')
+const repeatES6 = require('../es2018/repeat')
+const repeatES5 = require('../es5/repeat')
 
 const esversion = ['es6', 'es5']
 
