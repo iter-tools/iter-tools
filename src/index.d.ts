@@ -25,6 +25,9 @@ export declare function execute<T>(func: (...args: any[]) => T, ...args: any[]):
 export declare function filter<T>(func: (item: T) => boolean): (iterable: IterableLike<T>) => Iterable<T>;
 export declare function filter<T>(func: (item: T) => boolean, iterable: IterableLike<T>): Iterable<T>;
 
+export declare function batch<T>(number: number): (iterable: IterableLike<T>) => Iterable<T>;
+export declare function batch<T>(number: number, iterable: IterableLike<T>): Iterable<T>;
+
 export declare function flatMap<T, O>(func: (item: T) => IterableLike<O>): (iter: IterableLike<T>) => Iterable<O>;
 export declare function flatMap<T, O>(func: (item: T) => IterableLike<O>, iter: IterableLike<T>): Iterable<O>;
 
