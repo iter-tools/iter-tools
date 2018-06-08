@@ -32,19 +32,21 @@ describe('batch', function () {
 
 describe('asyncBatch', function () {
   [asyncBatchES6, asyncBatchES5].forEach(function (asyncBatch, i) {
-    it('returns an async iterable with batches', async function () {
-      const iter = asyncBatch(2, [1, 2, 3, 4, 5, 6, 7, 8, 9])
-      assert.deepEqual(await asyncIterToArray(iter), [[1, 2], [3, 4], [5, 6], [7, 8], [9]])
-    })
+    describe(esversion[i], function () {
+      it('returns an async iterable with batches', async function () {
+        const iter = asyncBatch(2, [1, 2, 3, 4, 5, 6, 7, 8, 9])
+        assert.deepEqual(await asyncIterToArray(iter), [[1, 2], [3, 4], [5, 6], [7, 8], [9]])
+      })
 
-    it('returns an async iterable with batches when passed an iterable', async function () {
-      const iter = asyncBatch(2, range({ start: 1, end: 10 }))
-      assert.deepEqual(await asyncIterToArray(iter), [[1, 2], [3, 4], [5, 6], [7, 8], [9]])
-    })
+      it('returns an async iterable with batches when passed an iterable', async function () {
+        const iter = asyncBatch(2, range({ start: 1, end: 10 }))
+        assert.deepEqual(await asyncIterToArray(iter), [[1, 2], [3, 4], [5, 6], [7, 8], [9]])
+      })
 
-    it('returns an async iterable with batches (curried version)', async function () {
-      const iter = asyncBatch(2)
-      assert.deepEqual(await asyncIterToArray(iter(range({ start: 1, end: 10 }))), [[1, 2], [3, 4], [5, 6], [7, 8], [9]])
+      it('returns an async iterable with batches (curried version)', async function () {
+        const iter = asyncBatch(2)
+        assert.deepEqual(await asyncIterToArray(iter(range({ start: 1, end: 10 }))), [[1, 2], [3, 4], [5, 6], [7, 8], [9]])
+      })
     })
   })
 })
