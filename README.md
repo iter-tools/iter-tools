@@ -35,6 +35,8 @@ Transform a single iterable
 * [async-flat-map](#async-flat-map)
 * [reduce](#reduce)
 * [async-reduce](#async-reduce)
+* [batch](#batch)
+* [async-batch](#async-batch)
 
 Combine multiple iterables
 * [chain](#chain)
@@ -272,6 +274,15 @@ reduce((acc = 0, v) => acc += v, range(4)); // returns 6
 
 ## async-reduce
 Same as reduce but works on both sync and async iterables.
+
+## batch
+Takes a number and an iterable and returns an iterable divided into batches
+```js
+batch(2, range(5)); // [0, 1], [2, 3], [4]
+```
+
+## async-batch
+Same as Batch but works on both sync and async iterables.
 
 # Combine multiple iterators
 

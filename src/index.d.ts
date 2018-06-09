@@ -1,6 +1,9 @@
 type IterableLike<T> = Iterable<T> | T[] | { [key: string]: T; } | { [key: number]: T; };
 type AsyncIterableLike<T> = AsyncIterable<T> | IterableLike<T>;
 
+export declare function batch<T>(number: number): (iterable: IterableLike<T>) => Iterable<T>;
+export declare function batch<T>(number: number, iterable: IterableLike<T>): Iterable<T>;
+
 export declare function chain<T>(...iterables: IterableLike<T>[]): Iterable<T>;
 
 export declare function combinations<T>(iterable: IterableLike<T>, r: number): Iterable<T>;
@@ -82,6 +85,8 @@ export declare function zip<T, T2, T3, T4, T5>(iterable1: IterableLike<T>[], ite
 export declare function zip<T, T2, T3, T4, T5, T6>(iterable1: IterableLike<T>[], iterable2: IterableLike<T2>[], iterable3: IterableLike<T3>[], iterable4: IterableLike<T4>[], iterable5: IterableLike<T5>[], iterable6: IterableLike<T6>[]): Iterable<[T, T2, T3, T4, T5, T6]>;
 export declare function zip<T>(...iterables: IterableLike<T>[]): Iterable<[T]>;
 
+export declare function asyncBatch<T>(number: number): (iterable: AsyncIterableLike<T>) => AsyncIterable<T>;
+export declare function asyncBatch<T>(number: number, iterable: AsyncIterableLike<T>): AsyncIterable<T>;
 export declare function asyncIter<T>(syncIterable: AsyncIterableLike<T>): AsyncIterable<T>;
 
 export declare function asyncIterToArray<T>(iterable: AsyncIterableLike<T>): T[];
