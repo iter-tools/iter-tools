@@ -62,6 +62,7 @@ Utilities
 * [async-iter-to-array](async-iter-to-array)
 * [execute](#execute)
 * [async-execute](#async-execute)
+* [async-map-batch](#async-map-batch)
 
 Combinatory generators
 * [products](#products)
@@ -267,8 +268,6 @@ Same as flatMap but works on both sync and async iterables.
 This is an implementation of the reduce that consumes an iterable instead of an array (have a look at Array.prototype.reduce).
 It takes as arguments a function and an iterable;
 ```js
-const reduce = require('iter-tools/lib/reduce');
-// const reduce = require('iter-tools').reduce;
 reduce((acc = 0, v) => acc += v, range(4)); // returns 6
 ```
 
@@ -412,6 +411,13 @@ iter(() => Math.round(Math.random() * 10) ); // 3, 5, 9 ...
 It returns an iterator that returns the output of an asynchronous function (promise based) at every iteration.
 ```js
 asyncIter(() => Promise.resolve(Math.round(Math.random() * 10)) ); // 3, 5, 9 ...
+```
+
+## async-map-batch
+It executes an async function on iterable items on batch of n. Then it returns the result as iterable.
+It is a version of asyncMap that allows to run functions in parallel.
+```js
+asyncMapBatch(2, asyncFunction, iterable);
 ```
 
 # Combinatory generators

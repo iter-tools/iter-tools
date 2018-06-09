@@ -142,3 +142,6 @@ export declare function asyncRegexpExecIter(re: RegExp): (iterable: AsyncIterabl
 export declare function asyncRegexpExecIter(re: RegExp, iterable: AsyncIterableLike<string>): AsyncIterableLike<string>;
 
 export declare function asyncSplitLines(iterable: AsyncIterableLike<string>) => AsyncIterableLike<string>;
+
+export declare function asyncMapBatch<T>(number: number, func: (item: T) => O): (iterable: AsyncIterableLike<T>) => AsyncIterable<T>;
+export declare function asyncMapBatch<T>(number: number, func: (item: T) => O, iterable: AsyncIterableLike<T>): AsyncIterable<T>;
