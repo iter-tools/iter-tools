@@ -14,6 +14,9 @@ export declare function compose<T>(fns: IterableLike<T>): T;
 
 export declare function compress<T>(iterable: IterableLike<T>, compress: IterableLike<boolean>): Iterable<T>;
 
+export declare function consume<T>(func: (item: T) => void): (iterable: IterableLike<T>) => void;
+export declare function consume<T>(func: (item: T) => void, iterable: IterableLike<T>): void;
+
 export declare function count(opts: number | { start: number, end?: number, step?: number }): Iterable<number>;
 
 export declare function cycle<T>(iterable: IterableLike<T>): Iterable<T>;
@@ -93,6 +96,9 @@ export declare function asyncIterToArray<T>(iterable: AsyncIterableLike<T>): T[]
 
 export declare function asyncChain<T>(...iterables: AsyncIterableLike<T>[]): AsyncIterable<T>;
 
+export declare function asyncConsume<T>(func: (item: T) => void): (iterable: AsyncIterableLike<T>) => void;
+export declare function asyncConsume<T>(func: (item: T) => void, iterable: AsyncIterableLike<T>): void;
+
 export declare function asyncCompress<T>(iterable: AsyncIterableLike<T>, compress: AsyncIterableLike<boolean>): AsyncIterable<T>;
 
 export declare function asyncCycle<T>(iterable: AsyncIterableLike<T>): AsyncIterable<T>;
@@ -145,3 +151,6 @@ export declare function asyncSplitLines(iterable: AsyncIterableLike<string>) => 
 
 export declare function asyncMapBatch<T>(number: number, func: (item: T) => O): (iterable: AsyncIterableLike<T>) => AsyncIterable<T>;
 export declare function asyncMapBatch<T>(number: number, func: (item: T) => O, iterable: AsyncIterableLike<T>): AsyncIterable<T>;
+
+export declare function asyncThrottle<T>(number: number): (iterable: AsyncIterableLike<T>) => AsyncIterable<T>;
+export declare function asyncThrottle<T>(number: number, iterable: AsyncIterableLike<T>): AsyncIterable<T>;

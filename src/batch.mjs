@@ -1,4 +1,5 @@
 import iter from './iter'
+
 export default function batch (number, iterable) {
   function * curriedBatch (_iterable) {
     let batch = []

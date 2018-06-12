@@ -63,6 +63,9 @@ Utilities
 * [execute](#execute)
 * [async-execute](#async-execute)
 * [async-map-batch](#async-map-batch)
+* [async-throttle](#async-throttle)
+* [consume](#consume)
+* [async-consume](#async-consume)
 
 Combinatory generators
 * [products](#products)
@@ -419,6 +422,21 @@ It is a version of asyncMap that allows to run functions in parallel.
 ```js
 asyncMapBatch(2, asyncFunction, iterable);
 ```
+
+## async-throttle
+It wraps an async iterable and ensures that every item is yielded with an interval of n ms.
+```js
+asyncThrottle(10, iterable);
+```
+
+## consume
+It consumes an iterable, running a function for every value yielded. Passing only the function you get a curried version.
+```js
+consume((item) => console.log(item), [1, 2, 3]) // prints 1, 2, 3
+```
+
+## async-consume
+The equivalent of consume, for async iterables. It returns a promise.
 
 # Combinatory generators
 
