@@ -33,7 +33,7 @@ describe('asyncMapBatch', function () {
         const t0 = Date.now()
         assert.deepEqual(await asyncIterToArray(iter), [0, 1, 4, 9, 16, 25, 36, 49])
         const t1 = Date.now()
-        assert.isBelow(t1 - t0, 25)
+        assert.isBelow(t1 - t0, 30)
       })
     })
   })
