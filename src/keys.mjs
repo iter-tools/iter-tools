@@ -1,0 +1,14 @@
+const emptyArr = []
+export default function * keys (keysable) {
+  if (keysable == null) {
+    return emptyArr[Symbol.iterator]()
+  } else if (typeof keysable.keys === 'function') {
+    yield * keysable.keys()
+  } else if (typeof keysable === 'object') { // pojo
+    for (let key in keysable) {
+      if (keysable.hasOwnProperty(key)) {
+        yield key
+      }
+    }
+  }
+}
