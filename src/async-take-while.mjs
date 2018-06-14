@@ -1,20 +1,21 @@
 import asyncIter from './async-iter'
 
-export default function takeWhile (func, iterable) {
-  async function * curriedTakeWhile (i) {
-    let take = true
-    let c = 0
-    for await (const item of asyncIter(i)) {
-      take = func(item, c++)
-      if (take) {
-        yield item
-      } else {
-        break
-      }
+async function * takeWhile (func, iterable) {
+  let take = true
+  let c = 0
+  for await (const item of asyncIter(iterable)) {
+    take = func(item, c++)
+    if (take) {
+      yield item
+    } else {
+      break
     }
   }
-  if (iterable) {
-    return curriedTakeWhile(iterable)
+}
+
+export default function curriedTakeWhile (func, iterable) {
+  if (!iterable) {
+    return iterable => takeWhile(func, iterable)
   }
-  return curriedTakeWhile
+  return takeWhile(func, iterable)
 }

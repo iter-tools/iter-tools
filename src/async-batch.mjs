@@ -1,21 +1,23 @@
 import asyncIter from './async-iter'
-export default function batch (number, iterable) {
-  async function * curriedAsyncBatch (_iterable) {
-    let batch = []
-    for await (const item of asyncIter(_iterable)) {
-      batch.push(item)
-      if (batch.length === number) {
-        yield batch
-        batch = []
-      }
-    }
-    if (batch.length) {
+
+async function * batch (number, iterable) {
+  let batch = []
+  for await (const item of asyncIter(iterable)) {
+    batch.push(item)
+    if (batch.length === number) {
       yield batch
+      batch = []
     }
+  }
+  if (batch.length) {
+    yield batch
+  }
+}
+
+export default function curriedBatch (number, iterable) {
+  if (!iterable) {
+    return iterable => batch(number, iterable)
   }
 
-  if (iterable) {
-    return curriedAsyncBatch(iterable)
-  }
-  return curriedAsyncBatch
+  return batch(number, iterable)
 }

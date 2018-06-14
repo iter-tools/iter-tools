@@ -1,14 +1,15 @@
 import map from './map'
 
-export default function flatMap (func, iterable) {
+function * flatMap (func, iterable) {
   const mapIter = map(func)
-  function * curriedFlatMap (i) {
-    for (const item of mapIter(i)) {
-      yield * item
-    }
+  for (const item of mapIter(iterable)) {
+    yield * item
   }
-  if (iterable) {
-    return curriedFlatMap(iterable)
+}
+
+export default function curriedFlatMap (func, iterable) {
+  if (!iterable) {
+    return iterable => flatMap(func, iterable)
   }
-  return curriedFlatMap
+  return flatMap(func, iterable)
 }

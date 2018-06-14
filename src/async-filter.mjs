@@ -1,16 +1,17 @@
 import asyncIter from './async-iter'
 
-export default function filter (func, iterable) {
-  async function * curriedFilter (i) {
-    let c = 0
-    for await (const item of asyncIter(i)) {
-      if (func(item, c++)) {
-        yield item
-      }
+async function * filter (func, iterable) {
+  let c = 0
+  for await (const item of asyncIter(iterable)) {
+    if (func(item, c++)) {
+      yield item
     }
   }
-  if (iterable) {
-    return curriedFilter(iterable)
+}
+
+export default function curriedFilter (func, iterable) {
+  if (!iterable) {
+    return iterable => filter(func, iterable)
   }
-  return curriedFilter
+  return filter(func, iterable)
 }

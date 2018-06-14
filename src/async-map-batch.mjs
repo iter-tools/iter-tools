@@ -1,16 +1,16 @@
 import asyncBatch from './async-batch'
 import map from './map'
 
-export default function asyncMapBatch (number, func, iterable) {
-  async function * curriedAsyncMapBatch (_iterable) {
-    for await (const items of asyncBatch(number, _iterable)) {
-      const results = await Promise.all(map(func, items))
-      yield * results
-    }
+async function * asyncMapBatch (number, func, iterable) {
+  for await (const items of asyncBatch(number, iterable)) {
+    const results = await Promise.all(map(func, items))
+    yield * results
   }
+}
 
-  if (iterable) {
-    return curriedAsyncMapBatch(iterable)
+export default function curriedAsyncMapBatch (number, func, iterable) {
+  if (!iterable) {
+    return iterable => asyncMapBatch(number, func, iterable)
   }
-  return curriedAsyncMapBatch
+  return asyncMapBatch(number, func, iterable)
 }

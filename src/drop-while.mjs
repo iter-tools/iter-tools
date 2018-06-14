@@ -1,22 +1,23 @@
 import iter from './iter'
 
-export default function dropWhile (func, iterable) {
-  function * curriedDropWhile (i) {
-    let drop = true
-    let c = 0
-    for (const item of iter(i)) {
+function * dropWhile (func, iterable) {
+  let drop = true
+  let c = 0
+  for (const item of iter(iterable)) {
+    if (!drop) {
+      yield item
+    } else {
+      drop = func(item, c++)
       if (!drop) {
         yield item
-      } else {
-        drop = func(item, c++)
-        if (!drop) {
-          yield item
-        }
       }
     }
   }
-  if (iterable) {
-    return curriedDropWhile(iterable)
+}
+
+export default function curriedDropWhile (func, iterable) {
+  if (!iterable) {
+    return iterable => dropWhile(func, iterable)
   }
-  return curriedDropWhile
+  return dropWhile(func, iterable)
 }

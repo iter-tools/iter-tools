@@ -1,14 +1,15 @@
 import asyncIter from './async-iter'
 
-export default function map (func, iterable) {
-  async function * curriedMap (i) {
-    let c = 0
-    for await (const item of asyncIter(i)) {
-      yield func(item, c++)
-    }
+async function * map (func, iterable) {
+  let c = 0
+  for await (const item of asyncIter(iterable)) {
+    yield func(item, c++)
   }
-  if (iterable) {
-    return curriedMap(iterable)
+}
+
+export default function curriedMap (func, iterable) {
+  if (!iterable) {
+    return iterable => map(func, iterable)
   }
-  return curriedMap
+  return map(func, iterable)
 }

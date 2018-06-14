@@ -1,6 +1,6 @@
 import iter from './iter'
 
-export default function slice (opts, iterable) {
+function * slice (opts, iterable) {
   let start, step, end
   opts = typeof opts === 'number' ? { end: opts, start: 0 } : opts
 
@@ -8,27 +8,26 @@ export default function slice (opts, iterable) {
   end = typeof opts.end === 'undefined'
     ? (step > 0 ? Infinity : -Infinity) : opts.end
   start = opts.start ? opts.start : 0
+  let currentPos = 0
+  let nextValidPos = start
 
-  function * curriedSlice (iterable) {
-    let currentPos = 0
-    let nextValidPos = start
-
-    for (var item of iter(iterable)) {
-      if (currentPos >= end) {
-        break
-      }
-
-      if (nextValidPos === currentPos) {
-        yield item
-        nextValidPos += step
-      }
-      currentPos++
+  for (var item of iter(iterable)) {
+    if (currentPos >= end) {
+      break
     }
+
+    if (nextValidPos === currentPos) {
+      yield item
+      nextValidPos += step
+    }
+    currentPos++
+  }
+}
+
+export default function curriedSlice (opts, iterable) {
+  if (!iterable) {
+    return iterable => slice(opts, iterable)
   }
 
-  if (iterable) {
-    return curriedSlice(iterable)
-  }
-
-  return curriedSlice
+  return slice(opts, iterable)
 }

@@ -1,17 +1,17 @@
 import iter from './iter'
 
-export default function reduce (func, iterable) {
-  function curriedReduce (i) {
-    let c = 0
-    let acc
-    for (const item of iter(i)) {
-      acc = func(acc, item, c++)
-    }
-    return acc
+function reduce (func, iterable) {
+  let c = 0
+  let acc
+  for (const item of iter(iterable)) {
+    acc = func(acc, item, c++)
   }
+  return acc
+}
 
-  if (iterable) {
-    return curriedReduce(iterable)
+export default function curriedReduce (func, iterable) {
+  if (!iterable) {
+    return iterable => reduce(func, iterable)
   }
-  return curriedReduce
+  return reduce(func, iterable)
 }
