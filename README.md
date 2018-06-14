@@ -83,27 +83,20 @@ This should help clarify the documentation. You can also get more informations h
 #### Javascript support
 Every module is available in 3 ecmascript editions: ES5, ES2015, ES2018.
 
-* Use ES5 when you need to support old browsers (like IE11).
-* Use ES2015 when you need to support modern browsers, that don't support async iterables yet. This is also the right version for node 8 and below.
-* Use ES2018 when you need to support modern browser, that supports async iterables. Like node 10 and above.
+* Use ES5 when you need to support IE11.
+* Use ES2015 when you need to support modern browsers that don't support async iterables yet. This is also the right version for node 8 and below.
+* Use ES2018 when you know all your target environments natively support async iterables. Node 10 and above do.
 
-Every version is available in 2 formats, using "ES2015 modules" (import/export) and "commonjs". The "ES2015 modules" uses the extension .mjs (for nodejs compatibility). If you are using a bundler like webpack or rollup, the "ES2015 modules" version should be automatically picked up. This way you will benefit of the treeshaking.
+The individual modules can be required either using named imports, or by importing the specific submodule you need. Using named imports will include the entire library and thus should only be done when bundle weight is not a concern (node) or when using a es2015+ module versions in combination with webpack4+ or rollup.
 
 Here are some examples:
 
 ```js
 const takeWhile = require('iter-tools').takeWhile; // ES5 is default
-import { takeWhile } from 'iter-tools'; // ES5 is default
 
-const takeWhile = require('iter-tools/es5').takeWhile; // ES5
-const takeWhile = require('iter-tools/es5/take-while'); // ES5
-import { takeWhile } from 'iter-tools/es5'; // ES5
-
-const takeWhile = require('iter-tools/es2015').takeWhile; // ES2015
 const takeWhile = require('iter-tools/es2015/take-while'); // ES2015
 import { takeWhile } from 'iter-tools/es2015'; // ES2015
 
-const takeWhile = require('iter-tools/es2018').takeWhile; // ES2018
 const takeWhile = require('iter-tools/es2018/take-while'); // ES2018
 import { takeWhile } from 'iter-tools/es2018'; // ES2018
 ```
@@ -205,28 +198,56 @@ The same as regexpExecIter but for async iterables.
 # Transform a single iterable
 These series of generators take as first argument a function and as a second an iterable. If the second argument is omitted it automatically returns a curried function. These functions can be composed:
 ```js
-const iterator = compose([map(power2), filter(isEven)]);
+const iterator = compose([map(x => x * x), filter(isEven)]);
 iterator([ ...... ]);
 ```
 This is more memory efficient of using array methods as it doesn't require to build intermediate arrays.
 
 ## map
-The equivalent of the array "map" function. But runs on an iterable and returns another iterable.
+The equivalent of the array "map" function.
 ```js
-map(power2, range(4)); // 0, 1, 4, 9
+map(x => x * x, range(4)); // 0, 1, 4, 9
+await asyncMap(animal => animal.kind, [
+  Promise.resolve({type: 'cat'}),
+  Promise.resolve({type: 'dog'})
+]); // ['cat', 'dog']
 ```
 
-## async-map
-Same as Map but works on both sync and async iterables.
+## async-find
+See map
+
+## find
+The equivalent of the array "find" function.
+```js
+find(animal => animal.kind === 'dog', [{type: 'cat'}, {type: 'dog'}])
+await asyncFind(animal => animal.kind === 'dog', [
+  Promise.resolve({type: 'cat'}),
+  Promise.resolve({type: 'dog'})
+]) // {type: 'dog'}
+```
+
+## size
+Returns the number of values yielded by an iterable.
+```js
+size([1, 2, 3]) // 3
+```
+
+## async-find
+See find
 
 ## filter
-The equivalent of the array "filter" function. But runs on an iterable and returns another iterable.
+The equivalent of the array "filter" function.
 ```js
 filter(isEven, range(4)); // 0, 2
+await asyncFilter(animal => animal.kind.slice(1) === 'at', [
+  Promise.resolve({type: 'cat'}),
+  Promise.resolve({type: 'rat'}),
+  Promise.resolve({type: 'dog'}),
+]) // [{type: 'cat'}, {type: 'rat'}]
 ```
 
 ## async-filter
-Same as Filter but works on both sync and async iterables.
+See filter
 
 ## take-while
 It returns values as soon as the function is true. Then it stops.
@@ -373,7 +394,7 @@ Same as tee but works on both sync and async iterables.
 
 # Utilities
 
-## Iter
+## iter
 It tries to return an iterator from a value. This is useful for 2 reasons:
 * you can consume the iterator using the "next" method without worrying if it is a string, array, an iterable etc.
 * allows to iterate over a simple object
@@ -397,6 +418,48 @@ for await (const n of iter) {
   console.log(n); // 1, 2, 3
 }
 ```
+
+## entries
+Takes in a plain object, null, a Map, or any other object which defines an `entries` method.
+When given an Object, it is equivalent to Object.entries, otherwise it calls `entries()`
+When passed a nullish value, returns an empty iterable.
+
+`entries` is a great way to construct Maps from objects
+
+```js
+const obj = {foo: 'bar', fox: 'far'}
+const map = new Map(entries(obj))
+
+Array.from(entries(obj)) // [['foo': 'bar'], 'fox': 'far']]
+deepEqual(Array.from(entries(map)), entries(obj)) // true
+```
+
+## keys
+Takes in a plain object, null, a Map, or any other object which defines an `keys` method.
+When given an Object, it is equivalent to Object.keys, otherwise it calls `keys()`
+When passed a nullish value, returns an empty iterable.
+
+```js
+const obj = {foo: 'bar', fox: 'far'}
+const map = new Map(entries(obj))
+
+Array.from(keys(obj)) // ['foo', 'fox'];
+deepEqual(Array.from(keys(map)), keys(obj)) // true
+```
+
+## values
+Takes in a plain object, null, a Map, or any other object which defines an `values` method.
+When given an Object, it is equivalent to Object.values, otherwise it calls `values()`
+When passed a nullish value, returns an empty iterable.
+
+```js
+const obj = {foo: 'bar', fox: 'far'}
+const map = new Map(entries(obj))
+
+Array.from(values(obj)) // ['bar', 'far']
+deepEqual(Array.from(values(map)), values(obj)) // true
+```
+
 
 ## async-iter-to-array
 It transform an asynchronous iterator to an array:

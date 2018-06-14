@@ -1,6 +1,11 @@
 type IterableLike<T> = Iterable<T> | T[] | { [key: string]: T; } | { [key: number]: T; };
 type AsyncIterableLike<T> = AsyncIterable<T> | IterableLike<T>;
 
+
+export declare function keys(iterable: any): Iterable<any>; // TODO, type me?
+export declare function values(iterable: any): Iterable<any>;
+export declare function entries(iterable: any): Iterable<any>;
+
 export declare function batch<T>(number: number): (iterable: IterableLike<T>) => Iterable<T>;
 export declare function batch<T>(number: number, iterable: IterableLike<T>): Iterable<T>;
 
@@ -30,6 +35,9 @@ export declare function execute<T>(func: (...args: any[]) => T, ...args: any[]):
 
 export declare function filter<T>(func: (item: T) => boolean): (iterable: IterableLike<T>) => Iterable<T>;
 export declare function filter<T>(func: (item: T) => boolean, iterable: IterableLike<T>): Iterable<T>;
+
+export declare function find<T>(func: (item: T) => boolean): (iterable: IterableLike<T>) => T | null;
+export declare function find<T>(func: (item: T) => boolean, iterable: IterableLike<T>): T | null;
 
 export declare function flatMap<T, O>(func: (item: T) => IterableLike<O>): (iter: IterableLike<T>) => Iterable<O>;
 export declare function flatMap<T, O>(func: (item: T) => IterableLike<O>, iter: IterableLike<T>): Iterable<O>;
@@ -72,6 +80,8 @@ export declare function splitLines(iterable: IterableLike<T>): Iterable<string>;
 
 export declare function repeat<T>(obj: T, times?: number): Iterable<T>;
 
+export declare function size(iterable: Iterable<any>) => number;
+
 export declare function slice<T>(opts: number | { start: number, end?: number, step?: number }, iterable: IterableLike<T>): Iterable<number>;
 
 export declare function takeWhile<T>(func: (item: T) => boolean): (iterable: IterableLike<T>) => Iterable<T>;
@@ -112,6 +122,9 @@ export declare function asyncExecute<T>(func: (...args: any[]) => Promise<T>, ..
 
 export declare function asyncFilter<T>(func: (item: T) => boolean): (iterable: AsyncIterableLike<T>) => AsyncIterable<T>;
 export declare function asyncFilter<T>(func: (item: T) => boolean, iterable: AsyncIterableLike<T>): AsyncIterable<T>;
+
+export declare function asyncFind<T>(func: (item: T) => boolean): (iterable: AsyncIterableLike<T>) => T | null;
+export declare function asyncFind<T>(func: (item: T) => boolean, iterable: AsyncIterableLike<T>): T | null;
 
 export declare function asyncFlatmap<T, O>(func: (item: T) => AsyncIterableLike<O>): (iter: AsyncIterableLike<T>) => AsyncIterable<O>;
 export declare function asyncFlatmap<T, O>(func: (item: T) => AsyncIterableLike<O>, iter: AsyncIterableLike<T>): AsyncIterable<O>;

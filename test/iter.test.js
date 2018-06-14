@@ -26,6 +26,10 @@ describe('iter', function () {
         const i = iter({'1': 1, '2': 2})
         assert.deepEqual(Array.from(i), [['1', 1], ['2', 2]])
       })
+      it('works with null', function() {
+        const i = iter(null)
+        assert.deepEqual(Array.from(i), [])
+      })
     })
   })
 })
