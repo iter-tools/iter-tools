@@ -1,16 +1,17 @@
 import iter from './iter'
 
-export default function filter (func, iterable) {
-  function * curriedFilter (i) {
-    let c = 0
-    for (const item of iter(i)) {
-      if (func(item, c++)) {
-        yield item
-      }
+function * filter (func, iterable) {
+  let c = 0
+  for (const item of iter(iterable)) {
+    if (func(item, c++)) {
+      yield item
     }
   }
-  if (iterable) {
-    return curriedFilter(iterable)
+}
+
+export default function curriedFilter (func, iterable) {
+  if (!iterable) {
+    return iterable => filter(func, iterable)
   }
-  return curriedFilter
+  return filter(func, iterable)
 }

@@ -1,14 +1,15 @@
 import map from './async-map'
 
-export default function flatMap (func, iterable) {
+async function * flatMap (func, iterable) {
   const mapIter = map(func)
-  async function * curriedFlatMap (i) {
-    for await (const item of mapIter(i)) {
-      yield * item
-    }
+  for await (const item of mapIter(iterable)) {
+    yield * item
   }
-  if (iterable) {
-    return curriedFlatMap(iterable)
+}
+
+export default function curriedFlatMap (func, iterable) {
+  if (!iterable) {
+    return iterable => flatMap(func, iterable)
   }
-  return curriedFlatMap
+  return flatMap(func, iterable)
 }

@@ -5,18 +5,18 @@ function delay (ms) {
   return new Promise((resolve) => setTimeout(resolve, ms))
 }
 
-export default function asyncThrottle (ms, iterable) {
-  async function * _asyncThrottle (iterable) {
-    let waitSince = Infinity
-    for await (const item of asyncIter(iterable)) {
-      await delay(ms - (Date.now() - waitSince))
-      waitSince = Date.now()
-      yield item
-    }
+async function * asyncThrottle (ms, iterable) {
+  let waitSince = Infinity
+  for await (const item of asyncIter(iterable)) {
+    await delay(ms - (Date.now() - waitSince))
+    waitSince = Date.now()
+    yield item
   }
+}
 
-  if (iterable) {
-    return _asyncThrottle(iterable)
+export default function curriedAsyncThrottle (ms, iterable) {
+  if (!iterable) {
+    return iterable => asyncThrottle(ms, iterable)
   }
-  return _asyncThrottle
+  return asyncThrottle(ms, iterable)
 }

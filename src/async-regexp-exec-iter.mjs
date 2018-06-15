@@ -1,32 +1,33 @@
 import regexExec from './regexp-exec'
 
-export default function regexpExecIter (re, iterable) {
-  async function * _regexpExecIter (iterable) {
-    let matches
-    let buffer = ''
-    for await (const chunk of iterable) {
-      if (chunk === '') continue
-      let lastIndex = 0
-      matches = []
-      buffer += chunk
-      for (const match of regexExec(re, buffer)) {
-        if (match[0] === '') {
-          continue
-        }
-        lastIndex = re.lastIndex - match[0].length
-        matches.push(match)
-        if (matches.length === 2) {
-          yield matches.shift()
-        }
+async function * regexpExecIter (re, iterable) {
+  let matches
+  let buffer = ''
+  for await (const chunk of iterable) {
+    if (chunk === '') continue
+    let lastIndex = 0
+    matches = []
+    buffer += chunk
+    for (const match of regexExec(re, buffer)) {
+      if (match[0] === '') {
+        continue
       }
-      buffer = buffer.slice(lastIndex)
+      lastIndex = re.lastIndex - match[0].length
+      matches.push(match)
+      if (matches.length === 2) {
+        yield matches.shift()
+      }
     }
-    if (matches && matches.length) {
-      yield * matches
-    }
+    buffer = buffer.slice(lastIndex)
   }
+  if (matches && matches.length) {
+    yield * matches
+  }
+}
+
+export default function curriedRegexpExecIter (re, iterable) {
   if (typeof iterable === 'undefined') {
-    return _regexpExecIter
+    return iterable => regexpExecIter(re, iterable)
   }
-  return _regexpExecIter(iterable)
+  return regexpExecIter(re, iterable)
 }

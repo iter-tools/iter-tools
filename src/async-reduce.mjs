@@ -1,17 +1,17 @@
 import asyncIter from './async-iter'
 
-export default function reduce (func, iterable) {
-  async function curriedReduce (i) {
-    let c = 0
-    let acc
-    for await (const item of asyncIter(i)) {
-      acc = func(acc, item, c++)
-    }
-    return acc
+async function reduce (func, iterable) {
+  let c = 0
+  let acc
+  for await (const item of asyncIter(iterable)) {
+    acc = func(acc, item, c++)
   }
+  return acc
+}
 
-  if (iterable) {
-    return curriedReduce(iterable)
+export default function curriedReduce (func, iterable) {
+  if (!iterable) {
+    return iterable => reduce(func, iterable)
   }
-  return curriedReduce
+  return reduce(func, iterable)
 }

@@ -1,22 +1,22 @@
 import iter from './iter'
 
-export default function batch (number, iterable) {
-  function * curriedBatch (_iterable) {
-    let batch = []
-    for (const item of iter(_iterable)) {
-      batch.push(item)
-      if (batch.length === number) {
-        yield batch
-        batch = []
-      }
-    }
-    if (batch.length) {
+function * batch (number, iterable) {
+  let batch = []
+  for (const item of iter(iterable)) {
+    batch.push(item)
+    if (batch.length === number) {
       yield batch
+      batch = []
     }
   }
-
-  if (iterable) {
-    return curriedBatch(iterable)
+  if (batch.length) {
+    yield batch
   }
-  return curriedBatch
+}
+
+export default function curriedBatch (number, iterable) {
+  if (!iterable) {
+    return iterable => batch(number, iterable)
+  }
+  return batch(number, iterable)
 }

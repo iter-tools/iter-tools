@@ -1,41 +1,41 @@
 import iter from './iter'
 
-export default function groupBy (key, iterable) {
+function * groupBy (key, iterable) {
   key = key || function (key) { return key }
-  function * curriedGroupBy (iterable) {
-    iterable = iter(iterable)
+  iterable = iter(iterable)
 
-    let currentItem
-    let currentKey, previousKey
+  let currentItem
+  let currentKey, previousKey
 
-    function * group () {
-      while (true) {
-        yield currentItem.value
-        currentItem = iterable.next()
-        if (currentItem.done) return
-        currentKey = key(currentItem.value)
-        if (previousKey !== currentKey) {
-          return
-        }
-      }
-    };
-
-    currentItem = iterable.next()
-
+  function * group () {
     while (true) {
+      yield currentItem.value
+      currentItem = iterable.next()
       if (currentItem.done) return
       currentKey = key(currentItem.value)
       if (previousKey !== currentKey) {
-        previousKey = currentKey
-        yield [currentKey, group()]
-      } else {
-        currentItem = iterable.next()
+        return
       }
     }
-  }
+  };
 
-  if (typeof iterable !== 'undefined') {
-    return curriedGroupBy(iterable)
+  currentItem = iterable.next()
+
+  while (true) {
+    if (currentItem.done) return
+    currentKey = key(currentItem.value)
+    if (previousKey !== currentKey) {
+      previousKey = currentKey
+      yield [currentKey, group()]
+    } else {
+      currentItem = iterable.next()
+    }
   }
-  return curriedGroupBy
+}
+
+export default function curriedGroupBy (key, iterable) {
+  if (typeof iterable === 'undefined') {
+    return iterable => groupBy(key, iterable)
+  }
+  return groupBy(key, iterable)
 }

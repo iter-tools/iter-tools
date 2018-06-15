@@ -1,13 +1,11 @@
 import iter from './iter'
 
 export default function consume (func, iterable) {
-  function curriedConsume (i) {
-    for (const item of iter(i)) {
-      func(item)
-    }
+  if (!iterable) {
+    return iterable => consume(func, iterable)
   }
-  if (iterable) {
-    return curriedConsume(iterable)
+
+  for (const item of iter(iterable)) {
+    func(item)
   }
-  return curriedConsume
 }

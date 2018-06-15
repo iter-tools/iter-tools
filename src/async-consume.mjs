@@ -1,13 +1,15 @@
 import asyncIter from './async-iter'
 
-export default function consume (func, iterable) {
-  async function curriedConsume (i) {
-    for await (const item of asyncIter(i)) {
-      func(item)
-    }
+async function consume (func, iterable) {
+  for await (const item of asyncIter(iterable)) {
+    func(item)
   }
-  if (iterable) {
-    return curriedConsume(iterable)
+}
+
+export default function curriedConsume (func, iterable) {
+  if (!iterable) {
+    return iterable => consume(func, iterable)
   }
-  return curriedConsume
+
+  return consume(func, iterable)
 }

@@ -1,14 +1,15 @@
 import iter from './iter'
 
-export default function map (func, iterable) {
-  function * curriedMap (i) {
-    let c = 0
-    for (const item of iter(i)) {
-      yield func(item, c++)
-    }
+function * map (func, iterable) {
+  let c = 0
+  for (const item of iter(iterable)) {
+    yield func(item, c++)
   }
-  if (iterable) {
-    return curriedMap(iterable)
+}
+
+export default function curriedMap (func, iterable) {
+  if (!iterable) {
+    return iterable => map(func, iterable)
   }
-  return curriedMap
+  return map(func, iterable)
 }

@@ -1,17 +1,18 @@
 import asyncIter from './async-iter'
 
-export default function find (func, iterable) {
-  async function curriedFind (i) {
-    let c = 0
-    for await (const item of asyncIter(i)) {
-      if (func(item, c++)) {
-        return item
-      }
+async function find (func, iterable) {
+  let c = 0
+  for await (const item of asyncIter(iterable)) {
+    if (func(item, c++)) {
+      return item
     }
-    return null
   }
-  if (iterable) {
-    return curriedFind(iterable)
+  return null
+}
+
+export default function curriedFind (func, iterable) {
+  if (!iterable) {
+    return iterable => find(func, iterable)
   }
-  return curriedFind
+  return find(func, iterable)
 }

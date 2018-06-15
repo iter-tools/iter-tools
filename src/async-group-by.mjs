@@ -1,41 +1,41 @@
 import asyncIter from './async-iter'
 
-export default function groupBy (key, iterable) {
+async function * groupBy (key, iterable) {
   key = key || function (key) { return key }
-  async function * curriedGroupBy (iterable) {
-    iterable = asyncIter(iterable)
+  iterable = asyncIter(iterable)
 
-    let currentItem
-    let currentKey, previousKey
+  let currentItem
+  let currentKey, previousKey
 
-    async function * group () {
-      while (true) {
-        yield currentItem.value
-        currentItem = await iterable.next()
-        if (currentItem.done) return
-        currentKey = key(currentItem.value)
-        if (previousKey !== currentKey) {
-          return
-        }
-      }
-    };
-
-    currentItem = await iterable.next()
-
+  async function * group () {
     while (true) {
+      yield currentItem.value
+      currentItem = await iterable.next()
       if (currentItem.done) return
       currentKey = key(currentItem.value)
       if (previousKey !== currentKey) {
-        previousKey = currentKey
-        yield [currentKey, group()]
-      } else {
-        currentItem = await iterable.next()
+        return
       }
     }
-  }
+  };
 
-  if (typeof iterable !== 'undefined') {
-    return curriedGroupBy(iterable)
+  currentItem = await iterable.next()
+
+  while (true) {
+    if (currentItem.done) return
+    currentKey = key(currentItem.value)
+    if (previousKey !== currentKey) {
+      previousKey = currentKey
+      yield [currentKey, group()]
+    } else {
+      currentItem = await iterable.next()
+    }
   }
-  return curriedGroupBy
+}
+
+export default function curriedGroupBy (key, iterable) {
+  if (typeof iterable === 'undefined') {
+    return iterable => groupBy(key, iterable)
+  }
+  return groupBy(key, iterable)
 }
