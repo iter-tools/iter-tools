@@ -1,7 +1,7 @@
 Iter-tools
 ==========
 [![Build Status](https://travis-ci.org/sithmel/iter-tools.svg?branch=master)](https://travis-ci.org/sithmel/iter-tools)
-
+[![codecov.io](https://img.shields.io/codecov/c/github/sithmel/iter-tools/master.svg?style=flat-square)](http://codecov.io/github/sithmel/iter-tools?branch=master)
 iter-tools is an utility toolbox that allows you to unleash the power and expressiveness of iterators and generators.
 
 Create iterators
