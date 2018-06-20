@@ -1,15 +1,11 @@
 import asyncIter from './async-iter'
 
 export default async function * zip () {
-  let next, i, zipped
   const iters = Array.prototype.map.call(arguments, (arg) => asyncIter(arg))
   while (true) {
-    zipped = []
-    for (i = 0; i < iters.length; i++) {
-      next = await iters[i].next()
-      if (next.done) return
-      zipped.push(next.value)
-    }
-    yield zipped
+    const results = await Promise.all(iters.map((iter) => iter.next()))
+    const done = results.some((r) => r.done)
+    if (done) return
+    yield results.map((r) => r.value)
   }
 }

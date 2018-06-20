@@ -324,7 +324,8 @@ zip([1, 2], [3, 4], [5, 6, 7]); // [1, 3, 5], [2, 4, 6]
 ```
 
 ## async-zip
-Same as zip but works on both sync and async iterables.
+It returns the same results of zip and works on both sync and async iterables.
+Items are resolved in parallel.
 
 ## zip-longest
 It zips 2 or more iterables together. The iteration stops when the longesest iterable is exausted. The first argument is the placeholder used when an iterable is exausted.
@@ -333,7 +334,8 @@ zipLongest(null, [1, 2], [3, 4], [5, 6, 7]); // [1, 3, 5], [2, 4, 6], [null, nul
 ```
 
 ## async-zip-longest
-Same as zipLongest but works on both sync and async iterables.
+It returns the same results of zipLongest and works on both sync and async iterables.
+Items are resolved in parallel.
 
 ## enumerate
 It is a shorthand for zipping an index to an iterable:
