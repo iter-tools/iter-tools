@@ -8,23 +8,31 @@ export default function tee (iterable, number) {
   iterable = asyncIter(iterable)
   const arrays = Array.from(map(() => new Dequeue(), range(number)))
   let done = false
+
+  function fetch () {
+    return new Promise((resolve, reject) => {
+      iterable.next()
+        .then((newItem) => {
+          if (newItem.done) {
+            done = true
+            return resolve()
+          } else {
+            arrays.forEach((ar) => ar.push(newItem.value))
+            return resolve()
+          }
+        })
+        .catch((err) => reject(err))
+    })
+  }
+
   async function * teeGen (a) {
-    let newItem
     while (true) {
       if (a.length) {
         yield a.shift()
+      } else if (done) {
+        return
       } else {
-        if (done) {
-          return
-        }
-        newItem = await iterable.next()
-        if (newItem.done) {
-          done = true
-          return
-        } else {
-          arrays.forEach((ar) => ar.push(newItem.value))
-          yield a.shift()
-        }
+        await fetch()
       }
     }
   }

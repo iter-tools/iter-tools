@@ -8,23 +8,24 @@ export default function tee (iterable, number) {
   iterable = iter(iterable)
   const arrays = Array.from(map(() => new Dequeue(), range(number)))
   let done = false
+
+  function fetch () {
+    const newItem = iterable.next()
+    if (newItem.done) {
+      done = true
+    } else {
+      arrays.forEach((ar) => ar.push(newItem.value))
+    }
+  }
+
   function * teeGen (a) {
-    let newItem
     while (true) {
       if (a.length) {
         yield a.shift()
+      } else if (done) {
+        return
       } else {
-        if (done) {
-          return
-        }
-        newItem = iterable.next()
-        if (newItem.done) {
-          done = true
-          return
-        } else {
-          arrays.forEach((ar) => ar.push(newItem.value))
-          yield a.shift()
-        }
+        fetch()
       }
     }
   }

@@ -6,7 +6,7 @@ function delay (ms) {
 }
 
 async function * asyncThrottle (ms, iterable) {
-  let waitSince = Infinity
+  let waitSince = 0
   for await (const item of asyncIter(iterable)) {
     await delay(ms - (Date.now() - waitSince))
     waitSince = Date.now()

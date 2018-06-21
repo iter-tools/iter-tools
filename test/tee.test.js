@@ -3,6 +3,7 @@ const assert = require('chai').assert
 const teeES6 = require('../es2018/tee')
 const teeES5 = require('../es5/tee')
 
+const asyncIterToArray = require('../es2018/async-iter-to-array')
 const asyncTeeES6 = require('../es2018/async-tee')
 const asyncTeeES5 = require('../es5/async-tee')
 const range = require('../es2018/range')
@@ -56,6 +57,29 @@ describe('tee', function () {
         assert.equal((await iters[2].next()).value, 1)
         assert.equal((await iters[2].next()).value, 2)
         assert.equal((await iters[2].next()).done, true)
+      })
+
+      it('tee iterable', async function () {
+        const iters = asyncTee([0, 1, 2], 3)
+
+        assert.deepEqual(await asyncIterToArray(iters[0]), [0, 1, 2])
+        assert.deepEqual(await asyncIterToArray(iters[1]), [0, 1, 2])
+        assert.deepEqual(await asyncIterToArray(iters[2]), [0, 1, 2])
+      })
+
+      it('tee iterable async', function () {
+        const iters = asyncTee([0, 1, 2], 2)
+        const a = asyncIterToArray(iters[0])
+          .then(arr => {
+            assert.deepEqual(arr, [0, 1, 2])
+          })
+
+        const b = asyncIterToArray(iters[1])
+          .then(arr => {
+            assert.deepEqual(arr, [0, 1, 2])
+          })
+
+        return Promise.all([a, b])
       })
     })
   })
