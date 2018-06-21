@@ -1,6 +1,7 @@
 Iter-tools
 ==========
 [![Build Status](https://travis-ci.org/sithmel/iter-tools.svg?branch=master)](https://travis-ci.org/sithmel/iter-tools)
+
 iter-tools is an utility toolbox that allows you to unleash the power and expressiveness of iterators and generators.
 
 Create iterators
@@ -57,7 +58,10 @@ Utilities returning multiple iterators
 
 Utilities
 * [iter](#iter)
-* [async-iter](async-iter)
+* [async-iter](#async-iter)
+* [entries](#entries)
+* [keys](#keys)
+* [values](#values)
 * [async-iter-to-array](async-iter-to-array)
 * [execute](#execute)
 * [async-execute](#async-execute)
@@ -65,6 +69,9 @@ Utilities
 * [async-throttle](#async-throttle)
 * [consume](#consume)
 * [async-consume](#async-consume)
+* [find](#find)
+* [async-find](#async-find)
+* [size](#size)
 
 Combinatory generators
 * [products](#products)
@@ -86,7 +93,7 @@ Every module is available in 3 ecmascript editions: ES5, ES2015, ES2018.
 * Use ES2015 when you need to support modern browsers that don't support async iterables yet. This is also the right version for node 8 and below.
 * Use ES2018 when you know all your target environments natively support async iterables. Node 10 and above do.
 
-The individual modules can be required either using named imports, or by importing the specific submodule you need. Using named imports will include the entire library and thus should only be done when bundle weight is not a concern (node) or when using a es2015+ module versions in combination with webpack4+ or rollup.
+The individual modules can be required either using named imports, or by importing the specific submodule you need. Using named imports will include the entire library and thus should only be done when bundle weight is not a concern (node) or when using a es2015+ module versions in combination with webpack3+ or rollup.
 
 Here are some examples:
 
@@ -171,7 +178,7 @@ regexpSplitIter(/\s+/g, ['ab ', 's',' ', '  d']); // ab, s, d
 The same as regexpSplitIter Iter but for async iterables.
 
 ## split-lines
-It split an iterables in lines, joining fragments when there are no new line between them. It is compatible with any type of newline characters.
+It split an iterables in lines, joining fragments when there are no new line between them. It is compatible with any type of newline characters (it can't be curried).
 ```js
 splitLines(['a\nb', 'c\n', 'd']); // a, bc, d
 ```
@@ -206,33 +213,15 @@ This is more memory efficient of using array methods as it doesn't require to bu
 The equivalent of the array "map" function.
 ```js
 map(x => x * x, range(4)); // 0, 1, 4, 9
+```
+
+## async-map
+```js
 await asyncMap(animal => animal.kind, [
   Promise.resolve({type: 'cat'}),
   Promise.resolve({type: 'dog'})
 ]); // ['cat', 'dog']
 ```
-
-## async-find
-See map
-
-## find
-The equivalent of the array "find" function.
-```js
-find(animal => animal.kind === 'dog', [{type: 'cat'}, {type: 'dog'}])
-await asyncFind(animal => animal.kind === 'dog', [
-  Promise.resolve({type: 'cat'}),
-  Promise.resolve({type: 'dog'})
-]) // {type: 'dog'}
-```
-
-## size
-Returns the number of values yielded by an iterable.
-```js
-size([1, 2, 3]) // 3
-```
-
-## async-find
-See find
 
 ## filter
 The equivalent of the array "filter" function.
@@ -461,7 +450,6 @@ Array.from(values(obj)) // ['bar', 'far']
 deepEqual(Array.from(values(map)), values(obj)) // true
 ```
 
-
 ## async-iter-to-array
 It transform an asynchronous iterator to an array:
 ```js
@@ -488,7 +476,7 @@ asyncMapBatch(2, asyncFunction, iterable);
 ```
 
 ## async-throttle
-It wraps an async iterable and ensures that every item is yielded with an interval of n ms.
+It wraps an async iterable and ensures that every item is yielded with an interval of n ms (it can be curried).
 ```js
 asyncThrottle(10, iterable);
 ```
@@ -501,6 +489,27 @@ consume((item) => console.log(item), [1, 2, 3]) // prints 1, 2, 3
 
 ## async-consume
 The equivalent of consume, for async iterables. It returns a promise.
+
+## find
+The equivalent of the array "find" function (it can be curried).
+```js
+find(animal => animal.kind === 'dog', [{type: 'cat'}, {type: 'dog'}])
+```
+
+## async-find
+Same as find but for async iterables
+```js
+await asyncFind(animal => animal.kind === 'dog', [
+  Promise.resolve({type: 'cat'}),
+  Promise.resolve({type: 'dog'})
+]) // {type: 'dog'}
+```
+
+## size
+Returns the number of values yielded by an iterable. Without loading the whole sequence in memory. It works for both sync and async iterables.
+```js
+size([1, 2, 3]) // 3
+```
 
 # Combinatory generators
 
