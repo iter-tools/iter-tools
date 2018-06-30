@@ -15,7 +15,7 @@ describe('asyncThrottle', function () {
         const t0 = Date.now()
         assert.deepEqual(await asyncIterToArray(iter), [0, 1, 2, 3, 4, 5])
         const t1 = Date.now()
-        assert.isAbove(t1 - t0, 50)
+        assert.isAbove(t1 - t0, 40)
       })
     })
   })

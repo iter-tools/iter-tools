@@ -14,7 +14,9 @@ export default function regexpSplit (re, str) {
       return
     }
     for (i = 0; match = re.exec(str); i = re.lastIndex) { // eslint-disable-line no-cond-assign
-      yield str.slice(i, re.lastIndex - match[0].length)
+      const part = str.slice(i, re.lastIndex - match[0].length)
+      yield part
+      if (i === 0 && re.lastIndex === 0 && match[0].length === 0) break
       if (!re.global) break
     }
     yield str.slice(i)
