@@ -36,7 +36,7 @@
         "@babel/plugin-proposal-async-generator-functions"
       ]
     },
-    "cjs": {
+    "es2018-cjs": {
       "plugins": [
         "@babel/plugin-syntax-async-generators",
         "add-module-exports",

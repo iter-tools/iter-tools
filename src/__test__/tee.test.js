@@ -1,0 +1,69 @@
+/* eslint-env node, jest */
+const { tee, asyncTee, asyncIterToArray, range } = require('iter-tools')
+
+describe('tee', function () {
+  it('tee iterable', function () {
+    const iters = tee(range(3), 3)
+    expect(iters.length).toBe(3)
+    expect(iters[0].next().value).toBe(0)
+    expect(iters[0].next().value).toBe(1)
+
+    expect(iters[1].next().value).toBe(0)
+    expect(iters[1].next().value).toBe(1)
+    expect(iters[1].next().value).toBe(2)
+    expect(iters[1].next().done).toBe(true)
+
+    expect(iters[0].next().value).toBe(2)
+    expect(iters[0].next().done).toBe(true)
+
+    expect(iters[2].next().value).toBe(0)
+    expect(iters[2].next().value).toBe(1)
+    expect(iters[2].next().value).toBe(2)
+    expect(iters[2].next().done).toBe(true)
+  })
+})
+
+describe('asyncTee', function () {
+  it('tee iterable', async function () {
+    const iters = asyncTee(range(3), 3)
+    expect(iters.length).toBe(3)
+    expect((await iters[0].next()).value).toBe(0)
+    expect((await iters[0].next()).value).toBe(1)
+
+    expect((await iters[1].next()).value).toBe(0)
+    expect((await iters[1].next()).value).toBe(1)
+    expect((await iters[1].next()).value).toBe(2)
+    expect((await iters[1].next()).done).toBe(true)
+
+    expect((await iters[0].next()).value).toBe(2)
+    expect((await iters[0].next()).done).toBe(true)
+
+    expect((await iters[2].next()).value).toBe(0)
+    expect((await iters[2].next()).value).toBe(1)
+    expect((await iters[2].next()).value).toBe(2)
+    expect((await iters[2].next()).done).toBe(true)
+  })
+
+  it('tee iterable', async function () {
+    const iters = asyncTee([0, 1, 2], 3)
+
+    expect(await asyncIterToArray(iters[0])).toEqual([0, 1, 2])
+    expect(await asyncIterToArray(iters[1])).toEqual([0, 1, 2])
+    expect(await asyncIterToArray(iters[2])).toEqual([0, 1, 2])
+  })
+
+  it('tee iterable async', function () {
+    const iters = asyncTee([0, 1, 2], 2)
+    const a = asyncIterToArray(iters[0])
+      .then(arr => {
+        expect(arr).toEqual([0, 1, 2])
+      })
+
+    const b = asyncIterToArray(iters[1])
+      .then(arr => {
+        expect(arr).toEqual([0, 1, 2])
+      })
+
+    return Promise.all([a, b])
+  })
+})
