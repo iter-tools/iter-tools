@@ -65,7 +65,6 @@ Utilities
 * [async-iter-to-array](async-iter-to-array)
 * [execute](#execute)
 * [async-execute](#async-execute)
-* [async-map-batch](#async-map-batch)
 * [async-throttle](#async-throttle)
 * [consume](#consume)
 * [async-consume](#async-consume)
@@ -466,13 +465,6 @@ iter(() => Math.round(Math.random() * 10) ); // 3, 5, 9 ...
 It returns an iterator that returns the output of an asynchronous function (promise based) at every iteration.
 ```js
 asyncIter(() => Promise.resolve(Math.round(Math.random() * 10)) ); // 3, 5, 9 ...
-```
-
-## async-map-batch
-It executes an async function on iterable items on batch of n. Then it returns the result as iterable.
-It is a version of asyncMap that allows to run functions in parallel.
-```js
-asyncMapBatch(2, asyncFunction, iterable);
 ```
 
 ## async-throttle

@@ -6,8 +6,8 @@ export declare function keys(iterable: any): Iterable<any>; // TODO, type me?
 export declare function values(iterable: any): Iterable<any>;
 export declare function entries(iterable: any): Iterable<any>;
 
-export declare function batch<T>(number: number): (iterable: IterableLike<T>) => Iterable<T>;
-export declare function batch<T>(number: number, iterable: IterableLike<T>): Iterable<T>;
+export declare function batch<T>(number: number): (iterable: IterableLike<T>) => Iterable<Iterable<T>>;
+export declare function batch<T>(number: number, iterable: IterableLike<T>): Iterable<Iterable<T>>;
 
 export declare function chain<T>(...iterables: IterableLike<T>[]): Iterable<T>;
 
@@ -161,9 +161,6 @@ export declare function asyncRegexpExecIter(re: RegExp): (iterable: AsyncIterabl
 export declare function asyncRegexpExecIter(re: RegExp, iterable: AsyncIterableLike<string>): AsyncIterableLike<string>;
 
 export declare function asyncSplitLines(iterable: AsyncIterableLike<string>) => AsyncIterableLike<string>;
-
-export declare function asyncMapBatch<T>(number: number, func: (item: T) => O): (iterable: AsyncIterableLike<T>) => AsyncIterable<T>;
-export declare function asyncMapBatch<T>(number: number, func: (item: T) => O, iterable: AsyncIterableLike<T>): AsyncIterable<T>;
 
 export declare function asyncThrottle<T>(number: number): (iterable: AsyncIterableLike<T>) => AsyncIterable<T>;
 export declare function asyncThrottle<T>(number: number, iterable: AsyncIterableLike<T>): AsyncIterable<T>;

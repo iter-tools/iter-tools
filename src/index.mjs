@@ -59,6 +59,4 @@ export { default as asyncZip } from './async-zip'
 export { default as asyncRegexpSplitIter } from './async-regexp-split-iter'
 export { default as asyncRegexpExecIter } from './async-regexp-exec-iter'
 export { default as asyncSplitLines } from './async-split-lines'
-
-export { default as asyncMapBatch } from './async-map-batch'
 export { default as asyncThrottle } from './async-throttle'
