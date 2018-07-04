@@ -1,9 +1,12 @@
 import iter from './iter'
 
-export default function * zip (...args) {
-  const iters = args.map(x => iter(x))
+export default function * zip (iterables, reuseEntry = false) {
+  const iters = iterables.map(i => iter(i))
+  let zipped = []
   while (true) {
-    const zipped = []
+    zipped = reuseEntry ? zipped : []
+    zipped.length = 0
+
     for (const iter of iters) {
       const {done, value} = iter.next()
       if (done) return

@@ -11,7 +11,7 @@ function isEven (x) {
 
 describe('compose', function () {
   it('composes iterables', function () {
-    const iter = compose([map(power2), filter(isEven), map(power2)])
+    const iter = compose(map(power2), filter(isEven), map(power2))
     expect(Array.from(iter([1, 2, 3, 4]))).toEqual([16, 256])
   })
 })

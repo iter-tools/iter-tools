@@ -4,6 +4,8 @@ Iter-tools
 
 iter-tools is an utility toolbox that allows you to unleash the power and expressiveness of iterators and generators.
 
+If you want some ideas about how and when Iterators and iter-tools can help you out, take a look at [The Cookbook](https://github.com/sithmel/iter-tools/blob/master/COOKBOOK.md).
+
 Create iterators
 * [range](#range)
 * [count](#count)
@@ -203,8 +205,8 @@ The same as regexpExecIter but for async iterables.
 # Transform a single iterable
 These series of generators take as first argument a function and as a second an iterable. If the second argument is omitted it automatically returns a curried function. These functions can be composed:
 ```js
-const iterator = compose([map(x => x * x), filter(isEven)]);
-iterator([ ...... ]);
+const iterator = compose(map(x => x * x), filter(isEven));
+iterator([ 1, 2, 3, 4 ]); // 4, 16
 ```
 This is more memory efficient of using array methods as it doesn't require to build intermediate arrays.
 
@@ -306,24 +308,28 @@ chain([3, 5, 6], [1, 1], [10]); // 3, 5, 6, 1, 1, 10
 Same as chain but works on both sync and async iterables.
 
 ## zip
-It zips 2 or more iterables together. The iteration stops when the shortest iterable is exausted.
+Zip receives an array of 2 or more iterables. It returns an iterable of entries, each of which contains one item from each of the input iterables. The iteration stops when the shortest input iterable is exausted.
+
+Zip has an optional second parameter, `reuseEntry`, which will cause each entry in the resulting zipped iterable to be the same Array instance. Only useful as a performance optimization when you are sure the lifecycle of the entry object will be complete before the next iteration begins.
 ```js
-zip([1, 2], [3, 4], [5, 6, 7]); // [1, 3, 5], [2, 4, 6]
+zip([[1, 2], [3, 4], [5, 6, 7]]); // [1, 3, 5], [2, 4, 6]
 ```
 
 ## async-zip
 It returns the same results of zip and works on both sync and async iterables.
-Items are resolved in parallel.
+Items are resolved in parallel. AsyncZip will never reuse entries.
 
 ## zip-longest
-It zips 2 or more iterables together. The iteration stops when the longesest iterable is exausted. The first argument is the placeholder used when an iterable is exausted.
+ZipLongest receives an array of 2 or more iterables. It returns an iterable of entries, each of which contains one item from each of the input iterables. The iteration stops when the longesest iterable is exausted. The first argument is the placeholder used when an iterable is exausted.
+
+ZipLongest has an optional third parameter, `reuseEntry`, which will cause each entry in the resulting zipped iterable to be the same Array instance. Only useful as a performance optimization when you are sure the lifecycle of the entry object will be complete before the next iteration begins.
 ```js
-zipLongest(null, [1, 2], [3, 4], [5, 6, 7]); // [1, 3, 5], [2, 4, 6], [null, null, 7]
+zipLongest(null, [[1, 2], [3, 4], [5, 6, 7]]); // [1, 3, 5], [2, 4, 6], [null, null, 7]
 ```
 
 ## async-zip-longest
 It returns the same results of zipLongest and works on both sync and async iterables.
-Items are resolved in parallel.
+Items are resolved in parallel. AsyncZipLongest will never reuse entries.
 
 ## enumerate
 It is a shorthand for zipping an index to an iterable:
@@ -412,6 +418,8 @@ for await (const n of iter) {
 Takes in a plain object, null, a Map, or any other object which defines an `entries` method.
 When given an Object, it is equivalent to Object.entries, otherwise it calls `entries()`
 When passed a nullish value, returns an empty iterable.
+
+Entries takes an optional second parameter, `reuseEntry`, which defaults to false. If enabled, `entries` will emit the same entry item on each iteration step, changing that entry's values each time. If the target object is Map-like, `entries(target, true)` will attempt to call `target.keys` and `target.values` instead of `target.entries`. _If you are not certain this is safe to do, do not do it!_. Look at [Cookbook#reusing-entries](https://github.com/sithmel/iter-tools/blob/master/COOKBOOK.md#reusing-entries) for more information.
 
 `entries` is a great way to construct Maps from objects
 

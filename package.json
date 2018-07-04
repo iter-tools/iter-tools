@@ -29,9 +29,16 @@
     "prepush": "npm run test"
   },
   "keywords": [
-    "iterators",
+    "Iterator",
+    "Generator",
+    "Map",
+    "Set",
+    "map",
+    "filter",
+    "functional",
     "itertools",
-    "generators",
+    "tools",
+    "utils",
     "async"
   ],
   "repository": "git@github.com:sithmel/iter-tools.git",

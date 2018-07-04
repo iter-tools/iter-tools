@@ -1,11 +1,12 @@
+import compose from './compose'
 import zip from './async-zip'
 import filter from './async-filter'
 import map from './async-map'
 
-export default function compress (iterable, compress) {
-  const _map = map(function (couple) { return couple[0] })
-  const _filter = filter(function (couple) {
-    return couple[1]
-  })
-  return _map(_filter(zip(iterable, compress)))
+export default function compress (...args) {
+  return compose(
+    map(entry => entry[0]),
+    filter(entry => entry[1]),
+    (iterable, compress) => zip([iterable, compress], true)
+  )(...args)
 }

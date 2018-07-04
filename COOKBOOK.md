@@ -1,0 +1,144 @@
+# The iter-tools Cookbook
+
+Here are some ideas about how iter-tools could simplify common coding tasks!
+
+## Successive functional operations
+If you're already familiar with the advantages of iterators, you should skip this section.
+
+The functional style is very convenient and powerful and javascript. You will frequently find that it is helpful to express transformations on data as a series of calls to methods like Array.map and Array.filter. For example:
+```js
+const users = [
+  [1, {first: 'Ada', last: 'Lovelace', status: 'active'}],
+  null,
+  [3, {status: 'banned'}],
+  [4, {nameless: true, status: 'active'}], // TODO 2/2/1994 remove nameless users
+];
+
+const activeUserNames =
+  users
+    .filter(Boolean) // separate for the purposes of type checking, perhaps
+    .filter(([id, user]) => user.status === 'active')
+    .map(([id, user]) => [user.first, user.last].join(' '))
+    .filter(name => name.length > 0);
+```
+
+In this (possibly slightly contrived) example, the problem is that each of our four functional operations creates a separate array. If our list of users was large to begin with, we're wasting a lot of memory and making unnecessary work for the garbage collector in order to allocate intermediate arrays which are not part of our output anyway. In this regard our function is four times heavier than it needs to be!
+
+Iterators avoid making those intermediate allocations by executing all their specified transformations on an individual item before moving on to the next item.
+
+Using iter-tools, the above example would look like:
+```js
+import { map, filter, compose } from 'iter-tools';
+
+const activeUserNames = Array.from(compose(
+    filter(name => name.length > 0),
+    map(([id, user]) => [user.first, user.last].join(' ')),
+    filter(([id, user]) => user.status === 'active'),
+    filter(Boolean),
+  )(users));
+```
+
+## The toolbox that should have come with [Map](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map).
+
+The silliest thing about es6 Maps is that they don't come with any tooling.
+
+None of the standard functional utilites like `map` or `filter` can be found on `Map.prototype`. Instead there are only a few iterators exposed, and a constructor that takes iterables... My personal theory is that the language authors recognized that these methods could be easily (and reusably) implemented by an iterator library.
+
+So here they are, the missing methods for Maps!
+
+```js
+const users = new Map([
+  [1, {name: 'Ada Lovelace', status: 'active'}],
+  [3, {name: null, status: 'banned'}],
+]);
+
+const posts = new Map([
+  [1, {user: 1, text: 'Hello world!'}],
+  [2, {user: 1, text: 'The only certain things in life are death and taxes.'}],
+  [3, {user: 3, text: 'HUGE SALES AT CARPET EMPORIUM! SAVE SAVE SAVE!'}]
+]);
+
+const postsByActiveUsers = new Map(compose(
+  filter(([id, post]) => post.user.status === 'active'),
+  map(([id, post]) => ({...post, user: users.get(post.user.id)})),
+)(users));
+```
+
+## Reusing Entries
+The iter-tools `entries` function takes a second parameter, `reuseEntry`. 
+
+This parameter is strictly a performance optimization. In the case of small objects its impact will be minimal. **It should not be used if you are not sure that it is safe!** Use the examples below as guidance as to what is safe.
+
+Reusing entries avoids needless memory allocation. In each of the examples below, passing true for `reuseEntry` will eliminate the need to allocate an entire set of entry objects, saving the garbage collector work later.
+
+This is because it is imperative that Maps never expose their internal entries tuples, whose mutation would trigger real state changes to (or inconsistencies in) the data structure. Thus a full set of entries objects is normally allocated even when the usage, as in these examples, does not strictly require it.
+
+### Instantiating Maps
+```js
+const myMap = new Map(entries({
+  foo: 'foo',
+  bar: 'bar',
+}, true));
+```
+
+### Destructured iteration on Maps
+```js
+for (const [key, value] of entries(myMap, true)) {
+  // ...
+}
+```
+
+### Copying Maps
+```js
+const myMapCopy = new Map(entries(myMap, true));
+```
+
+## Managing asynchronicity
+
+The lazy nature of iterators make them a great match for loading additional data. You get to write the code as if all the data were being fetched at once using common constructs like map, yet you can consume items from the iterator lazily, not fetching additional data until the user is ready.
+
+From a UI perspective this is not a good pattern for random access paging, however it can work great for infinte scroll.
+
+### Infinite Scroll
+This example uses a synchronous iterator of Promises because the data which will be iterated over is known at the outset.
+```js
+const user = {
+  friends: [4, 100, 101, 100021, 112358, ... ] // hundreds of items, perhaps
+}
+
+const batchedRequests = compose(
+  map(Promise.all), // each user's data will be fetched in parallel
+  batch(25),
+  map(id => fetch(`users/${id}`).then(res => res.json()).then()),
+)(user.friends);
+
+const page1Results = await batchedRequests.next().value; 
+const page2Results = await batchedRequests.next().value;
+```
+
+### Cursor-based Infinite Scroll
+Cursor based infinite scroll is designed eliminate problems with offset-based infinite scroll when data is dynamic. Coding something like `?offset=25` into a request to get page 2 can be problematic, since the appearance of new data in the feed could push to page 2 items which previously were already displayed as part of page 1. To avoid this cursor objects can be used to track a paging user's position in a feed.
+
+Note also that we don't know for sure how many pages of data there will be when we start iterating. Items could be added to the middle of the list, creating more pages than existed when paging was initiated. For this reason we need to user async tools to accomplish this task.
+
+This example is based on the structure of data specified in the [GraphQL connection specification](https://facebook.github.io/relay/graphql/connections.htm), though it doesn't use GraphQL.
+
+```js
+import last from 'array-last';
+
+let cursor = null;
+const cursorPagedResults = compose(
+  asyncMap(response => response.edges.map(edge => edge.node)),
+  asyncTakeWhile(reponse => response.pageInfo.hasNextPage),
+  asyncMap(response => { cursor = last(response.edges).cursor; return response; }),
+  asyncMap(response => res.json()),
+  asyncMap(() => fetch(`/feed?pageSize=25${cursor ? `&after=${cursor}` : ''}`)),
+)(asyncIter(range()))
+
+const {value: page1Results} = await cursorPagedResults.next();
+const {value: page2Results} = await cursorPagedResults.next();
+```
+
+## Your recipe here!
+
+If you have uncovered a use case where iterators can enhance the performance, readability, or maintainability of a particular coding task please submit a pull request to the cookbook!
