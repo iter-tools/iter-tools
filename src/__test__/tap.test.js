@@ -1,5 +1,5 @@
 /* eslint-env node, jest */
-const { tap, asyncTap, asyncIterToArray, range } = require('iter-tools')
+const { tap, asyncTap, asyncToArray, range } = require('iter-tools')
 
 describe('tap', function () {
   it('return tapped iterable', function () {
@@ -21,16 +21,16 @@ describe('tap', function () {
 describe('asyncTap', function () {
     it('return tapped iterable', async function () {
       const iter = asyncTap(function (item) { return item * 2 }, [1, 2, 3])
-      expect(await asyncIterToArray(iter)).toEqual([1, 2, 3])
+      expect(await asyncToArray(iter)).toEqual([1, 2, 3])
     })
 
     it('return tapped iterable from iterable', async function () {
       const iter = asyncTap(function (item) { return item * 2 }, range({ start: 1, end: 4 }))
-      expect(await asyncIterToArray(iter)).toEqual([1, 2, 3])
+      expect(await asyncToArray(iter)).toEqual([1, 2, 3])
     })
 
     it('return tapped iterable (curried version)', async function () {
       const iter = asyncTap(function (item) { return item * 2 })
-      expect(await asyncIterToArray(iter(range({ start: 1, end: 4 })))).toEqual([1, 2, 3])
+      expect(await asyncToArray(iter(range({ start: 1, end: 4 })))).toEqual([1, 2, 3])
     })
 })

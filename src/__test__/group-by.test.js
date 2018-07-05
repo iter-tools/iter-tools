@@ -1,5 +1,5 @@
 /* eslint-env node, jest */
-const { groupBy, asyncGroupBy, asyncIterToArray } = require('iter-tools')
+const { groupBy, asyncGroupBy, asyncToArray } = require('iter-tools')
 
 describe('groupBy', function () {
   it('groupBy main cursor', function () {
@@ -113,19 +113,19 @@ describe('asyncGroupBy', function () {
     let next
     next = await iter.next()
     expect(next.value[0]).toBe('A')
-    expect(await asyncIterToArray(next.value[1])).toEqual(['A', 'A', 'A'])
+    expect(await asyncToArray(next.value[1])).toEqual(['A', 'A', 'A'])
     next = await iter.next()
     expect(next.value[0]).toBe('B')
-    expect(await asyncIterToArray(next.value[1])).toEqual(['B', 'B'])
+    expect(await asyncToArray(next.value[1])).toEqual(['B', 'B'])
     next = await iter.next()
     expect(next.value[0]).toBe('A')
-    expect(await asyncIterToArray(next.value[1])).toEqual(['A', 'A'])
+    expect(await asyncToArray(next.value[1])).toEqual(['A', 'A'])
     next = await iter.next()
     expect(next.value[0]).toBe('C')
-    expect(await asyncIterToArray(next.value[1])).toEqual(['C', 'C', 'C', 'C'])
+    expect(await asyncToArray(next.value[1])).toEqual(['C', 'C', 'C', 'C'])
     next = await iter.next()
     expect(next.value[0]).toBe('D')
-    expect(await asyncIterToArray(next.value[1])).toEqual(['D'])
+    expect(await asyncToArray(next.value[1])).toEqual(['D'])
     next = await iter.next()
     expect(next.done).toBe(true)
   })

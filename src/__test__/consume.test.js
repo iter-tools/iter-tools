@@ -1,5 +1,5 @@
 /* eslint-env node, jest */
-const { consume, asyncConsume, asyncIterToArray, range } = require('iter-tools')
+const { consume, asyncConsume, asyncToArray, range } = require('iter-tools')
 
 describe('consume', function () {
   it('consume an iterable', function () {

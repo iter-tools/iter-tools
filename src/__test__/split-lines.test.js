@@ -1,5 +1,5 @@
 /* eslint-env node, jest */
-const { splitLines, asyncSplitLines, asyncIterToArray } = require('iter-tools')
+const { splitLines, asyncSplitLines, asyncToArray } = require('iter-tools')
 
 describe('splitLines', function () {
   it('should split 1', function () {
@@ -15,10 +15,10 @@ describe('splitLines', function () {
 describe('asyncSplitLines', function () {
   it('should split 1', async function () {
     const iter = asyncSplitLines(['aa', '\nb', 'cc'])
-    expect(await asyncIterToArray(iter)).toEqual(['aa', 'bcc'])
+    expect(await asyncToArray(iter)).toEqual(['aa', 'bcc'])
   })
   it('should split 2', async function () {
     const iter = asyncSplitLines(['aa\n', 'b ', 'cc\n'])
-    expect(await asyncIterToArray(iter)).toEqual(['aa', 'b cc', ''])
+    expect(await asyncToArray(iter)).toEqual(['aa', 'b cc', ''])
   })
 })

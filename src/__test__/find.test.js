@@ -1,5 +1,5 @@
 /* eslint-env node, jest */
-const { find, asyncFind, asyncIterToArray, range } = require('iter-tools')
+const { find, asyncFind, asyncToArray, range } = require('iter-tools')
 
 describe('find', function () {
   it('return found item', function () {

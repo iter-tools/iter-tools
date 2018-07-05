@@ -1,8 +1,8 @@
 /* eslint-env node, jest */
-const { regexpExecIter, asyncRegexpExecIter, asyncIterToArray } = require('iter-tools')
+const { regexpExecIter, asyncRegexpExecIter, asyncToArray } = require('iter-tools')
 
 const getMatchesArray = (iter) => Array.from(iter).map((matches) => matches[0])
-const getMatchesArrayAsync = async (iter) => (await asyncIterToArray(iter)).map((matches) => matches[0])
+const getMatchesArrayAsync = async (iter) => (await asyncToArray(iter)).map((matches) => matches[0])
 
 describe('regexpExecIter', function () {
   it('should exec 1', function () {

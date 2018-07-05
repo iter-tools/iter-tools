@@ -1,5 +1,5 @@
 /* eslint-env node, jest */
-const { tee, asyncTee, asyncIterToArray, range } = require('iter-tools')
+const { tee, asyncTee, asyncToArray, range } = require('iter-tools')
 
 describe('tee', function () {
   it('tee iterable', function () {
@@ -47,19 +47,19 @@ describe('asyncTee', function () {
   it('tee iterable', async function () {
     const iters = asyncTee([0, 1, 2], 3)
 
-    expect(await asyncIterToArray(iters[0])).toEqual([0, 1, 2])
-    expect(await asyncIterToArray(iters[1])).toEqual([0, 1, 2])
-    expect(await asyncIterToArray(iters[2])).toEqual([0, 1, 2])
+    expect(await asyncToArray(iters[0])).toEqual([0, 1, 2])
+    expect(await asyncToArray(iters[1])).toEqual([0, 1, 2])
+    expect(await asyncToArray(iters[2])).toEqual([0, 1, 2])
   })
 
   it('tee iterable async', function () {
     const iters = asyncTee([0, 1, 2], 2)
-    const a = asyncIterToArray(iters[0])
+    const a = asyncToArray(iters[0])
       .then(arr => {
         expect(arr).toEqual([0, 1, 2])
       })
 
-    const b = asyncIterToArray(iters[1])
+    const b = asyncToArray(iters[1])
       .then(arr => {
         expect(arr).toEqual([0, 1, 2])
       })

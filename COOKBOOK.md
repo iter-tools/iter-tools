@@ -28,14 +28,15 @@ Iterators avoid making those intermediate allocations by executing all their spe
 
 Using iter-tools, the above example would look like:
 ```js
-import { map, filter, compose } from 'iter-tools';
+import { map, filter, compose, toArray } from 'iter-tools';
 
-const activeUserNames = Array.from(compose(
+const activeUserNames = compose(
+    toArray,
     filter(name => name.length > 0),
     map(([id, user]) => [user.first, user.last].join(' ')),
     filter(([id, user]) => user.status === 'active'),
     filter(Boolean),
-  )(users));
+  )(users);
 ```
 
 ## The toolbox that should have come with [Map](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map).

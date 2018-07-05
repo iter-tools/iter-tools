@@ -11,13 +11,9 @@ Create iterators
 * [count](#count)
 * [repeat](#repeat)
 * [cycle](#cycle)
-
-Strings manipulation
-* [regexpExec](#regexp-exec)
-* [regexpSplit](#regexp-split)
-* [regexpSplitIter](#regexp-split-iter) ([async](#async-regexp-split-iter))
-* [splitLines](#split-lines) ([async](#async-split-lines))
-* [regexpExecIter](#regexp-exec-iter) ([async](#async-regexp-exec-iter))
+* [entries](#entries)
+* [keys](#keys)
+* [values](#values)
 
 Transform a single iterable
 * [map](#map) ([async](#async-map))
@@ -40,21 +36,23 @@ Utilities returning multiple iterators
 * [groupBy](#group-by) ([async](#group-by))
 * [tee](#tee) ([async](#async-tee))
 
-Map and Object Utilities
-* [entries](#entries)
-* [keys](#keys)
-* [values](#values)
-
 Utilities
 * [iter](#iter)
 * [asyncIter](#async-iter)
-* [asyncIterToArray](async-iter-to-array)
+* [toArray](#to-array) ([async](#async-to-array))
 * [execute](#execute) ([async](#async-execute))
-* [asyncThrottle](#async-throttle)
 * [consume](#consume) ([async](#async-consume))
 * [find](#find) ([async](#async-find))
 * [tap](#tap) ([async](#async-tap))
-* [size](#size)
+* [size](#size) ([async](#async-size))
+* [asyncThrottle](#async-throttle)
+
+Strings manipulation
+* [regexpExec](#regexp-exec)
+* [regexpSplit](#regexp-split)
+* [regexpSplitIter](#regexp-split-iter) ([async](#async-regexp-split-iter))
+* [splitLines](#split-lines) ([async](#async-split-lines))
+* [regexpExecIter](#regexp-exec-iter) ([async](#async-regexp-exec-iter))
 
 Combinatory generators
 * [products](#products)
@@ -72,7 +70,7 @@ This should help clarify the documentation. You can also get more informations h
 #### Javascript support
 Every module is available in 3 ecmascript editions: ES5, ES2015, ES2018.
 
-* Use ES5 when you need to support IE11.
+* Use ES5 when you need to support IE11 or when you are authoring a library.
 * Use ES2015 when you need to support modern browsers that don't support async iterables yet. This is also the right version for node 8 and below.
 * Use ES2018 when you know all your target environments natively support async iterables. Node 10 and above do.
 
@@ -123,66 +121,49 @@ It cycles the same iterable forever.
 cycle(range(3)); // 0, 1, 2, 0, 1, 2, 0, 1, 2 ....
 ```
 
-# Strings Manipulation
-These generators take as a first argument a regular expression. If the second argument is omitted it automatically returns a curried function.
+## entries
+Takes in a plain object, null, a Map, or any other object which defines an `entries` method.
+When given an Object, it is equivalent to Object.entries, otherwise it calls `entries()`
+When passed a nullish value, returns an empty iterable.
 
-## regexp-exec
-It runs a regular expression on a string. Every iteration returns a new match. You should use a "global" regular expression to return multiple matches. The returned object type is the same one returned by the "RegExp.prototype.exec" method (https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp/exec).
-* [0] the full string matching the reg exp
-* [1] ... [n] the matching groups
-* index: the 0 based index of the match
-* input: the original string
-```js
-const iter = regexpExec(/[0-9]{4}/g, '10/2/2013, 03/03/2015 12/4/1997');
-for (let [match] of iter) {
-  console.log(match); // '2013', '2015', '1997'
-}
-```
-Note:
-* global regular expressions are mutable, you can't reuse the same object more than once
-* the destructuring expression [match] extract only the first match
+Entries takes an optional second parameter, `reuseEntry`, which defaults to false. If enabled, `entries` will emit the same entry item on each iteration step, changing that entry's values each time. If the target object is Map-like, `entries(target, true)` will attempt to call `target.keys` and `target.values` instead of `target.entries`. _If you are not certain this is safe to do, do not do it!_. Look at [Cookbook#reusing-entries](https://github.com/sithmel/iter-tools/blob/master/COOKBOOK.md#reusing-entries) for more information.
 
-## regexp-split
-It splits a string. You can split by regular expression or string.
-```js
-regexpSplit(/\s+/g, 'ab s   d'); // ab, s, d
-```
-Note:
-* the regular expression is automatically converted to "global"
-* you can use a string (it will be internally transformed to global regExp)
+`entries` is a great way to construct Maps from objects
 
-## regexp-split-iter
-It takes an iterators of strings and output an iterable split using the regular expression.
 ```js
-regexpSplitIter(/\s+/g, ['ab ', 's',' ', '  d']); // ab, s, d
+const obj = {foo: 'bar', fox: 'far'}
+const map = new Map(entries(obj))
+
+Array.from(entries(obj)) // [['foo': 'bar'], 'fox': 'far']]
+deepEqual(Array.from(entries(map)), entries(obj)) // true
 ```
 
-## async-regexp-split-iter
-The same as regexpSplitIter Iter but for async iterables.
+## keys
+Takes in a plain object, null, a Map, or any other object which defines an `keys` method.
+When given an Object, it is equivalent to Object.keys, otherwise it calls `keys()`
+When passed a nullish value, returns an empty iterable.
 
-## split-lines
-It split an iterables in lines, joining fragments when there are no new line between them. It is compatible with any type of newline characters (it can't be curried).
 ```js
-splitLines(['a\nb', 'c\n', 'd']); // a, bc, d
+const obj = {foo: 'bar', fox: 'far'}
+const map = new Map(entries(obj))
+
+Array.from(keys(obj)) // ['foo', 'fox'];
+deepEqual(Array.from(keys(map)), keys(obj)) // true
 ```
 
-## async-split-lines
-The same as splitLines but for async iterables.
+## values
+Takes in a plain object, null, a Map, or any other object which defines an `values` method.
+When given an Object, it is equivalent to Object.values, otherwise it calls `values()`
+When passed a nullish value, returns an empty iterable.
 
-## regexp-exec-iter
-It takes a regular expression and an iterators of strings and output an iterable containing the matches.
 ```js
-const iter = regexpExecIter(/[0-9]+/g, ['1', '23', ' 2 ex', 'amp', 'le: 34', '6']);
-for (let [match] of iter) {
-  console.log(match); // 123, 2, 346
-}
-```
-Note:
-* global regular expressions are mutable, you can't reuse the same object more than once
-* the destructuring expression [match] extract only the first match
+const obj = {foo: 'bar', fox: 'far'}
+const map = new Map(entries(obj))
 
-## async-regexp-exec-iter
-The same as regexpExecIter but for async iterables.
+Array.from(values(obj)) // ['bar', 'far']
+deepEqual(Array.from(values(map)), values(obj)) // true
+```
+
 
 # Transform a single iterable
 These series of generators take as first argument a function and as a second an iterable. If the second argument is omitted it automatically returns a curried function. These functions can be composed:
@@ -369,51 +350,6 @@ tee(range(3), 4); // [iter1, iter2, iter3, iter4]
 ## async-tee
 Same as tee but works on both sync and async iterables.
 
-# Map and Object Utilities
-
-## entries
-Takes in a plain object, null, a Map, or any other object which defines an `entries` method.
-When given an Object, it is equivalent to Object.entries, otherwise it calls `entries()`
-When passed a nullish value, returns an empty iterable.
-
-Entries takes an optional second parameter, `reuseEntry`, which defaults to false. If enabled, `entries` will emit the same entry item on each iteration step, changing that entry's values each time. If the target object is Map-like, `entries(target, true)` will attempt to call `target.keys` and `target.values` instead of `target.entries`. _If you are not certain this is safe to do, do not do it!_. Look at [Cookbook#reusing-entries](https://github.com/sithmel/iter-tools/blob/master/COOKBOOK.md#reusing-entries) for more information.
-
-`entries` is a great way to construct Maps from objects
-
-```js
-const obj = {foo: 'bar', fox: 'far'}
-const map = new Map(entries(obj))
-
-Array.from(entries(obj)) // [['foo': 'bar'], 'fox': 'far']]
-deepEqual(Array.from(entries(map)), entries(obj)) // true
-```
-
-## keys
-Takes in a plain object, null, a Map, or any other object which defines an `keys` method.
-When given an Object, it is equivalent to Object.keys, otherwise it calls `keys()`
-When passed a nullish value, returns an empty iterable.
-
-```js
-const obj = {foo: 'bar', fox: 'far'}
-const map = new Map(entries(obj))
-
-Array.from(keys(obj)) // ['foo', 'fox'];
-deepEqual(Array.from(keys(map)), keys(obj)) // true
-```
-
-## values
-Takes in a plain object, null, a Map, or any other object which defines an `values` method.
-When given an Object, it is equivalent to Object.values, otherwise it calls `values()`
-When passed a nullish value, returns an empty iterable.
-
-```js
-const obj = {foo: 'bar', fox: 'far'}
-const map = new Map(entries(obj))
-
-Array.from(values(obj)) // ['bar', 'far']
-deepEqual(Array.from(values(map)), values(obj)) // true
-```
-
 # Utilities
 
 ## iter
@@ -441,10 +377,16 @@ for await (const n of iter) {
 }
 ```
 
-## async-iter-to-array
-It transform an asynchronous iterator to an array:
+## to-array
+Transform an iterator to an array. toArray is implemented as Array.from. It is included for consistency since Array.from has no counterpart for use with async iterators.
 ```js
-const arr = await asyncIterToArray(asyncIter);
+const arr = toArray(iter);
+```
+
+## async-to-array
+Transforms an asynchronous iterator to an array:
+```js
+const arr = await asyncToArray(asyncIter);
 ```
 
 ## execute
@@ -457,12 +399,6 @@ iter(() => Math.round(Math.random() * 10) ); // 3, 5, 9 ...
 It returns an iterator that returns the output of an asynchronous function (promise based) at every iteration.
 ```js
 asyncIter(() => Promise.resolve(Math.round(Math.random() * 10)) ); // 3, 5, 9 ...
-```
-
-## async-throttle
-It wraps an async iterable and ensures that every item is yielded with an interval of n ms (it can be curried).
-```js
-asyncThrottle(10, iterable);
 ```
 
 ## consume
@@ -512,6 +448,79 @@ Returns the number of values yielded by an iterable. Without loading the whole s
 ```js
 size([1, 2, 3]) // 3
 ```
+
+## async-size
+Returns the number of values yielded by an iterable. Without loading the whole sequence in memory. It works for both sync and async iterables.
+```js
+asyncSize(asyncIter([1, 2, 3])) // 3
+```
+
+## async-throttle
+It wraps an async iterable and ensures that every item is yielded with an interval of n ms (it can be curried).
+```js
+asyncThrottle(10, iterable);
+```
+
+# Strings Manipulation
+These generators take as a first argument a regular expression. If the second argument is omitted it automatically returns a curried function.
+
+## regexp-exec
+It runs a regular expression on a string. Every iteration returns a new match. You should use a "global" regular expression to return multiple matches. The returned object type is the same one returned by the "RegExp.prototype.exec" method (https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp/exec).
+* [0] the full string matching the reg exp
+* [1] ... [n] the matching groups
+* index: the 0 based index of the match
+* input: the original string
+```js
+const iter = regexpExec(/[0-9]{4}/g, '10/2/2013, 03/03/2015 12/4/1997');
+for (let [match] of iter) {
+  console.log(match); // '2013', '2015', '1997'
+}
+```
+Note:
+* global regular expressions are mutable, you can't reuse the same object more than once
+* the destructuring expression [match] extract only the first match
+
+## regexp-split
+It splits a string. You can split by regular expression or string.
+```js
+regexpSplit(/\s+/g, 'ab s   d'); // ab, s, d
+```
+Note:
+* the regular expression is automatically converted to "global"
+* you can use a string (it will be internally transformed to global regExp)
+
+## regexp-split-iter
+It takes an iterators of strings and output an iterable split using the regular expression.
+```js
+regexpSplitIter(/\s+/g, ['ab ', 's',' ', '  d']); // ab, s, d
+```
+
+## async-regexp-split-iter
+The same as regexpSplitIter Iter but for async iterables.
+
+## split-lines
+It split an iterables in lines, joining fragments when there are no new line between them. It is compatible with any type of newline characters (it can't be curried).
+```js
+splitLines(['a\nb', 'c\n', 'd']); // a, bc, d
+```
+
+## async-split-lines
+The same as splitLines but for async iterables.
+
+## regexp-exec-iter
+It takes a regular expression and an iterators of strings and output an iterable containing the matches.
+```js
+const iter = regexpExecIter(/[0-9]+/g, ['1', '23', ' 2 ex', 'amp', 'le: 34', '6']);
+for (let [match] of iter) {
+  console.log(match); // 123, 2, 346
+}
+```
+Note:
+* global regular expressions are mutable, you can't reuse the same object more than once
+* the destructuring expression [match] extract only the first match
+
+## async-regexp-exec-iter
+The same as regexpExecIter but for async iterables.
 
 # Combinatory generators
 

@@ -1,5 +1,5 @@
 /* eslint-env node, jest */
-const { chain, asyncChain, asyncIterToArray, range } = require('iter-tools')
+const { chain, asyncChain, asyncToArray, range } = require('iter-tools')
 
 describe('chain', function () {
   it('chains iterables', function () {
@@ -11,6 +11,6 @@ describe('chain', function () {
 describe('asyncChain', function () {
   it('chains iterables', async function () {
     const iter = chain(range({ start: 1, end: 3 }), [3, 4])
-    expect(await asyncIterToArray(iter)).toEqual([1, 2, 3, 4])
+    expect(await asyncToArray(iter)).toEqual([1, 2, 3, 4])
   })
 })

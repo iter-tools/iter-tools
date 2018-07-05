@@ -1,5 +1,5 @@
 /* eslint-env node, jest */
-const { size, range } = require('iter-tools')
+const { size, asyncSize, asyncIter, range } = require('iter-tools')
 
 describe('size', function () {
   it('return length of array', function () {
@@ -8,5 +8,15 @@ describe('size', function () {
 
   it('return number of items in iterable', function () {
     expect(size(range({ start: 1, end: 7 }))).toBe(6)
+  })
+})
+
+describe('asyncSize', function () {
+  it('return length of array', async function () {
+    expect(await asyncSize(asyncIter([1, 2, 3, 4, 5, 6]))).toBe(6)
+  });
+
+  it('return number of items in iterable', async function () {
+    expect(await asyncSize(asyncIter(range({ start: 1, end: 7 })))).toBe(6)
   })
 })

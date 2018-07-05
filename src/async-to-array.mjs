@@ -1,6 +1,6 @@
 import asyncIter from './async-iter'
 
-export default async function asyncIterToArray (iterable) {
+export default async function asyncToArray (iterable) {
   const out = []
   for await (const item of asyncIter(iterable)) {
     out.push(item)

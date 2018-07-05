@@ -1,5 +1,5 @@
 /* eslint-env node, jest */
-const { filter, asyncFilter, asyncIterToArray, range } = require('iter-tools')
+const { filter, asyncFilter, asyncToArray, range } = require('iter-tools')
 
 describe('filter', function () {
   it('return filtered iterable', function () {
@@ -21,16 +21,16 @@ describe('filter', function () {
 describe('asyncFilter', function () {
   it('return filtered iterable', async function () {
     const iter = asyncFilter(function (item) { return item % 2 === 0 }, [1, 2, 3, 4, 5, 6])
-    expect(await asyncIterToArray(iter)).toEqual([2, 4, 6])
+    expect(await asyncToArray(iter)).toEqual([2, 4, 6])
   })
 
   it('return filtered iterable from iterable', async function () {
     const iter = asyncFilter(function (item) { return item % 2 === 0 }, range({ start: 1, end: 7 }))
-    expect(await asyncIterToArray(iter)).toEqual([2, 4, 6])
+    expect(await asyncToArray(iter)).toEqual([2, 4, 6])
   })
 
   it('return filtered iterable (curried version)', async function () {
     const iter = asyncFilter(function (item) { return item % 2 === 0 })
-    expect(await asyncIterToArray(iter(range({ start: 1, end: 7 })))).toEqual([2, 4, 6])
+    expect(await asyncToArray(iter(range({ start: 1, end: 7 })))).toEqual([2, 4, 6])
   })
 })

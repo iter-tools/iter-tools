@@ -1,5 +1,5 @@
 /* eslint-env node, jest */
-const { flatMap, asyncFlatMap, asyncIterToArray, range } = require('iter-tools')
+const { flatMap, asyncFlatMap, asyncToArray, range } = require('iter-tools')
 
 describe('flatMap', function () {
   it('return flatMapped iterable', function () {
@@ -21,16 +21,16 @@ describe('flatMap', function () {
 describe('asyncFlatMap', function () {
   it('return flatMapped iterable', async function () {
     const iter = asyncFlatMap(function (item) { return [item, item * 2] }, [1, 2, 3])
-    expect(await asyncIterToArray(iter)).toEqual([1, 2, 2, 4, 3, 6])
+    expect(await asyncToArray(iter)).toEqual([1, 2, 2, 4, 3, 6])
   })
 
   it('return flatMapped iterable from iterable', async function () {
     const iter = asyncFlatMap(function (item) { return [item, item * 2] }, range({ start: 1, end: 4 }))
-    expect(await asyncIterToArray(iter)).toEqual([1, 2, 2, 4, 3, 6])
+    expect(await asyncToArray(iter)).toEqual([1, 2, 2, 4, 3, 6])
   })
 
   it('return flatMapped iterable (curried version)', async function () {
     const iter = asyncFlatMap(function (item) { return [item, item * 2] })
-    expect(await asyncIterToArray(iter(range({ start: 1, end: 4 })))).toEqual([1, 2, 2, 4, 3, 6])
+    expect(await asyncToArray(iter(range({ start: 1, end: 4 })))).toEqual([1, 2, 2, 4, 3, 6])
   })
 })

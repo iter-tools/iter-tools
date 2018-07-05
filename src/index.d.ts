@@ -91,6 +91,8 @@ export declare function tap<T>(func: (item: T, c: number) => any, iterable: Iter
 
 export declare function tee<T>(iterable: IterableLike<T>, number?: number): Iterable<T>[];
 
+export declare function toArray<T>(iterable: IterableLike<T>): T[];
+
 export declare function zipLongest<T>(filler: T, iterables: IterableLike<T>[]): Iterable<[T]>;
 
 export declare function zip<T, T2>(iterables: [iterable1: IterableLike<T>[], iterable2: IterableLike<T2>[]], reuseEntry?: boolean): Iterable<[T, T2]>;
@@ -103,8 +105,6 @@ export declare function zip<T>(iterables: IterableLike<T>[], reuseEntry?: boolea
 export declare function asyncBatch<T>(number: number): (iterable: AsyncIterableLike<T>) => AsyncIterable<T>;
 export declare function asyncBatch<T>(number: number, iterable: AsyncIterableLike<T>): AsyncIterable<T>;
 export declare function asyncIter<T>(syncIterable: AsyncIterableLike<T>): AsyncIterable<T>;
-
-export declare function asyncIterToArray<T>(iterable: AsyncIterableLike<T>): T[];
 
 export declare function asyncChain<T>(...iterables: AsyncIterableLike<T>[]): AsyncIterable<T>;
 
@@ -140,6 +140,8 @@ export declare function asyncMap<T, O>(func: (item: T) => O, iter: AsyncIterable
 export declare function asyncReduce<T, O>(func: (acc: O, item: T, c: number) => O): (iterable: AsyncIterableLike<T>) => O;
 export declare function asyncReduce<T, O>(func: (acc: O, item: T, c: number) => O, iterable: AsyncIterableLike<T>): O;
 
+export declare function asyncSize(iterable: AsyncIterable<any>) => number;
+
 export declare function asyncSlice<T>(opts: number | { start: number, end?: number, step?: number }, iterable: AsyncIterableLike<T>): AsyncIterable<number>;
 
 export declare function asyncTakeWhile<T>(func: (item: T) => boolean): (iterable: AsyncIterableLike<T>) => AsyncIterable<T>;
@@ -148,6 +150,8 @@ export declare function asyncTakeWhile<T>(func: (item: T) => boolean, iterable: 
 export declare function asyncTap<T>(func: (item: T, c: number) => any, iterable: AsyncIterableLike<T>): AsyncIterable<T>;
 
 export declare function asyncTee<T>(iterable: AsyncIterableLike<T>, number?: number): AsyncIterable<T>[];
+
+export declare function asyncToArray<T>(iterable: AsyncIterableLike<T>): T[];
 
 export declare function asyncZipLongest<T>(filler: T, iterables: AsyncIterableLike<T>[]): AsyncIterable<[T]>;
 
