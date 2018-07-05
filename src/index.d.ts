@@ -87,6 +87,8 @@ export declare function slice<T>(opts: number | { start: number, end?: number, s
 export declare function takeWhile<T>(func: (item: T) => boolean): (iterable: IterableLike<T>) => Iterable<T>;
 export declare function takeWhile<T>(func: (item: T) => boolean, iterable: IterableLike<T>): Iterable<T>;
 
+export declare function tap<T>(func: (item: T, c: number) => any, iterable: IterableLike<T>): Iterable<T>;
+
 export declare function tee<T>(iterable: IterableLike<T>, number?: number): Iterable<T>[];
 
 export declare function zipLongest<T>(filler: T, iterables: IterableLike<T>[]): Iterable<[T]>;
@@ -142,6 +144,8 @@ export declare function asyncSlice<T>(opts: number | { start: number, end?: numb
 
 export declare function asyncTakeWhile<T>(func: (item: T) => boolean): (iterable: AsyncIterableLike<T>) => AsyncIterable<T>;
 export declare function asyncTakeWhile<T>(func: (item: T) => boolean, iterable: AsyncIterableLike<T>): AsyncIterable<T>;
+
+export declare function asyncTap<T>(func: (item: T, c: number) => any, iterable: AsyncIterableLike<T>): AsyncIterable<T>;
 
 export declare function asyncTee<T>(iterable: AsyncIterableLike<T>, number?: number): AsyncIterable<T>[];
 

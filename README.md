@@ -58,12 +58,14 @@ Utilities returning multiple iterators
 * [tee](#tee)
 * [async-tee](#async-tee)
 
-Utilities
-* [iter](#iter)
-* [async-iter](#async-iter)
+Map and Object Utilities
 * [entries](#entries)
 * [keys](#keys)
 * [values](#values)
+
+Utilities
+* [iter](#iter)
+* [async-iter](#async-iter)
 * [async-iter-to-array](async-iter-to-array)
 * [execute](#execute)
 * [async-execute](#async-execute)
@@ -72,6 +74,8 @@ Utilities
 * [async-consume](#async-consume)
 * [find](#find)
 * [async-find](#async-find)
+* [tap](#tap)
+* [async-tap](#async-tap)
 * [size](#size)
 
 Combinatory generators
@@ -387,32 +391,7 @@ tee(range(3), 4); // [iter1, iter2, iter3, iter4]
 ## async-tee
 Same as tee but works on both sync and async iterables.
 
-# Utilities
-
-## iter
-It tries to return an iterator from a value. This is useful for 2 reasons:
-* you can consume the iterator using the "next" method without worrying if it is a string, array, an iterable etc.
-* allows to iterate over a simple object
-
-If the value is an object with a "Symbol.iterator" attribute: it initialise and return the iterator (arrays, maps, sets and strings for example).
-If the value is already an iterator, it returns itself.
-If the value is a generator, it initialises it and returns the iterator.
-If the value is an object, it returns an iterator iterating over attribute/value pairs.
-```js
-iter([1, 2, 3]); // 1, 2, 3
-iter("hello"); // h e l l o
-iter(range(4)); // 0, 1, 2, 3
-iter({p1: 1, p2: 2}); // ['p1', 1] ['p2', 2]
-```
-
-## async-iter
-It converts a synchronous iterator in an asynchronous one.
-```js
-const iter = asyncIter(range({ start: 1, end: 4 }));
-for await (const n of iter) {
-  console.log(n); // 1, 2, 3
-}
-```
+# Map and Object Utilities
 
 ## entries
 Takes in a plain object, null, a Map, or any other object which defines an `entries` method.
@@ -455,6 +434,33 @@ const map = new Map(entries(obj))
 
 Array.from(values(obj)) // ['bar', 'far']
 deepEqual(Array.from(values(map)), values(obj)) // true
+```
+
+# Utilities
+
+## iter
+It tries to return an iterator from a value. This is useful for 2 reasons:
+* you can consume the iterator using the "next" method without worrying if it is a string, array, an iterable etc.
+* allows to iterate over a simple object
+
+If the value is an object with a "Symbol.iterator" attribute: it initialise and return the iterator (arrays, maps, sets and strings for example).
+If the value is already an iterator, it returns itself.
+If the value is a generator, it initialises it and returns the iterator.
+If the value is an object, it returns an iterator iterating over attribute/value pairs.
+```js
+iter([1, 2, 3]); // 1, 2, 3
+iter("hello"); // h e l l o
+iter(range(4)); // 0, 1, 2, 3
+iter({p1: 1, p2: 2}); // ['p1', 1] ['p2', 2]
+```
+
+## async-iter
+It converts a synchronous iterator in an asynchronous one.
+```js
+const iter = asyncIter(range({ start: 1, end: 4 }));
+for await (const n of iter) {
+  console.log(n); // 1, 2, 3
+}
 ```
 
 ## async-iter-to-array
@@ -503,6 +509,24 @@ await asyncFind(animal => animal.kind === 'dog', [
   Promise.resolve({type: 'cat'}),
   Promise.resolve({type: 'dog'})
 ]) // {type: 'dog'}
+```
+
+## tap
+Tap is not unlike a forEach method, and like forEach is usually used to express side effects. Without breaking a chain of composition, it allows you access to the value yielded to it. Tap always yields the same value it received. Tap can be curried.
+```js
+compose(
+  tap(item => console.log(item)),
+  filter(item => !!item),
+)([0, 1, 2]) // logs "1", "2". returns Iterable[1, 2]
+```
+
+## async-tap
+Same as tap, but for async iterables
+```js
+compose(
+  asyncTap(item => console.log(item)),
+  asyncFilter(item => !!item),
+)(asyncIter([0, 1, 2])) // logs "1", "2". returns AsyncIterable[1, 2]
 ```
 
 ## size

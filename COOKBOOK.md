@@ -130,10 +130,10 @@ let cursor = null;
 const cursorPagedResults = compose(
   asyncMap(response => response.edges.map(edge => edge.node)),
   asyncTakeWhile(reponse => response.pageInfo.hasNextPage),
-  asyncMap(response => { cursor = last(response.edges).cursor; return response; }),
+  asyncTap(response => (cursor = last(response.edges).cursor)),
   asyncMap(response => res.json()),
   asyncMap(() => fetch(`/feed?pageSize=25${cursor ? `&after=${cursor}` : ''}`)),
-)(asyncIter(range()))
+)(range())
 
 const {value: page1Results} = await cursorPagedResults.next();
 const {value: page2Results} = await cursorPagedResults.next();
