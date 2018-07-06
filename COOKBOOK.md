@@ -22,9 +22,9 @@ const activeUserNames =
     .filter(name => name.length > 0);
 ```
 
-In this (possibly slightly contrived) example, the problem is that each of our four functional operations creates a separate array. If our list of users was large to begin with, we're wasting a lot of memory and making unnecessary work for the garbage collector in order to allocate intermediate arrays which are not part of our output anyway. In this regard our function is four times heavier than it needs to be!
+In this (possibly slightly contrived) example, the problem is that each of our four functional operations creates a separate array. If our list of users was large to begin with, we're wasting a lot of memory and making unnecessary work for the garbage collector in order to allocate intermediate arrays which are not part of our output anyway. In this regard our function is four times heavier than it needs to be! Iterators avoid making those intermediate allocations by executing all their specified transformations on an individual item before moving on to the next item.
 
-Iterators avoid making those intermediate allocations by executing all their specified transformations on an individual item before moving on to the next item.
+**BUT.** This is a trade off, not a pure win. Native array operations like `Array.map` and `Array.filter` are extremely fast. They can be up to ten times faster than their iterator-based counterparts. If you are not working with particularly long datasets, the raw speed of native code working with memory may be more desirable.
 
 Using iter-tools, the above example would look like:
 ```js
@@ -68,7 +68,7 @@ const postsByActiveUsers = new Map(compose(
 ## Reusing Entries
 The iter-tools `entries` function takes a second parameter, `reuseEntry`. 
 
-This parameter is strictly a performance optimization. In the case of small objects its impact will be minimal. **It should not be used if you are not sure that it is safe!** Use the examples below as guidance as to what is safe.
+This parameter is strictly a performance optimization. In the case of small objects its impact will be minimal, so since it is more complicated to write and read I do not recommend doing this as a matter of course. **It should not be used if you are not sure that it is safe!** Use the examples below as guidance as to what is safe.
 
 Reusing entries avoids needless memory allocation. In each of the examples below, passing true for `reuseEntry` will eliminate the need to allocate an entire set of entry objects, saving the garbage collector work later.
 

@@ -444,13 +444,13 @@ compose(
 ```
 
 ## size
-Returns the number of values yielded by an iterable. Without loading the whole sequence in memory. It works for both sync and async iterables.
+Returns the number of values yielded by an iterable.
 ```js
 size([1, 2, 3]) // 3
 ```
 
 ## async-size
-Returns the number of values yielded by an iterable. Without loading the whole sequence in memory. It works for both sync and async iterables.
+Returns the number of values yielded by an iterable. It works for both sync and async iterables.
 ```js
 asyncSize(asyncIter([1, 2, 3])) // 3
 ```

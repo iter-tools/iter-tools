@@ -43,6 +43,9 @@
   ],
   "repository": "git@github.com:sithmel/iter-tools.git",
   "author": "Maurizio Lupo <maurizio.lupo@gmail.com>",
+  "contributors": [
+    "Conrad Buck <conartist6@gmail.com>"
+  ],
   "license": "MIT",
   "dependencies": {
     "@babel/runtime": "^7.0.0-beta.49",
