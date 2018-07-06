@@ -1,7 +1,7 @@
 import asyncIter from './async-iter'
 
-export default async function * zipLongest (filler) {
-  const iters = Array.prototype.slice.call(arguments, 1).map((arg) => asyncIter(arg))
+export default async function * zipLongest (filler, iterables) {
+  const iters = iterables.map(iterable => asyncIter(iterable))
   while (true) {
     const results = await Promise.all(iters.map((iter) => iter.next()))
     const done = results.every((r) => r.done)

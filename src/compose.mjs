@@ -1,4 +1,3 @@
-export default function compose (fns) {
-  return Array.from(fns)
-    .reduce((f, g) => (...args) => f(g(...args)))
+export default function compose (...fns) {
+  return fns.reduce((f, g) => (...args) => f(g(...args)))
 }
