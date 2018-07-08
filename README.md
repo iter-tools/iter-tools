@@ -126,7 +126,7 @@ Takes in a plain object, null, a Map, or any other object which defines an `entr
 When given an Object, it is equivalent to Object.entries, otherwise it calls `entries()`
 When passed a nullish value, returns an empty iterable.
 
-Entries takes an optional second parameter, `reuseEntry`, which defaults to false. If enabled, `entries` will emit the same entry item on each iteration step, changing that entry's values each time. If the target object is Map-like, `entries(target, true)` will attempt to call `target.keys` and `target.values` instead of `target.entries`. _If you are not certain this is safe to do, do not do it!_. Look at [Cookbook#reusing-entries](https://github.com/sithmel/iter-tools/blob/master/COOKBOOK.md#reusing-entries) for more information.
+If the target object is Map-like, `entries(target, true)` will attempt to call `target.keys` and `target.values` instead of `target.entries`. _If you are not certain this is safe to do, do not do it!_.
 
 `entries` is a great way to construct Maps from objects
 
@@ -262,9 +262,9 @@ Same as Batch but works on both sync and async iterables.
 # Combine multiple iterators
 
 ## chain
-It chains multiple iterables in a single one.
+It chains multiple iterables in a single one. It takes an array of iterables as argument
 ```js
-chain([3, 5, 6], [1, 1], [10]); // 3, 5, 6, 1, 1, 10
+chain([[3, 5, 6], [1, 1], [10]]); // 3, 5, 6, 1, 1, 10
 ```
 
 ## async-chain
@@ -273,7 +273,6 @@ Same as chain but works on both sync and async iterables.
 ## zip
 Zip receives an array of 2 or more iterables. It returns an iterable of entries, each of which contains one item from each of the input iterables. The iteration stops when the shortest input iterable is exausted.
 
-Zip has an optional second parameter, `reuseEntry`, which will cause each entry in the resulting zipped iterable to be the same Array instance. Only useful as a performance optimization when you are sure the lifecycle of the entry object will be complete before the next iteration begins.
 ```js
 zip([[1, 2], [3, 4], [5, 6, 7]]); // [1, 3, 5], [2, 4, 6]
 ```
@@ -285,7 +284,6 @@ Items are resolved in parallel. AsyncZip will never reuse entries.
 ## zip-longest
 ZipLongest receives an array of 2 or more iterables. It returns an iterable of entries, each of which contains one item from each of the input iterables. The iteration stops when the longesest iterable is exausted. The first argument is the placeholder used when an iterable is exausted.
 
-ZipLongest has an optional third parameter, `reuseEntry`, which will cause each entry in the resulting zipped iterable to be the same Array instance. Only useful as a performance optimization when you are sure the lifecycle of the entry object will be complete before the next iteration begins.
 ```js
 zipLongest(null, [[1, 2], [3, 4], [5, 6, 7]]); // [1, 3, 5], [2, 4, 6], [null, null, 7]
 ```
