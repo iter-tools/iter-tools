@@ -126,8 +126,6 @@ Takes in a plain object, null, a Map, or any other object which defines an `entr
 When given an Object, it is equivalent to Object.entries, otherwise it calls `entries()`
 When passed a nullish value, returns an empty iterable.
 
-If the target object is Map-like, `entries(target, true)` will attempt to call `target.keys` and `target.values` instead of `target.entries`. _If you are not certain this is safe to do, do not do it!_.
-
 `entries` is a great way to construct Maps from objects
 
 ```js
