@@ -4,7 +4,7 @@ const filter = require('../es2018/filter')
 
 const measureSpeed = require('measure-speed')
 
-function asyncf() {
+function asyncf () {
   const f1 = filter((n) => n % 2)
 
   const f2 = asyncFilter((n) => n % 2)
@@ -14,6 +14,7 @@ function asyncf() {
     for (const n of f1(range(1000))) {
       sum += n
     }
+    return sum
   }, { samples: 1000, discard: 10 }, function (err, ms) {
     if (err) return console.log('Error!')
     console.log('************ sync ************')
@@ -25,6 +26,7 @@ function asyncf() {
     for await (const n of f2(range(1000))) { // eslint-disable-line
       sum += n
     }
+    return sum
   }, { samples: 1000, discard: 10 }, function (err, ms) {
     if (err) return console.log('Error!')
     console.log('************ async ************')
@@ -33,5 +35,5 @@ function asyncf() {
 }
 
 module.exports = {
-  async: asyncf,
+  async: asyncf
 }

@@ -19,7 +19,7 @@ describe('iter', function () {
     const i = iter({'1': 1, '2': 2})
     expect(Array.from(i)).toEqual([['1', 1], ['2', 2]])
   })
-  it('works with null', function() {
+  it('works with null', function () {
     const i = iter(null)
     expect(Array.from(i)).toEqual([])
   })

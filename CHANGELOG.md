@@ -12,7 +12,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
  -  Removed `asyncMapBatch`
  -  `compose([...fns])` => `compose(...fns)`
  -  `zip(...iterables)` => `zip([...iterables])`
- -  `zipLongest(...iterables)` => `zipLongest([...iterables])`
+ -  `zipLongest(...iterables)` => `zipLongest(filler, [...iterables])`
 
 
 

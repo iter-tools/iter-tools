@@ -26,7 +26,7 @@ function forVsWhileInIterators () {
     console.log(ms)
   })
 
-  // var iter = compose([map(power2), filter(isEven)])
+  // var iter = compose(map(power2), filter(isEven))
   measureSpeed(function () {
     var a = range(2000)
     var next
@@ -50,6 +50,7 @@ function filterMapArrayVsIter () {
     var result = a
       .map(power2)
       .filter(isEven)
+    global.gc()
     return result
   }, { samples: 1000, discard: 10 }, function (err, ms) {
     if (err) return console.log('Error!')
@@ -59,10 +60,11 @@ function filterMapArrayVsIter () {
 
   var arr = Array.from(range(1000))
 
-  var iter = compose([map(power2), filter(isEven)])
+  var iter = compose(map(power2), filter(isEven))
 
   measureSpeed(function () {
     var result = Array.from(iter(arr))
+    global.gc()
     return result
   }, { samples: 1000, discard: 10 }, function (err, ms) {
     if (err) return console.log('Error!')

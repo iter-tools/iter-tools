@@ -1,5 +1,5 @@
 /* eslint-env node, jest */
-const { range, asyncToArray } = require('iter-tools');
+const { range, asyncToArray } = require('iter-tools')
 
 describe('asyncToArray', function () {
   it('transform async iter to array', async function () {

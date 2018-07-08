@@ -1,5 +1,5 @@
 /* eslint-env node, jest */
-const { keys, range } = require('iter-tools')
+const { keys } = require('iter-tools')
 
 describe('keys', function () {
   it('works with Map', function () {
@@ -10,7 +10,7 @@ describe('keys', function () {
     const i = keys({'1': 1, '2': 2})
     expect(Array.from(i)).toEqual(['1', '2'])
   })
-  it('works with null', function() {
+  it('works with null', function () {
     const i = keys(null)
     expect(Array.from(i)).toEqual([])
   })

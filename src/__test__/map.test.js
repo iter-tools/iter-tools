@@ -19,18 +19,18 @@ describe('map', function () {
 })
 
 describe('asyncMap', function () {
-    it('return mapped iterable', async function () {
-      const iter = asyncMap(function (item) { return item * 2 }, [1, 2, 3])
-      expect(await asyncToArray(iter)).toEqual([2, 4, 6])
-    })
+  it('return mapped iterable', async function () {
+    const iter = asyncMap(function (item) { return item * 2 }, [1, 2, 3])
+    expect(await asyncToArray(iter)).toEqual([2, 4, 6])
+  })
 
-    it('return mapped iterable from iterable', async function () {
-      const iter = asyncMap(function (item) { return item * 2 }, range({ start: 1, end: 4 }))
-      expect(await asyncToArray(iter)).toEqual([2, 4, 6])
-    })
+  it('return mapped iterable from iterable', async function () {
+    const iter = asyncMap(function (item) { return item * 2 }, range({ start: 1, end: 4 }))
+    expect(await asyncToArray(iter)).toEqual([2, 4, 6])
+  })
 
-    it('return mapped iterable (curried version)', async function () {
-      const iter = asyncMap(function (item) { return item * 2 })
-      expect(await asyncToArray(iter(range({ start: 1, end: 4 })))).toEqual([2, 4, 6])
-    })
+  it('return mapped iterable (curried version)', async function () {
+    const iter = asyncMap(function (item) { return item * 2 })
+    expect(await asyncToArray(iter(range({ start: 1, end: 4 })))).toEqual([2, 4, 6])
+  })
 })

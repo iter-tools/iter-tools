@@ -28,7 +28,7 @@ function lazyRegexp () {
   measureSpeed(function () {
     var regIter = regexpExec(/^[0-9]+;[A-Z]{3}[0-9]*;([0-9.]*);([0-9.]*)/gm)
     var mapper = map(matches2numbers)
-    var superIter = compose([filter(filterNegative), mapper, regIter])
+    var superIter = compose(filter(filterNegative), mapper, regIter)
     reduce((acc = 0, item) => acc + item[0] + item[1], superIter(csv))
   }, { samples: 1000, discard: 10 }, function (err, ms) {
     if (err) return console.log('Error!')

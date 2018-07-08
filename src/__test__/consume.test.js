@@ -1,10 +1,10 @@
 /* eslint-env node, jest */
-const { consume, asyncConsume, asyncToArray, range } = require('iter-tools')
+const { consume, asyncConsume } = require('iter-tools')
 
 describe('consume', function () {
   it('consume an iterable', function () {
     const arr = []
-    const iter = consume((item) => arr.push(item), [1, 2, 3])
+    consume((item) => arr.push(item), [1, 2, 3])
     expect(arr).toEqual([1, 2, 3])
   })
   it('consume an iterable (curried)', function () {
@@ -18,7 +18,7 @@ describe('consume', function () {
 describe('asyncConsume', function () {
   it('consume an iterable', async function () {
     const arr = []
-    const iter = await asyncConsume((item) => arr.push(item), [1, 2, 3])
+    await asyncConsume((item) => arr.push(item), [1, 2, 3])
     expect(arr).toEqual([1, 2, 3])
   })
   it('consume an iterable (curried)', async function () {
