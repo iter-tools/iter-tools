@@ -7,7 +7,7 @@
   "jsnext:main": "es5/index.mjs",
   "typings": "src/index.d.ts",
   "scripts": {
-    "lint": "eslint --fix --ext .mjs ./src && eslint --fix --ext .js ./src/__test__ ./benchmarks",
+    "lint": "eslint --fix --ext .mjs,.js ./src ./src/__test__ ./benchmarks",
     "test:es5": "npm run build:es5-cjs && jest --moduleNameMapper '{\"iter-tools\": \"<rootDir>/es5\"}'",
     "test:es2015": "npm run build:es2015-cjs && jest --moduleNameMapper '{\"iter-tools\": \"<rootDir>/es2015\"}'",
     "test:es2018": "npm run build:es2018-cjs && jest --moduleNameMapper '{\"iter-tools\": \"<rootDir>/es2018\"}'",
