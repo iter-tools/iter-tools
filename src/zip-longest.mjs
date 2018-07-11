@@ -1,18 +1,17 @@
 import iter from './iter'
 
-export default function * zipLongest (filler, iterables, reuseEntry = false) {
+export default function * zipLongest (...iterables) {
   const iters = iterables.map(i => iter(i))
-  let zipped = []
   while (true) {
     let numberOfExausted = 0
-    zipped = reuseEntry ? zipped : []
-    zipped.length = 0
+    const zipped = new Array(iterables.length)
+    let i = 0
     for (const iter of iters) {
-      const {done, value} = iter.next()
+      const { done, value } = iter.next()
       if (done) {
         numberOfExausted++
       }
-      zipped.push(done ? filler : value)
+      zipped[i++] = done ? undefined : value
     }
     if (iters.length === numberOfExausted) {
       return

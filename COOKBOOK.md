@@ -47,6 +47,20 @@ None of the standard functional utilites like `map` or `filter` can be found on 
 
 So here they are, the missing methods for Maps!
 
+### Instantiating Maps
+```js
+const myMap = new Map(entries({
+  foo: 'foo',
+  bar: 'bar',
+}));
+```
+
+### Copying Maps
+```js
+const myMapCopy = new Map(entries(myMap));
+```
+
+### A more convoluted example
 ```js
 const users = new Map([
   [1, {name: 'Ada Lovelace', status: 'active'}],
@@ -63,35 +77,6 @@ const postsByActiveUsers = new Map(compose(
   filter(([id, post]) => post.user.status === 'active'),
   map(([id, post]) => ({...post, user: users.get(post.user.id)})),
 )(users));
-```
-
-## Reusing Entries
-The iter-tools `entries` function takes a second parameter, `reuseEntry`. 
-
-This parameter is strictly a performance optimization. In the case of small objects its impact will be minimal, so since it is more complicated to write and read I do not recommend doing this as a matter of course. **It should not be used if you are not sure that it is safe!** Use the examples below as guidance as to what is safe.
-
-Reusing entries avoids needless memory allocation. In each of the examples below, passing true for `reuseEntry` will eliminate the need to allocate an entire set of entry objects, saving the garbage collector work later.
-
-This is because it is imperative that Maps never expose their internal entries tuples, whose mutation would trigger real state changes to (or inconsistencies in) the data structure. Thus a full set of entries objects is normally allocated even when the usage, as in these examples, does not strictly require it.
-
-### Instantiating Maps
-```js
-const myMap = new Map(entries({
-  foo: 'foo',
-  bar: 'bar',
-}, true));
-```
-
-### Destructured iteration on Maps
-```js
-for (const [key, value] of entries(myMap, true)) {
-  // ...
-}
-```
-
-### Copying Maps
-```js
-const myMapCopy = new Map(entries(myMap, true));
 ```
 
 ## Managing asynchronicity
@@ -113,7 +98,7 @@ const batchedRequests = compose(
   map(id => fetch(`users/${id}`).then(res => res.json()).then()),
 )(user.friends);
 
-const page1Results = await batchedRequests.next().value; 
+const page1Results = await batchedRequests.next().value;
 const page2Results = await batchedRequests.next().value;
 ```
 

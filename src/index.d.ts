@@ -10,6 +10,7 @@ export declare function batch<T>(number: number): (iterable: IterableLike<T>) =>
 export declare function batch<T>(number: number, iterable: IterableLike<T>): Iterable<Iterable<T>>;
 
 export declare function chain<T>(...iterables: IterableLike<T>[]): Iterable<T>;
+export declare function concat<T>(...iterables: IterableLike<T>[]): Iterable<T>;
 
 export declare function combinations<T>(iterable: IterableLike<T>, r: number): Iterable<T>;
 
@@ -93,20 +94,22 @@ export declare function tee<T>(iterable: IterableLike<T>, number?: number): Iter
 
 export declare function toArray<T>(iterable: IterableLike<T>): T[];
 
-export declare function zipLongest<T>(filler: T, iterables: IterableLike<T>[]): Iterable<[T]>;
+export declare function zipLongest<T>(...iterables: IterableLike<T>[]): Iterable<[T]>;
+export declare function zipAll<T>(...iterables: IterableLike<T>[]): Iterable<[T]>;
 
-export declare function zip<T, T2>(iterables: [iterable1: IterableLike<T>[], iterable2: IterableLike<T2>[]], reuseEntry?: boolean): Iterable<[T, T2]>;
-export declare function zip<T, T2, T3>(iterables: [iterable1: IterableLike<T>[], iterable2: IterableLike<T2>[], iterable3: IterableLike<T3>[]], reuseEntry?: boolean): Iterable<[T, T2, T3]>;
-export declare function zip<T, T2, T3, T4>(iterables: [iterable1: IterableLike<T>[], iterable2: IterableLike<T2>[], iterable3: IterableLike<T3>[], iterable4: IterableLike<T4>[]], reuseEntry?: boolean): Iterable<[T, T2, T3, T4]>;
-export declare function zip<T, T2, T3, T4, T5>(iterables: [iterable1: IterableLike<T>[], iterable2: IterableLike<T2>[], iterable3: IterableLike<T3>[], iterable4: IterableLike<T4>[], iterable5: IterableLike<T5>[]], reuseEntry?: boolean): Iterable<[T, T2, T3, T4, T5]>;
-export declare function zip<T, T2, T3, T4, T5, T6>(iterables: [iterable1: IterableLike<T>[], iterable2: IterableLike<T2>[], iterable3: IterableLike<T3>[], iterable4: IterableLike<T4>[], iterable5: IterableLike<T5>[], iterable6: IterableLike<T6>[]], reuseEntry?: boolean): Iterable<[T, T2, T3, T4, T5, T6]>;
-export declare function zip<T>(iterables: IterableLike<T>[], reuseEntry?: boolean): Iterable<[T]>;
+export declare function zip<T, T2>(...iterables: [iterable1: IterableLike<T>[], iterable2: IterableLike<T2>[]]): Iterable<[T, T2]>;
+export declare function zip<T, T2, T3>(...iterables: [iterable1: IterableLike<T>[], iterable2: IterableLike<T2>[], iterable3: IterableLike<T3>[]]): Iterable<[T, T2, T3]>;
+export declare function zip<T, T2, T3, T4>(...iterables: [iterable1: IterableLike<T>[], iterable2: IterableLike<T2>[], iterable3: IterableLike<T3>[], iterable4: IterableLike<T4>[]]): Iterable<[T, T2, T3, T4]>;
+export declare function zip<T, T2, T3, T4, T5>(...iterables: [iterable1: IterableLike<T>[], iterable2: IterableLike<T2>[], iterable3: IterableLike<T3>[], iterable4: IterableLike<T4>[], iterable5: IterableLike<T5>[]]): Iterable<[T, T2, T3, T4, T5]>;
+export declare function zip<T, T2, T3, T4, T5, T6>(iterables: [iterable1: IterableLike<T>[], iterable2: IterableLike<T2>[], iterable3: IterableLike<T3>[], iterable4: IterableLike<T4>[], iterable5: IterableLike<T5>[], iterable6: IterableLike<T6>[]]): Iterable<[T, T2, T3, T4, T5, T6]>;
+export declare function zip<T>(...iterables: IterableLike<T>[]): Iterable<[T]>;
 
 export declare function asyncBatch<T>(number: number): (iterable: AsyncIterableLike<T>) => AsyncIterable<T>;
 export declare function asyncBatch<T>(number: number, iterable: AsyncIterableLike<T>): AsyncIterable<T>;
 export declare function asyncIter<T>(syncIterable: AsyncIterableLike<T>): AsyncIterable<T>;
 
 export declare function asyncChain<T>(...iterables: AsyncIterableLike<T>[]): AsyncIterable<T>;
+export declare function asyncConcat<T>(...iterables: AsyncIterableLike<T>[]): AsyncIterable<T>;
 
 export declare function asyncConsume<T>(func: (item: T) => void): (iterable: AsyncIterableLike<T>) => void;
 export declare function asyncConsume<T>(func: (item: T) => void, iterable: AsyncIterableLike<T>): void;
@@ -153,14 +156,15 @@ export declare function asyncTee<T>(iterable: AsyncIterableLike<T>, number?: num
 
 export declare function asyncToArray<T>(iterable: AsyncIterableLike<T>): T[];
 
-export declare function asyncZipLongest<T>(filler: T, iterables: AsyncIterableLike<T>[]): AsyncIterable<[T]>;
+export declare function asyncZipLongest<T>(...iterables: AsyncIterableLike<T>[]): AsyncIterable<[T]>;
+export declare function asyncZipAll<T>(...iterables: AsyncIterableLike<T>[]): AsyncIterable<[T]>;
 
-export declare function asyncZip<T, T2>(iterables: [iterable1: AsyncIterableLike<T>[], iterable2: AsyncIterableLike<T2>[]]): AsyncIterable<[T, T2]>;
-export declare function asyncZip<T, T2, T3>(iterables: [iterable1: AsyncIterableLike<T>[], iterable2: AsyncIterableLike<T2>[], iterable3: AsyncIterableLike<T3>[]]): AsyncIterable<[T, T2, T3]>;
-export declare function asyncZip<T, T2, T3, T4>(iterables: [iterable1: AsyncIterableLike<T>[], iterable2: AsyncIterableLike<T2>[], iterable3: AsyncIterableLike<T3>[], iterable4: AsyncIterableLike<T4>[]]): AsyncIterable<[T, T2, T3, T4]>;
-export declare function asyncZip<T, T2, T3, T4, T5>(iterables: [iterable1: AsyncIterableLike<T>[], iterable2: AsyncIterableLike<T2>[], iterable3: AsyncIterableLike<T3>[], iterable4: AsyncIterableLike<T4>[], iterable5: AsyncIterableLike<T5>[]]): AsyncIterable<[T, T2, T3, T4, T5]>;
-export declare function asyncZip<T, T2, T3, T4, T5, T6>(iterables: [iterable1: AsyncIterableLike<T>[], iterable2: AsyncIterableLike<T2>[], iterable3: AsyncIterableLike<T3>[], iterable4: AsyncIterableLike<T4>[], iterable5: AsyncIterableLike<T5>[], iterable6: AsyncIterableLike<T6>[]]): AsyncIterable<[T, T2, T3, T4, T5, T6]>;
-export declare function asyncZip<T>(iterables: AsyncIterableLike<T>[]): AsyncIterable<[T]>;
+export declare function asyncZip<T, T2>(...iterables: [iterable1: AsyncIterableLike<T>[], iterable2: AsyncIterableLike<T2>[]]): AsyncIterable<[T, T2]>;
+export declare function asyncZip<T, T2, T3>(...iterables: [iterable1: AsyncIterableLike<T>[], iterable2: AsyncIterableLike<T2>[], iterable3: AsyncIterableLike<T3>[]]): AsyncIterable<[T, T2, T3]>;
+export declare function asyncZip<T, T2, T3, T4>(...iterables: [iterable1: AsyncIterableLike<T>[], iterable2: AsyncIterableLike<T2>[], iterable3: AsyncIterableLike<T3>[], iterable4: AsyncIterableLike<T4>[]]): AsyncIterable<[T, T2, T3, T4]>;
+export declare function asyncZip<T, T2, T3, T4, T5>(...iterables: [iterable1: AsyncIterableLike<T>[], iterable2: AsyncIterableLike<T2>[], iterable3: AsyncIterableLike<T3>[], iterable4: AsyncIterableLike<T4>[], iterable5: AsyncIterableLike<T5>[]]): AsyncIterable<[T, T2, T3, T4, T5]>;
+export declare function asyncZip<T, T2, T3, T4, T5, T6>(...iterables: [iterable1: AsyncIterableLike<T>[], iterable2: AsyncIterableLike<T2>[], iterable3: AsyncIterableLike<T3>[], iterable4: AsyncIterableLike<T4>[], iterable5: AsyncIterableLike<T5>[], iterable6: AsyncIterableLike<T6>[]]): AsyncIterable<[T, T2, T3, T4, T5, T6]>;
+export declare function asyncZip<T>(...iterables: AsyncIterableLike<T>[]): AsyncIterable<[T]>;
 
 export declare function asyncRegexpSplitIter(re: RegExp): (iterable: AsyncIterableLike<string>) => AsyncIterableLike<string>;
 export declare function asyncRegexpSplitIter(re: RegExp, iterable: AsyncIterableLike<string>): AsyncIterableLike<string>;
