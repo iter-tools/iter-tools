@@ -27,8 +27,10 @@ Transform a single iterable
 
 Combine multiple iterables
 * [chain](#chain) ([async](#async-chain))
+* [concat](#concat) ([async](#async-concat))
 * [zip](#zip) ([async](#async-zip))
 * [zipLongest](#zip-longest) ([async](#async-zip-longest))
+* [zipAll](#zip-all) ([async](#async-zip-all))
 * [enumerate](#enumerate) ([async](#async-enumerate))
 * [compress](#compress) ([async](#async-compress))
 
@@ -260,19 +262,25 @@ Same as Batch but works on both sync and async iterables.
 # Combine multiple iterators
 
 ## chain
-It chains multiple iterables in a single one. It takes an array of iterables as argument
+It chains multiple iterables in a single one.
 ```js
-chain([[3, 5, 6], [1, 1], [10]]); // 3, 5, 6, 1, 1, 10
+chain([3, 5, 6], [1, 1], [10]); // 3, 5, 6, 1, 1, 10
 ```
 
 ## async-chain
 Same as chain but works on both sync and async iterables.
 
+## concat
+Alias of chain
+
+## async-chain
+Alias of async-chain
+
 ## zip
-Zip receives an array of 2 or more iterables. It returns an iterable of entries, each of which contains one item from each of the input iterables. The iteration stops when the shortest input iterable is exausted.
+Zip receives 2 or more iterables. It returns an iterable of entries, each of which contains one item from each of the input iterables. The iteration stops when the shortest input iterable is exausted.
 
 ```js
-zip([[1, 2], [3, 4], [5, 6, 7]]); // [1, 3, 5], [2, 4, 6]
+zip([1, 2], [3, 4], [5, 6, 7]); // [1, 3, 5], [2, 4, 6]
 ```
 
 ## async-zip
@@ -280,15 +288,21 @@ It returns the same results of zip and works on both sync and async iterables.
 Items are resolved in parallel. AsyncZip will never reuse entries.
 
 ## zip-longest
-ZipLongest receives an array of 2 or more iterables. It returns an iterable of entries, each of which contains one item from each of the input iterables. The iteration stops when the longesest iterable is exausted. The first argument is the placeholder used when an iterable is exausted.
+ZipLongest receives 2 or more iterables. It returns an iterable of entries, each of which contains one item from each of the input iterables. The iteration stops when the longest iterable is exausted. If an iterable is exhausted, it is returning undefined.
 
 ```js
-zipLongest(null, [[1, 2], [3, 4], [5, 6, 7]]); // [1, 3, 5], [2, 4, 6], [null, null, 7]
+zipLongest([1, 2], [3, 4], [5, 6, 7]); // [1, 3, 5], [2, 4, 6], [undefined, undefined, 7]
 ```
 
 ## async-zip-longest
 It returns the same results of zipLongest and works on both sync and async iterables.
 Items are resolved in parallel. AsyncZipLongest will never reuse entries.
+
+## zip-all
+Alias of zipLongest
+
+## async-zip-all
+Alias of async-zip-longest
 
 ## enumerate
 It is a shorthand for zipping an index to an iterable:

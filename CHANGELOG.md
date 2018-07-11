@@ -6,15 +6,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## Unreleased
 ### Added
- -  `zip`, `entries`, and `enumerate` all have additional `reuseEntry` parameter for performance optimization.
+ -  aliases for chain (concat), zipLongest (zipAll), asyncChain (asyncConcat) and asyncZipLongest (asyncZipAll)
 
 ### Changed
  -  Removed `asyncMapBatch`
  -  `compose([...fns])` => `compose(...fns)`
- -  `zip(...iterables)` => `zip([...iterables])`
- -  `zipLongest(...iterables)` => `zipLongest(filler, [...iterables])`
-
-
+ -  Removed filler argument from zipLongest: `zipLongest(filler, ...iterables)` => `zipLongest(...iterables])`
 
 ## [5.0.0] - 2018-6-20
 ### Added

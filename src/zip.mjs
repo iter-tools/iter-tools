@@ -1,6 +1,6 @@
 import iter from './iter'
 
-export default function * zip (iterables) {
+export default function * zip (...iterables) {
   const iters = iterables.map(i => iter(i))
   while (true) {
     const zipped = new Array(iterables.length)
