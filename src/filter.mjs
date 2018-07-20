@@ -1,4 +1,4 @@
-import iter from './iter'
+import iter from './internal/iter'
 
 function * filter (func, iterable) {
   let c = 0

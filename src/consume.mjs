@@ -1,4 +1,4 @@
-import iter from './iter'
+import iter from './internal/iter'
 
 export default function consume (func, iterable) {
   if (!iterable) {

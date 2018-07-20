@@ -1,4 +1,4 @@
-import asyncIter from './async-iter'
+import asyncIter from './internal/async-iter'
 
 async function * dropWhile (func, iterable) {
   let drop = true

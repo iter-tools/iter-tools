@@ -1,4 +1,4 @@
-import asyncIter from './async-iter'
+import asyncIter from './internal/async-iter'
 
 async function reduce (func, iterable) {
   let c = 0

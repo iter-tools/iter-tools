@@ -1,4 +1,4 @@
-import asyncIter from './async-iter'
+import asyncIter from './internal/async-iter'
 
 async function consume (func, iterable) {
   for await (const item of asyncIter(iterable)) {

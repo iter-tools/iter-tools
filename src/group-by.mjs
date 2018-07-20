@@ -1,8 +1,8 @@
-import iter from './iter'
+import iter from './internal/iter'
 
 function * groupBy (key, iterable) {
   key = key || function (key) { return key }
-  iterable = iter(iterable)
+  iterable = iter(iterable)[Symbol.iterator]()
 
   let currentItem
   let currentKey, previousKey

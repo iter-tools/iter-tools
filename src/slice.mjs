@@ -1,4 +1,4 @@
-import iter from './iter'
+import iter from './internal/iter'
 
 function * slice (opts, iterable) {
   let start, step, end

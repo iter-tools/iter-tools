@@ -1,6 +1,6 @@
 import range from './range'
 import map from './map'
-import asyncIter from './async-iter'
+import asyncIter from './internal/async-iter'
 import Dequeue from 'dequeue'
 
 export default function tee (iterable, number) {

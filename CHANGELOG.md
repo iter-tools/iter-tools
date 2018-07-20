@@ -6,12 +6,17 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## Unreleased
 ### Added
- -  aliases for chain (concat), zipLongest (zipAll), asyncChain (asyncConcat) and asyncZipLongest (asyncZipAll)
+ -  Added `tap`, `iterable`, `asyncIterable`, `toArray` and `asyncToArray` methods.
+ -  Added aliases:
+ 	-  `concat` and `asyncConcat` for `chain` and `asyncChain`
+ 	-  `zipAll` and `asyncZipAll` for `zipLongest` and `asyncZipLongest`
 
 ### Changed
+ -  **All methods:** Object parameters are no longer implicitly treated as iterables, and will throw errors.
+ -  Removed `iter` and `asyncIter`
  -  Removed `asyncMapBatch`
  -  `compose([...fns])` => `compose(...fns)`
- -  Removed filler argument from zipLongest: `zipLongest(filler, ...iterables)` => `zipLongest(...iterables])`
+ -  Removed filler argument from zipLongest: `zipLongest(filler, ...iterables)` => `zipLongest(...iterables)`
 
 ## [5.0.0] - 2018-6-20
 ### Added

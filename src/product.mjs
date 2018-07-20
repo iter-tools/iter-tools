@@ -1,4 +1,4 @@
-import iter from './iter'
+import iter from './internal/iter'
 
 export default function product (...args) {
   const iters = args.map(i => iter(i))

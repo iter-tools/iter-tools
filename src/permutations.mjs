@@ -1,4 +1,4 @@
-import iter from './iter'
+import iter from './internal/iter'
 import map from './map'
 import range from './range'
 import tee from './tee'

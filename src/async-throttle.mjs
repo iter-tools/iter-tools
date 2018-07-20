@@ -1,4 +1,4 @@
-import asyncIter from './async-iter'
+import asyncIter from './internal/async-iter'
 
 function delay (ms) {
   if (ms <= 0) return Promise.resolve()

@@ -1,11 +1,11 @@
 import range from './range'
 import map from './map'
-import iter from './iter'
+import iter from './internal/iter'
 import Dequeue from 'dequeue'
 
 export default function tee (iterable, number) {
   number = number || 2
-  iterable = iter(iterable)
+  iterable = iter(iterable)[Symbol.iterator]()
   const arrays = Array.from(map(() => new Dequeue(), range(number)))
   let done = false
 

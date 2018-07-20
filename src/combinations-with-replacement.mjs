@@ -2,7 +2,7 @@ import map from './map'
 import range from './range'
 import product from './product'
 import tee from './tee'
-import iter from './iter'
+import iter from './internal/iter'
 
 function isSorted (arr) {
   if (arr.length < 2) return true

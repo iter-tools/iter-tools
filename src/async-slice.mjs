@@ -1,4 +1,4 @@
-import asyncIter from './async-iter'
+import asyncIter from './internal/async-iter'
 
 async function * slice (opts, iterable) {
   let start, step, end

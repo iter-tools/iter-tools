@@ -1,4 +1,4 @@
-import asyncIter from './async-iter'
+import asyncIter from './internal/async-iter'
 import map from './map'
 
 export default async function * zip (...iterables) {

@@ -1,4 +1,4 @@
-import iter from './iter'
+import iter from './internal/iter'
 
 export default function size (iterable) {
   let size = 0

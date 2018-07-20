@@ -1,7 +1,7 @@
 import map from './map'
 import range from './range'
 import permutations from './permutations'
-import iter from './iter'
+import iter from './internal/iter'
 
 function isSorted (arr) {
   if (arr.length < 2) return true

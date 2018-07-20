@@ -46,8 +46,6 @@ export declare function flatMap<T, O>(func: (item: T) => IterableLike<O>, iter: 
 export declare function groupBy<T, K>(key: (item: T) => K): (iterable: IterableLike<T>) => Iterable<[K, Iterable<T>]>;
 export declare function groupBy<T, K>(key: (item: T) => K, iterable: IterableLike<T>): Iterable<[K, Iterable<T>]>;
 
-export declare function iter<T>(iterable: IterableLike<T>): Iterable<T>;
-
 export declare function map<T, O>(func: (item: T) => O): (iter: IterableLike<T>) => Iterable<O>;
 export declare function map<T, O>(func: (item: T) => O, iter: IterableLike<T>): Iterable<O>;
 
@@ -106,7 +104,6 @@ export declare function zip<T>(...iterables: IterableLike<T>[]): Iterable<[T]>;
 
 export declare function asyncBatch<T>(number: number): (iterable: AsyncIterableLike<T>) => AsyncIterable<T>;
 export declare function asyncBatch<T>(number: number, iterable: AsyncIterableLike<T>): AsyncIterable<T>;
-export declare function asyncIter<T>(syncIterable: AsyncIterableLike<T>): AsyncIterable<T>;
 
 export declare function asyncChain<T>(...iterables: AsyncIterableLike<T>[]): AsyncIterable<T>;
 export declare function asyncConcat<T>(...iterables: AsyncIterableLike<T>[]): AsyncIterable<T>;

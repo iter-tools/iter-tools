@@ -1,4 +1,4 @@
-import asyncIter from './async-iter'
+import asyncIter from './internal/async-iter'
 
 async function * groupBy (key, iterable) {
   key = key || function (key) { return key }

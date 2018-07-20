@@ -1,4 +1,4 @@
-import asyncIter from './async-iter'
+import asyncIter from './internal/async-iter'
 
 export default async function asyncToArray (iterable) {
   const out = []

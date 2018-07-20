@@ -1,5 +1,6 @@
 /* eslint-env node, jest */
-const { range, asyncIter } = require('iter-tools')
+const asyncIter = require('iter-tools/internal/async-iter')
+const { range } = require('iter-tools')
 
 describe('asyncIter', function () {
   it('transform sync iter to async', async function () {

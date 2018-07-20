@@ -1,4 +1,4 @@
-import asyncIter from './async-iter'
+import asyncIter from './internal/async-iter'
 
 export default async function * zipLongest (...iterables) {
   const iters = iterables.map(iterable => asyncIter(iterable))
