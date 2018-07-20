@@ -1,5 +1,6 @@
 export { default as batch } from './batch'
 export { default as chain } from './chain'
+export { default as concat } from './concat'
 export { default as consume } from './consume'
 export { default as combinationsWithReplacement } from './combinations-with-replacement'
 export { default as combinations } from './combinations'
