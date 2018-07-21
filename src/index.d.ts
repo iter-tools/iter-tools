@@ -1,7 +1,7 @@
 type IterableLike<T> = Iterable<T> | T[] | { [key: string]: T; } | { [key: number]: T; };
 type AsyncIterableLike<T> = AsyncIterable<T> | IterableLike<T>;
 
-
+// Sync
 export declare function keys(iterable: any): Iterable<any>; // TODO, type me?
 export declare function values(iterable: any): Iterable<any>;
 export declare function entries(iterable: any): Iterable<any>;
@@ -102,6 +102,10 @@ export declare function zip<T, T2, T3, T4, T5>(...iterables: [iterable1: Iterabl
 export declare function zip<T, T2, T3, T4, T5, T6>(iterables: [iterable1: IterableLike<T>[], iterable2: IterableLike<T2>[], iterable3: IterableLike<T3>[], iterable4: IterableLike<T4>[], iterable5: IterableLike<T5>[], iterable6: IterableLike<T6>[]]): Iterable<[T, T2, T3, T4, T5, T6]>;
 export declare function zip<T>(...iterables: IterableLike<T>[]): Iterable<[T]>;
 
+// Deprecated
+export declare function iter<T>(iterable: IterableLike<T>): Iterable<T>;
+
+// Async
 export declare function asyncBatch<T>(number: number): (iterable: AsyncIterableLike<T>) => AsyncIterable<T>;
 export declare function asyncBatch<T>(number: number, iterable: AsyncIterableLike<T>): AsyncIterable<T>;
 
@@ -173,3 +177,6 @@ export declare function asyncSplitLines(iterable: AsyncIterableLike<string>) => 
 
 export declare function asyncThrottle<T>(number: number): (iterable: AsyncIterableLike<T>) => AsyncIterable<T>;
 export declare function asyncThrottle<T>(number: number, iterable: AsyncIterableLike<T>): AsyncIterable<T>;
+
+// Deprecated
+export declare function asyncIter<T>(syncIterable: AsyncIterableLike<T>): AsyncIterable<T>;

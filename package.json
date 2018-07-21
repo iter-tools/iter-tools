@@ -50,6 +50,7 @@
   "dependencies": {
     "@babel/runtime": "^7.0.0-beta.49",
     "clone-regexp": "^1.0.1",
+    "deprecate": "^1.0.0",
     "dequeue": "^1.0.5"
   },
   "devDependencies": {

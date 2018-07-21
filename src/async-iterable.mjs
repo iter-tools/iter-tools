@@ -2,8 +2,12 @@ async function * asyncify (iterable) {
   yield * iterable
 }
 
+const emptyArray = []
+
 export default function asyncIterable (asyncIterator) {
-  if (asyncIterator[Symbol.asyncIterator]) {
+  if (asyncIterator == null) {
+    return asyncify(emptyArray)
+  } else if (asyncIterator[Symbol.asyncIterator]) {
     return asyncIterator
   } else if (asyncIterator[Symbol.iterator]) {
     asyncIterator = asyncify(asyncIterator)[Symbol.asyncIterator]()

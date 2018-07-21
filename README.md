@@ -372,8 +372,6 @@ const myRangeIterator = {
 slice(3, iterable(myRangeIterator)) // 1, 2, 3
 ```
 
-**NOTE:** Prior to 6.0 there was the `iter` function. This is not the same! In fact its purpose is exactly opposite: it makes iterables from iterators, where `iter` made iterators from iterables. The only similarity is that there are relatively few situtions in which either function should be necessary.
-
 ## async-iterable
 Same as iterable, but receives an asyncIterator as its argument. If the argument is an asyncIterable, it is returned as is. Otherwise if the argument is an iterable, it is returned as an asyncIterable
 ```js
@@ -385,7 +383,13 @@ const myAsyncRangeIterator = {
 asyncSlice(3, asyncIterable(myAsyncRangeIterator)) // 1, 2, 3
 ```
 
-**NOTE:** Prior to 6.0 there was the `asyncIter` function, which was not the same as `asyncIterable`. `asyncIter` functioned as a cast to async iterators. `asyncIterable` casts to async iterables. Both functions can (could) be used to cast from sync to async when necessary.
+## iter [DEPRECATED]
+This function is intended to cast iterables to iterators. This is not particularly useful because iter-tools expects iterables as input, not iterators. This made `iter` confusing and unneccessary in virtually all usages, and prompted its deprecation. It will be removed in the next major release.
+
+## async-iter [DEPRECATED]
+This function is intended to cast async iterables to async iterators. This is not particularly useful because iter-tools async functions expect async iterables as input, not async iterators. It has been deprecated and will be removed in the next major release as it was confusing and usually unnecessary.
+
+Its legitimate usage was to cast sync iterables to async iterables, which should now be done with `async-iterable`.
 
 ## to-array
 Transform an iterable to an array. toArray is implemented as Array.from. It is included for consistency since Array.from has no counterpart for use with async iterators.
