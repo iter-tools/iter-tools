@@ -1,8 +1,8 @@
-import iter from './internal/iter'
+import ensureIterable from './internal/ensure-iterable'
 
 function * batch (number, iterable) {
   let batch = []
-  for (const item of iter(iterable)) {
+  for (const item of ensureIterable(iterable)) {
     batch.push(item)
     if (batch.length === number) {
       yield batch

@@ -1,8 +1,8 @@
-import asyncIter from './internal/async-iter'
+import ensureAsyncIterable from './internal/ensure-async-iterable'
 
 async function * batch (number, iterable) {
   let batch = []
-  for await (const item of asyncIter(iterable)) {
+  for await (const item of ensureAsyncIterable(iterable)) {
     batch.push(item)
     if (batch.length === number) {
       yield batch

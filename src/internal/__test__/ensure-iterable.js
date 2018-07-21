@@ -1,19 +1,19 @@
 /* eslint-env node, jest */
-const iter = require('iter-tools/internal/iter')
+const ensureIterable = require('iter-tools/internal/ensure-iterable')
 const { range } = require('iter-tools')
 
-describe('iter', function () {
+describe('ensureIterable', function () {
   it('works with iterables', function () {
     const i = range(3)
-    expect(i).toBe(iter(i))
-    expect(Array.from(iter(i))).toEqual([0, 1, 2])
+    expect(i).toBe(ensureIterable(i))
+    expect(Array.from(ensureIterable(i))).toEqual([0, 1, 2])
   })
   it('works with Symbol.iterator', function () {
-    const i = iter([0, 1, 2])
+    const i = ensureIterable([0, 1, 2])
     expect(Array.from(i)).toEqual([0, 1, 2])
   })
   it('works with null', function () {
-    const i = iter(null)
+    const i = ensureIterable(null)
     expect(Array.from(i)).toEqual([])
   })
 })

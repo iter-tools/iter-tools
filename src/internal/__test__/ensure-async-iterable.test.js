@@ -1,10 +1,10 @@
 /* eslint-env node, jest */
-const asyncIter = require('iter-tools/internal/async-iter')
+const ensureAsyncIterable = require('iter-tools/internal/ensure-async-iterable')
 const { range } = require('iter-tools')
 
-describe('asyncIter', function () {
+describe('ensureAsyncIterable', function () {
   it('transform sync iter to async', async function () {
-    const iter = asyncIter(range({ start: 1, end: 4 }))
+    const iter = ensureAsyncIterable(range({ start: 1, end: 4 }))
     expect(await iter.next()).toEqual({ value: 1, done: false })
     expect(await iter.next()).toEqual({ value: 2, done: false })
     expect(await iter.next()).toEqual({ value: 3, done: false })

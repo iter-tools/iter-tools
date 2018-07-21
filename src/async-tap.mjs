@@ -1,8 +1,8 @@
-import asyncIter from './internal/async-iter'
+import ensureAsyncIterable from './internal/ensure-async-iterable'
 
 async function * tap (func, iterable) {
   let c = 0
-  for await (const item of asyncIter(iterable)) {
+  for await (const item of ensureAsyncIterable(iterable)) {
     func(item, c++)
     yield item
   }

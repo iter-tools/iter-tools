@@ -1,7 +1,7 @@
-import iter from './internal/iter'
+import ensureIterable from './internal/ensure-iterable'
 
 export default function * zipLongest (...iterables) {
-  const iters = iterables.map(i => iter(i)[Symbol.iterator]())
+  const iters = iterables.map(i => ensureIterable(i)[Symbol.iterator]())
   while (true) {
     let numberOfExausted = 0
     const zipped = new Array(iterables.length)

@@ -1,4 +1,4 @@
-import asyncIter from './internal/async-iter'
+import ensureAsyncIterable from './internal/ensure-async-iterable'
 
 function delay (ms) {
   if (ms <= 0) return Promise.resolve()
@@ -7,7 +7,7 @@ function delay (ms) {
 
 async function * asyncThrottle (ms, iterable) {
   let waitSince = 0
-  for await (const item of asyncIter(iterable)) {
+  for await (const item of ensureAsyncIterable(iterable)) {
     await delay(ms - (Date.now() - waitSince))
     waitSince = Date.now()
     yield item

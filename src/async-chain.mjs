@@ -1,7 +1,7 @@
-import asyncIter from './internal/async-iter'
+import ensureAsyncIterable from './internal/ensure-async-iterable'
 
 export default async function * chain (...arrayOfIter) {
   for (const iterable of arrayOfIter) {
-    yield * asyncIter(iterable)
+    yield * ensureAsyncIterable(iterable)
   }
 }

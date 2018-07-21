@@ -1,8 +1,8 @@
-import asyncIter from './internal/async-iter'
+import ensureAsyncIterable from './internal/ensure-async-iterable'
 import map from './map'
 
 export default async function * zip (...iterables) {
-  const iters = iterables.map(arg => asyncIter(arg))
+  const iters = iterables.map(arg => ensureAsyncIterable(arg)[Symbol.asyncIterator]())
   while (true) {
     const results = await Promise.all(map(iter => iter.next(), iters))
     const done = results.some(r => r.done)

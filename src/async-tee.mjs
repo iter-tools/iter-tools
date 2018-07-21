@@ -1,11 +1,11 @@
 import range from './range'
 import map from './map'
-import asyncIter from './internal/async-iter'
+import ensureAsyncIterable from './internal/ensure-async-iterable'
 import Dequeue from 'dequeue'
 
 export default function tee (iterable, number) {
   number = number || 2
-  iterable = asyncIter(iterable)
+  iterable = ensureAsyncIterable(iterable)
   const arrays = Array.from(map(() => new Dequeue(), range(number)))
   let done = false
 

@@ -1,7 +1,7 @@
-import iter from './internal/iter'
+import ensureIterable from './internal/ensure-iterable'
 
 export default function product (...args) {
-  const iters = args.map(i => iter(i))
+  const iters = args.map(i => ensureIterable(i))
 
   function * multiply (iterable1, iterable2) {
     for (const item1 of iterable1) {

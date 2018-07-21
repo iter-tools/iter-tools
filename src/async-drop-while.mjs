@@ -1,9 +1,9 @@
-import asyncIter from './internal/async-iter'
+import ensureAsyncIterable from './internal/ensure-async-iterable'
 
 async function * dropWhile (func, iterable) {
   let drop = true
   let c = 0
-  for await (const item of asyncIter(iterable)) {
+  for await (const item of ensureAsyncIterable(iterable)) {
     if (!drop) {
       yield item
     } else {

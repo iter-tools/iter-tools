@@ -1,4 +1,4 @@
-import iter from './internal/iter'
+import ensureIterable from './internal/ensure-iterable'
 
 export default function * cycle (iterable) {
   let copy
@@ -8,7 +8,7 @@ export default function * cycle (iterable) {
     }
   } else {
     copy = []
-    for (const item of iter(iterable)) {
+    for (const item of ensureIterable(iterable)) {
       copy.push(item)
       yield item
     }

@@ -1,9 +1,9 @@
-import iter from './internal/iter'
+import ensureIterable from './internal/ensure-iterable'
 
 function find (func, iterable) {
   let found = true
   let c = 0
-  for (const item of iter(iterable)) {
+  for (const item of ensureIterable(iterable)) {
     found = func(item, c++)
     if (found) {
       return item
