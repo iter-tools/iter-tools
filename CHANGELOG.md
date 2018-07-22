@@ -11,6 +11,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
  -  Added aliases:
  	-  `concat` and `asyncConcat` for `chain` and `asyncChain`
  	-  `zipAll` and `asyncZipAll` for `zipLongest` and `asyncZipLongest`
+ -  Added overload to `reduce`: `reduce(initialValue, reducer, iterable)`
+ -  Added overload to `reduceAsync`: `reduceAsync(initialValue, reducer, iterable)`
 
 ### Deprecated
  -  Deprecated `iter` and `asyncIter`
@@ -21,6 +23,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Changed
  -  **All methods:** Object parameters are no longer implicitly treated as iterables, and will throw errors.
+ -  `reduce` behavior now matches `Array.reduce`, which means that the initial come from a parameter with a default value. Such a reducer function might look like: `(acc = 0, val) => acc + val`.
  -  `compose([...fns])` => `compose(...fns)`
 
 ## [5.0.0] - 2018-6-20
