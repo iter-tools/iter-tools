@@ -1,8 +1,8 @@
-import asyncIter from './async-iter'
+import ensureAsyncIterable from './internal/ensure-async-iterable'
 
 async function find (func, iterable) {
   let c = 0
-  for await (const item of asyncIter(iterable)) {
+  for await (const item of ensureAsyncIterable(iterable)) {
     if (func(item, c++)) {
       return item
     }

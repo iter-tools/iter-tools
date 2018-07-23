@@ -39,8 +39,7 @@ Utilities returning multiple iterators
 * [tee](#tee) ([async](#async-tee))
 
 Utilities
-* [iter](#iter)
-* [asyncIter](#async-iter)
+* [iterable](#iterable) ([async](#async-iterable))
 * [toArray](#to-array) ([async](#async-to-array))
 * [execute](#execute) ([async](#async-execute))
 * [consume](#consume) ([async](#async-consume))
@@ -97,7 +96,7 @@ Async iterators are a new feature introduced by ES2018. Iter-tools implements an
 
 # Create iterators
 ## Range
-Create an iterator returning a sequence of numbers (the sequence can be infinite)
+Create an iterable returning a sequence of numbers (the sequence can be infinite)
 ```js
 range(); // 0, 1, 2 ... Infinity
 range(3); // 0, 1, 2
@@ -111,7 +110,7 @@ range({start: 9, end: 3, step: -3}); // 9, 6
 An alias of range.
 
 ## repeat
-Create an iterator that returns the same value n times
+Create an iterable that returns the same value n times
 ```js
 repeat('x', 3); // 'x', 'x', 'x'
 repeat('x'); // 'x', 'x', 'x' .... forever
@@ -168,8 +167,8 @@ deepEqual(Array.from(values(map)), values(obj)) // true
 # Transform a single iterable
 These series of generators take as first argument a function and as a second an iterable. If the second argument is omitted it automatically returns a curried function. These functions can be composed:
 ```js
-const iterator = compose(map(x => x * x), filter(isEven));
-iterator([ 1, 2, 3, 4 ]); // 4, 16
+const iterable = compose(map(x => x * x), filter(isEven));
+iterable([ 1, 2, 3, 4 ]); // 4, 16
 ```
 This is more memory efficient of using array methods as it doesn't require to build intermediate arrays.
 
@@ -211,7 +210,7 @@ takeWhile(isEven, range(4)); // 0
 Same as Take While but works on both sync and async iterables.
 
 ## drop-while
-It starts returning values when the function is false. Then it keeps going until the iterator is exausted.
+It starts returning values when the function is false. Then it keeps going until the iterable is exausted.
 ```js
 dropWhile(isEven, range(4)); // 1, 2, 3
 ```
@@ -220,7 +219,7 @@ dropWhile(isEven, range(4)); // 1, 2, 3
 Same as Drop While but works on both sync and async iterables.
 
 ## slice
-It returns an iterator that returns a slice of an iterable.
+It returns an iterable that returns a slice of an iterable.
 ```js
 slice(3, range(10)); // 0, 1, 2
 slice({start: 2}, range(10)); // 2, 3, 4, 5, 6, 7, 8, 9
@@ -325,9 +324,9 @@ Same as compress but works on both sync and async iterables.
 # Utilities returning multiple iterators
 
 ## group-by
-On each iteration it returns a key and a sub-iterator of items with that key.
+On each iteration it returns a key and a sub-iterable of items with that key.
 You can pass a function that returns a key, if you pass null or undefined an identity function will be used.
-When you iterate over the next group, the previous sub-iterator items will not be available anymore.
+When you iterate over the next group, the previous sub-iterable items will not be available anymore.
 Note: it groups **adjecents** items returning the same key.
 ```js
 groupBy(null, [1, 1, 1, 1, -1, -1, -1, 4]);
@@ -341,7 +340,7 @@ groupBy((value) => {value * value}, [1, 1, 1, 1, -1, -1, -1, 4]);
 // 1, subiterator (1, 1, 1, 1, -1, -1, -1)
 // 16, subiterator (4)
 ```
-This iterator can be curried:
+This iterable can be curried:
 ```js
 const groupBySquare = groupBy((value) => {value * value});
 groupBySquare([1, 1, 1, 1, -1, -1, -1, 4]);
@@ -351,7 +350,7 @@ groupBySquare([1, 1, 1, 1, -1, -1, -1, 4]);
 Same as groupBy but works on both sync and async iterables.
 
 ## tee
-It returns 2 or more copies of an iterable. In reality they are not copies (it is not possible) they are distinct iterables sharing the original one and caching the values when one of the copy pull a new value from the original iterator.
+It returns 2 or more copies of an iterable. In reality they are not copies (it is not possible) they are distinct iterables sharing the original one and caching the values when one of the copy pull a new value from the original iterable.
 ```js
 tee(range(3)); // [iter1, iter2]
 tee(range(3), 4); // [iter1, iter2, iter3, iter4]
@@ -362,53 +361,58 @@ Same as tee but works on both sync and async iterables.
 
 # Utilities
 
-## iter
-It tries to return an iterator from a value. This is useful for 2 reasons:
-* you can consume the iterator using the "next" method without worrying if it is a string, array, an iterable etc.
-* allows to iterate over a simple object
-
-If the value is an object with a "Symbol.iterator" attribute: it initialise and return the iterator (arrays, maps, sets and strings for example).
-If the value is already an iterator, it returns itself.
-If the value is a generator, it initialises it and returns the iterator.
-If the value is an object, it returns an iterator iterating over attribute/value pairs.
+## iterable
+Takes an iterator, and returns an iterable. All iter-tools functions expect iterables, as do `Array.from` and `for ... of`. Usually however this function is not neccessary, as generator functions (which most iter-tools functions are under the hood) return iterables. If the argument is already an iterable it is returned as is. The example shows a rare case when `iterable` is necessary.
 ```js
-iter([1, 2, 3]); // 1, 2, 3
-iter("hello"); // h e l l o
-iter(range(4)); // 0, 1, 2, 3
-iter({p1: 1, p2: 2}); // ['p1', 1] ['p2', 2]
-```
-
-## async-iter
-It converts a synchronous iterator in an asynchronous one.
-```js
-const iter = asyncIter(range({ start: 1, end: 4 }));
-for await (const n of iter) {
-  console.log(n); // 1, 2, 3
+const myRangeIterator = {
+  value: 1,
+  next: () => ({ value: this.value++, done: false } })
 }
+
+slice(3, iterable(myRangeIterator)) // 1, 2, 3
 ```
+
+## async-iterable
+Same as iterable, but receives an asyncIterator as its argument. If the argument is an asyncIterable, it is returned as is. Otherwise if the argument is an iterable, it is returned as an asyncIterable
+```js
+const myAsyncRangeIterator = {
+  value: 1,
+  next: () => Promise.resolve({ value: this.value++, done: false } })
+}
+
+asyncSlice(3, asyncIterable(myAsyncRangeIterator)) // 1, 2, 3
+```
+
+## iter [DEPRECATED]
+This function is intended to cast iterables to iterators. This is not particularly useful because iter-tools expects iterables as input, not iterators. This made `iter` confusing and unneccessary in virtually all usages, and prompted its deprecation. It will be removed in the next major release.
+
+## async-iter [DEPRECATED]
+This function is intended to cast async iterables to async iterators. This is not particularly useful because iter-tools async functions expect async iterables as input, not async iterators. It has been deprecated and will be removed in the next major release as it was confusing and usually unnecessary.
+
+Its legitimate usage was to cast sync iterables to async iterables, which should now be done with `async-iterable`.
 
 ## to-array
-Transform an iterator to an array. toArray is implemented as Array.from. It is included for consistency since Array.from has no counterpart for use with async iterators.
+Transform an iterable to an array. toArray is implemented as Array.from. It is included for consistency since Array.from has no counterpart for use with async iterators.
 ```js
 const arr = toArray(iter);
 ```
 
 ## async-to-array
-Transforms an asynchronous iterator to an array:
+Transforms an asynchronous iterable to an array:
 ```js
 const arr = await asyncToArray(asyncIter);
 ```
 
 ## execute
-It returns an iterator that returns the output of a function at every iteration.
+It returns an iterable that returns the output of a function at every iteration.
 ```js
-iter(() => Math.round(Math.random() * 10) ); // 3, 5, 9 ...
+execute(() => Math.round(Math.random() * 10) ); // 3, 5, 9 ...
 ```
 
 ## async-execute
-It returns an iterator that returns the output of an asynchronous function (promise based) at every iteration.
+It returns an iterable that returns the output of an asynchronous function (promise based) at every iteration.
 ```js
-asyncIter(() => Promise.resolve(Math.round(Math.random() * 10)) ); // 3, 5, 9 ...
+asyncExectue(() => Promise.resolve(Math.round(Math.random() * 10)) ); // 3, 5, 9 ...
 ```
 
 ## consume
@@ -606,7 +610,7 @@ combinationsWithReplacement([1, 2, 3, 4], 2);
 
 ## Issues and limitations
 There are a couple of limitations that you need to be aware of.
-First of all, when you consume an iterator object (using next or for..of) you are mutating the object for good.
+First of all, when you consume an iterator object (using next) you are mutating the object for good.
 Some of these functions makes an in memory copy of the output. For example: cycle, product or tee. They do that in a efficient lazy way. Still you need to consider that.
 Also with the iterator protocol you can create infinite iterables (repeat, cycle, count etc.). These iterables can't be used by all generators. For example combinatory generators require finite iterables.
 

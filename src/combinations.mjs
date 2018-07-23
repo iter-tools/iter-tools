@@ -1,7 +1,7 @@
 import map from './map'
 import range from './range'
 import permutations from './permutations'
-import iter from './iter'
+import ensureIterable from './internal/ensure-iterable'
 
 function isSorted (arr) {
   if (arr.length < 2) return true
@@ -15,7 +15,7 @@ function isSorted (arr) {
 }
 
 export default function * combinations (iterable, r) {
-  const arr = Array.from(iter(iterable))
+  const arr = Array.from(ensureIterable(iterable))
   const mapToIndex = map(function (i) { return arr[i] })
   const n = arr.length
 

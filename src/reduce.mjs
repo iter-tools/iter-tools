@@ -1,9 +1,9 @@
-import iter from './iter'
+import ensureIterable from './internal/ensure-iterable'
 
 function reduce (func, iterable) {
   let c = 0
   let acc
-  for (const item of iter(iterable)) {
+  for (const item of ensureIterable(iterable)) {
     acc = func(acc, item, c++)
   }
   return acc

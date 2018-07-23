@@ -1,7 +1,7 @@
-import iter from './iter'
+import ensureIterable from './internal/ensure-iterable'
 
 export default function * zip (...iterables) {
-  const iters = iterables.map(i => iter(i))
+  const iters = iterables.map(i => ensureIterable(i)[Symbol.iterator]())
   while (true) {
     const zipped = new Array(iterables.length)
     let i = 0

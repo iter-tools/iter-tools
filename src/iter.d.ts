@@ -1,2 +1,2 @@
-import { iter } from './index';
+import { iter } from './iter';
 export = iter;

@@ -1,9 +1,9 @@
-import asyncIter from './async-iter'
+import ensureAsyncIterable from './internal/ensure-async-iterable'
 
 async function reduce (func, iterable) {
   let c = 0
   let acc
-  for await (const item of asyncIter(iterable)) {
+  for await (const item of ensureAsyncIterable(iterable)) {
     acc = func(acc, item, c++)
   }
   return acc

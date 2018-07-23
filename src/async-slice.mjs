@@ -1,4 +1,4 @@
-import asyncIter from './async-iter'
+import ensureAsyncIterable from './internal/ensure-async-iterable'
 
 async function * slice (opts, iterable) {
   let start, step, end
@@ -12,7 +12,7 @@ async function * slice (opts, iterable) {
   let currentPos = 0
   let nextValidPos = start
 
-  for await (const item of asyncIter(iterable)) {
+  for await (const item of ensureAsyncIterable(iterable)) {
     if (currentPos >= end) {
       break
     }

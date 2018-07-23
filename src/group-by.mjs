@@ -1,8 +1,8 @@
-import iter from './iter'
+import ensureIterable from './internal/ensure-iterable'
 
 function * groupBy (key, iterable) {
   key = key || function (key) { return key }
-  iterable = iter(iterable)
+  iterable = ensureIterable(iterable)[Symbol.iterator]()
 
   let currentItem
   let currentKey, previousKey

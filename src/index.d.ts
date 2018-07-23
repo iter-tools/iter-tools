@@ -1,7 +1,7 @@
 type IterableLike<T> = Iterable<T> | T[] | { [key: string]: T; } | { [key: number]: T; };
 type AsyncIterableLike<T> = AsyncIterable<T> | IterableLike<T>;
 
-
+// Sync
 export declare function keys(iterable: any): Iterable<any>; // TODO, type me?
 export declare function values(iterable: any): Iterable<any>;
 export declare function entries(iterable: any): Iterable<any>;
@@ -46,7 +46,8 @@ export declare function flatMap<T, O>(func: (item: T) => IterableLike<O>, iter: 
 export declare function groupBy<T, K>(key: (item: T) => K): (iterable: IterableLike<T>) => Iterable<[K, Iterable<T>]>;
 export declare function groupBy<T, K>(key: (item: T) => K, iterable: IterableLike<T>): Iterable<[K, Iterable<T>]>;
 
-export declare function iter<T>(iterable: IterableLike<T>): Iterable<T>;
+export declare function iterable<T>(iterator: { next: () => {value: T}> } }): AsyncIterable<T>;
+export declare function iterable<T>(iterable: IterableLike<T>): Iterable<T>;
 
 export declare function map<T, O>(func: (item: T) => O): (iter: IterableLike<T>) => Iterable<O>;
 export declare function map<T, O>(func: (item: T) => O, iter: IterableLike<T>): Iterable<O>;
@@ -104,9 +105,12 @@ export declare function zip<T, T2, T3, T4, T5>(...iterables: [iterable1: Iterabl
 export declare function zip<T, T2, T3, T4, T5, T6>(iterables: [iterable1: IterableLike<T>[], iterable2: IterableLike<T2>[], iterable3: IterableLike<T3>[], iterable4: IterableLike<T4>[], iterable5: IterableLike<T5>[], iterable6: IterableLike<T6>[]]): Iterable<[T, T2, T3, T4, T5, T6]>;
 export declare function zip<T>(...iterables: IterableLike<T>[]): Iterable<[T]>;
 
+// Deprecated
+export declare function iter<T>(iterable: IterableLike<T>): Iterable<T>;
+
+// Async
 export declare function asyncBatch<T>(number: number): (iterable: AsyncIterableLike<T>) => AsyncIterable<T>;
 export declare function asyncBatch<T>(number: number, iterable: AsyncIterableLike<T>): AsyncIterable<T>;
-export declare function asyncIter<T>(syncIterable: AsyncIterableLike<T>): AsyncIterable<T>;
 
 export declare function asyncChain<T>(...iterables: AsyncIterableLike<T>[]): AsyncIterable<T>;
 export declare function asyncConcat<T>(...iterables: AsyncIterableLike<T>[]): AsyncIterable<T>;
@@ -131,11 +135,14 @@ export declare function asyncFilter<T>(func: (item: T) => boolean, iterable: Asy
 export declare function asyncFind<T>(func: (item: T) => boolean): (iterable: AsyncIterableLike<T>) => T | null;
 export declare function asyncFind<T>(func: (item: T) => boolean, iterable: AsyncIterableLike<T>): T | null;
 
-export declare function asyncFlatmap<T, O>(func: (item: T) => AsyncIterableLike<O>): (iter: AsyncIterableLike<T>) => AsyncIterable<O>;
-export declare function asyncFlatmap<T, O>(func: (item: T) => AsyncIterableLike<O>, iter: AsyncIterableLike<T>): AsyncIterable<O>;
+export declare function asyncFlatMap<T, O>(func: (item: T) => AsyncIterableLike<O>): (iter: AsyncIterableLike<T>) => AsyncIterable<O>;
+export declare function asyncFlatMap<T, O>(func: (item: T) => AsyncIterableLike<O>, iter: AsyncIterableLike<T>): AsyncIterable<O>;
 
 export declare function asyncGroupBy<T, K>(key: (item: T) => K): (iterable: AsyncIterableLike<T>) => Iterable<[K, Iterable<T>]>;
 export declare function asyncGroupBy<T, K>(key: (item: T) => K, iterable: AsyncIterableLike<T>): Iterable<[K, Iterable<T>]>;
+
+export declare function asyncIterable<T>(asyncIterator: { next: () => Promise<{value: T}> } }): AsyncIterable<T>;
+export declare function asyncIterable<T>(syncIterable: AsyncIterableLike<T>): AsyncIterable<T>;
 
 export declare function asyncMap<T, O>(func: (item: T) => O): (iter: AsyncIterableLike<T>) => AsyncIterable<O>;
 export declare function asyncMap<T, O>(func: (item: T) => O, iter: AsyncIterableLike<T>): AsyncIterable<O>;
@@ -176,3 +183,6 @@ export declare function asyncSplitLines(iterable: AsyncIterableLike<string>) => 
 
 export declare function asyncThrottle<T>(number: number): (iterable: AsyncIterableLike<T>) => AsyncIterable<T>;
 export declare function asyncThrottle<T>(number: number, iterable: AsyncIterableLike<T>): AsyncIterable<T>;
+
+// Deprecated
+export declare function asyncIter<T>(syncIterable: AsyncIterableLike<T>): AsyncIterable<T>;

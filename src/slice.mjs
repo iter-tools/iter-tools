@@ -1,4 +1,4 @@
-import iter from './iter'
+import ensureIterable from './internal/ensure-iterable'
 
 function * slice (opts, iterable) {
   let start, step, end
@@ -11,7 +11,7 @@ function * slice (opts, iterable) {
   let currentPos = 0
   let nextValidPos = start
 
-  for (var item of iter(iterable)) {
+  for (var item of ensureIterable(iterable)) {
     if (currentPos >= end) {
       break
     }

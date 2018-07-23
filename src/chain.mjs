@@ -1,7 +1,7 @@
-import iter from './iter'
+import ensureIterable from './internal/ensure-iterable'
 
 export default function * chain (...arrayOfIter) {
   for (const iterable of arrayOfIter) {
-    yield * iter(iterable)
+    yield * ensureIterable(iterable)
   }
 }

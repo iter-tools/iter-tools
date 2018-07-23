@@ -1,8 +1,8 @@
-import asyncIter from './async-iter'
+import ensureAsyncIterable from './internal/ensure-async-iterable'
 
 async function * groupBy (key, iterable) {
   key = key || function (key) { return key }
-  iterable = asyncIter(iterable)
+  iterable = ensureAsyncIterable(iterable)
 
   let currentItem
   let currentKey, previousKey

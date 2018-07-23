@@ -1,8 +1,8 @@
-import iter from './iter'
+import ensureIterable from './internal/ensure-iterable'
 
 function * map (func, iterable) {
   let c = 0
-  for (const item of iter(iterable)) {
+  for (const item of ensureIterable(iterable)) {
     yield func(item, c++)
   }
 }

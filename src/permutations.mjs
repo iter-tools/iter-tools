@@ -1,11 +1,11 @@
-import iter from './iter'
+import ensureIterable from './internal/ensure-iterable'
 import map from './map'
 import range from './range'
 import tee from './tee'
 import product from './product'
 
 export default function * permutations (iterable, r) {
-  const arr = Array.from(iter(iterable))
+  const arr = Array.from(ensureIterable(iterable))
   const mapToIndex = map(function (i) { return arr[i] })
   const n = arr.length
   r = typeof r === 'undefined' ? n : r

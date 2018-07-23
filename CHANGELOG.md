@@ -6,23 +6,33 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## Unreleased
 ### Added
- -  aliases for chain (concat), zipLongest (zipAll), asyncChain (asyncConcat) and asyncZipLongest (asyncZipAll)
+ -  Added `iterable` and `asyncIterable`. These methods are NOT the same as `iter` and `asyncIter`. What they do is exactly the opposite!
+ -  Added `tap`, `toArray` and `asyncToArray` methods.
+ -  Added aliases:
+ 	-  `concat` and `asyncConcat` for `chain` and `asyncChain`
+ 	-  `zipAll` and `asyncZipAll` for `zipLongest` and `asyncZipLongest`
+
+### Deprecated
+ -  Deprecated `iter` and `asyncIter`
+
+### Removed
+ -  Removed `asyncMapBatch`
+ -  Removed filler argument from zipLongest: `zipLongest(filler, ...iterables)` => `zipLongest(...iterables)`
 
 ### Changed
- -  Removed `asyncMapBatch`
+ -  **All methods:** Object parameters are no longer implicitly treated as iterables, and will throw errors.
  -  `compose([...fns])` => `compose(...fns)`
- -  Removed filler argument from zipLongest: `zipLongest(filler, ...iterables)` => `zipLongest(...iterables])`
 
 ## [5.0.0] - 2018-6-20
 ### Added
  -  Added `keys`, `values`, `entries`, `size`, and `find` methods.
 
 ### Changed
- -  `iter(iter(iterable))` is now an error.
+ -  The behavior of `iter(iter(iterable))` should now be considered undefined.
  -  `asyncZip` and `asyncZipLongest` now run items in parallel
 
 ### Fixed
- -  `iter({next: 'foo'})` now returns `Iterator[[next, 'foo']]` not `{next: foo}`. This is particular to objects having any property named next.
+ -  `iter({next: 'foo'})` now returns `Iterator[[next, 'foo']]` not `{next: 'foo'}`. This is particular to objects having any property named next.
 
 
 
