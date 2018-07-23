@@ -64,7 +64,9 @@ export declare function product<T>(...iterables: IterableLike<T>[]): Iterable<[T
 export declare function range(opts: number | { start: number, end?: number, step?: number }): Iterable<number>;
 
 export declare function reduce<T, O>(func: (acc: O, item: T, c: number) => O): (iterable: IterableLike<T>) => O;
+export declare function reduce<T, O>(initial: O, func: (acc: O, item: T, c: number) => O): (iterable: IterableLike<T>) => O;
 export declare function reduce<T, O>(func: (acc: O, item: T, c: number) => O, iterable: IterableLike<T>): O;
+export declare function reduce<T, O>(initial: O, func: (acc: O, item: T, c: number) => O, iterable: IterableLike<T>): O;
 
 export declare function regexpExec(re: RegExp): (str: string) => Iterable<string>;
 export declare function regexpExec(re: RegExp, str: string): Iterable<string>;
@@ -148,7 +150,9 @@ export declare function asyncMap<T, O>(func: (item: T) => O): (iter: AsyncIterab
 export declare function asyncMap<T, O>(func: (item: T) => O, iter: AsyncIterableLike<T>): AsyncIterable<O>;
 
 export declare function asyncReduce<T, O>(func: (acc: O, item: T, c: number) => O): (iterable: AsyncIterableLike<T>) => O;
+export declare function asyncReduce<T, O>(initial: O, func: (acc: O, item: T, c: number) => O): (iterable: AsyncIterableLike<T>) => O;
 export declare function asyncReduce<T, O>(func: (acc: O, item: T, c: number) => O, iterable: AsyncIterableLike<T>): O;
+export declare function asyncReduce<T, O>(initial: O, func: (acc: O, item: T, c: number) => O, iterable: AsyncIterableLike<T>): O;
 
 export declare function asyncSize(iterable: AsyncIterable<any>) => number;
 
