@@ -2,7 +2,7 @@ import ensureAsyncIterable from './internal/ensure-async-iterable'
 
 async function * groupBy (key, iterable) {
   key = key || function (key) { return key }
-  iterable = ensureAsyncIterable(iterable)
+  iterable = ensureAsyncIterable(iterable)[Symbol.asyncIterator]()
 
   let currentItem
   let currentKey, previousKey

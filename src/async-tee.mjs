@@ -5,7 +5,7 @@ import Dequeue from 'dequeue'
 
 export default function tee (iterable, number) {
   number = number || 2
-  iterable = ensureAsyncIterable(iterable)
+  iterable = ensureAsyncIterable(iterable)[Symbol.asyncIterator]()
   const arrays = Array.from(map(() => new Dequeue(), range(number)))
   let done = false
 
