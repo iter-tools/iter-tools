@@ -62,11 +62,46 @@ Combinatory generators
 * [combinations](#combinations)
 
 ## Definitions
-This should help clarify the documentation. You can also get more informations here: https://developer.mozilla.org/en/docs/Web/JavaScript/Guide/Iterators_and_Generators
-* Iterator: an object implementing the iterator protocol (the method next etc.)
-* generator: a function returning an iterator
-* iterable: a generator function or any object with a generator function under the attribute Symbol.iterator
-* async iterable: an async generator function or any object with an async generator function under the attribute Symbol.asyncIterator
+This should help clarify the documentation. You can also get more informations here: https://developer.mozilla.org/en/docs/Web/JavaScript/Guide/Iterators_and_Generators and here: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols
+* **Iterator**: an object implementing the iterator protocol (the method next etc.)
+* **Async Iterator**: an object implementing the async iterator protocol (the method next that returns a promise etc.)
+* An object is **iterable** if it implements the @@iterator method, meaning that the object (or one of the objects up its prototype chain) must have a property with a @@iterator key which is available via constant Symbol.iterator. You can call this function without arguments to get an object implementing the **iterator** protocol.
+* An object is **async iterable** if it implements the @@asyncIterator method, meaning that the object (or one of the objects up its prototype chain) must have a property with a @@asyncIterator key which is available via constant Symbol.asyncIterator. You can call this function without arguments to get an object implementing the **async iterator** protocol.
+* **Generator function**: a function returning an **generator object**
+* **Async generator function**: a function returning an **async generator object**
+* **Generator object**: an object supporting both **iterable** and **iterator** protocol
+* **Async generator object**: an object supporting both **async iterable** and **async iterator** protocol
+
+For example:
+```js
+// iterator
+const iterator = {
+  value: 1,
+  next() {
+    return { value: this.value++, done: false }
+  }
+}
+
+// iterable
+const obj = {
+  [Symbol.iterator]: iterator
+}
+
+// generator function
+function * genFunc() {
+  i = 1
+  yield i++
+}
+
+// generator object
+const genObj = genFunc()
+
+// generator object supports iterable protocol
+typeof genObj[Symbol.iterator] === 'function'
+// generator object supports iterator protocol
+typeof genObj.next === 'function'
+```
+
 
 #### Javascript support
 Every module is available in 3 ecmascript editions: ES5, ES2015, ES2018.
