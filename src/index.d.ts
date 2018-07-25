@@ -34,6 +34,9 @@ export declare function enumerate<T>(iterable: IterableLike<T>, start?: number):
 
 export declare function execute<T>(func: (...args: any[]) => T, ...args: any[]): Iterable<T>;
 
+export declare function every<T>(func: (item: T) => boolean): (iterable: IterableLike<T>) => boolean;
+export declare function every<T>(func: (item: T) => boolean, iterable: IterableLike<T>): boolean;
+
 export declare function filter<T>(func: (item: T) => boolean): (iterable: IterableLike<T>) => Iterable<T>;
 export declare function filter<T>(func: (item: T) => boolean, iterable: IterableLike<T>): Iterable<T>;
 
@@ -46,7 +49,7 @@ export declare function flatMap<T, O>(func: (item: T) => IterableLike<O>, iter: 
 export declare function groupBy<T, K>(key: (item: T) => K): (iterable: IterableLike<T>) => Iterable<[K, Iterable<T>]>;
 export declare function groupBy<T, K>(key: (item: T) => K, iterable: IterableLike<T>): Iterable<[K, Iterable<T>]>;
 
-export declare function iterable<T>(iterator: { next: () => {value: T}> } }): AsyncIterable<T>;
+export declare function iterable<T>(iterator: { next: () => {value: T}> }): Iterable<T>;
 export declare function iterable<T>(iterable: IterableLike<T>): Iterable<T>;
 
 export declare function map<T, O>(func: (item: T) => O): (iter: IterableLike<T>) => Iterable<O>;
@@ -84,9 +87,12 @@ export declare function splitLines(iterable: IterableLike<T>): Iterable<string>;
 
 export declare function repeat<T>(obj: T, times?: number): Iterable<T>;
 
-export declare function size(iterable: Iterable<any>) => number;
+export declare function size(iterable: Iterable<any>): number;
 
 export declare function slice<T>(opts: number | { start: number, end?: number, step?: number }, iterable: IterableLike<T>): Iterable<number>;
+
+export declare function some<T>(func: (item: T) => boolean): (iterable: IterableLike<T>) => boolean;
+export declare function some<T>(func: (item: T) => boolean, iterable: IterableLike<T>): boolean;
 
 export declare function takeWhile<T>(func: (item: T) => boolean): (iterable: IterableLike<T>) => Iterable<T>;
 export declare function takeWhile<T>(func: (item: T) => boolean, iterable: IterableLike<T>): Iterable<T>;
@@ -129,6 +135,9 @@ export declare function asyncDropWhile<T>(func: (item: T) => boolean, iterable: 
 
 export declare function asyncEnumerate<T>(iterable: AsyncIterableLike<T>, start?: number): AsyncIterable<[number, T]>;
 
+export declare function asyncEvery<T>(func: (item: T) => boolean): (iterable: AsyncIterableLike<T>) => boolean;
+export declare function asyncEvery<T>(func: (item: T) => boolean, iterable: AsyncIterableLike<T>): boolean;
+
 export declare function asyncExecute<T>(func: (...args: any[]) => Promise<T>, ...args: any[]): AsyncIterable<T>;
 
 export declare function asyncFilter<T>(func: (item: T) => boolean): (iterable: AsyncIterableLike<T>) => AsyncIterable<T>;
@@ -143,7 +152,7 @@ export declare function asyncFlatMap<T, O>(func: (item: T) => AsyncIterableLike<
 export declare function asyncGroupBy<T, K>(key: (item: T) => K): (iterable: AsyncIterableLike<T>) => Iterable<[K, Iterable<T>]>;
 export declare function asyncGroupBy<T, K>(key: (item: T) => K, iterable: AsyncIterableLike<T>): Iterable<[K, Iterable<T>]>;
 
-export declare function asyncIterable<T>(asyncIterator: { next: () => Promise<{value: T}> } }): AsyncIterable<T>;
+export declare function asyncIterable<T>(asyncIterator: { next: () => Promise<{value: T}> }): AsyncIterable<T>;
 export declare function asyncIterable<T>(syncIterable: AsyncIterableLike<T>): AsyncIterable<T>;
 
 export declare function asyncMap<T, O>(func: (item: T) => O): (iter: AsyncIterableLike<T>) => AsyncIterable<O>;
@@ -154,7 +163,7 @@ export declare function asyncReduce<T, O>(initial: O, func: (acc: O, item: T, c:
 export declare function asyncReduce<T, O>(func: (acc: O, item: T, c: number) => O, iterable: AsyncIterableLike<T>): O;
 export declare function asyncReduce<T, O>(initial: O, func: (acc: O, item: T, c: number) => O, iterable: AsyncIterableLike<T>): O;
 
-export declare function asyncSize(iterable: AsyncIterable<any>) => number;
+export declare function asyncSize(iterable: AsyncIterable<any>): number;
 
 export declare function asyncSlice<T>(opts: number | { start: number, end?: number, step?: number }, iterable: AsyncIterableLike<T>): AsyncIterable<number>;
 
@@ -183,7 +192,10 @@ export declare function asyncRegexpSplitIter(re: RegExp, iterable: AsyncIterable
 export declare function asyncRegexpExecIter(re: RegExp): (iterable: AsyncIterableLike<string>) => AsyncIterableLike<string>;
 export declare function asyncRegexpExecIter(re: RegExp, iterable: AsyncIterableLike<string>): AsyncIterableLike<string>;
 
-export declare function asyncSplitLines(iterable: AsyncIterableLike<string>) => AsyncIterableLike<string>;
+export declare function asyncSplitLines(iterable: AsyncIterableLike<string>): AsyncIterableLike<string>;
+
+export declare function asyncSome<T>(func: (item: T) => boolean): (iterable: AsyncIterableLike<T>) => boolean;
+export declare function asyncSome<T>(func: (item: T) => boolean, iterable: AsyncIterableLike<T>): boolean;
 
 export declare function asyncThrottle<T>(number: number): (iterable: AsyncIterableLike<T>) => AsyncIterable<T>;
 export declare function asyncThrottle<T>(number: number, iterable: AsyncIterableLike<T>): AsyncIterable<T>;

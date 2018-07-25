@@ -2,7 +2,7 @@ import ensureAsyncIterable from './internal/ensure-async-iterable'
 
 async function every (func, iterable) {
   let c = 0
-  for (const item of ensureAsyncIterable(iterable)) {
+  for await (const item of ensureAsyncIterable(iterable)) {
     if (!func(item, c++)) {
       return false
     }
