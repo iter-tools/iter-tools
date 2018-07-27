@@ -1,5 +1,5 @@
 /* eslint-env node, jest */
-const { largest, /*asynclargest, asyncToArray,*/ range } = require('iter-tools')
+const { nlargest, /* asynclargest, asyncToArray, */ range } = require('iter-tools')
 
 function shuffleArray (a) {
   for (let i = a.length - 1; i > 0; i--) {
@@ -19,18 +19,18 @@ const unsorted = shuffle(range(100))
 
 describe('largest', function () {
   it('return largest iterable', function () {
-    const largest3 = largest(3, unsorted)
+    const largest3 = nlargest(3, unsorted)
     expect(Array.from(largest3)).toEqual([97, 98, 99])
-    const largest1 = largest(1, unsorted)
+    const largest1 = nlargest(1, unsorted)
     expect(Array.from(largest1)).toEqual([99])
   })
 
-  it('return smallest iterable', function () {
-    const smallest3 = largest(3, (a, b) => b - a, unsorted)
-    expect(Array.from(smallest3)).toEqual([2, 1, 0])
-    const smallest1 = largest(1, (a, b) => b - a, unsorted)
-    expect(Array.from(smallest1)).toEqual([0])
-  })
+  // it('return smallest iterable', function () {
+  //   const smallest3 = nlargest(3, (a, b) => b - a, unsorted)
+  //   expect(Array.from(smallest3)).toEqual([2, 1, 0])
+  //   const smallest1 = nlargest(1, (a, b) => b - a, unsorted)
+  //   expect(Array.from(smallest1)).toEqual([0])
+  // })
 
   // it('return largest iterable from iterable', function () {
   //   const iter = largest(function (item) { return item * 2 }, range({ start: 1, end: 4 }))

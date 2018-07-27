@@ -52,7 +52,8 @@
     "clone-regexp": "^1.0.1",
     "deprecate": "^1.0.0",
     "dequeue": "^1.0.5",
-    "little-ds-toolkit": "^1.1.0"
+    "little-ds-toolkit": "^1.1.0",
+    "lodash": "^4.17.10"
   },
   "devDependencies": {
     "@babel/cli": "^7.0.0-beta.49",
