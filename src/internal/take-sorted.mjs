@@ -3,9 +3,7 @@ import Heap from 'little-ds-toolkit/lib/heap'
 import _iteratee from 'lodash/iteratee'
 
 export default function * takeSorted (number, expr, comparator, iterable) {
-  console.log(_iteratee)
   const getKey = _iteratee(expr)
-
   const heap = new Heap(comparator)
 
   for (const item of ensureIterable(iterable)) {

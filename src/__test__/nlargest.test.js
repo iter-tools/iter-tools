@@ -1,61 +1,54 @@
 /* eslint-env node, jest */
 const { nlargest, /* asynclargest, asyncToArray, */ range } = require('iter-tools')
 
-function shuffleArray (a) {
-  for (let i = a.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1))
-    const tmp = a[i]
-    a[i] = a[j]
-    a[j] = tmp
-  }
-  return a
-}
-
-function shuffle (iterable) {
-  return shuffleArray(Array.from(iterable))
-}
-
-const unsorted = shuffle(range(100))
-
-describe('largest', function () {
+describe('nlargest', function () {
   it('return largest iterable', function () {
-    const largest3 = nlargest(3, unsorted)
+    const largest3 = nlargest(3, [99, 12, 4, 6, 97, 44, 66, 77, 98])
     expect(Array.from(largest3)).toEqual([97, 98, 99])
-    const largest1 = nlargest(1, unsorted)
+    const largest1 = nlargest(1, [99, 12, 4, 6, 97, 44, 66, 77, 98])
     expect(Array.from(largest1)).toEqual([99])
   })
 
-  // it('return smallest iterable', function () {
-  //   const smallest3 = nlargest(3, (a, b) => b - a, unsorted)
-  //   expect(Array.from(smallest3)).toEqual([2, 1, 0])
-  //   const smallest1 = nlargest(1, (a, b) => b - a, unsorted)
-  //   expect(Array.from(smallest1)).toEqual([0])
-  // })
+  it('return largest iterable, using key', function () {
+    const largest2 = nlargest(2, (item) => item.length, ['abc', 'a', 'abcd', 'abcd', 'abcdef', 'ab'])
+    expect(Array.from(largest2)).toEqual(['abcd', 'abcdef'])
+  })
 
-  // it('return largest iterable from iterable', function () {
-  //   const iter = largest(function (item) { return item * 2 }, range({ start: 1, end: 4 }))
-  //   expect(Array.from(iter)).toEqual([2, 4, 6])
-  // })
+  it('return largest iterable, using iteratee', function () {
+    const largest2 = nlargest(1, 'id', [{ id: 123 }, { id: 12 }, { id: 124 }, { id: 1 }, { id: 3 }])
+    expect(Array.from(largest2)).toEqual([{ id: 124 }])
+  })
 
-  // it('return largestped iterable (curried version)', function () {
-  //   const iter = largest(function (item) { return item * 2 })
-  //   expect(Array.from(iter(range({ start: 1, end: 4 })))).toEqual([2, 4, 6])
-  // })
+  it('return largest iterable, using curry', function () {
+    const largest3 = nlargest(3)([99, 12, 4, 6, 97, 44, 66, 77, 98])
+    expect(Array.from(largest3)).toEqual([97, 98, 99])
+    const largest2 = nlargest(2, (item) => item.length)(['abc', 'a', 'abcd', 'abcd', 'abcdef', 'ab'])
+    expect(Array.from(largest2)).toEqual(['abcd', 'abcdef'])
+  })
 })
 
-// describe('asynclargest', function () {
-//   it('return largestped iterable', async function () {
-//     const iter = asynclargest(function (item) { return item * 2 }, [1, 2, 3])
-//     expect(await asyncToArray(iter)).toEqual([2, 4, 6])
+// describe('asyncNLargest', function () {
+//   it('return largest iterable', async function () {
+//     const largest3 = nlargest(3, [99, 12, 4, 6, 97, 44, 66, 77, 98])
+//     expect(await asyncToArray(largest3)).toEqual([97, 98, 99])
+//     const largest1 = nlargest(1, [99, 12, 4, 6, 97, 44, 66, 77, 98])
+//     expect(await asyncToArray(largest1)).toEqual([99])
 //   })
 
-//   it('return largestped iterable from iterable', async function () {
-//     const iter = asynclargest(function (item) { return item * 2 }, range({ start: 1, end: 4 }))
-//     expect(await asyncToArray(iter)).toEqual([2, 4, 6])
+//   it('return largest iterable, using key', async function () {
+//     const largest2 = nlargest(2, (item) => item.length, ['abc', 'a', 'abcd', 'abcd', 'abcdef', 'ab'])
+//     expect(await asyncToArray(largest2)).toEqual(['abcd', 'abcdef'])
 //   })
 
-//   it('return largestped iterable (curried version)', async function () {
-//     const iter = asynclargest(function (item) { return item * 2 })
-//     expect(await asyncToArray(iter(range({ start: 1, end: 4 })))).toEqual([2, 4, 6])
+//   it('return largest iterable, using iteratee', async function () {
+//     const largest2 = nlargest(1, 'id', [{ id: 123 }, { id: 12 }, { id: 124 }, { id: 1 }, { id: 3 }])
+//     expect(await asyncToArray(largest2)).toEqual([{ id: 124 }])
+//   })
+
+//   it('return largest iterable, using curry', async function () {
+//     const largest3 = nlargest(3)([99, 12, 4, 6, 97, 44, 66, 77, 98])
+//     expect(await asyncToArray(largest3)).toEqual([97, 98, 99])
+//     const largest2 = nlargest(2, (item) => item.length)(['abc', 'a', 'abcd', 'abcd', 'abcdef', 'ab'])
+//     expect(await asyncToArray(largest2)).toEqual(['abcd', 'abcdef'])
 //   })
 // })
