@@ -24,6 +24,8 @@ Transform a single iterable
 * [flatMap](#flat-map) ([async](#async-flat-map))
 * [reduce](#reduce) ([async](#async-reduce))
 * [batch](#batch) ([async](#async-batch))
+* [nLargest](#n-largest) ([async](#async-n-largest))
+* [nSmallest](#n-smallest) ([async](#async-n-smallest))
 
 Combine multiple iterables
 * [chain](#chain) ([async](#async-chain))
@@ -296,6 +298,36 @@ batch(2, range(5)); // [0, 1], [2, 3], [4]
 
 ## async-batch
 Same as Batch but works on both sync and async iterables.
+
+## n-largest
+Takes an iterable and returns the n biggest items sorted and starting with the smallest (the nth order statistic).
+The function is both space efficient (only stores n items) and fast O(m log n), given m as the total items yielded by the iterable.
+```js
+nLargest(3, [10, 4, 9, 2, 5, 8, 7]) // 8, 9, 10
+```
+It can also take a function returning the key used to sort items:
+```js
+nLargest(2, (item) => item.length)(['abc', 'a', 'abcd', 'abcd', 'abcdef', 'ab']) // 'abcd', 'abcdef'
+```
+This function can also be expressed as string. It uses the function [iteratee from lodash](https://lodash.com/docs/4.17.10#iteratee).
+
+## async-n-largest
+Same as nLargest but works on both sync and async iterables.
+
+## n-smallest
+Takes an iterable and returns the n smallest items sorted and starting with the biggest (the nth order statistic).
+The function is both space efficient (only stores n items) and fast O(m log n), given m as the total items yielded by the iterable.
+```js
+nSmallest(3, [10, 4, 9, 2, 5, 8, 7]) // 5, 4, 2
+```
+It can also take a function returning the key used to sort items:
+```js
+nSmallest(2, (item) => item.length)(['abc', 'a', 'abcd', 'abcd', 'abcdef', 'ab']) // 'ab', 'a'
+```
+This function can also be expressed as string. It uses the function [iteratee from lodash](https://lodash.com/docs/4.17.10#iteratee).
+
+## async-n-smallest
+Same as nSmallest but works on both sync and async iterables.
 
 # Combine multiple iterators
 
