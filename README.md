@@ -46,6 +46,8 @@ Utilities
 * [find](#find) ([async](#async-find))
 * [tap](#tap) ([async](#async-tap))
 * [size](#size) ([async](#async-size))
+* [some](#some) ([async](#async-some))
+* [every](#every) ([async](#async-every))
 * [asyncThrottle](#async-throttle)
 
 Strings manipulation
@@ -504,6 +506,34 @@ size([1, 2, 3]) // 3
 Returns the number of values yielded by an iterable. It works for both sync and async iterables.
 ```js
 asyncSize(asyncIter([1, 2, 3])) // 3
+```
+
+## some
+It returns true if running the function, at least one item returns true (can be curried).
+```js
+some((n) => n % 2 === 0, [1, 2, 3]) // returns true
+some((n) => n % 2 === 0, [1, 3, 7]) // returns false
+```
+
+## async-some
+It returns true if running the function, at least one item returns true (can be curried).
+```js
+asyncSome(asyncIter([1, 2, 3])) // returns a promise that resolve on true
+asyncSome(asyncIter([1, 3, 7])) // returns a promise that resolve on false
+```
+
+## every
+It returns true if running the function, all items return true (can be curried).
+```js
+every((n) => n % 2 === 0, [1, 2, 3]) // returns false
+every((n) => n % 2 === 0, [2, 4, 6]) // returns true
+```
+
+## async-every
+It returns true if running the function, all items return true (can be curried).
+```js
+asyncEvery(asyncIter([1, 2, 3])) // returns a promise that resolve on false
+asyncEvery(asyncIter([2, 4, 6])) // returns a promise that resolve on true
 ```
 
 ## async-throttle
