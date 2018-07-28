@@ -12,7 +12,7 @@
     "test:es2015": "npm run build:es2015-cjs && jest --moduleNameMapper '{\"^iter-tools(.*)\": \"<rootDir>/es2015$1\"}'",
     "test:es2018": "npm run build:es2018-cjs && jest --moduleNameMapper '{\"^iter-tools(.*)\": \"<rootDir>/es2018$1\"}'",
     "test": "npm run test:es5 && npm run test:es2015",
-    "watch": "npm run test -- -w",
+    "watch": "jest --moduleNameMapper '{\"^iter-tools(.*)\": \"<rootDir>/es2015$1\"}' --watch",
     "benchmarks": "npm run clean && npm run build:es2018-cjs && node --expose-gc benchmarks",
     "coverage:badges": "jest-coverage-badges",
     "coverage": "npm run test:es2015 -- --coverage --coverageDirectory=coverage --config '{ \"coverageReporters\" : [\"lcov\", \"json-summary\"]}' && npm run coverage:badges",
@@ -51,7 +51,9 @@
     "@babel/runtime": "^7.0.0-beta.49",
     "clone-regexp": "^1.0.1",
     "deprecate": "^1.0.0",
-    "dequeue": "^1.0.5"
+    "dequeue": "^1.0.5",
+    "little-ds-toolkit": "^1.1.0",
+    "lodash": "^4.17.10"
   },
   "devDependencies": {
     "@babel/cli": "^7.0.0-beta.49",
@@ -78,5 +80,8 @@
     "mkdirp": "^0.5.1",
     "require-all": "^2.2.0",
     "rimraf": "^2.6.2"
+  },
+  "jest": {
+    "testEnvironment": "node"
   }
 }
