@@ -56,7 +56,7 @@ Strings manipulation
 * [regexpExecIter](#regexp-exec-iter) ([async](#async-regexp-exec-iter))
 
 Combinatory generators
-* [products](#products)
+* [product](#product)
 * [permutations](#permutations)
 * [combinationsWithReplacement](#combinations-with-replacement)
 * [combinations](#combinations)

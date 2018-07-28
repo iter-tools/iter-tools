@@ -52,6 +52,12 @@ export declare function iterable<T>(iterable: IterableLike<T>): Iterable<T>;
 export declare function map<T, O>(func: (item: T) => O): (iter: IterableLike<T>) => Iterable<O>;
 export declare function map<T, O>(func: (item: T) => O, iter: IterableLike<T>): Iterable<O>;
 
+export declare function nLargest<T, O>(n: Number, func: (item: T) => O): (iter: IterableLike<T>) => Iterable<O>;
+export declare function nLargest<T, O>(n: Number, func: (item: T) => O, iter: IterableLike<T>): Iterable<O>;
+
+export declare function nSmallest<T, O>(n: Number, func: (item: T) => O): (iter: IterableLike<T>) => Iterable<O>;
+export declare function nSmallest<T, O>(n: Number, func: (item: T) => O, iter: IterableLike<T>): Iterable<O>;
+
 export declare function permutations<T>(iterable: IterableLike<T>, r: number): Iterable<T>;
 
 export declare function product<T, T2>(iterable1: IterableLike<T>[], iterable2: IterableLike<T2>[]): Iterable<[T, T2]>;
@@ -148,6 +154,12 @@ export declare function asyncIterable<T>(syncIterable: AsyncIterableLike<T>): As
 
 export declare function asyncMap<T, O>(func: (item: T) => O): (iter: AsyncIterableLike<T>) => AsyncIterable<O>;
 export declare function asyncMap<T, O>(func: (item: T) => O, iter: AsyncIterableLike<T>): AsyncIterable<O>;
+
+export declare function asyncNLargest<T, O>(n: Number, func: (item: T) => O): (iter: IterableLike<T>) => Iterable<O>;
+export declare function asyncNLargest<T, O>(n: Number, func: (item: T) => O, iter: IterableLike<T>): Iterable<O>;
+
+export declare function asyncNSmallest<T, O>(n: Number, func: (item: T) => O): (iter: IterableLike<T>) => Iterable<O>;
+export declare function asyncNSmallest<T, O>(n: Number, func: (item: T) => O, iter: IterableLike<T>): Iterable<O>;
 
 export declare function asyncReduce<T, O>(func: (acc: O, item: T, c: number) => O): (iterable: AsyncIterableLike<T>) => O;
 export declare function asyncReduce<T, O>(initial: O, func: (acc: O, item: T, c: number) => O): (iterable: AsyncIterableLike<T>) => O;
