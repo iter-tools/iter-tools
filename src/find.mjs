@@ -13,7 +13,7 @@ function find (func, iterable) {
 }
 
 export default function curriedFind (func, iterable) {
-  if (!iterable) {
+  if (arguments.length === 1) {
     return iterable => find(func, iterable)
   }
   return find(func, iterable)

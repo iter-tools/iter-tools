@@ -7,7 +7,7 @@ async function consume (func, iterable) {
 }
 
 export default function curriedConsume (func, iterable) {
-  if (!iterable) {
+  if (arguments.length === 1) {
     return iterable => consume(func, iterable)
   }
 

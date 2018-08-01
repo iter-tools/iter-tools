@@ -1,9 +1,10 @@
+import ensureIterable from './internal/ensure-iterable'
 import regexExec from './regexp-exec'
 
 function * regexpExecIter (re, iterable) {
   let matches
   let buffer = ''
-  for (const chunk of iterable) {
+  for (const chunk of ensureIterable(iterable)) {
     if (chunk === '') continue
     let lastIndex = 0
     matches = []
@@ -26,7 +27,7 @@ function * regexpExecIter (re, iterable) {
 }
 
 export default function curriedRegexpExecIter (re, iterable) {
-  if (typeof iterable === 'undefined') {
+  if (arguments.length === 1) {
     return iterable => regexpExecIter(re, iterable)
   }
   return regexpExecIter(re, iterable)

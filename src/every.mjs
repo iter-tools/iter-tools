@@ -11,7 +11,7 @@ function every (func, iterable) {
 }
 
 export default function curriedEvery (func, iterable) {
-  if (!iterable) {
+  if (arguments.length === 1) {
     return iterable => every(func, iterable)
   }
 

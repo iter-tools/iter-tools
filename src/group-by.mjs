@@ -34,7 +34,7 @@ function * groupBy (key, iterable) {
 }
 
 export default function curriedGroupBy (key, iterable) {
-  if (typeof iterable === 'undefined') {
+  if (arguments.length === 1) {
     return iterable => groupBy(key, iterable)
   }
   return groupBy(key, iterable)

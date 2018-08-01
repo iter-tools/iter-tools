@@ -50,7 +50,7 @@ describe('regexpSplitIter', function () {
   })
   it('should split (no iterables)', function () {
     const re = /\s+/g
-    const iter = regexpSplitIter(re, [])
+    const iter = regexpSplitIter(re, null)
     expect(Array.from(iter)).toEqual([])
   })
   it('should split with empty string', function () {
@@ -109,7 +109,7 @@ describe('asyncRegexpSplitIter', function () {
   })
   it('should split (no iterables)', async function () {
     const re = /\s+/g
-    const iter = asyncRegexpSplitIter(re, [])
+    const iter = asyncRegexpSplitIter(re, null)
     expect(await asyncToArray(iter)).toEqual([])
   })
   it('should split with empty string', async function () {

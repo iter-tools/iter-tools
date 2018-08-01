@@ -15,7 +15,7 @@ function * batch (number, iterable) {
 }
 
 export default function curriedBatch (number, iterable) {
-  if (!iterable) {
+  if (arguments.length === 1) {
     return iterable => batch(number, iterable)
   }
   return batch(number, iterable)

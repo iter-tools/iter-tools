@@ -1,10 +1,11 @@
+import ensureAsyncIterable from './internal/ensure-async-iterable'
 import regexSplit from './regexp-split'
 
 async function * regexpSplitIter (re, iterable) {
   let buffer = ''
   let queue
   let mergeEmpty = false
-  for await (const chunk of iterable) {
+  for await (const chunk of ensureAsyncIterable(iterable)) {
     if (chunk === '') continue
     queue = []
     buffer += chunk
@@ -28,7 +29,7 @@ async function * regexpSplitIter (re, iterable) {
 }
 
 export default function curriedRegexpSplitIter (re, iterable) {
-  if (typeof iterable === 'undefined') {
+  if (arguments.length === 1) {
     return iterable => regexpSplitIter(re, iterable)
   }
   return regexpSplitIter(re, iterable)

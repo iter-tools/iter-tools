@@ -10,7 +10,7 @@ async function * filter (func, iterable) {
 }
 
 export default function curriedFilter (func, iterable) {
-  if (!iterable) {
+  if (arguments.length === 1) {
     return iterable => filter(func, iterable)
   }
   return filter(func, iterable)

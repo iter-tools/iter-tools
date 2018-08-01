@@ -1,7 +1,7 @@
 import ensureAsyncIterable from './internal/ensure-async-iterable'
 
-async function * groupBy (key, iterable) {
-  key = key || function (key) { return key }
+async function * groupBy (selector, iterable) {
+  selector = selector || function (key) { return key }
   iterable = ensureAsyncIterable(iterable)[Symbol.asyncIterator]()
 
   let currentItem
@@ -12,7 +12,7 @@ async function * groupBy (key, iterable) {
       yield currentItem.value
       currentItem = await iterable.next()
       if (currentItem.done) return
-      currentKey = key(currentItem.value)
+      currentKey = selector(currentItem.value)
       if (previousKey !== currentKey) {
         return
       }
@@ -23,7 +23,7 @@ async function * groupBy (key, iterable) {
 
   while (true) {
     if (currentItem.done) return
-    currentKey = key(currentItem.value)
+    currentKey = selector(currentItem.value)
     if (previousKey !== currentKey) {
       previousKey = currentKey
       yield [currentKey, group()]
@@ -33,9 +33,9 @@ async function * groupBy (key, iterable) {
   }
 }
 
-export default function curriedGroupBy (key, iterable) {
+export default function curriedGroupBy (selector, iterable) {
   if (typeof iterable === 'undefined') {
-    return iterable => groupBy(key, iterable)
+    return iterable => groupBy(selector, iterable)
   }
-  return groupBy(key, iterable)
+  return groupBy(selector, iterable)
 }

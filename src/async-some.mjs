@@ -11,7 +11,7 @@ async function some (func, iterable) {
 }
 
 export default function curriedSome (func, iterable) {
-  if (!iterable) {
+  if (arguments.length === 1) {
     return iterable => some(func, iterable)
   }
 
