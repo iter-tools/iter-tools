@@ -17,19 +17,23 @@ async function * groupBy (selector, iterable) {
         return
       }
     }
-  };
+  }
 
-  currentItem = await iterable.next()
+  try {
+    currentItem = await iterable.next()
 
-  while (true) {
-    if (currentItem.done) return
-    currentKey = selector(currentItem.value)
-    if (previousKey !== currentKey) {
-      previousKey = currentKey
-      yield [currentKey, group()]
-    } else {
-      currentItem = await iterable.next()
+    while (true) {
+      if (currentItem.done) return
+      currentKey = selector(currentItem.value)
+      if (previousKey !== currentKey) {
+        previousKey = currentKey
+        yield [currentKey, group()]
+      } else {
+        currentItem = await iterable.next()
+      }
     }
+  } finally { // calling close on the main iterable, closes the input iterable
+    if (typeof iterable.return === 'function') iterable.return()
   }
 }
 

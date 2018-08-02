@@ -19,17 +19,21 @@ function * groupBy (key, iterable) {
     }
   };
 
-  currentItem = iterable.next()
+  try {
+    currentItem = iterable.next()
 
-  while (true) {
-    if (currentItem.done) return
-    currentKey = key(currentItem.value)
-    if (previousKey !== currentKey) {
-      previousKey = currentKey
-      yield [currentKey, group()]
-    } else {
-      currentItem = iterable.next()
+    while (true) {
+      if (currentItem.done) return
+      currentKey = key(currentItem.value)
+      if (previousKey !== currentKey) {
+        previousKey = currentKey
+        yield [currentKey, group()]
+      } else {
+        currentItem = iterable.next()
+      }
     }
+  } finally { // calling close on the main iterable, closes the input iterable
+    if (typeof iterable.return === 'function') iterable.return()
   }
 }
 

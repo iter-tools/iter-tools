@@ -34,9 +34,7 @@ export default function tee (iterable, number) {
     } finally {
       closed++
       if (closed === number) {
-        if (typeof iterable.return === 'function') {
-          iterable.return()
-        }
+        if (typeof iterable.return === 'function') iterable.return()
       }
     }
   }

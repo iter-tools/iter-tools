@@ -22,15 +22,17 @@ describe('tee', function () {
     expect(iters[2].next().done).toBe(true)
   })
 
-  it.skip('closes when exhausted', function () {
+  it('closes when exhausted', function () {
     const repeatX = {
       [Symbol.iterator] () { return this },
       next: () => ({ done: false, value: 'x' }),
       return: jest.fn(() => ({ done: true }))
     }
     const [iter1, iter2] = tee(repeatX)
+    iter1[Symbol.iterator]().next() // you can't close a brand new iterator
     iter1[Symbol.iterator]().return()
     expect(repeatX.return).toBeCalledTimes(0)
+    iter2[Symbol.iterator]().next() // you can't close a brand new iterator
     iter2[Symbol.iterator]().return()
     expect(repeatX.return).toBeCalled()
   })

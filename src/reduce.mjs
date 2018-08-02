@@ -4,19 +4,23 @@ function reduce (initial, func, iterable) {
   let c = 0
   let acc = initial
   const iterator = ensureIterable(iterable)[Symbol.iterator]()
-  if (initial === undefined) {
-    const firstResult = iterator.next()
-    if (firstResult.done) {
-      throw new Error('Cannot reduce: no initial value specified and iterable was empty')
+  try {
+    if (initial === undefined) {
+      const firstResult = iterator.next()
+      if (firstResult.done) {
+        throw new Error('Cannot reduce: no initial value specified and iterable was empty')
+      }
+      acc = firstResult.value
+      c = 1
     }
-    acc = firstResult.value
-    c = 1
+    let result
+    while (!(result = iterator.next()).done) {
+      acc = func(acc, result.value, c++)
+    }
+    return acc
+  } finally { // close the iterable in case of exceptions
+    if (typeof iterable.return === 'function') iterable.return()
   }
-  let result
-  while (!(result = iterator.next()).done) {
-    acc = func(acc, result.value, c++)
-  }
-  return acc
 }
 
 export default function curriedReduce (initial, func, iterable) {
