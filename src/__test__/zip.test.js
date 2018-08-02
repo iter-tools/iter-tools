@@ -34,7 +34,7 @@ describe('zip', function () {
     expect(calledClose).toBe(true)
   })
 
-  it.skip('closes when stopping earlier, using slice', function () {
+  it.skip('closes when stopping earlier, using slice', function () { // broken in es5 version
     let calledClose = false
     const repeatX = {
       next: () => ({ done: false, value: 'x' }),

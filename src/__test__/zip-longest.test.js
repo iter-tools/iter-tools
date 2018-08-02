@@ -19,7 +19,7 @@ describe('zipLongest', function () {
     expect(Array.from(iter)).toEqual([[1, 4, 7], [2, 5, 8], [3, undefined, undefined]])
   })
 
-  it.skip('closes when stopping earlier', function () {
+  it.skip('closes when stopping earlier', function () { // broken on es5
     let calledClose = false
     const repeatX = {
       next: () => ({ done: false, value: 'x' }),

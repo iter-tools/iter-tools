@@ -14,19 +14,23 @@ function closeIterators (iters, except) {
 
 export default function * zip (...iterables) {
   const iters = iterables.map(i => ensureIterable(i)[Symbol.iterator]())
-  while (true) {
-    const zipped = new Array(iterables.length)
-    let i = 0
-    let c = 0
-    for (const iter of iters) {
-      const {done, value} = iter.next()
-      if (done) {
-        closeIterators(iters, c) // clean up unfinished iterators
-        return
+  try {
+    while (true) {
+      const zipped = new Array(iterables.length)
+      let i = 0
+      let c = 0
+      for (const iter of iters) {
+        const {done, value} = iter.next()
+        if (done) {
+          closeIterators(iters, c) // clean up unfinished iterators
+          return
+        }
+        c++
+        zipped[i++] = value
       }
-      c++
-      zipped[i++] = value
+      yield zipped
     }
-    yield zipped
+  } finally {
+    closeIterators(iters)
   }
 }
