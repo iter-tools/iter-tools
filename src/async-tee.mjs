@@ -5,14 +5,14 @@ import Dequeue from 'dequeue'
 
 export default function tee (iterable, number) {
   number = number || 2
-  iterable = ensureAsyncIterable(iterable)[Symbol.asyncIterator]()
+  const iterator = ensureAsyncIterable(iterable)[Symbol.asyncIterator]()
   let exhausted = 0
   const arrays = Array.from(map(() => new Dequeue(), range(number)))
   let done = false
 
   function fetch () {
     return new Promise((resolve, reject) => {
-      iterable.next()
+      iterator.next()
         .then((newItem) => {
           if (newItem.done) {
             done = true
@@ -40,7 +40,7 @@ export default function tee (iterable, number) {
     } finally {
       exhausted++
       if (exhausted === number) {
-        if (typeof iterable.return === 'function') iterable.return()
+        if (typeof iterator.return === 'function') iterator.return()
       }
     }
   }
