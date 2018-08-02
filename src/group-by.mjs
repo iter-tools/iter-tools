@@ -2,7 +2,7 @@ import ensureIterable from './internal/ensure-iterable'
 
 function * groupBy (key, iterable) {
   key = key || function (key) { return key }
-  iterable = ensureIterable(iterable)[Symbol.iterator]()
+  const iterator = ensureIterable(iterable)[Symbol.iterator]()
 
   let currentItem
   let currentKey, previousKey
@@ -10,7 +10,7 @@ function * groupBy (key, iterable) {
   function * group () {
     while (true) {
       yield currentItem.value
-      currentItem = iterable.next()
+      currentItem = iterator.next()
       if (currentItem.done) return
       currentKey = key(currentItem.value)
       if (previousKey !== currentKey) {
@@ -19,17 +19,21 @@ function * groupBy (key, iterable) {
     }
   };
 
-  currentItem = iterable.next()
+  try {
+    currentItem = iterator.next()
 
-  while (true) {
-    if (currentItem.done) return
-    currentKey = key(currentItem.value)
-    if (previousKey !== currentKey) {
-      previousKey = currentKey
-      yield [currentKey, group()]
-    } else {
-      currentItem = iterable.next()
+    while (true) {
+      if (currentItem.done) return
+      currentKey = key(currentItem.value)
+      if (previousKey !== currentKey) {
+        previousKey = currentKey
+        yield [currentKey, group()]
+      } else {
+        currentItem = iterator.next()
+      }
     }
+  } finally { // calling close on the main iterable, closes the input iterable
+    if (typeof iterator.return === 'function') iterator.return()
   }
 }
 

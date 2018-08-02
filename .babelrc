@@ -6,7 +6,6 @@
       ],
       "presets": [
         ["@babel/preset-env", {
-          "loose": true,
           "modules": false
         }]
       ]
@@ -23,9 +22,7 @@
         "add-module-exports"
       ],
       "presets": [
-        ["@babel/preset-env", {
-          "loose": true
-        }]
+        "@babel/preset-env"
       ]
     },
     "es2015-cjs": {

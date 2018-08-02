@@ -43,6 +43,8 @@ export declare function filter<T>(func: (item: T) => boolean, iterable: Iterable
 export declare function find<T>(func: (item: T) => boolean): (iterable: IterableLike<T>) => T | null;
 export declare function find<T>(func: (item: T) => boolean, iterable: IterableLike<T>): T | null;
 
+export declare function first<T>(iterable: IterableLike<T>): T | undefined;
+
 export declare function flatMap<T, O>(func: (item: T) => IterableLike<O>): (iter: IterableLike<T>) => Iterable<O>;
 export declare function flatMap<T, O>(func: (item: T) => IterableLike<O>, iter: IterableLike<T>): Iterable<O>;
 
@@ -145,6 +147,8 @@ export declare function asyncFilter<T>(func: (item: T) => boolean, iterable: Asy
 
 export declare function asyncFind<T>(func: (item: T) => boolean): (iterable: AsyncIterableLike<T>) => T | null;
 export declare function asyncFind<T>(func: (item: T) => boolean, iterable: AsyncIterableLike<T>): T | null;
+
+export declare function asyncFirst<T>(iterable: AsyncIterableLike<T>): T | undefined;
 
 export declare function asyncFlatMap<T, O>(func: (item: T) => AsyncIterableLike<O>): (iter: AsyncIterableLike<T>) => AsyncIterable<O>;
 export declare function asyncFlatMap<T, O>(func: (item: T) => AsyncIterableLike<O>, iter: AsyncIterableLike<T>): AsyncIterable<O>;

@@ -11,7 +11,7 @@ function * slice (opts, iterable) {
   let currentPos = 0
   let nextValidPos = start
 
-  for (var item of ensureIterable(iterable)) {
+  for (const item of ensureIterable(iterable)) {
     if (currentPos >= end) {
       break
     }

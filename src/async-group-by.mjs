@@ -2,7 +2,7 @@ import ensureAsyncIterable from './internal/ensure-async-iterable'
 
 async function * groupBy (selector, iterable) {
   selector = selector || function (key) { return key }
-  iterable = ensureAsyncIterable(iterable)[Symbol.asyncIterator]()
+  const iterator = ensureAsyncIterable(iterable)[Symbol.asyncIterator]()
 
   let currentItem
   let currentKey, previousKey
@@ -10,26 +10,30 @@ async function * groupBy (selector, iterable) {
   async function * group () {
     while (true) {
       yield currentItem.value
-      currentItem = await iterable.next()
+      currentItem = await iterator.next()
       if (currentItem.done) return
       currentKey = selector(currentItem.value)
       if (previousKey !== currentKey) {
         return
       }
     }
-  };
+  }
 
-  currentItem = await iterable.next()
+  try {
+    currentItem = await iterator.next()
 
-  while (true) {
-    if (currentItem.done) return
-    currentKey = selector(currentItem.value)
-    if (previousKey !== currentKey) {
-      previousKey = currentKey
-      yield [currentKey, group()]
-    } else {
-      currentItem = await iterable.next()
+    while (true) {
+      if (currentItem.done) return
+      currentKey = selector(currentItem.value)
+      if (previousKey !== currentKey) {
+        previousKey = currentKey
+        yield [currentKey, group()]
+      } else {
+        currentItem = await iterator.next()
+      }
     }
+  } finally { // calling close on the main iterable, closes the input iterable
+    if (typeof iterator.return === 'function') iterator.return()
   }
 }
 

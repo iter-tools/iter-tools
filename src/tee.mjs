@@ -5,12 +5,14 @@ import Dequeue from 'dequeue'
 
 export default function tee (iterable, number) {
   number = number || 2
-  iterable = ensureIterable(iterable)[Symbol.iterator]()
+  const iterator = ensureIterable(iterable)[Symbol.iterator]()
+
+  let exhausted = 0
   const arrays = Array.from(map(() => new Dequeue(), range(number)))
   let done = false
 
   function fetch () {
-    const newItem = iterable.next()
+    const newItem = iterator.next()
     if (newItem.done) {
       done = true
     } else {
@@ -19,13 +21,20 @@ export default function tee (iterable, number) {
   }
 
   function * teeGen (a) {
-    while (true) {
-      if (a.length) {
-        yield a.shift()
-      } else if (done) {
-        return
-      } else {
-        fetch()
+    try {
+      while (true) {
+        if (a.length) {
+          yield a.shift()
+        } else if (done) {
+          return
+        } else {
+          fetch()
+        }
+      }
+    } finally {
+      exhausted++
+      if (exhausted === number) {
+        if (typeof iterator.return === 'function') iterator.return()
       }
     }
   }
