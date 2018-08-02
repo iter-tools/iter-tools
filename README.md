@@ -43,6 +43,7 @@ Utilities
 * [toArray](#to-array) ([async](#async-to-array))
 * [execute](#execute) ([async](#async-execute))
 * [consume](#consume) ([async](#async-consume))
+* [first](#first) ([async](#async-first))
 * [find](#find) ([async](#async-find))
 * [tap](#tap) ([async](#async-tap))
 * [size](#size) ([async](#async-size))
@@ -462,6 +463,15 @@ consume((item) => console.log(item), [1, 2, 3]) // prints 1, 2, 3
 
 ## async-consume
 The equivalent of consume, for async iterables. It returns a promise.
+
+## first
+It returns the fist item from an iterable.
+```js
+first([1, 2, 3]) // 1
+```
+
+## async-first
+It returns the fist item from an async iterable. It returns a promise.
 
 ## find
 The equivalent of the array "find" function (it can be curried).

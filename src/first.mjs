@@ -1,7 +1,5 @@
-import ensureIterable from './internal/ensure-iterable'
+import slice from './slice'
 
 export default function first (iterable) {
-  const iter = ensureIterable(iterable)[Symbol.iterator]()
-  const firstItem = iter.next()
-  return firstItem.value
+  return Array.from(slice(1, iterable))[0]
 }
