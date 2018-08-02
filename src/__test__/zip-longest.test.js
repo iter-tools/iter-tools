@@ -19,19 +19,16 @@ describe('zipLongest', function () {
     expect(Array.from(iter)).toEqual([[1, 4, 7], [2, 5, 8], [3, undefined, undefined]])
   })
 
-  it.skip('closes when stopping earlier', function () { // broken on es5
-    let calledClose = false
+  it('closes when stopping earlier', function () { // broken if transpiled with es5 loose
     const repeatX = {
+      [Symbol.iterator] () { return this },
       next: () => ({ done: false, value: 'x' }),
-      return: () => {
-        calledClose = true
-        return { done: true }
-      }
+      return: jest.fn(() => ({ done: true }))
     }
 
-    const iter = slice(2, zipLongest(range(2), {[Symbol.iterator]: () => repeatX}))
+    const iter = slice(2, zipLongest(range(2), repeatX))
     expect(Array.from(iter)).toEqual([[0, 'x'], [1, 'x']])
-    expect(calledClose).toBe(true)
+    expect(repeatX.return).toBeCalled()
   })
 })
 

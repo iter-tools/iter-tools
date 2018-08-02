@@ -6,6 +6,7 @@ import Dequeue from 'dequeue'
 export default function tee (iterable, number) {
   number = number || 2
   iterable = ensureAsyncIterable(iterable)[Symbol.asyncIterator]()
+  let closed = 0
   const arrays = Array.from(map(() => new Dequeue(), range(number)))
   let done = false
 
@@ -26,13 +27,20 @@ export default function tee (iterable, number) {
   }
 
   async function * teeGen (a) {
-    while (true) {
-      if (a.length) {
-        yield a.shift()
-      } else if (done) {
-        return
-      } else {
-        await fetch()
+    try {
+      while (true) {
+        if (a.length) {
+          yield a.shift()
+        } else if (done) {
+          return
+        } else {
+          await fetch()
+        }
+      }
+    } finally {
+      closed++
+      if (closed === number) {
+        if (typeof iterable.return === 'function') iterable.return()
       }
     }
   }

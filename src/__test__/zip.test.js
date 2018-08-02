@@ -20,33 +20,27 @@ describe('zip', function () {
   })
 
   it('closes when stopping earlier', function () {
-    let calledClose = false
     const repeatX = {
+      [Symbol.iterator] () { return this },
       next: () => ({ done: false, value: 'x' }),
-      return: () => {
-        calledClose = true
-        return { done: true }
-      }
+      return: jest.fn(() => ({ done: true }))
     }
 
-    const iter = zip(range(2), {[Symbol.iterator]: () => repeatX})
+    const iter = zip(range(2), repeatX)
     expect(Array.from(iter)).toEqual([[0, 'x'], [1, 'x']])
-    expect(calledClose).toBe(true)
+    expect(repeatX.return).toBeCalled()
   })
 
-  it.skip('closes when stopping earlier, using slice', function () { // broken in es5 version
-    let calledClose = false
+  it('closes when stopping earlier, using slice', function () { // broken if transpiled with es5 loose
     const repeatX = {
+      [Symbol.iterator] () { return this },
       next: () => ({ done: false, value: 'x' }),
-      return: () => {
-        calledClose = true
-        return { done: true }
-      }
+      return: jest.fn(() => ({ done: true }))
     }
 
-    const iter = slice(1, zip(range(2), {[Symbol.iterator]: () => repeatX}))
+    const iter = slice(1, zip(range(2), repeatX))
     expect(Array.from(iter)).toEqual([[0, 'x']])
-    expect(calledClose).toBe(true)
+    expect(repeatX.return).toBeCalled()
   })
 })
 
