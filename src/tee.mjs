@@ -7,7 +7,7 @@ export default function tee (iterable, number) {
   number = number || 2
   iterable = ensureIterable(iterable)[Symbol.iterator]()
 
-  let closed = 0
+  let exhausted = 0
   const arrays = Array.from(map(() => new Dequeue(), range(number)))
   let done = false
 
@@ -32,8 +32,8 @@ export default function tee (iterable, number) {
         }
       }
     } finally {
-      closed++
-      if (closed === number) {
+      exhausted++
+      if (exhausted === number) {
         if (typeof iterable.return === 'function') iterable.return()
       }
     }
