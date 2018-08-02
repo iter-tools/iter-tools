@@ -25,7 +25,7 @@ function * slice (opts, iterable) {
 }
 
 export default function curriedSlice (opts, iterable) {
-  if (!iterable) {
+  if (arguments.length === 1) {
     return iterable => slice(opts, iterable)
   }
 

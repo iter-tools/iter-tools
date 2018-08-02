@@ -1,10 +1,11 @@
+import ensureIterable from './internal/ensure-iterable'
 import regexSplit from './regexp-split'
 
 function * regexpSplitIter (re, iterable) {
   let buffer = ''
   let queue
   let mergeEmpty = false
-  for (const chunk of iterable) {
+  for (const chunk of ensureIterable(iterable)) {
     if (chunk === '') continue
     queue = []
     buffer += chunk
@@ -28,7 +29,7 @@ function * regexpSplitIter (re, iterable) {
 }
 
 export default function curriedRegexpSplitIter (re, iterable) {
-  if (typeof iterable === 'undefined') {
+  if (arguments.length === 1) {
     return iterable => regexpSplitIter(re, iterable)
   }
   return regexpSplitIter(re, iterable)

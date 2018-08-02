@@ -38,7 +38,7 @@ describe('regexpExecIter', function () {
   })
   it('should exec (no iterables)', function () {
     const re = /a+/g
-    const iter = regexpExecIter(re, [])
+    const iter = regexpExecIter(re, null)
     expect(getMatchesArray(iter)).toEqual([])
   })
 })
@@ -77,7 +77,7 @@ describe('asyncRegexpExecIter', function () {
   })
   it('should exec (no iterables)', async function () {
     const re = /a+/g
-    const iter = asyncRegexpExecIter(re, [])
+    const iter = asyncRegexpExecIter(re, null)
     expect(await getMatchesArrayAsync(iter)).toEqual([])
   })
 })

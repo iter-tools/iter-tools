@@ -15,7 +15,7 @@ async function * asyncThrottle (ms, iterable) {
 }
 
 export default function curriedAsyncThrottle (ms, iterable) {
-  if (!iterable) {
+  if (arguments.length === 1) {
     return iterable => asyncThrottle(ms, iterable)
   }
   return asyncThrottle(ms, iterable)

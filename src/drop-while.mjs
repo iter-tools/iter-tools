@@ -16,7 +16,7 @@ function * dropWhile (func, iterable) {
 }
 
 export default function curriedDropWhile (func, iterable) {
-  if (!iterable) {
+  if (arguments.length === 1) {
     return iterable => dropWhile(func, iterable)
   }
   return dropWhile(func, iterable)

@@ -1,9 +1,10 @@
+import ensureAsyncIterable from './internal/ensure-async-iterable'
 import regexExec from './regexp-exec'
 
 async function * regexpExecIter (re, iterable) {
   let matches
   let buffer = ''
-  for await (const chunk of iterable) {
+  for await (const chunk of ensureAsyncIterable(iterable)) {
     if (chunk === '') continue
     let lastIndex = 0
     matches = []
@@ -26,7 +27,7 @@ async function * regexpExecIter (re, iterable) {
 }
 
 export default function curriedRegexpExecIter (re, iterable) {
-  if (typeof iterable === 'undefined') {
+  if (arguments.length === 1) {
     return iterable => regexpExecIter(re, iterable)
   }
   return regexpExecIter(re, iterable)
