@@ -8,7 +8,7 @@ function * flatMap (func, iterable) {
 }
 
 export default function curriedFlatMap (func, iterable) {
-  if (!iterable) {
+  if (arguments.length === 1) {
     return iterable => flatMap(func, iterable)
   }
   return flatMap(func, iterable)

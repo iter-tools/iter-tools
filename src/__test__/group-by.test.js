@@ -71,6 +71,10 @@ describe('groupBy', function () {
     expect(next.value[0]).toBe('B')
     // ...
   })
+
+  it('groupBy of null returns empty iterable', function () {
+    expect(Array.from(groupBy(null, null))).toEqual([])
+  })
 })
 
 describe('asyncGroupBy', function () {
@@ -142,5 +146,9 @@ describe('asyncGroupBy', function () {
     next = await iter.next()
     expect(next.value[0]).toBe('B')
     // ...
+  })
+
+  it('groupBy of null returns empty iterable', async function () {
+    expect(await asyncToArray(asyncGroupBy(null, null))).toEqual([])
   })
 })

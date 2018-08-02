@@ -9,7 +9,7 @@ function * tap (func, iterable) {
 }
 
 export default function curriedTap (func, iterable) {
-  if (!iterable) {
+  if (arguments.length === 1) {
     return iterable => tap(func, iterable)
   }
   return tap(func, iterable)

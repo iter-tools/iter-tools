@@ -8,7 +8,7 @@ function * map (func, iterable) {
 }
 
 export default function curriedMap (func, iterable) {
-  if (!iterable) {
+  if (arguments.length === 1) {
     return iterable => map(func, iterable)
   }
   return map(func, iterable)

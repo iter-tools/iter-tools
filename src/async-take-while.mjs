@@ -14,7 +14,7 @@ async function * takeWhile (func, iterable) {
 }
 
 export default function curriedTakeWhile (func, iterable) {
-  if (!iterable) {
+  if (arguments.length === 1) {
     return iterable => takeWhile(func, iterable)
   }
   return takeWhile(func, iterable)

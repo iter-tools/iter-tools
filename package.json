@@ -80,6 +80,7 @@
     "rimraf": "^2.6.2"
   },
   "jest": {
-    "testEnvironment": "node"
+    "testEnvironment": "node",
+    "setupTestFrameworkScriptFile": "./test-setup.js"
   }
 }

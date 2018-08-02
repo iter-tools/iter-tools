@@ -23,8 +23,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Changed
  -  **All methods:** Object parameters are no longer implicitly treated as iterables, and will throw errors.
+ -  **All curried methods:** passing `null` and `undefined` as the iterable will always result in those values being coerced to iterables. Currying happens based on `arguments.length`.
  -  `reduce` behavior now matches `Array.reduce`, which means that the initial come from a parameter with a default value. Such a reducer function might look like: `(acc = 0, val) => acc + val`.
  -  `compose([...fns])` => `compose(...fns)`
+ -  `asyncRegexpExecIter` and `asyncRegexpSplitIter` now coerce sync iterables to async iterables, matching behavior of all other async methods.
+ -  `regexpExec` now ensures its RegExp parameter is global unless it is already sticky.
+
+
 
 ## [5.0.0] - 2018-6-20
 ### Added
@@ -48,6 +53,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ## [4.0.0] - 2018-6-2
 ### Changed
  -  Changed **the whole way the library is imported.** Very breaking.
+
 
 
 ### Find earlier history [on GitHub](https://github.com/sithmel/iter-tools/commits/master?before=3c215852eae92417f3ea28ac2abfe56f1cea83fa+35)

@@ -21,6 +21,10 @@ describe('batch', function () {
     const iter = batch(2)
     expect(Array.from(iter(range({ start: 1, end: 10 })))).toEqual([[1, 2], [3, 4], [5, 6], [7, 8], [9]])
   })
+
+  it('returns an empty iterable when passed null', function () {
+    expect(Array.from(batch(2, null))).toEqual([])
+  })
 })
 
 describe('asyncBatch', function () {
@@ -42,5 +46,9 @@ describe('asyncBatch', function () {
   it('returns an async iterable with batches (curried version)', async function () {
     const iter = asyncBatch(2)
     expect(await asyncToArray(iter(range({ start: 1, end: 10 })))).toEqual([[1, 2], [3, 4], [5, 6], [7, 8], [9]])
+  })
+
+  it('returns an empty iterable when passed null', async function () {
+    expect(await asyncToArray(asyncBatch(2, null))).toEqual([])
   })
 })

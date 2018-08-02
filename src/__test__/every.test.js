@@ -9,6 +9,10 @@ describe('every', function () {
   it('returns false if one item are false', function () {
     expect(every((n) => n % 2 === 0, [4, 1, 6, 4, 8, 6])).toBe(false)
   })
+
+  it('returns true if there are no items', function () {
+    expect(every((n) => n % 2 === 0, null)).toBe(true)
+  })
 })
 
 describe('asyncEvery', function () {
@@ -18,5 +22,9 @@ describe('asyncEvery', function () {
 
   it('returns false if all items are false', async function () {
     expect(await asyncEvery((n) => n % 2 === 0, asyncIterable([4, 1, 6, 4, 8, 6]))).toBe(false)
+  })
+
+  it('returns true if there are no items', async function () {
+    expect(await asyncEvery((n) => n % 2 === 0, null)).toBe(true)
   })
 })
