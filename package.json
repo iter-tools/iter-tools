@@ -1,7 +1,7 @@
 {
   "name": "iter-tools",
   "version": "5.0.4",
-  "description": "The iterator toolbox",
+  "description": "The iterable toolbox",
   "main": "es5/index",
   "module": "es5/index.mjs",
   "jsnext:main": "es5/index.mjs",

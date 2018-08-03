@@ -4,6 +4,5 @@
 /es2018
 .DS_Store
 
-/coverage
-# /coverage/*
-# !/coverage/badge-*.svg
+/coverage/*
+!/coverage/badge-*.svg
