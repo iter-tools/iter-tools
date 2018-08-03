@@ -101,6 +101,9 @@ export declare function takeWhile<T>(func: (item: T) => boolean, iterable: Itera
 
 export declare function tap<T>(func: (item: T, c: number) => any, iterable: IterableLike<T>): Iterable<T>;
 
+export declare function takeSorted<T>(number: number, func?: (item: T) => boolean): (iterable: IterableLike<T>) => Iterable<T>;
+export declare function takeSorted<T>(number: number, func?: (item: T) => boolean, iterable: IterableLike<T>): Iterable<T>;
+
 export declare function tee<T>(iterable: IterableLike<T>, number?: number): Iterable<T>[];
 
 export declare function toArray<T>(iterable: IterableLike<T>): T[];
@@ -175,6 +178,9 @@ export declare function asyncTakeWhile<T>(func: (item: T) => boolean): (iterable
 export declare function asyncTakeWhile<T>(func: (item: T) => boolean, iterable: AsyncIterableLike<T>): AsyncIterable<T>;
 
 export declare function asyncTap<T>(func: (item: T, c: number) => any, iterable: AsyncIterableLike<T>): AsyncIterable<T>;
+
+export declare function asyncTakeSorted<T>(number: number, func?: (item: T) => boolean): (iterable: AsyncIterableLike<T>) => AsyncIterableLike<T>;
+export declare function asyncTakeSorted<T>(number: number, func?: (item: T) => boolean, iterable: IterablAsyncIterableLikeeLike<T>): AsyncIterableLike<T>;
 
 export declare function asyncTee<T>(iterable: AsyncIterableLike<T>, number?: number): AsyncIterable<T>[];
 

@@ -28,6 +28,7 @@ Transform a single iterable
 * [flatMap](#flat-map) ([async](#async-flat-map))
 * [reduce](#reduce) ([async](#async-reduce))
 * [batch](#batch) ([async](#async-batch))
+* [takeSorted](#take-sorted) ([async](#async-take-sorted))
 
 Combine multiple iterables
 * [chain](#chain) ([async](#async-chain))
@@ -63,7 +64,7 @@ Strings manipulation
 * [regexpExecIter](#regexp-exec-iter) ([async](#async-regexp-exec-iter))
 
 Combinatory generators
-* [products](#products)
+* [product](#product)
 * [permutations](#permutations)
 * [combinationsWithReplacement](#combinations-with-replacement)
 * [combinations](#combinations)
@@ -301,6 +302,28 @@ batch(2, range(5)); // [0, 1], [2, 3], [4]
 
 ## async-batch
 Same as Batch but works on both sync and async iterables.
+
+## take-sorted
+Takes an iterable and returns n biggest items sorted from the smallest (the nth order statistic) to the biggest.
+The function is both space efficient (only stores n items) and fast O(m log n), given m as the total items yielded by the iterable.
+```js
+takeSorted(3, [10, 4, 9, 2, 5, 8, 7]) // 5, 4, 2
+```
+It can take as a optional argument a comparator (just like Array.prototype.sort). The default one is:
+```js
+(a, b) => {
+ if (a > b) {
+    return 1
+  } else if (a < b) {
+    return -1
+  } else {
+    return 0
+  }
+}
+```
+
+## async-take-sorted
+Same as takeSorted but works with both sync and async iterables.
 
 # Combine multiple iterators
 
@@ -690,10 +713,12 @@ combinationsWithReplacement([1, 2, 3, 4], 2);
 ```
 
 ## Issues and limitations
-There are a couple of limitations that you need to be aware of.
+There are a few limitations that you need to be aware of.
 First of all, when you consume an iterator object (using next) you are mutating the object for good.
 Some of these functions makes an in memory copy of the output. For example: cycle, product or tee. They do that in a efficient lazy way. Still you need to consider that.
 Also with the iterator protocol you can create infinite iterables (repeat, cycle, count etc.). These iterables can't be used by all generators. For example combinatory generators require finite iterables.
+Some of the obvious things you can do with arrays, are not efficients with iterables. For example: sorting, shuffling and in general all operations that rely on having the full array at your disposal. In that case the way to go is to convert the iterable in an array and use that.
+
 
 ## Acknowledgements
 Of course I give a lot of credit to the great itertools Python library.

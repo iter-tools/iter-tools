@@ -125,6 +125,40 @@ const {value: page1Results} = await cursorPagedResults.next();
 const {value: page2Results} = await cursorPagedResults.next();
 ```
 
+### Taking the biggest items
+You'll have to combine takeSorted and first:
+```js
+first(takeSorted(1, iterable))
+```
+
+## Getting the arithmetic mean
+```js
+let nItems = 0
+
+const total = reduce(0, (acc, n) => {
+  nItems++
+  return acc + n
+}, iterable)
+
+const mean = total / nItems
+```
+
+## Counting repeated items
+You can do that with reduce:
+```js
+const counts = reduce(new Map(), (map, item) => {
+  let count = map.get(item)
+  map.set(item, typeof count === undefined ? 0 : count + 1)
+  return map
+}, 'a', 'a', 'b', 'c', 'a', 'c')
+```
+This will return:
+```js
+counts.get('a') // 3
+counts.get('b') // 1
+counts.get('c') // 2
+```
+
 ## Your recipe here!
 
 If you have uncovered a use case where iterators can enhance the performance, readability, or maintainability of a particular coding task please submit a pull request to the cookbook!

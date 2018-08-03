@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ## Unreleased
 ### Added
  -  Added `iterable` and `asyncIterable`. These methods are NOT the same as `iter` and `asyncIter`. What they do is exactly the opposite!
- -  Added `some`, `every`, `tap`, `first`, `toArray` and `asyncToArray` methods.
+ -  Added `some`, `every`, `tap`, `first`, `takeSorted`, `toArray` and `asyncToArray` methods.
  -  Added aliases:
  	-  `concat` and `asyncConcat` for `chain` and `asyncChain`
  	-  `zipAll` and `asyncZipAll` for `zipLongest` and `asyncZipLongest`
