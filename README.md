@@ -2,7 +2,7 @@ Iter-tools
 ==========
 [![Build Status](https://travis-ci.org/sithmel/iter-tools.svg?branch=master)](https://travis-ci.org/sithmel/iter-tools)
 
-[![coverage](https://raw.githubusercontent.com/sithmel/iter-tools/master/coverage/badge-branches.svg)]
+![coverage](coverage/badge-branches.svg)
 
 iter-tools is an utility toolbox that allows you to unleash the power and expressiveness of iterables.
 
