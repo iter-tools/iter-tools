@@ -2,11 +2,13 @@ Iter-tools
 ==========
 [![Build Status](https://travis-ci.org/sithmel/iter-tools.svg?branch=master)](https://travis-ci.org/sithmel/iter-tools)
 
-iter-tools is an utility toolbox that allows you to unleash the power and expressiveness of iterators and generators.
+[![coverage](https://raw.githubusercontent.com/sithmel/iter-tools/master/coverage/badge-branches.svg)]
+
+iter-tools is an utility toolbox that allows you to unleash the power and expressiveness of iterables.
 
 If you want some ideas about how and when Iterators and iter-tools can help you out, take a look at [The Cookbook](https://github.com/sithmel/iter-tools/blob/master/COOKBOOK.md).
 
-Create iterators
+Create iterables
 * [range](#range)
 * [count](#count)
 * [repeat](#repeat)
@@ -34,7 +36,7 @@ Combine multiple iterables
 * [enumerate](#enumerate) ([async](#async-enumerate))
 * [compress](#compress) ([async](#async-compress))
 
-Utilities returning multiple iterators
+Utilities returning multiple iterables
 * [groupBy](#group-by) ([async](#group-by))
 * [tee](#tee) ([async](#async-tee))
 
