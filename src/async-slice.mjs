@@ -1,4 +1,4 @@
-import CircularBuffer from './internal/circular-array'
+import CircularBuffer from './internal/circular-buffer'
 import ensureAsyncIterable from './internal/ensure-async-iterable'
 import asyncToArray from './async-to-array'
 
