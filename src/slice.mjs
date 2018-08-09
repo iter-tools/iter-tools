@@ -1,4 +1,4 @@
-import Dequeue from 'dequeue'
+import CircularBuffer from './internal/circular-buffer'
 import ensureIterable from './internal/ensure-iterable'
 import toArray from './to-array'
 
@@ -9,15 +9,13 @@ function * simpleSlice (iterable, start, end, step) {
   let buffer
 
   if (end < 0) {
-    buffer = new Dequeue()
+    buffer = new CircularBuffer(bufferSize)
   }
 
   for (let item of iterable) {
     if (buffer) {
-      buffer.push(item)
-      if (buffer.length > bufferSize) {
-        item = buffer.shift()
-      } else {
+      item = buffer.push(item)
+      if (buffer.counter <= bufferSize) {
         continue
       }
     }
