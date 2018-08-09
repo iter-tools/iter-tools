@@ -1,10 +1,36 @@
 import Dequeue from 'dequeue'
 import ensureAsyncIterable from './internal/ensure-async-iterable'
+import asyncToArray from './async-to-array'
 
-function * deQueueIter (dequeue) {
-  const len = dequeue.length
-  for (let i = 0; i < len; i++) {
-    yield dequeue.shift()
+async function * simpleSlice (iterable, start, end, step) {
+  let currentPos = 0
+  let nextValidPos = start
+  let bufferSize = Math.abs(end)
+  let buffer
+
+  if (end < 0) {
+    buffer = new Dequeue()
+  }
+
+  for await (let item of iterable) {
+    if (buffer) {
+      buffer.push(item)
+      if (buffer.length > bufferSize) {
+        item = buffer.shift()
+      } else {
+        continue;
+      }
+    }
+
+    if (currentPos >= end && end >= 0) {
+      break
+    }
+
+    if (nextValidPos === currentPos) {
+      yield item
+      nextValidPos += step
+    }
+    currentPos++
   }
 }
 
@@ -17,61 +43,18 @@ async function * slice (opts, iterable) {
   start = opts.start ? opts.start : 0
   iterable = ensureAsyncIterable(iterable)
 
-  if (start >= 0 && end >= 0) {
-    let currentPos = 0
-    let nextValidPos = start
+  if (step === 0) {
+    throw new TypeError("Cannot slice with step = 0")
+  }
 
-    for await (const item of iterable) {
-      if (currentPos >= end) {
-        break
-      }
+  if (start >= 0) {
+    yield * simpleSlice(iterable, start, end, step)
+  } else {
+    const array = await asyncToArray(iterable);
+    start = start < 0 ? array.length + start : start
+    end = end < 0 && isFinite(end) ? array.length + end : end
 
-      if (nextValidPos === currentPos) {
-        yield item
-        nextValidPos += step
-      }
-      currentPos++
-    }
-  } else if (start >= 0 && end < 0) {
-    let buffer = []
-    let currentPos = 0
-
-    for await (const item of iterable) {
-      if (currentPos >= start) {
-        buffer.push(item)
-      }
-      currentPos++
-    }
-    buffer = buffer.slice(0, end)
-    yield * slice({ step }, buffer)
-  } else if (start < 0 && end >= 0) {
-    // buffer from 0 to end. Finish iteration after end + abs(start)
-    let buffer = []
-    let currentPos = 0
-
-    for await (const item of iterable) {
-      if (currentPos >= end) {
-        break
-      }
-      buffer.push(item)
-      currentPos++
-    }
-    buffer = buffer.slice(start)
-    yield * slice({ step }, buffer)
-  } else { // (start < 0 && end < 0)
-    if (start >= end) {
-      return
-    }
-    const queue = new Dequeue()
-    const queueMaxSize = Math.abs(start - end) + Math.abs(end)
-
-    for await (const item of iterable) {
-      queue.push(item)
-      if (queue.length > queueMaxSize) {
-        queue.shift()
-      }
-    }
-    yield * slice({start: 0, end: queue.length + end, step}, deQueueIter(queue))
+    yield * simpleSlice(array, start, end, step)
   }
 }
 
