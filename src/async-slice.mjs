@@ -18,7 +18,7 @@ async function * simpleSlice (iterable, start, end, step) {
       if (buffer.length > bufferSize) {
         item = buffer.shift()
       } else {
-        continue;
+        continue
       }
     }
 
@@ -43,14 +43,14 @@ async function * slice (opts, iterable) {
   start = opts.start ? opts.start : 0
   iterable = ensureAsyncIterable(iterable)
 
-  if (step === 0) {
-    throw new TypeError("Cannot slice with step = 0")
+  if (step <= 0) {
+    throw new TypeError('Cannot slice with step <= 0')
   }
 
   if (start >= 0) {
     yield * simpleSlice(iterable, start, end, step)
   } else {
-    const array = await asyncToArray(iterable);
+    const array = await asyncToArray(iterable)
     start = start < 0 ? array.length + start : start
     end = end < 0 && isFinite(end) ? array.length + end : end
 
