@@ -1,11 +1,28 @@
 import CircularBuffer from './internal/circular-buffer'
 import ensureAsyncIterable from './internal/ensure-async-iterable'
-import asyncToArray from './async-to-array'
+
+async function bufferedSlice (iterable, start, end, step) {
+  const bufferSize = Math.abs(start)
+
+  const buffer = new CircularBuffer(bufferSize)
+  for await (const item of iterable) {
+    buffer.push(item)
+  }
+
+  let newEnd
+  if (isFinite(end) && end > 0) {
+    newEnd = end - (buffer.counter - bufferSize)
+    if (newEnd < 0) return []
+  } else {
+    newEnd = end
+  }
+  return simpleSlice(buffer, 0, newEnd, step)
+}
 
 async function * simpleSlice (iterable, start, end, step) {
   let currentPos = 0
   let nextValidPos = start
-  let bufferSize = Math.abs(end)
+  const bufferSize = Math.abs(end)
   let buffer
 
   if (end < 0) {
@@ -48,11 +65,7 @@ async function * slice (opts, iterable) {
   if (start >= 0) {
     yield * simpleSlice(iterable, start, end, step)
   } else {
-    const array = await asyncToArray(iterable)
-    start = start < 0 ? array.length + start : start
-    end = end < 0 && isFinite(end) ? array.length + end : end
-
-    yield * simpleSlice(array, start, end, step)
+    yield * await bufferedSlice(iterable, start, end, step)
   }
 }
 

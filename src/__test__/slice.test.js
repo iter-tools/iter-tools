@@ -63,6 +63,18 @@ describe('slice', function () {
   it('returns slice with negative start and end, and end < start', function () {
     expect(Array.from(slice({ start: -1, end: -2 }, list))).toEqual([])
   })
+
+  it('returns slice with negative start and positive end', function () {
+    expect(Array.from(slice({ start: -5, end: 9 }, list))).toEqual([5, 6, 7, 8])
+  })
+
+  it('returns slice with negative start and positive end (return empty)', function () {
+    expect(Array.from(slice({ start: -5, end: 2 }, list))).toEqual([])
+  })
+
+  it('returns slice with negative start and positive end and step', function () {
+    expect(Array.from(slice({ start: -5, end: 9, step: 2 }, list))).toEqual([5, 7])
+  })
 })
 
 describe('asyncSlice', function () {
@@ -126,5 +138,17 @@ describe('asyncSlice', function () {
 
   it('returns slice with negative start and end, and end < start', async function () {
     expect(await asyncToArray(asyncSlice({ start: -1, end: -2 }, list))).toEqual([])
+  })
+
+  it('returns slice with negative start and positive end', async function () {
+    expect(await asyncToArray(asyncSlice({ start: -5, end: 9 }, list))).toEqual([5, 6, 7, 8])
+  })
+
+  it('returns slice with negative start and positive end (return empty)', async function () {
+    expect(await asyncToArray(asyncSlice({ start: -5, end: 2 }, list))).toEqual([])
+  })
+
+  it('returns slice with negative start and positive end and step', async function () {
+    expect(await asyncToArray(asyncSlice({ start: -5, end: 9, step: 2 }, list))).toEqual([5, 7])
   })
 })

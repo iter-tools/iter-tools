@@ -1,11 +1,28 @@
 import CircularBuffer from './internal/circular-buffer'
 import ensureIterable from './internal/ensure-iterable'
-import toArray from './to-array'
+
+function bufferedSlice (iterable, start, end, step) {
+  const bufferSize = Math.abs(start)
+
+  const buffer = new CircularBuffer(bufferSize)
+  for (let item of iterable) {
+    buffer.push(item)
+  }
+
+  let newEnd
+  if (isFinite(end) && end > 0) {
+    newEnd = end - (buffer.counter - bufferSize)
+    if (newEnd < 0) return []
+  } else {
+    newEnd = end
+  }
+  return simpleSlice(buffer, 0, newEnd, step)
+}
 
 function * simpleSlice (iterable, start, end, step) {
   let currentPos = 0
   let nextValidPos = start
-  let bufferSize = Math.abs(end)
+  const bufferSize = Math.abs(end)
   let buffer
 
   if (end < 0) {
@@ -48,11 +65,7 @@ function * slice (opts, iterable) {
   if (start >= 0) {
     yield * simpleSlice(iterable, start, end, step)
   } else {
-    const array = toArray(iterable)
-    start = start < 0 ? array.length + start : start
-    end = end < 0 && isFinite(end) ? array.length + end : end
-
-    yield * simpleSlice(array, start, end, step)
+    yield * bufferedSlice(iterable, start, end, step)
   }
 }
 

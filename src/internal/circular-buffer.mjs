@@ -11,4 +11,12 @@ export default class CircularBuffer {
     this.array[this.counter % this._size] = newItem
     return currentItem
   }
+
+  * [Symbol.iterator] () {
+    let counter = this.counter
+    for (let i = 0; i < this._size; i++) {
+      counter++
+      yield this.array[counter % this._size]
+    }
+  }
 }
