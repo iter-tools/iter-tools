@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
  	-  `zipAll` and `asyncZipAll` for `zipLongest` and `asyncZipLongest`
  -  Added overload to `reduce`: `reduce(initialValue, reducer, iterable)`
  -  Added overload to `reduceAsync`: `reduceAsync(initialValue, reducer, iterable)`
+ - slice/asyncSlice are now supporting negative start/end
 
 ### Deprecated
  -  Deprecated `iter` and `asyncIter`
