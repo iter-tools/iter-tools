@@ -1,2 +1,2 @@
-import { combinations } from './index';
+import { combinations } from "./index";
 export = combinations;

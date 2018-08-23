@@ -1,2 +1,2 @@
-import { asyncTap } from './index';
+import { asyncTap } from "./index";
 export = asyncTap;

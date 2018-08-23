@@ -1,2 +1,2 @@
-import { asyncRegexpExecIter } from './index';
+import { asyncRegexpExecIter } from "./index";
 export = asyncRegexpExecIter;

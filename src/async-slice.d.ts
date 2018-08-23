@@ -1,2 +1,2 @@
-import { asyncSlice } from './index';
+import { asyncSlice } from "./index";
 export = asyncSlice;

@@ -1,2 +1,2 @@
-import { regexpSplit } from './index';
+import { regexpSplit } from "./index";
 export = regexpSplit;

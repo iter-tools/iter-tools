@@ -1,2 +1,2 @@
-import { splitLines } from './index';
+import { splitLines } from "./index";
 export = splitLines;

@@ -1,2 +1,2 @@
-import { asyncZipLongest } from './index';
+import { asyncZipLongest } from "./index";
 export = asyncZipLongest;

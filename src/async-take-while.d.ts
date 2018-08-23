@@ -1,2 +1,2 @@
-import { asyncTakeWhile } from './index';
+import { asyncTakeWhile } from "./index";
 export = asyncTakeWhile;

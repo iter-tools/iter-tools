@@ -1,2 +1,2 @@
-import { regexpExec } from './index';
+import { regexpExec } from "./index";
 export = regexpExec;

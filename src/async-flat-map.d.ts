@@ -1,2 +1,2 @@
-import { asyncFlatmap } from './index';
+import { asyncFlatmap } from "./index";
 export = asyncFlatmap;

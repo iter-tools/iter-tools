@@ -1,2 +1,2 @@
-import { asyncDropWhile } from './index';
+import { asyncDropWhile } from "./index";
 export = asyncDropWhile;

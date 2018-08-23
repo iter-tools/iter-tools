@@ -1,2 +1,2 @@
-import { asyncGroupBy } from './index';
+import { asyncGroupBy } from "./index";
 export = asyncGroupBy;

@@ -1,2 +1,2 @@
-import { tee } from './index';
+import { tee } from "./index";
 export = tee;

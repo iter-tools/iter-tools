@@ -24,6 +24,7 @@
     "build:es2015-cjs": "cross-env BABEL_ENV=es2015-cjs babel -x \".mjs\" src -d es2015",
     "build:es2018": "mkdirp es2018 && copyfiles -f src/*.mjs es2018",
     "build:es2018-cjs": "cross-env BABEL_ENV=es2018-cjs babel -x \".mjs\" src -d es2018",
+    "tslint": "tslint -c tslint.json 'src/**/*.ts'",
     "prepublish": "npm run build",
     "precommit": "npm run lint",
     "prepush": "npm run test"
@@ -78,7 +79,9 @@
     "measure-speed": "^1.0.0",
     "mkdirp": "^0.5.1",
     "require-all": "^2.2.0",
-    "rimraf": "^2.6.2"
+    "rimraf": "^2.6.2",
+    "tslint": "^5.11.0",
+    "typescript": "^3.0.1"
   },
   "jest": {
     "testEnvironment": "node",

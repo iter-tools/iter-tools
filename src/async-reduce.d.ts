@@ -1,2 +1,2 @@
-import { asyncReduce } from './index';
+import { asyncReduce } from "./index";
 export = asyncReduce;

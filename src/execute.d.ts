@@ -1,2 +1,2 @@
-import { execute } from './index';
+import { execute } from "./index";
 export = execute;

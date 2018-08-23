@@ -1,2 +1,2 @@
-import { combinationsWithReplacement } from './index';
+import { combinationsWithReplacement } from "./index";
 export = combinationsWithReplacement;

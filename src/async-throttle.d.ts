@@ -1,2 +1,2 @@
-import { asyncThrottle } from './index';
+import { asyncThrottle } from "./index";
 export = asyncThrottle;

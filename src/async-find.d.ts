@@ -1,2 +1,2 @@
-import { asyncFind } from './index';
+import { asyncFind } from "./index";
 export = asyncFind;

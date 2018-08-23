@@ -1,2 +1,2 @@
-import { asyncSome } from './index';
+import { asyncSome } from "./index";
 export = asyncSome;

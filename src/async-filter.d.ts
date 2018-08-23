@@ -1,2 +1,2 @@
-import { asyncFilter } from './index';
+import { asyncFilter } from "./index";
 export = asyncFilter;
