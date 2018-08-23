@@ -52,6 +52,7 @@ Utilities
 * [some](#some) ([async](#async-some))
 * [every](#every) ([async](#async-every))
 * [asyncThrottle](#async-throttle)
+* [asyncBuffer](#async-buffer)
 
 Strings manipulation
 * [regexpExec](#regexp-exec)
@@ -575,6 +576,12 @@ asyncEvery(asyncIter([2, 4, 6])) // returns a promise that resolve on true
 It wraps an async iterable and ensures that every item is yielded with an interval of n ms (it can be curried).
 ```js
 asyncThrottle(10, iterable);
+```
+
+## async-buffer
+It buffers n items of an asyncIterable (it can be curried).
+```js
+asyncBuffer(10, iterable);
 ```
 
 # Strings Manipulation
