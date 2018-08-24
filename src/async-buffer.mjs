@@ -1,26 +1,29 @@
 import ensureAsyncIterable from './internal/ensure-async-iterable'
 import Dequeue from 'dequeue'
 
-async function * asyncBuffer (maxSize, iterable) {
+async function * asyncBuffer (bufferSize, iterable) {
+  const iterator = ensureAsyncIterable(iterable)[Symbol.asyncIterator]()
   const buffer = new Dequeue()
-  let currentSize = 0
-  for await (const item of ensureAsyncIterable(iterable)) {
-    buffer.push(item)
-    currentSize++
-    if (currentSize > maxSize) {
-      yield buffer.shift()
-      currentSize--
+  try {
+    // fill buffer
+    for (let i = 0; i < bufferSize; i++) {
+      buffer.push(iterator.next())
     }
-  }
-  for (let i = 0; i < currentSize; i++) {
-    yield buffer.shift()
+    while (true) {
+      buffer.push(iterator.next())
+      const { done, value } = await buffer.shift()
+      if (done) return
+      yield value
+    }
+  } finally {
+    if (typeof iterator.return === 'function') iterator.return()
   }
 }
 
-export default function asyncBufferCurried (maxSize, iterable) {
+export default function asyncBufferCurried (bufferSize, iterable) {
   if (arguments.length === 1) {
-    return iterable => asyncBuffer(maxSize, iterable)
+    return iterable => asyncBuffer(bufferSize, iterable)
   }
 
-  return asyncBuffer(maxSize, iterable)
+  return asyncBuffer(bufferSize, iterable)
 }
