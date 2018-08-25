@@ -1,6 +1,8 @@
 /* eslint-env node, jest */
 const { asyncBuffer, asyncToArray } = require('iter-tools')
 
+jest.useFakeTimers()
+
 function delay (ms) {
   if (ms <= 0) return Promise.resolve()
   return new Promise((resolve) => setTimeout(resolve, ms))
@@ -120,16 +122,28 @@ describe('asyncBuffer', function () {
 
   it('returns all items', async function () {
     const iter = asyncBuffer(2, intermittent())
-    expect(await asyncToArray(iter)).toEqual([0, 1, 2, 3, 4, 5, 6])
+    asyncToArray(iter)
+      .then((result) => {
+        expect(result).toEqual([0, 1, 2, 3, 4, 5, 6])
+      })
+    jest.runAllTimers()
   })
 
   it('buffer using curry', async function () {
     const iter = asyncBuffer(2)(intermittent())
-    expect(await asyncToArray(iter)).toEqual([0, 1, 2, 3, 4, 5, 6])
+    asyncToArray(iter)
+      .then((result) => {
+        expect(result).toEqual([0, 1, 2, 3, 4, 5, 6])
+      })
+    jest.runAllTimers()
   })
 
   it('buffer (bigger then iterable)', async function () {
     const iter = asyncBuffer(10, intermittent())
-    expect(await asyncToArray(iter)).toEqual([0, 1, 2, 3, 4, 5, 6])
+    asyncToArray(iter)
+      .then((result) => {
+        expect(result).toEqual([0, 1, 2, 3, 4, 5, 6])
+      })
+    jest.runAllTimers()
   })
 })
