@@ -36,7 +36,7 @@ function intermittent () {
 }
 
 describe('asyncBuffer', function () {
-  it('does not buffers', async function () {
+  it.skip('does not buffers', async function () {
     const iter = intermittent()[Symbol.asyncIterator]()
     const d0 = Date.now()
     await iter.next() // 0
@@ -77,7 +77,7 @@ describe('asyncBuffer', function () {
     expect(d7 - d6).toBeLessThan(70)
   })
 
-  it('buffers', async function () {
+  it.skip('buffers', async function () {
     const iter = asyncBuffer(2, intermittent())
     const d0 = Date.now()
     await iter.next() // 0
