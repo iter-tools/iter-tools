@@ -2,7 +2,7 @@ import ensureAsyncIterable from './internal/ensure-async-iterable'
 import Dequeue from 'dequeue'
 
 async function * asyncBuffer (bufferSize, iterable) {
-  const iterator = ensureAsyncIterable(iterable)[Symbol.asyncIterator]()
+  const iterator = ensureAsyncIterable(iterable, true)[Symbol.asyncIterator]()
   const buffer = new Dequeue()
   try {
     // fill buffer
