@@ -232,6 +232,9 @@ export declare function asyncSplitLines(iterable: AsyncIterableLike<string>): As
 export declare function asyncSome<T>(func: (item: T) => boolean): (iterable: AsyncIterableLike<T>) => boolean;
 export declare function asyncSome<T>(func: (item: T) => boolean, iterable: AsyncIterableLike<T>): boolean;
 
+export declare function asyncBuffer<T>(n: number): (iterable: AsyncIterableLike<T>) => AsyncIterable<T>;
+export declare function asyncBuffer<T>(n: number, iterable: AsyncIterableLike<T>): AsyncIterable<T>;
+
 export declare function asyncThrottle<T>(n: number): (iterable: AsyncIterableLike<T>) => AsyncIterable<T>;
 export declare function asyncThrottle<T>(n: number, iterable: AsyncIterableLike<T>): AsyncIterable<T>;
 
