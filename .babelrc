@@ -2,7 +2,7 @@
   "env": {
     "es5": {
       "plugins": [
-        "@babel/plugin-transform-runtime"
+        ["@babel/plugin-transform-runtime", {"useESModules": true}]
       ],
       "presets": [
         ["@babel/preset-env", {
@@ -12,7 +12,7 @@
     },
     "es2015": {
       "plugins": [
-        "@babel/plugin-transform-runtime",
+        ["@babel/plugin-transform-runtime", {"useESModules": true}],
         "@babel/plugin-proposal-async-generator-functions"
       ]
     },
