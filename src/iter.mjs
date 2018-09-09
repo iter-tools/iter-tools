@@ -1,10 +1,12 @@
-import deprecate from 'deprecate'
-
 const deprecationWarning = 'iter() is deprecated! It is probably safe to simply remove the call.'
+
+let warnedDeprecation = false
+export const silence = () => (warnedDeprecation = true)
 
 const emptyArr = []
 export default function iter (iterable, ...args) {
-  deprecate(deprecationWarning)
+  !warnedDeprecation && console.warn(deprecationWarning)
+  warnedDeprecation = true
 
   if (iterable == null) {
     return emptyArr[Symbol.iterator]()

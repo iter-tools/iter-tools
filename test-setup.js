@@ -1,3 +1,5 @@
-const deprecate = require('deprecate');
+const iter = require('iter-tools/iter');
+const asyncIter = require('iter-tools/async-iter');
 
-deprecate.silence = true;
+iter.silence()
+asyncIter.silence()
