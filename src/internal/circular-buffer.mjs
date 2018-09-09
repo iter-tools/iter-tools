@@ -7,8 +7,9 @@ export default class CircularBuffer {
 
   push (newItem) {
     this.counter++
-    const currentItem = this.array[this.counter % this._size]
-    this.array[this.counter % this._size] = newItem
+    const index = this.counter % this._size
+    const currentItem = this.array[index]
+    this.array[index] = newItem
     return currentItem
   }
 
