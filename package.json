@@ -3,8 +3,8 @@
   "version": "6.1.1",
   "description": "The iterable toolbox",
   "main": "es5/index",
-  "module": "es5/index.mjs",
-  "jsnext:main": "es5/index.mjs",
+  "module": "es2018/index.mjs",
+  "jsnext:main": "es2018/index.mjs",
   "typings": "src/index.d.ts",
   "scripts": {
     "lint": "eslint --fix --ext .mjs,.js ./src ./src/__test__ ./benchmarks",
