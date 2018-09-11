@@ -1,10 +1,29 @@
 /// <reference lib="es2018" />
 /// <reference lib="esnext.asynciterable" />
 
-import { Repeat } from 'typescript-tuple'
+import { Repeat, Prepend, Reverse } from 'typescript-tuple'
 
 type IterableLike<T> = Iterable<T> | T[] | { [key: string]: T; } | { [key: number]: T; };
 type AsyncIterableLike<T> = AsyncIterable<T> | IterableLike<T>;
+
+/**
+ * Helper generic for `product` function
+ * This creates element type of returning iterable from argument types
+ *
+ * @example
+ *   `ProductReturn<[string[], number[], boolean[]]>` is `[string, number, boolean]`
+ */
+type ProductReturn<Args extends any[][], Holder extends any[][] = []> = {
+  empty: Holder,
+  many: ((...a: Reverse<Args>) => any) extends ((a: infer Last, ...b: infer ReversedRest) => any)
+    ? ProductReturn<
+      Reverse<ReversedRest>,
+      Prepend<Holder, Last extends (infer T)[] ? T : ({last: Last})>
+    >
+    : never
+}[
+  Args extends [] ? 'empty' : 'many'
+]
 
 // Sync
 export declare function keys(iterable: any): Iterable<any>;
@@ -64,6 +83,7 @@ export declare function map<T, O>(func: (item: T) => O, iter: IterableLike<T>): 
 export declare function permutations<T, R extends number>(iterable: IterableLike<T>, r: R): Iterable<Repeat<T, R>>;
 
 export declare function product<T>(...iterables: Array<IterableLike<T>>): Iterable<T[]>;
+export declare function product<Args extends any[][]>(...iterables: Args): Iterable<ProductReturn<Args>>
 export declare function range(opts: number | { start: number, end?: number, step?: number }): Iterable<number>;
 
 export declare function reduce<T, O>(func: (acc: O, item: T, c: number) => O): (iterable: IterableLike<T>) => O;
