@@ -18,7 +18,7 @@ type ProductReturn<Args extends any[][], Holder extends any[][] = []> = {
   many: ((...a: Reverse<Args>) => any) extends ((a: infer Last, ...b: infer ReversedRest) => any)
     ? ProductReturn<
       Reverse<ReversedRest>,
-      Prepend<Holder, Last extends (infer T)[] ? T : ({last: Last})>
+      Prepend<Holder, Last extends (infer T)[] ? T : never>
     >
     : never
 }[
