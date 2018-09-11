@@ -137,9 +137,9 @@ export declare function tee<T>(iterable: IterableLike<T>, n?: number): Array<Ite
 
 export declare function toArray<T>(iterable: IterableLike<T>): T[];
 
-export declare function zipLongest<T>(...iterables: Array<IterableLike<T>>): Iterable<[T]>;
-export declare function zipAll<T>(...iterables: Array<IterableLike<T>>): Iterable<[T]>;
-export declare function zip<T>(...iterables: Array<IterableLike<T>>): Iterable<[T]>;
+export declare function zipLongest<T>(...iterables: Array<IterableLike<T>>): Iterable<T[]>;
+export declare function zipAll<T>(...iterables: Array<IterableLike<T>>): Iterable<T[]>;
+export declare function zip<T>(...iterables: Array<IterableLike<T>>): Iterable<T[]>;
 
 // Deprecated
 export declare function iter<T>(iterable: IterableLike<T>): Iterable<T>;
@@ -234,10 +234,10 @@ export declare function asyncTee<T>(iterable: AsyncIterableLike<T>, n?: number):
 
 export declare function asyncToArray<T>(iterable: AsyncIterableLike<T>): T[];
 
-export declare function asyncZipLongest<T>(...iterables: Array<AsyncIterableLike<T>>): AsyncIterable<[T]>;
-export declare function asyncZipAll<T>(...iterables: Array<AsyncIterableLike<T>>): AsyncIterable<[T]>;
+export declare function asyncZipLongest<T>(...iterables: Array<AsyncIterableLike<T>>): AsyncIterable<T[]>;
+export declare function asyncZipAll<T>(...iterables: Array<AsyncIterableLike<T>>): AsyncIterable<T[]>;
 
-export declare function asyncZip<T>(...iterables: Array<AsyncIterableLike<T>>): AsyncIterable<[T]>;
+export declare function asyncZip<T>(...iterables: Array<AsyncIterableLike<T>>): AsyncIterable<T[]>;
 
 export declare function asyncRegexpSplitIter(re: RegExp):
     (iterable: AsyncIterableLike<string>) => AsyncIterableLike<string>;
