@@ -1,7 +1,7 @@
 /// <reference lib="es2018" />
 /// <reference lib="esnext.asynciterable" />
 
-import { Repeat, Prepend, Reverse } from 'typescript-tuple'
+import { Prepend, Repeat, Reverse } from "typescript-tuple";
 
 type IterableLike<T> = Iterable<T> | T[] | { [key: string]: T; } | { [key: number]: T; };
 type AsyncIterableLike<T> = AsyncIterable<T> | IterableLike<T>;
@@ -18,12 +18,12 @@ type ProductReturn<Args extends any[][], Holder extends any[][] = []> = {
   many: ((...a: Reverse<Args>) => any) extends ((a: infer Last, ...b: infer ReversedRest) => any)
     ? ProductReturn<
       Reverse<ReversedRest>,
-      Prepend<Holder, Last extends (infer T)[] ? T : never>
+      Prepend<Holder, Last extends Array<infer T> ? T : never>
     >
-    : never
+    : never,
 }[
-  Args extends [] ? 'empty' : 'many'
-]
+  Args extends [] ? "empty" : "many"
+];
 
 // Sync
 export declare function keys(iterable: any): Iterable<any>;
@@ -38,7 +38,10 @@ export declare function concat<T>(...iterables: Array<IterableLike<T>>): Iterabl
 
 export declare function combinations<T, R extends number>(iterable: IterableLike<T>, r: R): Iterable<Repeat<T, R>>;
 
-export declare function combinationsWithReplacement<T, R extends number>(iterable: IterableLike<T>, r: R): Iterable<Repeat<T, R>>;
+export declare function combinationsWithReplacement<T, R extends number>(
+  iterable: IterableLike<T>,
+  r: R,
+): Iterable<Repeat<T, R>>;
 
 export declare function compose<T>(fns: IterableLike<(_: T) => T>): Iterable<T>;
 
@@ -83,7 +86,7 @@ export declare function map<T, O>(func: (item: T) => O, iter: IterableLike<T>): 
 export declare function permutations<T, R extends number>(iterable: IterableLike<T>, r: R): Iterable<Repeat<T, R>>;
 
 export declare function product<T>(...iterables: Array<IterableLike<T>>): Iterable<T[]>;
-export declare function product<Args extends any[][]>(...iterables: Args): Iterable<ProductReturn<Args>>
+export declare function product<Args extends any[][]>(...iterables: Args): Iterable<ProductReturn<Args>>;
 export declare function range(opts: number | { start: number, end?: number, step?: number }): Iterable<number>;
 
 export declare function reduce<T, O>(func: (acc: O, item: T, c: number) => O): (iterable: IterableLike<T>) => O;
