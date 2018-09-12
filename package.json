@@ -1,13 +1,13 @@
 {
   "name": "iter-tools",
-  "version": "6.1.1",
+  "version": "6.1.2",
   "description": "The iterable toolbox",
   "main": "es5/index",
   "module": "es5/index.mjs",
   "jsnext:main": "es5/index.mjs",
   "typings": "es5/index.d.ts",
   "scripts": {
-    "lint": "eslint --fix --ext .mjs,.js ./src ./src/__test__ ./benchmarks",
+    "lint": "eslint --fix --ext .mjs,.js ./src ./src/__test__ ./benchmarks && npm run tslint",
     "test:es5": "npm run build:es5-cjs && jest --moduleNameMapper '{\"^iter-tools(.*)\": \"<rootDir>/es5$1\"}'",
     "test:es2015": "npm run build:es2015-cjs && jest --moduleNameMapper '{\"^iter-tools(.*)\": \"<rootDir>/es2015$1\"}'",
     "test:es2018": "npm run build:es2018-cjs && jest --moduleNameMapper '{\"^iter-tools(.*)\": \"<rootDir>/es2018$1\"}'",
@@ -17,7 +17,7 @@
     "coverage:badges": "jest-coverage-badges",
     "coverage": "npm run test:es2015 -- --coverage --coverageDirectory=coverage --config '{ \"coverageReporters\" : [\"lcov\", \"json-summary\"]}' && npm run coverage:badges",
     "clean": "rimraf es5 es2015 es2018",
-    "build": "npm run clean && npm run build:es5 && npm run build:es5-cjs && npm run build:es2015 && npm run build:es2015-cjs && npm run build:es2018 && npm run build:es2018-cjs && npm run build:copyts",
+    "build": "npm run clean && npm run lint && npm run build:es5 && npm run build:es5-cjs && npm run build:es2015 && npm run build:es2015-cjs && npm run build:es2018 && npm run build:es2018-cjs && npm run build:copyts",
     "build:es5": "cross-env BABEL_ENV=es5 babel --keep-file-extension -x \".mjs\" src -d es5",
     "build:es5-cjs": "cross-env BABEL_ENV=es5-cjs babel -x \".mjs\" src -d es5",
     "build:es2015": "cross-env BABEL_ENV=es2015 babel --keep-file-extension -x \".mjs\" src -d es2015",
@@ -26,6 +26,7 @@
     "build:es2018-cjs": "cross-env BABEL_ENV=es2018-cjs babel -x \".mjs\" src -d es2018",
     "build:copyts": "copyfiles -f src/*.ts es5 && copyfiles -f src/*.ts es2015 && copyfiles -f src/*.ts es2018",
     "tslint": "tslint -c tslint.json 'src/**/*.ts'",
+    "tslint:fix": "npm run tslint -- --fix",
     "prepublish": "npm run build",
     "precommit": "npm run lint",
     "prepush": "npm run test"
