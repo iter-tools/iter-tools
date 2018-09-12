@@ -1,6 +1,6 @@
 {
   "name": "iter-tools",
-  "version": "6.1.1",
+  "version": "6.1.2",
   "description": "The iterable toolbox",
   "main": "es5/index",
   "module": "es5/index.mjs",
@@ -27,9 +27,8 @@
     "build:copyts": "copyfiles -f src/*.ts es5 && copyfiles -f src/*.ts es2015 && copyfiles -f src/*.ts es2018",
     "tslint": "tslint -c tslint.json 'src/**/*.ts'",
     "tslint:fix": "npm run tslint -- --fix",
-    "prepublish": "npm run build",
-    "precommit": "npm run lint",
-    "prepush": "npm run test"
+    "prepublishOnly": "npm run build",
+    "precommit": "npm run lint"
   },
   "keywords": [
     "Iterator",
