@@ -13,7 +13,7 @@ type AsyncIterableLike<T> = AsyncIterable<T> | IterableLike<T>;
  * @example
  *   `ProductReturn<[string[], number[], boolean[]]>` is `[string, number, boolean]`
  */
-type ProductReturn<Args extends any[][], Holder extends any[][] = []> = {
+type ProductReturn<Args extends any[][], Holder extends any[] = []> = {
   empty: Holder,
   many: ((...a: Reverse<Args>) => any) extends ((a: infer Last, ...b: infer ReversedRest) => any)
     ? ProductReturn<
