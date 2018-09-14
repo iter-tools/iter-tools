@@ -14,13 +14,13 @@ assert<
 >(iter.combinations([0, 1, 2, 3], 999));
 
 assert<
-  Iterable<[number, number, number]>
->(iter.combinations(iter.range(5), 3));
+  Iterable<[string, string, string]>
+>(iter.combinations(iter.iterable(""), 3));
 
 assert<
   Iterable<[number, number, number, number]>
 >(iter.combinations([0, 1, 2, 3] as [number, number, number, number]));
 
 assert<
-  Iterable<number[]>
->(iter.combinations(iter.range(5)));
+  Iterable<string[]>
+>(iter.combinations(iter.iterable("")));

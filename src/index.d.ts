@@ -45,6 +45,9 @@ type ProductReturn<Args extends any[][], Holder extends any[] = []> = {
   Args extends [] ? "empty" : "many"
 ];
 
+type RangeReturn<R extends number> =
+  Iterable<R extends ReasonableNumber ? Repeat<number, R> : number[]>;
+
 // Sync
 export declare function keys(iterable: any): Iterable<any>;
 export declare function values(iterable: any): Iterable<any>;
@@ -103,7 +106,9 @@ export declare const permutations: ICombinationsPermutations;
 
 export declare function product<T>(...iterables: Array<IterableLike<T>>): Iterable<T[]>;
 export declare function product<Args extends any[][]>(...iterables: Args): Iterable<ProductReturn<Args>>;
-export declare function range(opts: number | { start: number, end?: number, step?: number }): Iterable<number>;
+
+export declare function range<R extends number>(r: R): RangeReturn<R>;
+export declare function range(opts: { start: number, end?: number, step?: number }): Iterable<number>;
 
 export declare function reduce<T, O>(func: (acc: O, item: T, c: number) => O): (iterable: IterableLike<T>) => O;
 export declare function reduce<T, O>(initial: O, func: (acc: O, item: T, c: number) => O):
