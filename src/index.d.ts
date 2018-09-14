@@ -12,7 +12,7 @@ type ReasonableNumber = UnionRange<32>;
  * Function signature of `permutations` and `combinations`
  */
 type CombinationsPermutations = <T, R extends number>(iterable: IterableLike<T>, r: R) =>
-  Iterable<R extends ReasonableNumber ? Repeat<T, R> : number[]>;
+  Iterable<R extends ReasonableNumber ? Repeat<T, R> : T[]>;
 
 /**
  * Helper generic for `product` function
