@@ -1,7 +1,7 @@
 /// <reference lib="es2018" />
 /// <reference lib="esnext.asynciterable" />
 
-import { Prepend, Repeat, Reverse } from "typescript-tuple";
+import { IsFinite, Prepend, Repeat, Reverse } from "typescript-tuple";
 import { RangeZero as UnionRange } from "typescript-union";
 
 type IterableLike<T> = Iterable<T> | T[] | { [key: string]: T; } | { [key: number]: T; };
@@ -31,18 +31,19 @@ type CombinationsPermutationsByLength<T, R extends number> =
  * This creates element type of returning iterable from argument types
  *
  * @example
- *   `ProductReturn<[string[], number[], boolean[]]>` is `[string, number, boolean]`
+ *   `ProductReturnElement<[string[], number[], boolean[]]>` is `[string, number, boolean]`
  */
-type ProductReturn<Args extends any[][], Holder extends any[] = []> = {
+type ProductReturnElement<Args extends Array<Iterable<any>>, Holder extends any[] = []> = {
   empty: Holder,
   many: ((...a: Reverse<Args>) => any) extends ((a: infer Last, ...b: infer ReversedRest) => any)
-    ? ProductReturn<
+    ? ProductReturnElement<
       Reverse<ReversedRest>,
-      Prepend<Holder, Last extends Array<infer T> ? T : never>
+      Prepend<Holder, Last extends Iterable<infer T> ? T : never>
     >
     : never,
+  infinite: Args extends Array<Array<infer T>> ? T[] : never
 }[
-  Args extends [] ? "empty" : "many"
+  Args extends [] ? "empty" : IsFinite<Args, "many", "infinite">
 ];
 
 type RangeReturn<R extends number> =
@@ -104,8 +105,8 @@ export declare function map<T, O>(func: (item: T) => O, iter: IterableLike<T>): 
 
 export declare const permutations: ICombinationsPermutations;
 
-export declare function product<T>(...iterables: Array<IterableLike<T>>): Iterable<T[]>;
-export declare function product<Args extends any[][]>(...iterables: Args): Iterable<ProductReturn<Args>>;
+export declare function product<Args extends Array<Iterable<any>>>(...iterables: Args):
+  Iterable<ProductReturnElement<Args>>;
 
 export declare function range<R extends number>(r: R): RangeReturn<R>;
 export declare function range(opts: { start: number, end?: number, step?: number }): Iterable<number>;
