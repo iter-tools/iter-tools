@@ -170,7 +170,9 @@ export declare function zipLongest<T>(...iterables: Array<IterableLike<T>>): Ite
 export declare function zipAll<T>(...iterables: Array<IterableLike<T>>): Iterable<T[]>;
 export declare function zip<T>(...iterables: Array<IterableLike<T>>): Iterable<T[]>;
 
-// Deprecated
+/**
+ * @deprecated Use `iterable` instead
+ */
 export declare function iter<T>(iterable: IterableLike<T>): Iterable<T>;
 
 // Async
@@ -289,5 +291,7 @@ export declare function asyncBuffer<T>(n: number, iterable: AsyncIterableLike<T>
 export declare function asyncThrottle<T>(n: number): (iterable: AsyncIterableLike<T>) => AsyncIterable<T>;
 export declare function asyncThrottle<T>(n: number, iterable: AsyncIterableLike<T>): AsyncIterable<T>;
 
-// Deprecated
+/**
+ * @deprecated Use `asyncIterable` instead
+ */
 export declare function asyncIter<T>(syncIterable: AsyncIterableLike<T>): AsyncIterable<T>;
