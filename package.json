@@ -11,7 +11,8 @@
     "test:es5": "npm run build:es5-cjs && jest --moduleNameMapper '{\"^iter-tools(.*)\": \"<rootDir>/es5$1\"}'",
     "test:es2015": "npm run build:es2015-cjs && jest --moduleNameMapper '{\"^iter-tools(.*)\": \"<rootDir>/es2015$1\"}'",
     "test:es2018": "npm run build:es2018-cjs && jest --moduleNameMapper '{\"^iter-tools(.*)\": \"<rootDir>/es2018$1\"}'",
-    "test": "npm run test:es5 && npm run test:es2015",
+    "test:types": "tsc",
+    "test": "npm run test:es5 && npm run test:es2015 && npm run test:types",
     "watch": "jest --moduleNameMapper '{\"^iter-tools(.*)\": \"<rootDir>/es2015$1\"}' --watch",
     "benchmarks": "npm run clean && npm run build:es2018-cjs && node --expose-gc benchmarks",
     "coverage:badges": "jest-coverage-badges",
@@ -82,7 +83,8 @@
     "require-all": "^2.2.0",
     "rimraf": "^2.6.2",
     "tslint": "^5.11.0",
-    "typescript": "^3.0.1"
+    "static-type-assert": "^2.0.0",
+    "typescript": "^3.0.3"
   },
   "jest": {
     "testEnvironment": "node",
