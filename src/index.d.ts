@@ -133,7 +133,11 @@ export declare function splitLines(iterable: IterableLike<string>): Iterable<str
 
 export declare function repeat<T>(obj: T, times?: number): Iterable<T>;
 
-export declare function size(iterable: Iterable<any>): number;
+// export declare function size(iterable: Iterable<any>): number;
+// export declare function size<T extends any[]>(array: T): T['length'];
+
+export declare function size<Iter extends Iterable<any>>(iterable: Iter):
+  Iter extends any[] ? Iter["length"] : number;
 
 export declare function slice<T>(
     opts: number | { start: number, end?: number, step?: number },
