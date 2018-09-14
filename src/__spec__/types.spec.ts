@@ -1,7 +1,5 @@
 import assert from "static-type-assert";
-import * as tuple from "typescript-tuple";
 import * as iter from "../index";
-import compare = assert.compare;
 
 assert<
   Iterable<[number, number, number]>
