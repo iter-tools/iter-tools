@@ -2,9 +2,17 @@
 /// <reference lib="esnext.asynciterable" />
 
 import { Prepend, Repeat, Reverse } from "typescript-tuple";
+import { RangeZero as UnionRange } from "typescript-union";
 
 type IterableLike<T> = Iterable<T> | T[] | { [key: string]: T; } | { [key: number]: T; };
 type AsyncIterableLike<T> = AsyncIterable<T> | IterableLike<T>;
+type ReasonableNumber = UnionRange<32>;
+
+/**
+ * Function signature of `permutations` and `combinations`
+ */
+type CombinationsPermutations = <T, R extends number>(iterable: IterableLike<T>, r: R) =>
+  Iterable<R extends ReasonableNumber ? Repeat<T, R> : number[]>;
 
 /**
  * Helper generic for `product` function
@@ -36,12 +44,8 @@ export declare function batch<T>(n: number, iterable: IterableLike<T>): Iterable
 export declare function chain<T>(...iterables: Array<IterableLike<T>>): Iterable<T>;
 export declare function concat<T>(...iterables: Array<IterableLike<T>>): Iterable<T>;
 
-export declare function combinations<T, R extends number>(iterable: IterableLike<T>, r: R): Iterable<Repeat<T, R>>;
-
-export declare function combinationsWithReplacement<T, R extends number>(
-  iterable: IterableLike<T>,
-  r: R,
-): Iterable<Repeat<T, R>>;
+export declare const combinations: CombinationsPermutations;
+export declare const combinationsWithReplacement: CombinationsPermutations;
 
 export declare function compose<T>(fns: IterableLike<(_: T) => T>): Iterable<T>;
 
@@ -83,7 +87,7 @@ export declare function iterable<T>(iterator: { next: () => {value: T} } | Itera
 export declare function map<T, O>(func: (item: T) => O): (iter: IterableLike<T>) => Iterable<O>;
 export declare function map<T, O>(func: (item: T) => O, iter: IterableLike<T>): Iterable<O>;
 
-export declare function permutations<T, R extends number>(iterable: IterableLike<T>, r: R): Iterable<Repeat<T, R>>;
+export declare const permutations: CombinationsPermutations;
 
 export declare function product<T>(...iterables: Array<IterableLike<T>>): Iterable<T[]>;
 export declare function product<Args extends any[][]>(...iterables: Args): Iterable<ProductReturn<Args>>;
