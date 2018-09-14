@@ -15,6 +15,18 @@ assert<
 
 assert<
   Iterable<[number, number, number]>
+>(iter.combinations(iter.range(5), 3));
+
+assert<
+  Iterable<[number, number, number, number]>
+>(iter.combinations([0, 1, 2, 3] as [number, number, number, number]));
+
+assert<
+  Iterable<number[]>
+>(iter.combinations(iter.range(5)));
+
+assert<
+  Iterable<[number, number, number]>
 >(iter.permutations([0, 1, 2, 3], 3));
 
 assert<
@@ -24,6 +36,18 @@ assert<
 assert<
   Iterable<number[]>
 >(iter.permutations([0, 1, 2, 3], 999));
+
+assert<
+  Iterable<[number, number, number]>
+>(iter.permutations(iter.range(5), 3));
+
+assert<
+  Iterable<[number, number, number, number]>
+>(iter.permutations([0, 1, 2, 3] as [number, number, number, number]));
+
+assert<
+  Iterable<number[]>
+>(iter.permutations(iter.range(5)));
 
 assert<
   Iterable<number[]>
