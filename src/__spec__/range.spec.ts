@@ -2,8 +2,8 @@ import assert from "static-type-assert";
 import * as iter from "../index";
 
 assert<
-  Iterable<[number, number, number, number]>
->(iter.range(4));
+  Iterable<[0 | 1 | 2, 0 | 1 | 2, 0 | 1 | 2]>
+>(iter.range(3));
 
 assert<
   Iterable<number[]>
