@@ -46,7 +46,7 @@ type ProductReturn<Args extends any[][], Holder extends any[] = []> = {
 ];
 
 type RangeReturn<R extends number> =
-  Iterable<R extends ReasonableNumber ? Repeat<UnionRange<R>, R> : number[]>;
+  R extends ReasonableNumber ? Repeat<UnionRange<R>, R> : Iterable<number>;
 
 // Sync
 export declare function keys(iterable: any): Iterable<any>;
