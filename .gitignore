@@ -6,5 +6,5 @@
 
 /coverage/*
 !/coverage/badge-*.svg
-__spec__/*.js
-__spec__/*.d.ts
+/src/__spec__/*.js
+/src/__spec__/*.d.ts
