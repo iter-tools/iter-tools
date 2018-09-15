@@ -2,7 +2,7 @@
 /// <reference lib="esnext.asynciterable" />
 
 import { IsFinite, Prepend, Repeat, Reverse } from "typescript-tuple";
-import { RangeZero as UnionRange } from "typescript-union";
+import { FromTuple as UnionFromTuple, RangeZero as UnionRange } from "typescript-union";
 
 type IterableLike<T> = Iterable<T> | T[] | { [key: string]: T; } | { [key: number]: T; };
 type AsyncIterableLike<T> = AsyncIterable<T> | IterableLike<T>;
@@ -72,7 +72,8 @@ export declare function consume<T>(func: (item: T) => void, iterable: IterableLi
 
 export declare function count(opts: number | { start: number, end?: number, step?: number }): Iterable<number>;
 
-export declare function cycle<T>(iterable: IterableLike<T>): Iterable<T>;
+export declare function cycle<Iter extends IterableLike<any>>(iterable: Iter):
+  Iter extends any[] ? Iterable<UnionFromTuple<Iter>> : Iter;
 
 export declare function dropWhile<T>(func: (item: T) => boolean): (iterable: IterableLike<T>) => Iterable<T>;
 export declare function dropWhile<T>(func: (item: T) => boolean, iterable: IterableLike<T>): Iterable<T>;
