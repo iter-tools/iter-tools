@@ -80,7 +80,10 @@ export declare function dropWhile<T>(func: (item: T) => boolean, iterable: Itera
 
 export declare function enumerate<T>(iterable: IterableLike<T>, start?: number): Iterable<[number, T]>;
 
-export declare function execute<T>(func: (...args: any[]) => T, ...args: any[]): Iterable<T>;
+export declare function execute<T, Args extends any[] = any[]>(
+  func: (...args: Args) => T,
+  ...args: Args
+): Iterable<T>;
 
 export declare function every<T>(func: (item: T) => boolean): (iterable: IterableLike<T>) => boolean;
 export declare function every<T>(func: (item: T) => boolean, iterable: IterableLike<T>): boolean;
@@ -204,7 +207,10 @@ export declare function asyncEnumerate<T>(iterable: AsyncIterableLike<T>, start?
 export declare function asyncEvery<T>(func: (item: T) => boolean): (iterable: AsyncIterableLike<T>) => boolean;
 export declare function asyncEvery<T>(func: (item: T) => boolean, iterable: AsyncIterableLike<T>): boolean;
 
-export declare function asyncExecute<T>(func: (...args: any[]) => Promise<T>, ...args: any[]): AsyncIterable<T>;
+export declare function asyncExecute<T, Args extends any[] = any[]>(
+  func: (...args: Args) => Promise<T>,
+  ...args: Args
+): AsyncIterable<T>;
 
 export declare function asyncFilter<T>(func: (item: T) => boolean):
     (iterable: AsyncIterableLike<T>) => AsyncIterable<T>;
