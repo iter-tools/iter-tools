@@ -91,7 +91,11 @@ export declare function filter<T>(func: (item: T) => boolean, iterable: Iterable
 export declare function find<T>(func: (item: T) => boolean): (iterable: IterableLike<T>) => T | null;
 export declare function find<T>(func: (item: T) => boolean, iterable: IterableLike<T>): T | null;
 
-export declare function first<T>(iterable: IterableLike<T>): T | undefined;
+export declare function first<Iter extends IterableLike<any>>(iterable: Iter):
+  Iter extends [] ? undefined :
+  Iter extends [infer First, ...any[]] ? First :
+  Iter extends IterableLike<infer T> ? T | undefined :
+  never;
 
 export declare function flatMap<T, O>(func: (item: T) => IterableLike<O>): (iter: IterableLike<T>) => Iterable<O>;
 export declare function flatMap<T, O>(func: (item: T) => IterableLike<O>, iter: IterableLike<T>): Iterable<O>;
