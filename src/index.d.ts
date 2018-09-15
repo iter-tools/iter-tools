@@ -1,29 +1,53 @@
 /// <reference lib="es2018" />
 /// <reference lib="esnext.asynciterable" />
 
-import { Prepend, Repeat, Reverse } from "typescript-tuple";
+import { IsFinite, Prepend, Repeat, Reverse } from "typescript-tuple";
+import { FromTuple as UnionFromTuple, RangeZero as UnionRange } from "typescript-union";
 
 type IterableLike<T> = Iterable<T> | T[] | { [key: string]: T; } | { [key: number]: T; };
 type AsyncIterableLike<T> = AsyncIterable<T> | IterableLike<T>;
+type ReasonableNumber = UnionRange<32>;
+
+/**
+ * Function signature of `permutations` and `combinations`
+ */
+interface ICombinationsPermutations {
+  <Iter extends IterableLike<any>>(iterable: Iter, r?: undefined): CombinationsPermutationsByIterable<Iter>;
+  <T, R extends number>(iterable: IterableLike<T>, r: R): CombinationsPermutationsByLength<T, R>;
+}
+
+type CombinationsPermutationsByIterable<Iter extends IterableLike<any>> =
+  Iter extends Iterable<infer T>
+    ? Iter extends T[]
+      ? CombinationsPermutationsByLength<T, Iter["length"]>
+      : Iterable<T[]>
+    : never;
+
+type CombinationsPermutationsByLength<T, R extends number> =
+  Iterable<R extends ReasonableNumber ? Repeat<T, R> : T[]>;
 
 /**
  * Helper generic for `product` function
  * This creates element type of returning iterable from argument types
  *
  * @example
- *   `ProductReturn<[string[], number[], boolean[]]>` is `[string, number, boolean]`
+ *   `ProductReturnElement<[string[], number[], boolean[]]>` is `[string, number, boolean]`
  */
-type ProductReturn<Args extends any[][], Holder extends any[] = []> = {
+type ProductReturnElement<Args extends Array<Iterable<any>>, Holder extends any[] = []> = {
   empty: Holder,
   many: ((...a: Reverse<Args>) => any) extends ((a: infer Last, ...b: infer ReversedRest) => any)
-    ? ProductReturn<
+    ? ProductReturnElement<
       Reverse<ReversedRest>,
-      Prepend<Holder, Last extends Array<infer T> ? T : never>
+      Prepend<Holder, Last extends Iterable<infer T> ? T : never>
     >
     : never,
+  infinite: Args extends Array<Array<infer T>> ? T[] : never
 }[
-  Args extends [] ? "empty" : "many"
+  Args extends [] ? "empty" : IsFinite<Args, "many", "infinite">
 ];
+
+type RangeReturn<R extends number> =
+  R extends ReasonableNumber ? Repeat<UnionRange<R>, R> : Iterable<number>;
 
 // Sync
 export declare function keys(iterable: any): Iterable<any>;
@@ -36,12 +60,8 @@ export declare function batch<T>(n: number, iterable: IterableLike<T>): Iterable
 export declare function chain<T>(...iterables: Array<IterableLike<T>>): Iterable<T>;
 export declare function concat<T>(...iterables: Array<IterableLike<T>>): Iterable<T>;
 
-export declare function combinations<T, R extends number>(iterable: IterableLike<T>, r: R): Iterable<Repeat<T, R>>;
-
-export declare function combinationsWithReplacement<T, R extends number>(
-  iterable: IterableLike<T>,
-  r: R,
-): Iterable<Repeat<T, R>>;
+export declare const combinations: ICombinationsPermutations;
+export declare const combinationsWithReplacement: ICombinationsPermutations;
 
 export declare function compose<T>(fns: IterableLike<(_: T) => T>): Iterable<T>;
 
@@ -52,14 +72,18 @@ export declare function consume<T>(func: (item: T) => void, iterable: IterableLi
 
 export declare function count(opts: number | { start: number, end?: number, step?: number }): Iterable<number>;
 
-export declare function cycle<T>(iterable: IterableLike<T>): Iterable<T>;
+export declare function cycle<Iter extends IterableLike<any>>(iterable: Iter):
+  Iter extends any[] ? Iterable<UnionFromTuple<Iter>> : Iter;
 
 export declare function dropWhile<T>(func: (item: T) => boolean): (iterable: IterableLike<T>) => Iterable<T>;
 export declare function dropWhile<T>(func: (item: T) => boolean, iterable: IterableLike<T>): Iterable<T>;
 
 export declare function enumerate<T>(iterable: IterableLike<T>, start?: number): Iterable<[number, T]>;
 
-export declare function execute<T>(func: (...args: any[]) => T, ...args: any[]): Iterable<T>;
+export declare function execute<T, Args extends any[] = any[]>(
+  func: (...args: Args) => T,
+  ...args: Args
+): Iterable<T>;
 
 export declare function every<T>(func: (item: T) => boolean): (iterable: IterableLike<T>) => boolean;
 export declare function every<T>(func: (item: T) => boolean, iterable: IterableLike<T>): boolean;
@@ -70,7 +94,11 @@ export declare function filter<T>(func: (item: T) => boolean, iterable: Iterable
 export declare function find<T>(func: (item: T) => boolean): (iterable: IterableLike<T>) => T | null;
 export declare function find<T>(func: (item: T) => boolean, iterable: IterableLike<T>): T | null;
 
-export declare function first<T>(iterable: IterableLike<T>): T | undefined;
+export declare function first<Iter extends IterableLike<any>>(iterable: Iter):
+  Iter extends [] ? undefined :
+  Iter extends [infer First, ...any[]] ? First :
+  Iter extends IterableLike<infer T> ? T | undefined :
+  never;
 
 export declare function flatMap<T, O>(func: (item: T) => IterableLike<O>): (iter: IterableLike<T>) => Iterable<O>;
 export declare function flatMap<T, O>(func: (item: T) => IterableLike<O>, iter: IterableLike<T>): Iterable<O>;
@@ -83,11 +111,13 @@ export declare function iterable<T>(iterator: { next: () => {value: T} } | Itera
 export declare function map<T, O>(func: (item: T) => O): (iter: IterableLike<T>) => Iterable<O>;
 export declare function map<T, O>(func: (item: T) => O, iter: IterableLike<T>): Iterable<O>;
 
-export declare function permutations<T, R extends number>(iterable: IterableLike<T>, r: R): Iterable<Repeat<T, R>>;
+export declare const permutations: ICombinationsPermutations;
 
-export declare function product<T>(...iterables: Array<IterableLike<T>>): Iterable<T[]>;
-export declare function product<Args extends any[][]>(...iterables: Args): Iterable<ProductReturn<Args>>;
-export declare function range(opts: number | { start: number, end?: number, step?: number }): Iterable<number>;
+export declare function product<Args extends Array<Iterable<any>>>(...iterables: Args):
+  Iterable<ProductReturnElement<Args>>;
+
+export declare function range<R extends number>(r: R): RangeReturn<R>;
+export declare function range(opts: { start: number, end?: number, step?: number }): Iterable<number>;
 
 export declare function reduce<T, O>(func: (acc: O, item: T, c: number) => O): (iterable: IterableLike<T>) => O;
 export declare function reduce<T, O>(initial: O, func: (acc: O, item: T, c: number) => O):
@@ -111,7 +141,8 @@ export declare function splitLines(iterable: IterableLike<string>): Iterable<str
 
 export declare function repeat<T>(obj: T, times?: number): Iterable<T>;
 
-export declare function size(iterable: Iterable<any>): number;
+export declare function size<Iter extends Iterable<any>>(iterable: Iter):
+  Iter extends any[] ? Iter["length"] : number;
 
 export declare function slice<T>(
     opts: number | { start: number, end?: number, step?: number },
@@ -144,7 +175,9 @@ export declare function zipLongest<T>(...iterables: Array<IterableLike<T>>): Ite
 export declare function zipAll<T>(...iterables: Array<IterableLike<T>>): Iterable<T[]>;
 export declare function zip<T>(...iterables: Array<IterableLike<T>>): Iterable<T[]>;
 
-// Deprecated
+/**
+ * @deprecated Use `iterable` instead
+ */
 export declare function iter<T>(iterable: IterableLike<T>): Iterable<T>;
 
 // Async
@@ -174,7 +207,10 @@ export declare function asyncEnumerate<T>(iterable: AsyncIterableLike<T>, start?
 export declare function asyncEvery<T>(func: (item: T) => boolean): (iterable: AsyncIterableLike<T>) => boolean;
 export declare function asyncEvery<T>(func: (item: T) => boolean, iterable: AsyncIterableLike<T>): boolean;
 
-export declare function asyncExecute<T>(func: (...args: any[]) => Promise<T>, ...args: any[]): AsyncIterable<T>;
+export declare function asyncExecute<T, Args extends any[] = any[]>(
+  func: (...args: Args) => Promise<T>,
+  ...args: Args
+): AsyncIterable<T>;
 
 export declare function asyncFilter<T>(func: (item: T) => boolean):
     (iterable: AsyncIterableLike<T>) => AsyncIterable<T>;
@@ -263,5 +299,7 @@ export declare function asyncBuffer<T>(n: number, iterable: AsyncIterableLike<T>
 export declare function asyncThrottle<T>(n: number): (iterable: AsyncIterableLike<T>) => AsyncIterable<T>;
 export declare function asyncThrottle<T>(n: number, iterable: AsyncIterableLike<T>): AsyncIterable<T>;
 
-// Deprecated
+/**
+ * @deprecated Use `asyncIterable` instead
+ */
 export declare function asyncIter<T>(syncIterable: AsyncIterableLike<T>): AsyncIterable<T>;
