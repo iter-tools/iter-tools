@@ -12,11 +12,11 @@ type ReasonableNumber = UnionRange<32>;
  * Function signature of `permutations` and `combinations`
  */
 interface ICombinationsPermutations {
-  <Iter extends Iterable<any>>(iterable: Iter, r?: undefined): CombinationsPermutationsByIterable<Iter>;
+  <Iter extends IterableLike<any>>(iterable: Iter, r?: undefined): CombinationsPermutationsByIterable<Iter>;
   <T, R extends number>(iterable: IterableLike<T>, r: R): CombinationsPermutationsByLength<T, R>;
 }
 
-type CombinationsPermutationsByIterable<Iter extends Iterable<any>> =
+type CombinationsPermutationsByIterable<Iter extends IterableLike<any>> =
   Iter extends Iterable<infer T>
     ? Iter extends T[]
       ? CombinationsPermutationsByLength<T, Iter["length"]>
@@ -33,12 +33,12 @@ type CombinationsPermutationsByLength<T, R extends number> =
  * @example
  *   `ProductReturnElement<[string[], number[], boolean[]]>` is `[string, number, boolean]`
  */
-type ProductReturnElement<Args extends Array<Iterable<any>>, Holder extends any[] = []> = {
+type ProductReturnElement<Args extends Array<IterableLike<any>>, Holder extends any[] = []> = {
   empty: Holder,
   many: ((...a: Reverse<Args>) => any) extends ((a: infer Last, ...b: infer ReversedRest) => any)
     ? ProductReturnElement<
       Reverse<ReversedRest>,
-      Prepend<Holder, Last extends Iterable<infer T> ? T : never>
+      Prepend<Holder, Last extends IterableLike<infer T> ? T : never>
     >
     : never,
   infinite: Args extends Array<Array<infer T>> ? T[] : never
