@@ -1,6 +1,6 @@
 {
   "name": "iter-tools",
-  "version": "6.1.2",
+  "version": "6.1.4-rc.1",
   "description": "The iterable toolbox",
   "main": "es5/index",
   "module": "es5/index.mjs",
@@ -11,7 +11,8 @@
     "test:es5": "npm run build:es5-cjs && jest --moduleNameMapper '{\"^iter-tools(.*)\": \"<rootDir>/es5$1\"}'",
     "test:es2015": "npm run build:es2015-cjs && jest --moduleNameMapper '{\"^iter-tools(.*)\": \"<rootDir>/es2015$1\"}'",
     "test:es2018": "npm run build:es2018-cjs && jest --moduleNameMapper '{\"^iter-tools(.*)\": \"<rootDir>/es2018$1\"}'",
-    "test": "npm run test:es5 && npm run test:es2015",
+    "test:types": "tsc",
+    "test": "npm run test:es5 && npm run test:es2015 && npm run test:types",
     "watch": "jest --moduleNameMapper '{\"^iter-tools(.*)\": \"<rootDir>/es2015$1\"}' --watch",
     "benchmarks": "npm run clean && npm run build:es2018-cjs && node --expose-gc benchmarks",
     "coverage:badges": "jest-coverage-badges",
@@ -27,9 +28,8 @@
     "build:copyts": "copyfiles -f src/*.ts es5 && copyfiles -f src/*.ts es2015 && copyfiles -f src/*.ts es2018",
     "tslint": "tslint -c tslint.json 'src/**/*.ts'",
     "tslint:fix": "npm run tslint -- --fix",
-    "prepublish": "npm run build",
-    "precommit": "npm run lint",
-    "prepush": "npm run test"
+    "prepublishOnly": "npm run build",
+    "precommit": "npm run lint"
   },
   "keywords": [
     "Iterator",
@@ -55,7 +55,8 @@
     "clone-regexp": "^2.0.1",
     "dequeue": "^1.0.5",
     "little-ds-toolkit": "^1.1.0",
-    "typescript-tuple": "1.2.1"
+    "typescript-tuple": "^1.4.0",
+    "typescript-union": "0.0.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.0.0",
@@ -83,7 +84,8 @@
     "require-all": "^2.2.0",
     "rimraf": "^2.6.2",
     "tslint": "^5.11.0",
-    "typescript": "^3.0.1"
+    "static-type-assert": "^2.0.0",
+    "typescript": "^3.0.3"
   },
   "jest": {
     "testEnvironment": "node",
