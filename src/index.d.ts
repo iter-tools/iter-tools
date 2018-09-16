@@ -107,6 +107,12 @@ export declare function flatMap<T, O>(
   iter: IterableLike<T>
 ): IterableIterator<O>;
 
+export declare function groupBy(key: null):
+  <T>(iterable: IterableLike<T>) => IterableIterator<[T, IterableIterator<T>]>;
+export declare function groupBy<T>(
+  key: null,
+  iterable: IterableLike<T>
+): IterableIterator<[T, IterableIterator<T>]>;
 export declare function groupBy<T, K>(key: (item: T) => K):
   (iterable: IterableLike<T>) => IterableIterator<[K, IterableIterator<T>]>;
 export declare function groupBy<T, K>(
@@ -236,10 +242,16 @@ export declare function asyncFlatMap<T, O>(func: (item: T) => AsyncIterableLike<
 export declare function asyncFlatMap<T, O>(func: (item: T) => AsyncIterableLike<O>, iter: AsyncIterableLike<T>):
     AsyncIterableIterator<O>;
 
+export declare function asyncGroupBy(key: null):
+  <T>(iterable: AsyncIterableLike<T>) => AsyncIterableIterator<[T, AsyncIterableIterator<T>]>;
+export declare function asyncGroupBy<T>(
+  key: null,
+  iterable: AsyncIterableLike<T>
+): AsyncIterableIterator<[T, AsyncIterableIterator<T>]>;
 export declare function asyncGroupBy<T, K>(key: (item: T) => K):
-    (iterable: AsyncIterableLike<T>) => Iterable<[K, Iterable<T>]>;
+  (iterable: AsyncIterableLike<T>) => AsyncIterableIterator<[K, AsyncIterableIterator<T>]>;
 export declare function asyncGroupBy<T, K>(key: (item: T) => K, iterable: AsyncIterableLike<T>):
-    Iterable<[K, Iterable<T>]>;
+  AsyncIterableIterator<[K, AsyncIterableIterator<T>]>;
 
 export declare function AsyncIterableIterator<T>(
   asyncIterator: { next: () => Promise<{value: T}> } | AsyncIterableLike<T>
