@@ -20,11 +20,11 @@ type CombinationsPermutationsByIterable<Iter extends IterableLike<any>> =
   Iter extends Iterable<infer T>
     ? Iter extends T[]
       ? CombinationsPermutationsByLength<T, Iter["length"]>
-      : Iterable<T[]>
+      : IterableIterator<T[]>
     : never;
 
 type CombinationsPermutationsByLength<T, R extends number> =
-  Iterable<R extends ReasonableNumber ? Repeat<T, R> : T[]>;
+  IterableIterator<R extends ReasonableNumber ? Repeat<T, R> : T[]>;
 
 /**
  * Helper generic for `product` function
@@ -47,7 +47,7 @@ type ProductReturnElement<Args extends Array<Iterable<any>>, Holder extends any[
 ];
 
 type RangeReturn<R extends number> =
-  R extends ReasonableNumber ? Repeat<UnionRange<R>, R> : IterableIterator<number>;
+  IterableIterator<R extends ReasonableNumber ? UnionRange<R> : number>;
 
 // Sync
 export declare function keys(iterable: any): IterableIterator<any>;
