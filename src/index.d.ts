@@ -4,19 +4,18 @@
 import { IsFinite, Prepend, Repeat, Reverse } from "typescript-tuple";
 import { FromTuple as UnionFromTuple, RangeZero as UnionRange } from "typescript-union";
 
-type IterableLike<T> = Iterable<T> | T[] | { [key: string]: T; } | { [key: number]: T; };
-type AsyncIterableLike<T> = AsyncIterable<T> | IterableLike<T>;
+type AsyncIterableLike<T> = AsyncIterable<T> | Iterable<T>;
 type ReasonableNumber = UnionRange<32>;
 
 /**
  * Function signature of `permutations` and `combinations`
  */
 interface ICombinationsPermutations {
-  <Iter extends IterableLike<any>>(iterable: Iter, r?: undefined): CombinationsPermutationsByIterable<Iter>;
-  <T, R extends number>(iterable: IterableLike<T>, r: R): CombinationsPermutationsByLength<T, R>;
+  <Iter extends Iterable<any>>(iterable: Iter, r?: undefined): CombinationsPermutationsByIterable<Iter>;
+  <T, R extends number>(iterable: Iterable<T>, r: R): CombinationsPermutationsByLength<T, R>;
 }
 
-type CombinationsPermutationsByIterable<Iter extends IterableLike<any>> =
+type CombinationsPermutationsByIterable<Iter extends Iterable<any>> =
   Iter extends Iterable<infer T>
     ? Iter extends T[]
       ? CombinationsPermutationsByLength<T, Iter["length"]>
@@ -50,80 +49,80 @@ type RangeReturn<R extends number> =
   IterableIterator<R extends ReasonableNumber ? UnionRange<R> : number>;
 
 // Sync
-export declare function keys(iterable: any): IterableIterator<any>;
-export declare function values(iterable: any): IterableIterator<any>;
-export declare function entries(iterable: any): IterableIterator<any>;
+export declare function keys(obj: { [id: string]: any }): IterableIterator<string>;
+export declare function values<T>(obj: { [id: string]: T }): IterableIterator<T>;
+export declare function entries<T>(obj: { [id: string]: T }): IterableIterator<[string, T]>;
 
-export declare function batch<T>(n: number): (iterable: IterableLike<T>) => IterableIterator<T[]>;
-export declare function batch<T>(n: number, iterable: IterableLike<T>): IterableIterator<T[]>;
+export declare function batch<T>(n: number): (iterable: Iterable<T>) => IterableIterator<T[]>;
+export declare function batch<T>(n: number, iterable: Iterable<T>): IterableIterator<T[]>;
 
-export declare function chain<T>(...iterables: Array<IterableLike<T>>): IterableIterator<T>;
-export declare function concat<T>(...iterables: Array<IterableLike<T>>): IterableIterator<T>;
+export declare function chain<T>(...iterables: Array<Iterable<T>>): IterableIterator<T>;
+export declare function concat<T>(...iterables: Array<Iterable<T>>): IterableIterator<T>;
 
 export declare const combinations: ICombinationsPermutations;
 export declare const combinationsWithReplacement: ICombinationsPermutations;
 
-export declare function compose<T>(fns: IterableLike<(_: T) => T>): IterableIterator<T>;
+export declare function compose<T>(fns: Iterable<(_: T) => T>): IterableIterator<T>;
 
-export declare function compress<T>(iterable: IterableLike<T>, compress: IterableLike<boolean>): IterableIterator<T>;
+export declare function compress<T>(iterable: Iterable<T>, compress: Iterable<boolean>): IterableIterator<T>;
 
-export declare function consume<T>(func: (item: T) => void): (iterable: IterableLike<T>) => void;
-export declare function consume<T>(func: (item: T) => void, iterable: IterableLike<T>): void;
+export declare function consume<T>(func: (item: T) => void): (iterable: Iterable<T>) => void;
+export declare function consume<T>(func: (item: T) => void, iterable: Iterable<T>): void;
 
 export declare function count(opts: number | { start: number, end?: number, step?: number }): IterableIterator<number>;
 
-export declare function cycle<Iter extends IterableLike<any>>(iterable: Iter):
+export declare function cycle<Iter extends Iterable<any>>(iterable: Iter):
   Iter extends any[] ? IterableIterator<UnionFromTuple<Iter>> : Iter;
 
-export declare function dropWhile<T>(func: (item: T) => boolean): (iterable: IterableLike<T>) => IterableIterator<T>;
-export declare function dropWhile<T>(func: (item: T) => boolean, iterable: IterableLike<T>): IterableIterator<T>;
+export declare function dropWhile<T>(func: (item: T) => boolean): (iterable: Iterable<T>) => IterableIterator<T>;
+export declare function dropWhile<T>(func: (item: T) => boolean, iterable: Iterable<T>): IterableIterator<T>;
 
-export declare function enumerate<T>(iterable: IterableLike<T>, start?: number): IterableIterator<[number, T]>;
+export declare function enumerate<T>(iterable: Iterable<T>, start?: number): IterableIterator<[number, T]>;
 
 export declare function execute<T, Args extends any[] = any[]>(
   func: (...args: Args) => T,
   ...args: Args
 ): IterableIterator<T>;
 
-export declare function every<T>(func: (item: T) => boolean): (iterable: IterableLike<T>) => boolean;
-export declare function every<T>(func: (item: T) => boolean, iterable: IterableLike<T>): boolean;
+export declare function every<T>(func: (item: T) => boolean): (iterable: Iterable<T>) => boolean;
+export declare function every<T>(func: (item: T) => boolean, iterable: Iterable<T>): boolean;
 
-export declare function filter<T>(func: (item: T) => boolean): (iterable: IterableLike<T>) => IterableIterator<T>;
-export declare function filter<T>(func: (item: T) => boolean, iterable: IterableLike<T>): IterableIterator<T>;
+export declare function filter<T>(func: (item: T) => boolean): (iterable: Iterable<T>) => IterableIterator<T>;
+export declare function filter<T>(func: (item: T) => boolean, iterable: Iterable<T>): IterableIterator<T>;
 
-export declare function find<T>(func: (item: T) => boolean): (iterable: IterableLike<T>) => T | null;
-export declare function find<T>(func: (item: T) => boolean, iterable: IterableLike<T>): T | null;
+export declare function find<T>(func: (item: T) => boolean): (iterable: Iterable<T>) => T | null;
+export declare function find<T>(func: (item: T) => boolean, iterable: Iterable<T>): T | null;
 
-export declare function first<Iter extends IterableLike<any>>(iterable: Iter):
+export declare function first<Iter extends Iterable<any>>(iterable: Iter):
   Iter extends [] ? undefined :
   Iter extends [infer First, ...any[]] ? First :
-  Iter extends IterableLike<infer T> ? T | undefined :
+  Iter extends Iterable<infer T> ? T | undefined :
   never;
 
-export declare function flatMap<T, O>(func: (item: T) => IterableLike<O>):
-  (iter: IterableLike<T>) => IterableIterator<O>;
+export declare function flatMap<T, O>(func: (item: T) => Iterable<O>):
+  (iter: Iterable<T>) => IterableIterator<O>;
 export declare function flatMap<T, O>(
-  func: (item: T) => IterableLike<O>,
-  iter: IterableLike<T>
+  func: (item: T) => Iterable<O>,
+  iter: Iterable<T>
 ): IterableIterator<O>;
 
 export declare function groupBy(key: null):
-  <T>(iterable: IterableLike<T>) => IterableIterator<[T, IterableIterator<T>]>;
+  <T>(iterable: Iterable<T>) => IterableIterator<[T, IterableIterator<T>]>;
 export declare function groupBy<T>(
   key: null,
-  iterable: IterableLike<T>
+  iterable: Iterable<T>
 ): IterableIterator<[T, IterableIterator<T>]>;
 export declare function groupBy<T, K>(key: (item: T) => K):
-  (iterable: IterableLike<T>) => IterableIterator<[K, IterableIterator<T>]>;
+  (iterable: Iterable<T>) => IterableIterator<[K, IterableIterator<T>]>;
 export declare function groupBy<T, K>(
   key: (item: T) => K,
-  iterable: IterableLike<T>
+  iterable: Iterable<T>
 ): IterableIterator<[K, IterableIterator<T>]>;
 
-export declare function iterable<T>(iterator: { next: () => {value: T} } | IterableLike<T>): IterableIterator<T>;
+export declare function iterable<T>(iterator: { next: () => {value: T} } | Iterable<T>): IterableIterator<T>;
 
-export declare function map<T, O>(func: (item: T) => O): (iter: IterableLike<T>) => IterableIterator<O>;
-export declare function map<T, O>(func: (item: T) => O, iter: IterableLike<T>): IterableIterator<O>;
+export declare function map<T, O>(func: (item: T) => O): (iter: Iterable<T>) => IterableIterator<O>;
+export declare function map<T, O>(func: (item: T) => O, iter: Iterable<T>): IterableIterator<O>;
 
 export declare const permutations: ICombinationsPermutations;
 
@@ -133,11 +132,11 @@ export declare function product<Args extends Array<Iterable<any>>>(...iterables:
 export declare function range<R extends number>(r: R): RangeReturn<R>;
 export declare function range(opts: { start: number, end?: number, step?: number }): IterableIterator<number>;
 
-export declare function reduce<T, O>(func: (acc: O, item: T, c: number) => O): (iterable: IterableLike<T>) => O;
+export declare function reduce<T, O>(func: (acc: O, item: T, c: number) => O): (iterable: Iterable<T>) => O;
 export declare function reduce<T, O>(initial: O, func: (acc: O, item: T, c: number) => O):
-    (iterable: IterableLike<T>) => O;
-export declare function reduce<T, O>(func: (acc: O, item: T, c: number) => O, iterable: IterableLike<T>): O;
-export declare function reduce<T, O>(initial: O, func: (acc: O, item: T, c: number) => O, iterable: IterableLike<T>): O;
+    (iterable: Iterable<T>) => O;
+export declare function reduce<T, O>(func: (acc: O, item: T, c: number) => O, iterable: Iterable<T>): O;
+export declare function reduce<T, O>(initial: O, func: (acc: O, item: T, c: number) => O, iterable: Iterable<T>): O;
 
 export declare function regexpExec(re: RegExp): (str: string) => IterableIterator<string>;
 export declare function regexpExec(re: RegExp, str: string): IterableIterator<string>;
@@ -145,13 +144,13 @@ export declare function regexpExec(re: RegExp, str: string): IterableIterator<st
 export declare function regexpSplit(re: RegExp): (str: string) => IterableIterator<string>;
 export declare function regexpSplit(re: RegExp, str: string): IterableIterator<string>;
 
-export declare function regexpSplitIter(re: RegExp): (iterable: IterableLike<string>) => IterableIterator<string>;
-export declare function regexpSplitIter(re: RegExp, iterable: IterableLike<string>): IterableIterator<string>;
+export declare function regexpSplitIter(re: RegExp): (iterable: Iterable<string>) => IterableIterator<string>;
+export declare function regexpSplitIter(re: RegExp, iterable: Iterable<string>): IterableIterator<string>;
 
-export declare function regexpExecIter(re: RegExp): (iterable: IterableLike<string>) => IterableIterator<string>;
-export declare function regexpExecIter(re: RegExp, iterable: IterableLike<string>): IterableIterator<string>;
+export declare function regexpExecIter(re: RegExp): (iterable: Iterable<string>) => IterableIterator<string>;
+export declare function regexpExecIter(re: RegExp, iterable: Iterable<string>): IterableIterator<string>;
 
-export declare function splitLines(iterable: IterableLike<string>): IterableIterator<string>;
+export declare function splitLines(iterable: Iterable<string>): IterableIterator<string>;
 
 export declare function repeat<T>(obj: T, times?: number): IterableIterator<T>;
 
@@ -160,39 +159,39 @@ export declare function size<Iter extends Iterable<any>>(iterable: Iter):
 
 export declare function slice<T>(
     opts: number | { start: number, end?: number, step?: number },
-    iterable: IterableLike<T>,
+    iterable: Iterable<T>,
 ): IterableIterator<number>;
 
-export declare function some<T>(func: (item: T) => boolean): (iterable: IterableLike<T>) => boolean;
-export declare function some<T>(func: (item: T) => boolean, iterable: IterableLike<T>): boolean;
+export declare function some<T>(func: (item: T) => boolean): (iterable: Iterable<T>) => boolean;
+export declare function some<T>(func: (item: T) => boolean, iterable: Iterable<T>): boolean;
 
-export declare function takeWhile<T>(func: (item: T) => boolean): (iterable: IterableLike<T>) => IterableIterator<T>;
-export declare function takeWhile<T>(func: (item: T) => boolean, iterable: IterableLike<T>): IterableIterator<T>;
+export declare function takeWhile<T>(func: (item: T) => boolean): (iterable: Iterable<T>) => IterableIterator<T>;
+export declare function takeWhile<T>(func: (item: T) => boolean, iterable: Iterable<T>): IterableIterator<T>;
 
-export declare function tap<T>(func: (item: T, c: number) => any, iterable: IterableLike<T>): IterableIterator<T>;
+export declare function tap<T>(func: (item: T, c: number) => any, iterable: Iterable<T>): IterableIterator<T>;
 
 export declare function takeSorted<T>(
     n: number,
     func?: (item: T) => boolean,
-): (iterable: IterableLike<T>) => IterableIterator<T>;
+): (iterable: Iterable<T>) => IterableIterator<T>;
 export declare function takeSorted<T>(
     n: number,
     func?: (item: T) => boolean,
-    iterable?: IterableLike<T>,
+    iterable?: Iterable<T>,
 ): IterableIterator<T>;
 
-export declare function tee<T>(iterable: IterableLike<T>, n?: number): Array<IterableIterator<T>>;
+export declare function tee<T>(iterable: Iterable<T>, n?: number): Array<IterableIterator<T>>;
 
-export declare function toArray<T>(iterable: IterableLike<T>): T[];
+export declare function toArray<T>(iterable: Iterable<T>): T[];
 
-export declare function zipLongest<T>(...iterables: Array<IterableLike<T>>): IterableIterator<T[]>;
-export declare function zipAll<T>(...iterables: Array<IterableLike<T>>): IterableIterator<T[]>;
-export declare function zip<T>(...iterables: Array<IterableLike<T>>): IterableIterator<T[]>;
+export declare function zipLongest<T>(...iterables: Array<Iterable<T>>): IterableIterator<T[]>;
+export declare function zipAll<T>(...iterables: Array<Iterable<T>>): IterableIterator<T[]>;
+export declare function zip<T>(...iterables: Array<Iterable<T>>): IterableIterator<T[]>;
 
 /**
  * @deprecated Use `iterable` instead
  */
-export declare function iter<T>(iterable: IterableLike<T>): IterableIterator<T>;
+export declare function iter<T>(iterable: Iterable<T>): IterableIterator<T>;
 
 // Async
 export declare function asyncBatch<T>(n: number): (iterable: AsyncIterableLike<T>) => AsyncIterableIterator<T>;
