@@ -252,7 +252,7 @@ export declare function asyncGroupBy<T, K>(key: (item: T) => K):
 export declare function asyncGroupBy<T, K>(key: (item: T) => K, iterable: AsyncIterableLike<T>):
   AsyncIterableIterator<[K, AsyncIterableIterator<T>]>;
 
-export declare function AsyncIterableIterator<T>(
+export declare function asyncIterable<T>(
   asyncIterator: { next: () => Promise<{value: T}> } | AsyncIterableLike<T>
 ): AsyncIterableIterator<T>;
 
