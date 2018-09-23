@@ -1,2 +1,2 @@
-import { consume } from "./index";
-export = consume;
+import { consume } from './index'
+export = consume

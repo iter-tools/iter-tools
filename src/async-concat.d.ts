@@ -1,2 +1,2 @@
-import { asyncConcat } from "./index";
-export = asyncConcat;
+import { asyncConcat } from './index'
+export = asyncConcat
