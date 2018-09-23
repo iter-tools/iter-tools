@@ -1,2 +1,2 @@
-import { zipAll } from "./index";
-export = zipAll;
+import { zipAll } from './index'
+export = zipAll

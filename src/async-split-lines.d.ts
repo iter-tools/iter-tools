@@ -1,2 +1,2 @@
-import { asyncSplitLines } from "./index";
-export = asyncSplitLines;
+import { asyncSplitLines } from './index'
+export = asyncSplitLines

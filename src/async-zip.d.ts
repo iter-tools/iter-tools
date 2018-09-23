@@ -1,2 +1,2 @@
-import { asyncZip } from "./index";
-export = asyncZip;
+import { asyncZip } from './index'
+export = asyncZip

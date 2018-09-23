@@ -1,2 +1,2 @@
-import { zipLongest } from "./index";
-export = zipLongest;
+import { zipLongest } from './index'
+export = zipLongest

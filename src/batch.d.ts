@@ -1,2 +1,2 @@
-import { batch } from "./index";
-export = batch;
+import { batch } from './index'
+export = batch

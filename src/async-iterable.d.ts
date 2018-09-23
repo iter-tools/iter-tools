@@ -1,2 +1,2 @@
-import { asyncIterable } from "./index";
-export = asyncIterable;
+import { asyncIterable } from './index'
+export = asyncIterable

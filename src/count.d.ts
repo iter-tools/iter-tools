@@ -1,2 +1,2 @@
-import { count } from "./index";
-export = count;
+import { count } from './index'
+export = count

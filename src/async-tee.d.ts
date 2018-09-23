@@ -1,2 +1,2 @@
-import { asyncTee } from "./index";
-export = asyncTee;
+import { asyncTee } from './index'
+export = asyncTee

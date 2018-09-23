@@ -1,2 +1,2 @@
-import { regexpSplitIter } from "./index";
-export = regexpSplitIter;
+import { regexpSplitIter } from './index'
+export = regexpSplitIter
