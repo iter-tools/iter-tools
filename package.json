@@ -26,7 +26,7 @@
     "build:es2018": "mkdirp es2018 && copyfiles -f src/*.mjs es2018",
     "build:es2018-cjs": "cross-env BABEL_ENV=es2018-cjs babel -x \".mjs\" src -d es2018",
     "build:copyts": "copyfiles -f src/*.ts es5 && copyfiles -f src/*.ts es2015 && copyfiles -f src/*.ts es2018",
-    "tslint": "tslint -c tslint.json 'src/**/*.ts'",
+    "tslint": "tslint -c tslint.json -p . 'src/**/*.ts'",
     "tslint:fix": "npm run tslint -- --fix",
     "prepublishOnly": "npm run build",
     "precommit": "npm run lint"
