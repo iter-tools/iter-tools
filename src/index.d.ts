@@ -10,7 +10,7 @@ type ReasonableNumber = UnionRange<32>
 /**
  * Function signature of `permutations` and `combinations`
  */
-interface ICombinationsPermutations {
+interface CombinationsPermutations {
   <Iter extends Iterable<any>>(iterable: Iter, r?: undefined): CombinationsPermutationsByIterable<Iter>
   <T, R extends number>(iterable: Iterable<T>, r: R): CombinationsPermutationsByLength<T, R>
 }
@@ -59,8 +59,8 @@ export declare function batch<T> (n: number, iterable: Iterable<T>): IterableIte
 export declare function chain<T> (...iterables: Array<Iterable<T>>): IterableIterator<T>
 export declare function concat<T> (...iterables: Array<Iterable<T>>): IterableIterator<T>
 
-export declare const combinations: ICombinationsPermutations
-export declare const combinationsWithReplacement: ICombinationsPermutations
+export declare const combinations: CombinationsPermutations
+export declare const combinationsWithReplacement: CombinationsPermutations
 
 export declare function compose<T> (fns: Iterable<(_: T) => T>): IterableIterator<T>
 
@@ -124,7 +124,7 @@ export declare function iterable<T> (iterator: { next: () => {value: T} } | Iter
 export declare function map<T, O> (func: (item: T) => O): (iter: Iterable<T>) => IterableIterator<O>
 export declare function map<T, O> (func: (item: T) => O, iter: Iterable<T>): IterableIterator<O>
 
-export declare const permutations: ICombinationsPermutations
+export declare const permutations: CombinationsPermutations
 
 export declare function product<Args extends Array<Iterable<any>>> (...iterables: Args):
   IterableIterator<ProductReturnElement<Args>>
