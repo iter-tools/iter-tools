@@ -1,4 +1,4 @@
-import cloneRegexp from 'clone-regexp'
+import cloneRegexp from './internal/clone-regexp'
 
 function * regexpExec (re, str) {
   let match
