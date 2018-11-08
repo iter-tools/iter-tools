@@ -1,35 +1,33 @@
 {
   "env": {
     "es5": {
-      "plugins": [
-        ["@babel/plugin-transform-runtime", {"useESModules": true}]
-      ],
       "presets": [
         ["@babel/preset-env", {
-          "modules": false
+          "modules": false,
+          "useBuiltIns": "usage"
         }]
       ]
     },
     "es2015": {
       "plugins": [
-        ["@babel/plugin-transform-runtime", {"useESModules": true}],
         "@babel/plugin-proposal-async-generator-functions"
       ]
     },
     "es5-cjs": {
       "plugins": [
-        "@babel/plugin-transform-runtime",
-        "add-module-exports"
+        "add-module-exports",
+        "@babel/plugin-transform-modules-commonjs"
       ],
       "presets": [
-        "@babel/preset-env"
+        ["@babel/preset-env", {
+          "useBuiltIns": "usage"
+        }]
       ]
     },
     "es2015-cjs": {
       "plugins": [
         "add-module-exports",
         "@babel/plugin-transform-modules-commonjs",
-        "@babel/plugin-transform-runtime",
         "@babel/plugin-proposal-async-generator-functions"
       ]
     },

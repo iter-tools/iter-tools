@@ -51,9 +51,10 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "@babel/runtime": "^7.0.0",
+    "core-js": "^2.5.7",
     "dequeue": "^1.0.5",
     "little-ds-toolkit": "^1.1.0",
+    "regenerator-runtime": "^0.12.1",
     "typescript-tuple": "^1.4.0",
     "typescript-union": "0.0.0"
   },
@@ -62,7 +63,6 @@
     "@babel/core": "^7.0.0",
     "@babel/plugin-syntax-async-generators": "^7.0.0",
     "@babel/plugin-transform-modules-commonjs": "^7.0.0",
-    "@babel/plugin-transform-runtime": "^7.0.0",
     "@babel/preset-env": "^7.0.0",
     "babel-eslint": "^8.2.6",
     "babel-plugin-add-module-exports": "^0.2.1",
@@ -75,16 +75,16 @@
     "eslint-plugin-promise": "^3.8.0",
     "eslint-plugin-standard": "^3.1.0",
     "husky": "^0.14.3",
-    "jest": "^23.2.0",
+    "jest": "^23.6.0",
     "jest-coverage-badges": "^1.0.0",
     "json": "^9.0.6",
     "measure-speed": "^1.0.0",
     "mkdirp": "^0.5.1",
     "require-all": "^2.2.0",
     "rimraf": "^2.6.2",
+    "static-type-assert": "^2.0.0",
     "tslint": "^5.11.0",
     "tslint-config-standard": "^8.0.1",
-    "static-type-assert": "^2.0.0",
     "typescript": "^3.0.3"
   },
   "jest": {
