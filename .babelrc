@@ -8,11 +8,6 @@
         }]
       ]
     },
-    "es2015": {
-      "plugins": [
-        "@babel/plugin-proposal-async-generator-functions"
-      ]
-    },
     "es5-cjs": {
       "plugins": [
         "add-module-exports",
@@ -22,6 +17,11 @@
         ["@babel/preset-env", {
           "useBuiltIns": "usage"
         }]
+      ]
+    },
+    "es2015": {
+      "plugins": [
+        "@babel/plugin-proposal-async-generator-functions"
       ]
     },
     "es2015-cjs": {
