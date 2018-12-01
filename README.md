@@ -42,6 +42,7 @@ Utilities returning multiple iterables
 * [tee](#tee) ([async](#async-tee))
 
 Utilities
+* [when...](#when)
 * [iterable](#iterable) ([async](#async-iterable))
 * [toArray](#to-array) ([async](#async-to-array))
 * [execute](#execute) ([async](#async-execute))
@@ -427,6 +428,41 @@ tee(range(3), 4); // [iter1, iter2, iter3, iter4]
 Same as tee but works on both sync and async iterables.
 
 # Utilities
+
+## when
+When is a family of functions with chained syntax, all of which are meant for use
+with the spread operator. They are designed to improve the readability of the
+common pattern of conditionally spreading certain values into an array or object. For an array that would look like: `...(condition ? [items] : [])`.
+
+### when...add
+This expression is used to control the addition of a single element into a list
+```js
+[
+  "foo",
+  ...when(true).add("bar"),
+  ...when(false).add("bork"),
+] // ["foo", "bar"]
+```
+
+### when...concat
+This expression controls the concatenation of a mulitple elements to a list
+```js
+[
+  "foo",
+  ...when(true).concat(["bar", "baz"]),
+  ...when(false).concat(["bork", "bork"]),
+] // ["foo", "bar", "baz"]
+```
+
+### when...assign
+This expression controls the spreading of an object into another object
+```js
+{
+  foo: "foo",
+  ...when(true).assign({bar: "bar"}),
+  ...when(false).assign({bork: "bork"}),
+} // {foo: "foo", bar: "bar"}
+```
 
 ## iterable
 Takes an iterator, and returns an iterable. All iter-tools functions expect iterables, as do `Array.from` and `for ... of`. Usually however this function is not neccessary, as generator functions (which most iter-tools functions are under the hood) return iterables. If the argument is already an iterable it is returned as is. The example shows a rare case when `iterable` is necessary.

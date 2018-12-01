@@ -184,6 +184,14 @@ export declare function tee<T> (iterable: Iterable<T>, n?: number): Array<Iterab
 
 export declare function toArray<T> (iterable: Iterable<T>): T[]
 
+type Then = {
+  add<T> (item: T): IterableIterator<T>
+  concat<T> (iterable: Iterable<T>): IterableIterator<T>
+  assign<T extends Object> (obj: T): T | {}
+}
+
+export declare function when (condition: boolean): Then
+
 export declare function zipLongest<T> (...iterables: Array<Iterable<T>>): IterableIterator<T[]>
 export declare function zipAll<T> (...iterables: Array<Iterable<T>>): IterableIterator<T[]>
 export declare function zip<T> (...iterables: Array<Iterable<T>>): IterableIterator<T[]>
