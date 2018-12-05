@@ -18,6 +18,7 @@ Create iterables
 * [values](#values)
 
 Transform a single iterable
+* [cursor](#cursor) ([async](#async-cursor))
 * [map](#map) ([async](#async-map))
 * [filter](#filter) ([async](#async-filter))
 * [takeWhile](#take-while) ([async](#async-take-while))
@@ -213,6 +214,15 @@ const iterable = compose(map(x => x * x), filter(isEven));
 iterable([ 1, 2, 3, 4 ]); // 4, 16
 ```
 This is more memory efficient of using array methods as it doesn't require to build intermediate arrays.
+
+## cursor
+It returns all items with the previous elements returned. Inside an array of a determined size.
+```js
+cursor(3, [1, 2, 3, 4]); // [undefined, undefined, 1] [undefined, 1, 2] [1, 2, 3] [2, 3, 4]
+```
+
+## async-cursor
+The same as cursor but working with async iterables.
 
 ## map
 The equivalent of the array "map" function.
