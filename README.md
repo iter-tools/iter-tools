@@ -23,6 +23,7 @@ Transform a single iterable
 * [takeWhile](#take-while) ([async](#async-take-while))
 * [dropWhile](#drop-while) ([async](#async-drop-while))
 * [slice](#slice) ([async](#async-slice))
+* [flat](#flat) ([async](#async-flat))
 * [flatMap](#flat-map) ([async](#async-flat-map))
 * [reduce](#reduce) ([async](#async-reduce))
 * [batch](#batch) ([async](#async-batch))
@@ -272,6 +273,16 @@ slice({start: 2, end: 6, step: 2}, range(10)); // 2, 4
 
 ## async-slice
 Same as slice but works on both sync and async iterables.
+
+## flat
+It flattens an iterable. You can specify the maximum depth as first argument (default 1).
+```js
+flat([1, [2, 3], [4, [5, 6]]]); // 1, 2, 3, 4, [5, 6]
+flat([2, [2, 3], [4, [5, 6]]]); // 1, 2, 3, 4, 5, 6
+```
+
+## async-flat-map
+Same as flat but works on both sync and async iterables.
 
 ## flat-map
 It maps value of an iterable and flatten them.
