@@ -74,8 +74,10 @@ export declare function count (opts: number | { start: number, end?: number, ste
 export declare function cycle<Iter extends Iterable<any>> (iterable: Iter):
   Iter extends any[] ? IterableIterator<UnionFromTuple<Iter>> : Iter
 
-export declare function cursor<T> (size: number): (iter: Iterable<T>) => IterableIterator<T>
-export declare function cursor<T> (size: number, iter: Iterable<T>): IterableIterator<T>
+export declare function cursor<T> (size: number):
+  (iter: Iterable<T>) => IterableIterator<Array<T | undefined>>
+export declare function cursor<T> (size: number, iter: Iterable<T>):
+  IterableIterator<Array<T | undefined>>
 
 export declare function dropWhile<T> (func: (item: T) => boolean): (iterable: Iterable<T>) => IterableIterator<T>
 export declare function dropWhile<T> (func: (item: T) => boolean, iterable: Iterable<T>): IterableIterator<T>
@@ -213,8 +215,10 @@ export declare function asyncCompress<T> (
 
 export declare function asyncCycle<T> (iterable: AsyncIterableLike<T>): AsyncIterableIterator<T>
 
-export declare function asyncCursor<T> (size: number): (iter: AsyncIterableLike<T>) => AsyncIterableIterator<T>
-export declare function asyncCursor<T> (size: number, iter: AsyncIterableLike<T>): AsyncIterableIterator<T>
+export declare function asyncCursor<T> (size: number):
+  (iter: AsyncIterableLike<T>) => AsyncIterableIterator<Array<T | undefined>>
+export declare function asyncCursor<T> (size: number, iter: AsyncIterableLike<T>):
+  AsyncIterableIterator<Array<T | undefined>>
 
 export declare function asyncDropWhile<T> (func: (item: T) => boolean):
     (iterable: AsyncIterableLike<T>) => AsyncIterableIterator<T>
