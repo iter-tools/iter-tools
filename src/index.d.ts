@@ -99,6 +99,13 @@ export declare function first<Iter extends Iterable<any>> (iterable: Iter):
   Iter extends Iterable<infer T> ? T | undefined :
   never
 
+export declare function flat<T> (depth: number):
+  (iter: Iterable<T>) => IterableIterator<T>
+export declare function flat<T> (
+  depth: number,
+  iter: Iterable<T>
+): IterableIterator<T>
+
 export declare function flatMap<T, O> (func: (item: T) => Iterable<O>):
   (iter: Iterable<T>) => IterableIterator<O>
 export declare function flatMap<T, O> (
@@ -235,6 +242,13 @@ export declare function asyncFind<T> (func: (item: T) => boolean): (iterable: As
 export declare function asyncFind<T> (func: (item: T) => boolean, iterable: AsyncIterableLike<T>): T | null
 
 export declare function asyncFirst<T> (iterable: AsyncIterableLike<T>): T | undefined
+
+export declare function asyncFlat<T> (depth: number):
+  (iter: AsyncIterableLike<T>) => AsyncIterableLike<T>
+export declare function asyncFlat<T> (
+  depth: number,
+  iter: AsyncIterableLike<T>
+): AsyncIterableLike<T>
 
 export declare function asyncFlatMap<T, O> (func: (item: T) => AsyncIterableLike<O>):
     (iter: AsyncIterableLike<T>) => AsyncIterableIterator<O>
