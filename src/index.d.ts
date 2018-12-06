@@ -180,7 +180,7 @@ export declare function takeSorted<T> (
     iterable?: Iterable<T>
 ): IterableIterator<T>
 
-export declare function tee<T> (iterable: Iterable<T>, n?: number): Array<IterableIterator<T>>
+export declare function tee<T> (iterable: Iterable<T>, n?: number): IterableIterator<IterableIterator<T>>
 
 export declare function toArray<T> (iterable: Iterable<T>): T[]
 
@@ -290,7 +290,7 @@ export declare function asyncTakeSorted<T> (n: number, func?: (item: T) => boole
 export declare function asyncTakeSorted<T> (n: number, func?: (item: T) => boolean, iterable?: AsyncIterableLike<T>):
     AsyncIterableLike<T>
 
-export declare function asyncTee<T> (iterable: AsyncIterableLike<T>, n?: number): Array<AsyncIterableIterator<T>>
+export declare function asyncTee<T> (iterable: AsyncIterableLike<T>, n?: number): AsyncIterableIterator<AsyncIterableIterator<T>>
 
 export declare function asyncToArray<T> (iterable: AsyncIterableLike<T>): T[]
 
