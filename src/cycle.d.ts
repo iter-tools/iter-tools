@@ -1,2 +1,2 @@
-import { cycle } from "./index";
-export = cycle;
+import { cycle } from './index'
+export = cycle

@@ -1,6 +1,6 @@
 {
   "name": "iter-tools",
-  "version": "6.1.4-rc.4",
+  "version": "6.1.7",
   "description": "The iterable toolbox",
   "main": "es5/index",
   "module": "es5/index.mjs",
@@ -26,7 +26,7 @@
     "build:es2018": "mkdirp es2018 && copyfiles -f src/*.mjs es2018",
     "build:es2018-cjs": "cross-env BABEL_ENV=es2018-cjs babel -x \".mjs\" src -d es2018",
     "build:copyts": "copyfiles -f src/*.ts es5 && copyfiles -f src/*.ts es2015 && copyfiles -f src/*.ts es2018",
-    "tslint": "tslint -c tslint.json 'src/**/*.ts'",
+    "tslint": "tslint -c tslint.json -p . 'src/**/*.ts'",
     "tslint:fix": "npm run tslint -- --fix",
     "prepublishOnly": "npm run build",
     "precommit": "npm run lint"
@@ -52,7 +52,7 @@
   "license": "MIT",
   "dependencies": {
     "@babel/runtime": "^7.0.0",
-    "clone-regexp": "^2.0.1",
+    "@babel/runtime-corejs2": "^7.1.5",
     "dequeue": "^1.0.5",
     "little-ds-toolkit": "^1.1.0",
     "typescript-tuple": "^1.4.0",
@@ -84,6 +84,7 @@
     "require-all": "^2.2.0",
     "rimraf": "^2.6.2",
     "tslint": "^5.11.0",
+    "tslint-config-standard": "^8.0.1",
     "static-type-assert": "^2.0.0",
     "typescript": "^3.0.3"
   },

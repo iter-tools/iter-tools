@@ -2,7 +2,7 @@
   "env": {
     "es5": {
       "plugins": [
-        ["@babel/plugin-transform-runtime", {"useESModules": true}]
+        ["@babel/plugin-transform-runtime", {"useESModules": true, "corejs": 2}]
       ],
       "presets": [
         ["@babel/preset-env", {
@@ -12,13 +12,12 @@
     },
     "es2015": {
       "plugins": [
-        ["@babel/plugin-transform-runtime", {"useESModules": true}],
         "@babel/plugin-proposal-async-generator-functions"
       ]
     },
     "es5-cjs": {
       "plugins": [
-        "@babel/plugin-transform-runtime",
+        ["@babel/plugin-transform-runtime", {"corejs": 2}],
         "add-module-exports"
       ],
       "presets": [
@@ -29,7 +28,6 @@
       "plugins": [
         "add-module-exports",
         "@babel/plugin-transform-modules-commonjs",
-        "@babel/plugin-transform-runtime",
         "@babel/plugin-proposal-async-generator-functions"
       ]
     },

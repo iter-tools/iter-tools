@@ -1,2 +1,2 @@
-import { permutations } from "./index";
-export = permutations;
+import { permutations } from './index'
+export = permutations

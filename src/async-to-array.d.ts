@@ -1,2 +1,2 @@
-import { asyncToArray } from "./index";
-export = asyncToArray;
+import { asyncToArray } from './index'
+export = asyncToArray

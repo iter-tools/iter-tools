@@ -1,2 +1,2 @@
-import { compose } from "./index";
-export = compose;
+import { compose } from './index'
+export = compose

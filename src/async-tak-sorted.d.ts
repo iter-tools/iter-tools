@@ -1,2 +1,2 @@
-import { asyncTakeSorted } from "./index";
-export = asyncTakeSorted;
+import { asyncTakeSorted } from './index'
+export = asyncTakeSorted

@@ -1,2 +1,2 @@
-import { asyncRegexpSplitIter } from "./index";
-export = asyncRegexpSplitIter;
+import { asyncRegexpSplitIter } from './index'
+export = asyncRegexpSplitIter

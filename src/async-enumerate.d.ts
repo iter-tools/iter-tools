@@ -1,2 +1,2 @@
-import { asyncEnumerate } from "./index";
-export = asyncEnumerate;
+import { asyncEnumerate } from './index'
+export = asyncEnumerate

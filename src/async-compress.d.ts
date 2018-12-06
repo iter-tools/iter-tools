@@ -1,2 +1,2 @@
-import { asyncCompress } from "./index";
-export = asyncCompress;
+import { asyncCompress } from './index'
+export = asyncCompress

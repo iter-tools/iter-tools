@@ -4,6 +4,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [6.1.6] - 2018-11-06
+### Fixed
+ -  Bump all deps (code vulnerability)
+
+## [6.1.5] - 2018-10-23
+### Fixed
+ -  Removed clone-regexp dependency
+
+## [6.1.4] - 2018-9-22
+### Fixed
+ -  Typescript definitions
+
 ## [6.1.3] - 2018-9-12
 ### Fixed
  -  Typescript definitions

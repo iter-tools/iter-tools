@@ -1,2 +1,2 @@
-import { asyncMap } from "./index";
-export = asyncMap;
+import { asyncMap } from './index'
+export = asyncMap

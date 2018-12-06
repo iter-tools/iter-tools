@@ -1,2 +1,2 @@
-import { enumerate } from "./index";
-export = enumerate;
+import { enumerate } from './index'
+export = enumerate
