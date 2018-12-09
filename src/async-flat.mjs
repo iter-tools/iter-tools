@@ -1,30 +1,41 @@
 import ensureAsyncIterable from './internal/ensure-async-iterable'
 
-async function * asyncFlat (depth, iterable) {
-  if (depth === 0) {
-    yield * ensureAsyncIterable(iterable)
-  } else {
-    for await (const iter of ensureAsyncIterable(iterable)) {
-      if (typeof iter !== 'string' &&
-        (typeof iter[Symbol.iterator] === 'function' || typeof iter[Symbol.asyncIterator] === 'function')) {
-        yield * asyncFlat(depth - 1, iter)
-      } else {
-        yield iter
-      }
-    }
+const defaultShouldIFlat = (depth) => {
+  if (typeof depth === 'function') {
+    return depth
   }
+  if (typeof depth === 'number') {
+    return (currentDepth, iter) =>
+      currentDepth <= depth &&
+      (typeof iter[Symbol.iterator] === 'function' || typeof iter[Symbol.asyncIterator] === 'function') &&
+      typeof iter !== 'string'
+  }
+  throw new Error('flat: "depth" can be a function or a number')
 }
 
-export default function curriedAsyncFlat (depth, iterable) {
-  if (arguments.length === 0) {
-    return iterable => asyncFlat(1, iterable)
-  } else if (arguments.length === 1) {
-    if (typeof depth === 'number') {
-      return iterable => asyncFlat(depth, iterable)
+function asyncFlat (shouldIFlat, iterable) {
+  async function * _asyncFlat (currentDepth, iterable) {
+    if (shouldIFlat(currentDepth, iterable)) {
+      for await (const iter of iterable) {
+        yield * _asyncFlat(currentDepth + 1, iter)
+      }
     } else {
-      return asyncFlat(1, depth)
+      yield iterable
+    }
+  }
+  return _asyncFlat(0, ensureAsyncIterable(iterable))
+}
+
+export default function curriedAsyncFlat () {
+  if (arguments.length === 0) {
+    return iterable => asyncFlat(defaultShouldIFlat(1), iterable)
+  } else if (arguments.length === 1) {
+    if (typeof arguments[0][Symbol.iterator] === 'function') {
+      return asyncFlat(defaultShouldIFlat(1), arguments[0])
+    } else {
+      return iterable => asyncFlat(defaultShouldIFlat(arguments[0]), iterable)
     }
   } else {
-    return asyncFlat(depth, iterable)
+    return asyncFlat(defaultShouldIFlat(arguments[0]), arguments[1])
   }
 }
