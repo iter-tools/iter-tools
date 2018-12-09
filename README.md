@@ -216,9 +216,11 @@ iterable([ 1, 2, 3, 4 ]); // 4, 16
 This is more memory efficient of using array methods as it doesn't require to build intermediate arrays.
 
 ## cursor
-It returns all items with their previous elements. Inside an array of a determined size.
+It returns every item of the sequence and its n preceding items (or succeeding items). It takes as arguments the window **size** and **trailing** option (default false). When trailing is false every iteration returns an item and its preceding items, when trailing true every iteration reu=turns an item and its succeeding items.
 ```js
-cursor(3, [1, 2, 3, 4, 5]); // [1, 2, 3] [2, 3, 4] [3, 4, 5]
+cursor({ size: 3 }, [1, 2, 3, 4, 5]); // [undefined, undefined, 1] [undefined, 1, 2] [1, 2, 3] [2, 3, 4] [3, 4, 5]
+
+cursor({ size: 3, trailing: true }, [1, 2, 3, 4, 5]); // [1, 2, 3] [2, 3, 4] [3, 4, 5] [4, 5, undefined] [5, undefined, undefined]
 ```
 
 ## async-cursor

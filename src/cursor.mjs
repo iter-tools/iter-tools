@@ -1,18 +1,25 @@
-import enumerate from './enumerate'
+import ensureIterable from './internal/ensure-iterable'
+import chain from './chain'
+import repeat from './repeat'
+
 import CircularBuffer from './internal/circular-buffer'
 
-function * cursor (size, iterable) {
+function * cursor ({ size, trailing }, iterable) {
   const circular = new CircularBuffer(size)
-  let yielded = false
-  for (const [index, item] of enumerate(iterable)) {
-    circular.push(item)
-    if (index + 1 >= size) {
-      yielded = true
+  if (trailing) {
+    let index = 0
+    for (const item of chain(iterable, repeat(undefined, size - 1))) {
+      circular.push(item)
+      if (index + 1 >= size) {
+        yield Array.from(circular)
+      }
+      index++
+    }
+  } else {
+    for (const item of ensureIterable(iterable)) {
+      circular.push(item)
       yield Array.from(circular)
     }
-  }
-  if (!yielded) {
-    yield Array.from(circular)
   }
 }
 
