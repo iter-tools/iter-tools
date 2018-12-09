@@ -216,9 +216,9 @@ iterable([ 1, 2, 3, 4 ]); // 4, 16
 This is more memory efficient of using array methods as it doesn't require to build intermediate arrays.
 
 ## cursor
-It returns all items with the previous elements returned. Inside an array of a determined size.
+It returns all items with their previous elements. Inside an array of a determined size.
 ```js
-cursor(3, [1, 2, 3, 4]); // [undefined, undefined, 1] [undefined, 1, 2] [1, 2, 3] [2, 3, 4]
+cursor(3, [1, 2, 3, 4, 5]); // [1, 2, 3] [2, 3, 4] [3, 4, 5]
 ```
 
 ## async-cursor

@@ -1,10 +1,16 @@
-import ensureAsyncIterable from './internal/ensure-async-iterable'
+import asyncEnumerate from './async-enumerate'
 import CircularBuffer from './internal/circular-buffer'
 
 async function * asyncCursor (size, iterable) {
   const circular = new CircularBuffer(size)
-  for await (const item of ensureAsyncIterable(iterable)) {
+  let yielded = false
+  for await (const [index, item] of asyncEnumerate(iterable)) {
     circular.push(item)
+    if (index + 1 >= size) {
+      yield Array.from(circular)
+    }
+  }
+  if (!yielded) {
     yield Array.from(circular)
   }
 }
