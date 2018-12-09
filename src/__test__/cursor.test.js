@@ -18,7 +18,7 @@ describe('cursor', function () {
     ])
   })
 
-  it.only('frames iterable (cursor bigger than the sequence)', function () {
+  it('frames iterable (cursor bigger than the sequence)', function () {
     const iter = cursor(6, [1, 2, 3, 4, 5])
     expect(Array.from(iter)).toEqual([
       [undefined, 1, 2, 3, 4, 5]
@@ -43,7 +43,7 @@ describe('asyncCursor', function () {
     ])
   })
 
-  it.only('frames iterable (cursor bigger than the sequence)', async function () {
+  it('frames iterable (cursor bigger than the sequence)', async function () {
     const iter = asyncCursor(6, [1, 2, 3, 4, 5])
     expect(await asyncToArray(iter)).toEqual([
       [undefined, 1, 2, 3, 4, 5]

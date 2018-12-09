@@ -7,6 +7,7 @@ async function * asyncCursor (size, iterable) {
   for await (const [index, item] of asyncEnumerate(iterable)) {
     circular.push(item)
     if (index + 1 >= size) {
+      yielded = true
       yield Array.from(circular)
     }
   }
