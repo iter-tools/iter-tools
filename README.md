@@ -280,9 +280,11 @@ It flattens an iterable. You can specify the maximum depth as first argument (de
 flat([1, [2, 3], [4, [5, 6]]]); // 1, 2, 3, 4, [5, 6]
 flat([2, [2, 3], [4, [5, 6]]]); // 1, 2, 3, 4, 5, 6
 ```
+The algorithm takes into consideration every item that is iterable, except strings.
 
 ## async-flat-map
 Same as flat but works on both sync and async iterables.
+The algorithm takes into consideration every item that is iterable or asynciterable, except strings.
 
 ## flat-map
 It maps value of an iterable and flatten them.

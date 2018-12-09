@@ -5,7 +5,8 @@ async function * asyncFlat (depth, iterable) {
     yield * ensureAsyncIterable(iterable)
   } else {
     for await (const iter of ensureAsyncIterable(iterable)) {
-      if (iter[Symbol.iterator] || iter[Symbol.asyncIterator]) {
+      if (typeof iter !== 'string' &&
+        (typeof iter[Symbol.iterator] === 'function' || typeof iter[Symbol.asyncIterator] === 'function')) {
         yield * asyncFlat(depth - 1, iter)
       } else {
         yield iter

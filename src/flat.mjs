@@ -5,7 +5,7 @@ function * flat (depth, iterable) {
     yield * ensureIterable(iterable)
   } else {
     for (const iter of ensureIterable(iterable)) {
-      if (iter[Symbol.iterator]) {
+      if (typeof iter !== 'string' && typeof iter[Symbol.iterator] === 'function') {
         yield * flat(depth - 1, iter)
       } else {
         yield iter

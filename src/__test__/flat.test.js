@@ -31,6 +31,11 @@ describe('flat', function () {
     const iter = flat(2, [[1, 2], [3, [4, 5]], [[6]]])
     expect(Array.from(iter)).toEqual([1, 2, 3, 4, 5, 6])
   })
+
+  it('flats strings', function () {
+    const iter = flat(2, [['a', 'b'], ['c', ['d', 'e']], [['f']]])
+    expect(Array.from(iter)).toEqual(['a', 'b', 'c', 'd', 'e', 'f'])
+  })
 })
 
 describe('asyncFlat', function () {
@@ -62,5 +67,10 @@ describe('asyncFlat', function () {
   it('flats iterable depth 2', async function () {
     const iter = asyncFlat(2, [[1, 2], [3, [4, 5]], [[6]]])
     expect(await asyncToArray(iter)).toEqual([1, 2, 3, 4, 5, 6])
+  })
+
+  it('flats strings', async function () {
+    const iter = asyncFlat(2, [['a', 'b'], ['c', ['d', 'e']], [['f']]])
+    expect(await asyncToArray(iter)).toEqual(['a', 'b', 'c', 'd', 'e', 'f'])
   })
 })
