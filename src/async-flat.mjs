@@ -26,16 +26,16 @@ function asyncFlat (shouldIFlat, iterable) {
   return _asyncFlat(0, ensureAsyncIterable(iterable))
 }
 
-export default function curriedAsyncFlat () {
-  if (arguments.length === 0) {
+export default function curriedAsyncFlat (...args) {
+  if (args.length === 0) {
     return iterable => asyncFlat(defaultShouldIFlat(1), iterable)
-  } else if (arguments.length === 1) {
-    if (typeof arguments[0][Symbol.iterator] === 'function') {
-      return asyncFlat(defaultShouldIFlat(1), arguments[0])
+  } else if (args.length === 1) {
+    if (typeof args[0][Symbol.iterator] === 'function') {
+      return asyncFlat(defaultShouldIFlat(1), args[0])
     } else {
-      return iterable => asyncFlat(defaultShouldIFlat(arguments[0]), iterable)
+      return iterable => asyncFlat(defaultShouldIFlat(args[0]), iterable)
     }
   } else {
-    return asyncFlat(defaultShouldIFlat(arguments[0]), arguments[1])
+    return asyncFlat(defaultShouldIFlat(args[0]), args[1])
   }
 }

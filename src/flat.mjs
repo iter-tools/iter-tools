@@ -24,16 +24,16 @@ function flat (shouldIFlat, iterable) {
   return _flat(0, ensureIterable(iterable))
 }
 
-export default function curriedFlat () {
-  if (arguments.length === 0) {
+export default function curriedFlat (...args) {
+  if (args.length === 0) {
     return iterable => flat(defaultShouldIFlat(1), iterable)
-  } else if (arguments.length === 1) {
-    if (typeof arguments[0][Symbol.iterator] === 'function') {
-      return flat(defaultShouldIFlat(1), arguments[0])
+  } else if (args.length === 1) {
+    if (typeof args[0][Symbol.iterator] === 'function') {
+      return flat(defaultShouldIFlat(1), args[0])
     } else {
-      return iterable => flat(defaultShouldIFlat(arguments[0]), iterable)
+      return iterable => flat(defaultShouldIFlat(args[0]), iterable)
     }
   } else {
-    return flat(defaultShouldIFlat(arguments[0]), arguments[1])
+    return flat(defaultShouldIFlat(args[0]), args[1])
   }
 }
