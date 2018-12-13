@@ -6,6 +6,8 @@ import { FromTuple as UnionFromTuple, RangeZero as UnionRange } from 'typescript
 
 type AsyncIterableLike<T> = AsyncIterable<T> | Iterable<T>
 type ReasonableNumber = UnionRange<32>
+type IterableElement<Iter> = Iter extends Iterable<infer X> ? X : never
+type AsyncIterableElement<Iter> = Iter extends AsyncIterableLike<infer X> ? X : never
 
 /**
  * Function signature of `permutations` and `combinations`
@@ -47,6 +49,68 @@ type ProductReturnElement<Args extends Array<Iterable<any>>, Holder extends any[
 
 type RangeReturn<R extends number> =
   IterableIterator<R extends ReasonableNumber ? UnionRange<R> : number>
+
+type FlatReturnElement<
+  Depth extends number,
+  MaybeIterable,
+  DepthStack extends any[] = []
+> = {
+  matched: MaybeIterable
+  union: Depth extends DepthStack['length'] | infer Rest ? Rest extends number ?
+      FlatReturnElement<DepthStack['length'], MaybeIterable> |
+      FlatReturnElement<Rest, MaybeIterable>
+    : never : never
+  unmatched: MaybeIterable extends Iterable<infer Next>
+    ? FlatReturnElement<Depth, Next, Prepend<DepthStack, any>>
+    : MaybeIterable
+}[
+  DepthStack['length'] extends Depth
+    ? Depth extends DepthStack['length']
+      ? 'matched'
+      : 'union'
+    : 'unmatched'
+]
+
+type FlatReturnTransform<Type> = Type extends Iterable<infer X>
+  ? IterableIterator<X>
+  : never
+
+type FlatReturn<
+  Depth extends ReasonableNumber,
+  Iter extends Iterable<any>
+> = IterableIterator<FlatReturnElement<
+  Depth,
+  IterableElement<Iter>
+>>
+
+type AsyncFlatReturnElement<
+  Depth extends number,
+  MaybeIterable,
+  DepthStack extends any[] = []
+> = {
+  matched: MaybeIterable
+  union: Depth extends DepthStack['length'] | infer Rest ? Rest extends number ?
+      AsyncFlatReturnElement<DepthStack['length'], MaybeIterable> |
+      AsyncFlatReturnElement<Rest, MaybeIterable>
+    : never : never
+  unmatched: MaybeIterable extends Iterable<infer Next>
+    ? AsyncFlatReturnElement<Depth, Next, Prepend<DepthStack, any>>
+    : MaybeIterable
+}[
+  DepthStack['length'] extends Depth
+    ? Depth extends DepthStack['length']
+      ? 'matched'
+      : 'union'
+    : 'unmatched'
+]
+
+type AsyncFlatReturn<
+  Depth extends ReasonableNumber,
+  Iter extends AsyncIterableLike<any>
+> = AsyncIterableIterator<AsyncFlatReturnElement<
+  Depth,
+  AsyncIterableElement<Iter>
+>>
 
 // Sync
 export declare function keys (obj: { [id: string]: any }): IterableIterator<string>
@@ -98,6 +162,18 @@ export declare function first<Iter extends Iterable<any>> (iterable: Iter):
   Iter extends [infer First, ...any[]] ? First :
   Iter extends Iterable<infer T> ? T | undefined :
   never
+
+export declare function flat<
+  Iter extends Iterable<any>
+> (iter: Iter): FlatReturn<1, Iter>
+export declare function flat<Depth extends ReasonableNumber> (depth: Depth):
+  <Iter extends Iterable<any>> (iter: Iter) => FlatReturn<Depth, Iter>
+export declare function flat (depth: number): (iter: Iterable<any>) => IterableIterator<any>
+export declare function flat<
+  Depth extends ReasonableNumber,
+  Iter extends Iterable<any>
+> (depth: Depth, iter: Iter): FlatReturn<Depth, Iter>
+export declare function flat (depth: number, iter: Iterable<any>): IterableIterator<any>
 
 export declare function flatMap<T, O> (func: (item: T) => Iterable<O>):
   (iter: Iterable<T>) => IterableIterator<O>
@@ -235,6 +311,18 @@ export declare function asyncFind<T> (func: (item: T) => boolean): (iterable: As
 export declare function asyncFind<T> (func: (item: T) => boolean, iterable: AsyncIterableLike<T>): T | null
 
 export declare function asyncFirst<T> (iterable: AsyncIterableLike<T>): T | undefined
+
+export declare function asyncFlat<
+  Iter extends AsyncIterableLike<any>
+> (iter: Iter): AsyncFlatReturn<1, Iter>
+export declare function asyncFlat<Depth extends ReasonableNumber> (depth: Depth):
+  <Iter extends Iterable<any>> (iter: Iter) => AsyncFlatReturn<Depth, Iter>
+export declare function asyncFlat (depth: number): (iter: Iterable<any>) => AsyncIterableIterator<any>
+export declare function asyncFlat<
+  Depth extends ReasonableNumber,
+  Iter extends Iterable<any>
+> (depth: Depth, iter: Iter): AsyncFlatReturn<Depth, Iter>
+export declare function asyncFlat (depth: number, iter: Iterable<any>): AsyncIterableIterator<any>
 
 export declare function asyncFlatMap<T, O> (func: (item: T) => AsyncIterableLike<O>):
     (iter: AsyncIterableLike<T>) => AsyncIterableIterator<O>
