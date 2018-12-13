@@ -4,11 +4,14 @@ import repeat from './repeat'
 
 import CircularBuffer from './internal/circular-buffer'
 
-function * cursor ({ size, trailing }, iterable) {
+function * cursor ({ size, trailing, filler }, iterable) {
   const circular = new CircularBuffer(size)
+  if (typeof filler !== 'undefined') {
+    circular.array.fill(filler)
+  }
   if (trailing) {
     let index = 0
-    for (const item of chain(iterable, repeat(undefined, size - 1))) {
+    for (const item of chain(iterable, repeat(filler, size - 1))) {
       circular.push(item)
       if (index + 1 >= size) {
         yield Array.from(circular)
