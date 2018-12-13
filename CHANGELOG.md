@@ -6,7 +6,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [6.2.0] - UNRELEASED
 ### Added
- -  flat, asyncFlat
+ -  flat, asyncFlat, cursor, asyncCursor
 
 ## [6.1.7] - 2018-11-06
 ### Fixed
