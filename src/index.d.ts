@@ -331,16 +331,16 @@ export declare function asyncFlat<
   Iter extends AsyncIterableLike<any>
 > (iter: Iter): AsyncFlatReturn<1, Iter>
 export declare function asyncFlat<Depth extends ReasonableNumber> (depth: Depth):
-  <Iter extends Iterable<any>> (iter: Iter) => AsyncFlatReturn<Depth, Iter>
-export declare function asyncFlat (depth: number): (iter: Iterable<any>) => AsyncIterableIterator<any>
+  <Iter extends AsyncIterableLike<any>> (iter: Iter) => AsyncFlatReturn<Depth, Iter>
+export declare function asyncFlat (depth: number): (iter: AsyncIterableLike<any>) => AsyncIterableIterator<any>
 export declare function asyncFlat<
   Depth extends ReasonableNumber,
-  Iter extends Iterable<any>
+  Iter extends AsyncIterableLike<any>
 > (depth: Depth, iter: Iter): AsyncFlatReturn<Depth, Iter>
-export declare function asyncFlat (depth: number, iter: Iterable<any>): AsyncIterableIterator<any>
+export declare function asyncFlat (depth: number, iter: AsyncIterableLike<any>): AsyncIterableIterator<any>
 export declare function asyncFlat (
   shouldFlat: (depth: number, iter: any) => boolean,
-  iter: AsyncIterable<any>
+  iter: AsyncIterableLike<any>
 ): AsyncIterableIterator<any>
 
 export declare function asyncFlatMap<T, O> (func: (item: T) => AsyncIterableLike<O>):
