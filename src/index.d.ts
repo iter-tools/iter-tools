@@ -1,3 +1,4 @@
+// tslint:disable:unified-signatures
 /// <reference lib="es2018" />
 /// <reference lib="esnext.asynciterable" />
 
@@ -207,6 +208,12 @@ export declare function flat<
   Iter extends Iterable<any>
 > (depth: Depth, iter: Iter): FlatReturn<Depth, Iter>
 export declare function flat (depth: number, iter: Iterable<any>): IterableIterator<any>
+export declare function flat (
+  shouldFlat: (depth: number, iter: any) => boolean,
+  iter: Iterable<any>
+): IterableIterator<any>
+export declare function flat (shouldFlat: (depth: number, iter: any) => boolean):
+  (iter: Iterable<any>) => IterableIterator<any>
 
 export declare function flatMap<T, O> (func: (item: T) => Iterable<O>):
   (iter: Iterable<T>) => IterableIterator<O>
@@ -382,13 +389,19 @@ export declare function asyncFlat<
   Iter extends AsyncIterableLike<any>
 > (iter: Iter): AsyncFlatReturn<1, Iter>
 export declare function asyncFlat<Depth extends ReasonableNumber> (depth: Depth):
-  <Iter extends Iterable<any>> (iter: Iter) => AsyncFlatReturn<Depth, Iter>
-export declare function asyncFlat (depth: number): (iter: Iterable<any>) => AsyncIterableIterator<any>
+  <Iter extends AsyncIterableLike<any>> (iter: Iter) => AsyncFlatReturn<Depth, Iter>
+export declare function asyncFlat (depth: number): (iter: AsyncIterableLike<any>) => AsyncIterableIterator<any>
 export declare function asyncFlat<
   Depth extends ReasonableNumber,
-  Iter extends Iterable<any>
+  Iter extends AsyncIterableLike<any>
 > (depth: Depth, iter: Iter): AsyncFlatReturn<Depth, Iter>
-export declare function asyncFlat (depth: number, iter: Iterable<any>): AsyncIterableIterator<any>
+export declare function asyncFlat (depth: number, iter: AsyncIterableLike<any>): AsyncIterableIterator<any>
+export declare function asyncFlat (
+  shouldFlat: (depth: number, iter: any) => boolean,
+  iter: AsyncIterableLike<any>
+): AsyncIterableIterator<any>
+export declare function asyncFlat (shouldFlat: (depth: number, iter: any) => boolean):
+  (iter: AsyncIterable<any>) => AsyncIterableIterator<any>
 
 export declare function asyncFlatMap<T, O> (func: (item: T) => AsyncIterableLike<O>):
     (iter: AsyncIterableLike<T>) => AsyncIterableIterator<O>
