@@ -37,6 +37,11 @@ describe('flat', function () {
     expect(Array.from(iter)).toEqual(['a', 'b', 'c', 'd', 'e', 'f'])
   })
 
+  it('does not expand string', function () {
+    const iter = flat(2, ['foo', ['bar', ['baz']]])
+    expect(Array.from(iter)).toEqual(['foo', 'bar', 'baz'])
+  })
+
   it('flats using custom function', function () {
     const iter = flat((depth, iter) => !(typeof iter === 'string' && iter.length === 1), [['a', 'b'], ['c', ['d', 'e']], [['fghi']]])
     expect(Array.from(iter)).toEqual(['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i'])
@@ -77,6 +82,11 @@ describe('asyncFlat', function () {
   it('flats strings', async function () {
     const iter = asyncFlat(2, [['a', 'b'], ['c', ['d', 'e']], [['f']]])
     expect(await asyncToArray(iter)).toEqual(['a', 'b', 'c', 'd', 'e', 'f'])
+  })
+
+  it('does not expand string', async function () {
+    const iter = asyncFlat(2, ['foo', ['bar', ['baz']]])
+    expect(await asyncToArray(iter)).toEqual(['foo', 'bar', 'baz'])
   })
 
   it('flats using custom function', async function () {
