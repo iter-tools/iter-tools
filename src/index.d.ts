@@ -138,10 +138,38 @@ export declare function count (opts: number | { start: number, end?: number, ste
 export declare function cycle<Iter extends Iterable<any>> (iterable: Iter):
   Iter extends any[] ? IterableIterator<UnionFromTuple<Iter>> : Iter
 
-export declare function cursor<T> (size: number):
-  (iter: Iterable<T>) => IterableIterator<Array<T | undefined>>
-export declare function cursor<T> (size: number, iter: Iterable<T>):
-  IterableIterator<Array<T | undefined>>
+export declare function cursor<T, Size extends ReasonableNumber> (
+  opts: {
+    readonly size: Size
+    readonly trailing?: boolean
+    readonly filler?: undefined
+  },
+  iter: Iterable<T>
+): IterableIterator<Repeat<T | undefined, Size>>
+export declare function cursor<T, Size extends ReasonableNumber, Filler> (
+  opts: {
+    readonly size: Size
+    readonly trailing?: boolean
+    readonly filler: Filler
+  },
+  iter: Iterable<T>
+): IterableIterator<Repeat<T | Filler, Size>>
+export declare function cursor<T> (
+  opts: {
+    readonly size: number
+    readonly trailing?: boolean
+    readonly filler?: undefined
+  },
+  iter: Iterable<T>
+): IterableIterator<Array<T | undefined>>
+export declare function cursor<T, Filler> (
+  opts: {
+    readonly size: number
+    readonly trailing?: boolean
+    readonly filler: Filler
+  },
+  iter: Iterable<T>
+): IterableIterator<Array<T | Filler>>
 
 export declare function dropWhile<T> (func: (item: T) => boolean): (iterable: Iterable<T>) => IterableIterator<T>
 export declare function dropWhile<T> (func: (item: T) => boolean, iterable: Iterable<T>): IterableIterator<T>
@@ -291,10 +319,38 @@ export declare function asyncCompress<T> (
 
 export declare function asyncCycle<T> (iterable: AsyncIterableLike<T>): AsyncIterableIterator<T>
 
-export declare function asyncCursor<T> (size: number):
-  (iter: AsyncIterableLike<T>) => AsyncIterableIterator<Array<T | undefined>>
-export declare function asyncCursor<T> (size: number, iter: AsyncIterableLike<T>):
-  AsyncIterableIterator<Array<T | undefined>>
+export declare function asyncCursor<T, Size extends ReasonableNumber> (
+  opts: {
+    readonly size: Size
+    readonly trailing?: boolean
+    readonly filler?: undefined
+  },
+  iter: Iterable<T>
+): AsyncIterableIterator<Repeat<T | undefined, Size>>
+export declare function asyncCursor<T, Size extends ReasonableNumber, Filler> (
+  opts: {
+    readonly size: Size
+    readonly trailing?: boolean
+    readonly filler: Filler
+  },
+  iter: Iterable<T>
+): AsyncIterableIterator<Repeat<T | Filler, Size>>
+export declare function asyncCursor<T> (
+  opts: {
+    readonly size: number
+    readonly trailing?: boolean
+    readonly filler?: undefined
+  },
+  iter: AsyncIterable<T>
+): AsyncIterableIterator<Array<T | undefined>>
+export declare function asyncCursor<T, Filler> (
+  opts: {
+    readonly size: number
+    readonly trailing?: boolean
+    readonly filler: Filler
+  },
+  iter: AsyncIterable<T>
+): AsyncIterableIterator<Array<T | Filler>>
 
 export declare function asyncDropWhile<T> (func: (item: T) => boolean):
     (iterable: AsyncIterableLike<T>) => AsyncIterableIterator<T>
