@@ -184,6 +184,8 @@ export declare function flat (
   shouldFlat: (depth: number, iter: any) => boolean,
   iter: Iterable<any>
 ): IterableIterator<any>
+export declare function flat (shouldFlat: (depth: number, iter: any) => boolean):
+  (iter: Iterable<any>) => IterableIterator<any>
 
 export declare function flatMap<T, O> (func: (item: T) => Iterable<O>):
   (iter: Iterable<T>) => IterableIterator<O>
@@ -342,6 +344,8 @@ export declare function asyncFlat (
   shouldFlat: (depth: number, iter: any) => boolean,
   iter: AsyncIterableLike<any>
 ): AsyncIterableIterator<any>
+export declare function asyncFlat (shouldFlat: (depth: number, iter: any) => boolean):
+  (iter: AsyncIterable<any>) => AsyncIterableIterator<any>
 
 export declare function asyncFlatMap<T, O> (func: (item: T) => AsyncIterableLike<O>):
     (iter: AsyncIterableLike<T>) => AsyncIterableIterator<O>
