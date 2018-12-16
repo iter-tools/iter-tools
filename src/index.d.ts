@@ -243,6 +243,9 @@ export declare function iterable<T> (iterator: { next: () => {value: T} } | Iter
 export declare function map<T, O> (func: (item: T) => O): (iter: Iterable<T>) => IterableIterator<O>
 export declare function map<T, O> (func: (item: T) => O, iter: Iterable<T>): IterableIterator<O>
 
+export declare function merge<T> (func: (item: { done: boolean, value: T }) => boolean): (iterables: Array<Iterable<T>>) => IterableIterator<T>
+export declare function merge<T> (func: (item: { done: boolean, value: T }) => boolean, iterables: Array<Iterable<T>>): IterableIterator<T>
+
 export declare const permutations: CombinationsPermutations
 
 export declare function product<Args extends Array<Iterable<any>>> (...iterables: Args):
@@ -431,6 +434,9 @@ export declare function asyncIterable<T> (
 
 export declare function asyncMap<T, O> (func: (item: T) => O): (iter: AsyncIterableLike<T>) => AsyncIterableIterator<O>
 export declare function asyncMap<T, O> (func: (item: T) => O, iter: AsyncIterableLike<T>): AsyncIterableIterator<O>
+
+export declare function asyncMerge<T> (func: (item: Promise<{ done: boolean, value: T }>) => boolean): (iterables: Array<AsyncIterableLike<T>>) => AsyncIterableIterator<T>
+export declare function asyncMerge<T> (func: (item: Promise<{ done: boolean, value: T }>) => boolean, iterables: Array<AsyncIterableLike<T>>): AsyncIterableIterator<T>
 
 export declare function asyncReduce<T, O> (func: (acc: O, item: T, c: number) => O):
     (iterable: AsyncIterableLike<T>) => O

@@ -292,7 +292,7 @@ slice({start: 2, end: 6, step: 2}, range(10)); // 2, 4
 Same as slice but works on both sync and async iterables.
 
 ## flat
-It flattens an iterable. You can specify the maximum depth as first argument (default 1).
+It flattens an iterable. You can specify the maximum depth as first argument (default 1). ```0``` means "no flatten", ```Infinity``` means "deep flatten".
 ```js
 flat([1, [2, 3], [4, [5, 6]]]); // 1, 2, 3, 4, [5, 6]
 flat(2, [1, [2, 3], [4, [5, 6]]]); // 1, 2, 3, 4, 5, 6
@@ -300,9 +300,9 @@ flat(2, [1, [2, 3], [4, [5, 6]]]); // 1, 2, 3, 4, 5, 6
 The algorithm takes into consideration every item that is iterable, except strings.
 Alternatively, you can pass a function that takes the current "depth" and "item" and returns true if the "item" is a sequence and it needs to be flatten.
 ```js
-const isNotAnIterableString = (depth, item) => !(typeof item === 'string' && item.length <= 1)
+const isNotACharacter = (depth, item) => !(typeof item === 'string' && item.length <= 1)
 
-flat(isNotAnIterableString, ['hel', ['lo', ''], ['world']]); // h e l l o w o r l d
+flat(isNotACharacter, ['hel', ['lo', ''], ['world']]); // h e l l o w o r l d
 ```
 
 ## async-flat-map
