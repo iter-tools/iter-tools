@@ -29,6 +29,7 @@ Transform a single iterable
 * [reduce](#reduce) ([async](#async-reduce))
 * [batch](#batch) ([async](#async-batch))
 * [takeSorted](#take-sorted) ([async](#async-take-sorted))
+* [interpose](#interpose) ([async](#async-interpose))
 
 Combine multiple iterables
 * [chain](#chain) ([async](#async-chain))
@@ -358,6 +359,15 @@ It can take as a optional argument a comparator (just like Array.prototype.sort)
 
 ## async-take-sorted
 Same as takeSorted but works with both sync and async iterables.
+
+## interpose
+Inserts a specififed item between each of the items in an iterable.
+```js
+interpose(null, [1, 2, 3]) // 1, null, 2, null, 3
+```
+
+## async-interpose
+Same as interpose, but works on both sync and async iterables.
 
 # Combine multiple iterators
 

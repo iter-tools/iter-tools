@@ -235,6 +235,9 @@ export declare function groupBy<T, K> (
   iterable: Iterable<T>
 ): IterableIterator<[K, IterableIterator<T>]>
 
+export declare function interpose<T, I> (interposeItem: I): (iter: Iterable<T>) => IterableIterator<T | I>
+export declare function interpose<T, I> (interposeItem: I, iter: Iterable<T>): IterableIterator<T | I>
+
 export declare function iterable<T> (iterator: { next: () => {value: T} } | Iterable<T>): IterableIterator<T>
 
 export declare function map<T, O> (func: (item: T) => O): (iter: Iterable<T>) => IterableIterator<O>
@@ -418,6 +421,9 @@ export declare function asyncGroupBy<T, K> (key: (item: T) => K):
   (iterable: AsyncIterableLike<T>) => AsyncIterableIterator<[K, AsyncIterableIterator<T>]>
 export declare function asyncGroupBy<T, K> (key: (item: T) => K, iterable: AsyncIterableLike<T>):
   AsyncIterableIterator<[K, AsyncIterableIterator<T>]>
+
+export declare function asyncInterpose<T, I> (interposeItem: I): (iter: AsyncIterableLike<T>) => AsyncIterableIterator<T | I>
+export declare function asyncInterpose<T, I> (interposeItem: I, iter: AsyncIterableLike<T>): AsyncIterableIterator<T | I>
 
 export declare function asyncIterable<T> (
   asyncIterator: { next: () => Promise<{value: T}> } | AsyncIterableLike<T>
