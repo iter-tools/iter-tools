@@ -276,7 +276,7 @@ export declare function size<Iter extends Iterable<any>> (iterable: Iter):
 export declare function slice<T> (
     opts: number | { start: number, end?: number, step?: number },
     iterable: Iterable<T>
-): IterableIterator<number>
+): IterableIterator<T>
 
 export declare function some<T> (func: (item: T) => boolean): (iterable: Iterable<T>) => boolean
 export declare function some<T> (func: (item: T) => boolean, iterable: Iterable<T>): boolean
@@ -442,7 +442,7 @@ export declare function asyncSize (iterable: AsyncIterable<any>): number
 export declare function asyncSlice<T> (
     opts: number | { start: number, end?: number, step?: number },
     iterable: AsyncIterableLike<T>
-): AsyncIterableIterator<number>
+): AsyncIterableIterator<T>
 
 export declare function asyncTakeWhile<T> (func: (item: T) => boolean):
     (iterable: AsyncIterableLike<T>) => AsyncIterableIterator<T>
