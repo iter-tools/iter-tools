@@ -39,6 +39,7 @@ Combine multiple iterables
 * [zipAll](#zip-all) ([async](#async-zip-all))
 * [enumerate](#enumerate) ([async](#async-enumerate))
 * [compress](#compress) ([async](#async-compress))
+* [merge](#merge) ([async](#async-merge))
 
 Utilities returning multiple iterables
 * [groupBy](#group-by) ([async](#group-by))
@@ -431,6 +432,81 @@ compress(range(5), [0, 0, 1, 1]); // 2, 3
 
 ## async-compress
 Same as compress but works on both sync and async iterables.
+
+## merge
+Merge takes multiple iterables and merge them in a single one. It uses a function that decides what sequence to use, time by time. The function takes an array with the latest item yielded from any iterable (null if the iterable is exhausted). The function returns the index of the iterable to consume.
+```js
+merge(minNumber, [[1, 2, 5, 6], [3, 4]]) // 1, 2, 3, 4, 5, 6
+```
+You can also curry it:
+```js
+merge(minNumber)([[1, 2, 5, 6], [3, 4]]) // 1, 2, 3, 4, 5, 6
+```
+here's minNumber implementation
+```js
+const minNumber = (items) => {
+  // items can be null when the sequence is exhausted
+  // or an object containing the "value", as it is returned
+  // from the "next" method
+  let min = Infinity
+  let minIndex = 0
+  for (let index = 0; index < items.length; index++) {
+    if (items[index] === null) continue
+    if (items[index].value < min) {
+      min = items[index].value
+      minIndex = index
+    }
+  }
+  return minIndex // this is the index of the iterable we want to consume
+}
+```
+
+## async-merge
+asyncMerge takes multiple async-iterables and merge them in a single one. It uses a function that decides what sequence to use, time by time. The function takes an array with the latest item yielded from any async-iterable (null if the async-iterable is exhausted). Items returned are promises and the function returns a promise that, when fulfilled, returns the index of the iterable to consume.
+```js
+asyncMerge(minNumber, [[1, 2, 5, 6], [3, 4]]) // 1, 2, 3, 4, 5, 6
+```
+You can also curry it:
+```js
+asyncMerge(minNumber)([[1, 2, 5, 6], [3, 4]]) // 1, 2, 3, 4, 5, 6
+```
+here's minNumber implementation
+```js
+const minNumber = async (promises) => {
+  // items can be null when the sequence is exhausted
+  // or an promise, as it is returned
+  // from the "next" method
+  const items = await Promise.all(promises)
+
+  let min = Infinity
+  let minIndex = 0
+  for (let index = 0; index < items.length; index++) {
+    if (items[index] === null) continue
+    if (items[index].value < min) {
+      min = items[index].value
+      minIndex = index
+    }
+  }
+  return minIndex // this is the index of the iterable we want to consume
+}
+```
+Using promises you can merge multiple iterables in a first come first served basis:
+```js
+asyncMerge(async (promises) => {
+  const validPromises = promises
+    .filter((promise) => promise) // filter out exhausted iterables
+
+  await Promise.race(validPromises) // as least 1 promise should be resolved or there is no point in returning anything
+
+  for (let index = 0; index < items.length; index++) {
+    if (items[index] === null) continue
+    if (!promises[index].isPending()) {
+      return index
+    }
+  }
+}, iterables)
+```
+As you can see, promises have some extra method "isPending", "isFulFilled", "isRejected". These have been added to the promise returned by the async-iterables to make easier to inspect the promise state.
 
 # Utilities returning multiple iterators
 

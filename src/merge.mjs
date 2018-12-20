@@ -6,18 +6,25 @@ function * merge (pickFunc, iterables) {
   let numberOfExhausted = 0
   const items = new Array(iterables.length)
   try {
-    while (iters.length !== numberOfExhausted) {
+    while (iters.length - 1 !== numberOfExhausted) {
       // tries to add items to zipped wherever the index is not exhausted
-      for (const index of range(iterables.length)) {
+      for (const index of range(iters.length)) {
         if (typeof items[index] === 'undefined') {
-          items[index] = iterables[index].next()
+          items[index] = iters[index].next()
         }
       }
       // pick and return the item
       const chosen = pickFunc(items)
+      if (typeof items[chosen] === 'undefined') {
+        throw new Error('iter-tools, merge: the sequence returned doesn\'t exist')
+      }
+      if (items[chosen] === null) {
+        throw new Error('iter-tools, merge: the sequence returned is exhausted')
+      }
       const { done, value } = items[chosen]
       if (done) {
         numberOfExhausted++
+        items[chosen] = null
       } else {
         yield value
         items[chosen] = undefined
@@ -32,7 +39,7 @@ function * merge (pickFunc, iterables) {
 
 export default function curriedMerge (pickFunc, iterables) {
   if (arguments.length === 1) {
-    return iterable => merge(pickFunc, iterable)
+    return iterables => merge(pickFunc, iterables)
   }
 
   return merge(pickFunc, iterables)
