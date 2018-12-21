@@ -444,21 +444,11 @@ merge(minNumber)([[1, 2, 5, 6], [3, 4]]) // 1, 2, 3, 4, 5, 6
 ```
 here's minNumber implementation
 ```js
-const minNumber = (items) => {
-  // items can be null when the sequence is exhausted
-  // or an object containing the "value", as it is returned
-  // from the "next" method
-  let min = Infinity
-  let minIndex = 0
-  for (let index = 0; index < items.length; index++) {
-    if (items[index] === null) continue
-    if (items[index].value < min) {
-      min = items[index].value
-      minIndex = index
-    }
-  }
-  return minIndex // this is the index of the iterable we want to consume
-}
+const minNumber = (items) =>
+  items
+    .map((item, index) => ({ index, item })) // add index
+    .filter((decoratedItem) => !!decoratedItem.item) // remove null
+    .sort((a, b) => a.item.value - b.item.value)[0].index // sort and pick first index
 ```
 
 ## async-merge
@@ -473,21 +463,12 @@ asyncMerge(minNumber)([[1, 2, 5, 6], [3, 4]]) // 1, 2, 3, 4, 5, 6
 here's minNumber implementation
 ```js
 const minNumber = async (promises) => {
-  // items can be null when the sequence is exhausted
-  // or an promise, as it is returned
-  // from the "next" method
   const items = await Promise.all(promises)
 
-  let min = Infinity
-  let minIndex = 0
-  for (let index = 0; index < items.length; index++) {
-    if (items[index] === null) continue
-    if (items[index].value < min) {
-      min = items[index].value
-      minIndex = index
-    }
-  }
-  return minIndex // this is the index of the iterable we want to consume
+  items
+    .map((item, index) => ({ index, item })) // add index
+    .filter((decoratedItem) => !!decoratedItem.item) // remove null
+    .sort((a, b) => a.item.value - b.item.value)[0].index // sort and pick first index
 }
 ```
 Using promises you can merge multiple iterables in a first come first served basis:
@@ -498,8 +479,8 @@ asyncMerge(async (promises) => {
 
   await Promise.race(validPromises) // as least 1 promise should be resolved or there is no point in returning anything
 
-  for (let index = 0; index < items.length; index++) {
-    if (items[index] === null) continue
+  for (let index = 0; index < promises.length; index++) {
+    if (promises[index] === null) continue
     if (!promises[index].isPending()) {
       return index
     }

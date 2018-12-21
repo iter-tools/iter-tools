@@ -6,7 +6,7 @@ function * merge (pickFunc, iterables) {
   let numberOfExhausted = 0
   const items = new Array(iterables.length)
   try {
-    while (iters.length - 1 !== numberOfExhausted) {
+    while (iters.length !== numberOfExhausted) {
       // tries to add items to zipped wherever the index is not exhausted
       for (const index of range(iters.length)) {
         if (typeof items[index] === 'undefined') {
@@ -43,4 +43,54 @@ export default function curriedMerge (pickFunc, iterables) {
   }
 
   return merge(pickFunc, iterables)
+}
+
+export function mergeByComparison (comparator) {
+  return function _mergeByComparison (items) {
+    if (items.length === 0) return
+
+    return items
+      .map((item, index) => ({ index, item }))
+      .filter((decoratedItem) => !!decoratedItem.item)
+      .sort((a, b) => comparator(a.item.value, b.item.value))[0].index
+  }
+}
+
+const sum = (array) => array.reduce((out, current) => out + current, 0)
+
+export function mergeByChance (weights) {
+  return function _mergeByChance (items) {
+    if (items.length === 0) return
+
+    const validWeights = items
+      .map((item, index) => weights[index] ? weights[index] : 1)
+      .filter((weight, index) => items[index] !== null)
+
+    const validItems = items
+      .filter((item) => item !== null)
+
+    const totalWeight = sum(validWeights)
+
+    const draw = Math.random() * totalWeight
+
+    let currentWeight = 0
+    for (let i = 0; i < validItems.length; i++) {
+      if (draw >= currentWeight && draw < currentWeight + validWeights[i]) {
+        return i
+      } else {
+        currentWeight += validWeights[i]
+      }
+    }
+  }
+}
+
+export function mergeByPosition (step) {
+  let current = -step
+  return function _mergeByPosition (items) {
+    current = (current + step) % items.length
+    while (items[current] === null) {
+      current = (current + 1) % items.length
+    }
+    return current
+  }
 }

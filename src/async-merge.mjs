@@ -1,13 +1,14 @@
 import ensureAsyncIterable from './internal/ensure-async-iterable'
 import querablePromise from './internal/querable-promise'
 import range from './range'
+import { mergeByComparison, mergeByChance, mergeByPosition } from './merge'
 
 async function * asyncMerge (pickFunc, iterables) {
   const iters = iterables.map(i => ensureAsyncIterable(i)[Symbol.asyncIterator]())
   let numberOfExhausted = 0
   const items = new Array(iters.length)
   try {
-    while (iters.length - 1 !== numberOfExhausted) {
+    while (iters.length !== numberOfExhausted) {
       // tries to add items to zipped wherever the index is not exhausted
       for (const index of range(iters.length)) {
         if (typeof items[index] === 'undefined') {
@@ -44,4 +45,32 @@ export default function curriedAsyncMerge (pickFunc, iterables) {
   }
 
   return asyncMerge(pickFunc, iterables)
+}
+
+const makeAsync = (func) => {
+  return function (args) {
+    const _func = func(args)
+    return async function (promises) {
+      const items = await Promise.all(promises)
+      return _func(items)
+    }
+  }
+}
+
+export const asyncMergeByComparison = makeAsync(mergeByComparison)
+export const asyncMergeByChance = makeAsync(mergeByChance)
+export const asyncMergeByPosition = makeAsync(mergeByPosition)
+
+export async function asyncMergeByReadiness (promises) {
+  const validPromises = promises
+    .filter((promise) => promise) // filter out exhausted iterables
+
+  await Promise.race(validPromises) // as least 1 promise should be resolved or there is no point in returning anything
+
+  for (let index = 0; index < promises.length; index++) {
+    if (promises[index] === null) continue
+    if (!promises[index].isPending()) {
+      return index
+    }
+  }
 }
