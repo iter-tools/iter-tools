@@ -61,16 +61,26 @@ export const asyncMergeByComparison = makeAsync(mergeByComparison)
 export const asyncMergeByChance = makeAsync(mergeByChance)
 export const asyncMergeByPosition = makeAsync(mergeByPosition)
 
-export async function asyncMergeByReadiness (promises) {
-  const validPromises = promises
-    .filter((promise) => promise) // filter out exhausted iterables
+const expire = (ms) =>
+  new Promise((resolve, reject) =>
+    setTimeout(() => reject(new Error('iter-tools, merge: no sequence is ready after the configured interval')), ms))
 
-  await Promise.race(validPromises) // as least 1 promise should be resolved or there is no point in returning anything
+export function asyncMergeByReadiness (ms) {
+  return async function _asyncMergeByReadiness (promises) {
+    const validPromises = promises
+      .filter((promise) => promise) // filter out exhausted iterables
 
-  for (let index = 0; index < promises.length; index++) {
-    if (promises[index] === null) continue
-    if (!promises[index].isPending()) {
-      return index
+    if (ms) {
+      validPromises.push(expire(ms))
+    }
+
+    await Promise.race(validPromises) // as least 1 promise should be resolved or there is no point in returning anything
+
+    for (let index = 0; index < promises.length; index++) {
+      if (promises[index] === null) continue
+      if (!promises[index].isPending()) {
+        return index
+      }
     }
   }
 }

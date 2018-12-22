@@ -45,7 +45,32 @@ export default function curriedMerge (pickFunc, iterables) {
   return merge(pickFunc, iterables)
 }
 
-export function mergeByComparison (comparator) {
+/* default compare */
+const toString = (obj) => {
+  if (obj === null) return 'null'
+  if (typeof obj === 'boolean' || typeof obj === 'number') return (obj).toString()
+  if (typeof obj === 'string') return obj
+  if (typeof obj === 'symbol') throw new TypeError()
+  return (obj).toString()
+}
+
+const defaultCompare = (x, y) => {
+  if (x === undefined && y === undefined) return 0
+  if (x === undefined) return 1
+  if (y === undefined) return -1
+
+  const xString = toString(x)
+  const yString = toString(y)
+
+  if (xString < yString) return -1
+  if (xString > yString) return 1
+  return 0
+}
+
+/*
+ helpers
+*/
+export function mergeByComparison (comparator = defaultCompare) {
   return function _mergeByComparison (items) {
     if (items.length === 0) return
 
@@ -56,35 +81,35 @@ export function mergeByComparison (comparator) {
   }
 }
 
-const sum = (array) => array.reduce((out, current) => out + current, 0)
-
-export function mergeByChance (weights) {
+export function mergeByChance (weights = []) {
   return function _mergeByChance (items) {
     if (items.length === 0) return
 
-    const validWeights = items
-      .map((item, index) => weights[index] ? weights[index] : 1)
-      .filter((weight, index) => items[index] !== null)
-
     const validItems = items
-      .filter((item) => item !== null)
+      .map((item, index) => ({
+        index,
+        item,
+        weight: weights[index] ? weights[index] : 1
+      }))
+      .filter((decoratedItem) => !!decoratedItem.item)
 
-    const totalWeight = sum(validWeights)
+    const totalWeight = validItems.reduce((out, current) =>
+      out + current.weight, 0)
 
     const draw = Math.random() * totalWeight
 
     let currentWeight = 0
     for (let i = 0; i < validItems.length; i++) {
-      if (draw >= currentWeight && draw < currentWeight + validWeights[i]) {
-        return i
+      if (draw >= currentWeight && draw < currentWeight + validItems[i].weight) {
+        return validItems[i].index
       } else {
-        currentWeight += validWeights[i]
+        currentWeight += validItems[i].weight
       }
     }
   }
 }
 
-export function mergeByPosition (step) {
+export function mergeByPosition (step = 1) {
   let current = -step
   return function _mergeByPosition (items) {
     current = (current + step) % items.length

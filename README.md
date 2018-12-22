@@ -434,7 +434,7 @@ compress(range(5), [0, 0, 1, 1]); // 2, 3
 Same as compress but works on both sync and async iterables.
 
 ## merge
-Merge takes multiple iterables and merge them in a single one. It uses a function that decides what sequence to use, time by time. The function takes an array with the latest item yielded from any iterable (null if the iterable is exhausted). The function returns the index of the iterable to consume.
+Merge takes multiple iterables and merge them in a single one. It uses a function that decides what sequence to use, time by time. The function takes an array with the latest items yielded from all iterables (null when an iterable is exhausted). The function returns the index of the iterable to consume.
 ```js
 merge(minNumber, [[1, 2, 5, 6], [3, 4]]) // 1, 2, 3, 4, 5, 6
 ```
@@ -450,9 +450,24 @@ const minNumber = (items) =>
     .filter((decoratedItem) => !!decoratedItem.item) // remove null
     .sort((a, b) => a.item.value - b.item.value)[0].index // sort and pick first index
 ```
+There are some helper to cover the most common cases:
+* mergeByComparison: it picks the smallest/biggest item, according to the comparator function (passed as argument). The default comparator behaves as the default one used by Array.prototype.sort.
+* mergeByChance: it picks a random item. You can pass an array with the "weights" to make more likely to consume the iterable with the highest weight (the default weight is 1).
+* mergeByPosition: it starts with the first iterable, it picks up the next one and restart from the beginning when there is no more. You can specify the step as argument (default 1). When an iterable is exhausted, it skips to the next one.
+Some example:
+```js
+// this one will return a sorted iterables, given as an input an array of sorted iterables (returning numbers)
+merge(mergeByComparison((a, b) => a - b), sortedIterables)
+
+// the merged iterable will contain twice more items from the first iterable than from the second
+merge(mergeByChance([2, 1], [iterable1, iterable2])
+
+//the merged iterable will cycle through the iterables, always skipping one
+merge(mergeByPosition(2), [repeat('a'), repeat('b'), repeat('c')]) // a c b a c b ...
+```
 
 ## async-merge
-asyncMerge takes multiple async-iterables and merge them in a single one. It uses a function that decides what sequence to use, time by time. The function takes an array with the latest item yielded from any async-iterable (null if the async-iterable is exhausted). Items returned are promises and the function returns a promise that, when fulfilled, returns the index of the iterable to consume.
+asyncMerge takes multiple async-iterables and merge them in a single one. It uses a function that decides what sequence to use, time by time. The function takes an array with the latest item yielded from all async-iterables (null when an async-iterable is exhausted). Items returned are promises and the function returns a promise that, when fulfilled, returns the index of the iterable to consume.
 ```js
 asyncMerge(minNumber, [[1, 2, 5, 6], [3, 4]]) // 1, 2, 3, 4, 5, 6
 ```
@@ -471,7 +486,7 @@ const minNumber = async (promises) => {
     .sort((a, b) => a.item.value - b.item.value)[0].index // sort and pick first index
 }
 ```
-Using promises you can merge multiple iterables in a first come first served basis:
+Using promises you can merge multiple iterables in a first come first served basis (see the helper asyncMergeByReadiness below):
 ```js
 asyncMerge(async (promises) => {
   const validPromises = promises
@@ -488,6 +503,26 @@ asyncMerge(async (promises) => {
 }, iterables)
 ```
 As you can see, promises have some extra method "isPending", "isFulFilled", "isRejected". These have been added to the promise returned by the async-iterables to make easier to inspect the promise state.
+There are some helper to cover the most common cases:
+* asyncMergeByComparison: it picks the smallest/biggest item, according to the comparator function (passed as argument). The default comparator behaves as the default one used by Array.prototype.sort.
+* asyncMergeByChance: it picks a random item. You can pass an array with the "weights" to make more likely to consume the iterable with the highest weight (the default weight is 1).
+* asyncMergeByPosition: it starts with the first iterable, it picks up the next one and restart from the beginning when there is no more. You can specify the step as argument (default 1). When an iterable is exhausted, it skips to the next one.
+* asyncMergeByReadiness: it picks the first available item from any iterable. If you specify a timeout, an error will be thrown if no item is ready after that interval.
+Some example:
+```js
+// this one will return a sorted iterables, given as an input an array of sorted iterables (returning numbers)
+asyncMerge(asyncMergeByComparison((a, b) => a - b), sortedIterables)
+
+// the merged iterable will contain twice more items from the first iterable than from the second
+asyncMerge(asyncMergeByChance([2, 1], [iterable1, iterable2])
+
+//the merged iterable will cycle through the iterables, always skipping one
+asyncMerge(asyncMergeByPosition(2), [repeat('a'), repeat('b'), repeat('c')]) // a c b a c b ...
+
+// yield the first available item every time. If it has to wait more than 100 ms, it will stop and throws an error.
+asyncMerge(asyncMergeByReadiness(100), [iterable1, iterable2])
+```
+
 
 # Utilities returning multiple iterators
 

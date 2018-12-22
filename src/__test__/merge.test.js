@@ -24,7 +24,7 @@ describe('merge', function () {
     expect(Array.from(iter)).toEqual([1, 2, 3, 4, 5, 6])
   })
 
-  it.skip('merges by chance', function () {
+  it('merges by chance', function () {
     const iter = merge(mergeByChance([]), [[1, 2, 5, 6], [3, 4]])
     expect(Array.from(iter).length).toEqual(6)
   })
@@ -46,9 +46,9 @@ describe('asyncMerge', function () {
     expect(await asyncToArray(iter)).toEqual([1, 2, 3, 4, 5, 6])
   })
 
-  it.skip('merges by chance', async function () {
+  it('merges by chance', async function () {
     const iter = asyncMerge(asyncMergeByChance([]), [[1, 2, 5, 6], [3, 4]])
-    expect(await asyncToArray(iter).length).toEqual(6)
+    expect((await asyncToArray(iter)).length).toEqual(6)
   })
 
   it('merges by position', async function () {
@@ -59,7 +59,20 @@ describe('asyncMerge', function () {
   it('interleaves sequences by timing', async function () {
     const seq1 = asyncThrottle(100, [0, 100, 200, 300, 400, 500])
     const seq2 = asyncThrottle(180, [0, 180, 360, 540])
-    const iter = asyncMerge(asyncMergeByReadiness, [seq1, seq2])
+    const iter = asyncMerge(asyncMergeByReadiness(1000), [seq1, seq2])
     expect(await asyncToArray(iter)).toEqual([0, 0, 100, 180, 200, 300, 360, 400, 500, 540])
+  })
+
+  it('interleaves sequences by timing (time is up)', async function () {
+    const seq1 = asyncThrottle(100, [0, 100, 200, 300, 400, 500])
+    const seq2 = asyncThrottle(180, [0, 180, 360, 540])
+    let error
+    try {
+      const iter = asyncMerge(asyncMergeByReadiness(10), [seq1, seq2])
+      await asyncToArray(iter)
+    } catch (e) {
+      error = e
+    }
+    expect(error.message).toEqual('iter-tools, merge: no sequence is ready after the configured interval')
   })
 })
