@@ -9,7 +9,7 @@ function generateCurrentAccount (nlines) {
   return lines.join('\n')
 }
 
-const csv = generateCurrentAccount(1000)
+const csv = generateCurrentAccount(10000)
 
 module.exports['RegExp vanilla'] = function () {
   const re = /^[0-9]+;[A-Z]{3}[0-9]*;([0-9.]*);([0-9.]*)/gm

@@ -1,6 +1,6 @@
 var range = require('../es2018/range')
 
-const a = range(2000)
+const a = range(10000)
 
 module.exports['for loop'] = function () {
   const arr = []

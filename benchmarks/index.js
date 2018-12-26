@@ -7,8 +7,8 @@ run([
   bench('map 100000 items', require('./map-100000')),
   bench('compose 1000 items', require('./compose-1000')),
   bench('compose 100000 items', require('./compose-100000')),
-  bench('regexp', require('./regexp')),
-  bench('while - for', require('./while-for'))
+  bench('regexp', require('./regexp-10000')),
+  bench('while - for', require('./while-for-10000'))
 ])
 
 function bench (title, config) {

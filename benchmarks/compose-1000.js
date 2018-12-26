@@ -14,9 +14,9 @@ function power2 (x) {
 const a = Array.from(range(1000))
 
 module.exports['Array compose 1000 items'] = function () {
-  return a
+  return Array.from(a
     .map(power2)
-    .filter(isEven)
+    .filter(isEven))
 }
 
 module.exports['iter-tools compose 1000 items'] = function () {
