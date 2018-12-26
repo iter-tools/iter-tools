@@ -1,10 +1,14 @@
 const Benchmark = require('benchmark')
 
 run([
-  bench('compose', require('./compose')),
+  bench('filter 1000 items', require('./filter-1000')),
+  bench('filter 100000 items', require('./filter-100000')),
+  bench('map 1000 items', require('./map-1000')),
+  bench('map 100000 items', require('./map-100000')),
+  bench('compose 1000 items', require('./compose-1000')),
+  bench('compose 100000 items', require('./compose-100000')),
   bench('regexp', require('./regexp')),
   bench('while - for', require('./while-for'))
-  // bench('async', require('./async')),
 ])
 
 function bench (title, config) {

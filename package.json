@@ -14,7 +14,7 @@
     "test:types": "tsc",
     "test": "npm run test:es5 && npm run test:es2015 && npm run test:types",
     "watch": "jest --moduleNameMapper '{\"^iter-tools(.*)\": \"<rootDir>/es2015$1\"}' --watch",
-    "benchmarks": "npm run clean && npm run build:es2018-cjs && node --expose-gc benchmarks",
+    "benchmarks": "npm run clean && npm run build:es2018-cjs && node benchmarks",
     "coverage:badges": "jest-coverage-badges",
     "coverage": "npm run test:es2015 -- --coverage --coverageDirectory=coverage --config '{ \"coverageReporters\" : [\"lcov\", \"json-summary\"]}' && npm run coverage:badges",
     "clean": "rimraf es5 es2015 es2018",
