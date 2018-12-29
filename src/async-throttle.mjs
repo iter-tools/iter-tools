@@ -1,9 +1,5 @@
 import ensureAsyncIterable from './internal/ensure-async-iterable'
-
-function delay (ms) {
-  if (ms <= 0) return Promise.resolve()
-  return new Promise((resolve) => setTimeout(resolve, ms))
-}
+import delay from './internal/delay'
 
 async function * asyncThrottle (ms, iterable) {
   let waitSince = 0

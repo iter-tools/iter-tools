@@ -1,10 +1,6 @@
 /* eslint-env node, jest */
 const { asyncBuffer, asyncToArray } = require('iter-tools')
-
-function delay (ms) {
-  if (ms <= 0) return Promise.resolve()
-  return new Promise((resolve) => setTimeout(resolve, ms))
-}
+const delay = require('iter-tools/internal/delay')
 
 // I had to build this because jest doesn't support es2018 natively
 
