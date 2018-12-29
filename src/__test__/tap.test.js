@@ -24,6 +24,11 @@ describe('asyncTap', function () {
     expect(await asyncToArray(iter)).toEqual([1, 2, 3])
   })
 
+  it('return tapped iterable (using a promise)', async function () {
+    const iter = asyncTap(function (item) { return Promise.resolve(item * 2) }, [1, 2, 3])
+    expect(await asyncToArray(iter)).toEqual([1, 2, 3])
+  })
+
   it('return tapped iterable from iterable', async function () {
     const iter = asyncTap(function (item) { return item * 2 }, range({ start: 1, end: 4 }))
     expect(await asyncToArray(iter)).toEqual([1, 2, 3])

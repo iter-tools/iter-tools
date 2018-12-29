@@ -30,6 +30,15 @@ describe('asyncConsume', function () {
     expect(arr).toEqual([1, 2, 3])
   })
 
+  it('consumes an iterable using a promise', async function () {
+    const arr = []
+    await asyncConsume((item) => {
+      arr.push(item)
+      return Promise.resolve(0)
+    }, [1, 2, 3])
+    expect(arr).toEqual([1, 2, 3])
+  })
+
   it('consumes an iterable (curried)', async function () {
     const arr = []
     const consumePush = asyncConsume((item) => arr.push(item))

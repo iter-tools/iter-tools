@@ -20,6 +20,10 @@ describe('asyncEvery', function () {
     expect(await asyncEvery((n) => n % 2 === 0, asyncIterable([4, 2, 6, 4, 8, 6]))).toBe(true)
   })
 
+  it('returns true if at least one item is true (using a promise)', async function () {
+    expect(await asyncEvery((n) => Promise.resolve(n % 2 === 0), asyncIterable([4, 2, 6, 4, 8, 6]))).toBe(true)
+  })
+
   it('returns false if all items are false', async function () {
     expect(await asyncEvery((n) => n % 2 === 0, asyncIterable([4, 1, 6, 4, 8, 6]))).toBe(false)
   })

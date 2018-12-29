@@ -138,7 +138,9 @@ import { takeWhile } from 'iter-tools/es2018'; // ES2018
 Note: **file names are all lowercase, dash separated. Module names are camelcase.**
 
 ## Async iterators
-Async iterators are a new feature introduced by ES2018. Iter-tools implements an alternate versions of many functions that works on async iterators as well as regular iterators.
+Async iterators are a new feature introduced by ES2018. Iter-tools implements an alternate versions of many functions that works on async iterators as well as regular iterators. Note some common patterns:
+* they return either an async iterable (asyncMap, asyncFilter for example) or a promise returning a value (asyncReduce for example)
+* whenever they take a function as argument, this can return a value or a promise
 
 # Create iterators
 ## Range
@@ -240,6 +242,7 @@ map(x => x * x, range(4)); // 0, 1, 4, 9
 ```
 
 ## async-map
+The same as map but working with sync and async iterables. The first argument can be a function returning synchronously or a promise.
 ```js
 await asyncMap(animal => animal.kind, [
   Promise.resolve({type: 'cat'}),
@@ -259,7 +262,7 @@ await asyncFilter(animal => animal.kind.slice(1) === 'at', [
 ```
 
 ## async-filter
-See filter
+See filter. The first argument can be a function returning synchronously or a promise.
 
 ## take-while
 It returns values as soon as the function is true. Then it stops.
@@ -268,7 +271,7 @@ takeWhile(isEven, range(4)); // 0
 ```
 
 ## async-take-while
-Same as Take While but works on both sync and async iterables.
+Same as Take While but works on both sync and async iterables. The first argument can be a function returning synchronously or a promise.
 
 ## drop-while
 It starts returning values when the function is false. Then it keeps going until the iterable is exausted.
@@ -277,7 +280,7 @@ dropWhile(isEven, range(4)); // 1, 2, 3
 ```
 
 ## async-drop-while
-Same as Drop While but works on both sync and async iterables.
+Same as Drop While but works on both sync and async iterables. The first argument can be a function returning synchronously or a promise.
 
 ## slice
 It returns an iterable that returns a slice of an iterable.
@@ -328,7 +331,7 @@ reduce((acc, v) => acc += v, range(4)); // 6
 ```
 
 ## async-reduce
-Same as reduce but works on both sync and async iterables.
+Same as reduce but works on both sync and async iterables. The function argument can return synchronously or a promise.
 
 ## batch
 Takes a number and an iterable and returns an iterable divided into batches
@@ -550,7 +553,7 @@ groupBySquare([1, 1, 1, 1, -1, -1, -1, 4]);
 ```
 
 ## async-group-by
-Same as groupBy but works on both sync and async iterables.
+Same as groupBy but works on both sync and async iterables. The first argument can be a function returning synchronously or a promise.
 
 ## tee
 It returns 2 or more copies of an iterable. In reality they are not copies (it is not possible) they are distinct iterables sharing the original one and caching the values when one of the copy pull a new value from the original iterable.
@@ -625,7 +628,7 @@ consume((item) => console.log(item), [1, 2, 3]) // prints 1, 2, 3
 ```
 
 ## async-consume
-The equivalent of consume, for async iterables. It returns a promise.
+The equivalent of consume, for async iterables. It returns a promise. The argument can be a function returning a promise.
 
 ## first
 It returns the fist item from an iterable.
@@ -643,7 +646,7 @@ find(animal => animal.kind === 'dog', [{type: 'cat'}, {type: 'dog'}])
 ```
 
 ## async-find
-Same as find but for async iterables
+Same as find but for async iterables. The first argument can be a function returning synchronously or a promise.
 ```js
 await asyncFind(animal => animal.kind === 'dog', [
   Promise.resolve({type: 'cat'}),
@@ -661,7 +664,7 @@ compose(
 ```
 
 ## async-tap
-Same as tap, but for async iterables
+Same as tap, but for async iterables. The argument can be a function returning synchronously or a promise.
 ```js
 compose(
   asyncTap(item => console.log(item)),
@@ -689,10 +692,10 @@ some((n) => n % 2 === 0, [1, 3, 7]) // returns false
 ```
 
 ## async-some
-It returns true if running the function, at least one item returns true (can be curried).
+It returns true if running the function, at least one item returns true (can be curried). The argument can be a function returning synchronously or a promise.
 ```js
-asyncSome(asyncIter([1, 2, 3])) // returns a promise that resolve on true
-asyncSome(asyncIter([1, 3, 7])) // returns a promise that resolve on false
+asyncSome((n) => n % 2 === 0, asyncIter([1, 2, 3])) // returns a promise that resolve on true
+asyncSome((n) => n % 2 === 0, asyncIter([1, 3, 7])) // returns a promise that resolve on false
 ```
 
 ## every
@@ -703,10 +706,10 @@ every((n) => n % 2 === 0, [2, 4, 6]) // returns true
 ```
 
 ## async-every
-It returns true if running the function, all items return true (can be curried).
+It returns true if running the function, all items return true (can be curried). The argument can be a function returning synchronously or a promise.
 ```js
-asyncEvery(asyncIter([1, 2, 3])) // returns a promise that resolve on false
-asyncEvery(asyncIter([2, 4, 6])) // returns a promise that resolve on true
+asyncEvery((n) => n % 2 === 0, asyncIter([1, 2, 3])) // returns a promise that resolve on false
+asyncEvery((n) => n % 2 === 0, asyncIter([2, 4, 6])) // returns a promise that resolve on true
 ```
 
 ## async-throttle

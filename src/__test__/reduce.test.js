@@ -45,6 +45,11 @@ describe('asyncReduce', function () {
     expect(sum).toBe(6)
   })
 
+  it('sums an array (using a promise)', async function () {
+    const sum = await asyncReduce(async (acc = 0, x) => acc + x, [0, 1, 2, 3])
+    expect(sum).toBe(6)
+  })
+
   it('sums a range', async function () {
     const sum = await asyncReduce((acc = 0, x) => acc + x, asyncIterable(range(4)))
     expect(sum).toBe(6)

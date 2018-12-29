@@ -4,7 +4,7 @@ async function * takeWhile (func, iterable) {
   let take = true
   let c = 0
   for await (const item of ensureAsyncIterable(iterable)) {
-    take = func(item, c++)
+    take = await func(item, c++)
     if (take) {
       yield item
     } else {

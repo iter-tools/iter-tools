@@ -28,6 +28,11 @@ describe('asyncFilter', function () {
     expect(await asyncToArray(iter)).toEqual([2, 4, 6])
   })
 
+  it('returns filtered iterable (using a promise)', async function () {
+    const iter = asyncFilter(function (item) { return Promise.resolve(item % 2 === 0) }, [1, 2, 3, 4, 5, 6])
+    expect(await asyncToArray(iter)).toEqual([2, 4, 6])
+  })
+
   it('returns filtered iterable from iterable', async function () {
     const iter = asyncFilter(function (item) { return item % 2 === 0 }, range({ start: 1, end: 7 }))
     expect(await asyncToArray(iter)).toEqual([2, 4, 6])

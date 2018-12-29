@@ -93,4 +93,9 @@ describe('asyncFlat', function () {
     const iter = asyncFlat((depth, iter) => !(typeof iter === 'string' && iter.length === 1), [['a', 'b'], ['c', ['d', 'e']], [['fghi']]])
     expect(await asyncToArray(iter)).toEqual(['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i'])
   })
+
+  it('flats using custom function (using a promise)', async function () {
+    const iter = asyncFlat(async (depth, iter) => !(typeof iter === 'string' && iter.length === 1), [['a', 'b'], ['c', ['d', 'e']], [['fghi']]])
+    expect(await asyncToArray(iter)).toEqual(['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i'])
+  })
 })
