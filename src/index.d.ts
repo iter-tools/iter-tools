@@ -9,6 +9,7 @@ type AsyncIterableLike<T> = AsyncIterable<T> | Iterable<T>
 type ReasonableNumber = UnionRange<32>
 type IterableElement<Iter> = Iter extends Iterable<infer X> ? X : never
 type AsyncIterableElement<Iter> = Iter extends AsyncIterableLike<infer X> ? X : never
+type MaybePromise<T> = T | Promise<T>
 
 /**
  * Function signature of `permutations` and `combinations`
@@ -350,8 +351,8 @@ export declare function asyncBatch<T> (n: number, iterable: AsyncIterableLike<T>
 export declare function asyncChain<T> (...iterables: Array<AsyncIterableLike<T>>): AsyncIterableIterator<T>
 export declare function asyncConcat<T> (...iterables: Array<AsyncIterableLike<T>>): AsyncIterableIterator<T>
 
-export declare function asyncConsume<T> (func: (item: T) => void): (iterable: AsyncIterableLike<T>) => void
-export declare function asyncConsume<T> (func: (item: T) => void, iterable: AsyncIterableLike<T>): void
+export declare function asyncConsume<T> (func: (item: T) => MaybePromise<void>): (iterable: AsyncIterableLike<T>) => void
+export declare function asyncConsume<T> (func: (item: T) => MaybePromise<void>, iterable: AsyncIterableLike<T>): void
 
 export declare function asyncCompress<T> (
     iterable: AsyncIterableLike<T>,
@@ -393,29 +394,41 @@ export declare function asyncCursor<T, Filler> (
   iter: AsyncIterable<T>
 ): AsyncIterableIterator<Array<T | Filler>>
 
-export declare function asyncDropWhile<T> (func: (item: T) => boolean):
+export declare function asyncDropWhile<T> (func: (item: T) => MaybePromise<boolean>):
     (iterable: AsyncIterableLike<T>) => AsyncIterableIterator<T>
-export declare function asyncDropWhile<T> (func: (item: T) => boolean, iterable: AsyncIterableLike<T>):
-    AsyncIterableIterator<T>
+export declare function asyncDropWhile<T> (
+  func: (item: T) => MaybePromise<boolean>,
+  iterable: AsyncIterableLike<T>
+): AsyncIterableIterator<T>
 
 export declare function asyncEnumerate<T> (iterable: AsyncIterableLike<T>, start?: number):
     AsyncIterableIterator<[number, T]>
 
-export declare function asyncEvery<T> (func: (item: T) => boolean): (iterable: AsyncIterableLike<T>) => boolean
-export declare function asyncEvery<T> (func: (item: T) => boolean, iterable: AsyncIterableLike<T>): boolean
+export declare function asyncEvery<T> (func: (item: T) => MaybePromise<boolean>):
+  (iterable: AsyncIterableLike<T>) => boolean
+export declare function asyncEvery<T> (
+  func: (item: T) => MaybePromise<boolean>,
+  iterable: AsyncIterableLike<T>
+): boolean
 
 export declare function asyncExecute<T, Args extends any[] = any[]> (
   func: (...args: Args) => Promise<T>,
   ...args: Args
 ): AsyncIterableIterator<T>
 
-export declare function asyncFilter<T> (func: (item: T) => boolean):
+export declare function asyncFilter<T> (func: (item: T) => MaybePromise<boolean>):
     (iterable: AsyncIterableLike<T>) => AsyncIterableIterator<T>
-export declare function asyncFilter<T> (func: (item: T) => boolean, iterable: AsyncIterableLike<T>):
-    AsyncIterableIterator<T>
+export declare function asyncFilter<T> (
+  func: (item: T) => MaybePromise<boolean>,
+  iterable: AsyncIterableLike<T>
+): AsyncIterableIterator<T>
 
-export declare function asyncFind<T> (func: (item: T) => boolean): (iterable: AsyncIterableLike<T>) => T | null
-export declare function asyncFind<T> (func: (item: T) => boolean, iterable: AsyncIterableLike<T>): T | null
+export declare function asyncFind<T> (func: (item: T) => MaybePromise<boolean>):
+  (iterable: AsyncIterableLike<T>) => T | null
+export declare function asyncFind<T> (
+  func: (item: T) => MaybePromise<boolean>,
+  iterable: AsyncIterableLike<T>
+): T | null
 
 export declare function asyncFirst<T> (iterable: AsyncIterableLike<T>): T | undefined
 
@@ -431,10 +444,10 @@ export declare function asyncFlat<
 > (depth: Depth, iter: Iter): AsyncFlatReturn<Depth, Iter>
 export declare function asyncFlat (depth: number, iter: AsyncIterableLike<any>): AsyncIterableIterator<any>
 export declare function asyncFlat (
-  shouldFlat: (depth: number, iter: any) => boolean,
+  shouldFlat: (depth: number, iter: any) => MaybePromise<boolean>,
   iter: AsyncIterableLike<any>
 ): AsyncIterableIterator<any>
-export declare function asyncFlat (shouldFlat: (depth: number, iter: any) => boolean):
+export declare function asyncFlat (shouldFlat: (depth: number, iter: any) => MaybePromise<boolean>):
   (iter: AsyncIterable<any>) => AsyncIterableIterator<any>
 
 export declare function asyncFlatMap<T, O> (func: (item: T) => AsyncIterableLike<O>):
@@ -448,10 +461,12 @@ export declare function asyncGroupBy<T> (
   key: null,
   iterable: AsyncIterableLike<T>
 ): AsyncIterableIterator<[T, AsyncIterableIterator<T>]>
-export declare function asyncGroupBy<T, K> (key: (item: T) => K):
+export declare function asyncGroupBy<T, K> (key: (item: T) => MaybePromise<K>):
   (iterable: AsyncIterableLike<T>) => AsyncIterableIterator<[K, AsyncIterableIterator<T>]>
-export declare function asyncGroupBy<T, K> (key: (item: T) => K, iterable: AsyncIterableLike<T>):
-  AsyncIterableIterator<[K, AsyncIterableIterator<T>]>
+export declare function asyncGroupBy<T, K> (
+  key: (item: T) => MaybePromise<K>,
+  iterable: AsyncIterableLike<T>
+): AsyncIterableIterator<[K, AsyncIterableIterator<T>]>
 
 export declare function asyncInterpose<T, I> (interposeItem: I): (iter: AsyncIterableLike<T>) => AsyncIterableIterator<T | I>
 export declare function asyncInterpose<T, I> (interposeItem: I, iter: AsyncIterableLike<T>): AsyncIterableIterator<T | I>
@@ -460,20 +475,29 @@ export declare function asyncIterable<T> (
   asyncIterator: { next: () => Promise<{value: T}> } | AsyncIterableLike<T>
 ): AsyncIterableIterator<T>
 
-export declare function asyncMap<T, O> (func: (item: T) => O): (iter: AsyncIterableLike<T>) => AsyncIterableIterator<O>
-export declare function asyncMap<T, O> (func: (item: T) => O, iter: AsyncIterableLike<T>): AsyncIterableIterator<O>
+export declare function asyncMap<T, O> (func: (item: T) => MaybePromise<O>):
+  (iter: AsyncIterableLike<T>) => AsyncIterableIterator<O>
+export declare function asyncMap<T, O> (
+  func: (item: T) => MaybePromise<O>,
+  iter: AsyncIterableLike<T>
+): AsyncIterableIterator<O>
 
 export declare function asyncMerge<T> (pickFunc: AsyncMergePickFunc<T>): (iterables: ReadonlyArray<AsyncIterableLike<T>>) => AsyncIterableIterator<T>
 export declare function asyncMerge<T> (pickFunc: AsyncMergePickFunc<T>, iterables: ReadonlyArray<AsyncIterableLike<T>>): AsyncIterableIterator<T>
 
 export declare function asyncReduce<T, O> (func: (acc: O, item: T, c: number) => O):
     (iterable: AsyncIterableLike<T>) => O
-export declare function asyncReduce<T, O> (initial: O, func: (acc: O, item: T, c: number) => O):
-    (iterable: AsyncIterableLike<T>) => O
-export declare function asyncReduce<T, O> (func: (acc: O, item: T, c: number) => O, iterable: AsyncIterableLike<T>): O
+export declare function asyncReduce<T, O> (
+  initial: O,
+  func: (acc: O, item: T, c: number) => MaybePromise<O>
+): (iterable: AsyncIterableLike<T>) => O
+export declare function asyncReduce<T, O> (
+  func: (acc: O, item: T, c: number) => MaybePromise<O>,
+  iterable: AsyncIterableLike<T>
+): O
 export declare function asyncReduce<T, O> (
     initial: O,
-    func: (acc: O, item: T, c: number) => O,
+    func: (acc: O, item: T, c: number) => MaybePromise<O>,
     iterable: AsyncIterableLike<T>
 ): O
 
@@ -484,16 +508,19 @@ export declare function asyncSlice<T> (
     iterable: AsyncIterableLike<T>
 ): AsyncIterableIterator<T>
 
-export declare function asyncTakeWhile<T> (func: (item: T) => boolean):
-    (iterable: AsyncIterableLike<T>) => AsyncIterableIterator<T>
-export declare function asyncTakeWhile<T> (func: (item: T) => boolean, iterable: AsyncIterableLike<T>):
-    AsyncIterableIterator<T>
+export declare function asyncTakeWhile<T> (func: (item: T) => MaybePromise<boolean>):
+  (iterable: AsyncIterableLike<T>) => AsyncIterableIterator<T>
+export declare function asyncTakeWhile<T> (
+  func: (item: T) => MaybePromise<boolean>,
+  iterable: AsyncIterableLike<T>
+): AsyncIterableIterator<T>
 
-export declare function asyncTap<T> (func: (item: T, c: number) => any, iterable: AsyncIterableLike<T>):
-    AsyncIterableIterator<T>
+export declare function asyncTap<T> (
+  func: (item: T, c: number) => MaybePromise<void>,
+  iterable: AsyncIterableLike<T>
+): AsyncIterableIterator<T>
 
-export declare function asyncTakeSorted<T> (n: number, func?: (item: T) => boolean):
-    (iterable: AsyncIterableLike<T>) => AsyncIterableLike<T>
+export declare function asyncTakeSorted<T> (n: number, func?: (item: T) => boolean): (iterable: AsyncIterableLike<T>) => AsyncIterableLike<T>
 export declare function asyncTakeSorted<T> (n: number, func?: (item: T) => boolean, iterable?: AsyncIterableLike<T>):
     AsyncIterableLike<T>
 
@@ -518,8 +545,12 @@ export declare function asyncRegexpExecIter (re: RegExp, iterable: AsyncIterable
 
 export declare function asyncSplitLines (iterable: AsyncIterableLike<string>): AsyncIterableLike<string>
 
-export declare function asyncSome<T> (func: (item: T) => boolean): (iterable: AsyncIterableLike<T>) => boolean
-export declare function asyncSome<T> (func: (item: T) => boolean, iterable: AsyncIterableLike<T>): boolean
+export declare function asyncSome<T> (func: (item: T) => MaybePromise<boolean>):
+  (iterable: AsyncIterableLike<T>) => boolean
+export declare function asyncSome<T> (
+  func: (item: T) => MaybePromise<boolean>,
+  iterable: AsyncIterableLike<T>
+): boolean
 
 export declare function asyncBuffer<T> (n: number): (iterable: AsyncIterableLike<T>) => AsyncIterableIterator<T>
 export declare function asyncBuffer<T> (n: number, iterable: AsyncIterableLike<T>): AsyncIterableIterator<T>
