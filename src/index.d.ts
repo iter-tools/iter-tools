@@ -424,11 +424,11 @@ export declare function asyncFilter<T> (
 ): AsyncIterableIterator<T>
 
 export declare function asyncFind<T> (func: (item: T) => MaybePromise<boolean>):
-  (iterable: AsyncIterableLike<T>) => T | null
+  (iterable: AsyncIterableLike<T>) => Promise<T | null>
 export declare function asyncFind<T> (
   func: (item: T) => MaybePromise<boolean>,
   iterable: AsyncIterableLike<T>
-): T | null
+): Promise<T | null>
 
 export declare function asyncFirst<T> (iterable: AsyncIterableLike<T>): T | undefined
 
