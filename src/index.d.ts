@@ -219,8 +219,8 @@ export declare function filter<S extends T, T> (func: (item: T) => item is S, it
 export declare function filter<T> (func: (item: T) => boolean): (iterable: Iterable<T>) => IterableIterator<T>
 export declare function filter<T> (func: (item: T) => boolean, iterable: Iterable<T>): IterableIterator<T>
 
-export declare function find<S extends T, T> (func: (item: T) => item is T): (iterable: Iterable<T>) => S | null
-export declare function find<S extends T, T> (func: (item: T) => item is T, iterable: Iterable<T>): S | null
+export declare function find<S extends T, T> (func: (item: T) => item is S): (iterable: Iterable<T>) => S | null
+export declare function find<S extends T, T> (func: (item: T) => item is S, iterable: Iterable<T>): S | null
 export declare function find<T> (func: (item: T) => boolean): (iterable: Iterable<T>) => T | null
 export declare function find<T> (func: (item: T) => boolean, iterable: Iterable<T>): T | null
 
