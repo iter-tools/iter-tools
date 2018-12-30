@@ -3,7 +3,7 @@ import ensureAsyncIterable from './internal/ensure-async-iterable'
 async function find (func, iterable) {
   let c = 0
   for await (const item of ensureAsyncIterable(iterable)) {
-    if (func(item, c++)) {
+    if ((await func(item, c++))) {
       return item
     }
   }

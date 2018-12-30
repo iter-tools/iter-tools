@@ -39,6 +39,11 @@ describe('asyncFind', function () {
     expect(await found).toBe(5)
   })
 
+  it('returns found item (using a promise)', async function () {
+    const found = asyncFind(async (item) => item === 5, [1, 2, 3, 4, 5, 6])
+    expect(await found).toBe(5)
+  })
+
   it('returns null if no item found', async function () {
     const found = asyncFind((item) => item === 100, [1, 2, 3, 4, 5, 6])
     expect(await found).toBe(null)

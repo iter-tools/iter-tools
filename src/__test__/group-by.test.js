@@ -19,6 +19,23 @@ describe('groupBy', function () {
     expect(next.done).toBe(true)
   })
 
+  it('groupBy use key function', function () {
+    const iter = groupBy((item) => item.toLowerCase(), 'AaaBbaACccCD')
+    let next
+    next = iter.next()
+    expect(next.value[0]).toBe('a')
+    next = iter.next()
+    expect(next.value[0]).toBe('b')
+    next = iter.next()
+    expect(next.value[0]).toBe('a')
+    next = iter.next()
+    expect(next.value[0]).toBe('c')
+    next = iter.next()
+    expect(next.value[0]).toBe('d')
+    next = iter.next()
+    expect(next.done).toBe(true)
+  })
+
   it('groupBy main cursor (curried)', function () {
     const iter = groupBy(null)('AAABBAACCCCD')
     let next
@@ -91,6 +108,40 @@ describe('asyncGroupBy', function () {
     expect(next.value[0]).toBe('C')
     next = await iter.next()
     expect(next.value[0]).toBe('D')
+    next = await iter.next()
+    expect(next.done).toBe(true)
+  })
+
+  it('groupBy use key function', async function () {
+    const iter = asyncGroupBy((item) => item.toLowerCase(), 'AaaBbaACccCD')
+    let next
+    next = await iter.next()
+    expect(next.value[0]).toBe('a')
+    next = await iter.next()
+    expect(next.value[0]).toBe('b')
+    next = await iter.next()
+    expect(next.value[0]).toBe('a')
+    next = await iter.next()
+    expect(next.value[0]).toBe('c')
+    next = await iter.next()
+    expect(next.value[0]).toBe('d')
+    next = await iter.next()
+    expect(next.done).toBe(true)
+  })
+
+  it('groupBy use key function (using a promise)', async function () {
+    const iter = asyncGroupBy(async (item) => item.toLowerCase(), 'AaaBbaACccCD')
+    let next
+    next = await iter.next()
+    expect(next.value[0]).toBe('a')
+    next = await iter.next()
+    expect(next.value[0]).toBe('b')
+    next = await iter.next()
+    expect(next.value[0]).toBe('a')
+    next = await iter.next()
+    expect(next.value[0]).toBe('c')
+    next = await iter.next()
+    expect(next.value[0]).toBe('d')
     next = await iter.next()
     expect(next.done).toBe(true)
   })

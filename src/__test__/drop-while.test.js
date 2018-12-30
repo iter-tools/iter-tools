@@ -33,6 +33,11 @@ describe('asyncDropWhile', function () {
     expect(await asyncToArray(iter)).toEqual([4, 5, 6])
   })
 
+  it('dropWhile on iterable (using a promise)', async function () {
+    const iter = asyncDropWhile((item) => Promise.resolve(item !== 4), range({ start: 1, end: 7 }))
+    expect(await asyncToArray(iter)).toEqual([4, 5, 6])
+  })
+
   it('dropWhile on iterable (curried version)', async function () {
     const iter = asyncDropWhile((item) => item !== 4)
     expect(await asyncToArray(iter(range({ start: 1, end: 7 })))).toEqual([4, 5, 6])

@@ -12,7 +12,7 @@ async function * groupBy (selector, iterable) {
       yield currentItem.value
       currentItem = await iterator.next()
       if (currentItem.done) return
-      currentKey = selector(currentItem.value)
+      currentKey = await selector(currentItem.value)
       if (previousKey !== currentKey) {
         return
       }
@@ -24,7 +24,7 @@ async function * groupBy (selector, iterable) {
 
     while (true) {
       if (currentItem.done) return
-      currentKey = selector(currentItem.value)
+      currentKey = await selector(currentItem.value)
       if (previousKey !== currentKey) {
         previousKey = currentKey
         yield [currentKey, group()]

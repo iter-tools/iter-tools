@@ -28,6 +28,11 @@ describe('asyncTakeWhile', function () {
     expect(await asyncToArray(iter)).toEqual([2, 2])
   })
 
+  it('takeWhile on array (using a promise)', async function () {
+    const iter = asyncTakeWhile((item) => Promise.resolve(item % 2 === 0), [2, 2, 3, 2, 2, 2])
+    expect(await asyncToArray(iter)).toEqual([2, 2])
+  })
+
   it('takeWhile on iterable', async function () {
     const iter = asyncTakeWhile((item) => item !== 4, range({ start: 1, end: 7 }))
     expect(await asyncToArray(iter)).toEqual([1, 2, 3])

@@ -15,7 +15,7 @@ async function reduce (initial, func, iterable) {
     }
     let result
     while (!(result = await iterator.next()).done) {
-      acc = func(acc, result.value, c++)
+      acc = await func(acc, result.value, c++)
     }
     return acc
   } finally { // close the iterable in case of exceptions

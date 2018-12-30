@@ -7,7 +7,7 @@ async function * dropWhile (func, iterable) {
     if (!drop) {
       yield item
     } else {
-      drop = func(item, c++)
+      drop = await func(item, c++)
       if (!drop) {
         yield item
       }

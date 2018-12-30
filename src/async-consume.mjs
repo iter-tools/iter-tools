@@ -2,7 +2,7 @@ import ensureAsyncIterable from './internal/ensure-async-iterable'
 
 async function consume (func, iterable) {
   for await (const item of ensureAsyncIterable(iterable)) {
-    func(item)
+    await func(item)
   }
 }
 
