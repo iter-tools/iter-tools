@@ -405,11 +405,11 @@ export declare function asyncEnumerate<T> (iterable: AsyncIterableLike<T>, start
     AsyncIterableIterator<[number, T]>
 
 export declare function asyncEvery<T> (func: (item: T) => MaybePromise<boolean>):
-  (iterable: AsyncIterableLike<T>) => boolean
+  (iterable: AsyncIterableLike<T>) => Promise<boolean>
 export declare function asyncEvery<T> (
   func: (item: T) => MaybePromise<boolean>,
   iterable: AsyncIterableLike<T>
-): boolean
+): Promise<boolean>
 
 export declare function asyncExecute<T, Args extends any[] = any[]> (
   func: (...args: Args) => Promise<T>,
@@ -486,20 +486,20 @@ export declare function asyncMerge<T> (pickFunc: AsyncMergePickFunc<T>): (iterab
 export declare function asyncMerge<T> (pickFunc: AsyncMergePickFunc<T>, iterables: ReadonlyArray<AsyncIterableLike<T>>): AsyncIterableIterator<T>
 
 export declare function asyncReduce<T, O> (func: (acc: O, item: T, c: number) => O):
-    (iterable: AsyncIterableLike<T>) => O
+  (iterable: AsyncIterableLike<T>) => Promise<O>
 export declare function asyncReduce<T, O> (
   initial: O,
   func: (acc: O, item: T, c: number) => MaybePromise<O>
-): (iterable: AsyncIterableLike<T>) => O
+): (iterable: AsyncIterableLike<T>) => Promise<O>
 export declare function asyncReduce<T, O> (
   func: (acc: O, item: T, c: number) => MaybePromise<O>,
   iterable: AsyncIterableLike<T>
-): O
+): Promise<O>
 export declare function asyncReduce<T, O> (
     initial: O,
     func: (acc: O, item: T, c: number) => MaybePromise<O>,
     iterable: AsyncIterableLike<T>
-): O
+): Promise<O>
 
 export declare function asyncSize (iterable: AsyncIterable<any>): number
 
@@ -546,11 +546,11 @@ export declare function asyncRegexpExecIter (re: RegExp, iterable: AsyncIterable
 export declare function asyncSplitLines (iterable: AsyncIterableLike<string>): AsyncIterableLike<string>
 
 export declare function asyncSome<T> (func: (item: T) => MaybePromise<boolean>):
-  (iterable: AsyncIterableLike<T>) => boolean
+  (iterable: AsyncIterableLike<T>) => Promise<boolean>
 export declare function asyncSome<T> (
   func: (item: T) => MaybePromise<boolean>,
   iterable: AsyncIterableLike<T>
-): boolean
+): Promise<boolean>
 
 export declare function asyncBuffer<T> (n: number): (iterable: AsyncIterableLike<T>) => AsyncIterableIterator<T>
 export declare function asyncBuffer<T> (n: number, iterable: AsyncIterableLike<T>): AsyncIterableIterator<T>
