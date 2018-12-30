@@ -15,7 +15,7 @@ const defaultShouldIFlat = (depth) => {
 
 function asyncFlat (shouldIFlat, iterable) {
   async function * _asyncFlat (currentDepth, iterable) {
-    if ((await shouldIFlat(currentDepth, iterable))) {
+    if (await shouldIFlat(currentDepth, iterable)) {
       for await (const iter of iterable) {
         yield * _asyncFlat(currentDepth + 1, iter)
       }
