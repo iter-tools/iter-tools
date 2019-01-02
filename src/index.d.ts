@@ -526,7 +526,7 @@ export declare function asyncTakeSorted<T> (n: number, func?: (item: T) => boole
 
 export declare function asyncTee<T> (iterable: AsyncIterableLike<T>, n?: number): IterableIterator<AsyncIterableIterator<T>>
 
-export declare function asyncToArray<T> (iterable: AsyncIterableLike<T>): T[]
+export declare function asyncToArray<T> (iterable: AsyncIterableLike<T>): Promise<T[]>
 
 export declare function asyncZipLongest<T> (...iterables: Array<AsyncIterableLike<T>>): AsyncIterableIterator<T[]>
 export declare function asyncZipAll<T> (...iterables: Array<AsyncIterableLike<T>>): AsyncIterableIterator<T[]>
