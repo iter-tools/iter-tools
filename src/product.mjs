@@ -1,23 +1,39 @@
 import ensureIterable from './internal/ensure-iterable'
 
-export default function product (...args) {
-  const iters = args.map(i => ensureIterable(i))
-
-  function * multiply (iterable1, iterable2) {
-    for (const item1 of iterable1) {
-      for (const item2 of iterable2) {
-        yield item1.concat(item2)
-      }
+function * multiply (iterable1, iterable2) {
+  for (const item1 of iterable1) {
+    for (const item2 of iterable2) {
+      yield item1.concat(item2)
     }
   }
+}
 
-  if (iters.length === 0) {
-    return function * () {}
-  } else {
+function * empty () {}
+
+class Product {
+  constructor (...args) {
+    this.iters = args.map(i => Array.from(ensureIterable(i)))
+  }
+
+  [Symbol.iterator] () {
+    if (this.iters.length === 0) return empty()
     let currentIter = [[]]
-    for (const it of iters) {
-      currentIter = multiply(currentIter, Array.from(it))
+    for (const it of this.iters) {
+      currentIter = multiply(currentIter, it)
     }
     return currentIter
   }
+
+  get length () {
+    if (this.iters.length === 0) return 0
+    const lengths = this.iters
+      .map((iter) => iter.length)
+
+    return lengths
+      .reduce((acc, value) => acc * value, 1)
+  }
+}
+
+export default function product (...args) {
+  return new Product(...args)
 }
