@@ -1,15 +1,20 @@
-import ensureAsyncIterable from './internal/ensure-async-iterable'
+import asyncBatch from './async-batch'
 
-async function * map (func, iterable) {
+async function * map (concurrency, func, iterable) {
   let c = 0
-  for await (const item of ensureAsyncIterable(iterable)) {
-    yield await func(item, c++)
+  for await (const items of asyncBatch(concurrency, iterable)) {
+    const results = await Promise.all(items.map((item) => func(item, c++)))
+    yield * results
   }
 }
 
-export default function curriedMap (func, iterable) {
-  if (arguments.length === 1) {
-    return iterable => map(func, iterable)
+export default function curriedMap (...args) {
+  if (args.length === 1) {
+    return iterable => map(1, args[0], iterable)
+  } else if (args.length === 2 && typeof args[0] === 'number') {
+    return iterable => map(args[0], args[1], iterable)
+  } else if (args.length === 2) {
+    return map(1, args[0], args[1])
   }
-  return map(func, iterable)
+  return map(args[0], args[1], args[2])
 }
