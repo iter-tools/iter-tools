@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Fixed
  -  async function can take an async callback
+ -  find, asyncFind: they return undefined when an item has not been found
 
 ## [6.1.7] - 2018-11-06
 ### Fixed
