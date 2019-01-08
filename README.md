@@ -45,7 +45,7 @@ Utilities returning multiple iterables
 * [groupBy](#group-by) ([async](#group-by))
 * [tee](#tee) ([async](#async-tee))
 
-Utilities
+Others
 * [iterable](#iterable) ([async](#async-iterable))
 * [toArray](#to-array) ([async](#async-to-array))
 * [execute](#execute) ([async](#async-execute))
@@ -71,6 +71,10 @@ Combinatory generators
 * [permutations](#permutations)
 * [combinationsWithReplacement](#combinations-with-replacement)
 * [combinations](#combinations)
+
+Utilities
+* [compose](#compose)
+* [pipeline](#pipeline)
 
 ## Definitions
 This should help clarify the documentation. You can also get more informations here: https://developer.mozilla.org/en/docs/Web/JavaScript/Guide/Iterators_and_Generators and here: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols
@@ -856,6 +860,40 @@ combinationsWithReplacement([1, 2, 3, 4], 2);
 // [ 3, 4 ],
 // [ 4, 4 ]
 ```
+
+## compose
+This is a classic composition function that can be used to assemble multiple functions that take an iterable and return an iterable.
+```js
+const iter = compose(
+  map((x) =>  x + 3),
+  filter((x % 2) === 0)
+)
+
+iter([1, 2, 3, 4]) // 5, 7
+```
+Note: it works right to left!
+
+## pipeline
+Pipeline is a more intuitive version of compose that works left to right:
+```js
+const iter = pipeline(
+  map((x) =>  x + 3),
+  filter((x % 2) === 0)
+)
+
+iter([1, 2, 3, 4]) // 4, 6
+```
+You can use pipeline this way for extra readibility
+```js
+const iter = pipeline(
+  () => [1, 2, 3, 4]
+  map((x) =>  x + 3),
+  filter((x % 2) === 0)
+)
+
+iter() // 4, 6
+```
+
 
 ## Issues and limitations
 There are a few limitations that you need to be aware of.

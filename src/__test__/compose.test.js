@@ -1,8 +1,8 @@
 /* eslint-env node, jest */
 const { map, filter, compose } = require('iter-tools')
 
-function power2 (x) {
-  return x * x
+function bump (x) {
+  return x + 3
 }
 
 function isEven (x) {
@@ -11,7 +11,12 @@ function isEven (x) {
 
 describe('compose', function () {
   it('composes iterables', function () {
-    const iter = compose(map(power2), filter(isEven), map(power2))
-    expect(Array.from(iter([1, 2, 3, 4]))).toEqual([16, 256])
+    const iter = compose(map(bump), filter(isEven))
+    expect(Array.from(iter([1, 2, 3, 4]))).toEqual([5, 7])
+  })
+
+  it('composes iterables (check order)', function () {
+    const iter = compose(filter(isEven), map(bump))
+    expect(Array.from(iter([1, 2, 3, 4]))).toEqual([4, 6])
   })
 })
