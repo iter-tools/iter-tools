@@ -281,6 +281,8 @@ export declare function merge<T> (pickFunc: MergePickFunc<T>, iterables: Readonl
 
 export declare const permutations: CombinationsPermutations
 
+export declare function pipeline<T> (fns: Iterable<(_: T) => T>): IterableIterator<T>
+
 export declare function product<Args extends Array<Iterable<any>>> (...iterables: Args):
   IterableIterator<ProductReturnElement<Args>>
 
