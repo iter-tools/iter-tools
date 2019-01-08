@@ -3,7 +3,7 @@ import * as iter from '../index'
 
 const sampleIterable = [0, 1, 2, 3]
 
-assert<2 | null>(
+assert<2 | undefined>(
   iter.find(
     (item): item is 2 => item === 2,
     sampleIterable
@@ -11,7 +11,7 @@ assert<2 | null>(
 )
 
 assert<
-  Promise<2 | null>
+  Promise<2 | undefined>
 >(
   iter.asyncFind(
     (item): item is 2 => item === 2,

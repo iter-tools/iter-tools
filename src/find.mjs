@@ -9,7 +9,7 @@ function find (func, iterable) {
       return item
     }
   }
-  return null
+  return undefined
 }
 
 export default function curriedFind (func, iterable) {
