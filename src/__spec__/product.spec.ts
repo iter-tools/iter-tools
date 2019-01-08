@@ -13,6 +13,10 @@ assert<
 >(iter.product([0, 1, 2], [3, 4, 5], [7, 8, 9]))
 
 assert<
+  number
+>(iter.product([0, 1, 2], [3, 4, 5], [7, 8, 9]).length)
+
+assert<
   IterableIterator<[string, string, string]>
 >(iter.product(
   iter.iterable(''),

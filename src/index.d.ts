@@ -15,8 +15,8 @@ type MaybePromise<T> = T | Promise<T>
  * Function signature of `permutations` and `combinations`
  */
 interface CombinationsPermutations {
-  <Iter extends Iterable<any>>(iterable: Iter, r?: undefined): CombinationsPermutationsByIterable<Iter>
-  <T, R extends number>(iterable: Iterable<T>, r: R): CombinationsPermutationsByLength<T, R>
+  <Iter extends Iterable<any>>(iterable: Iter, r?: undefined): CombinationsPermutationsByIterable<Iter> & { readonly length: number }
+  <T, R extends number>(iterable: Iterable<T>, r: R): CombinationsPermutationsByLength<T, R> & { readonly length: number }
 }
 
 type CombinationsPermutationsByIterable<Iter extends Iterable<any>> =
@@ -278,7 +278,7 @@ export declare function merge<T> (pickFunc: MergePickFunc<T>, iterables: Readonl
 export declare const permutations: CombinationsPermutations
 
 export declare function product<Args extends Array<Iterable<any>>> (...iterables: Args):
-  IterableIterator<ProductReturnElement<Args>>
+  IterableIterator<ProductReturnElement<Args>> & { readonly length: number }
 
 export declare function range<R extends number> (r: R): RangeReturn<R>
 export declare function range (opts: { start: number, end?: number, step?: number }): IterableIterator<number>
