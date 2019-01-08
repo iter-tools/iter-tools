@@ -219,10 +219,10 @@ export declare function filter<S extends T, T> (func: (item: T) => item is S, it
 export declare function filter<T> (func: (item: T) => boolean): (iterable: Iterable<T>) => IterableIterator<T>
 export declare function filter<T> (func: (item: T) => boolean, iterable: Iterable<T>): IterableIterator<T>
 
-export declare function find<S extends T, T> (func: (item: T) => item is S): (iterable: Iterable<T>) => S | null
-export declare function find<S extends T, T> (func: (item: T) => item is S, iterable: Iterable<T>): S | null
-export declare function find<T> (func: (item: T) => boolean): (iterable: Iterable<T>) => T | null
-export declare function find<T> (func: (item: T) => boolean, iterable: Iterable<T>): T | null
+export declare function find<S extends T, T> (func: (item: T) => item is S): (iterable: Iterable<T>) => S | undefined
+export declare function find<S extends T, T> (func: (item: T) => item is S, iterable: Iterable<T>): S | undefined
+export declare function find<T> (func: (item: T) => boolean): (iterable: Iterable<T>) => T | undefined
+export declare function find<T> (func: (item: T) => boolean, iterable: Iterable<T>): T | undefined
 
 export declare function first<Iter extends Iterable<any>> (iterable: Iter):
   Iter extends [] ? undefined :
@@ -440,13 +440,13 @@ export declare function asyncFind<S extends T, T> (func: (item: T) => item is S)
 export declare function asyncFind<S extends T, T> (
   func: (item: T) => item is S,
   iterable: AsyncIterableLike<T>
-): Promise<S | null>
+): Promise<S | undefined>
 export declare function asyncFind<T> (func: (item: T) => MaybePromise<boolean>):
   (iterable: AsyncIterableLike<T>) => Promise<T | null>
 export declare function asyncFind<T> (
   func: (item: T) => MaybePromise<boolean>,
   iterable: AsyncIterableLike<T>
-): Promise<T | null>
+): Promise<T | undefined>
 
 export declare function asyncFirst<T> (iterable: AsyncIterableLike<T>): T | undefined
 
