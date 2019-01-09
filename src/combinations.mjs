@@ -15,29 +15,23 @@ function isSorted (arr) {
   return true
 }
 
-class Combinations {
-  constructor (iterable, r) {
-    this.arr = Array.from(ensureIterable(iterable))
-    this.len = this.arr.length
-    this.r = typeof r === 'undefined' ? this.len : r
-  }
+export default function combinations (iterable, r) {
+  const arr = Array.from(ensureIterable(iterable))
+  const len = arr.length
+  r = typeof r === 'undefined' ? len : r
+  return {
+    * [Symbol.iterator] () {
+      const mapToIndex = map((i) => arr[i])
 
-  * [Symbol.iterator] () {
-    const mapToIndex = map((i) => this.arr[i])
-
-    for (let indices of permutations(range(this.len), this.r)) {
-      if (isSorted(indices)) {
-        yield Array.from(mapToIndex(indices))
+      for (let indices of permutations(range(len), r)) {
+        if (isSorted(indices)) {
+          yield Array.from(mapToIndex(indices))
+        }
       }
+    },
+    get length () {
+      if (len === 0 || r === 0 || r > len) return 0
+      return factorial(len) / (factorial(r) * factorial(len - r))
     }
   }
-
-  get length () {
-    if (this.len === 0 || this.r === 0 || this.r > this.len) return 0
-    return factorial(this.len) / (factorial(this.r) * factorial(this.len - this.r))
-  }
-}
-
-export default function combinations (iterable, r) {
-  return new Combinations(iterable, r)
 }

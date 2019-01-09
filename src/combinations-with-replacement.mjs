@@ -16,28 +16,22 @@ function isSorted (arr) {
   return true
 }
 
-class CombinationsWithReplacement {
-  constructor (iterable, r) {
-    this.arr = Array.from(ensureIterable(iterable))
-    this.len = this.arr.length
-    this.r = typeof r === 'undefined' ? this.len : r
-  }
-
-  * [Symbol.iterator] () {
-    const mapToIndex = map((i) => this.arr[i])
-    for (let indices of product(...tee(range(this.len), this.r))) {
-      if (isSorted(indices)) {
-        yield Array.from(mapToIndex(indices))
+export default function combinationsWithReplacement (iterable, r) {
+  const arr = Array.from(ensureIterable(iterable))
+  const len = arr.length
+  r = typeof r === 'undefined' ? len : r
+  return {
+    * [Symbol.iterator] () {
+      const mapToIndex = map((i) => arr[i])
+      for (let indices of product(...tee(range(len), r))) {
+        if (isSorted(indices)) {
+          yield Array.from(mapToIndex(indices))
+        }
       }
+    },
+    get length () {
+      if (len === 0 || r === 0 || r > len) return 0
+      return factorial(len + r - 1) / (factorial(r) * factorial(len - 1))
     }
   }
-
-  get length () {
-    if (this.len === 0 || this.r === 0 || this.r > this.len) return 0
-    return factorial(this.len + this.r - 1) / (factorial(this.r) * factorial(this.len - 1))
-  }
-}
-
-export default function combinationsWithReplacement (iterable, r) {
-  return new CombinationsWithReplacement(iterable, r)
 }
