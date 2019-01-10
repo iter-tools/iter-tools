@@ -23,11 +23,11 @@ type CombinationsPermutationsByIterable<Iter extends Iterable<any>> =
   Iter extends Iterable<infer T>
     ? Iter extends T[]
       ? CombinationsPermutationsByLength<T, Iter['length']>
-      : IterableIterator<T[]>
+      : Iterable<T[]>
     : never
 
 type CombinationsPermutationsByLength<T, R extends number> =
-  IterableIterator<R extends ReasonableNumber ? Repeat<T, R> : T[]>
+  Iterable<R extends ReasonableNumber ? Repeat<T, R> : T[]>
 
 /**
  * Helper generic for `product` function
@@ -278,7 +278,7 @@ export declare function merge<T> (pickFunc: MergePickFunc<T>, iterables: Readonl
 export declare const permutations: CombinationsPermutations
 
 export declare function product<Args extends Array<Iterable<any>>> (...iterables: Args):
-  IterableIterator<ProductReturnElement<Args>> & { readonly length: number }
+  Iterable<ProductReturnElement<Args>> & { readonly length: number }
 
 export declare function range<R extends number> (r: R): RangeReturn<R>
 export declare function range (opts: { start: number, end?: number, step?: number }): IterableIterator<number>
