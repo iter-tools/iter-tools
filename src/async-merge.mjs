@@ -18,10 +18,10 @@ async function * asyncMerge (pickFunc, iterables) {
       // pick and return the item
       const chosen = await pickFunc(items)
       if (typeof items[chosen] === 'undefined') {
-        throw new Error('iter-tools, merge: the sequence returned doesn\'t exist')
+        throw new Error('async-merge: the sequence returned doesn\'t exist')
       }
       if (items[chosen] === null) {
-        throw new Error('iter-tools, async-merge: the sequence returned is exhausted')
+        throw new Error('async-merge: the sequence returned is exhausted')
       }
       const { done, value } = await items[chosen]
       if (done) {
@@ -63,7 +63,7 @@ export const asyncMergeByPosition = makeAsync(mergeByPosition)
 
 const expire = (ms) =>
   new Promise((resolve, reject) =>
-    setTimeout(() => reject(new Error('iter-tools, merge: no sequence is ready after the configured interval')), ms))
+    setTimeout(() => reject(new Error('async-merge: no sequence is ready after the configured interval')), ms))
 
 export function asyncMergeByReadiness (ms) {
   return async function _asyncMergeByReadiness (promises) {

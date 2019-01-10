@@ -253,6 +253,11 @@ await asyncMap(animal => animal.kind, [
   Promise.resolve({type: 'dog'})
 ]); // ['cat', 'dog']
 ```
+It can also use as extra argument, the concurrency level (default 1):
+```js
+await asyncMap(2, asyncFunction, iterable);
+```
+If this is used, more than one asyncFunction can run concurrently.
 
 ## filter
 The equivalent of the array "filter" function.
@@ -267,6 +272,11 @@ await asyncFilter(animal => animal.kind.slice(1) === 'at', [
 
 ## async-filter
 See filter. The first argument can be a function returning synchronously or a promise.
+It can also use as extra argument, the concurrency level (default 1):
+```js
+await asyncFilter(2, asyncFunction, iterable);
+```
+If this is used, more than one asyncFunction can run concurrently.
 
 ## take-while
 It returns values as soon as the function is true. Then it stops.

@@ -16,10 +16,10 @@ function * merge (pickFunc, iterables) {
       // pick and return the item
       const chosen = pickFunc(items)
       if (typeof items[chosen] === 'undefined') {
-        throw new Error('iter-tools, merge: the sequence returned doesn\'t exist')
+        throw new Error('the sequence returned doesn\'t exist')
       }
       if (items[chosen] === null) {
-        throw new Error('iter-tools, merge: the sequence returned is exhausted')
+        throw new Error('the sequence returned is exhausted')
       }
       const { done, value } = items[chosen]
       if (done) {

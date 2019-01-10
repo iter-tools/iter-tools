@@ -1,7 +1,7 @@
 import cloneRegexp from './internal/clone-regexp'
 
 function * regexpExec (re, str) {
-  if (typeof str !== 'string') throw new Error('iter-tools - regexpExec: it should take a string')
+  if (typeof str !== 'string') throw new Error('regexpExec: it should take a string')
   let match
   while ((match = re.exec(str)) !== null) {
     yield match

@@ -38,6 +38,11 @@ describe('asyncMap', function () {
     expect(await asyncToArray(iter)).toEqual([2, 4, 6])
   })
 
+  it('maps concurrently', async function () {
+    const iter = asyncMap(2, (item) => item * 2, range({ start: 1, end: 4 }))
+    expect(await asyncToArray(iter)).toEqual([2, 4, 6])
+  })
+
   it('returns mapped iterable (curried version)', async function () {
     const iter = asyncMap((item) => item * 2)
     expect(await asyncToArray(iter(range({ start: 1, end: 4 })))).toEqual([2, 4, 6])

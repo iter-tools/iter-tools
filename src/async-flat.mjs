@@ -10,7 +10,7 @@ const defaultShouldIFlat = (depth) => {
       (typeof iter[Symbol.iterator] === 'function' || typeof iter[Symbol.asyncIterator] === 'function') &&
       typeof iter !== 'string'
   }
-  throw new Error('flat: "depth" can be a function or a number')
+  throw new Error('async-flat: "depth" can be a function or a number')
 }
 
 function asyncFlat (shouldIFlat, iterable) {
