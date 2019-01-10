@@ -2,25 +2,29 @@ import assert from 'static-type-assert'
 import * as iter from '../index'
 
 assert<
-  IterableIterator<[number, number, number]>
+  Iterable<[number, number, number]>
 >(iter.combinations([0, 1, 2, 3], 3))
 
 assert<
-  IterableIterator<number[]>
+  number
+>(iter.combinations([0, 1, 2, 3], 3).length)
+
+assert<
+  Iterable<number[]>
 >(iter.combinations([0, 1, 2, 3], Number()))
 
 assert<
-  IterableIterator<number[]>
+  Iterable<number[]>
 >(iter.combinations([0, 1, 2, 3], 999))
 
 assert<
-  IterableIterator<[string, string, string]>
+  Iterable<[string, string, string]>
 >(iter.combinations(iter.iterable(''), 3))
 
 assert<
-  IterableIterator<[number, number, number, number]>
+  Iterable<[number, number, number, number]>
 >(iter.combinations([0, 1, 2, 3] as [number, number, number, number]))
 
 assert<
-  IterableIterator<string[]>
+  Iterable<string[]>
 >(iter.combinations(iter.iterable('')))

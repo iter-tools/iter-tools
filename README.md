@@ -808,6 +808,11 @@ product([1, 2], [3, 4], [5, 6]);
 // You can use tee for multiplying the same iterable for itself.
 product(...tee(range(2))); // [0, 0]  [0, 1]  [1, 0]  [1, 1]
 ```
+You can get the number of items reading the attribute *length* without actually emitting the sequence:
+```js
+const iter = product([1, 2], [3, 4], [5, 6]);
+iter.length === 8
+```
 
 ## permutations
 It returns permutations of length n of an iterable. n defaults to the length of the iterable.
@@ -828,6 +833,11 @@ permutations([1, 2, 3, 4], 2);
   // [ 4, 2 ],
   // [ 4, 3 ]
 ```
+You can get the number of items reading the attribute *length* without actually emitting the sequence:
+```js
+const iter = permutations(range(2)); // [0, 1] [1, 0]
+iter.length === 2
+```
 
 ## combinations
 It returns combinations of length n of an iterable. n defaults to the length of the iterable.
@@ -841,6 +851,11 @@ combinations([1, 2, 3, 4], 2);
 // [ 2, 3 ],
 // [ 2, 4 ],
 // [ 3, 4 ]
+```
+You can get the number of items reading the attribute *length* without actually emitting the sequence:
+```js
+const iter = combinations([1, 2, 3, 4], 2);
+iter.length === 6
 ```
 
 ## combinations-with-replacement
@@ -859,6 +874,11 @@ combinationsWithReplacement([1, 2, 3, 4], 2);
 // [ 3, 3 ],
 // [ 3, 4 ],
 // [ 4, 4 ]
+```
+You can get the number of items reading the attribute *length* without actually emitting the sequence:
+```js
+const iter = combinationsWithReplacement([1, 2, 3, 4], 2);
+iter.length === 10
 ```
 
 ## compose

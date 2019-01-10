@@ -3,6 +3,7 @@ import range from './range'
 import product from './product'
 import tee from './tee'
 import ensureIterable from './internal/ensure-iterable'
+import factorial from './internal/factorial'
 
 function isSorted (arr) {
   if (arr.length < 2) return true
@@ -15,14 +16,22 @@ function isSorted (arr) {
   return true
 }
 
-export default function * combinationsWithReplacement (iterable, r) {
+export default function combinationsWithReplacement (iterable, r) {
   const arr = Array.from(ensureIterable(iterable))
-  const mapToIndex = map(function (i) { return arr[i] })
-  const n = arr.length
-
-  for (let indices of product(...tee(range(n), r))) {
-    if (isSorted(indices)) {
-      yield Array.from(mapToIndex(indices))
+  const len = arr.length
+  r = typeof r === 'undefined' ? len : r
+  return {
+    * [Symbol.iterator] () {
+      const mapToIndex = map((i) => arr[i])
+      for (let indices of product(...tee(range(len), r))) {
+        if (isSorted(indices)) {
+          yield Array.from(mapToIndex(indices))
+        }
+      }
+    },
+    get length () {
+      if (len === 0 || r === 0 || r > len) return 0
+      return factorial(len + r - 1) / (factorial(r) * factorial(len - 1))
     }
   }
 }
