@@ -15,19 +15,20 @@ type MaybePromise<T> = T | Promise<T>
  * Function signature of `permutations` and `combinations`
  */
 interface CombinationsPermutations {
-  <Iter extends Iterable<any>>(iterable: Iter, r?: undefined): CombinationsPermutationsByIterable<Iter> & { readonly length: number }
-  <T, R extends number>(iterable: Iterable<T>, r: R): CombinationsPermutationsByLength<T, R> & { readonly length: number }
+  <Iter extends Iterable<any>>(iterable: Iter, r?: undefined): CombinationsPermutationsByIterable<Iter>
+  <T, R extends number>(iterable: Iterable<T>, r: R): CombinationsPermutationsByLength<T, R>
 }
 
 type CombinationsPermutationsByIterable<Iter extends Iterable<any>> =
   Iter extends Iterable<infer T>
     ? Iter extends T[]
       ? CombinationsPermutationsByLength<T, Iter['length']>
-      : Iterable<T[]>
+      : (Iterable<T[]> & { readonly length: number })
     : never
 
 type CombinationsPermutationsByLength<T, R extends number> =
-  Iterable<R extends ReasonableNumber ? Repeat<T, R> : T[]>
+  Iterable<R extends ReasonableNumber ? Repeat<T, R> : T[]> &
+  { readonly length: number }
 
 /**
  * Helper generic for `product` function
