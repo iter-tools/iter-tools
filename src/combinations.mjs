@@ -2,7 +2,7 @@ import map from './map'
 import range from './range'
 import permutations from './permutations'
 import ensureIterable from './internal/ensure-iterable'
-import factorial from './internal/factorial'
+import { combinationsSize } from './internal/math'
 
 function isSorted (arr) {
   if (arr.length < 2) return true
@@ -29,9 +29,8 @@ export default function combinations (iterable, r) {
         }
       }
     },
-    get length () {
-      if (len === 0 || r === 0 || r > len) return 0
-      return factorial(len) / (factorial(r) * factorial(len - r))
+    getSize () {
+      return combinationsSize(len, r)
     }
   }
 }

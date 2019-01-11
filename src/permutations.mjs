@@ -1,5 +1,5 @@
 import ensureIterable from './internal/ensure-iterable'
-import factorial from './internal/factorial'
+import { permutationsSize } from './internal/math'
 import map from './map'
 import range from './range'
 import tee from './tee'
@@ -19,9 +19,8 @@ export default function permutations (iterable, r) {
         }
       }
     },
-    get length () {
-      if (len === 0 || r === 0 || r > len) return 0
-      return factorial(len) / factorial(len - r)
+    getSize () {
+      return permutationsSize(len, r)
     }
   }
 }

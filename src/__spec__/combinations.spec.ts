@@ -7,7 +7,7 @@ assert<
 
 assert<
   number
->(iter.combinations([0, 1, 2, 3], 3).length)
+>(iter.combinations([0, 1, 2, 3], 3).getSize())
 
 assert<
   Iterable<number[]>

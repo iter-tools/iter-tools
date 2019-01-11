@@ -21,7 +21,7 @@ export default function product (...args) {
       }
       return currentIter
     },
-    get length () {
+    getSize () {
       if (iters.length === 0) return 0
       const lengths = iters
         .map((iter) => iter.length)

@@ -14,7 +14,7 @@ assert<
 
 assert<
   number
->(iter.product([0, 1, 2], [3, 4, 5], [7, 8, 9]).length)
+>(iter.product([0, 1, 2], [3, 4, 5], [7, 8, 9]).getSize())
 
 assert<
   Iterable<[string, string, string]>

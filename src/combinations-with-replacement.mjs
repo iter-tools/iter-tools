@@ -3,7 +3,7 @@ import range from './range'
 import product from './product'
 import tee from './tee'
 import ensureIterable from './internal/ensure-iterable'
-import factorial from './internal/factorial'
+import { combinationsWithReplacementSize } from './internal/math'
 
 function isSorted (arr) {
   if (arr.length < 2) return true
@@ -29,9 +29,8 @@ export default function combinationsWithReplacement (iterable, r) {
         }
       }
     },
-    get length () {
-      if (len === 0 || r === 0 || r > len) return 0
-      return factorial(len + r - 1) / (factorial(r) * factorial(len - 1))
+    getSize () {
+      return combinationsWithReplacementSize(len, r)
     }
   }
 }

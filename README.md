@@ -808,10 +808,10 @@ product([1, 2], [3, 4], [5, 6]);
 // You can use tee for multiplying the same iterable for itself.
 product(...tee(range(2))); // [0, 0]  [0, 1]  [1, 0]  [1, 1]
 ```
-You can get the number of items reading the attribute *length* without actually emitting the sequence:
+You can get the number of items calling the method *getSize* without actually emitting the sequence:
 ```js
 const iter = product([1, 2], [3, 4], [5, 6]);
-iter.length === 8
+iter.getSize() === 8
 ```
 
 ## permutations
@@ -833,10 +833,10 @@ permutations([1, 2, 3, 4], 2);
   // [ 4, 2 ],
   // [ 4, 3 ]
 ```
-You can get the number of items reading the attribute *length* without actually emitting the sequence:
+You can get the number of items calling the method *getSize* without actually emitting the sequence:
 ```js
 const iter = permutations(range(2)); // [0, 1] [1, 0]
-iter.length === 2
+iter.getSize() === 2
 ```
 
 ## combinations
@@ -852,10 +852,10 @@ combinations([1, 2, 3, 4], 2);
 // [ 2, 4 ],
 // [ 3, 4 ]
 ```
-You can get the number of items reading the attribute *length* without actually emitting the sequence:
+You can get the number of items calling the method *getSize* without actually emitting the sequence:
 ```js
 const iter = combinations([1, 2, 3, 4], 2);
-iter.length === 6
+iter.getSize() === 6
 ```
 
 ## combinations-with-replacement
@@ -875,10 +875,10 @@ combinationsWithReplacement([1, 2, 3, 4], 2);
 // [ 3, 4 ],
 // [ 4, 4 ]
 ```
-You can get the number of items reading the attribute *length* without actually emitting the sequence:
+You can get the number of items calling the method *getSize* without actually emitting the sequence:
 ```js
 const iter = combinationsWithReplacement([1, 2, 3, 4], 2);
-iter.length === 10
+iter.getSize() === 10
 ```
 
 ## compose
