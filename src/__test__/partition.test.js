@@ -1,5 +1,5 @@
 /* eslint-env node, jest */
-const { partition, range } = require('iter-tools')
+const { partition, range, zip } = require('iter-tools')
 
 describe('partition', function () {
   describe('evens and odds', function () {
@@ -34,6 +34,18 @@ describe('partition', function () {
       expect(func.mock.calls).toEqual(
         Array.from(range(10)).map(x => [x])
       )
+    })
+
+    it('iterate both evens and odds at the same time', function () {
+      const [evens, odds] = partition(isEven, range(10))
+      const zipped = Array.from(zip(evens, odds))
+      expect(zipped).toEqual([
+        [0, 1],
+        [2, 3],
+        [4, 5],
+        [6, 7],
+        [8, 9]
+      ])
     })
   })
 })
