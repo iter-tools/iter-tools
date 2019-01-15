@@ -25,5 +25,15 @@ describe('partition', function () {
         [1, 3, 5, 7, 9]
       ])
     })
+
+    it('calls func once for each item', function () {
+      const func = jest.fn(isEven)
+      const [evens, odds] = partition(func, range(10))
+      Array.from(evens)
+      Array.from(odds)
+      expect(func.mock.calls).toEqual(
+        Array.from(range(10)).map(x => [x])
+      )
+    })
   })
 })
