@@ -7,7 +7,7 @@ function uncurried (func, iter) {
   let knownUnsatisfiedCursor = 0
   let exhausted = false
 
-  const iterator = iterable(iter)
+  const iterator = iterable(iter)[Symbol.iterator]()
   function add () {
     const { value, done } = iterator.next()
 
