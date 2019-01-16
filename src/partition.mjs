@@ -1,10 +1,12 @@
+import Dequeue from 'dequeue'
 import iterable from './iterable'
 
+const UNDONE = value => ({ done: false, value })
+const DONE = { done: true, value: undefined }
+
 function uncurried (func, iter) {
-  const knownSatisfied = []
-  const knownUnsatisfied = []
-  let knownSatisfiedCursor = 0
-  let knownUnsatisfiedCursor = 0
+  const satisfied = new Dequeue()
+  const unsatisfied = new Dequeue()
   let exhausted = false
 
   const iterator = iterable(iter)[Symbol.iterator]()
@@ -14,45 +16,23 @@ function uncurried (func, iter) {
     if (done) {
       exhausted = true
     } else {
-      const chosen = func(value) ? knownSatisfied : knownUnsatisfied
+      const chosen = func(value) ? satisfied : unsatisfied
       chosen.push(value)
     }
   }
 
-  function satisfiedNext () {
-    if (knownSatisfiedCursor < knownSatisfied.length) {
-      const value = knownSatisfied[knownSatisfiedCursor]
-      knownSatisfiedCursor += 1
-      return { value, done: false }
+  function part (queue) {
+    function next () {
+      if (queue.length) return UNDONE(queue.shift())
+      if (exhausted) return DONE
+      add()
+      return next()
     }
 
-    if (exhausted) {
-      return { value: undefined, done: true }
-    }
-
-    add()
-    return satisfiedNext()
+    return iterable({ next })
   }
 
-  function unsatisfiedNext () {
-    if (knownUnsatisfiedCursor < knownUnsatisfied.length) {
-      const value = knownUnsatisfied[knownUnsatisfiedCursor]
-      knownUnsatisfiedCursor += 1
-      return { value, done: false }
-    }
-
-    if (exhausted) {
-      return { value: undefined, done: true }
-    }
-
-    add()
-    return unsatisfiedNext()
-  }
-
-  return [
-    iterable({ next: satisfiedNext }),
-    iterable({ next: unsatisfiedNext })
-  ]
+  return [part(satisfied), part(unsatisfied)]
 }
 
 const curried = func => iter => uncurried(func, iter)
