@@ -12,6 +12,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
  -  async function can take an async callback
  -  find, asyncFind: they return undefined when an item has not been found
 
+### Changed
+ -  async-map, async-filter takes an extra optional argument "concurrency"
+
 ## [6.1.7] - 2018-11-06
 ### Fixed
  -  Added polyfills to transpiled versions

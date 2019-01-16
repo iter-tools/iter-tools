@@ -9,7 +9,8 @@ run([
   bench('compose 100000 items', require('./compose-100000')),
   bench('regexp', require('./regexp-10000')),
   bench('while - for', require('./while-for-10000')),
-  bench('async-map 1000 items', require('./async-map-1000'))
+  bench('async-map 1000 items', require('./async-map-1000')),
+  bench('async-map parallel', require('./async-map-parallel'))
 ])
 
 function bench (title, config) {

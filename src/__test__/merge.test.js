@@ -73,6 +73,6 @@ describe('asyncMerge', function () {
     } catch (e) {
       error = e
     }
-    expect(error.message).toEqual('iter-tools, merge: no sequence is ready after the configured interval')
+    expect(error.message).toEqual('async-merge: no sequence is ready after the configured interval')
   })
 })
