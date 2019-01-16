@@ -1,5 +1,4 @@
 import range from './range'
-import map from './map'
 import ensureIterable from './internal/ensure-iterable'
 import Dequeue from 'dequeue'
 
@@ -8,7 +7,7 @@ export default function tee (iterable, number) {
   const iterator = ensureIterable(iterable)[Symbol.iterator]()
 
   let exhausted = 0
-  const arrays = Array.from(map(() => new Dequeue(), range(number)))
+  const arrays = Array.from(range(number)).map(() => new Dequeue())
   let done = false
 
   function fetch () {
