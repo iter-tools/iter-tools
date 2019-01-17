@@ -7,17 +7,17 @@ function uncurried (func, iter) {
   const iterator = iterable(iter)[Symbol.iterator]()
 
   function * part (queue) {
-    while (true) {
-      while (queue.length) {
-        yield queue.shift()
-      }
-
-      const { value, done } = iterator.next()
-      if (done) break
-
-      const chosen = func(value) ? satisfied : unsatisfied
-      chosen.push(value)
+    while (queue.length) {
+      yield queue.shift()
     }
+
+    const { value, done } = iterator.next()
+    if (done) return
+
+    const chosen = func(value) ? satisfied : unsatisfied
+    chosen.push(value)
+
+    yield * part(queue)
   }
 
   return [part(satisfied), part(unsatisfied)]
