@@ -285,21 +285,21 @@ export declare function partition<T, S extends T> (
   func: (item: T) => item is S,
   iter: Iterable<T>
 ): [
-  Iterable<S>,
-  Iterable<SetComplement<T, S>>
+  IterableIterator<S>,
+  IterableIterator<SetComplement<T, S>>
 ]
 export declare function partition<T, S extends T> (
   func: (item: T) => item is S
 ): (iter: Iterable<T>) => [
-  Iterable<S>,
-  Iterable<SetComplement<T, S>>
+  IterableIterator<S>,
+  IterableIterator<SetComplement<T, S>>
 ]
 export declare function partition<T> (
   func: (item: T) => boolean,
   iter: Iterable<T>
-): [Iterable<T>, Iterable<T>]
+): [IterableIterator<T>, IterableIterator<T>]
 export declare function partition<T> (func: (item: T) => boolean):
-  (iter: Iterable<T>) => [Iterable<T>, Iterable<T>]
+  (iter: Iterable<T>) => [IterableIterator<T>, IterableIterator<T>]
 
 export declare const permutations: CombinationsPermutations
 
