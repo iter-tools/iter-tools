@@ -4,27 +4,19 @@ import iterable from './iterable'
 function uncurried (func, iter) {
   const satisfied = new Dequeue()
   const unsatisfied = new Dequeue()
-  let exhausted = false
-
   const iterator = iterable(iter)[Symbol.iterator]()
-  function add () {
-    const { value, done } = iterator.next()
-
-    if (done) {
-      exhausted = true
-    } else {
-      const chosen = func(value) ? satisfied : unsatisfied
-      chosen.push(value)
-    }
-  }
 
   function * part (queue) {
     while (true) {
       while (queue.length) {
         yield queue.shift()
       }
-      if (exhausted) break
-      add()
+
+      const { value, done } = iterator.next()
+      if (done) break
+
+      const chosen = func(value) ? satisfied : unsatisfied
+      chosen.push(value)
     }
   }
 
