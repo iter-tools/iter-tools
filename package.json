@@ -55,8 +55,8 @@
     "@babel/runtime-corejs2": "^7.1.5",
     "dequeue": "^1.0.5",
     "little-ds-toolkit": "^1.1.0",
-    "typescript-tuple": "^1.4.0",
-    "typescript-union": "0.0.0"
+    "typescript-tuple": "^2.1.0",
+    "typescript-union": "^0.1.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.0.0",
@@ -83,10 +83,10 @@
     "microtime": "^2.1.8",
     "mkdirp": "^0.5.1",
     "rimraf": "^2.6.2",
-    "static-type-assert": "^2.0.0",
+    "static-type-assert": "^3.0.1",
     "tslint": "^5.11.0",
     "tslint-config-standard": "^8.0.1",
-    "typescript": "^3.0.3"
+    "typescript": "^3.2.2"
   },
   "jest": {
     "testEnvironment": "node",
