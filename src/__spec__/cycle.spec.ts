@@ -18,3 +18,7 @@ assert<
 assert<
   IterableIterator<string>
 >(iter.cycle(iter.iterable('')))
+
+assert<
+  IterableIterator<0 | 1 | 2>
+>(iter.cycle(new Set<0 | 1 | 2>()))

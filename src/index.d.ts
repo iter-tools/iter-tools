@@ -9,6 +9,7 @@ type AsyncIterableLike<T> = AsyncIterable<T> | Iterable<T>
 type ReasonableNumber = UnionRange<32>
 type IterableElement<Iter> = Iter extends Iterable<infer X> ? X : never
 type AsyncIterableElement<Iter> = Iter extends AsyncIterableLike<infer X> ? X : never
+type ToIterator<Iter> = IterableIterator<IterableElement<Iter>>
 type MaybePromise<T> = T | Promise<T>
 
 /**
@@ -167,7 +168,7 @@ export declare function consume<T> (func: (item: T) => void, iterable: Iterable<
 export declare function count (opts: number | { start: number, end?: number, step?: number }): IterableIterator<number>
 
 export declare function cycle<Iter extends Iterable<any>> (iterable: Iter):
-  Iter extends any[] ? IterableIterator<UnionFromTuple<Iter>> : Iter
+  Iter extends any[] ? IterableIterator<UnionFromTuple<Iter>> : ToIterator<Iter>
 
 export declare function cursor<T, Size extends ReasonableNumber> (
   opts: {
