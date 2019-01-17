@@ -44,6 +44,7 @@ Combine multiple iterables
 Utilities returning multiple iterables
 * [groupBy](#group-by) ([async](#group-by))
 * [tee](#tee) ([async](#async-tee))
+* [partition](#partition)
 
 Others
 * [iterable](#iterable) ([async](#async-iterable))
@@ -578,6 +579,14 @@ tee(range(3), 4); // [iter1, iter2, iter3, iter4]
 
 ## async-tee
 Same as tee but works on both sync and async iterables.
+
+## partition
+Takes a condition function and an iterable, divides the iterable into 2, one contains items that satisfy the condition function, one contains item that don't.
+```js
+const [evens, odds] = partition(x => x % 2 === 0, range(10))
+Array.from(evens) // [0, 2, 4, 6, 8]
+Array.from(odds) // [1, 3, 5, 7, 9]
+```
 
 # Utilities
 
