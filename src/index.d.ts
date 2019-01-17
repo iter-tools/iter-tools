@@ -9,6 +9,7 @@ type AsyncIterableLike<T> = AsyncIterable<T> | Iterable<T>
 type ReasonableNumber = UnionRange<32>
 type IterableElement<Iter> = Iter extends Iterable<infer X> ? X : never
 type AsyncIterableElement<Iter> = Iter extends AsyncIterableLike<infer X> ? X : never
+type ToIterator<Iter> = IterableIterator<IterableElement<Iter>>
 type MaybePromise<T> = T | Promise<T>
 
 /**
@@ -167,7 +168,7 @@ export declare function consume<T> (func: (item: T) => void, iterable: Iterable<
 export declare function count (opts: number | { start: number, end?: number, step?: number }): IterableIterator<number>
 
 export declare function cycle<Iter extends Iterable<any>> (iterable: Iter):
-  Iter extends any[] ? IterableIterator<UnionFromTuple<Iter>> : Iter
+  Iter extends any[] ? IterableIterator<UnionFromTuple<Iter>> : ToIterator<Iter>
 
 export declare function cursor<T, Size extends ReasonableNumber> (
   opts: {
@@ -272,7 +273,11 @@ export declare function groupBy<T, K> (
 export declare function interpose<T, I> (interposeItem: I): (iter: Iterable<T>) => IterableIterator<T | I>
 export declare function interpose<T, I> (interposeItem: I, iter: Iterable<T>): IterableIterator<T | I>
 
-export declare function iterable<T> (iterator: { next: () => {value: T} } | Iterable<T>): IterableIterator<T>
+export declare function iterable<T> (
+  iterator: {
+    readonly next: () => IteratorResult<T>
+  } | Iterable<T>
+): Iterable<T>
 
 export declare function map<T, O> (func: (item: T) => O): (iter: Iterable<T>) => IterableIterator<O>
 export declare function map<T, O> (func: (item: T) => O, iter: Iterable<T>): IterableIterator<O>
@@ -511,8 +516,10 @@ export declare function asyncInterpose<T, I> (interposeItem: I): (iter: AsyncIte
 export declare function asyncInterpose<T, I> (interposeItem: I, iter: AsyncIterableLike<T>): AsyncIterableIterator<T | I>
 
 export declare function asyncIterable<T> (
-  asyncIterator: { next: () => Promise<{value: T}> } | AsyncIterableLike<T>
-): AsyncIterableIterator<T>
+  asyncIterator: {
+    readonly next: () => Promise<IteratorResult<T>>
+  } | AsyncIterableLike<T>
+): AsyncIterable<T>
 
 export declare function asyncMap<T, O> (func: (item: T) => MaybePromise<O>):
   (iter: AsyncIterableLike<T>) => AsyncIterableIterator<O>
