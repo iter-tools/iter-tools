@@ -157,7 +157,7 @@ export declare function concat<T> (...iterables: Array<Iterable<T>>): IterableIt
 export declare const combinations: CombinationsPermutations
 export declare const combinationsWithReplacement: CombinationsPermutations
 
-export declare function compose<T> (fns: Iterable<(_: T) => T>): IterableIterator<T>
+export declare function compose<T> (...fns: ((x: T) => T)[]): (x: T) => T
 
 export declare function compress<T> (iterable: Iterable<T>, compress: Iterable<boolean>): IterableIterator<T>
 
@@ -282,7 +282,13 @@ export declare function merge<T> (pickFunc: MergePickFunc<T>, iterables: Readonl
 
 export declare const permutations: CombinationsPermutations
 
-export declare function pipeline<T> (fns: Iterable<(_: T) => T>): IterableIterator<T>
+export declare function pipeline<
+  Args extends any[],
+  T
+> (
+  init: (...args: Args) => T,
+  ...fns: ((x: T) => T)[]
+): (...args: Args) => T
 
 export declare function product<Args extends Array<Iterable<any>>> (...iterables: Args):
   Iterable<ProductReturnElement<Args>> & { getSize: () => number }
