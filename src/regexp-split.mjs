@@ -1,7 +1,7 @@
 import cloneRegexp from './internal/clone-regexp'
 
 function * regexpSplit (re, str) {
-  if (typeof str !== 'string') throw new Error('iter-tools - regexpSplit: it should take a string')
+  if (typeof str !== 'string') throw new Error('regexpSplit: it should take a string')
   let i, match
   if (!re) {
     yield * str

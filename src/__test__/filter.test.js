@@ -38,6 +38,11 @@ describe('asyncFilter', function () {
     expect(await asyncToArray(iter)).toEqual([2, 4, 6])
   })
 
+  it('filters concurrently', async function () {
+    const iter = asyncFilter(2, (item) => item % 2 === 0, range({ start: 1, end: 7 }))
+    expect(await asyncToArray(iter)).toEqual([2, 4, 6])
+  })
+
   it('returns filtered iterable (curried version)', async function () {
     const iter = asyncFilter(function (item) { return item % 2 === 0 })
     expect(await asyncToArray(iter(range({ start: 1, end: 7 })))).toEqual([2, 4, 6])

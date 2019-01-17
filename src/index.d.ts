@@ -158,7 +158,7 @@ export declare function concat<T> (...iterables: Array<Iterable<T>>): IterableIt
 export declare const combinations: CombinationsPermutations
 export declare const combinationsWithReplacement: CombinationsPermutations
 
-export declare function compose<T> (fns: Iterable<(_: T) => T>): IterableIterator<T>
+export declare function compose<T> (...fns: ((x: T) => T)[]): (x: T) => T
 
 export declare function compress<T> (iterable: Iterable<T>, compress: Iterable<boolean>): IterableIterator<T>
 
@@ -303,7 +303,13 @@ export declare function partition<T> (func: (item: T) => boolean):
 
 export declare const permutations: CombinationsPermutations
 
-export declare function pipeline<T> (fns: Iterable<(_: T) => T>): IterableIterator<T>
+export declare function pipeline<
+  Args extends any[],
+  T
+> (
+  init: (...args: Args) => T,
+  ...fns: ((x: T) => T)[]
+): (...args: Args) => T
 
 export declare function product<Args extends Array<Iterable<any>>> (...iterables: Args):
   Iterable<ProductReturnElement<Args>> & { getSize: () => number }
@@ -456,6 +462,20 @@ export declare function asyncFilter<T> (
   func: (item: T) => MaybePromise<boolean>,
   iterable: AsyncIterableLike<T>
 ): AsyncIterableIterator<T>
+export declare function asyncFilter<S extends T, T> (concurrency: number, func: (item: T) => item is S):
+  (iterable: AsyncIterableLike<T>) => AsyncIterableIterator<S>
+export declare function asyncFilter<S extends T, T> (
+  concurrency: number,
+  func: (item: T) => item is S,
+  iterable: AsyncIterableLike<T>
+): AsyncIterableIterator<S>
+export declare function asyncFilter<T> (concurrency: number, func: (item: T) => MaybePromise<boolean>):
+  (iterable: AsyncIterableLike<T>) => AsyncIterableIterator<T>
+export declare function asyncFilter<T> (
+  concurrency: number,
+  func: (item: T) => MaybePromise<boolean>,
+  iterable: AsyncIterableLike<T>
+): AsyncIterableIterator<T>
 
 export declare function asyncFind<S extends T, T> (func: (item: T) => item is S):
   (iterable: AsyncIterableLike<T>) => Promise<S | null>
@@ -518,6 +538,13 @@ export declare function asyncIterable<T> (
 export declare function asyncMap<T, O> (func: (item: T) => MaybePromise<O>):
   (iter: AsyncIterableLike<T>) => AsyncIterableIterator<O>
 export declare function asyncMap<T, O> (
+  func: (item: T) => MaybePromise<O>,
+  iter: AsyncIterableLike<T>
+): AsyncIterableIterator<O>
+export declare function asyncMap<T, O> (concurrency: number, func: (item: T) => MaybePromise<O>):
+  (iter: AsyncIterableLike<T>) => AsyncIterableIterator<O>
+export declare function asyncMap<T, O> (
+  concurrency: number,
   func: (item: T) => MaybePromise<O>,
   iter: AsyncIterableLike<T>
 ): AsyncIterableIterator<O>
