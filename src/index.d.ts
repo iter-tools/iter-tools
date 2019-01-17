@@ -4,6 +4,7 @@
 
 import { IsFinite, Prepend, Repeat, Reverse } from 'typescript-tuple'
 import { FromTuple as UnionFromTuple, RangeZero as UnionRange } from 'typescript-union'
+import { SetComplement } from 'utility-types'
 
 type AsyncIterableLike<T> = AsyncIterable<T> | Iterable<T>
 type ReasonableNumber = UnionRange<32>
@@ -279,6 +280,26 @@ export declare function map<T, O> (func: (item: T) => O, iter: Iterable<T>): Ite
 
 export declare function merge<T> (pickFunc: MergePickFunc<T>): (iterables: ReadonlyArray<Iterable<T>>) => IterableIterator<T>
 export declare function merge<T> (pickFunc: MergePickFunc<T>, iterables: ReadonlyArray<Iterable<T>>): IterableIterator<T>
+
+export declare function partition<T, S extends T> (
+  func: (item: T) => item is S,
+  iter: Iterable<T>
+): [
+  Iterable<S>,
+  Iterable<SetComplement<T, S>>
+]
+export declare function partition<T, S extends T> (
+  func: (item: T) => item is S
+): (iter: Iterable<T>) => [
+  Iterable<S>,
+  Iterable<SetComplement<T, S>>
+]
+export declare function partition<T> (
+  func: (item: T) => boolean,
+  iter: Iterable<T>
+): [Iterable<T>, Iterable<T>]
+export declare function partition<T> (func: (item: T) => boolean):
+  (iter: Iterable<T>) => [Iterable<T>, Iterable<T>]
 
 export declare const permutations: CombinationsPermutations
 

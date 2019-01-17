@@ -56,7 +56,8 @@
     "dequeue": "^1.0.5",
     "little-ds-toolkit": "^1.1.0",
     "typescript-tuple": "^1.4.0",
-    "typescript-union": "0.0.0"
+    "typescript-union": "0.0.0",
+    "utility-types": "^3.2.1"
   },
   "devDependencies": {
     "@babel/cli": "^7.0.0",
