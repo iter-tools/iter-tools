@@ -117,6 +117,11 @@ type AsyncFlatReturn<
   AsyncIterableElement<Iter>
 >>
 
+interface MultiFilterReturn<T> {
+  readonly satisfied: Iterable<Iterable<T>>
+  readonly unsatisfied: Iterable<T>
+}
+
 /**
  * Functions of type `MergePickFunc` is
  * to be used as `pickFunc` parameter of `merge()`.
@@ -285,6 +290,13 @@ export declare function map<T, O> (func: (item: T) => O, iter: Iterable<T>): Ite
 
 export declare function merge<T> (pickFunc: MergePickFunc<T>): (iterables: ReadonlyArray<Iterable<T>>) => IterableIterator<T>
 export declare function merge<T> (pickFunc: MergePickFunc<T>, iterables: ReadonlyArray<Iterable<T>>): IterableIterator<T>
+
+export declare function multiFilter<T> (
+  fns: Iterable<(item: T) => boolean>,
+  iter: Iterable<T>
+): MultiFilterReturn<T>
+export declare function multiFilter<T> (fns: Iterable<(item: T) => boolean>):
+  (iter: Iterable<T>) => MultiFilterReturn<T>
 
 export declare function partition<T, S extends T> (
   func: (item: T) => item is S,
