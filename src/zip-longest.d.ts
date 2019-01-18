@@ -1,2 +1,2 @@
 import { zipLongest } from './index'
-export = zipLongest
+export default zipLongest

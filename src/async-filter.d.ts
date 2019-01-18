@@ -1,2 +1,2 @@
 import { asyncFilter } from './index'
-export = asyncFilter
+export default asyncFilter

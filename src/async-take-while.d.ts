@@ -1,2 +1,2 @@
 import { asyncTakeWhile } from './index'
-export = asyncTakeWhile
+export default asyncTakeWhile

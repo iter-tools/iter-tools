@@ -1,2 +1,2 @@
 import { asyncTee } from './index'
-export = asyncTee
+export default asyncTee

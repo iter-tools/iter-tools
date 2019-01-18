@@ -1,2 +1,2 @@
 import { flat } from './index'
-export = flat
+export default flat

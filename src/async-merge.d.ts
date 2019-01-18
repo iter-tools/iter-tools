@@ -1,2 +1,2 @@
 import { asyncMerge } from './index'
-export = asyncMerge
+export default asyncMerge

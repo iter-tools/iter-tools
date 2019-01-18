@@ -1,2 +1,2 @@
 import { iterable } from './index'
-export = iterable
+export default iterable

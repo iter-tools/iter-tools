@@ -1,2 +1,2 @@
 import { asyncTap } from './index'
-export = asyncTap
+export default asyncTap
