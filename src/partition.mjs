@@ -6,16 +6,12 @@ function partition (func, iter) {
   const satisfied = new Dequeue()
   const unsatisfied = new Dequeue()
   const iterator = ensureIterable(iter)[Symbol.iterator]()
-  let exhausted = 0
 
   const part = queue => partitionPart(
     iterator,
     queue,
     value => func(value) ? satisfied : unsatisfied,
-    () => {
-      exhausted += 1
-      return exhausted === 2
-    }
+    () => 2
   )
 
   return [part(satisfied), part(unsatisfied)]

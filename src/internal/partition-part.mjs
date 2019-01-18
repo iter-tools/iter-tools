@@ -1,4 +1,6 @@
-export default function * partitionPart (iterator, readQueue, getWriteQueue, shouldReturn) {
+export default function * partitionPart (iterator, readQueue, getWriteQueue, getPartCount) {
+  let exhausted = 0
+
   try {
     while (true) {
       while (readQueue.length) {
@@ -11,7 +13,9 @@ export default function * partitionPart (iterator, readQueue, getWriteQueue, sho
       getWriteQueue(value).push(value)
     }
   } finally {
-    shouldReturn() &&
+    exhausted += 1
+
+    getPartCount() === exhausted &&
     typeof iterator.return === 'function' &&
     iterator.return()
   }
