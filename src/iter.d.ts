@@ -1,2 +1,2 @@
 import { iter } from './index'
-export = iter
+export default iter

@@ -1,2 +1,2 @@
 import { tee } from './index'
-export = tee
+export default tee

@@ -1,2 +1,2 @@
 import { asyncBatch } from './index'
-export = asyncBatch
+export default asyncBatch

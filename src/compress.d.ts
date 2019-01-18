@@ -1,2 +1,2 @@
 import { compress } from './index'
-export = compress
+export default compress

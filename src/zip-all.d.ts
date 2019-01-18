@@ -1,2 +1,2 @@
 import { zipAll } from './index'
-export = zipAll
+export default zipAll
