@@ -1,5 +1,6 @@
 import Dequeue from 'dequeue'
 import ensureIterable from './internal/ensure-iterable'
+import partitionPart from './internal/partition-part'
 
 function partition (func, iter) {
   const satisfied = new Dequeue()
@@ -7,26 +8,15 @@ function partition (func, iter) {
   const iterator = ensureIterable(iter)[Symbol.iterator]()
   let exhausted = 0
 
-  function * part (queue) {
-    try {
-      while (true) {
-        while (queue.length) {
-          yield queue.shift()
-        }
-
-        const { value, done } = iterator.next()
-        if (done) break
-
-        const chosen = func(value) ? satisfied : unsatisfied
-        chosen.push(value)
-      }
-    } finally {
-      exhausted++
-      if (exhausted === 2) {
-        if (typeof iterator.return === 'function') iterator.return()
-      }
+  const part = queue => partitionPart(
+    iterator,
+    queue,
+    value => func(value) ? satisfied : unsatisfied,
+    () => {
+      exhausted += 1
+      return exhausted === 2
     }
-  }
+  )
 
   return [part(satisfied), part(unsatisfied)]
 }
