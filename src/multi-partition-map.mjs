@@ -6,16 +6,12 @@ import partitionPart from './internal/partition-part'
 function uncurried (func, iter) {
   const queueMap = new AdvancedMapInitialized(Map, () => new Dequeue())
   const iterator = ensureIterable(iter)[Symbol.iterator]()
-  let exhausted = 0
 
   const part = queue => partitionPart(
     iterator,
     queue,
     value => queueMap.get(func(value)),
-    () => {
-      exhausted += 1
-      return exhausted >= queueMap.data.size
-    }
+    () => queueMap.data.size
   )
 
   return new AdvancedMapInitialized(Map, index => part(queueMap.get(index)))
