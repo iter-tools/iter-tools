@@ -22,7 +22,7 @@ describe('multiPartition', function () {
       ])
     })
 
-    it('out-of-range access returns empty', function () {
+    it('out-of-bound access returns empty iterables', function () {
       const iv = pipeline(
         multiPartition(func),
         slice({ start: 6, end: 8 }),
