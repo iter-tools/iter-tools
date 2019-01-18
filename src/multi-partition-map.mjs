@@ -1,10 +1,10 @@
 import AdvancedMapInitialized from 'advanced-map-initialized'
 import Dequeue from 'dequeue'
-import iterable from './iterable'
+import ensureIterable from './internal/ensure-iterable'
 
 function uncurried (func, iter) {
   const queueMap = new AdvancedMapInitialized(Map, () => new Dequeue())
-  const iterator = iterable(iter)[Symbol.iterator]()
+  const iterator = ensureIterable(iter)[Symbol.iterator]()
 
   function * part (queue) {
     while (true) {
