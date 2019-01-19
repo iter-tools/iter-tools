@@ -1,2 +1,2 @@
 import { asyncReduce } from './index'
-export = asyncReduce
+export default asyncReduce

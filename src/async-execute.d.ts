@@ -1,2 +1,2 @@
 import { asyncExecute } from './index'
-export = asyncExecute
+export default asyncExecute

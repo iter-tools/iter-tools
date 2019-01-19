@@ -1,2 +1,2 @@
 import { pipeline } from './index'
-export = pipeline
+export default pipeline

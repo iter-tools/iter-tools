@@ -1,2 +1,2 @@
 import { cursor } from './index'
-export = cursor
+export default cursor

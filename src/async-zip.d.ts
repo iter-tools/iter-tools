@@ -1,2 +1,2 @@
 import { asyncZip } from './index'
-export = asyncZip
+export default asyncZip

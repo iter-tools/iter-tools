@@ -1,2 +1,2 @@
 import { asyncConsume } from './index'
-export = asyncConsume
+export default asyncConsume

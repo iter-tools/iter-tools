@@ -341,6 +341,7 @@ export declare function product<Args extends Array<Iterable<any>>> (...iterables
 
 export declare function range<R extends number> (r: R): RangeReturn<R>
 export declare function range (opts: { start: number, end?: number, step?: number }): IterableIterator<number>
+export declare function range (_?: undefined): IterableIterator<number>
 
 export declare function reduce<T, O> (func: (acc: O, item: T, c: number) => O): (iterable: Iterable<T>) => O
 export declare function reduce<T, O> (initial: O, func: (acc: O, item: T, c: number) => O):

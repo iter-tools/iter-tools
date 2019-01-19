@@ -1,2 +1,2 @@
 import { asyncConcat } from './index'
-export = asyncConcat
+export default asyncConcat

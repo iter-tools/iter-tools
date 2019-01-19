@@ -1,2 +1,2 @@
 import { asyncBuffer } from './index'
-export = asyncBuffer
+export default asyncBuffer
