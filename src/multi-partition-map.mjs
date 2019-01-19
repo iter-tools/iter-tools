@@ -19,7 +19,11 @@ function uncurried (func, iter) {
     }
   }
 
-  return new AdvancedMapInitialized(Map, index => part(queueMap.get(index)))
+  const partMap = new AdvancedMapInitialized(Map, index => part(queueMap.get(index)))
+
+  return {
+    get: value => partMap.get(value)
+  }
 }
 
 const curried = func => iter => uncurried(func, iter)
