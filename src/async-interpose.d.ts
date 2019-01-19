@@ -1,2 +1,2 @@
 import { asyncInterpose } from './index'
-export = asyncInterpose
+export default asyncInterpose

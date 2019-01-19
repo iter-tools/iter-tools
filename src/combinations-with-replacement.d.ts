@@ -1,2 +1,2 @@
 import { combinationsWithReplacement } from './index'
-export = combinationsWithReplacement
+export default combinationsWithReplacement

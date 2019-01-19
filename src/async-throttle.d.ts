@@ -1,2 +1,2 @@
 import { asyncThrottle } from './index'
-export = asyncThrottle
+export default asyncThrottle

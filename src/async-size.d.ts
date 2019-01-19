@@ -1,2 +1,2 @@
 import { asyncSize } from './index'
-export = asyncSize
+export default asyncSize

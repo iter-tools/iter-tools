@@ -1,2 +1,2 @@
 import { asyncFlat } from './index'
-export = asyncFlat
+export default asyncFlat

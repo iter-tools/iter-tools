@@ -1,2 +1,2 @@
 import { regexpExecIter } from './index'
-export = regexpExecIter
+export default regexpExecIter

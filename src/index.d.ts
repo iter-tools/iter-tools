@@ -117,6 +117,10 @@ type AsyncFlatReturn<
   AsyncIterableElement<Iter>
 >>
 
+interface MultiPartitionMap<Key, Value> {
+  get (key: Key): IterableIterator<Value>
+}
+
 /**
  * Functions of type `MergePickFunc` is
  * to be used as `pickFunc` parameter of `merge()`.
@@ -286,6 +290,22 @@ export declare function map<T, O> (func: (item: T) => O, iter: Iterable<T>): Ite
 export declare function merge<T> (pickFunc: MergePickFunc<T>): (iterables: ReadonlyArray<Iterable<T>>) => IterableIterator<T>
 export declare function merge<T> (pickFunc: MergePickFunc<T>, iterables: ReadonlyArray<Iterable<T>>): IterableIterator<T>
 
+export declare function multiPartition<T> (
+  func: (item: T) => number,
+  iter: Iterable<T>
+): IterableIterator<IterableIterator<T>>
+export declare function multiPartition<T> (
+  func: (item: T) => number
+): (iter: Iterable<T>) => IterableIterator<IterableIterator<T>>
+
+export declare function multiPartitionMap<Key, Value> (
+  func: (item: Value) => Key,
+  iter: Iterable<Value>
+): MultiPartitionMap<Key, Value>
+export declare function multiPartitionMap<Key, Value> (
+  func: (item: Value) => Key
+): (iter: Iterable<Value>) => MultiPartitionMap<Key, Value>
+
 export declare function partition<T, S extends T> (
   func: (item: T) => item is S,
   iter: Iterable<T>
@@ -321,6 +341,7 @@ export declare function product<Args extends Array<Iterable<any>>> (...iterables
 
 export declare function range<R extends number> (r: R): RangeReturn<R>
 export declare function range (opts: { start: number, end?: number, step?: number }): IterableIterator<number>
+export declare function range (_?: undefined): IterableIterator<number>
 
 export declare function reduce<T, O> (func: (acc: O, item: T, c: number) => O): (iterable: Iterable<T>) => O
 export declare function reduce<T, O> (initial: O, func: (acc: O, item: T, c: number) => O):
