@@ -40,7 +40,7 @@ export default function tee (iterable, number) {
     } finally {
       exhausted++
       if (exhausted === number) {
-        if (typeof iterator.return === 'function') iterator.return()
+        if (typeof iterator.return === 'function') await iterator.return()
       }
     }
   }

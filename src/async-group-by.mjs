@@ -33,7 +33,7 @@ async function * groupBy (selector, iterable) {
       }
     }
   } finally { // calling close on the main iterable, closes the input iterable
-    if (typeof iterator.return === 'function') iterator.return()
+    if (typeof iterator.return === 'function') await iterator.return()
   }
 }
 

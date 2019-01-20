@@ -11,7 +11,7 @@ export default async function * zipLongest (...iterables) {
     }
   } finally {
     for (const iter in iters) {
-      if (typeof iter.return === 'function') iter.return()
+      if (typeof iter.return === 'function') await iter.return()
     }
   }
 }

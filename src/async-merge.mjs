@@ -34,7 +34,7 @@ async function * asyncMerge (pickFunc, iterables) {
     }
   } finally {
     for (const iter of iters) {
-      if (typeof iter.return === 'function') iter.return()
+      if (typeof iter.return === 'function') await iter.return()
     }
   }
 }
