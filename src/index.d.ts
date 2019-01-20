@@ -341,6 +341,9 @@ export declare function regexpSplitIter (re: RegExp, iterable: Iterable<string>)
 export declare function regexpExecIter (re: RegExp): (iterable: Iterable<string>) => IterableIterator<string>
 export declare function regexpExecIter (re: RegExp, iterable: Iterable<string>): IterableIterator<string>
 
+export declare function splitAt<T> (position: number, iterable: Iterable<T>): [Iterable<T>, Iterable<T>]
+export declare function splitAt (position: number): <T> (iterable: Iterable<T>) => [Iterable<T>, Iterable<T>]
+
 export declare function splitLines (iterable: Iterable<string>): IterableIterator<string>
 
 export declare function repeat<T> (obj: T, times?: number): IterableIterator<T>
@@ -617,6 +620,14 @@ export declare function asyncRegexpExecIter (re: RegExp):
     (iterable: AsyncIterableLike<string>) => AsyncIterableLike<string>
 export declare function asyncRegexpExecIter (re: RegExp, iterable: AsyncIterableLike<string>):
     AsyncIterableLike<string>
+
+export declare function asyncSplitAt<T> (
+  position: number,
+  iterable: AsyncIterableLike<T>
+): [AsyncIterableIterator<T>, AsyncIterableIterator<T>]
+export declare function asyncSplitAt (
+  position: number
+): <T> (iterable: AsyncIterableLike<T>) => [AsyncIterableIterator<T>, AsyncIterableIterator<T>]
 
 export declare function asyncSplitLines (iterable: AsyncIterableLike<string>): AsyncIterableLike<string>
 
