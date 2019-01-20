@@ -308,7 +308,7 @@ export declare function partition<T> (func: (item: T) => boolean):
 
 export declare const permutations: CombinationsPermutations
 
-export declare function pipeline<Value, Return> (
+export declare function pipe<Value, Return> (
   value: Value,
   fstFn: (value: Value) => Return,
   ...restFn: ((value: Return) => Return)[]

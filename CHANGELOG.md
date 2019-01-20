@@ -6,7 +6,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [6.2.0] - UNRELEASED
 ### Added
- -  flat, asyncFlat, cursor, asyncCursor, merge, asyncMerge, pipeline, partition
+ -  flat, asyncFlat, cursor, asyncCursor, merge, asyncMerge, pipe, partition
 
 ### Fixed
  -  async function can take an async callback

@@ -75,7 +75,7 @@ Combinatory generators
 
 Utilities
 * [compose](#compose)
-* [pipeline](#pipeline)
+* [pipe](#pipe)
 
 ## Definitions
 This should help clarify the documentation. You can also get more informations here: https://developer.mozilla.org/en/docs/Web/JavaScript/Guide/Iterators_and_Generators and here: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols
@@ -912,10 +912,10 @@ iter([1, 2, 3, 4]) // 5, 7
 ```
 Note: it works right to left!
 
-## pipeline
-Pipeline allows to run an iterable through several functions. The first argument is an iterable, the following are functions that takes an iterable and return an iterable.
+## pipe
+Pipe allows to run an iterable through several functions. The first argument is an iterable, the following are functions that takes an iterable and return an iterable.
 ```js
-const iter = pipeline(
+const iter = pipe(
   [1, 2, 3, 4],
   filter((x % 2) === 0)
   map((x) =>  x + 3),
@@ -923,7 +923,7 @@ const iter = pipeline(
 
 iter // 5, 7
 ```
-The previous example is equivalent to the *compose* one (note that *pipeline* works left to right, while *compose* works right to left).
+The previous example is equivalent to the *compose* one (note that *pipe* works left to right, while *compose* works right to left).
 
 
 ## Issues and limitations
