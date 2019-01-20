@@ -2,7 +2,7 @@ import AdvancedMapInitialized from 'advanced-map-initialized'
 import Dequeue from 'dequeue'
 import ensureIterable from './internal/ensure-iterable'
 
-function uncurried (func, iter) {
+function multiPartitionMap (func, iter) {
   const queueMap = new AdvancedMapInitialized(Map, () => new Dequeue())
   const iterator = ensureIterable(iter)[Symbol.iterator]()
 
@@ -26,8 +26,9 @@ function uncurried (func, iter) {
   }
 }
 
-const curried = func => iter => uncurried(func, iter)
-
-export default function multiPartitionMap (func, iter) {
-  return iter === undefined ? curried(func) : uncurried(func, iter)
+export default function curriedMultiPartitionMap (func, iter) {
+  if (typeof iter === 'undefined') {
+    return iter => multiPartitionMap(func, iter)
+  }
+  return multiPartitionMap(func, iter)
 }
