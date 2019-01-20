@@ -1,30 +1,39 @@
 import Dequeue from 'dequeue'
-import iterable from './iterable'
+import ensureIterable from './internal/ensure-iterable'
 
-function uncurried (func, iter) {
+function partition (func, iter) {
   const satisfied = new Dequeue()
   const unsatisfied = new Dequeue()
-  const iterator = iterable(iter)[Symbol.iterator]()
+  const iterator = ensureIterable(iter)[Symbol.iterator]()
+  let exhausted = 0
 
   function * part (queue) {
-    while (true) {
-      while (queue.length) {
-        yield queue.shift()
+    try {
+      while (true) {
+        while (queue.length) {
+          yield queue.shift()
+        }
+
+        const { value, done } = iterator.next()
+        if (done) break
+
+        const chosen = func(value) ? satisfied : unsatisfied
+        chosen.push(value)
       }
-
-      const { value, done } = iterator.next()
-      if (done) break
-
-      const chosen = func(value) ? satisfied : unsatisfied
-      chosen.push(value)
+    } finally {
+      exhausted++
+      if (exhausted === 2) {
+        if (typeof iterator.return === 'function') iterator.return()
+      }
     }
   }
 
   return [part(satisfied), part(unsatisfied)]
 }
 
-const curried = func => iter => uncurried(func, iter)
-
-export default function partition (func, iter) {
-  return iter === undefined ? curried(func) : uncurried(func, iter)
+export default function curriedPartition (func, iter) {
+  if (typeof iter === 'undefined') {
+    return iter => partition(func, iter)
+  }
+  return partition(func, iter)
 }
