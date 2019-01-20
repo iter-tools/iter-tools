@@ -1,3 +1,3 @@
-export default function pipeline (...fns) {
-  return fns.reverse().reduce((f, g) => (...args) => f(g(...args)))
+export default function pipeline (iterable, ...fns) {
+  return fns.reduce((iterable, fn) => fn(iterable), iterable)
 }

@@ -913,25 +913,17 @@ iter([1, 2, 3, 4]) // 5, 7
 Note: it works right to left!
 
 ## pipeline
-Pipeline is a more intuitive version of compose that works left to right:
+Pipeline allows to run an iterable through several functions. The first argument is an iterable, the following are functions that takes an iterable and return an iterable.
 ```js
 const iter = pipeline(
-  map((x) =>  x + 3),
+  [1, 2, 3, 4],
   filter((x % 2) === 0)
+  map((x) =>  x + 3),
 )
 
-iter([1, 2, 3, 4]) // 4, 6
+iter // 5, 7
 ```
-You can use pipeline this way for extra readibility
-```js
-const iter = pipeline(
-  () => [1, 2, 3, 4]
-  map((x) =>  x + 3),
-  filter((x % 2) === 0)
-)
-
-iter() // 4, 6
-```
+The previous example is equivalent to the *compose* one (note that *pipeline* works left to right, while *compose* works right to left).
 
 
 ## Issues and limitations
