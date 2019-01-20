@@ -308,13 +308,11 @@ export declare function partition<T> (func: (item: T) => boolean):
 
 export declare const permutations: CombinationsPermutations
 
-export declare function pipeline<
-  Args extends any[],
-  T
-> (
-  init: (...args: Args) => T,
-  ...fns: ((x: T) => T)[]
-): (...args: Args) => T
+export declare function pipeline<Value, Return> (
+  value: Value,
+  fstFn: (value: Value) => Return,
+  ...restFn: ((value: Return) => Return)[]
+): Return
 
 export declare function product<Args extends Array<Iterable<any>>> (...iterables: Args):
   Iterable<ProductReturnElement<Args>> & { getSize: () => number }
