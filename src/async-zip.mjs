@@ -15,7 +15,7 @@ export default async function * zip (...iterables) {
             c++
             continue
           }
-          if (typeof iter.return === 'function') iter.return()
+          if (typeof iter.return === 'function') await iter.return()
           c++
         }
         return
@@ -24,7 +24,7 @@ export default async function * zip (...iterables) {
     }
   } finally {
     for (const iter in iters) {
-      if (typeof iter.return === 'function') iter.return()
+      if (typeof iter.return === 'function') await iter.return()
     }
   }
 }
