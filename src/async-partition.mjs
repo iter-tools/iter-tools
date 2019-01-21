@@ -1,32 +1,18 @@
 import Dequeue from 'dequeue'
 import ensureAsyncIterable from './internal/ensure-async-iterable'
+import asyncPartitionPart from './internal/async-partition-part'
 
 function partition (func, iter) {
   const satisfied = new Dequeue()
   const unsatisfied = new Dequeue()
   const iterator = ensureAsyncIterable(iter)[Symbol.asyncIterator]()
-  let exhausted = 0
 
-  async function * part (queue) {
-    try {
-      while (true) {
-        while (queue.length) {
-          yield queue.shift()
-        }
-
-        const { value, done } = await iterator.next()
-        if (done) break
-
-        const chosen = (await func(value)) ? satisfied : unsatisfied
-        chosen.push(value)
-      }
-    } finally {
-      exhausted++
-      if (exhausted === 2) {
-        if (typeof iterator.return === 'function') await iterator.return()
-      }
-    }
-  }
+  const part = queue => asyncPartitionPart(
+    iterator,
+    queue,
+    async value => (await func(value)) ? satisfied : unsatisfied,
+    () => 2
+  )
 
   return [part(satisfied), part(unsatisfied)]
 }
