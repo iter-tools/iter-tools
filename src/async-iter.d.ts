@@ -1,2 +1,2 @@
 import { asyncIter } from './index'
-export = asyncIter
+export default asyncIter

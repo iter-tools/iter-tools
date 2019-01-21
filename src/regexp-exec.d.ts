@@ -1,2 +1,2 @@
 import { regexpExec } from './index'
-export = regexpExec
+export default regexpExec

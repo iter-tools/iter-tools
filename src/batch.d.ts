@@ -1,2 +1,2 @@
 import { batch } from './index'
-export = batch
+export default batch

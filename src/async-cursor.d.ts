@@ -1,2 +1,2 @@
 import { asyncCursor } from './index'
-export = asyncCursor
+export default asyncCursor

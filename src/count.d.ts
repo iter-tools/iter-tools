@@ -1,2 +1,2 @@
 import { count } from './index'
-export = count
+export default count

@@ -1,2 +1,2 @@
 import { takeSorted } from './index'
-export = takeSorted
+export default takeSorted

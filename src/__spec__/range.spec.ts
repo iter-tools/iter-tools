@@ -12,3 +12,7 @@ assert<
 assert<
   IterableIterator<number>
 >(iter.range({ start: 2 }))
+
+assert<
+  IterableIterator<number>
+>(iter.range())
