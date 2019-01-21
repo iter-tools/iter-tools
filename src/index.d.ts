@@ -562,6 +562,26 @@ export declare function asyncMap<T, O> (
 export declare function asyncMerge<T> (pickFunc: AsyncMergePickFunc<T>): (iterables: ReadonlyArray<AsyncIterableLike<T>>) => AsyncIterableIterator<T>
 export declare function asyncMerge<T> (pickFunc: AsyncMergePickFunc<T>, iterables: ReadonlyArray<AsyncIterableLike<T>>): AsyncIterableIterator<T>
 
+export declare function asyncPartition<T, S extends T> (
+  func: (item: T) => item is S,
+  iter: Iterable<T>
+): [
+  AsyncIterableIterator<S>,
+  AsyncIterableIterator<SetComplement<T, S>>
+]
+export declare function asyncPartition<T, S extends T> (
+  func: (item: T) => item is S
+): (iter: Iterable<T>) => [
+  AsyncIterableIterator<S>,
+  AsyncIterableIterator<SetComplement<T, S>>
+]
+export declare function asyncPartition<T> (
+  func: (item: T) => MaybePromise<boolean>,
+  iter: Iterable<T>
+): [AsyncIterableIterator<T>, AsyncIterableIterator<T>]
+export declare function asyncPartition<T> (func: (item: T) => MaybePromise<boolean>):
+  (iter: Iterable<T>) => [AsyncIterableIterator<T>, AsyncIterableIterator<T>]
+
 export declare function asyncReduce<T, O> (func: (acc: O, item: T, c: number) => O):
   (iterable: AsyncIterableLike<T>) => Promise<O>
 export declare function asyncReduce<T, O> (
