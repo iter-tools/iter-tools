@@ -308,11 +308,56 @@ export declare function partition<T> (func: (item: T) => boolean):
 
 export declare const permutations: CombinationsPermutations
 
-export declare function pipe<Value, Return> (
-  value: Value,
-  fstFn: (value: Value) => Return,
-  ...restFn: ((value: Return) => Return)[]
-): Return
+export declare function pipe<T0> (value: T0): T0
+export declare function pipe<T0, T1> (
+  value: T0,
+  fn0: (value: T0) => T1
+): T1
+export declare function pipe<T0, T1, T2> (
+  value: T0,
+  fn0: (value: T0) => T1,
+  fn1: (value: T1) => T2
+): T2
+export declare function pipe<T0, T1, T2, T3> (
+  value: T0,
+  fn0: (value: T0) => T1,
+  fn1: (value: T1) => T2,
+  fn2: (value: T2) => T3
+): T3
+export declare function pipe<T0, T1, T2, T3, T4> (
+  value: T0,
+  fn0: (value: T0) => T1,
+  fn1: (value: T1) => T2,
+  fn2: (value: T2) => T3,
+  fn3: (value: T3) => T4
+): T4
+export declare function pipe<T0, T1, T2, T3, T4, T5> (
+  value: T0,
+  fn0: (value: T0) => T1,
+  fn1: (value: T1) => T2,
+  fn2: (value: T2) => T3,
+  fn3: (value: T3) => T4,
+  fn4: (value: T4) => T5
+): T5
+export declare function pipe<T0, T1, T2, T3, T4, T5, T6> (
+  value: T0,
+  fn0: (value: T0) => T1,
+  fn1: (value: T1) => T2,
+  fn2: (value: T2) => T3,
+  fn3: (value: T3) => T4,
+  fn4: (value: T4) => T5,
+  fn5: (value: T5) => T6
+): T6
+export declare function pipe<T0, T1, T2, T3, T4, T5, R> (
+  value: T0,
+  fn0: (value: T0) => T1,
+  fn1: (value: T1) => T2,
+  fn2: (value: T2) => T3,
+  fn3: (value: T3) => T4,
+  fn4: (value: T4) => T5,
+  fn5: (value: T5) => R,
+  ...restFns: Array<(value: R) => R>
+): R
 
 export declare function product<Args extends Array<Iterable<any>>> (...iterables: Args):
   Iterable<ProductReturnElement<Args>> & { getSize: () => number }
