@@ -1,5 +1,5 @@
 import assert from 'static-type-assert'
-import { pipe, range, map, filter, permutations } from '../index'
+import { pipe, range, map, filter } from '../index'
 
 assert<
   IterableIterator<number>
