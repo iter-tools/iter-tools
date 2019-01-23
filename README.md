@@ -44,7 +44,7 @@ Combine multiple iterables
 Utilities returning multiple iterables
 * [groupBy](#group-by) ([async](#group-by))
 * [tee](#tee) ([async](#async-tee))
-* [partition](#partition)
+* [partition](#partition) ([async](#async-partition))
 
 Others
 * [iterable](#iterable) ([async](#async-iterable))
@@ -587,6 +587,7 @@ const [evens, odds] = partition(x => x % 2 === 0, range(10))
 Array.from(evens) // [0, 2, 4, 6, 8]
 Array.from(odds) // [1, 3, 5, 7, 9]
 ```
+
 ## async-partition
 Same as partition but works on both sync and async iterables.
 
