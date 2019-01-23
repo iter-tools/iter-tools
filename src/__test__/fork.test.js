@@ -11,6 +11,15 @@ describe('fork', function () {
     )
   })
 
+  it('iterate each part one by one in reverse', function () {
+    const [a, b, c, d] = fork([0, 1, 2, 3, 4, 5])
+    expect(
+      [d, c, b, a].map(iter => Array.from(iter))
+    ).toEqual(
+      Array(4).fill([0, 1, 2, 3, 4, 5])
+    )
+  })
+
   it('zip them together', function () {
     const [a, b, c, d] = fork([0, 1, 2, 3, 4, 5])
     const zipped = zip(a, b, c, d)
