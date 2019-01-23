@@ -1,4 +1,5 @@
 import ensureIterable from './internal/ensure-iterable'
+import curry from './internal/curry'
 
 function some (func, iterable) {
   let c = 0
@@ -10,10 +11,4 @@ function some (func, iterable) {
   return false
 }
 
-export default function curriedSome (func, iterable) {
-  if (arguments.length === 1) {
-    return iterable => some(func, iterable)
-  }
-
-  return some(func, iterable)
-}
+export default curry(some)

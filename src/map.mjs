@@ -1,4 +1,5 @@
 import ensureIterable from './internal/ensure-iterable'
+import curry from './internal/curry'
 
 function * map (func, iterable) {
   let c = 0
@@ -7,9 +8,4 @@ function * map (func, iterable) {
   }
 }
 
-export default function curriedMap (func, iterable) {
-  if (arguments.length === 1) {
-    return iterable => map(func, iterable)
-  }
-  return map(func, iterable)
-}
+export default curry(map)

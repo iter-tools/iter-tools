@@ -1,6 +1,7 @@
 import ensureAsyncIterable from './internal/ensure-async-iterable'
+import curry from './internal/curry'
 
-async function * tap (func, iterable) {
+async function * asyncTap (func, iterable) {
   let c = 0
   for await (const item of ensureAsyncIterable(iterable)) {
     await func(item, c++)
@@ -8,9 +9,4 @@ async function * tap (func, iterable) {
   }
 }
 
-export default function curriedTap (func, iterable) {
-  if (arguments.length === 1) {
-    return iterable => tap(func, iterable)
-  }
-  return tap(func, iterable)
-}
+export default curry(asyncTap)

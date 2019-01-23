@@ -11,13 +11,13 @@ async function * asyncMerge (pickFunc, iterables) {
     while (iters.length !== numberOfExhausted) {
       // tries to add items to zipped wherever the index is not exhausted
       for (const index of range(iters.length)) {
-        if (typeof items[index] === 'undefined') {
+        if (items[index] === undefined) {
           items[index] = querablePromise(iters[index].next()) // promises should be quer-able
         }
       }
       // pick and return the item
       const chosen = await pickFunc(items)
-      if (typeof items[chosen] === 'undefined') {
+      if (items[chosen] === undefined) {
         throw new Error('async-merge: the sequence returned doesn\'t exist')
       }
       if (items[chosen] === null) {

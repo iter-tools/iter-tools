@@ -1,4 +1,5 @@
 import ensureIterable from './internal/ensure-iterable'
+import curry from './internal/curry'
 
 function * groupBy (key, iterable) {
   key = key || function (key) { return key }
@@ -37,9 +38,4 @@ function * groupBy (key, iterable) {
   }
 }
 
-export default function curriedGroupBy (key, iterable) {
-  if (arguments.length === 1) {
-    return iterable => groupBy(key, iterable)
-  }
-  return groupBy(key, iterable)
-}
+export default curry(groupBy)

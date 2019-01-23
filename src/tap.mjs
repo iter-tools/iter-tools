@@ -1,4 +1,5 @@
 import ensureIterable from './internal/ensure-iterable'
+import curry from './internal/curry'
 
 function * tap (func, iterable) {
   let c = 0
@@ -8,9 +9,4 @@ function * tap (func, iterable) {
   }
 }
 
-export default function curriedTap (func, iterable) {
-  if (arguments.length === 1) {
-    return iterable => tap(func, iterable)
-  }
-  return tap(func, iterable)
-}
+export default curry(tap)

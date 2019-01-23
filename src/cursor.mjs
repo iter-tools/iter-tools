@@ -1,8 +1,8 @@
 import ensureIterable from './internal/ensure-iterable'
+import curry from './internal/curry'
+import CircularBuffer from './internal/circular-buffer'
 import chain from './chain'
 import repeat from './repeat'
-
-import CircularBuffer from './internal/circular-buffer'
 
 function * cursor ({ size, trailing, filler }, iterable) {
   const circular = new CircularBuffer(size)
@@ -26,9 +26,4 @@ function * cursor ({ size, trailing, filler }, iterable) {
   }
 }
 
-export default function curriedCursor (size, iterable) {
-  if (arguments.length === 1) {
-    return iterable => cursor(size, iterable)
-  }
-  return cursor(size, iterable)
-}
+export default curry(cursor)

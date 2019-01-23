@@ -1,4 +1,5 @@
 import ensureAsyncIterable from './internal/ensure-async-iterable'
+import curry from './internal/curry'
 import asyncChain from './async-chain'
 import repeat from './repeat'
 
@@ -26,9 +27,4 @@ async function * asyncCursor ({ size, trailing, filler }, iterable) {
   }
 }
 
-export default function curriedAsyncCursor (size, iterable) {
-  if (arguments.length === 1) {
-    return iterable => asyncCursor(size, iterable)
-  }
-  return asyncCursor(size, iterable)
-}
+export default curry(asyncCursor)

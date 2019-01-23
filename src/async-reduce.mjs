@@ -1,6 +1,6 @@
 import ensureAsyncIterable from './internal/ensure-async-iterable'
 
-async function reduce (initial, func, iterable) {
+async function asyncReduce (initial, func, iterable) {
   let c = 0
   let acc = initial
   const iterator = ensureAsyncIterable(iterable)[Symbol.asyncIterator]()
@@ -48,7 +48,7 @@ export default function curriedReduce (initial, func, iterable) {
   }
 
   if (!hasIterable) {
-    return iterable => reduce(initial, func, iterable)
+    return iterable => asyncReduce(initial, func, iterable)
   }
-  return reduce(initial, func, iterable)
+  return asyncReduce(initial, func, iterable)
 }

@@ -1,4 +1,5 @@
 import ensureIterable from './internal/ensure-iterable'
+import curry from './internal/curry'
 
 function * interpose (interposeItem, iterable) {
   let first = true
@@ -11,9 +12,4 @@ function * interpose (interposeItem, iterable) {
   }
 }
 
-export default function curriedInterpose (interposeItem, iterable) {
-  if (arguments.length === 1) {
-    return iterable => interpose(interposeItem, iterable)
-  }
-  return interpose(interposeItem, iterable)
-}
+export default curry(interpose)

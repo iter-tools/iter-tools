@@ -1,5 +1,6 @@
 import Dequeue from 'dequeue'
 import ensureIterable from './internal/ensure-iterable'
+import curry from './internal/curry'
 
 function partition (func, iter) {
   const satisfied = new Dequeue()
@@ -31,9 +32,4 @@ function partition (func, iter) {
   return [part(satisfied), part(unsatisfied)]
 }
 
-export default function curriedPartition (func, iter) {
-  if (typeof iter === 'undefined') {
-    return iter => partition(func, iter)
-  }
-  return partition(func, iter)
-}
+export default curry(partition)

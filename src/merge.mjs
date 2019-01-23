@@ -9,13 +9,13 @@ function * merge (pickFunc, iterables) {
     while (iters.length !== numberOfExhausted) {
       // tries to add items to zipped wherever the index is not exhausted
       for (const index of range(iters.length)) {
-        if (typeof items[index] === 'undefined') {
+        if (items[index] === undefined) {
           items[index] = iters[index].next()
         }
       }
       // pick and return the item
       const chosen = pickFunc(items)
-      if (typeof items[chosen] === 'undefined') {
+      if (items[chosen] === undefined) {
         throw new Error('the sequence returned doesn\'t exist')
       }
       if (items[chosen] === null) {

@@ -8,7 +8,7 @@ import product from './product'
 export default function permutations (iterable, r) {
   const arr = Array.from(ensureIterable(iterable))
   const len = arr.length
-  r = typeof r === 'undefined' ? len : r
+  r = r === undefined ? len : r
   return {
     * [Symbol.iterator] () {
       if (r > len) return

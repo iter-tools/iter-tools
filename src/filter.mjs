@@ -1,4 +1,5 @@
 import ensureIterable from './internal/ensure-iterable'
+import curry from './internal/curry'
 
 function * filter (func, iterable) {
   let c = 0
@@ -9,9 +10,4 @@ function * filter (func, iterable) {
   }
 }
 
-export default function curriedFilter (func, iterable) {
-  if (arguments.length === 1) {
-    return iterable => filter(func, iterable)
-  }
-  return filter(func, iterable)
-}
+export default curry(filter)

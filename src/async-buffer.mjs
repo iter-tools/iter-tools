@@ -1,4 +1,5 @@
 import ensureAsyncIterable from './internal/ensure-async-iterable'
+import curry from './internal/curry'
 import Dequeue from 'dequeue'
 
 async function * asyncBuffer (bufferSize, iterable) {
@@ -20,10 +21,4 @@ async function * asyncBuffer (bufferSize, iterable) {
   }
 }
 
-export default function asyncBufferCurried (bufferSize, iterable) {
-  if (arguments.length === 1) {
-    return iterable => asyncBuffer(bufferSize, iterable)
-  }
-
-  return asyncBuffer(bufferSize, iterable)
-}
+export default curry(asyncBuffer)

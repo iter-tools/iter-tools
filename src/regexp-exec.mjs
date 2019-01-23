@@ -1,26 +1,22 @@
-import cloneRegexp from './internal/clone-regexp'
+import { cloneRegexp, isRegExp } from './internal/regexp'
+import curry from './internal/curry'
 
 function * regexpExec (re, str) {
-  if (typeof str !== 'string') throw new Error('regexpExec: it should take a string')
+  if (typeof re === 'string') {
+    re = new RegExp(re, 'g')
+  }
+
+  if (!isRegExp(re)) throw new Error('regexpExec: the first argument can be a string or a regular expression')
+
+  if (!re.sticky && !re.global) {
+    re = cloneRegexp(re, { global: true })
+  }
+
+  if (typeof str !== 'string') throw new Error('regexpExec: the second argument should be a string')
   let match
   while ((match = re.exec(str)) !== null) {
     yield match
   }
 }
 
-export default function curriedRegexpExec (re, str) {
-  if (!re) {
-    throw new Error('A RegExp string or instance must be passed to regexpExec.')
-  }
-
-  if (typeof re === 'string') {
-    re = new RegExp(re, 'g')
-  } else if (!re.sticky && !re.global) {
-    re = cloneRegexp(re, { global: true })
-  }
-
-  if (arguments.length === 1) {
-    return str => regexpExec(re, str)
-  }
-  return regexpExec(re, str)
-}
+export default curry(regexpExec)
