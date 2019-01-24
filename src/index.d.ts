@@ -258,6 +258,8 @@ export declare function flatMap<T, O> (
   iter: Iterable<T>
 ): IterableIterator<O>
 
+export declare function fork<T> (iterable: Iterable<T>, n?: number): IterableIterator<IterableIterator<T>>
+
 export declare function groupBy (key: null):
   <T>(iterable: Iterable<T>) => IterableIterator<[T, IterableIterator<T>]>
 export declare function groupBy<T> (
