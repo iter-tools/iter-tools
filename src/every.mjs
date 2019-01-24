@@ -1,4 +1,5 @@
 import ensureIterable from './internal/ensure-iterable'
+import curry from './internal/curry'
 
 function every (func, iterable) {
   let c = 0
@@ -10,10 +11,4 @@ function every (func, iterable) {
   return true
 }
 
-export default function curriedEvery (func, iterable) {
-  if (arguments.length === 1) {
-    return iterable => every(func, iterable)
-  }
-
-  return every(func, iterable)
-}
+export default curry(every)

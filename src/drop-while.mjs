@@ -1,4 +1,5 @@
 import ensureIterable from './internal/ensure-iterable'
+import curry from './internal/curry'
 
 function * dropWhile (func, iterable) {
   let drop = true
@@ -15,9 +16,4 @@ function * dropWhile (func, iterable) {
   }
 }
 
-export default function curriedDropWhile (func, iterable) {
-  if (arguments.length === 1) {
-    return iterable => dropWhile(func, iterable)
-  }
-  return dropWhile(func, iterable)
-}
+export default curry(dropWhile)

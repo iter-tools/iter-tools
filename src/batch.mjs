@@ -1,4 +1,5 @@
 import ensureIterable from './internal/ensure-iterable'
+import curry from './internal/curry'
 
 function * batch (number, iterable) {
   let batch = []
@@ -14,9 +15,4 @@ function * batch (number, iterable) {
   }
 }
 
-export default function curriedBatch (number, iterable) {
-  if (arguments.length === 1) {
-    return iterable => batch(number, iterable)
-  }
-  return batch(number, iterable)
-}
+export default curry(batch)

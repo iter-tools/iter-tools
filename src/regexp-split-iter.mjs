@@ -1,4 +1,5 @@
 import ensureIterable from './internal/ensure-iterable'
+import curry from './internal/curry'
 import regexSplit from './regexp-split'
 
 function * regexpSplitIter (re, iterable) {
@@ -28,9 +29,4 @@ function * regexpSplitIter (re, iterable) {
   }
 }
 
-export default function curriedRegexpSplitIter (re, iterable) {
-  if (arguments.length === 1) {
-    return iterable => regexpSplitIter(re, iterable)
-  }
-  return regexpSplitIter(re, iterable)
-}
+export default curry(regexpSplitIter)

@@ -1,4 +1,5 @@
 import ensureIterable from './internal/ensure-iterable'
+import curry from './internal/curry'
 import regexExec from './regexp-exec'
 
 function * regexpExecIter (re, iterable) {
@@ -26,9 +27,4 @@ function * regexpExecIter (re, iterable) {
   }
 }
 
-export default function curriedRegexpExecIter (re, iterable) {
-  if (arguments.length === 1) {
-    return iterable => regexpExecIter(re, iterable)
-  }
-  return regexpExecIter(re, iterable)
-}
+export default curry(regexpExecIter)

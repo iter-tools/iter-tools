@@ -1,7 +1,8 @@
 import ensureAsyncIterable from './internal/ensure-async-iterable'
 import regexExec from './regexp-exec'
+import curry from './internal/curry'
 
-async function * regexpExecIter (re, iterable) {
+async function * asyncRegexpExecIter (re, iterable) {
   let matches
   let buffer = ''
   for await (const chunk of ensureAsyncIterable(iterable)) {
@@ -26,9 +27,4 @@ async function * regexpExecIter (re, iterable) {
   }
 }
 
-export default function curriedRegexpExecIter (re, iterable) {
-  if (arguments.length === 1) {
-    return iterable => regexpExecIter(re, iterable)
-  }
-  return regexpExecIter(re, iterable)
-}
+export default curry(asyncRegexpExecIter)

@@ -1,15 +1,10 @@
 import ensureAsyncIterable from './internal/ensure-async-iterable'
+import curry from './internal/curry'
 
-async function consume (func, iterable) {
+async function asyncConsume (func, iterable) {
   for await (const item of ensureAsyncIterable(iterable)) {
     await func(item)
   }
 }
 
-export default function curriedConsume (func, iterable) {
-  if (arguments.length === 1) {
-    return iterable => consume(func, iterable)
-  }
-
-  return consume(func, iterable)
-}
+export default curry(asyncConsume)

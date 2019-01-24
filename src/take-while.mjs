@@ -1,4 +1,5 @@
 import ensureIterable from './internal/ensure-iterable'
+import curry from './internal/curry'
 
 function * takeWhile (func, i) {
   let take = true
@@ -13,9 +14,4 @@ function * takeWhile (func, i) {
   }
 }
 
-export default function curriedTakeWhile (func, iterable) {
-  if (arguments.length === 1) {
-    return iterable => takeWhile(func, iterable)
-  }
-  return takeWhile(func, iterable)
-}
+export default curry(takeWhile)

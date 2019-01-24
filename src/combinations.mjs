@@ -18,7 +18,7 @@ function isSorted (arr) {
 export default function combinations (iterable, r) {
   const arr = Array.from(ensureIterable(iterable))
   const len = arr.length
-  r = typeof r === 'undefined' ? len : r
+  r = r === undefined ? len : r
   return {
     * [Symbol.iterator] () {
       const mapToIndex = map((i) => arr[i])

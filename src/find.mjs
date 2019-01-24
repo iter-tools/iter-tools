@@ -1,4 +1,5 @@
 import ensureIterable from './internal/ensure-iterable'
+import curry from './internal/curry'
 
 function find (func, iterable) {
   let found = true
@@ -12,9 +13,4 @@ function find (func, iterable) {
   return undefined
 }
 
-export default function curriedFind (func, iterable) {
-  if (arguments.length === 1) {
-    return iterable => find(func, iterable)
-  }
-  return find(func, iterable)
-}
+export default curry(find)

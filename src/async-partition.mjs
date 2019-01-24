@@ -1,7 +1,8 @@
 import Dequeue from 'dequeue'
 import ensureAsyncIterable from './internal/ensure-async-iterable'
+import curry from './internal/curry'
 
-function partition (func, iter) {
+function asyncPartition (func, iter) {
   const satisfied = new Dequeue()
   const unsatisfied = new Dequeue()
   const iterator = ensureAsyncIterable(iter)[Symbol.asyncIterator]()
@@ -31,9 +32,4 @@ function partition (func, iter) {
   return [part(satisfied), part(unsatisfied)]
 }
 
-export default function curriedPartition (func, iter) {
-  if (typeof iter === 'undefined') {
-    return iter => partition(func, iter)
-  }
-  return partition(func, iter)
-}
+export default curry(asyncPartition)

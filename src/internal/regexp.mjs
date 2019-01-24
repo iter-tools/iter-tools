@@ -7,7 +7,7 @@ const flagMap = {
   unicode: 'u'
 }
 
-export default function cloneRegexp (regex, options = {}) {
+export function cloneRegexp (regex, options = {}) {
   const flags = Object.keys(flagMap).map(flag => {
     const flagValue = typeof options[flag] === 'boolean' ? options[flag] : regex[flag]
     return flagValue ? flagMap[flag] : ''
@@ -15,4 +15,8 @@ export default function cloneRegexp (regex, options = {}) {
 
   const clonedRegexp = new RegExp(regex.source, flags)
   return clonedRegexp
+}
+
+export function isRegExp (input) {
+  return Object.prototype.toString.call(input) === '[object RegExp]'
 }

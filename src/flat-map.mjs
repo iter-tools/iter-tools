@@ -1,3 +1,4 @@
+import curry from './internal/curry'
 import map from './map'
 
 function * flatMap (func, iterable) {
@@ -7,9 +8,4 @@ function * flatMap (func, iterable) {
   }
 }
 
-export default function curriedFlatMap (func, iterable) {
-  if (arguments.length === 1) {
-    return iterable => flatMap(func, iterable)
-  }
-  return flatMap(func, iterable)
-}
+export default curry(flatMap)

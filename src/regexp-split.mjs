@@ -1,12 +1,25 @@
-import cloneRegexp from './internal/clone-regexp'
+import { cloneRegexp, isRegExp } from './internal/regexp'
+import curry from './internal/curry'
 
 function * regexpSplit (re, str) {
-  if (typeof str !== 'string') throw new Error('regexpSplit: it should take a string')
-  let i, match
+  if (typeof str !== 'string') throw new Error('regexpSplit: the second argument should be a string')
+
   if (!re) {
     yield * str
     return
   }
+
+  if (typeof re === 'string') {
+    re = new RegExp(re, 'g')
+  }
+
+  if (!isRegExp(re)) throw new Error('regexpSplit: the first argument can be a string or a regular expression')
+
+  if (re && !re.global) {
+    re = cloneRegexp(re, { global: true })
+  }
+
+  let i, match
   for (i = 0; match = re.exec(str); i = re.lastIndex) { // eslint-disable-line no-cond-assign
     const part = str.slice(i, re.lastIndex - match[0].length)
     yield part
@@ -16,15 +29,4 @@ function * regexpSplit (re, str) {
   yield str.slice(i)
 }
 
-export default function curriedRegexpSplit (re, str) {
-  if (re && typeof re === 'string') {
-    re = new RegExp(re, 'g')
-  } else if (re && !re.global) {
-    re = cloneRegexp(re, { global: true })
-  }
-
-  if (arguments.length === 1) {
-    return str => regexpSplit(re, str)
-  }
-  return regexpSplit(re, str)
-}
+export default curry(regexpSplit)

@@ -1,5 +1,6 @@
 import ensureAsyncIterable from './internal/ensure-async-iterable'
 import delay from './internal/delay'
+import curry from './internal/curry'
 
 async function * asyncThrottle (ms, iterable) {
   let waitSince = 0
@@ -10,9 +11,4 @@ async function * asyncThrottle (ms, iterable) {
   }
 }
 
-export default function curriedAsyncThrottle (ms, iterable) {
-  if (arguments.length === 1) {
-    return iterable => asyncThrottle(ms, iterable)
-  }
-  return asyncThrottle(ms, iterable)
-}
+export default curry(asyncThrottle)
