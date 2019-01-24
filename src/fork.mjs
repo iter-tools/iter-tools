@@ -7,25 +7,41 @@ const _count = Symbol('count')
 const _position = Symbol('position')
 const _sourceIterator = Symbol('sourceIterator')
 const _returnItem = Symbol('returnValue')
-const _forkIterable = Symbol('forkIterable')
+const _forkGenerator = Symbol('forkGenerator')
 const _forksReturned = Symbol('forksReturned')
 const _emittedReturnValue = Symbol('emittedReturnValue')
 
 class ForkedIterable {
-  constructor (forkIterable) {
-    this[_forkIterable] = forkIterable
+  constructor (forkGenerator) {
+    this[_forkGenerator] = forkGenerator
+
+    /**
+     * True if this iterator has returned prior to exhausting the source
+     */
     this[_done] = false
-    this[_position] = -1
+    /**
+     * The number of items from the source iterable that this fork has emitted
+     * thus far
+     */
+    this[_position] = 0
+    /**
+     * True if this iterator has emitted a return value. The fork should emit
+     * the return value of the source iterator once if the source iterator
+     * returned a value, which matches generator behavior.
+     */
     this[_emittedReturnValue] = false
   }
 
   next () {
-    const forkIterable = this[_forkIterable]
+    const forkGenerator = this[_forkGenerator]
     const done = this[_done]
 
+    const position = this[_position];
     this[_position]++
 
-    if (done || forkIterable[_returnItem]) {
+    if (done || forkGenerator[_returnItem]) {
+      // There are no more items to emit
+
       if (done || this[_emittedReturnValue]) {
         return {
           value: undefined,
@@ -33,12 +49,13 @@ class ForkedIterable {
         }
       } else {
         this[_emittedReturnValue] = true
-        return forkIterable[_returnItem]
+        return forkGenerator[_returnItem]
       }
     } else {
-      const position = this[_position]
-      const sourceIterator = forkIterable[_sourceIterator]
-      const queue = forkIterable[_queue]
+      // There is definitely some item to emit
+
+      const sourceIterator = forkGenerator[_sourceIterator]
+      const queue = forkGenerator[_queue]
 
       if (position < queue.length) {
         return queue[position]
@@ -46,7 +63,8 @@ class ForkedIterable {
         const iteratorItem = sourceIterator.next()
 
         if (iteratorItem.done) {
-          forkIterable[_returnItem] = iteratorItem
+          forkGenerator[_returnItem] = iteratorItem
+          this[_emittedReturnValue] = true
         } else {
           queue.push(iteratorItem)
         }
@@ -56,14 +74,19 @@ class ForkedIterable {
   }
 
   return (returnVal) {
-    const forkIterable = this[_forkIterable]
-    forkIterable[_forksReturned]++
+    const forkGenerator = this[_forkGenerator]
+    forkGenerator[_forksReturned]++
 
     this[_done] = true
+    this[_emittedReturnValue] = true
 
-    if (!forkIterable[_returnItem]) {
-      if (forkIterable[_done] && forkIterable[_forksReturned] === forkIterable[_count]) {
-        forkIterable[_sourceIterator].return()
+    if (!forkGenerator[_returnItem]) {
+      if (
+        forkGenerator[_done] &&
+        forkGenerator[_forksReturned] === forkGenerator[_count]
+      ) {
+        // All forks have returned prematurely, so clean up the source
+        forkGenerator[_sourceIterator].return()
       }
     }
 
@@ -78,13 +101,36 @@ class ForkedIterable {
   }
 }
 
-class ForkIterable {
+class ForkGenerator {
   constructor (source) {
     this[_sourceIterator] = ensureIterable(source)[Symbol.iterator]()
+
+    /**
+     * Cache of all values emitted so far from the source
+     */
     this[_queue] = []
+    /**
+     * Whether the fork iterable itself is done, which is to say that no more
+     * new forks of the source iterable will be created
+     */
     this[_done] = false
+    /**
+     * `null` if the source iterator is not exhausted, otherwise the
+     * `{done: true, ...}` item that it yielded
+     */
     this[_returnItem] = null
+    /**
+     * The number of forks created
+     */
     this[_count] = 0
+    /**
+     * The number of forks which returned. Used to ensure that `source.return()`
+     * is still called when all forks return before exhausting the source.
+     *
+     * It may not ever reach `count`, nor need it. If count is not reached, that 
+     * means that one fork terminated by exhausting the source, in which case
+     * there is no need for a call to `source.return()`
+     */
     this[_forksReturned] = 0
   }
 
@@ -103,6 +149,11 @@ class ForkIterable {
     }
   }
 
+  /**
+   * ForkGenerator is an infinite generator, so for purposes of correctness it
+   * is imperative to avoid leaks that this return method be called when no more
+   * forks are needed.
+   */
   return (returnVal) {
     this[_done] = true
     return {
@@ -117,5 +168,5 @@ class ForkIterable {
 }
 
 export default function fork (iterable, count = Infinity) {
-  return count === Infinity ? new ForkIterable(iterable) : tee(iterable, count)
+  return count === Infinity ? new ForkGenerator(iterable) : tee(iterable, count)
 }
