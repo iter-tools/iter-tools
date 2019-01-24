@@ -16,7 +16,7 @@ class ForkedIterable {
     this[_forkGenerator] = forkGenerator
 
     /**
-     * True if this iterator has returned prior to exhausting the source
+     * True if this iterator is done emitting values
      */
     this[_done] = false
     /**
@@ -36,13 +36,11 @@ class ForkedIterable {
     const forkGenerator = this[_forkGenerator]
     const done = this[_done]
 
-    const position = this[_position];
+    const position = this[_position]
     this[_position]++
 
-    if (done || forkGenerator[_returnItem]) {
-      // There are no more items to emit
-
-      if (done || this[_emittedReturnValue]) {
+    if (done) {
+      if (this[_emittedReturnValue]) {
         return {
           value: undefined,
           done: true
@@ -52,8 +50,6 @@ class ForkedIterable {
         return forkGenerator[_returnItem]
       }
     } else {
-      // There is definitely some item to emit
-
       const sourceIterator = forkGenerator[_sourceIterator]
       const queue = forkGenerator[_queue]
 
@@ -65,6 +61,7 @@ class ForkedIterable {
         if (iteratorItem.done) {
           forkGenerator[_returnItem] = iteratorItem
           this[_emittedReturnValue] = true
+          this[_done] = true
         } else {
           queue.push(iteratorItem)
         }
@@ -74,13 +71,14 @@ class ForkedIterable {
   }
 
   return (returnVal) {
-    const forkGenerator = this[_forkGenerator]
-    forkGenerator[_forksReturned]++
+    if(!this[_done]) {
+      const forkGenerator = this[_forkGenerator]
 
-    this[_done] = true
-    this[_emittedReturnValue] = true
+      forkGenerator[_forksReturned]++
 
-    if (!forkGenerator[_returnItem]) {
+      this[_done] = true
+      this[_emittedReturnValue] = true
+
       if (
         forkGenerator[_done] &&
         forkGenerator[_forksReturned] === forkGenerator[_count]
@@ -127,7 +125,7 @@ class ForkGenerator {
      * The number of forks which returned. Used to ensure that `source.return()`
      * is still called when all forks return before exhausting the source.
      *
-     * It may not ever reach `count`, nor need it. If count is not reached, that 
+     * It may not ever reach `count`, nor need it. If count is not reached, that
      * means that one fork terminated by exhausting the source, in which case
      * there is no need for a call to `source.return()`
      */
