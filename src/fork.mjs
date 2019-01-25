@@ -71,7 +71,7 @@ class ForkedIterable {
   }
 
   return (returnVal) {
-    if(!this[_done]) {
+    if (!this[_done]) {
       const forkGenerator = this[_forkGenerator]
 
       forkGenerator[_forksReturned]++
@@ -83,7 +83,7 @@ class ForkedIterable {
         forkGenerator[_done] &&
         forkGenerator[_forksReturned] === forkGenerator[_count]
       ) {
-        // All forks have returned prematurely, so clean up the source
+        // All forks have now returned prematurely
         forkGenerator[_sourceIterator].return()
       }
     }
@@ -153,7 +153,15 @@ class ForkGenerator {
    * forks are needed.
    */
   return (returnVal) {
-    this[_done] = true
+    if (!this[_done]) {
+      this[_done] = true
+
+      if (this[_count] === this[_forksReturned]) {
+        // All forks have already returned prematurely
+        this[_sourceIterator].return()
+      }
+    }
+
     return {
       done: true,
       value: returnVal
