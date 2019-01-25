@@ -8,7 +8,7 @@ function * makeIterable () {
 }
 
 class OneTwoThreeIterable {
-  constructor() {
+  constructor () {
     this._counter = 0
     this.isCleanedUp = false
   }
@@ -37,9 +37,7 @@ class OneTwoThreeIterable {
   }
 }
 
- describe('fork', function () {
-
-
+describe('fork', function () {
   it('creates an iterable of iterables with the same values as its source', function () {
     const [a, b, c] = fork(makeIterable())
     expect(
@@ -70,29 +68,29 @@ class OneTwoThreeIterable {
       const oneTwoThree = new OneTwoThreeIterable()
       const [a, b] = fork(oneTwoThree)
       expect(oneTwoThree).toHaveProperty('isCleanedUp', false)
-      a[Symbol.iterator]().next();
-      a.return();
+      a[Symbol.iterator]().next()
+      a.return()
       expect(oneTwoThree).toHaveProperty('isCleanedUp', false)
-      b[Symbol.iterator]().next();
-      b.return();
+      b[Symbol.iterator]().next()
+      b.return()
       expect(oneTwoThree).toHaveProperty('isCleanedUp', true)
     })
 
     it('happens when all forks are exhausted then fork is exhausted', function () {
       const oneTwoThree = new OneTwoThreeIterable()
-      const iterableIterator = fork(oneTwoThree)[Symbol.iterator]();
+      const iterableIterator = fork(oneTwoThree)[Symbol.iterator]()
 
-      const a = iterableIterator.next().value;
-      a[Symbol.iterator]().next();
-      a.return();
+      const a = iterableIterator.next().value
+      a[Symbol.iterator]().next()
+      a.return()
       expect(oneTwoThree).toHaveProperty('isCleanedUp', false)
 
-      const b = iterableIterator.next().value;
-      b[Symbol.iterator]().next();
-      b.return();
+      const b = iterableIterator.next().value
+      b[Symbol.iterator]().next()
+      b.return()
       expect(oneTwoThree).toHaveProperty('isCleanedUp', false)
 
-      iterableIterator.return();
+      iterableIterator.return()
 
       expect(oneTwoThree).toHaveProperty('isCleanedUp', true)
     })

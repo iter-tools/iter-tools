@@ -44,6 +44,7 @@ Combine multiple iterables
 Utilities returning multiple iterables
 * [groupBy](#group-by) ([async](#group-by))
 * [tee](#tee) ([async](#async-tee))
+* [fork](#fork)
 * [partition](#partition) ([async](#async-partition))
 
 Others
@@ -579,6 +580,22 @@ tee(range(3), 4); // [iter1, iter2, iter3, iter4]
 
 ## async-tee
 Same as tee but works on both sync and async iterables.
+
+## fork
+Fork is given an iterable called the source, and returns an infinite iterable of copies of the source. This is highly useful because iterables do not guarantee that they may be iterated over more than once. Fork guarantees that you can iterate over its source as many times as you need to. It accomplishes this by caching values to the extent that it needs to.
+
+Because fork's iterable of copies is infinite, you must ensure that it is properly closed, particularly if the forks of your source are not fully exhausted and your source requires cleanup. If you are unsure what this means, simply know that using either es6 destructuring (preferred, if you can) or a combination of `Array.from` and slice will ensure correct behavior in all circumstances. See below for correct examples.
+
+```js
+const [a, b] = fork(range(3))
+Array.from(a) // [1, 2, 3]
+Array.from(b) // [1, 2, 3]
+
+// or, in es5
+const forks = Array.from(slice(2, fork));
+Array.from(forks[0]) // [1, 2, 3]
+Array.from(forks[1]) // [1, 2, 3]
+```
 
 ## partition
 Takes a condition function and an iterable, divides the iterable into 2, one contains items that satisfy the condition function, one contains item that don't.
