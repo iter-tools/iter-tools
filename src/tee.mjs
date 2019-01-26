@@ -1,13 +1,14 @@
-import range from './range'
 import ensureIterable from './internal/ensure-iterable'
-import Dequeue from 'dequeue'
+import MessageQueue from './internal/message-queue'
+import range from './range'
+import map from './map'
 
 export default function tee (iterable, number) {
   number = number || 2
   const iterator = ensureIterable(iterable)[Symbol.iterator]()
 
   let exhausted = 0
-  const arrays = Array.from(range(number)).map(() => new Dequeue())
+  const messageQueue = new MessageQueue()
   let done = false
 
   function fetch () {
@@ -15,15 +16,15 @@ export default function tee (iterable, number) {
     if (newItem.done) {
       done = true
     } else {
-      arrays.forEach((ar) => ar.push(newItem.value))
+      messageQueue.add(newItem.value)
     }
   }
 
   function * teeGen (a) {
     try {
       while (true) {
-        if (a.length) {
-          yield a.shift()
+        if (!a.isExhausted()) {
+          yield a.get()
         } else if (done) {
           return
         } else {
@@ -37,5 +38,7 @@ export default function tee (iterable, number) {
       }
     }
   }
-  return arrays.map((a) => teeGen(a))
+  const array = Array.from(map(() => teeGen(messageQueue.spawnConsumer()), range(number)))
+  messageQueue.close()
+  return array
 }
