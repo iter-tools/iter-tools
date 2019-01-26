@@ -32,6 +32,18 @@ export default class MessageQueue {
     this.tail = newItem
   }
 
+  get () {
+    if (!this.head) throw new Error('You cannot consume after closing')
+    if (this.isExhausted()) throw new Error('Consumer is exhausted')
+    const data = this.head.previous.data
+    this.head = this.head.previous
+    return data
+  }
+
+  isExhausted () {
+    return !this.head.previous
+  }
+
   spawnConsumer () {
     if (!this.head) throw new Error('You cannot spawn a new consumer after closing')
     return new Consumer(this.head)

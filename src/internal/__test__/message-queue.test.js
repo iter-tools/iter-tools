@@ -70,4 +70,16 @@ describe('MessageQueue', function () {
     expect(consumer1.get()).toBe(4)
     expect(consumer2.get()).toBe(4)
   })
+
+  it('can be used as a queue', async function () {
+    const messageQueue = new MessageQueue()
+    messageQueue.add(1)
+    messageQueue.add(2)
+    expect(messageQueue.isExhausted()).toBe(false)
+    expect(messageQueue.get()).toBe(1)
+    expect(messageQueue.get()).toBe(2)
+    expect(messageQueue.isExhausted()).toBe(true)
+    messageQueue.add(3)
+    expect(messageQueue.get()).toBe(3)
+  })
 })
