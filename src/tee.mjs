@@ -1,5 +1,5 @@
 import ensureIterable from './internal/ensure-iterable'
-import MessageQueue from './internal/message-queue'
+import { Exchange } from './internal/queues'
 import range from './range'
 import map from './map'
 
@@ -8,7 +8,7 @@ export default function tee (iterable, number) {
   const iterator = ensureIterable(iterable)[Symbol.iterator]()
 
   let exhausted = 0
-  const messageQueue = new MessageQueue()
+  const exchange = new Exchange()
   let done = false
 
   function fetch () {
@@ -16,15 +16,15 @@ export default function tee (iterable, number) {
     if (newItem.done) {
       done = true
     } else {
-      messageQueue.add(newItem.value)
+      exchange.push(newItem.value)
     }
   }
 
   function * teeGen (a) {
     try {
       while (true) {
-        if (!a.isExhausted()) {
-          yield a.get()
+        if (!a.isEmpty()) {
+          yield a.shift()
         } else if (done) {
           return
         } else {
@@ -38,7 +38,7 @@ export default function tee (iterable, number) {
       }
     }
   }
-  const array = Array.from(map(() => teeGen(messageQueue.spawnConsumer()), range(number)))
-  messageQueue.close()
+  const array = Array.from(map(() => teeGen(exchange.spawnConsumer()), range(number)))
+  exchange.noMoreConsumers()
   return array
 }

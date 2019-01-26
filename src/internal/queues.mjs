@@ -9,47 +9,55 @@ class Consumer {
   constructor (queueItem) {
     this.queueItem = queueItem
   }
-  isExhausted () {
+  isEmpty () {
     return !this.queueItem.previous
   }
-  get () {
-    if (this.isExhausted()) throw new Error('Consumer is exhausted')
+  shift () {
+    if (this.isEmpty()) throw new Error('Queue is empty')
     const data = this.queueItem.previous.data
     this.queueItem = this.queueItem.previous
     return data
   }
 }
 
-export default class MessageQueue {
+export class Queue {
   constructor () {
     this.head = new QueueItem() // an empty queue points to a head node
     this.tail = this.head // initially head and tail are the same
   }
 
-  add (data) {
+  push (data) {
     const newItem = new QueueItem(data)
     this.tail.previous = newItem
     this.tail = newItem
   }
 
-  get () {
-    if (!this.head) throw new Error('You cannot consume after closing')
-    if (this.isExhausted()) throw new Error('Consumer is exhausted')
+  shift () {
+    if (this.isEmpty()) throw new Error('Queue is empty')
     const data = this.head.previous.data
     this.head = this.head.previous
     return data
   }
 
-  isExhausted () {
+  isEmpty () {
     return !this.head.previous
+  }
+}
+
+export class Exchange extends Queue {
+  shift () {
+    throw new Error('Unsupported')
   }
 
   spawnConsumer () {
-    if (!this.head) throw new Error('You cannot spawn a new consumer after closing')
+    if (!this.head) throw new Error('You cannot spawn a new consumer after setting calling producerOnly')
     return new Consumer(this.head)
   }
 
-  close () {
-    this.head = null // this enables to garbage collect all the consumed
+  noMoreConsumers () {
+    // this enables to garbage collect all the consumed items
+    this.head = null
   }
 }
+
+export const fakeQueue = { push: () => {} }

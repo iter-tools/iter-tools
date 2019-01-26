@@ -1,10 +1,10 @@
 import ensureAsyncIterable from './internal/ensure-async-iterable'
 import curry from './internal/curry'
-import Dequeue from 'dequeue'
+import { Queue } from './internal/queues'
 
 async function * asyncBuffer (bufferSize, iterable) {
   const iterator = ensureAsyncIterable(iterable, true)[Symbol.asyncIterator]()
-  const buffer = new Dequeue()
+  const buffer = new Queue()
   try {
     // fill buffer
     for (let i = 0; i < bufferSize; i++) {
