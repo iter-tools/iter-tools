@@ -582,9 +582,9 @@ tee(range(3), 4); // [iter1, iter2, iter3, iter4]
 Same as tee but works on both sync and async iterables.
 
 ## fork
-Fork is given an iterable called the source, and returns an infinite iterable of copies of the source. This is highly useful because iterables do not guarantee that they may be iterated over more than once. Fork guarantees that you can iterate over its source as many times as you need to. It accomplishes this by caching values to the extent that it needs to.
+A close relative of `tee`. Given an iterable called the source, fork returns an infinite iterable of copies of the source. This is highly useful because iterables do not guarantee that they may be iterated over more than once. Fork guarantees that you can iterate over its source as many times as you need to. It accomplishes this by caching values to the extent that it needs to.
 
-Because fork's iterable of copies is infinite, you must ensure that it is properly closed, particularly if the forks of your source are not fully exhausted and your source requires cleanup. If you are unsure what this means, simply know that using either es6 destructuring (preferred, if you can) or a combination of `Array.from` and slice will ensure correct behavior in all circumstances. See below for correct examples.
+Because fork's iterable of copies is infinite, unlike with `tee` you can always create another fork on demand. However, while fork may still need to create another copy, it must keep a complete cache of all the data from the beginning of the source iterable. This means that in no circumstance may fork be used as a truly infinite iterable of infinte iterables without, well, infinite memory cost.
 
 ```js
 const [a, b] = fork(range(3))

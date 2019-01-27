@@ -1,29 +1,109 @@
+import map from './map'
 import tee from './tee'
+import zip from './zip'
 import ensureIterable from './internal/ensure-iterable'
 
 const _queue = Symbol('queue')
 const _done = Symbol('done')
-const _count = Symbol('count')
-const _position = Symbol('position')
 const _sourceIterator = Symbol('sourceIterator')
 const _returnItem = Symbol('returnValue')
 const _forkGenerator = Symbol('forkGenerator')
+const _forks = Symbol('forks')
 const _forksReturned = Symbol('forksReturned')
 const _emittedReturnValue = Symbol('emittedReturnValue')
+const maybeCloseSource = Symbol('maybeCloseSource')
+
+class SharedArrayQueue {
+  constructor (array) {
+    this._array = array
+    this._position = 0
+  }
+
+  push (value) {
+    this._array.push(value)
+  }
+
+  poll (value) {
+    return this._array[this._position++]
+  }
+
+  isEmpty () {
+    return this._position === this._array.length
+  }
+}
+
+class LinkedQueue {
+  static makeQueues (arrayQueues) {
+    let head = null
+    let tail = null
+
+    if (!arrayQueues.length) return []
+
+    const array = arrayQueues[0]._array
+
+    const positionSet = new Set(map(queue => queue._position, arrayQueues))
+    const nodesByPosition = new Map()
+
+    for (let i = array.length - 1; i--; i >= 0) {
+      head = new LinkedQueueNode(array[i], head)
+      tail = tail || head
+
+      if (positionSet.has(i)) {
+        nodesByPosition.set(i, head)
+      }
+    }
+
+    return map(
+      pos => new LinkedQueue(nodesByPosition.get(pos), tail),
+      positionSet
+    )
+  }
+
+  push (value) {
+    const node = new LinkedQueueNode(value)
+    if (this._tail) {
+      this._tail._next = node
+    } else {
+      this._tail = this._head = node
+    }
+    this._tail = node
+  }
+
+  poll (value) {
+    const node = this._head
+    this._head = node._next
+    if (!this._head) {
+      this._tail = null
+    }
+    return node._value
+  }
+
+  isEmpty () {
+    return this._head === null
+  }
+
+  constructor (head, tail) {
+    this._head = head
+    this._tail = tail
+  }
+}
+
+class LinkedQueueNode {
+  constructor (value, next = null) {
+    this._value = value
+    this._next = next
+  }
+}
 
 class ForkedIterable {
   constructor (forkGenerator) {
     this[_forkGenerator] = forkGenerator
+    this[_queue] = new SharedArrayQueue(forkGenerator[_queue])
 
     /**
      * True if this iterator is done emitting values
      */
     this[_done] = false
-    /**
-     * The number of items from the source iterable that this fork has emitted
-     * thus far
-     */
-    this[_position] = 0
     /**
      * True if this iterator has emitted a return value. The fork should emit
      * the return value of the source iterator once if the source iterator
@@ -35,9 +115,6 @@ class ForkedIterable {
   next () {
     const forkGenerator = this[_forkGenerator]
     const done = this[_done]
-
-    const position = this[_position]
-    this[_position]++
 
     if (done) {
       if (this[_emittedReturnValue]) {
@@ -51,22 +128,24 @@ class ForkedIterable {
       }
     } else {
       const sourceIterator = forkGenerator[_sourceIterator]
-      const queue = forkGenerator[_queue]
+      const queue = this[_queue]
 
-      if (position < queue.length) {
-        return queue[position]
-      } else {
+      if (queue.isEmpty()) {
         const iteratorItem = sourceIterator.next()
 
         if (iteratorItem.done) {
           forkGenerator[_returnItem] = iteratorItem
           this[_emittedReturnValue] = true
           this[_done] = true
+
+          // TODO can I just push this into the cache? why not?
+          return iteratorItem
         } else {
           queue.push(iteratorItem)
         }
-        return iteratorItem
       }
+
+      return queue.poll()
     }
   }
 
@@ -79,13 +158,7 @@ class ForkedIterable {
       this[_done] = true
       this[_emittedReturnValue] = true
 
-      if (
-        forkGenerator[_done] &&
-        forkGenerator[_forksReturned] === forkGenerator[_count]
-      ) {
-        // All forks have now returned prematurely
-        forkGenerator[_sourceIterator].return()
-      }
+      forkGenerator[maybeCloseSource]()
     }
 
     return {
@@ -104,6 +177,10 @@ class ForkGenerator {
     this[_sourceIterator] = ensureIterable(source)[Symbol.iterator]()
 
     /**
+     * The fork created so far
+     */
+    this[_forks] = []
+    /**
      * Cache of all values emitted so far from the source
      */
     this[_queue] = []
@@ -118,16 +195,12 @@ class ForkGenerator {
      */
     this[_returnItem] = null
     /**
-     * The number of forks created
-     */
-    this[_count] = 0
-    /**
      * The number of forks which returned. Used to ensure that `source.return()`
      * is still called when all forks return before exhausting the source.
      *
-     * It may not ever reach `count`, nor need it. If count is not reached, that
-     * means that one fork terminated by exhausting the source, in which case
-     * there is no need for a call to `source.return()`
+     * It may not ever reach `forks.length`, nor need it. If `forks.length` is
+     * not reached, that means that one fork terminated by exhausting the
+     * source, in which case there is no need for a call to `source.return()`
      */
     this[_forksReturned] = 0
   }
@@ -139,9 +212,11 @@ class ForkGenerator {
         done: true
       }
     } else {
-      this[_count]++
+      const fork = new ForkedIterable(this)
+      this[_forks].push(fork)
+
       return {
-        value: new ForkedIterable(this),
+        value: fork,
         done: false
       }
     }
@@ -156,15 +231,28 @@ class ForkGenerator {
     if (!this[_done]) {
       this[_done] = true
 
-      if (this[_count] === this[_forksReturned]) {
-        // All forks have already returned prematurely
-        this[_sourceIterator].return()
+      const queues = LinkedQueue.makeQueues(
+        map(fork => fork[_queue], this[_forks])
+      )
+      for (const [queue, fork] of zip(this[_forks], queues)) {
+        fork[_queue] = queue
       }
+
+      this[maybeCloseSource]()
     }
 
     return {
       done: true,
       value: returnVal
+    }
+  }
+
+  /**
+   * If all forks have returned prematurely, the source must also be closed
+   */
+  [maybeCloseSource] () {
+    if (this[_done] && this[_forks].length === this[_forksReturned]) {
+      this[_sourceIterator].return()
     }
   }
 
