@@ -50,7 +50,7 @@ export class Exchange extends Queue {
   }
 
   spawnConsumer () {
-    if (!this.head) throw new Error('You cannot spawn a new consumer after setting calling producerOnly')
+    if (!this.head) throw new Error('You cannot spawn a new consumer after setting calling noMoreConsumers')
     return new Consumer(this.head)
   }
 

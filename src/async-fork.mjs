@@ -25,9 +25,9 @@ export default function * asyncFork (iterable) {
     })
   }
 
-  function returnIterator () {
+  async function returnIterator () {
     if (noNewIterables && iterableNumber === 0) {
-      if (typeof iterator.return === 'function') iterator.return()
+      if (typeof iterator.return === 'function') await iterator.return()
     }
   }
 
@@ -44,7 +44,7 @@ export default function * asyncFork (iterable) {
       }
     } finally {
       iterableNumber--
-      returnIterator()
+      await returnIterator()
     }
   }
   try {
