@@ -34,7 +34,7 @@ function asyncFork (number, iterable) {
     }
   }
 
-  async function * forkGen (a) {
+  async function * generateFork (a) {
     try {
       while (true) {
         if (!a.isEmpty()) {
@@ -55,7 +55,7 @@ function asyncFork (number, iterable) {
     try {
       while (true) {
         iterableNumber++
-        yield forkGen(exchange.spawnConsumer())
+        yield generateFork(exchange.spawnConsumer())
       }
     } finally {
       noNewIterables = true

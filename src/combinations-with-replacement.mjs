@@ -1,7 +1,6 @@
 import map from './map'
 import range from './range'
 import product from './product'
-import fork from './fork'
 import ensureIterable from './internal/ensure-iterable'
 import { combinationsWithReplacementSize } from './internal/math'
 
@@ -23,7 +22,7 @@ export default function combinationsWithReplacement (iterable, r) {
   return {
     * [Symbol.iterator] () {
       const mapToIndex = map((i) => arr[i])
-      for (let indices of product(...fork(r, range(len)))) {
+      for (let indices of product(...map(() => range(len), range(r)))) {
         if (isSorted(indices)) {
           yield Array.from(mapToIndex(indices))
         }

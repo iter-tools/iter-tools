@@ -27,7 +27,7 @@ function fork (number, iterable) {
     }
   }
 
-  function * forkGen (a) {
+  function * generateFork (a) {
     try {
       while (true) {
         if (!a.isEmpty()) {
@@ -48,7 +48,7 @@ function fork (number, iterable) {
     try {
       while (true) {
         iterableNumber++
-        yield forkGen(exchange.spawnConsumer())
+        yield generateFork(exchange.spawnConsumer())
       }
     } finally {
       noNewIterables = true
