@@ -8,6 +8,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Removed
  - iter, asyncIter
 
+### Renamed
+ - pipe to pipeline
+
+### Added
+ - pipe
+
 ## [6.2.3] - 2019-1-23
 ### Added
  -  flat, asyncFlat, cursor, asyncCursor, merge, asyncMerge, pipe, partition, async-partition
