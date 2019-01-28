@@ -428,11 +428,6 @@ export declare function zipLongest<T> (...iterables: Array<Iterable<T>>): Iterab
 export declare function zipAll<T> (...iterables: Array<Iterable<T>>): IterableIterator<T[]>
 export declare function zip<T> (...iterables: Array<Iterable<T>>): IterableIterator<T[]>
 
-/**
- * @deprecated Use `iterable` instead
- */
-export declare function iter<T> (iterable: Iterable<T>): IterableIterator<T>
-
 // Async
 export declare function asyncBatch<T> (n: number): (iterable: AsyncIterableLike<T>) => AsyncIterableIterator<T>
 export declare function asyncBatch<T> (n: number, iterable: AsyncIterableLike<T>): AsyncIterableIterator<T>
@@ -713,8 +708,3 @@ export declare function mergeByPosition (step?: number): MergePickFunc<any>
 export declare function asyncMergeByComparison<T> (comparator: (a: T, b: T) => number): AsyncMergePickFunc<T>
 export declare function asyncMergeByChance (weights: ReadonlyArray<number>): AsyncMergePickFunc<any>
 export declare function asyncMergeByPosition (step?: number): AsyncMergePickFunc<any>
-
-/**
- * @deprecated Use `asyncIterable` instead
- */
-export declare function asyncIter<T> (syncIterable: AsyncIterableLike<T>): AsyncIterableIterator<T>
