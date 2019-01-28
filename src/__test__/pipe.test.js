@@ -10,8 +10,13 @@ function isEven (x) {
 }
 
 describe('pipe', function () {
-  it('works', function () {
-    const iter = pipe([1, 2, 3, 4], map(bump), filter(isEven))
-    expect(Array.from(iter)).toEqual([4, 6])
+  it('composes iterables', function () {
+    const iter = pipe(map(bump), filter(isEven))
+    expect(Array.from(iter([1, 2, 3, 4]))).toEqual([4, 6])
+  })
+
+  it('composes iterables (check order)', function () {
+    const iter = pipe(filter(isEven), map(bump))
+    expect(Array.from(iter([1, 2, 3, 4]))).toEqual([5, 7])
   })
 })
