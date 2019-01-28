@@ -9,11 +9,13 @@ function fork (number, iterable) {
   let noNewIterables = false
   const exchange = new Exchange()
   let done = false
+  let doneValue
 
   function fetch () {
     const newItem = iterator.next()
     if (newItem.done) {
       done = true
+      doneValue = newItem.value
     } else {
       exchange.push(newItem.value)
     }
@@ -31,7 +33,7 @@ function fork (number, iterable) {
         if (!a.isEmpty()) {
           yield a.shift()
         } else if (done) {
-          return
+          return doneValue
         } else {
           fetch()
         }

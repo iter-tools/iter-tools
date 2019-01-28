@@ -9,6 +9,7 @@ function asyncFork (number, iterable) {
   let noNewIterables = false
   const exchange = new Exchange()
   let done = false
+  let doneValue
 
   function fetch () {
     return new Promise((resolve, reject) => {
@@ -16,6 +17,7 @@ function asyncFork (number, iterable) {
         .then((newItem) => {
           if (newItem.done) {
             done = true
+            doneValue = newItem.value
             return resolve()
           } else {
             exchange.push(newItem.value)
@@ -38,7 +40,7 @@ function asyncFork (number, iterable) {
         if (!a.isEmpty()) {
           yield a.shift()
         } else if (done) {
-          return
+          return doneValue
         } else {
           fetch()
         }
