@@ -312,30 +312,32 @@ export declare function partition<T> (func: (item: T) => boolean):
 
 export declare const permutations: CombinationsPermutations
 
-export declare function pipe<T0> (value: T0): T0
-export declare function pipe<T0, T1> (
+export declare function pipe<T> (...fns: ((x: T) => T)[]): (x: T) => T
+
+export declare function pipeline<T0> (value: T0): T0
+export declare function pipeline<T0, T1> (
   value: T0,
   fn0: (value: T0) => T1
 ): T1
-export declare function pipe<T0, T1, T2> (
+export declare function pipeline<T0, T1, T2> (
   value: T0,
   fn0: (value: T0) => T1,
   fn1: (value: T1) => T2
 ): T2
-export declare function pipe<T0, T1, T2, T3> (
+export declare function pipeline<T0, T1, T2, T3> (
   value: T0,
   fn0: (value: T0) => T1,
   fn1: (value: T1) => T2,
   fn2: (value: T2) => T3
 ): T3
-export declare function pipe<T0, T1, T2, T3, T4> (
+export declare function pipeline<T0, T1, T2, T3, T4> (
   value: T0,
   fn0: (value: T0) => T1,
   fn1: (value: T1) => T2,
   fn2: (value: T2) => T3,
   fn3: (value: T3) => T4
 ): T4
-export declare function pipe<T0, T1, T2, T3, T4, T5> (
+export declare function pipeline<T0, T1, T2, T3, T4, T5> (
   value: T0,
   fn0: (value: T0) => T1,
   fn1: (value: T1) => T2,
@@ -343,7 +345,7 @@ export declare function pipe<T0, T1, T2, T3, T4, T5> (
   fn3: (value: T3) => T4,
   fn4: (value: T4) => T5
 ): T5
-export declare function pipe<T0, T1, T2, T3, T4, T5, T6> (
+export declare function pipeline<T0, T1, T2, T3, T4, T5, T6> (
   value: T0,
   fn0: (value: T0) => T1,
   fn1: (value: T1) => T2,
@@ -352,7 +354,7 @@ export declare function pipe<T0, T1, T2, T3, T4, T5, T6> (
   fn4: (value: T4) => T5,
   fn5: (value: T5) => T6
 ): T6
-export declare function pipe<T0, T1, T2, T3, T4, T5, R> (
+export declare function pipeline<T0, T1, T2, T3, T4, T5, R> (
   value: T0,
   fn0: (value: T0) => T1,
   fn1: (value: T1) => T2,
@@ -432,11 +434,6 @@ export declare function toArray<T> (iterable: Iterable<T>): T[]
 export declare function zipLongest<T> (...iterables: Array<Iterable<T>>): IterableIterator<T[]>
 export declare function zipAll<T> (...iterables: Array<Iterable<T>>): IterableIterator<T[]>
 export declare function zip<T> (...iterables: Array<Iterable<T>>): IterableIterator<T[]>
-
-/**
- * @deprecated Use `iterable` instead
- */
-export declare function iter<T> (iterable: Iterable<T>): IterableIterator<T>
 
 // Async
 export declare function asyncBatch<T> (n: number): (iterable: AsyncIterableLike<T>) => AsyncIterableIterator<T>
@@ -725,8 +722,3 @@ export declare function mergeByPosition (step?: number): MergePickFunc<any>
 export declare function asyncMergeByComparison<T> (comparator: (a: T, b: T) => number): AsyncMergePickFunc<T>
 export declare function asyncMergeByChance (weights: ReadonlyArray<number>): AsyncMergePickFunc<any>
 export declare function asyncMergeByPosition (step?: number): AsyncMergePickFunc<any>
-
-/**
- * @deprecated Use `asyncIterable` instead
- */
-export declare function asyncIter<T> (syncIterable: AsyncIterableLike<T>): AsyncIterableIterator<T>

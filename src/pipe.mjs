@@ -1,3 +1,3 @@
-export default function pipe (value, ...fns) {
-  return fns.reduce((value, fn) => fn(value), value)
+export default function pipe (...fns) {
+  return fns.reduce((f, g) => (...args) => g(f(...args)))
 }

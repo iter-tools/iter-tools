@@ -76,6 +76,7 @@ Combinatory generators
 Utilities
 * [compose](#compose)
 * [pipe](#pipe)
+* [pipeline](#pipeline)
 
 ## Definitions
 This should help clarify the documentation. You can also get more informations here: https://developer.mozilla.org/en/docs/Web/JavaScript/Guide/Iterators_and_Generators and here: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols
@@ -660,14 +661,6 @@ const myAsyncRangeIterator = {
 asyncSlice(3, asyncIterable(myAsyncRangeIterator)) // 1, 2, 3
 ```
 
-## iter [DEPRECATED]
-This function is intended to cast iterables to iterators. This is not particularly useful because iter-tools expects iterables as input, not iterators. This made `iter` confusing and unneccessary in virtually all usages, and prompted its deprecation. It will be removed in the next major release.
-
-## async-iter [DEPRECATED]
-This function is intended to cast async iterables to async iterators. This is not particularly useful because iter-tools async functions expect async iterables as input, not async iterators. It has been deprecated and will be removed in the next major release as it was confusing and usually unnecessary.
-
-Its legitimate usage was to cast sync iterables to async iterables, which should now be done with `async-iterable`.
-
 ## to-array
 Transform an iterable to an array. toArray is implemented as Array.from. It is included for consistency since Array.from has no counterpart for use with async iterators.
 ```js
@@ -958,12 +951,25 @@ const iter = compose(
 
 iter([1, 2, 3, 4]) // 5, 7
 ```
-Note: it works right to left!
+Note: it is equivalent to *pipe* but it works right to left!
 
 ## pipe
-Pipe allows to run an iterable through several functions. The first argument is an iterable, the following are functions that takes an iterable and return an iterable.
+This is a classic composition function that can be used to assemble multiple functions that take an iterable and return an iterable.
 ```js
-const iter = pipe(
+const iter = compose(
+  filter((x % 2) === 0),
+  map((x) =>  x + 3)
+)
+
+iter([1, 2, 3, 4]) // 5, 7
+```
+Note: it is equivalent to *compose* but it works left to right!
+
+
+## pipeline
+Pipeline allows to run an iterable through several functions. The first argument is an iterable, the following are functions that takes an iterable and return an iterable.
+```js
+const iter = pipeline(
   [1, 2, 3, 4],
   filter((x % 2) === 0)
   map((x) =>  x + 3),
@@ -971,8 +977,7 @@ const iter = pipe(
 
 iter // 5, 7
 ```
-The previous example is equivalent to the *compose* one (note that *pipe* works left to right, while *compose* works right to left).
-
+The previous example is equivalent to the *compose* and *pipe* ones (note that *pipeline* works left to right like *pipe*).
 
 ## Issues and limitations
 There are a few limitations that you need to be aware of.
