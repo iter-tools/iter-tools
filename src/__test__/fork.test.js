@@ -94,5 +94,15 @@ describe('fork', function () {
 
       expect(oneTwoThree).toHaveProperty('isCleanedUp', true)
     })
+
+    it('happens even when a fork is closed without being used', function () {
+      const oneTwoThree = new OneTwoThreeIterable()
+      const [a, b] = fork(oneTwoThree)
+      expect(oneTwoThree).toHaveProperty('isCleanedUp', false)
+      a.return()
+      expect(oneTwoThree).toHaveProperty('isCleanedUp', false)
+      b.return()
+      expect(oneTwoThree).toHaveProperty('isCleanedUp', true)
+    })
   })
 })

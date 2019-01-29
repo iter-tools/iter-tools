@@ -5,7 +5,7 @@ import slice from './slice'
 function fork (number, iterable) {
   const iterator = ensureIterable(iterable)[Symbol.iterator]()
 
-  let iterableNumber = 0
+  let iterableCounter = 0
   let noNewIterables = false
   const exchange = new Exchange()
   let done = false
@@ -22,13 +22,15 @@ function fork (number, iterable) {
   }
 
   function returnIterator () {
-    if (noNewIterables && iterableNumber === 0) {
+    if (noNewIterables && iterableCounter === 0) {
       if (typeof iterator.return === 'function') iterator.return()
     }
   }
 
   function * generateFork (a) {
     try {
+      iterableCounter++
+      yield 'ready' // the function generator is ready
       while (true) {
         if (!a.isEmpty()) {
           yield a.shift()
@@ -39,7 +41,7 @@ function fork (number, iterable) {
         }
       }
     } finally {
-      iterableNumber--
+      iterableCounter--
       returnIterator()
     }
   }
@@ -47,8 +49,14 @@ function fork (number, iterable) {
   function * generateForks () {
     try {
       while (true) {
-        iterableNumber++
-        yield generateFork(exchange.spawnConsumer())
+        const fork = generateFork(exchange.spawnConsumer())
+        // this first call to "next" allows to initiate the function generator
+        // this ensures that "iterableCounter" will be always increased and decreased
+        //
+        // the default behaviour of a generator is that finally clause is only called
+        // if next was called at least once
+        fork.next()
+        yield fork
       }
     } finally {
       noNewIterables = true
