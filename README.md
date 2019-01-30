@@ -40,6 +40,7 @@ Combine multiple iterables
 * [enumerate](#enumerate) ([async](#async-enumerate))
 * [compress](#compress) ([async](#async-compress))
 * [merge](#merge) ([async](#async-merge))
+* [mapFunc](#map-func)
 
 Utilities returning multiple iterables
 * [groupBy](#group-by) ([async](#group-by))
@@ -542,6 +543,17 @@ asyncMerge(asyncMergeByPosition(2), [repeat('a'), repeat('b'), repeat('c')]) // 
 asyncMerge(asyncMergeByReadiness(100), [iterable1, iterable2])
 ```
 
+## map-func
+This function maps an iterable of funtions to an iterable of arguments, returning an iterable of results.
+```js
+const square = x => x * x
+const double = x => x * 2
+mapFunc([square, double], [3, 10]) // 9, 20
+```
+It is particularly useful to map different iterables or async iterables to different transformations:
+```js
+const [squareEven, squareOdds] = mapFunc([map(square), double(double)], partition(even, iterable))
+```
 
 # Utilities returning multiple iterators
 

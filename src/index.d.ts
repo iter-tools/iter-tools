@@ -283,6 +283,9 @@ export declare function iterable<T> (
 export declare function map<T, O> (func: (item: T) => O): (iter: Iterable<T>) => IterableIterator<O>
 export declare function map<T, O> (func: (item: T) => O, iter: Iterable<T>): IterableIterator<O>
 
+export declare function mapFunc<T, O> (func: Iterable<(item: T) => O>): (iter: Iterable<T>) => IterableIterator<O>
+export declare function mapFunc<T, O> (func: Iterable<(item: T) => O>, iter: Iterable<T>): IterableIterator<O>
+
 export declare function merge<T> (pickFunc: MergePickFunc<T>): (iterables: ReadonlyArray<Iterable<T>>) => IterableIterator<T>
 export declare function merge<T> (pickFunc: MergePickFunc<T>, iterables: ReadonlyArray<Iterable<T>>): IterableIterator<T>
 

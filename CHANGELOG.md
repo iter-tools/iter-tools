@@ -12,7 +12,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
  - pipe to pipeline
 
 ### Added
- - pipe
+ - pipe, mapFunc
 
 ## [6.2.3] - 2019-1-23
 ### Added
