@@ -163,8 +163,11 @@ export declare function compose<T> (...fns: ((x: T) => T)[]): (x: T) => T
 
 export declare function compress<T> (iterable: Iterable<T>, compress: Iterable<boolean>): IterableIterator<T>
 
-export declare function consume<T> (func: (item: T) => void): (iterable: Iterable<T>) => void
-export declare function consume<T> (func: (item: T) => void, iterable: Iterable<T>): void
+export declare function consume<T> (func: (item: T, counter: number) => void): (iterable: Iterable<T>) => void
+export declare function consume<T> (func: (item: T, counter: number) => void, iterable: Iterable<T>): void
+
+export declare function consumeMany<T> (func: (item: T, counter: number) => void): (iterable: Iterable<T>) => void
+export declare function consumeMany<T> (func: (item: T, counter: number) => void, iterable: Iterable<T>): void
 
 export declare function count (opts: number | { start: number, end?: number, step?: number }): IterableIterator<number>
 
@@ -435,8 +438,11 @@ export declare function asyncBatch<T> (n: number, iterable: AsyncIterableLike<T>
 export declare function asyncChain<T> (...iterables: Array<AsyncIterableLike<T>>): AsyncIterableIterator<T>
 export declare function asyncConcat<T> (...iterables: Array<AsyncIterableLike<T>>): AsyncIterableIterator<T>
 
-export declare function asyncConsume<T> (func: (item: T) => MaybePromise<void>): (iterable: AsyncIterableLike<T>) => void
-export declare function asyncConsume<T> (func: (item: T) => MaybePromise<void>, iterable: AsyncIterableLike<T>): void
+export declare function asyncConsume<T> (func: (item: T, counter: number) => MaybePromise<void>): (iterable: AsyncIterableLike<T>) => void
+export declare function asyncConsume<T> (func: (item: T, counter: number) => MaybePromise<void>, iterable: AsyncIterableLike<T>): void
+
+export declare function asyncConsumeMany<T> (func: (item: T, counter: number) => MaybePromise<void>): (iterable: AsyncIterableLike<T>) => void
+export declare function asyncConsumeMany<T> (func: (item: T, counter: number) => MaybePromise<void>, iterable: AsyncIterableLike<T>): void
 
 export declare function asyncCompress<T> (
     iterable: AsyncIterableLike<T>,

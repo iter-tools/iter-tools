@@ -51,6 +51,7 @@ Others
 * [toArray](#to-array) ([async](#async-to-array))
 * [execute](#execute) ([async](#async-execute))
 * [consume](#consume) ([async](#async-consume))
+* [consumeMany](#consume-many) ([async](#async-consume-many))
 * [first](#first) ([async](#async-first))
 * [find](#find) ([async](#async-find))
 * [tap](#tap) ([async](#async-tap))
@@ -643,11 +644,23 @@ asyncExectue(() => Promise.resolve(Math.round(Math.random() * 10)) ); // 3, 5, 9
 ## consume
 It consumes an iterable, running a function for every value yielded. Passing only the function you get a curried version.
 ```js
-consume((item) => console.log(item), [1, 2, 3]) // prints 1, 2, 3
+consume((item, index) => console.log(item), [1, 2, 3]) // prints 1, 2, 3
 ```
 
 ## async-consume
 The equivalent of consume, for async iterables. It returns a promise. The argument can be a function returning a promise.
+
+## consume-many
+It consumes multiple iterables (it is equivalent to merge and consume)
+```js
+consumeMany((item, index) => console.log(item), [[1, 2, 3], [4, 5, 6]]) // prints 1, 4, 2, 5, 3, 6
+```
+
+## async-consume-many
+It consumes multiple async iterables (it is equivalent to merge and consume). The items are returned in the order they are ready.
+```js
+await asyncConsumeMany((item, index) => console.log(item), [[1, 2, 3], [4, 5, 6]]) // prints 1, 2, 3, 4, 5, 6 (the order may vary)
+```
 
 ## first
 It returns the fist item from an iterable.

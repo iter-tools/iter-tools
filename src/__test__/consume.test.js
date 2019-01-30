@@ -8,6 +8,12 @@ describe('consume', function () {
     expect(arr).toEqual([1, 2, 3])
   })
 
+  it('consumes an iterable (use counter)', function () {
+    const arr = []
+    consume((item, n) => arr.push(n), [1, 2, 3])
+    expect(arr).toEqual([0, 1, 2])
+  })
+
   it('consumes an iterable (curried)', function () {
     const arr = []
     const consumePush = consume((item) => arr.push(item))
@@ -28,6 +34,12 @@ describe('asyncConsume', function () {
     const arr = []
     await asyncConsume((item) => arr.push(item), [1, 2, 3])
     expect(arr).toEqual([1, 2, 3])
+  })
+
+  it('consumes an iterable (use counter)', async function () {
+    const arr = []
+    await asyncConsume((item, n) => arr.push(n), [1, 2, 3])
+    expect(arr).toEqual([0, 1, 2])
   })
 
   it('consumes an iterable using a promise', async function () {

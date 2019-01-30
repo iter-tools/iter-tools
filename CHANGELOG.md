@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Added
  - pipe
+ - consumeMany, asyncConsumeMany
 
 ## [6.2.3] - 2019-1-23
 ### Added
