@@ -15,4 +15,4 @@ function * takeSorted (comparator, number, iterable) {
   }
 }
 
-export default iterableCurry(takeSorted, 2, 3)
+export default iterableCurry(takeSorted, false, 1, 2)

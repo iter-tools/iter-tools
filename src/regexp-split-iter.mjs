@@ -28,4 +28,4 @@ function * regexpSplitIter (re, iterable) {
   }
 }
 
-export default iterableCurry(regexpSplitIter)
+export default iterableCurry(regexpSplitIter, false)

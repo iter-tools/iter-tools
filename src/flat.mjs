@@ -25,4 +25,4 @@ function flat (shouldIFlat = 1, iterable) {
   return _flat(0, iterable)
 }
 
-export default iterableCurry(flat, 1, 2)
+export default iterableCurry(flat, false, 0, 1)

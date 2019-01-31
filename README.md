@@ -35,10 +35,10 @@ Combine multiple iterables
 * [chain](#chain) ([async](#async-chain))
 * [concat](#concat) ([async](#async-concat))
 * [zip](#zip) ([async](#async-zip))
-* [zipLongest](#zip-longest) ([async](#async-zip-longest))
 * [zipAll](#zip-all) ([async](#async-zip-all))
 * [enumerate](#enumerate) ([async](#async-enumerate))
 * [compress](#compress) ([async](#async-compress))
+* [collate](#collate) ([async](#async-collate))
 * [merge](#merge) ([async](#async-merge))
 
 Utilities returning multiple iterables
@@ -423,22 +423,16 @@ zip([1, 2], [3, 4], [5, 6, 7]); // [1, 3, 5], [2, 4, 6]
 It returns the same results of zip and works on both sync and async iterables.
 Items are resolved in parallel. AsyncZip will never reuse entries.
 
-## zip-longest
-ZipLongest receives 2 or more iterables. It returns an iterable of entries, each of which contains one item from each of the input iterables. The iteration stops when the longest iterable is exausted. If an iterable is exhausted, it is returning undefined.
+## zip-all
+zipAll receives 2 or more iterables. It returns an iterable of entries, each of which contains one item from each of the input iterables. The iteration stops when the longest iterable is exausted. If an iterable is exhausted, undefined will be used as a placeholder value.
 
 ```js
-zipLongest([1, 2], [3, 4], [5, 6, 7]); // [1, 3, 5], [2, 4, 6], [undefined, undefined, 7]
+zipAll([1, 2], [3, 4], [5, 6, 7]); // [1, 3, 5], [2, 4, 6], [undefined, undefined, 7]
 ```
 
-## async-zip-longest
-It returns the same results of zipLongest and works on both sync and async iterables.
-Items are resolved in parallel. AsyncZipLongest will never reuse entries.
-
-## zip-all
-Alias of zipLongest
-
 ## async-zip-all
-Alias of async-zip-longest
+It returns the same results of zipAll and works on both sync and async iterables.
+Items are resolved in parallel. asyncZipAll will never reuse entries.
 
 ## enumerate
 It is a shorthand for zipping an index to an iterable:
@@ -459,95 +453,57 @@ compress(range(5), [0, 0, 1, 1]); // 2, 3
 Same as compress but works on both sync and async iterables.
 
 ## merge
-Merge takes multiple iterables and merge them in a single one. It uses a function that decides what sequence to use, time by time. The function takes an array with the latest items yielded from all iterables (null when an iterable is exhausted). The function returns the index of the iterable to consume.
-```js
-merge(minNumber, [[1, 2, 5, 6], [3, 4]]) // 1, 2, 3, 4, 5, 6
-```
-You can also curry it:
-```js
-merge(minNumber)([[1, 2, 5, 6], [3, 4]]) // 1, 2, 3, 4, 5, 6
-```
-here's minNumber implementation
-```js
-const minNumber = (items) =>
-  items
-    .map((item, index) => ({ index, item })) // add index
-    .filter((decoratedItem) => !!decoratedItem.item) // remove null
-    .sort((a, b) => a.item.value - b.item.value)[0].index // sort and pick first index
-```
-There are some helper to cover the most common cases:
-* mergeByComparison: it picks the smallest/biggest item, according to the comparator function (passed as argument). The default comparator behaves as the default one used by Array.prototype.sort.
-* mergeByChance: it picks a random item. You can pass an array with the "weights" to make more likely to consume the iterable with the highest weight (the default weight is 1).
-* mergeByPosition: it starts with the first iterable, it picks up the next one and restart from the beginning when there is no more. You can specify the step as argument (default 1). When an iterable is exhausted, it skips to the next one.
-Some example:
-```js
-// this one will return a sorted iterables, given as an input an array of sorted iterables (returning numbers)
-merge(mergeByComparison((a, b) => a - b), sortedIterables)
+Merge takes multiple input iterables and returns a single iterable where each item is the output of a provided merging function, which takes as parameters an item from each input iterable. Merge stops when the first input iterable is exhausted.
 
-// the merged iterable will contain twice more items from the first iterable than from the second
-merge(mergeByChance([2, 1], [iterable1, iterable2])
-
-//the merged iterable will cycle through the iterables, always skipping one
-merge(mergeByPosition(2), [repeat('a'), repeat('b'), repeat('c')]) // a c b a c b ...
+```js
+merge((a, b) => a + b, [1, 2, 3], [4, 5, 6]) // 5, 7, 9
+merge(
+  (a, b) => ({...a, ...b})
+)(
+  [{ lo: 14 }, { lo: 31 }], [{ hi: 44 }, { hi: 50 }]
+) // [{ lo: 14, hi: 44 }, { lo: 31, hi: 50 }]
 ```
 
 ## async-merge
-asyncMerge takes multiple async-iterables and merge them in a single one. It uses a function that decides what sequence to use, time by time. The function takes an array with the latest item yielded from all async-iterables (null when an async-iterable is exhausted). Items returned are promises and the function returns a promise that, when fulfilled, returns the index of the iterable to consume.
+Same as merge, but works on both sync an async input iterables. The merging function is still synchronous.
+
+## merge-all
+Merge all takes multiple input iterables and returns a single iterable where each item is the output of a provided merging function, which takes as parameters an item from each input iterable. Merge all stops only when all input iterables are exhausted. If an iterable is exhausted, undefined will be used as a placeholder parameter value.
+
 ```js
-asyncMerge(minNumber, [[1, 2, 5, 6], [3, 4]]) // 1, 2, 3, 4, 5, 6
+mergeAll((a, b) => (a || 0) + (b || 0), [1, 2, 3], [4, 5]) // 5, 7, 3
+mergeAll(
+  (a, b) => ({...(a || {}), ...(b || {})})
+)(
+  [{ lo: 14 }], [{ hi: 44 }, { hi: 50 }]
+) // [{ lo: 14, hi: 44 }, { hi: 50 }]
+```
+
+## async-merge-all
+Same as mergeAll, but works on both sync an async input iterables. The merging function is still synchronous.
+
+## collate
+Collate takes multiple iterables and collates them in a single one. The manner or collation can be chosen by specifying either a number or a comparator function.
+
+If a comparator function is specified, collate will compare the items available at the head of each iterable and pick the one which would be sorted to the lowest index. A comparator comparing of `(a, b) => { return -1 }` would indicate that a is always preferable to b.
+
+If a number `n` is specified, collate will do a round-robin collation, taking an item form the first iterable, then the one-plus-nth, etc. If no parameter is given the default is to collate with `n` equal to one.
+```js
+collate([1, 3, 5], [2, 4, 6]) // 1, 2, 3, 4, 5, 6
+```
+```js
+collate(2, [1, 4], [3, 6], [2, 5]) // 1, 2, 3, 4, 5, 6
+```
+```js
+collate((a, b) => a - b, [1, 2, 5, 6], [3, 4]) // 1, 2, 3, 4, 5, 6
 ```
 You can also curry it:
 ```js
-asyncMerge(minNumber)([[1, 2, 5, 6], [3, 4]]) // 1, 2, 3, 4, 5, 6
-```
-here's minNumber implementation
-```js
-const minNumber = async (promises) => {
-  const items = await Promise.all(promises)
-
-  items
-    .map((item, index) => ({ index, item })) // add index
-    .filter((decoratedItem) => !!decoratedItem.item) // remove null
-    .sort((a, b) => a.item.value - b.item.value)[0].index // sort and pick first index
-}
-```
-Using promises you can merge multiple iterables in a first come first served basis (see the helper asyncMergeByReadiness below):
-```js
-asyncMerge(async (promises) => {
-  const validPromises = promises
-    .filter((promise) => promise) // filter out exhausted iterables
-
-  await Promise.race(validPromises) // as least 1 promise should be resolved or there is no point in returning anything
-
-  for (let index = 0; index < promises.length; index++) {
-    if (promises[index] === null) continue
-    if (!promises[index].isPending()) {
-      return index
-    }
-  }
-}, iterables)
-```
-As you can see, promises have some extra method "isPending", "isFulFilled", "isRejected". These have been added to the promise returned by the async-iterables to make easier to inspect the promise state.
-There are some helper to cover the most common cases:
-* asyncMergeByComparison: it picks the smallest/biggest item, according to the comparator function (passed as argument). The default comparator behaves as the default one used by Array.prototype.sort.
-* asyncMergeByChance: it picks a random item. You can pass an array with the "weights" to make more likely to consume the iterable with the highest weight (the default weight is 1).
-* asyncMergeByPosition: it starts with the first iterable, it picks up the next one and restart from the beginning when there is no more. You can specify the step as argument (default 1). When an iterable is exhausted, it skips to the next one.
-* asyncMergeByReadiness: it picks the first available item from any iterable. If you specify a timeout, an error will be thrown if no item is ready after that interval.
-Some example:
-```js
-// this one will return a sorted iterables, given as an input an array of sorted iterables (returning numbers)
-asyncMerge(asyncMergeByComparison((a, b) => a - b), sortedIterables)
-
-// the merged iterable will contain twice more items from the first iterable than from the second
-asyncMerge(asyncMergeByChance([2, 1], [iterable1, iterable2])
-
-//the merged iterable will cycle through the iterables, always skipping one
-asyncMerge(asyncMergeByPosition(2), [repeat('a'), repeat('b'), repeat('c')]) // a c b a c b ...
-
-// yield the first available item every time. If it has to wait more than 100 ms, it will stop and throws an error.
-asyncMerge(asyncMergeByReadiness(100), [iterable1, iterable2])
+collate((a, b) => a - b)([[1, 2, 5, 6], [3, 4]]) // 1, 2, 3, 4, 5, 6
 ```
 
+## async-collate
+Same as collate, but can be used to collate both sync and async iterables. Async-collate's comparator function is still synchronous
 
 # Utilities returning multiple iterators
 

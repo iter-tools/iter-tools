@@ -28,4 +28,4 @@ function asyncFlat (shouldIFlat = 1, iterable) {
   return _asyncFlat(0, iterable)
 }
 
-export default asyncIterableCurry(asyncFlat, 1, 2)
+export default asyncIterableCurry(asyncFlat, false, 0, 1)

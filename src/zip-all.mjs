@@ -1,2 +1,5 @@
-import zipLongest from './zip-longest'
-export default zipLongest
+import mergeAll from './merge-all'
+
+export default function zipAll (...iterables) {
+  return mergeAll((...items) => [...items], ...iterables)
+}

@@ -117,34 +117,6 @@ type AsyncFlatReturn<
   AsyncIterableElement<Iter>
 >>
 
-/**
- * Functions of type `MergePickFunc` is
- * to be used as `pickFunc` parameter of `merge()`.
- *
- * This function decides what sequence to use.
- *
- * @param items An array of iterators corresponding to respective iterables passed to `merge()`.
- * @return Index of chosen sequence.
- */
-export interface MergePickFunc<Value> {
-  (items: ReadonlyArray<IteratorResult<Value> | null>): number
-}
-
-/**
- * Functions of type `AsyncMergePickFunc` is
- * to be used as `pickFunc` parameter of `asyncMerge()`.
- *
- * This function decides what sequence to use.
- *
- * @param items An array of iterators corresponding to respective iterables passed to `asyncMerge()`.
- * @return Index of chosen sequence.
- */
-export interface AsyncMergePickFunc<Value> {
-  (items: ReadonlyArray<
-    Promise<IteratorResult<Value> | null>
-  >): number
-}
-
 // Sync
 export declare function keys (obj: { [id: string]: any }): IterableIterator<string>
 export declare function values<T> (obj: { [id: string]: T }): IterableIterator<T>
@@ -155,6 +127,12 @@ export declare function batch<T> (n: number, iterable: Iterable<T>): IterableIte
 
 export declare function chain<T> (...iterables: Array<Iterable<T>>): IterableIterator<T>
 export declare function concat<T> (...iterables: Array<Iterable<T>>): IterableIterator<T>
+
+export declare function collate<T> (step?: number): (...iterables: Array<Iterable<T>>) => IterableIterator<T>
+export declare function collate<T> (step: number, ...iterables: Array<Iterable<T>>): IterableIterator<T>
+export declare function collate<T> (...iterables: Array<Iterable<T>>): IterableIterator<T>
+export declare function collate<T> (comparator: (a: T, b: T) => number): (...iterables: Array<Iterable<T>>) => IterableIterator<T>
+export declare function collate<T> (comparator: (a: T, b: T) => number, ...iterables: Array<Iterable<T>>): IterableIterator<T>
 
 export declare const combinations: CombinationsPermutations
 export declare const combinationsWithReplacement: CombinationsPermutations
@@ -285,8 +263,19 @@ export declare function iterable<T> (
 export declare function map<T, O> (func: (item: T) => O): (iter: Iterable<T>) => IterableIterator<O>
 export declare function map<T, O> (func: (item: T) => O, iter: Iterable<T>): IterableIterator<O>
 
-export declare function merge<T> (pickFunc: MergePickFunc<T>): (iterables: ReadonlyArray<Iterable<T>>) => IterableIterator<T>
-export declare function merge<T> (pickFunc: MergePickFunc<T>, iterables: ReadonlyArray<Iterable<T>>): IterableIterator<T>
+export declare function merge<T, O> (func: (...items: Array<T>) => O): (...iters: Array<Iterable<T>>) => IterableIterator<O>
+export declare function merge<T, O> (func: (...items: Array<T>) => O, ...iters: Array<Iterable<T>>): IterableIterator<O>
+export declare function merge<T1, T2, O> (func: (a: T1, b: T2) => O): (a: Iterable<T1>, b: Iterable<T2>) => IterableIterator<O>
+export declare function merge<T1, T2, O> (func: (a: T1, b: T2) => O, a: Iterable<T1>, b: Iterable<T2>): IterableIterator<O>
+export declare function merge<T1, T2, T3, O> (func: (a: T1, b: T2, c: T3) => O): (a: Iterable<T1>, b: Iterable<T2>, c: Iterable<T3>) => IterableIterator<O>
+export declare function merge<T1, T2, T3, O> (func: (a: T1, b: T2, c: T3) => O, a: Iterable<T1>, b: Iterable<T2>, c: Iterable<T3>): IterableIterator<O>
+
+export declare function mergeAll<T, O> (func: (...items: Array<T | undefined>) => O): (...iters: Array<Iterable<T>>) => IterableIterator<O>
+export declare function mergeAll<T, O> (func: (...items: Array<T | undefined>) => O, ...iters: Array<Iterable<T>>): IterableIterator<O>
+export declare function mergeAll<T1, T2, O> (func: (a: T1 | undefined, b: T2 | undefined) => O): (a: Iterable<T1>, b: Iterable<T2>) => IterableIterator<O>
+export declare function mergeAll<T1, T2, O> (func: (a: T1 | undefined, b: T2 | undefined) => O, a: Iterable<T1>, b: Iterable<T2>): IterableIterator<O>
+export declare function mergeAll<T1, T2, T3, O> (func: (a: T1 | undefined, b: T2 | undefined, c: T3 | undefined) => O): (a: Iterable<T1>, b: Iterable<T2>, c: Iterable<T3>) => IterableIterator<O>
+export declare function mergeAll<T1, T2, T3, O> (func: (a: T1 | undefined, b: T2 | undefined, c: T3 | undefined) => O, a: Iterable<T1>, b: Iterable<T2>, c: Iterable<T3>): IterableIterator<O>
 
 export declare function partition<T, S extends T> (
   func: (item: T) => item is S,
@@ -446,8 +435,7 @@ export declare function tee<T> (iterable: Iterable<T>, n?: number): IterableIter
 
 export declare function toArray<T> (iterable: Iterable<T>): T[]
 
-export declare function zipLongest<T> (...iterables: Array<Iterable<T>>): IterableIterator<T[]>
-export declare function zipAll<T> (...iterables: Array<Iterable<T>>): IterableIterator<T[]>
+export declare function zipAll<T> (...iterables: Array<Iterable<T | undefined>>): IterableIterator<T[]>
 export declare function zip<T> (...iterables: Array<Iterable<T>>): IterableIterator<T[]>
 
 // Async
@@ -456,6 +444,12 @@ export declare function asyncBatch<T> (n: number, iterable: AsyncIterableLike<T>
 
 export declare function asyncChain<T> (...iterables: Array<AsyncIterableLike<T>>): AsyncIterableIterator<T>
 export declare function asyncConcat<T> (...iterables: Array<AsyncIterableLike<T>>): AsyncIterableIterator<T>
+
+export declare function asyncCollate<T> (step?: number): (...iterables: Array<AsyncIterableLike<T>>) => AsyncIterableIterator<T>
+export declare function asyncCollate<T> (step: number, ...iterables: Array<AsyncIterableLike<T>>): AsyncIterableIterator<T>
+export declare function asyncCollate<T> (...iterables: Array<AsyncIterableLike<T>>): AsyncIterableIterator<T>
+export declare function asyncCollate<T> (comparator: (a: T, b: T) => number): (...iterables: Array<AsyncIterableLike<T>>) => AsyncIterableIterator<T>
+export declare function asyncCollate<T> (comparator: (a: T, b: T) => number, ...iterables: Array<AsyncIterableLike<T>>): AsyncIterableIterator<T>
 
 export declare function asyncConsume<T> (func: (item: T) => MaybePromise<void>): (iterable: AsyncIterableLike<T>) => void
 export declare function asyncConsume<T> (func: (item: T) => MaybePromise<void>, iterable: AsyncIterableLike<T>): void
@@ -629,8 +623,19 @@ export declare function asyncMap<T, O> (
   iter: AsyncIterableLike<T>
 ): AsyncIterableIterator<O>
 
-export declare function asyncMerge<T> (pickFunc: AsyncMergePickFunc<T>): (iterables: ReadonlyArray<AsyncIterableLike<T>>) => AsyncIterableIterator<T>
-export declare function asyncMerge<T> (pickFunc: AsyncMergePickFunc<T>, iterables: ReadonlyArray<AsyncIterableLike<T>>): AsyncIterableIterator<T>
+export declare function asyncMerge<T, O> (func: (...items: Array<T>) => O): (...iters: Array<AsyncIterableLike<T>>) => AsyncIterableIterator<O>
+export declare function asyncMerge<T, O> (func: (...items: Array<T>) => O, ...iters: Array<AsyncIterableLike<T>>): AsyncIterableIterator<O>
+export declare function asyncMerge<T1, T2, O> (func: (a: T1, b: T2) => O): (a: AsyncIterableLike<T1>, b: AsyncIterableLike<T2>) => AsyncIterableIterator<O>
+export declare function asyncMerge<T1, T2, O> (func: (a: T1, b: T2) => O, a: AsyncIterableLike<T1>, b: AsyncIterableLike<T2>): AsyncIterableIterator<O>
+export declare function asyncMerge<T1, T2, T3, O> (func: (a: T1, b: T2, c: T3) => O): (a: AsyncIterableLike<T1>, b: AsyncIterableLike<T2>, c: AsyncIterableLike<T3>) => AsyncIterableIterator<O>
+export declare function asyncMerge<T1, T2, T3, O> (func: (a: T1, b: T2, c: T3) => O, a: AsyncIterableLike<T1>, b: AsyncIterableLike<T2>, c: AsyncIterableLike<T3>): AsyncIterableIterator<O>
+
+export declare function asyncMergeAll<T, O> (func: (...items: Array<T | undefined>) => O): (...iters: Array<AsyncIterableLike<T>>) => AsyncIterableIterator<O>
+export declare function asyncMergeAll<T, O> (func: (...items: Array<T | undefined>) => O, ...iters: Array<AsyncIterableLike<T>>): AsyncIterableIterator<O>
+export declare function asyncMergeAll<T1, T2, O> (func: (a: T1 | undefined, b: T2 | undefined) => O): (a: AsyncIterableLike<T1>, b: AsyncIterableLike<T2>) => AsyncIterableIterator<O>
+export declare function asyncMergeAll<T1, T2, O> (func: (a: T1 | undefined, b: T2 | undefined) => O, a: AsyncIterableLike<T1>, b: AsyncIterableLike<T2>): AsyncIterableIterator<O>
+export declare function asyncMergeAll<T1, T2, T3, O> (func: (a: T1 | undefined, b: T2 | undefined, c: T3 | undefined) => O): (a: AsyncIterableLike<T1>, b: AsyncIterableLike<T2>, c: AsyncIterableLike<T3>) => AsyncIterableIterator<O>
+export declare function asyncMergeAll<T1, T2, T3, O> (func: (a: T1 | undefined, b: T2 | undefined, c: T3 | undefined) => O, a: AsyncIterableLike<T1>, b: AsyncIterableLike<T2>, c: AsyncIterableLike<T3>): AsyncIterableIterator<O>
 
 export declare function asyncPartition<T, S extends T> (
   func: (item: T) => item is S,
@@ -705,7 +710,6 @@ export declare function asyncTee<T> (iterable: AsyncIterableLike<T>, n?: number)
 
 export declare function asyncToArray<T> (iterable: AsyncIterableLike<T>): Promise<T[]>
 
-export declare function asyncZipLongest<T> (...iterables: Array<AsyncIterableLike<T>>): AsyncIterableIterator<T[]>
 export declare function asyncZipAll<T> (...iterables: Array<AsyncIterableLike<T>>): AsyncIterableIterator<T[]>
 
 export declare function asyncZip<T> (...iterables: Array<AsyncIterableLike<T>>): AsyncIterableIterator<T[]>
@@ -741,11 +745,3 @@ export declare function asyncBuffer<T> (n: number, iterable: AsyncIterableLike<T
 
 export declare function asyncThrottle<T> (n: number): (iterable: AsyncIterableLike<T>) => AsyncIterableIterator<T>
 export declare function asyncThrottle<T> (n: number, iterable: AsyncIterableLike<T>): AsyncIterableIterator<T>
-
-// merge helpers
-export declare function mergeByComparison<T> (comparator: (a: T, b: T) => number): MergePickFunc<T>
-export declare function mergeByChance (weights: ReadonlyArray<number>): MergePickFunc<any>
-export declare function mergeByPosition (step?: number): MergePickFunc<any>
-export declare function asyncMergeByComparison<T> (comparator: (a: T, b: T) => number): AsyncMergePickFunc<T>
-export declare function asyncMergeByChance (weights: ReadonlyArray<number>): AsyncMergePickFunc<any>
-export declare function asyncMergeByPosition (step?: number): AsyncMergePickFunc<any>

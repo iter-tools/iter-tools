@@ -7,4 +7,4 @@ function consume (func = () => {}, iterable) {
   }
 }
 
-export default iterableCurry(consume, 1, 2)
+export default iterableCurry(consume, false, 0, 1)
