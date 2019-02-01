@@ -1,6 +1,5 @@
-import { asyncIterableCurry, asyncify } from './internal/async-iterable'
-
-import CircularBuffer from './internal/circular-buffer'
+import CircularBuffer from './circular-buffer'
+import { asyncify } from './async-iterable'
 
 class ParallelMapper {
   constructor (iterable, mapFn, concurrency) {
@@ -76,18 +75,6 @@ class ParallelMapper {
   [Symbol.asyncIterator] () { return this }
 }
 
-async function * asyncMap (concurrency, func, iterable) {
-  if (concurrency == null) {
-    concurrency = 1
-  }
-
-  let c = 0
-
-  const runner = new ParallelMapper(iterable, async item => func(item, c++), concurrency)
-
-  for await (const value of runner) {
-    yield value.mappedValue
-  }
+export default function asyncMapParallel (iterable, mapFn, concurrency) {
+  return new ParallelMapper(iterable, mapFn, concurrency)
 }
-
-export default asyncIterableCurry(asyncMap, 2, 3)

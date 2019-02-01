@@ -6,22 +6,24 @@ import CircularBuffer from './internal/circular-buffer'
 
 async function * asyncCursor ({ size, trailing, filler }, iterable) {
   const circular = new CircularBuffer(size)
-  if (typeof filler !== 'undefined') {
-    circular.array.fill(filler)
-  }
+
+  circular.fill(filler)
+
+  iterable = iterable[Symbol.asyncIterator]()
+
   if (trailing) {
     let index = 0
     for await (const item of asyncChain(iterable, repeat(filler, size - 1))) {
       circular.push(item)
       if (index + 1 >= size) {
-        yield Array.from(circular)
+        yield circular.readOnlyCopy
       }
       index++
     }
   } else {
     for await (const item of iterable) {
       circular.push(item)
-      yield Array.from(circular)
+      yield circular.readOnlyCopy
     }
   }
 }

@@ -19,6 +19,7 @@ export default function querablePromise (promise) {
       throw e
     })
 
+  result.isSettled = () => state !== PENDING
   result.isFulfilled = () => state === FULFILLED
   result.isPending = () => state === PENDING
   result.isRejected = () => state === REJECTED
