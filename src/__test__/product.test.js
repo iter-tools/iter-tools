@@ -1,5 +1,5 @@
 /* eslint-env node, jest */
-const { product, fork } = require('iter-tools')
+const { product } = require('iter-tools')
 
 describe('product', function () {
   it('returns empty', function () {
@@ -21,7 +21,7 @@ describe('product', function () {
   })
 
   it('returns with repeat', function () {
-    const iter = product(...fork(2, [1, 2]))
+    const iter = product([1, 2], [1, 2])
     expect(iter.getSize()).toEqual(4)
     expect(Array.from(iter)).toEqual([[1, 1], [1, 2], [2, 1], [2, 2]])
   })

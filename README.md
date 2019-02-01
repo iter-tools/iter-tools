@@ -594,24 +594,15 @@ Array.from(proxy3)
 ```
 This is highly useful because iterables do not guarantee that they may be iterated over more than once. Fork guarantees that you can iterate over its source as many times as you need to. It accomplishes this by caching values to the extent that it needs to.
 
-Fork's iterable of copies is infinite by default, so you can always create another fork on demand. However, while fork may still need to create another copy, it must keep a complete cache of all the data from the beginning of the source iterable. This means that in no circumstance may fork be used as a truly infinite iterable of infinte iterables without, well, infinite memory cost. For example:
+Fork's iterable of copies is infinite, so you can always create another fork on demand. However, while fork may still need to create another copy, it must keep a complete cache of all the data from the beginning of the source iterable. This means that in no circumstance may fork be used as a truly infinite iterable of infinte iterables without, well, infinite memory cost. For example:
 ```js
 for (const proxy of slice(2, fork(originalIterable))) {
   // if you consume proxy inside this loop
   // fork will cache every single item yielded by originalIterable
 }
 ```
-You can optionally specify the number of copies you need. This leads to a shorter syntax:
-```js
-for (const proxy of fork(2, originalIterable)) {
-  // if you consume proxy inside this loop
-  // fork won't cache every single item yielded by originalIterable
-  // starting with the last proxy, memory used can be safely released
-  // because no other proxy can be generated
-}
-```
 
-In the following case using the *number* argument won't make any difference:
+This is the recommended use of fork:
 ```js
 // after this line, the cache will contain only the items not consumed by all iterables
 const [proxy1, proxy2] = fork(originalIterable);

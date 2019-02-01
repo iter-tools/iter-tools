@@ -1,8 +1,7 @@
 import ensureIterable from './internal/ensure-iterable'
 import { Exchange } from './internal/queues'
-import slice from './slice'
 
-function fork (number, iterable) {
+export default function fork (iterable) {
   const iterator = ensureIterable(iterable)[Symbol.iterator]()
 
   let iterableCounter = 0
@@ -65,21 +64,5 @@ function fork (number, iterable) {
     }
   }
 
-  if (typeof number === 'number') {
-    return Array.from(slice(number, generateForks()))
-  }
   return generateForks()
-}
-
-export default function curriedFork (...args) {
-  if (args.length === 1 && typeof args[0] === 'number') {
-    return iterable => fork(args[0], iterable)
-  }
-  if (args.length === 1 && typeof args[0] !== 'number') {
-    return fork(undefined, args[0])
-  }
-  if (args.length === 2) {
-    return fork(args[0], args[1])
-  }
-  return curriedFork
 }

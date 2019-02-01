@@ -258,9 +258,7 @@ export declare function flatMap<T, O> (
   iter: Iterable<T>
 ): IterableIterator<O>
 
-export declare function fork<T> (n: number, iterable: Iterable<T>): IterableIterator<IterableIterator<T>>
 export declare function fork<T> (iterable: Iterable<T>): IterableIterator<IterableIterator<T>>
-export declare function fork<T> (n: number): (iterable: Iterable<T>) => IterableIterator<IterableIterator<T>>
 
 export declare function groupBy (key: null):
   <T>(iterable: Iterable<T>) => IterableIterator<[T, IterableIterator<T>]>
@@ -572,9 +570,7 @@ export declare function asyncFlatMap<T, O> (func: (item: T) => AsyncIterableLike
 export declare function asyncFlatMap<T, O> (func: (item: T) => AsyncIterableLike<O>, iter: AsyncIterableLike<T>):
     AsyncIterableIterator<O>
 
-export declare function asyncFork<T> (n: number, asyncIterable: AsyncIterableLike<T>): IterableIterator<AsyncIterableIterator<T>>
 export declare function asyncFork<T> (asyncIterable: AsyncIterableLike<T>): IterableIterator<AsyncIterableIterator<T>>
-export declare function asyncFork<T> (n: number): (asyncIterable: AsyncIterableLike<T>) => IterableIterator<AsyncIterableIterator<T>>
 
 export declare function asyncGroupBy (key: null):
   <T>(iterable: AsyncIterableLike<T>) => AsyncIterableIterator<[T, AsyncIterableIterator<T>]>

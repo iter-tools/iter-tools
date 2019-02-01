@@ -1,8 +1,7 @@
 import ensureAsyncIterable from './internal/ensure-async-iterable'
 import { Exchange } from './internal/queues'
-import slice from './slice'
 
-function asyncFork (number, iterable) {
+export default function asyncFork (iterable) {
   const iterator = ensureAsyncIterable(iterable)[Symbol.iterator]()
 
   let iterableCounter = 0
@@ -72,21 +71,5 @@ function asyncFork (number, iterable) {
     }
   }
 
-  if (typeof number === 'number') {
-    return Array.from(slice(number, generateForks()))
-  }
   return generateForks()
-}
-
-export default function curriedAsyncFork (...args) {
-  if (args.length === 1 && typeof args[0] === 'number') {
-    return iterable => asyncFork(args[0], iterable)
-  }
-  if (args.length === 1 && typeof args[0] !== 'number') {
-    return asyncFork(undefined, args[0])
-  }
-  if (args.length === 2) {
-    return asyncFork(args[0], args[1])
-  }
-  return curriedAsyncFork
 }
