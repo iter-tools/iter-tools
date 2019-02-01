@@ -1,11 +1,8 @@
-export default function curry (fn) {
-  function nest (len, args) {
-    return (...xs) => {
-      if (len - xs.length <= 0) {
-        return fn(...args, ...xs)
-      }
-      return nest(len - xs.length, [...args, ...xs])
+export default function curry (fn, expectedArgsLength = fn.length, appliedArgs = []) {
+  return (...args) => {
+    if (expectedArgsLength - args.length <= 0) {
+      return fn(...appliedArgs, ...args)
     }
+    return curry(fn, expectedArgsLength - args.length, [...appliedArgs, ...args])
   }
-  return nest(fn.length, [])
 }
