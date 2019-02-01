@@ -1,13 +1,21 @@
+import ensureAsyncIterable from './internal/ensure-async-iterable'
+import { Exchange } from './internal/queues'
 import range from './range'
 import map from './map'
-import ensureAsyncIterable from './internal/ensure-async-iterable'
-import Dequeue from 'dequeue'
+
+const deprecationWarning = 'tee() is deprecated! Use fork() instead'
+
+let warnedDeprecation = false
+export const silence = () => (warnedDeprecation = true)
 
 export default function tee (iterable, number) {
+  !warnedDeprecation && console.warn(deprecationWarning)
+  warnedDeprecation = true
+
   number = number || 2
   const iterator = ensureAsyncIterable(iterable)[Symbol.asyncIterator]()
   let exhausted = 0
-  const arrays = Array.from(map(() => new Dequeue(), range(number)))
+  const exchange = new Exchange()
   let done = false
 
   function fetch () {
@@ -18,7 +26,7 @@ export default function tee (iterable, number) {
             done = true
             return resolve()
           } else {
-            arrays.forEach((ar) => ar.push(newItem.value))
+            exchange.push(newItem.value)
             return resolve()
           }
         })
@@ -29,7 +37,7 @@ export default function tee (iterable, number) {
   async function * teeGen (a) {
     try {
       while (true) {
-        if (a.length) {
+        if (!a.isEmpty()) {
           yield a.shift()
         } else if (done) {
           return
@@ -44,5 +52,7 @@ export default function tee (iterable, number) {
       }
     }
   }
-  return arrays.map((a) => teeGen(a))
+  const array = Array.from(map(() => teeGen(exchange.spawnConsumer()), range(number)))
+  exchange.noMoreConsumers()
+  return array
 }

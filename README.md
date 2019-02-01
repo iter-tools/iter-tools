@@ -43,7 +43,7 @@ Combine multiple iterables
 
 Utilities returning multiple iterables
 * [groupBy](#group-by) ([async](#group-by))
-* [tee](#tee) ([async](#async-tee))
+* [fork](#fork) ([async](#async-fork))
 * [partition](#partition) ([async](#async-partition))
 
 Others
@@ -571,15 +571,51 @@ groupBySquare([1, 1, 1, 1, -1, -1, -1, 4]);
 ## async-group-by
 Same as groupBy but works on both sync and async iterables. The first argument can be a function returning synchronously or a promise.
 
-## tee
+## tee (DEPRECATED use *fork* instead)
 It returns 2 or more copies of an iterable. In reality they are not copies (it is not possible) they are distinct iterables sharing the original one and caching the values when one of the copy pull a new value from the original iterable.
 ```js
 tee(range(3)); // [iter1, iter2]
 tee(range(3), 4); // [iter1, iter2, iter3, iter4]
 ```
 
-## async-tee
+## async-tee (DEPRECATED use *asyncFork* instead)
 Same as tee but works on both sync and async iterables.
+
+## fork
+fork returns an iterable that yields buffered proxies of the input iterable:
+```js
+const [proxy1, proxy2, proxy3] = fork(originalIterable)
+// from now on originalIterable can't be used directly
+
+// all the following return the same items that yielded by originalIterable
+Array.from(proxy1)
+Array.from(proxy2)
+Array.from(proxy3)
+```
+This is highly useful because iterables do not guarantee that they may be iterated over more than once. Fork guarantees that you can iterate over its source as many times as you need to. It accomplishes this by caching values to the extent that it needs to.
+
+Fork's iterable of copies is infinite, so you can always create another fork on demand. However, while fork may still need to create another copy, it must keep a complete cache of all the data from the beginning of the source iterable. This means that in no circumstance may fork be used as a truly infinite iterable of infinte iterables without, well, infinite memory cost. For example:
+```js
+for (const proxy of slice(2, fork(originalIterable))) {
+  // if you consume proxy inside this loop
+  // fork will cache every single item yielded by originalIterable
+}
+```
+
+This is the recommended use of fork:
+```js
+// after this line, the cache will contain only the items not consumed by all iterables
+const [proxy1, proxy2] = fork(originalIterable);
+
+// That means that if I carefully consume all items in parallel, the memory cost will be minimal
+const square = (x) => x * x
+for (const [n, nsquared] of zip(proxy1, map(square, proxy1))) {
+  console.log(`${n} squared is ${nsquared}`)
+}
+```
+
+## async-fork
+Same as fork but works on both sync and async iterables.
 
 ## partition
 Takes a condition function and an iterable, divides the iterable into 2, one contains items that satisfy the condition function, one contains item that don't.

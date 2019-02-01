@@ -53,7 +53,6 @@
   "dependencies": {
     "@babel/runtime": "^7.0.0",
     "@babel/runtime-corejs2": "^7.1.5",
-    "dequeue": "^1.0.5",
     "little-ds-toolkit": "^1.1.0",
     "typescript-tuple": "^2.1.0",
     "typescript-union": "^0.1.0",

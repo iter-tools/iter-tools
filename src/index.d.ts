@@ -258,6 +258,8 @@ export declare function flatMap<T, O> (
   iter: Iterable<T>
 ): IterableIterator<O>
 
+export declare function fork<T> (iterable: Iterable<T>): IterableIterator<IterableIterator<T>>
+
 export declare function groupBy (key: null):
   <T>(iterable: Iterable<T>) => IterableIterator<[T, IterableIterator<T>]>
 export declare function groupBy<T> (
@@ -420,6 +422,9 @@ export declare function takeSorted<T> (
     iterable?: Iterable<T>
 ): IterableIterator<T>
 
+/**
+ * @deprecated Use `fork` instead
+ */
 export declare function tee<T> (iterable: Iterable<T>, n?: number): IterableIterator<IterableIterator<T>>
 
 export declare function toArray<T> (iterable: Iterable<T>): T[]
@@ -565,6 +570,8 @@ export declare function asyncFlatMap<T, O> (func: (item: T) => AsyncIterableLike
 export declare function asyncFlatMap<T, O> (func: (item: T) => AsyncIterableLike<O>, iter: AsyncIterableLike<T>):
     AsyncIterableIterator<O>
 
+export declare function asyncFork<T> (asyncIterable: AsyncIterableLike<T>): IterableIterator<AsyncIterableIterator<T>>
+
 export declare function asyncGroupBy (key: null):
   <T>(iterable: AsyncIterableLike<T>) => AsyncIterableIterator<[T, AsyncIterableIterator<T>]>
 export declare function asyncGroupBy<T> (
@@ -667,6 +674,9 @@ export declare function asyncTakeSorted<T> (n: number, func?: (item: T) => boole
 export declare function asyncTakeSorted<T> (n: number, func?: (item: T) => boolean, iterable?: AsyncIterableLike<T>):
     AsyncIterableLike<T>
 
+/**
+ * @deprecated Use `asyncFork` instead
+ */
 export declare function asyncTee<T> (iterable: AsyncIterableLike<T>, n?: number): IterableIterator<AsyncIterableIterator<T>>
 
 export declare function asyncToArray<T> (iterable: AsyncIterableLike<T>): Promise<T[]>
