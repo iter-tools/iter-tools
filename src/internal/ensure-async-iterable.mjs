@@ -1,10 +1,9 @@
 import asyncify from './asyncify'
+import isAsyncIterable from './is-async-iterable'
 import ensureIterable from './ensure-iterable'
 
 export default function ensureAsyncIterable (i) {
-  if (i && i[Symbol.asyncIterator]) {
-    return asyncify(i)
-  } else if (i && i[Symbol.asyncIterator]) {
+  if (isAsyncIterable(i)) {
     return i
   } else {
     return asyncify(ensureIterable(i))
