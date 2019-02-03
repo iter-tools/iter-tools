@@ -145,6 +145,44 @@ export interface AsyncMergePickFunc<Value> {
   >): number
 }
 
+export type SplitAtElement<
+  Position extends number,
+  Iter extends any[],
+  First extends any[] = [],
+  Rest extends any[] = []
+> = {
+  matched: [
+    IterableElement<First>,
+    IterableElement<Iter>
+  ]
+  unmatched: ((...args: Iter) => any) extends ((a: infer FirstAddend, ...b: infer NextRest) => any)
+    ? SplitAtElement<
+        Position,
+        NextRest,
+        Prepend<First, FirstAddend>,
+        NextRest
+      >
+    : never
+  outOfBound: [
+    IterableElement<First>,
+    never
+  ]
+}[
+  First['length'] extends Position ? 'matched' :
+  Iter extends [] ? 'outOfBound' :
+  'unmatched'
+]
+
+export type SplitAtArrayReturn<Position extends number, Iter extends any[]> =
+  SplitAtElement<Position, Iter> extends [infer A, infer B]
+    ? [IterableIterator<A>, IterableIterator<B>]
+    : never
+
+export type AsyncSplitAtArrayReturn<Position extends number, Iter extends any[]> =
+  SplitAtElement<Position, Iter> extends [infer A, infer B]
+    ? [AsyncIterableIterator<A>, AsyncIterableIterator<B>]
+    : never
+
 // Sync
 export declare function keys (obj: { [id: string]: any }): IterableIterator<string>
 export declare function values<T> (obj: { [id: string]: T }): IterableIterator<T>
@@ -407,8 +445,18 @@ export declare function slice<T> (
 export declare function some<T> (func: (item: T) => boolean): (iterable: Iterable<T>) => boolean
 export declare function some<T> (func: (item: T) => boolean, iterable: Iterable<T>): boolean
 
-export declare function splitAt<T> (position: number):
-  (iterable: Iterable<T>) => [IterableIterator<T>, IterableIterator<T>]
+export declare function splitAt<
+  Position extends ReasonableNumber,
+  Iter extends any[]
+> (position: Position, iter: Iter): SplitAtArrayReturn<Position, Iter>
+export declare function splitAt<
+  Position extends ReasonableNumber
+> (position: Position): {
+  <Iter extends any[]> (iter: Iter): SplitAtArrayReturn<Position, Iter>
+  <T> (iter: Iterable<T>): [IterableIterator<T>, IterableIterator<T>]
+}
+export declare function splitAt (position: number):
+  <T> (iterable: Iterable<T>) => [IterableIterator<T>, IterableIterator<T>]
 export declare function splitAt<T> (
   position: number,
   iterable: Iterable<T>
@@ -712,8 +760,18 @@ export declare function asyncSome<T> (
   iterable: AsyncIterableLike<T>
 ): Promise<boolean>
 
-export declare function asyncSplitAt<T> (position: number):
-  (iterable: AsyncIterableLike<T>) => [AsyncIterableIterator<T>, AsyncIterableIterator<T>]
+export declare function asyncSplitAt<
+  Position extends ReasonableNumber,
+  Iter extends any[]
+> (position: Position, iter: Iter): AsyncSplitAtArrayReturn<Position, Iter>
+export declare function asyncSplitAt<
+  Position extends ReasonableNumber
+> (position: Position): {
+  <Iter extends any[]> (iter: Iter): AsyncSplitAtArrayReturn<Position, Iter>
+  <T> (iter: AsyncIterableLike<T>): [AsyncIterableIterator<T>, AsyncIterableIterator<T>]
+}
+export declare function asyncSplitAt (position: number):
+  <T> (iterable: AsyncIterableLike<T>) => [AsyncIterableIterator<T>, AsyncIterableIterator<T>]
 export declare function asyncSplitAt<T> (
   position: number,
   iterable: AsyncIterableLike<T>
