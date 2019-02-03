@@ -407,6 +407,13 @@ export declare function slice<T> (
 export declare function some<T> (func: (item: T) => boolean): (iterable: Iterable<T>) => boolean
 export declare function some<T> (func: (item: T) => boolean, iterable: Iterable<T>): boolean
 
+export declare function splitAt<T> (position: number):
+  (iterable: Iterable<T>) => [IterableIterator<T>, IterableIterator<T>]
+export declare function splitAt<T> (
+  position: number,
+  iterable: Iterable<T>
+): [IterableIterator<T>, IterableIterator<T>]
+
 export declare function takeWhile<T> (func: (item: T) => boolean): (iterable: Iterable<T>) => IterableIterator<T>
 export declare function takeWhile<T> (func: (item: T) => boolean, iterable: Iterable<T>): IterableIterator<T>
 
@@ -704,6 +711,13 @@ export declare function asyncSome<T> (
   func: (item: T) => MaybePromise<boolean>,
   iterable: AsyncIterableLike<T>
 ): Promise<boolean>
+
+export declare function asyncSplitAt<T> (position: number):
+  (iterable: AsyncIterableLike<T>) => [AsyncIterableIterator<T>, AsyncIterableIterator<T>]
+export declare function asyncSplitAt<T> (
+  position: number,
+  iterable: AsyncIterableLike<T>
+): [AsyncIterableIterator<T>, AsyncIterableIterator<T>]
 
 export declare function asyncBuffer<T> (n: number): (iterable: AsyncIterableLike<T>) => AsyncIterableIterator<T>
 export declare function asyncBuffer<T> (n: number, iterable: AsyncIterableLike<T>): AsyncIterableIterator<T>
