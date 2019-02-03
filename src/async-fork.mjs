@@ -2,8 +2,7 @@ import ensureAsyncIterable from './internal/ensure-async-iterable'
 import { Exchange } from './internal/queues'
 
 export default function asyncFork (iterable) {
-  const iterator = ensureAsyncIterable(iterable)[Symbol.iterator]()
-
+  const iterator = ensureAsyncIterable(iterable)[Symbol.asyncIterator]()
   let iterableCounter = 0
   let noNewIterables = false
   const exchange = new Exchange()
@@ -43,7 +42,7 @@ export default function asyncFork (iterable) {
         } else if (done) {
           return doneValue
         } else {
-          fetch()
+          await fetch()
         }
       }
     } finally {
