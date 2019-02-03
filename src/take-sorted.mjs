@@ -1,5 +1,5 @@
 import Heap from 'little-ds-toolkit/lib/heap'
-import ensureIterable from './internal/ensure-iterable'
+import { ensureIterable } from './internal/iterable'
 
 function * takeSorted (number, comparator, iterable) {
   const heap = new Heap(comparator)

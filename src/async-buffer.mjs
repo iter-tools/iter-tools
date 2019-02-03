@@ -1,5 +1,5 @@
-import ensureAsyncIterable from './internal/ensure-async-iterable'
-import curry from './internal/curry'
+import { ensureAsyncIterable } from './internal/async-iterable'
+import { curry } from './internal/curry'
 import { Queue } from './internal/queues'
 
 async function * asyncBuffer (bufferSize, iterable) {

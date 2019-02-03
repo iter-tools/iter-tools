@@ -1,5 +1,5 @@
-import ensureIterable from './internal/ensure-iterable'
-import curry from './internal/curry'
+import { ensureIterable } from './internal/iterable'
+import { curry } from './internal/curry'
 
 function * takeWhile (func, i) {
   let take = true

@@ -1,4 +1,4 @@
-import ensureIterable from './internal/ensure-iterable'
+import { ensureIterable } from './internal/iterable'
 
 export default function * zipLongest (...iterables) {
   const iters = iterables.map(i => ensureIterable(i)[Symbol.iterator]())

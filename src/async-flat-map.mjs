@@ -1,5 +1,5 @@
 import map from './async-map'
-import curry from './internal/curry'
+import { curry } from './internal/curry'
 
 async function * asyncFlatMap (func, iterable) {
   const mapIter = map(func)

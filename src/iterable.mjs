@@ -1,5 +1,4 @@
-import ensureIterable from './internal/ensure-iterable'
-import isIterable from './internal/is-iterable'
+import { ensureIterable, isIterable } from './internal/iterable'
 
 export default function iterable (iterator) {
   if (iterator !== null &&

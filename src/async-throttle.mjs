@@ -1,6 +1,6 @@
-import ensureAsyncIterable from './internal/ensure-async-iterable'
+import { ensureAsyncIterable } from './internal/async-iterable'
 import delay from './internal/delay'
-import curry from './internal/curry'
+import { curry } from './internal/curry'
 
 async function * asyncThrottle (ms, iterable) {
   let waitSince = 0

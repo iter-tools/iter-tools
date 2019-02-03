@@ -1,9 +1,9 @@
 import Heap from 'little-ds-toolkit/lib/heap'
-import ensureIterable from './internal/ensure-async-iterable'
+import { ensureAsyncIterable } from './internal/async-iterable'
 
 async function * asyncTakeSorted (number, comparator, iterable) {
   const heap = new Heap(comparator)
-  for await (const item of ensureIterable(iterable)) {
+  for await (const item of ensureAsyncIterable(iterable)) {
     heap.push(item)
     if (heap.size() > number) {
       heap.pop()

@@ -1,5 +1,5 @@
-import ensureAsyncIterable from './internal/ensure-async-iterable'
-import curry from './internal/curry'
+import { ensureAsyncIterable } from './internal/async-iterable'
+import { curry } from './internal/curry'
 
 async function * asyncBatch (number, iterable) {
   if (typeof number !== 'number' || number < 1) throw new Error('batch size should be a number, greater than zero')

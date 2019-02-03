@@ -1,6 +1,6 @@
 import { Queue, fakeQueue } from './internal/queues'
-import ensureAsyncIterable from './internal/ensure-async-iterable'
-import curry from './internal/curry'
+import { ensureAsyncIterable } from './internal/async-iterable'
+import { curry } from './internal/curry'
 
 const SATISFIED = 0
 const UNSATISFIED = 1

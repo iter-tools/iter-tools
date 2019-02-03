@@ -1,4 +1,4 @@
-import ensureIterable from './internal/ensure-iterable'
+import { ensureIterable } from './internal/iterable'
 
 const defaultShouldIFlat = (depth) => {
   if (typeof depth === 'function') {

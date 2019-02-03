@@ -1,4 +1,4 @@
-import ensureIterable from './internal/ensure-iterable'
+import { ensureIterable } from './internal/iterable'
 
 const TypedArrayProto = Object.getPrototypeOf(Int8Array)
 

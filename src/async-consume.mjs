@@ -1,5 +1,5 @@
-import ensureAsyncIterable from './internal/ensure-async-iterable'
-import curry from './internal/curry'
+import { ensureAsyncIterable } from './internal/async-iterable'
+import { curry } from './internal/curry'
 
 async function asyncConsume (func, iterable) {
   for await (const item of ensureAsyncIterable(iterable)) {

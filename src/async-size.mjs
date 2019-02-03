@@ -1,4 +1,4 @@
-import ensureAsyncIterable from './internal/ensure-async-iterable'
+import { ensureAsyncIterable } from './internal/async-iterable'
 
 export default async function size (iterable) {
   let size = 0

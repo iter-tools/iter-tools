@@ -1,5 +1,5 @@
-import ensureIterable from './internal/ensure-iterable'
-import curry from './internal/curry'
+import { ensureIterable } from './internal/iterable'
+import { curry } from './internal/curry'
 import CircularBuffer from './internal/circular-buffer'
 import chain from './chain'
 import repeat from './repeat'

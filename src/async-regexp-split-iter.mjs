@@ -1,5 +1,5 @@
-import ensureAsyncIterable from './internal/ensure-async-iterable'
-import curry from './internal/curry'
+import { ensureAsyncIterable } from './internal/async-iterable'
+import { curry } from './internal/curry'
 import regexSplit from './regexp-split'
 
 async function * asyncRegexpSplitIter (re, iterable) {

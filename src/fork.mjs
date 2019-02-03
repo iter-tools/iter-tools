@@ -1,4 +1,4 @@
-import ensureIterable from './internal/ensure-iterable'
+import { ensureIterable } from './internal/iterable'
 import { Exchange } from './internal/queues'
 
 export default function fork (iterable) {

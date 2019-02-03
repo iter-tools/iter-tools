@@ -1,6 +1,6 @@
-import ensureAsyncIterable from './internal/ensure-async-iterable'
+import { ensureAsyncIterable } from './internal/async-iterable'
 import regexExec from './regexp-exec'
-import curry from './internal/curry'
+import { curry } from './internal/curry'
 
 async function * asyncRegexpExecIter (re, iterable) {
   let matches

@@ -1,7 +1,7 @@
 import map from './map'
 import range from './range'
 import product from './product'
-import ensureIterable from './internal/ensure-iterable'
+import { ensureIterable } from './internal/iterable'
 import { combinationsWithReplacementSize } from './internal/math'
 
 function isSorted (arr) {

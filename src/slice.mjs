@@ -1,6 +1,6 @@
 import CircularBuffer from './internal/circular-buffer'
-import ensureIterable from './internal/ensure-iterable'
-import curry from './internal/curry'
+import { ensureIterable } from './internal/iterable'
+import { curry } from './internal/curry'
 
 function bufferedSlice (iterable, start, end, step) {
   const bufferSize = Math.abs(start)

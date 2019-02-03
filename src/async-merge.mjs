@@ -1,4 +1,4 @@
-import ensureAsyncIterable from './internal/ensure-async-iterable'
+import { ensureAsyncIterable } from './internal/async-iterable'
 import querablePromise from './internal/querable-promise'
 import range from './range'
 import { mergeByComparison, mergeByChance, mergeByPosition } from './merge'

@@ -1,4 +1,4 @@
-import ensureAsyncIterable from './internal/ensure-async-iterable'
+import { ensureAsyncIterable } from './internal/async-iterable'
 
 const defaultShouldIFlat = (depth) => {
   if (typeof depth === 'function') {

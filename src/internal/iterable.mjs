@@ -1,8 +1,11 @@
-import isIterable from './is-iterable'
-
+import { variadicCurry } from './curry'
 const emptyArr = []
 
-export default function ensureIterable (i) {
+export function isIterable (i) {
+  return Boolean(i && i[Symbol.iterator])
+}
+
+export function ensureIterable (i) {
   if (i == null) {
     return emptyArr[Symbol.iterator]()
   } else if (!isIterable(i)) {
@@ -13,3 +16,9 @@ export default function ensureIterable (i) {
   }
   return i
 }
+
+export function isValidIterableArgument (i) {
+  return i == null || isIterable(i)
+}
+
+export const iterableCurry = (fn) => variadicCurry(isValidIterableArgument, ensureIterable, fn)

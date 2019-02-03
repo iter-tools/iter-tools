@@ -1,6 +1,6 @@
 import CircularBuffer from './internal/circular-buffer'
-import ensureAsyncIterable from './internal/ensure-async-iterable'
-import curry from './internal/curry'
+import { ensureAsyncIterable } from './internal/async-iterable'
+import { curry } from './internal/curry'
 
 async function bufferedSlice (iterable, start, end, step) {
   const bufferSize = Math.abs(start)

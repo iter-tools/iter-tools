@@ -1,4 +1,4 @@
-import curry from './internal/curry'
+import { curry } from './internal/curry'
 import map from './map'
 
 function * flatMap (func, iterable) {

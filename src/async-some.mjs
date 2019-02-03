@@ -1,5 +1,5 @@
-import ensureAsyncIterable from './internal/ensure-async-iterable'
-import curry from './internal/curry'
+import { ensureAsyncIterable } from './internal/async-iterable'
+import { curry } from './internal/curry'
 
 async function asyncSome (func, iterable) {
   let c = 0
