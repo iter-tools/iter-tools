@@ -1,3 +1,3 @@
-const createTransformer = require("./create-transformer");
+const createTransformer = require('./create-transformer')
 
-module.exports = createTransformer("babel-es2018.config.js");
+module.exports = createTransformer('babel-es2018.config.js')
