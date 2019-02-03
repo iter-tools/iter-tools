@@ -13,13 +13,14 @@ function makeProject (projectConfig) {
 module.exports = Object.assign({
   testEnvironment: 'node',
   testMatch: [],
+  coverageReporters: ['json-summary', 'text', 'lcov'],
   projects: [
-    makeProject({
-      name: 'es5'
-    }),
-    makeProject({
-      name: 'es2018'
-    })
+    // makeProject({
+    //   name: 'es5'
+    // }),
+    // makeProject({
+    //   name: 'es2018'
+    // })
   ]
 },
 makeProject({

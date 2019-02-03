@@ -13,7 +13,7 @@
     "test": "run-s test:*",
     "benchmarks": "npm run clean && npm run build:es2018-cjs && node benchmarks",
     "coverage:badges": "jest-coverage-badges",
-    "coverage": "npm run test:js -- --coverage --coverageDirectory=coverage --config '{ \"coverageReporters\" : [\"lcov\", \"json-summary\"]}' && npm run coverage:badges",
+    "coverage": "npm run test:js -- --coverage --coverageDirectory=coverage && npm run coverage:badges",
     "clean": "rimraf es5 es2015 es2018",
     "build": "npm run clean && npm run lint && npm run build:es5 && npm run build:es5-cjs && npm run build:es2015 && npm run build:es2015-cjs && npm run build:es2018 && npm run build:es2018-cjs && npm run build:copyts",
     "build:es5": "babel --config-file ./babel-es5.config.js --keep-file-extension -x \".mjs\" src -d es5",
