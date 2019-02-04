@@ -6,7 +6,6 @@ import map from './map'
 const deprecationWarning = 'tee() is deprecated! Use fork() instead'
 
 let warnedDeprecation = false
-export const silence = () => (warnedDeprecation = true)
 
 export default function tee (iterable, number) {
   !warnedDeprecation && console.warn(deprecationWarning)
@@ -49,3 +48,5 @@ export default function tee (iterable, number) {
   exchange.noMoreConsumers()
   return array
 }
+
+tee._silenceDeprecation = () => (warnedDeprecation = true)

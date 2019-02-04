@@ -3,10 +3,9 @@ import { Exchange } from './internal/queues'
 import range from './range'
 import map from './map'
 
-const deprecationWarning = 'tee() is deprecated! Use fork() instead'
+const deprecationWarning = 'ayncTee() is deprecated! Use asyncFork() instead'
 
 let warnedDeprecation = false
-export const silence = () => (warnedDeprecation = true)
 
 export default function tee (iterable, number) {
   !warnedDeprecation && console.warn(deprecationWarning)
@@ -56,3 +55,5 @@ export default function tee (iterable, number) {
   exchange.noMoreConsumers()
   return array
 }
+
+tee._silenceDeprecation = () => (warnedDeprecation = true)
