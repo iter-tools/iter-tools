@@ -9,11 +9,19 @@ export function curry (fn, expectedArgsLength = fn.length, appliedArgs = []) {
 
 export function variadicCurry (isLastArgument, applyOnLastArg, fn, appliedArgs = []) {
   return (...args) => {
-    const lastArg = args[args.length - 1]
-    if (isLastArgument(lastArg)) {
-      const otherArgs = args.slice(0, -1)
-      return fn(...appliedArgs, ...otherArgs, applyOnLastArg(lastArg))
+    const allArgs = [...appliedArgs, ...args]
+    const lastArg = args[allArgs.length - 1]
+
+    if (isLastArgument(lastArg) && allArgs.length <= fn.length) {
+      const otherArgs = allArgs.slice(0, -1)
+      otherArgs.length = fn.length - 1 // add padding
+      return fn(...otherArgs, applyOnLastArg(lastArg))
     }
-    return variadicCurry(fn, isLastArgument, applyOnLastArg, [...appliedArgs, ...args])
+
+    if (allArgs.length >= fn.length) {
+      throw new Error(`${fn.name} takes ${fn.length} arguments. You passed ${allArgs.length}`)
+    }
+
+    return variadicCurry(isLastArgument, applyOnLastArg, fn, allArgs)
   }
 }
