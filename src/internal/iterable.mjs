@@ -1,4 +1,4 @@
-import { variadicCurry } from './curry'
+import { variadicCurryWithValidation } from './curry'
 const emptyArr = []
 
 export function isIterable (i) {
@@ -21,4 +21,4 @@ export function isValidIterableArgument (i) {
   return i == null || isIterable(i)
 }
 
-export const iterableCurry = (fn) => variadicCurry(isValidIterableArgument, ensureIterable, fn)
+export const iterableCurry = (fn, maxArgs) => variadicCurryWithValidation(isValidIterableArgument, 'iterable', ensureIterable, fn, maxArgs)

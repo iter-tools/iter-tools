@@ -1,6 +1,5 @@
-import { ensureAsyncIterable } from './internal/async-iterable'
-import isIterable from './internal/is-iterable'
-import isAsyncIterable from './internal/is-async-iterable'
+import { ensureAsyncIterable, isAsyncIterable } from './internal/async-iterable'
+import { isIterable } from './internal/iterable'
 
 export default function asyncIterable (asyncIterator) {
   if (asyncIterator !== null &&

@@ -7,21 +7,21 @@ export function curry (fn, expectedArgsLength = fn.length, appliedArgs = []) {
   }
 }
 
-export function variadicCurry (isLastArgument, applyOnLastArg, fn, appliedArgs = []) {
+export function variadicCurryWithValidation (isLastArgument, lastArgumentName, applyOnLastArg, fn, maxArgs = fn.length, appliedArgs = []) {
   return (...args) => {
     const allArgs = [...appliedArgs, ...args]
-    const lastArg = args[allArgs.length - 1]
+    const lastArg = allArgs[allArgs.length - 1]
 
-    if (isLastArgument(lastArg) && allArgs.length <= fn.length) {
+    if (isLastArgument(lastArg) && allArgs.length <= maxArgs) {
       const otherArgs = allArgs.slice(0, -1)
-      otherArgs.length = fn.length - 1 // add padding
+      otherArgs.length = maxArgs - 1 // add padding
       return fn(...otherArgs, applyOnLastArg(lastArg))
     }
 
-    if (allArgs.length >= fn.length) {
-      throw new Error(`${fn.name} takes ${fn.length} arguments. You passed ${allArgs.length}`)
+    if (allArgs.length >= maxArgs) {
+      throw new Error(`${fn.name} takes up to ${maxArgs - 1} arguments, followed by ${lastArgumentName}. You already passed ${allArgs.length} arguments and the last argument was not ${lastArgumentName}`)
     }
 
-    return variadicCurry(isLastArgument, applyOnLastArg, fn, allArgs)
+    return variadicCurryWithValidation(isLastArgument, lastArgumentName, applyOnLastArg, fn, maxArgs, allArgs)
   }
 }

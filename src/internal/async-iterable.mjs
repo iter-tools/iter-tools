@@ -1,5 +1,5 @@
 import { ensureIterable, isValidIterableArgument } from './iterable'
-import { variadicCurry } from './curry'
+import { variadicCurryWithValidation } from './curry'
 
 export function isAsyncIterable (i) {
   return Boolean(i && i[Symbol.asyncIterator])
@@ -28,4 +28,4 @@ export function isValidAsyncIterableArgument (i) {
   return isAsyncIterable(i) || isValidIterableArgument(i)
 }
 
-export const asyncIterableCurry = (fn) => variadicCurry(isValidAsyncIterableArgument, ensureAsyncIterable, fn)
+export const asyncIterableCurry = (fn, maxArgs) => variadicCurryWithValidation(isValidAsyncIterableArgument, 'asyncIterable', ensureAsyncIterable, fn, maxArgs)
