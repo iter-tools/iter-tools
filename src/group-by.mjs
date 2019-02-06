@@ -1,9 +1,7 @@
-import { ensureIterable } from './internal/iterable'
-import { curry } from './internal/curry'
+import { iterableCurry } from './internal/iterable'
 
-function * groupBy (key, iterable) {
-  key = key || function (key) { return key }
-  const iterator = ensureIterable(iterable)[Symbol.iterator]()
+function * groupBy (key = (k) => k, iterable) {
+  const iterator = iterable[Symbol.iterator]()
 
   let currentItem
   let currentKey, previousKey
@@ -38,4 +36,4 @@ function * groupBy (key, iterable) {
   }
 }
 
-export default curry(groupBy)
+export default iterableCurry(groupBy, 1, 2)

@@ -1,9 +1,8 @@
-import { ensureIterable } from './internal/iterable'
-import { curry } from './internal/curry'
+import { iterableCurry } from './internal/iterable'
 
 function * interpose (interposeItem, iterable) {
   let first = true
-  for (const item of ensureIterable(iterable)) {
+  for (const item of iterable) {
     if (!first) {
       yield interposeItem
     }
@@ -12,4 +11,4 @@ function * interpose (interposeItem, iterable) {
   }
 }
 
-export default curry(interpose)
+export default iterableCurry(interpose)

@@ -20,14 +20,13 @@ describe('curry', function () {
 
 describe('variadicCurryWithValidation', function () {
   it('curries', function () {
-    const f = variadicCurryWithValidation((x) => x === '\n', 'new line', () => '!', (a, b = 'mars', c) => a + b + c, 3)
+    const f = variadicCurryWithValidation((x) => x === '\n', 'new line', () => '!', (a = 'mars', b, c) => a + b + c, 1, 3)
     expect(f('hello ')('world')('\n')).toBe('hello world!')
-    expect(f('hello ')('\n')).toBe('hello mars!')
+    expect(f('hello ')('\n')).toBe('marshello !')
   })
   it('works using function arity', function () {
     const f = variadicCurryWithValidation((x) => x === '\n', 'new line', () => '!', (a, b) => a + b)
     expect(f('hello world')('\n')).toBe('hello world!')
-    expect(f('\n')).toBe('undefined!')
   })
   it('works with empty invocation', function () {
     const f = variadicCurryWithValidation((x) => x === null, 'null', (x) => 0, (a, b, c) => a + b + c)

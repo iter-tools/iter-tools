@@ -1,6 +1,6 @@
 const emptyArr = []
 export default function * keys (keysable) {
-  if (keysable == null) {
+  if (keysable === null) {
     return emptyArr[Symbol.iterator]()
   } else if (typeof keysable.keys === 'function') {
     yield * keysable.keys()

@@ -3,7 +3,7 @@ const { groupBy, asyncGroupBy, asyncToArray } = require('..')
 
 describe('groupBy', function () {
   it('groupBy main cursor', function () {
-    const iter = groupBy(null, 'AAABBAACCCCD')
+    const iter = groupBy(undefined, 'AAABBAACCCCD')
     let next
     next = iter.next()
     expect(next.value[0]).toBe('A')
@@ -37,7 +37,7 @@ describe('groupBy', function () {
   })
 
   it('groupBy main cursor (curried)', function () {
-    const iter = groupBy(null)('AAABBAACCCCD')
+    const iter = groupBy()('AAABBAACCCCD')
     let next
     next = iter.next()
     expect(next.value[0]).toBe('A')
@@ -54,7 +54,7 @@ describe('groupBy', function () {
   })
 
   it('groupBy secondary', function () {
-    const iter = groupBy(null, 'AAABBAACCCCD')
+    const iter = groupBy(undefined, 'AAABBAACCCCD')
     let next
     next = iter.next()
     expect(next.value[0]).toBe('A')
@@ -76,7 +76,7 @@ describe('groupBy', function () {
   })
 
   it('groupBy secondary (consume partially)', function () {
-    const iter = groupBy(null, 'AAABBAACCCCD')
+    const iter = groupBy(undefined, 'AAABBAACCCCD')
     let next
     next = iter.next()
     expect(next.value[0]).toBe('A')
@@ -90,13 +90,13 @@ describe('groupBy', function () {
   })
 
   it('groupBy of null returns empty iterable', function () {
-    expect(Array.from(groupBy(null, null))).toEqual([])
+    expect(Array.from(groupBy(undefined, null))).toEqual([])
   })
 })
 
 describe('asyncGroupBy', function () {
   it('groupBy main cursor', async function () {
-    const iter = asyncGroupBy(null, 'AAABBAACCCCD')
+    const iter = asyncGroupBy(undefined, 'AAABBAACCCCD')
     let next
     next = await iter.next()
     expect(next.value[0]).toBe('A')
@@ -147,7 +147,7 @@ describe('asyncGroupBy', function () {
   })
 
   it('groupBy main cursor (curried)', async function () {
-    const iter = asyncGroupBy(null)('AAABBAACCCCD')
+    const iter = asyncGroupBy()('AAABBAACCCCD')
     let next
     next = await iter.next()
     expect(next.value[0]).toBe('A')
@@ -164,7 +164,7 @@ describe('asyncGroupBy', function () {
   })
 
   it('groupBy secondary', async function () {
-    const iter = asyncGroupBy(null, 'AAABBAACCCCD')
+    const iter = asyncGroupBy(undefined, 'AAABBAACCCCD')
     let next
     next = await iter.next()
     expect(next.value[0]).toBe('A')
@@ -186,7 +186,7 @@ describe('asyncGroupBy', function () {
   })
 
   it('groupBy secondary (consume partially)', async function () {
-    const iter = asyncGroupBy(null, 'AAABBAACCCCD')
+    const iter = asyncGroupBy(undefined, 'AAABBAACCCCD')
     let next
     next = await iter.next()
     expect(next.value[0]).toBe('A')
@@ -200,6 +200,6 @@ describe('asyncGroupBy', function () {
   })
 
   it('groupBy of null returns empty iterable', async function () {
-    expect(await asyncToArray(asyncGroupBy(null, null))).toEqual([])
+    expect(await asyncToArray(asyncGroupBy(undefined, null))).toEqual([])
   })
 })

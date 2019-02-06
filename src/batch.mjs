@@ -1,9 +1,8 @@
-import { ensureIterable } from './internal/iterable'
-import { curry } from './internal/curry'
+import { iterableCurry } from './internal/iterable'
 
 function * batch (number, iterable) {
   let batch = []
-  for (const item of ensureIterable(iterable)) {
+  for (const item of iterable) {
     batch.push(item)
     if (batch.length === number) {
       yield batch
@@ -15,4 +14,4 @@ function * batch (number, iterable) {
   }
 }
 
-export default curry(batch)
+export default iterableCurry(batch)

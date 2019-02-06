@@ -1,9 +1,9 @@
-import { ensureAsyncIterable } from './internal/async-iterable'
+import { asyncIterableCurry } from './internal/async-iterable'
 
 async function asyncReduce (initial, func, iterable) {
   let c = 0
   let acc = initial
-  const iterator = ensureAsyncIterable(iterable)[Symbol.asyncIterator]()
+  const iterator = iterable[Symbol.asyncIterator]()
   try {
     if (initial === undefined) {
       const firstResult = await iterator.next()
@@ -23,32 +23,4 @@ async function asyncReduce (initial, func, iterable) {
   }
 }
 
-export default function curriedReduce (initial, func, iterable) {
-  // is this complete? has an iterable been specified? (func can never be iterable)
-  //    is there an iterable that comes after func
-  //    work backwards from there
-  let hasIterable = false
-
-  if (arguments.length === 1) {
-    func = initial
-    initial = undefined
-  } else if (
-    arguments.length === 2 &&
-      (
-        func == null || func[Symbol.iterator] || func[Symbol.asyncIterator]
-      )
-  ) {
-    iterable = func
-    func = initial
-    initial = undefined
-
-    hasIterable = true
-  } else if (arguments.length === 3) {
-    hasIterable = true
-  }
-
-  if (!hasIterable) {
-    return iterable => asyncReduce(initial, func, iterable)
-  }
-  return asyncReduce(initial, func, iterable)
-}
+export default asyncIterableCurry(asyncReduce, 2, 3)

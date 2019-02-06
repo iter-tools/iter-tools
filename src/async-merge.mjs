@@ -1,10 +1,11 @@
 import { ensureAsyncIterable } from './internal/async-iterable'
+import { iterableCurry } from './internal/iterable'
 import querablePromise from './internal/querable-promise'
 import range from './range'
 import { mergeByComparison, mergeByChance, mergeByPosition } from './merge'
 
 async function * asyncMerge (pickFunc, iterables) {
-  const iters = iterables.map(i => ensureAsyncIterable(i)[Symbol.asyncIterator]())
+  const iters = Array.from(iterables).map(i => ensureAsyncIterable(i)[Symbol.asyncIterator]())
   let numberOfExhausted = 0
   const items = new Array(iters.length)
   try {
@@ -39,13 +40,7 @@ async function * asyncMerge (pickFunc, iterables) {
   }
 }
 
-export default function curriedAsyncMerge (pickFunc, iterables) {
-  if (arguments.length === 1) {
-    return iterables => asyncMerge(pickFunc, iterables)
-  }
-
-  return asyncMerge(pickFunc, iterables)
-}
+export default iterableCurry(asyncMerge)
 
 const makeAsync = (func) => {
   return function (args) {

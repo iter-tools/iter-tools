@@ -1,5 +1,5 @@
 import map from './async-map'
-import { curry } from './internal/curry'
+import { asyncIterableCurry } from './internal/async-iterable'
 
 async function * asyncFlatMap (func, iterable) {
   const mapIter = map(func)
@@ -8,4 +8,4 @@ async function * asyncFlatMap (func, iterable) {
   }
 }
 
-export default curry(asyncFlatMap)
+export default asyncIterableCurry(asyncFlatMap)

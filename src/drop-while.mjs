@@ -1,10 +1,9 @@
-import { ensureIterable } from './internal/iterable'
-import { curry } from './internal/curry'
+import { iterableCurry } from './internal/iterable'
 
 function * dropWhile (func, iterable) {
   let drop = true
   let c = 0
-  for (const item of ensureIterable(iterable)) {
+  for (const item of iterable) {
     if (!drop) {
       yield item
     } else {
@@ -16,4 +15,4 @@ function * dropWhile (func, iterable) {
   }
 }
 
-export default curry(dropWhile)
+export default iterableCurry(dropWhile)

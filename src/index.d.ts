@@ -413,12 +413,22 @@ export declare function takeWhile<T> (func: (item: T) => boolean, iterable: Iter
 export declare function tap<T> (func: (item: T, c: number) => any, iterable: Iterable<T>): IterableIterator<T>
 
 export declare function takeSorted<T> (
-    n: number,
-    func?: (item: T) => boolean
+    func: (item: T) => boolean,
+    n: number
 ): (iterable: Iterable<T>) => IterableIterator<T>
+
+export declare function takeSorted<T> (
+    func: (item: T) => boolean,
+    n: number,
+    iterable?: Iterable<T>
+): IterableIterator<T>
+
+export declare function takeSorted<T> (
+    n: number
+): (iterable: Iterable<T>) => IterableIterator<T>
+
 export declare function takeSorted<T> (
     n: number,
-    func?: (item: T) => boolean,
     iterable?: Iterable<T>
 ): IterableIterator<T>
 
@@ -670,8 +680,11 @@ export declare function asyncTap<T> (
   iterable: AsyncIterableLike<T>
 ): AsyncIterableIterator<T>
 
-export declare function asyncTakeSorted<T> (n: number, func?: (item: T) => boolean): (iterable: AsyncIterableLike<T>) => AsyncIterableLike<T>
-export declare function asyncTakeSorted<T> (n: number, func?: (item: T) => boolean, iterable?: AsyncIterableLike<T>):
+export declare function asyncTakeSorted<T> (func: (item: T) => boolean, n: number): (iterable: AsyncIterableLike<T>) => AsyncIterableLike<T>
+export declare function asyncTakeSorted<T> (func: (item: T) => boolean, n: number, iterable?: AsyncIterableLike<T>):
+    AsyncIterableLike<T>
+export declare function asyncTakeSorted<T> (n: number): (iterable: AsyncIterableLike<T>) => AsyncIterableLike<T>
+export declare function asyncTakeSorted<T> (n: number, iterable?: AsyncIterableLike<T>):
     AsyncIterableLike<T>
 
 /**

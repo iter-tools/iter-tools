@@ -1,11 +1,10 @@
-import { ensureAsyncIterable } from './internal/async-iterable'
+import { asyncIterableCurry } from './internal/async-iterable'
 import regexExec from './regexp-exec'
-import { curry } from './internal/curry'
 
 async function * asyncRegexpExecIter (re, iterable) {
   let matches
   let buffer = ''
-  for await (const chunk of ensureAsyncIterable(iterable)) {
+  for await (const chunk of iterable) {
     if (chunk === '') continue
     let lastIndex = 0
     matches = []
@@ -27,4 +26,4 @@ async function * asyncRegexpExecIter (re, iterable) {
   }
 }
 
-export default curry(asyncRegexpExecIter)
+export default asyncIterableCurry(asyncRegexpExecIter)

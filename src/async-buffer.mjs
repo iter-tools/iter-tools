@@ -1,9 +1,8 @@
-import { ensureAsyncIterable } from './internal/async-iterable'
-import { curry } from './internal/curry'
+import { asyncIterableCurry } from './internal/async-iterable'
 import { Queue } from './internal/queues'
 
 async function * asyncBuffer (bufferSize, iterable) {
-  const iterator = ensureAsyncIterable(iterable, true)[Symbol.asyncIterator]()
+  const iterator = iterable[Symbol.asyncIterator]()
   const buffer = new Queue()
   try {
     // fill buffer
@@ -21,4 +20,4 @@ async function * asyncBuffer (bufferSize, iterable) {
   }
 }
 
-export default curry(asyncBuffer)
+export default asyncIterableCurry(asyncBuffer)

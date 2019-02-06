@@ -1,9 +1,8 @@
-import { ensureIterable } from './internal/iterable'
-import { curry } from './internal/curry'
+import { iterableCurry } from './internal/iterable'
 
 function every (func, iterable) {
   let c = 0
-  for (const item of ensureIterable(iterable)) {
+  for (const item of iterable) {
     if (!func(item, c++)) {
       return false
     }
@@ -11,4 +10,4 @@ function every (func, iterable) {
   return true
 }
 
-export default curry(every)
+export default iterableCurry(every)

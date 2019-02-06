@@ -1,6 +1,5 @@
 import CircularBuffer from './internal/circular-buffer'
-import { ensureIterable } from './internal/iterable'
-import { curry } from './internal/curry'
+import { iterableCurry } from './internal/iterable'
 
 function bufferedSlice (iterable, start, end, step) {
   const bufferSize = Math.abs(start)
@@ -57,7 +56,6 @@ function * slice (opts, iterable) {
   step = opts.step === undefined ? 1 : opts.step
   end = opts.end === undefined ? Infinity : opts.end
   start = opts.start ? opts.start : 0
-  iterable = ensureIterable(iterable)
 
   if (step <= 0) {
     throw new TypeError('Cannot slice with step <= 0')
@@ -70,4 +68,4 @@ function * slice (opts, iterable) {
   }
 }
 
-export default curry(slice)
+export default iterableCurry(slice)

@@ -1,11 +1,10 @@
-import { ensureIterable } from './internal/iterable'
-import { curry } from './internal/curry'
+import { iterableCurry } from './internal/iterable'
 import regexExec from './regexp-exec'
 
 function * regexpExecIter (re, iterable) {
   let matches
   let buffer = ''
-  for (const chunk of ensureIterable(iterable)) {
+  for (const chunk of iterable) {
     if (chunk === '') continue
     let lastIndex = 0
     matches = []
@@ -27,4 +26,4 @@ function * regexpExecIter (re, iterable) {
   }
 }
 
-export default curry(regexpExecIter)
+export default iterableCurry(regexpExecIter)

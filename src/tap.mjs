@@ -1,12 +1,11 @@
-import { ensureIterable } from './internal/iterable'
-import { curry } from './internal/curry'
+import { iterableCurry } from './internal/iterable'
 
 function * tap (func, iterable) {
   let c = 0
-  for (const item of ensureIterable(iterable)) {
+  for (const item of iterable) {
     func(item, c++)
     yield item
   }
 }
 
-export default curry(tap)
+export default iterableCurry(tap)

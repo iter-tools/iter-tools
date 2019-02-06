@@ -1,10 +1,9 @@
-import { ensureIterable } from './internal/iterable'
-import { curry } from './internal/curry'
+import { iterableCurry } from './internal/iterable'
 
 function * takeWhile (func, i) {
   let take = true
   let c = 0
-  for (const item of ensureIterable(i)) {
+  for (const item of i) {
     take = func(item, c++)
     if (take) {
       yield item
@@ -14,4 +13,4 @@ function * takeWhile (func, i) {
   }
 }
 
-export default curry(takeWhile)
+export default iterableCurry(takeWhile)

@@ -1,13 +1,12 @@
 import { Queue, fakeQueue } from './internal/queues'
-import { ensureAsyncIterable } from './internal/async-iterable'
-import { curry } from './internal/curry'
+import { asyncIterableCurry } from './internal/async-iterable'
 
 const SATISFIED = 0
 const UNSATISFIED = 1
 
 function asyncPartition (func, iter) {
   const queues = [new Queue(), new Queue()]
-  const iterator = ensureAsyncIterable(iter)[Symbol.asyncIterator]()
+  const iterator = iter[Symbol.asyncIterator]()
   let exhausted = 0
 
   async function * part (queueId) {
@@ -35,4 +34,4 @@ function asyncPartition (func, iter) {
   return [part(SATISFIED), part(UNSATISFIED)]
 }
 
-export default curry(asyncPartition)
+export default asyncIterableCurry(asyncPartition)

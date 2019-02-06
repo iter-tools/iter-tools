@@ -1,9 +1,8 @@
-import { ensureAsyncIterable } from './internal/async-iterable'
-import { curry } from './internal/curry'
+import { asyncIterableCurry } from './internal/async-iterable'
 
 async function * asyncInterpose (interposeItem, iterable) {
   let first = true
-  for await (const item of ensureAsyncIterable(iterable)) {
+  for await (const item of iterable) {
     if (!first) {
       yield interposeItem
     }
@@ -12,4 +11,4 @@ async function * asyncInterpose (interposeItem, iterable) {
   }
 }
 
-export default curry(asyncInterpose)
+export default asyncIterableCurry(asyncInterpose, 2, 2)

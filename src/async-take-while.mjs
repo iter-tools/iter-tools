@@ -1,10 +1,9 @@
-import { ensureAsyncIterable } from './internal/async-iterable'
-import { curry } from './internal/curry'
+import { asyncIterableCurry } from './internal/async-iterable'
 
 async function * asyncTakeWhile (func, iterable) {
   let take = true
   let c = 0
-  for await (const item of ensureAsyncIterable(iterable)) {
+  for await (const item of iterable) {
     take = await func(item, c++)
     if (take) {
       yield item
@@ -14,4 +13,4 @@ async function * asyncTakeWhile (func, iterable) {
   }
 }
 
-export default curry(asyncTakeWhile)
+export default asyncIterableCurry(asyncTakeWhile)
