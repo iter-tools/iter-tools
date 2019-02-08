@@ -2,6 +2,9 @@ import { asyncIterableCurry } from './internal/async-iterable'
 import { Queue } from './internal/queues'
 
 async function * asyncBuffer (bufferSize, iterable) {
+  if (typeof bufferSize !== 'number' || bufferSize <= 0) {
+    throw new Error('The first argument (bufferSize) should be a number greater than 0')
+  }
   const iterator = iterable[Symbol.asyncIterator]()
   const buffer = new Queue()
   try {

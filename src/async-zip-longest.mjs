@@ -1,6 +1,6 @@
 import { ensureAsyncIterable } from './internal/async-iterable'
 
-export default async function * zipLongest (...iterables) {
+export default async function * asyncZipLongest (...iterables) {
   const iters = iterables.map(arg => ensureAsyncIterable(arg)[Symbol.asyncIterator]())
   try {
     while (true) {

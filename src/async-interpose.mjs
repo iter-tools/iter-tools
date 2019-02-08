@@ -11,4 +11,4 @@ async function * asyncInterpose (interposeItem, iterable) {
   }
 }
 
-export default asyncIterableCurry(asyncInterpose, 2, 2)
+export default asyncIterableCurry(asyncInterpose)
