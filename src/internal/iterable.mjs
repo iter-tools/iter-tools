@@ -6,7 +6,7 @@ export function isIterable (i) {
 }
 
 export function ensureIterable (i) {
-  if (i === null) {
+  if (i == null) {
     return emptyArr[Symbol.iterator]()
   } else if (!isIterable(i)) {
     if (typeof i.next === 'function') {
@@ -18,7 +18,7 @@ export function ensureIterable (i) {
 }
 
 export function isValidIterableArgument (i) {
-  return i === null || isIterable(i)
+  return i == null || isIterable(i)
 }
 
 export const iterableCurry = (fn, minArgs, maxArgs) => variadicCurryWithValidation(isValidIterableArgument, 'iterable', ensureIterable, fn, minArgs, maxArgs)

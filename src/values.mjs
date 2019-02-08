@@ -1,6 +1,7 @@
 const emptyArr = []
+
 export default function * values (valuesable) {
-  if (valuesable === null) {
+  if (valuesable == null) {
     return emptyArr[Symbol.iterator]()
   } else if (typeof valuesable.values === 'function') {
     yield * valuesable.values()

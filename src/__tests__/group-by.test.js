@@ -3,7 +3,8 @@ const { groupBy, asyncGroupBy, asyncToArray } = require('..')
 
 describe('groupBy', function () {
   it('groupBy main cursor', function () {
-    const iter = groupBy(undefined, 'AAABBAACCCCD')
+    // const iter = groupBy(undefined, 'AAABBAACCCCD')
+    const iter = groupBy('AAABBAACCCCD')
     let next
     next = iter.next()
     expect(next.value[0]).toBe('A')
@@ -91,6 +92,18 @@ describe('groupBy', function () {
 
   it('groupBy of null returns empty iterable', function () {
     expect(Array.from(groupBy(undefined, null))).toEqual([])
+  })
+
+  it('groupBy of undefined returns empty iterable', function () {
+    expect(Array.from(groupBy(undefined, undefined))).toEqual([])
+  })
+
+  it('groupBy of undefined returns empty iterable 2', function () {
+    expect(Array.from(groupBy(undefined))).toEqual([])
+  })
+
+  it('groupBy of undefined returns empty iterable 3', function () {
+    expect(Array.from(groupBy()(undefined))).toEqual([])
   })
 })
 
