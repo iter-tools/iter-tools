@@ -1,5 +1,5 @@
 /* eslint-env node, jest */
-const ensureAsyncIterable = require('../ensure-async-iterable')
+const { ensureAsyncIterable, isAsyncIterable, asyncify } = require('../async-iterable')
 const { range } = require('../..')
 
 describe('ensureAsyncIterable', function () {
@@ -9,5 +9,14 @@ describe('ensureAsyncIterable', function () {
     expect(await iter.next()).toEqual({ value: 2, done: false })
     expect(await iter.next()).toEqual({ value: 3, done: false })
     expect(await iter.next()).toEqual({ value: undefined, done: true })
+  })
+})
+
+describe('isAsyncIterable', function () {
+  it('works', function () {
+    expect(isAsyncIterable(range(3))).toBe(false)
+    expect(isAsyncIterable([])).toBe(false)
+    expect(isAsyncIterable(null)).toBe(false)
+    expect(isAsyncIterable(asyncify([]))).toBe(true)
   })
 })

@@ -1,10 +1,9 @@
-import ensureIterable from './internal/ensure-iterable'
-import curry from './internal/curry'
+import { iterableCurry } from './internal/iterable'
 
 function find (func, iterable) {
   let found = true
   let c = 0
-  for (const item of ensureIterable(iterable)) {
+  for (const item of iterable) {
     found = func(item, c++)
     if (found) {
       return item
@@ -13,4 +12,4 @@ function find (func, iterable) {
   return undefined
 }
 
-export default curry(find)
+export default iterableCurry(find)

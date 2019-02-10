@@ -1,8 +1,8 @@
-import ensureIterable from './internal/ensure-iterable'
+import { iterableCurry, ensureIterable } from './internal/iterable'
 import range from './range'
 
 function * merge (pickFunc, iterables) {
-  const iters = iterables.map(i => ensureIterable(i)[Symbol.iterator]())
+  const iters = Array.from(iterables).map(i => ensureIterable(i)[Symbol.iterator]())
   let numberOfExhausted = 0
   const items = new Array(iterables.length)
   try {
@@ -37,13 +37,7 @@ function * merge (pickFunc, iterables) {
   }
 }
 
-export default function curriedMerge (pickFunc, iterables) {
-  if (arguments.length === 1) {
-    return iterables => merge(pickFunc, iterables)
-  }
-
-  return merge(pickFunc, iterables)
-}
+export default iterableCurry(merge)
 
 /* default compare */
 const toString = (obj) => {

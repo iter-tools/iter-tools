@@ -1,7 +1,7 @@
 import map from './map'
 import range from './range'
 import permutations from './permutations'
-import ensureIterable from './internal/ensure-iterable'
+import { ensureIterable } from './internal/iterable'
 import { combinationsSize } from './internal/math'
 
 function isSorted (arr) {

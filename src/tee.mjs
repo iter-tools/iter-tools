@@ -1,4 +1,4 @@
-import ensureIterable from './internal/ensure-iterable'
+import { ensureIterable } from './internal/iterable'
 import { Exchange } from './internal/queues'
 import range from './range'
 import map from './map'

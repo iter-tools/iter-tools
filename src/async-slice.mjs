@@ -1,6 +1,5 @@
 import CircularBuffer from './internal/circular-buffer'
-import ensureAsyncIterable from './internal/ensure-async-iterable'
-import curry from './internal/curry'
+import { asyncIterableCurry } from './internal/async-iterable'
 
 async function bufferedSlice (iterable, start, end, step) {
   const bufferSize = Math.abs(start)
@@ -57,7 +56,6 @@ async function * asyncSlice (opts, iterable) {
   step = opts.step === undefined ? 1 : opts.step
   end = opts.end === undefined ? Infinity : opts.end
   start = opts.start ? opts.start : 0
-  iterable = ensureAsyncIterable(iterable)
 
   if (step <= 0) {
     throw new TypeError('Cannot slice with step <= 0')
@@ -70,4 +68,4 @@ async function * asyncSlice (opts, iterable) {
   }
 }
 
-export default curry(asyncSlice)
+export default asyncIterableCurry(asyncSlice)

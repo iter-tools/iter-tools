@@ -1,9 +1,8 @@
-import ensureAsyncIterable from './internal/ensure-async-iterable'
-import curry from './internal/curry'
+import { asyncIterableCurry } from './internal/async-iterable'
 
 async function asyncEvery (func, iterable) {
   let c = 0
-  for await (const item of ensureAsyncIterable(iterable)) {
+  for await (const item of iterable) {
     if (!(await func(item, c++))) {
       return false
     }
@@ -11,4 +10,4 @@ async function asyncEvery (func, iterable) {
   return true
 }
 
-export default curry(asyncEvery)
+export default asyncIterableCurry(asyncEvery)

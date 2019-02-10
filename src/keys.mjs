@@ -1,4 +1,5 @@
 const emptyArr = []
+
 export default function * keys (keysable) {
   if (keysable == null) {
     return emptyArr[Symbol.iterator]()

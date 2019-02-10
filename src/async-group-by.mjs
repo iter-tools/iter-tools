@@ -1,9 +1,7 @@
-import ensureAsyncIterable from './internal/ensure-async-iterable'
-import curry from './internal/curry'
+import { asyncIterableCurry } from './internal/async-iterable'
 
-async function * asyncGroupBy (selector, iterable) {
-  selector = selector || function (key) { return key }
-  const iterator = ensureAsyncIterable(iterable)[Symbol.asyncIterator]()
+async function * asyncGroupBy (selector = (key) => key, iterable) {
+  const iterator = iterable[Symbol.asyncIterator]()
 
   let currentItem
   let currentKey, previousKey
@@ -38,4 +36,4 @@ async function * asyncGroupBy (selector, iterable) {
   }
 }
 
-export default curry(asyncGroupBy)
+export default asyncIterableCurry(asyncGroupBy, 1, 2)

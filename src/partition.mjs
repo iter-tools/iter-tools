@@ -1,13 +1,12 @@
 import { Queue, fakeQueue } from './internal/queues'
-import ensureIterable from './internal/ensure-iterable'
-import curry from './internal/curry'
+import { iterableCurry } from './internal/iterable'
 
 const SATISFIED = 0
 const UNSATISFIED = 1
 
 function partition (func, iter) {
   const queues = [new Queue(), new Queue()]
-  const iterator = ensureIterable(iter)[Symbol.iterator]()
+  const iterator = iter[Symbol.iterator]()
   let exhausted = 0
 
   function * part (queueId) {
@@ -35,4 +34,4 @@ function partition (func, iter) {
   return [part(SATISFIED), part(UNSATISFIED)]
 }
 
-export default curry(partition)
+export default iterableCurry(partition)

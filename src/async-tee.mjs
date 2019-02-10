@@ -1,4 +1,4 @@
-import ensureAsyncIterable from './internal/ensure-async-iterable'
+import { ensureAsyncIterable } from './internal/async-iterable'
 import { Exchange } from './internal/queues'
 import range from './range'
 import map from './map'

@@ -9,7 +9,7 @@ describe('takeSorted', function () {
     expect(Array.from(smallest1)).toEqual([99])
   })
   it('return smallest iterable, using comparator', function () {
-    const smallest2 = takeSorted(2, (a, b) => a.length - b.length, ['abc', 'a', 'abcd', 'abcd', 'abcdef', 'ab'])
+    const smallest2 = takeSorted((a, b) => a.length - b.length, 2, ['abc', 'a', 'abcd', 'abcd', 'abcdef', 'ab'])
     expect(Array.from(smallest2)).toEqual(['abcd', 'abcdef'])
   })
   it('return smallest iterable, using curry', function () {
@@ -26,7 +26,7 @@ describe('asyncTakeSorted', function () {
     expect(await asyncToArray(smallest1)).toEqual([99])
   })
   it('return smallest iterable, using comparator', async function () {
-    const smallest2 = asyncTakeSorted(2, (a, b) => a.length - b.length, ['abc', 'a', 'abcd', 'abcd', 'abcdef', 'ab'])
+    const smallest2 = asyncTakeSorted((a, b) => a.length - b.length, 2, ['abc', 'a', 'abcd', 'abcd', 'abcdef', 'ab'])
     expect(await asyncToArray(smallest2)).toEqual(['abcd', 'abcdef'])
   })
   it('return smallest iterable, using curry', async function () {

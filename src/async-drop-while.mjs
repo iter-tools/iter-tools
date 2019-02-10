@@ -1,10 +1,9 @@
-import ensureAsyncIterable from './internal/ensure-async-iterable'
-import curry from './internal/curry'
+import { asyncIterableCurry } from './internal/async-iterable'
 
 async function * asyncDropWhile (func, iterable) {
   let drop = true
   let c = 0
-  for await (const item of ensureAsyncIterable(iterable)) {
+  for await (const item of iterable) {
     if (!drop) {
       yield item
     } else {
@@ -16,4 +15,4 @@ async function * asyncDropWhile (func, iterable) {
   }
 }
 
-export default curry(asyncDropWhile)
+export default asyncIterableCurry(asyncDropWhile)

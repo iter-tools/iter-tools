@@ -1,4 +1,4 @@
-import ensureIterable from './internal/ensure-iterable'
+import { ensureIterable } from './internal/iterable'
 import { permutationsSize } from './internal/math'
 import map from './map'
 import range from './range'

@@ -1,4 +1,4 @@
-import ensureIterable from './internal/ensure-iterable'
+import { ensureIterable } from './internal/iterable'
 
 function * multiply (iterable1, iterable2) {
   for (const item1 of iterable1) {

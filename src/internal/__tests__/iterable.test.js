@@ -1,5 +1,5 @@
 /* eslint-env node, jest */
-const ensureIterable = require('../ensure-iterable')
+const { ensureIterable, isIterable } = require('../iterable')
 const { range } = require('../..')
 
 describe('ensureIterable', function () {
@@ -15,5 +15,13 @@ describe('ensureIterable', function () {
   it('works with null', function () {
     const i = ensureIterable(null)
     expect(Array.from(i)).toEqual([])
+  })
+})
+
+describe('isIterable', function () {
+  it('works', function () {
+    expect(isIterable(range(3))).toBe(true)
+    expect(isIterable([])).toBe(true)
+    expect(isIterable(null)).toBe(false)
   })
 })

@@ -14,6 +14,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Added
  - pipe
 
+### Changes
+ - takeSorted/asyncTakeSorted optional comparator is now the first argument
+ - optional arguments can no longer have "undefined" as argument. This is at odds with considering undefined as a valid iterable.
+
 ## [6.2.3] - 2019-1-23
 ### Added
  -  flat, asyncFlat, cursor, asyncCursor, merge, asyncMerge, pipe, partition, async-partition

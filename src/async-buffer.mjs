@@ -1,9 +1,11 @@
-import ensureAsyncIterable from './internal/ensure-async-iterable'
-import curry from './internal/curry'
+import { asyncIterableCurry } from './internal/async-iterable'
 import { Queue } from './internal/queues'
 
 async function * asyncBuffer (bufferSize, iterable) {
-  const iterator = ensureAsyncIterable(iterable, true)[Symbol.asyncIterator]()
+  if (typeof bufferSize !== 'number' || bufferSize <= 0) {
+    throw new Error('The first argument (bufferSize) should be a number greater than 0')
+  }
+  const iterator = iterable[Symbol.asyncIterator]()
   const buffer = new Queue()
   try {
     // fill buffer
@@ -21,4 +23,4 @@ async function * asyncBuffer (bufferSize, iterable) {
   }
 }
 
-export default curry(asyncBuffer)
+export default asyncIterableCurry(asyncBuffer)

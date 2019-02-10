@@ -1,13 +1,12 @@
-import ensureIterable from './internal/ensure-iterable'
-import curry from './internal/curry'
+import { iterableCurry } from './internal/iterable'
 
 function * filter (func, iterable) {
   let c = 0
-  for (const item of ensureIterable(iterable)) {
+  for (const item of iterable) {
     if (func(item, c++)) {
       yield item
     }
   }
 }
 
-export default curry(filter)
+export default iterableCurry(filter)

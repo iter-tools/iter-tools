@@ -1,5 +1,4 @@
-import ensureAsyncIterable from './internal/ensure-async-iterable'
-import curry from './internal/curry'
+import { asyncIterableCurry } from './internal/async-iterable'
 import asyncChain from './async-chain'
 import repeat from './repeat'
 
@@ -20,11 +19,11 @@ async function * asyncCursor ({ size, trailing, filler }, iterable) {
       index++
     }
   } else {
-    for await (const item of ensureAsyncIterable(iterable)) {
+    for await (const item of iterable) {
       circular.push(item)
       yield Array.from(circular)
     }
   }
 }
 
-export default curry(asyncCursor)
+export default asyncIterableCurry(asyncCursor)
