@@ -15,8 +15,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
  - pipe
 
 ### Changes
- - takeSorted/asyncTakeSorted moved optional comparator argument to the beginning
- - calling standardisation (see README)
+ - takeSorted/asyncTakeSorted optional comparator is now the first argument
+ - optional arguments can no longer have "undefined" as argument. This is at odds with considering undefined as a valid iterable.
 
 ## [6.2.3] - 2019-1-23
 ### Added
