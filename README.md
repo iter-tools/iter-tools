@@ -259,7 +259,7 @@ It can also use as extra argument, the concurrency level (default 1):
 ```js
 await asyncMap(2, asyncFunction, iterable);
 ```
-If this is used, more than one asyncFunction can run concurrently.
+If this is used, more than one asyncFunction can run concurrently. This also means that the input will be consumed eagerly. **Do not use it if consuming the iterable leads to a side effect.**
 
 ## filter
 The equivalent of the array "filter" function.
@@ -278,7 +278,7 @@ It can also use as extra argument, the concurrency level (default 1):
 ```js
 await asyncFilter(2, asyncFunction, iterable);
 ```
-If this is used, more than one asyncFunction can run concurrently.
+If this is used, more than one asyncFunction can run concurrently. This also means that the input will be consumed eagerly. **Do not use it if consuming the iterable leads to a side effect.**
 
 ## take-while
 It returns values as soon as the function is true. Then it stops.
@@ -325,7 +325,7 @@ const isNotACharacter = (depth, item) => !(typeof item === 'string' && item.leng
 flat(isNotACharacter, ['hel', ['lo', ''], ['world']]); // h e l l o w o r l d
 ```
 
-## async-flat-map
+## async-flat
 Same as flat but works on both sync and async iterables.
 
 ## flat-map
@@ -336,6 +336,11 @@ flatMap(x => [x, x * x], range(4)); // 0, 0, 1, 1, 2, 4, 3, 9
 
 ## async-flat-map
 Same as flatMap but works on both sync and async iterables.
+It can also use as extra argument, the concurrency level (default 1):
+```js
+await asyncFlatMap(2, asyncFunction, iterable);
+```
+If this is used, more than one asyncFunction can run concurrently. This also means that the input will be consumed eagerly. **Do not use it if consuming the iterable leads to a side effect.**
 
 ## reduce
 This is an implementation of the reduce that consumes an iterable instead of an array (have a look at Array.prototype.reduce).

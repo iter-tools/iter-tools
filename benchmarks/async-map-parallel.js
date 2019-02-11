@@ -27,7 +27,7 @@ module.exports['iter-tools async map 100 items'] = {
 
 module.exports['iter-tools async map 100 parallel items'] = {
   fn: async function (deferred) {
-    const iter = asyncMap(4, power2)
+    const iter = asyncMap(10, power2)
 
     await asyncReduce([], concat, iter(a))
     deferred.resolve()
