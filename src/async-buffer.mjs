@@ -1,15 +1,16 @@
-import { asyncIterableCurry } from './internal/async-iterable'
+import { asyncify, asyncIterableCurry } from './internal/async-iterable'
 import { Queue } from './internal/queues'
 
 async function * asyncBuffer (bufferSize, iterable) {
   if (typeof bufferSize !== 'number' || bufferSize <= 0) {
     throw new Error('The first argument (bufferSize) should be a number greater than 0')
   }
-  const iterator = iterable[Symbol.asyncIterator]()
+  const iterator = asyncify(iterable)[Symbol.asyncIterator]()
   const buffer = new Queue()
+
   try {
-    // fill buffer
     for (let i = 0; i < bufferSize; i++) {
+      // Async generators have an internal item request queue, which this fills up
       buffer.push(iterator.next())
     }
     while (true) {
@@ -19,7 +20,7 @@ async function * asyncBuffer (bufferSize, iterable) {
       yield value
     }
   } finally {
-    if (typeof iterator.return === 'function') await iterator.return()
+    if (typeof iterator.return === 'function') iterator.return()
   }
 }
 

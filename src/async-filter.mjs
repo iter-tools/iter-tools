@@ -1,13 +1,18 @@
-import asyncBatch from './async-batch'
-import zip from './zip'
+import asyncMap from './async-map'
 import { asyncIterableCurry } from './internal/async-iterable'
 
-async function * asyncFilter (concurrency = 1, func, iterable) {
+async function * asyncFilter (concurrency, func, iterable) {
+  if (concurrency == null) {
+    concurrency = 1
+  }
+
   let c = 0
-  for await (const items of asyncBatch(concurrency, iterable)) {
-    const filters = await Promise.all(items.map((item) => func(item, c++)))
-    for (const [item, canYield] of zip(items, filters)) {
-      if (canYield) yield item
+
+  const mapped = asyncMap(concurrency, async item => ({ item, value: await func(item, c++) }), iterable)
+
+  for await (const item of mapped) {
+    if (item.value) {
+      yield item.item
     }
   }
 }

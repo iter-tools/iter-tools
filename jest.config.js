@@ -10,19 +10,22 @@ function makeProject (projectConfig) {
   }, projectConfig)
 }
 
-module.exports = Object.assign({
+module.exports = {
   testEnvironment: 'node',
   testMatch: [],
   coverageReporters: ['json-summary', 'text', 'lcov'],
   projects: [
-    // makeProject({
-    //   name: 'es5'
-    // }),
-    // makeProject({
-    //   name: 'es2018'
-    // })
-  ]
-},
-makeProject({
-  name: 'es2015'
-}))
+    makeProject({
+      name: 'es5'
+    }),
+    makeProject({
+      name: 'es2015'
+    }),
+  ].concat(
+    process.env.CI
+      ? makeProject({
+          name: 'es2018'
+        })
+      : []
+  )
+}

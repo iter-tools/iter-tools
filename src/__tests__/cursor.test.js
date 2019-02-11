@@ -1,10 +1,10 @@
 /* eslint-env node, jest */
-const { cursor, asyncCursor, asyncToArray } = require('..')
+const { cursor, map, asyncCursor, asyncToArray, asyncMap } = require('..')
 
 describe('cursor', function () {
   it('frames iterable', function () {
     const iter = cursor({ size: 3 }, [1, 2, 3, 4, 5])
-    expect(Array.from(iter)).toEqual([
+    expect(Array.from(map(wndw => [...wndw], iter))).toEqual([
       [undefined, undefined, 1],
       [undefined, 1, 2],
       [1, 2, 3],
@@ -15,7 +15,7 @@ describe('cursor', function () {
 
   it('frames iterable (use filler)', function () {
     const iter = cursor({ size: 3, filler: 'x' }, [1, 2, 3, 4, 5])
-    expect(Array.from(iter)).toEqual([
+    expect(Array.from(map(wndw => [...wndw], iter))).toEqual([
       ['x', 'x', 1],
       ['x', 1, 2],
       [1, 2, 3],
@@ -26,7 +26,7 @@ describe('cursor', function () {
 
   it('frames iterable (cursor equal to the sequence)', function () {
     const iter = cursor({ size: 5 }, [1, 2, 3, 4, 5])
-    expect(Array.from(iter)).toEqual([
+    expect(Array.from(map(wndw => [...wndw], iter))).toEqual([
       [undefined, undefined, undefined, undefined, 1],
       [undefined, undefined, undefined, 1, 2],
       [undefined, undefined, 1, 2, 3],
@@ -37,7 +37,7 @@ describe('cursor', function () {
 
   it('frames iterable (cursor bigger than the sequence)', function () {
     const iter = cursor({ size: 6 }, [1, 2, 3, 4, 5])
-    expect(Array.from(iter)).toEqual([
+    expect(Array.from(map(wndw => [...wndw], iter))).toEqual([
       [undefined, undefined, undefined, undefined, undefined, 1],
       [undefined, undefined, undefined, undefined, 1, 2],
       [undefined, undefined, undefined, 1, 2, 3],
@@ -48,7 +48,7 @@ describe('cursor', function () {
 
   it('frames iterable (cursor bigger than the sequence) with filler', function () {
     const iter = cursor({ size: 6, filler: 'x' }, [1, 2, 3, 4, 5])
-    expect(Array.from(iter)).toEqual([
+    expect(Array.from(map(wndw => [...wndw], iter))).toEqual([
       ['x', 'x', 'x', 'x', 'x', 1],
       ['x', 'x', 'x', 'x', 1, 2],
       ['x', 'x', 'x', 1, 2, 3],
@@ -59,7 +59,7 @@ describe('cursor', function () {
 
   it('frames iterable (cursor bigger than the sequence)', function () {
     const iter = cursor({ size: 7 }, [1, 2, 3, 4, 5])
-    expect(Array.from(iter)).toEqual([
+    expect(Array.from(map(wndw => [...wndw], iter))).toEqual([
       [undefined, undefined, undefined, undefined, undefined, undefined, 1],
       [undefined, undefined, undefined, undefined, undefined, 1, 2],
       [undefined, undefined, undefined, undefined, 1, 2, 3],
@@ -71,7 +71,7 @@ describe('cursor', function () {
   describe('trailing', function () {
     it('frames iterable', function () {
       const iter = cursor({ size: 3, trailing: true }, [1, 2, 3, 4, 5])
-      expect(Array.from(iter)).toEqual([
+      expect(Array.from(map(wndw => [...wndw], iter))).toEqual([
         [1, 2, 3],
         [2, 3, 4],
         [3, 4, 5],
@@ -82,7 +82,7 @@ describe('cursor', function () {
 
     it('frames iterable, with filler', function () {
       const iter = cursor({ size: 3, trailing: true, filler: 'x' }, [1, 2, 3, 4, 5])
-      expect(Array.from(iter)).toEqual([
+      expect(Array.from(map(wndw => [...wndw], iter))).toEqual([
         [1, 2, 3],
         [2, 3, 4],
         [3, 4, 5],
@@ -93,7 +93,7 @@ describe('cursor', function () {
 
     it('frames iterable (cursor equal to the sequence)', function () {
       const iter = cursor({ size: 5, trailing: true }, [1, 2, 3, 4, 5])
-      expect(Array.from(iter)).toEqual([
+      expect(Array.from(map(wndw => [...wndw], iter))).toEqual([
         [1, 2, 3, 4, 5],
         [2, 3, 4, 5, undefined],
         [3, 4, 5, undefined, undefined],
@@ -104,7 +104,7 @@ describe('cursor', function () {
 
     it('frames iterable (cursor bigger than the sequence)', function () {
       const iter = cursor({ size: 6, trailing: true }, [1, 2, 3, 4, 5])
-      expect(Array.from(iter)).toEqual([
+      expect(Array.from(map(wndw => [...wndw], iter))).toEqual([
         [1, 2, 3, 4, 5, undefined],
         [2, 3, 4, 5, undefined, undefined],
         [3, 4, 5, undefined, undefined, undefined],
@@ -115,7 +115,7 @@ describe('cursor', function () {
 
     it('frames iterable (cursor bigger than the sequence) with filler', function () {
       const iter = cursor({ size: 6, trailing: true, filler: 'x' }, [1, 2, 3, 4, 5])
-      expect(Array.from(iter)).toEqual([
+      expect(Array.from(map(wndw => [...wndw], iter))).toEqual([
         [1, 2, 3, 4, 5, 'x'],
         [2, 3, 4, 5, 'x', 'x'],
         [3, 4, 5, 'x', 'x', 'x'],
@@ -126,7 +126,7 @@ describe('cursor', function () {
 
     it('frames iterable (cursor bigger than the sequence) 2', function () {
       const iter = cursor({ size: 7, trailing: true }, [1, 2, 3, 4, 5])
-      expect(Array.from(iter)).toEqual([
+      expect(Array.from(map(wndw => [...wndw], iter))).toEqual([
         [1, 2, 3, 4, 5, undefined, undefined],
         [2, 3, 4, 5, undefined, undefined, undefined],
         [3, 4, 5, undefined, undefined, undefined, undefined],
@@ -140,7 +140,7 @@ describe('cursor', function () {
 describe('asyncCursor', function () {
   it('frames iterable', async function () {
     const iter = asyncCursor({ size: 3 }, [1, 2, 3, 4, 5])
-    expect(await asyncToArray(iter)).toEqual([
+    expect(await asyncToArray(asyncMap(wndw => [...wndw], iter))).toEqual([
       [undefined, undefined, 1],
       [undefined, 1, 2],
       [1, 2, 3],
@@ -151,7 +151,7 @@ describe('asyncCursor', function () {
 
   it('frames iterable (user filler)', async function () {
     const iter = asyncCursor({ size: 3, filler: 'x' }, [1, 2, 3, 4, 5])
-    expect(await asyncToArray(iter)).toEqual([
+    expect(await asyncToArray(asyncMap(wndw => [...wndw], iter))).toEqual([
       ['x', 'x', 1],
       ['x', 1, 2],
       [1, 2, 3],
@@ -162,7 +162,7 @@ describe('asyncCursor', function () {
 
   it('frames iterable (cursor equal to the sequence)', async function () {
     const iter = asyncCursor({ size: 5 }, [1, 2, 3, 4, 5])
-    expect(await asyncToArray(iter)).toEqual([
+    expect(await asyncToArray(asyncMap(wndw => [...wndw], iter))).toEqual([
       [undefined, undefined, undefined, undefined, 1],
       [undefined, undefined, undefined, 1, 2],
       [undefined, undefined, 1, 2, 3],
@@ -173,7 +173,7 @@ describe('asyncCursor', function () {
 
   it('frames iterable (cursor bigger than the sequence)', async function () {
     const iter = asyncCursor({ size: 6 }, [1, 2, 3, 4, 5])
-    expect(await asyncToArray(iter)).toEqual([
+    expect(await asyncToArray(asyncMap(wndw => [...wndw], iter))).toEqual([
       [undefined, undefined, undefined, undefined, undefined, 1],
       [undefined, undefined, undefined, undefined, 1, 2],
       [undefined, undefined, undefined, 1, 2, 3],
@@ -184,7 +184,7 @@ describe('asyncCursor', function () {
 
   it('frames iterable (cursor bigger than the sequence) with filler', async function () {
     const iter = asyncCursor({ size: 6, filler: 'x' }, [1, 2, 3, 4, 5])
-    expect(await asyncToArray(iter)).toEqual([
+    expect(await asyncToArray(asyncMap(wndw => [...wndw], iter))).toEqual([
       ['x', 'x', 'x', 'x', 'x', 1],
       ['x', 'x', 'x', 'x', 1, 2],
       ['x', 'x', 'x', 1, 2, 3],
@@ -196,7 +196,7 @@ describe('asyncCursor', function () {
   describe('trailing', function () {
     it('frames iterable', async function () {
       const iter = asyncCursor({ size: 3, trailing: true }, [1, 2, 3, 4, 5])
-      expect(await asyncToArray(iter)).toEqual([
+      expect(await asyncToArray(asyncMap(wndw => [...wndw], iter))).toEqual([
         [1, 2, 3],
         [2, 3, 4],
         [3, 4, 5],
@@ -207,7 +207,7 @@ describe('asyncCursor', function () {
 
     it('frames iterable', async function () {
       const iter = asyncCursor({ size: 3, trailing: true, filler: 'x' }, [1, 2, 3, 4, 5])
-      expect(await asyncToArray(iter)).toEqual([
+      expect(await asyncToArray(asyncMap(wndw => [...wndw], iter))).toEqual([
         [1, 2, 3],
         [2, 3, 4],
         [3, 4, 5],
@@ -218,7 +218,7 @@ describe('asyncCursor', function () {
 
     it('frames iterable (cursor equal to the sequence)', async function () {
       const iter = asyncCursor({ size: 5, trailing: true }, [1, 2, 3, 4, 5])
-      expect(await asyncToArray(iter)).toEqual([
+      expect(await asyncToArray(asyncMap(wndw => [...wndw], iter))).toEqual([
         [1, 2, 3, 4, 5],
         [2, 3, 4, 5, undefined],
         [3, 4, 5, undefined, undefined],
@@ -229,7 +229,7 @@ describe('asyncCursor', function () {
 
     it('frames iterable (cursor bigger than the sequence)', async function () {
       const iter = asyncCursor({ size: 6, trailing: true }, [1, 2, 3, 4, 5])
-      expect(await asyncToArray(iter)).toEqual([
+      expect(await asyncToArray(asyncMap(wndw => [...wndw], iter))).toEqual([
         [1, 2, 3, 4, 5, undefined],
         [2, 3, 4, 5, undefined, undefined],
         [3, 4, 5, undefined, undefined, undefined],
@@ -240,7 +240,7 @@ describe('asyncCursor', function () {
 
     it('frames iterable (cursor bigger than the sequence) with filler', async function () {
       const iter = asyncCursor({ size: 6, trailing: true, filler: 'x' }, [1, 2, 3, 4, 5])
-      expect(await asyncToArray(iter)).toEqual([
+      expect(await asyncToArray(asyncMap(wndw => [...wndw], iter))).toEqual([
         [1, 2, 3, 4, 5, 'x'],
         [2, 3, 4, 5, 'x', 'x'],
         [3, 4, 5, 'x', 'x', 'x'],
@@ -251,7 +251,7 @@ describe('asyncCursor', function () {
 
     it('frames iterable (cursor bigger than the sequence) 2', async function () {
       const iter = asyncCursor({ size: 7, trailing: true }, [1, 2, 3, 4, 5])
-      expect(await asyncToArray(iter)).toEqual([
+      expect(await asyncToArray(asyncMap(wndw => [...wndw], iter))).toEqual([
         [1, 2, 3, 4, 5, undefined, undefined],
         [2, 3, 4, 5, undefined, undefined, undefined],
         [3, 4, 5, undefined, undefined, undefined, undefined],
