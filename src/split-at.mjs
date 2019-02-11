@@ -1,8 +1,7 @@
-import ensureIterable from './internal/ensure-iterable'
-import curry from './internal/curry'
+import { iterableCurry } from './internal/iterable'
 
 function splitAt (index, iterable) {
-  const iter = ensureIterable(iterable)[Symbol.iterator]()
+  const iter = iterable[Symbol.iterator]()
   let firstRequestedIndex = -1
   let firstCache = null
   let firstCacheStart = null
@@ -88,4 +87,4 @@ function splitAt (index, iterable) {
   })()
 }
 
-export default curry(splitAt)
+export default iterableCurry(splitAt)

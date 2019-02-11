@@ -1,8 +1,7 @@
-import ensureAsyncIterable from './internal/ensure-async-iterable'
-import curry from './internal/curry'
+import { asyncIterableCurry } from './internal/async-iterable'
 
 function asyncSplitAt (index, iterable) {
-  const iter = ensureAsyncIterable(iterable)[Symbol.asyncIterator]()
+  const iter = iterable[Symbol.asyncIterator]()
   let firstRequestedIndex = -1
   let firstCache = null
   let firstCacheStart = null
@@ -90,4 +89,4 @@ function asyncSplitAt (index, iterable) {
   })()
 }
 
-export default curry(asyncSplitAt)
+export default asyncIterableCurry(asyncSplitAt)
