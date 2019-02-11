@@ -630,9 +630,13 @@ export declare function asyncFlat (
 export declare function asyncFlat (shouldFlat: (depth: number, iter: any) => MaybePromise<boolean>):
   (iter: AsyncIterable<any>) => AsyncIterableIterator<any>
 
-export declare function asyncFlatMap<T, O> (func: (item: T) => AsyncIterableLike<O>):
+export declare function asyncFlatMap<T, O> (func: (item: T) => MaybePromise<AsyncIterableLike<O>>):
     (iter: AsyncIterableLike<T>) => AsyncIterableIterator<O>
-export declare function asyncFlatMap<T, O> (func: (item: T) => AsyncIterableLike<O>, iter: AsyncIterableLike<T>):
+export declare function asyncFlatMap<T, O> (func: (item: T) => MaybePromise<AsyncIterableLike<O>>, iter: AsyncIterableLike<T>):
+    AsyncIterableIterator<O>
+export declare function asyncFlatMap<T, O> (concurrency: number, func: (item: T) => MaybePromise<AsyncIterableLike<O>>):
+    (iter: AsyncIterableLike<T>) => AsyncIterableIterator<O>
+export declare function asyncFlatMap<T, O> (concurrency: number, func: (item: T) => MaybePromise<AsyncIterableLike<O>>, iter: AsyncIterableLike<T>):
     AsyncIterableIterator<O>
 
 export declare function asyncFork<T> (asyncIterable: AsyncIterableLike<T>): IterableIterator<AsyncIterableIterator<T>>

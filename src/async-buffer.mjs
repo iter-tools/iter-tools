@@ -20,7 +20,7 @@ async function * asyncBuffer (bufferSize, iterable) {
       yield value
     }
   } finally {
-    if (typeof iterator.return === 'function') iterator.return()
+    if (typeof iterator.return === 'function') await iterator.return()
   }
 }
 
