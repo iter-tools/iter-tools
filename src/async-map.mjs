@@ -66,7 +66,7 @@ class ParallelMapper {
         if (item.done) {
           return item
         } else {
-          return { value: { value: item.value, mappedValue }, done: false }
+          return { value: mappedValue, done: false }
         }
       })
 
@@ -88,7 +88,7 @@ async function * asyncMap (concurrency = 1, func, iterable) {
   const runner = new ParallelMapper(iterable, async item => func(item, c++), concurrency)
 
   for await (const value of runner) {
-    yield value.mappedValue
+    yield value
   }
 }
 
