@@ -1,37 +1,9 @@
-import { Queue, fakeQueue } from './internal/queues'
+import multiPartition from './multi-partition'
 import { iterableCurry } from './internal/iterable'
 
-const SATISFIED = 0
-const UNSATISFIED = 1
-
 function partition (func, iter) {
-  const queues = [new Queue(), new Queue()]
-  const iterator = iter[Symbol.iterator]()
-  let exhausted = 0
-
-  function * part (queueId) {
-    try {
-      while (true) {
-        while (!queues[queueId].isEmpty()) {
-          yield queues[queueId].shift()
-        }
-
-        const { value, done } = iterator.next()
-        if (done) break
-
-        const chosen = func(value) ? SATISFIED : UNSATISFIED
-        queues[chosen].push(value)
-      }
-    } finally {
-      queues[queueId] = fakeQueue // /dev/null
-      exhausted++
-      if (exhausted === 2) {
-        if (typeof iterator.return === 'function') iterator.return()
-      }
-    }
-  }
-
-  return [part(SATISFIED), part(UNSATISFIED)]
+  const [first, second] = multiPartition((item) => func(item) ? 0 : 1, iter)
+  return [first, second]
 }
 
 export default iterableCurry(partition)

@@ -45,6 +45,7 @@ Utilities returning multiple iterables
 * [groupBy](#group-by) ([async](#group-by))
 * [fork](#fork) ([async](#async-fork))
 * [partition](#partition) ([async](#async-partition))
+* [multiPartition](#multi-partition) ([async](#async-multi-partition))
 * [splitAt](#split-at) ([async](#async-split-at))
 
 Others
@@ -633,6 +634,19 @@ Array.from(odds) // [1, 3, 5, 7, 9]
 
 ## async-partition
 Same as partition but works on both sync and async iterables.
+
+## multi-partition
+This function allows to partition an iterables in an arbitrary number of iterables. Which iterable will be based on the index returned by the function passed as a first argument.
+```js
+const [first, second, third] = partition(x => x % 3, range(9))
+Array.from(first)  // [0, 3, 6]
+Array.from(second) // [1, 4, 7]
+Array.from(third)  // [2, 5, 8]
+```
+
+
+## async-multi-partition
+This is equivalent to the multiPartition function but works for sync and async iterables.
 
 ## split-at
 It returns an iterable containing 2 slices of the input iterable. The first spans from the beginning to the chosen position. The second from the chosen position to the end.

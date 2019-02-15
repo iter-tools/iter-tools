@@ -10,7 +10,8 @@ run([
   bench('regexp', require('./regexp-10000')),
   bench('while - for', require('./while-for-10000')),
   bench('async-map 1000 items', require('./async-map-1000')),
-  bench('async-map parallel', require('./async-map-parallel'))
+  bench('async-map parallel', require('./async-map-parallel')),
+  bench('fork vs multipartition', require('./fork-vs-multi-partition'))
 ])
 
 function bench (title, config) {
