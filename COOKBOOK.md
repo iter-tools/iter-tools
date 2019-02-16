@@ -159,6 +159,14 @@ counts.get('b') // 1
 counts.get('c') // 2
 ```
 
+## Compare 2 iterables
+The following function checks if two iterables are equals. It uses a shallow comparison:
+```js
+function areEqual (iter1, iter2) {
+  return every(([item1, item2]) => Object.is(item1, item2), zipAll(iter1, iter2))
+}
+```
+
 ## Your recipe here!
 
 If you have uncovered a use case where iterators can enhance the performance, readability, or maintainability of a particular coding task please submit a pull request to the cookbook!

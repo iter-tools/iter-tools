@@ -1,4 +1,4 @@
-import ensureAsyncIterable from './internal/ensure-async-iterable'
+import { asyncIterableCurry } from './internal/async-iterable'
 
 const defaultShouldIFlat = (depth) => {
   if (typeof depth === 'function') {
@@ -13,7 +13,8 @@ const defaultShouldIFlat = (depth) => {
   throw new Error('async-flat: "depth" can be a function or a number')
 }
 
-function asyncFlat (shouldIFlat, iterable) {
+function asyncFlat (shouldIFlat = 1, iterable) {
+  shouldIFlat = defaultShouldIFlat(shouldIFlat)
   async function * _asyncFlat (currentDepth, iterable) {
     if (await shouldIFlat(currentDepth, iterable)) {
       for await (const iter of iterable) {
@@ -23,19 +24,8 @@ function asyncFlat (shouldIFlat, iterable) {
       yield iterable
     }
   }
-  return _asyncFlat(0, ensureAsyncIterable(iterable))
+
+  return _asyncFlat(0, iterable)
 }
 
-export default function curriedAsyncFlat (...args) {
-  if (args.length === 0) {
-    return iterable => asyncFlat(defaultShouldIFlat(1), iterable)
-  } else if (args.length === 1) {
-    if (typeof args[0][Symbol.iterator] === 'function') {
-      return asyncFlat(defaultShouldIFlat(1), args[0])
-    } else {
-      return iterable => asyncFlat(defaultShouldIFlat(args[0]), iterable)
-    }
-  } else {
-    return asyncFlat(defaultShouldIFlat(args[0]), args[1])
-  }
-}
+export default asyncIterableCurry(asyncFlat, 1, 2)

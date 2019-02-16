@@ -1,7 +1,7 @@
-import ensureAsyncIterable from './internal/ensure-async-iterable'
+import { ensureAsyncIterable } from './internal/async-iterable'
 import map from './map'
 
-export default async function * zip (...iterables) {
+export default async function * asyncZip (...iterables) {
   const iters = iterables.map(arg => ensureAsyncIterable(arg)[Symbol.asyncIterator]())
   try {
     while (true) {

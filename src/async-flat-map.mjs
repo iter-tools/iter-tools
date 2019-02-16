@@ -1,11 +1,11 @@
 import map from './async-map'
-import curry from './internal/curry'
+import { asyncIterableCurry } from './internal/async-iterable'
 
-async function * asyncFlatMap (func, iterable) {
+async function * asyncFlatMap (concurrency = 1, func, iterable) {
   const mapIter = map(func)
   for await (const item of mapIter(iterable)) {
     yield * item
   }
 }
 
-export default curry(asyncFlatMap)
+export default asyncIterableCurry(asyncFlatMap, 2, 3)

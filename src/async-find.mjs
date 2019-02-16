@@ -1,9 +1,8 @@
-import ensureAsyncIterable from './internal/ensure-async-iterable'
-import curry from './internal/curry'
+import { asyncIterableCurry } from './internal/async-iterable'
 
 async function asyncFind (func, iterable) {
   let c = 0
-  for await (const item of ensureAsyncIterable(iterable)) {
+  for await (const item of iterable) {
     if ((await func(item, c++))) {
       return item
     }
@@ -11,4 +10,4 @@ async function asyncFind (func, iterable) {
   return undefined
 }
 
-export default curry(asyncFind)
+export default asyncIterableCurry(asyncFind)

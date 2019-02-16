@@ -1,12 +1,11 @@
-import ensureIterable from './internal/ensure-iterable'
-import curry from './internal/curry'
+import { iterableCurry } from './internal/iterable'
 import regexSplit from './regexp-split'
 
 function * regexpSplitIter (re, iterable) {
   let buffer = ''
   let queue
   let mergeEmpty = false
-  for (const chunk of ensureIterable(iterable)) {
+  for (const chunk of iterable) {
     if (chunk === '') continue
     queue = []
     buffer += chunk
@@ -29,4 +28,4 @@ function * regexpSplitIter (re, iterable) {
   }
 }
 
-export default curry(regexpSplitIter)
+export default iterableCurry(regexpSplitIter)

@@ -1,5 +1,5 @@
 import { cloneRegexp, isRegExp } from './internal/regexp'
-import curry from './internal/curry'
+import { curry } from './internal/curry'
 
 function * regexpExec (re, str) {
   if (typeof re === 'string') {

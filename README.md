@@ -44,8 +44,9 @@ Combine multiple iterables
 
 Utilities returning multiple iterables
 * [groupBy](#group-by) ([async](#group-by))
-* [tee](#tee) ([async](#async-tee))
+* [fork](#fork) ([async](#async-fork))
 * [partition](#partition) ([async](#async-partition))
+* [splitAt](#split-at) ([async](#async-split-at))
 
 Others
 * [iterable](#iterable) ([async](#async-iterable))
@@ -260,7 +261,7 @@ It can also use as extra argument, the concurrency level (default 1):
 ```js
 await asyncMap(2, asyncFunction, iterable);
 ```
-If this is used, more than one asyncFunction can run concurrently.
+If this is used, more than one asyncFunction can run concurrently. This also means that the input will be consumed eagerly. **Do not use it if consuming the iterable leads to a side effect.**
 
 ## filter
 The equivalent of the array "filter" function.
@@ -279,7 +280,7 @@ It can also use as extra argument, the concurrency level (default 1):
 ```js
 await asyncFilter(2, asyncFunction, iterable);
 ```
-If this is used, more than one asyncFunction can run concurrently.
+If this is used, more than one asyncFunction can run concurrently. This also means that the input will be consumed eagerly. **Do not use it if consuming the iterable leads to a side effect.**
 
 ## take-while
 It returns values as soon as the function is true. Then it stops.
@@ -326,7 +327,7 @@ const isNotACharacter = (depth, item) => !(typeof item === 'string' && item.leng
 flat(isNotACharacter, ['hel', ['lo', ''], ['world']]); // h e l l o w o r l d
 ```
 
-## async-flat-map
+## async-flat
 Same as flat but works on both sync and async iterables.
 
 ## flat-map
@@ -337,6 +338,11 @@ flatMap(x => [x, x * x], range(4)); // 0, 0, 1, 1, 2, 4, 3, 9
 
 ## async-flat-map
 Same as flatMap but works on both sync and async iterables.
+It can also use as extra argument, the concurrency level (default 1):
+```js
+await asyncFlatMap(2, asyncFunction, iterable);
+```
+If this is used, more than one asyncFunction can run concurrently. This also means that the input will be consumed eagerly. **Do not use it if consuming the iterable leads to a side effect.**
 
 ## reduce
 This is an implementation of the reduce that consumes an iterable instead of an array (have a look at Array.prototype.reduce).
@@ -583,15 +589,51 @@ groupBySquare([1, 1, 1, 1, -1, -1, -1, 4]);
 ## async-group-by
 Same as groupBy but works on both sync and async iterables. The first argument can be a function returning synchronously or a promise.
 
-## tee
+## tee (DEPRECATED use *fork* instead)
 It returns 2 or more copies of an iterable. In reality they are not copies (it is not possible) they are distinct iterables sharing the original one and caching the values when one of the copy pull a new value from the original iterable.
 ```js
 tee(range(3)); // [iter1, iter2]
 tee(range(3), 4); // [iter1, iter2, iter3, iter4]
 ```
 
-## async-tee
+## async-tee (DEPRECATED use *asyncFork* instead)
 Same as tee but works on both sync and async iterables.
+
+## fork
+fork returns an iterable that yields buffered proxies of the input iterable:
+```js
+const [proxy1, proxy2, proxy3] = fork(originalIterable)
+// from now on originalIterable can't be used directly
+
+// all the following return the same items that yielded by originalIterable
+Array.from(proxy1)
+Array.from(proxy2)
+Array.from(proxy3)
+```
+This is highly useful because iterables do not guarantee that they may be iterated over more than once. Fork guarantees that you can iterate over its source as many times as you need to. It accomplishes this by caching values to the extent that it needs to.
+
+Fork's iterable of copies is infinite, so you can always create another fork on demand. However, while fork may still need to create another copy, it must keep a complete cache of all the data from the beginning of the source iterable. This means that in no circumstance may fork be used as a truly infinite iterable of infinte iterables without, well, infinite memory cost. For example:
+```js
+for (const proxy of slice(2, fork(originalIterable))) {
+  // if you consume proxy inside this loop
+  // fork will cache every single item yielded by originalIterable
+}
+```
+
+This is the recommended use of fork:
+```js
+// after this line, the cache will contain only the items not consumed by all iterables
+const [proxy1, proxy2] = fork(originalIterable);
+
+// That means that if I carefully consume all items in parallel, the memory cost will be minimal
+const square = (x) => x * x
+for (const [n, nsquared] of zip(proxy1, map(square, proxy1))) {
+  console.log(`${n} squared is ${nsquared}`)
+}
+```
+
+## async-fork
+Same as fork but works on both sync and async iterables.
 
 ## partition
 Takes a condition function and an iterable, divides the iterable into 2, one contains items that satisfy the condition function, one contains item that don't.
@@ -603,6 +645,18 @@ Array.from(odds) // [1, 3, 5, 7, 9]
 
 ## async-partition
 Same as partition but works on both sync and async iterables.
+
+## split-at
+It returns an iterable containing 2 slices of the input iterable. The first spans from the beginning to the chosen position. The second from the chosen position to the end.
+```js
+const [firstThree, others] = splitAt(3, range(100))
+Array.from(firstThree) // [0, 1, 2]
+Array.from(others) // [3, 4, 5, 6, 7, 8, 9]
+```
+Memory wise, the two iterables try to be as conservative as possible. But you have to take into consideration that consuming the second iterable without having consumed the first will keep the content of the first iterable in memory.
+
+## async-split-at
+Same as asyncSplitAt but works on both sync and async iterables.
 
 # Utilities
 

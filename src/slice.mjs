@@ -1,18 +1,19 @@
 import CircularBuffer from './internal/circular-buffer'
-import ensureIterable from './internal/ensure-iterable'
-import curry from './internal/curry'
+import { iterableCurry } from './internal/iterable'
 
 function bufferedSlice (iterable, start, end, step) {
   const bufferSize = Math.abs(start)
-
   const buffer = new CircularBuffer(bufferSize)
+  let counter = 0
+
   for (let item of iterable) {
     buffer.push(item)
+    counter++
   }
 
   let newEnd
   if (isFinite(end) && end > 0) {
-    newEnd = end - (buffer.counter - bufferSize)
+    newEnd = end - (counter - bufferSize)
     if (newEnd < 0) return []
   } else {
     newEnd = end
@@ -25,6 +26,7 @@ function * simpleSlice (iterable, start, end, step) {
   let nextValidPos = start
   const bufferSize = Math.abs(end)
   let buffer
+  let counter = 0
 
   if (end < 0) {
     buffer = new CircularBuffer(bufferSize)
@@ -33,7 +35,8 @@ function * simpleSlice (iterable, start, end, step) {
   for (let item of iterable) {
     if (buffer) {
       item = buffer.push(item)
-      if (buffer.counter <= bufferSize) {
+      counter++
+      if (counter <= bufferSize) {
         continue
       }
     }
@@ -57,7 +60,6 @@ function * slice (opts, iterable) {
   step = opts.step === undefined ? 1 : opts.step
   end = opts.end === undefined ? Infinity : opts.end
   start = opts.start ? opts.start : 0
-  iterable = ensureIterable(iterable)
 
   if (step <= 0) {
     throw new TypeError('Cannot slice with step <= 0')
@@ -70,4 +72,4 @@ function * slice (opts, iterable) {
   }
 }
 
-export default curry(slice)
+export default iterableCurry(slice)

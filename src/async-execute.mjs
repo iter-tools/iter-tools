@@ -1,5 +1,5 @@
-export default async function * execute (func, ...args) {
+export default async function * asyncExecute (func, ...args) {
   while (true) {
-    yield func(...args)
+    yield await func(...args)
   }
 }

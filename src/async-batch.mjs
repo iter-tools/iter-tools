@@ -1,10 +1,9 @@
-import ensureAsyncIterable from './internal/ensure-async-iterable'
-import curry from './internal/curry'
+import { asyncIterableCurry } from './internal/async-iterable'
 
 async function * asyncBatch (number, iterable) {
   if (typeof number !== 'number' || number < 1) throw new Error('batch size should be a number, greater than zero')
   let batch = []
-  for await (const item of ensureAsyncIterable(iterable)) {
+  for await (const item of iterable) {
     batch.push(item)
     if (batch.length === number) {
       yield batch
@@ -16,4 +15,4 @@ async function * asyncBatch (number, iterable) {
   }
 }
 
-export default curry(asyncBatch)
+export default asyncIterableCurry(asyncBatch)

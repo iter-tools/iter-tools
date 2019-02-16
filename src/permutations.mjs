@@ -1,8 +1,7 @@
-import ensureIterable from './internal/ensure-iterable'
+import { ensureIterable } from './internal/iterable'
 import { permutationsSize } from './internal/math'
 import map from './map'
 import range from './range'
-import tee from './tee'
 import product from './product'
 
 export default function permutations (iterable, r) {
@@ -13,7 +12,7 @@ export default function permutations (iterable, r) {
     * [Symbol.iterator] () {
       if (r > len) return
       const mapToIndex = map((i) => arr[i])
-      for (const indices of product(...tee(range(len), r))) {
+      for (const indices of product(...map(() => range(len), range(r)))) {
         if (new Set(indices).size === r) {
           yield Array.from(mapToIndex(indices))
         }

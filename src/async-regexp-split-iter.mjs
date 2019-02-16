@@ -1,12 +1,11 @@
-import ensureAsyncIterable from './internal/ensure-async-iterable'
-import curry from './internal/curry'
+import { asyncIterableCurry } from './internal/async-iterable'
 import regexSplit from './regexp-split'
 
 async function * asyncRegexpSplitIter (re, iterable) {
   let buffer = ''
   let queue
   let mergeEmpty = false
-  for await (const chunk of ensureAsyncIterable(iterable)) {
+  for await (const chunk of iterable) {
     if (chunk === '') continue
     queue = []
     buffer += chunk
@@ -29,4 +28,4 @@ async function * asyncRegexpSplitIter (re, iterable) {
   }
 }
 
-export default curry(asyncRegexpSplitIter)
+export default asyncIterableCurry(asyncRegexpSplitIter)

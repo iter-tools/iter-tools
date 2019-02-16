@@ -1,12 +1,11 @@
-import ensureAsyncIterable from './internal/ensure-async-iterable'
-import curry from './internal/curry'
+import { asyncIterableCurry } from './internal/async-iterable'
 
 async function * asyncTap (func, iterable) {
   let c = 0
-  for await (const item of ensureAsyncIterable(iterable)) {
+  for await (const item of iterable) {
     await func(item, c++)
     yield item
   }
 }
 
-export default curry(asyncTap)
+export default asyncIterableCurry(asyncTap)

@@ -1,11 +1,10 @@
-import ensureIterable from './internal/ensure-iterable'
+import { iterableCurry } from './internal/iterable'
 
-export default function consume (func, iterable) {
-  if (!iterable) {
-    return iterable => consume(func, iterable)
-  }
-
-  for (const item of ensureIterable(iterable)) {
-    func(item)
+function consume (func = () => {}, iterable) {
+  let c = 0
+  for (const item of iterable) {
+    func(item, c++)
   }
 }
+
+export default iterableCurry(consume, 1, 2)

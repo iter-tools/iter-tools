@@ -3,7 +3,7 @@ import zip from './async-zip'
 import filter from './async-filter'
 import map from './async-map'
 
-export default function compress (...args) {
+export default function asyncCompress (...args) {
   return compose(
     map(entry => entry[0]),
     filter(entry => entry[1]),

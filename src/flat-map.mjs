@@ -1,4 +1,4 @@
-import curry from './internal/curry'
+import { iterableCurry } from './internal/iterable'
 import map from './map'
 
 function * flatMap (func, iterable) {
@@ -8,4 +8,4 @@ function * flatMap (func, iterable) {
   }
 }
 
-export default curry(flatMap)
+export default iterableCurry(flatMap)

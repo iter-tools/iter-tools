@@ -1,5 +1,5 @@
 import { cloneRegexp, isRegExp } from './internal/regexp'
-import curry from './internal/curry'
+import { curry } from './internal/curry'
 
 function * regexpSplit (re, str) {
   if (typeof str !== 'string') throw new Error('regexpSplit: the second argument should be a string')

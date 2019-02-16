@@ -1,5 +1,4 @@
-import ensureAsyncIterable from './internal/ensure-async-iterable'
-import curry from './internal/curry'
+import { asyncIterableCurry } from './internal/async-iterable'
 import asyncChain from './async-chain'
 import repeat from './repeat'
 
@@ -7,24 +6,26 @@ import CircularBuffer from './internal/circular-buffer'
 
 async function * asyncCursor ({ size, trailing, filler }, iterable) {
   const circular = new CircularBuffer(size)
-  if (typeof filler !== 'undefined') {
-    circular.array.fill(filler)
-  }
+
+  circular.fill(filler)
+
+  iterable = iterable[Symbol.asyncIterator]()
+
   if (trailing) {
     let index = 0
     for await (const item of asyncChain(iterable, repeat(filler, size - 1))) {
       circular.push(item)
       if (index + 1 >= size) {
-        yield Array.from(circular)
+        yield circular.readOnlyCopy
       }
       index++
     }
   } else {
-    for await (const item of ensureAsyncIterable(iterable)) {
+    for await (const item of iterable) {
       circular.push(item)
-      yield Array.from(circular)
+      yield circular.readOnlyCopy
     }
   }
 }
 
-export default curry(asyncCursor)
+export default asyncIterableCurry(asyncCursor)
