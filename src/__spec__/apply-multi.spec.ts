@@ -3,4 +3,4 @@ import * as iter from '../index'
 
 assert<
   IterableIterator<number>
->(iter.mapFunc([(x) => x, (x) => x], [1, 2, 3]))
+>(iter.applyMulti([(x) => x, (x) => x], [1, 2, 3]))

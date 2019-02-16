@@ -40,7 +40,6 @@ Combine multiple iterables
 * [enumerate](#enumerate) ([async](#async-enumerate))
 * [compress](#compress) ([async](#async-compress))
 * [merge](#merge) ([async](#async-merge))
-* [mapFunc](#map-func)
 
 Utilities returning multiple iterables
 * [groupBy](#group-by) ([async](#group-by))
@@ -79,6 +78,7 @@ Utilities
 * [compose](#compose)
 * [pipe](#pipe)
 * [pipeline](#pipeline)
+* [applyMulti](#apply-multi)
 
 ## Definitions
 This should help clarify the documentation. You can also get more informations here: https://developer.mozilla.org/en/docs/Web/JavaScript/Guide/Iterators_and_Generators and here: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols
@@ -549,18 +549,6 @@ asyncMerge(asyncMergeByPosition(2), [repeat('a'), repeat('b'), repeat('c')]) // 
 asyncMerge(asyncMergeByReadiness(100), [iterable1, iterable2])
 ```
 
-## map-func
-This function maps an iterable of funtions to an iterable of arguments, returning an iterable of results.
-```js
-const square = x => x * x
-const double = x => x * 2
-mapFunc([square, double], [3, 10]) // 9, 20
-```
-It is particularly useful to map different iterables or async iterables to different transformations:
-```js
-const [squareEven, squareOdds] = mapFunc([map(square), double(double)], partition(even, iterable))
-```
-
 # Utilities returning multiple iterators
 
 ## group-by
@@ -999,6 +987,18 @@ const iter = pipeline(
 iter // 5, 7
 ```
 The previous example is equivalent to the *compose* and *pipe* ones (note that *pipeline* works left to right like *pipe*).
+
+## apply-multi
+This function takes as argument an iterable of functions and an iterable of arguments. The result will be an iterable with the results of all the functions applied to all arguments. The iterable will yield a number of items equal to the shorter iterable.
+```js
+const square = x => x * x
+const double = x => x * 2
+applyMulti([square, double], [3, 10]) // 9, 20
+```
+It is particularly useful to map different iterables or async iterables to different transformations:
+```js
+const [squareEven, doubleOdds] = applyMulti([map(square), double(double)], partition(isEven, iterable))
+```
 
 ## Issues and limitations
 There are a few limitations that you need to be aware of.
