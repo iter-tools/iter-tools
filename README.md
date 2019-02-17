@@ -997,7 +997,7 @@ applyMulti([square, double], [3, 10]) // 9, 20
 ```
 It is particularly useful to map different iterables or async iterables to different transformations:
 ```js
-const [squareEven, doubleOdds] = applyMulti([map(square), double(double)], partition(isEven, iterable))
+const [squareEven, doubleOdds] = applyMulti([map(square), map(double)], partition(isEven, iterable))
 ```
 
 ## Issues and limitations
