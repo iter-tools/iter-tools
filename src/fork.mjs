@@ -47,8 +47,9 @@ export default function fork (iterable) {
 
   function * generateForks () {
     try {
+      const consumer = exchange.getConsumer()
       while (true) {
-        const fork = generateFork(exchange.spawnConsumer())
+        const fork = generateFork(consumer.clone())
         // this first call to "next" allows to initiate the function generator
         // this ensures that "iterableCounter" will be always increased and decreased
         //
@@ -59,7 +60,6 @@ export default function fork (iterable) {
       }
     } finally {
       noNewIterables = true
-      exchange.noMoreConsumers()
       returnIterator()
     }
   }
