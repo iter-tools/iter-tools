@@ -5,21 +5,6 @@ class QueueItem {
   }
 }
 
-class Consumer {
-  constructor (queueItem) {
-    this.queueItem = queueItem
-  }
-  isEmpty () {
-    return !this.queueItem.previous
-  }
-  shift () {
-    if (this.isEmpty()) throw new Error('Queue is empty')
-    const data = this.queueItem.previous.data
-    this.queueItem = this.queueItem.previous
-    return data
-  }
-}
-
 export class Queue {
   constructor () {
     this.head = new QueueItem() // an empty queue points to a head node
@@ -44,19 +29,34 @@ export class Queue {
   }
 }
 
+class Consumer {
+  constructor (queueItem) {
+    this.queueItem = queueItem
+  }
+  isEmpty () {
+    return !this.queueItem.previous
+  }
+  shift () {
+    if (this.isEmpty()) throw new Error('Queue is empty')
+    const data = this.queueItem.previous.data
+    this.queueItem = this.queueItem.previous
+    return data
+  }
+  clone () {
+    return new Consumer(this.queueItem)
+  }
+}
+
 export class Exchange extends Queue {
   shift () {
     throw new Error('Unsupported')
   }
 
-  spawnConsumer () {
-    if (!this.head) throw new Error('You cannot spawn a new consumer after setting calling noMoreConsumers')
-    return new Consumer(this.head)
-  }
-
-  noMoreConsumers () {
-    // this enables to garbage collect all the consumed items
+  getConsumer () {
+    if (!this.head) throw new Error('You can only get a single consumer')
+    const consumer = new Consumer(this.head)
     this.head = null
+    return consumer
   }
 }
 
