@@ -1,4 +1,6 @@
+export { default as apply } from './apply'
 export { default as batch } from './batch'
+export { default as call } from './call'
 export { default as chain } from './chain'
 export { default as concat } from './concat'
 export { default as collate } from './collate'

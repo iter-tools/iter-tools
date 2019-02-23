@@ -19,6 +19,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
  - splitAt/asyncSplitAt
  - collate, asyncCollate: Formerly named merge. No longer takes a helper. Default with no params is now interleaving
  - mergeAll, asyncMergeAll
+ - call, apply
 
 ### Changes
  - takeSorted/asyncTakeSorted optional comparator is now the first argument

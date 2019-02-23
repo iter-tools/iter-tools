@@ -78,6 +78,8 @@ Utilities
 * [compose](#compose)
 * [pipe](#pipe)
 * [pipeline](#pipeline)
+* [call](#call)
+* [apply](#apply)
 
 ## Definitions
 This should help clarify the documentation. You can also get more informations here: https://developer.mozilla.org/en/docs/Web/JavaScript/Guide/Iterators_and_Generators and here: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols
@@ -602,7 +604,7 @@ Memory wise, the two iterables try to be as conservative as possible. But you ha
 ## async-split-at
 Same as asyncSplitAt but works on both sync and async iterables.
 
-# Utilities
+# Others
 
 ## iterable
 Takes an iterator, and returns an iterable. All iter-tools functions expect iterables, as do `Array.from` and `for ... of`. Usually however this function is not neccessary, as generator functions (which most iter-tools functions are under the hood) return iterables. If the argument is already an iterable it is returned as is. The example shows a rare case when `iterable` is necessary.
@@ -906,6 +908,8 @@ const iter = combinationsWithReplacement([1, 2, 3, 4], 2);
 iter.getSize() === 10
 ```
 
+# Utilities
+
 ## compose
 This is a classic composition function that can be used to assemble multiple functions that take an iterable and return an iterable.
 ```js
@@ -950,6 +954,18 @@ First of all, when you consume an iterator object (using next) you are mutating 
 Some of these functions makes an in memory copy of the output. For example: cycle, product or tee. They do that in a efficient lazy way. Still you need to consider that.
 Also with the iterator protocol you can create infinite iterables (repeat, cycle, count etc.). These iterables can't be used by all generators. For example combinatory generators require finite iterables.
 Some of the obvious things you can do with arrays, are not efficients with iterables. For example: sorting, shuffling and in general all operations that rely on having the full array at your disposal. In that case the way to go is to convert the iterable in an array and use that.
+
+## call
+call is a convenience method. Its implementation is:
+```js
+(fn, ...args) => fn(...args)
+```
+
+## apply
+apply is a convenience method. Its implementation is:
+```js
+(fn, args = []) => fn(...args)
+```
 
 
 ## Acknowledgements

@@ -122,6 +122,9 @@ export declare function keys (obj: { [id: string]: any }): IterableIterator<stri
 export declare function values<T> (obj: { [id: string]: T }): IterableIterator<T>
 export declare function entries<T> (obj: { [id: string]: T }): IterableIterator<[string, T]>
 
+export declare function apply (fn: Function, args: Array<any>): any
+export declare function call (fn: Function, ...args: Array<any>): any
+
 export declare function batch<T> (n: number): (iterable: Iterable<T>) => IterableIterator<T[]>
 export declare function batch<T> (n: number, iterable: Iterable<T>): IterableIterator<T[]>
 
