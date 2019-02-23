@@ -1,10 +1,20 @@
 export function curry (fn, expectedArgsLength = fn.length, appliedArgs = []) {
-  return (...args) => {
+  function curryInternal (...args) {
     if (expectedArgsLength <= args.length) {
       return fn(...appliedArgs, ...args)
     }
-    return curry(fn, expectedArgsLength - args.length, [...appliedArgs, ...args])
+    const argsLength = args.length
+    args.unshift(...appliedArgs)
+    return curry(fn, expectedArgsLength - argsLength, args)
   }
+
+  curryInternal.partial = function (...args) {
+    const argsLength = args.length
+    args.unshift(...appliedArgs)
+    return curryInternal(fn, expectedArgsLength - argsLength, args)
+  }
+
+  return curryInternal
 }
 
 export function variadicCurryWithValidation (
@@ -15,10 +25,10 @@ export function variadicCurryWithValidation (
   variadic,
   minConfigArgs = fn.length - 1,
   maxConfigArgs = fn.length - 1,
-  previousArgs = []
+  appliedArgs = []
 ) {
-  return (...args) => {
-    args.unshift(...previousArgs)
+  function curried (...args) {
+    args.unshift(...appliedArgs)
 
     if (args.length > minConfigArgs) {
       let iterableArgsStart = -1
@@ -79,4 +89,21 @@ export function variadicCurryWithValidation (
       args
     )
   }
+
+  curried.partial = function (...args) {
+    args.unshift(...appliedArgs)
+
+    return variadicCurryWithValidation(
+      isIterable,
+      lastArgumentName,
+      applyOnIterableArgs,
+      fn,
+      variadic,
+      minConfigArgs,
+      maxConfigArgs,
+      args
+    )
+  }
+
+  return curried
 }
