@@ -29,6 +29,16 @@ describe('multiPartition', function () {
       ])
     })
 
+    it('range(16) unsorted', function () {
+      const [a, b, c, d] = multiPartition(func, [10, 9, 2, 5, 0, 12, 3, 6, 8, 7, 14, 13, 15, 11, 4, 1])
+      expect(allToArray(a, b, c, d)).toEqual([
+        [0, 12, 8, 4],
+        [9, 5, 13, 1],
+        [10, 2, 6, 14],
+        [3, 7, 15, 11]
+      ])
+    })
+
     it('out-of-bound access returns empty iterables', function () {
       const iv = pipe(
         multiPartition(func),
@@ -58,6 +68,16 @@ describe('asyncMultiPartition', function () {
         [1, 5, 9, 13],
         [2, 6, 10, 14],
         [3, 7, 11, 15]
+      ])
+    })
+
+    it('range(16) unsorted', async function () {
+      const [a, b, c, d] = asyncMultiPartition(func, [10, 9, 2, 5, 0, 12, 3, 6, 8, 7, 14, 13, 15, 11, 4, 1])
+      expect(await allToArray(a, b, c, d)).toEqual([
+        [0, 12, 8, 4],
+        [9, 5, 13, 1],
+        [10, 2, 6, 14],
+        [3, 7, 15, 11]
       ])
     })
 
