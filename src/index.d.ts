@@ -441,6 +441,14 @@ export declare function toArray<T> (iterable: Iterable<T>): T[]
 export declare function zipAll<T> (...iterables: Array<Iterable<T | undefined>>): IterableIterator<T[]>
 export declare function zip<T> (...iterables: Array<Iterable<T>>): IterableIterator<T[]>
 
+// Sync Decorators
+interface InterleaveBuffer<T> {
+  take<T> (): T
+  canTake (): boolean
+}
+
+export declare function interleaveGenerator<T> (gen: (canTakeAny: () => InterleaveBuffer<T> | null, ...buffers: Array<InterleaveBuffer<T>>) => Iterable<T>): (...iterables: Array<Iterable<T>>) => Iterable<T>
+
 // Async
 export declare function asyncBatch<T> (n: number): (iterable: AsyncIterableLike<T>) => AsyncIterableIterator<T>
 export declare function asyncBatch<T> (n: number, iterable: AsyncIterableLike<T>): AsyncIterableIterator<T>
