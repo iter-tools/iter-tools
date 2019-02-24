@@ -288,6 +288,14 @@ export declare function map<T, O> (func: (item: T) => O, iter: Iterable<T>): Ite
 export declare function merge<T> (pickFunc: MergePickFunc<T>): (iterables: ReadonlyArray<Iterable<T>>) => IterableIterator<T>
 export declare function merge<T> (pickFunc: MergePickFunc<T>, iterables: ReadonlyArray<Iterable<T>>): IterableIterator<T>
 
+export declare function multiPartition<T> (
+  func: (item: T) => number,
+  iter: Iterable<T>
+): IterableIterator<IterableIterator<T>>
+export declare function multiPartition<T> (
+  func: (item: T) => number
+): (iter: Iterable<T>) => IterableIterator<IterableIterator<T>>
+
 export declare function partition<T, S extends T> (
   func: (item: T) => item is S,
   iter: Iterable<T>
@@ -632,16 +640,24 @@ export declare function asyncMap<T, O> (
 export declare function asyncMerge<T> (pickFunc: AsyncMergePickFunc<T>): (iterables: ReadonlyArray<AsyncIterableLike<T>>) => AsyncIterableIterator<T>
 export declare function asyncMerge<T> (pickFunc: AsyncMergePickFunc<T>, iterables: ReadonlyArray<AsyncIterableLike<T>>): AsyncIterableIterator<T>
 
+export declare function asyncMultiPartition<T> (
+  func: (item: T) => number,
+  iter: AsyncIterableIterator<T>
+): IterableIterator<AsyncIterableIterator<T>>
+export declare function asyncMultiPartition<T> (
+  func: (item: T) => number
+): (iter: AsyncIterableIterator<T>) => IterableIterator<AsyncIterableIterator<T>>
+
 export declare function asyncPartition<T, S extends T> (
   func: (item: T) => item is S,
-  iter: Iterable<T>
+  iter: AsyncIterableIterator<T>
 ): [
   AsyncIterableIterator<S>,
   AsyncIterableIterator<SetComplement<T, S>>
 ]
 export declare function asyncPartition<T, S extends T> (
   func: (item: T) => item is S
-): (iter: Iterable<T>) => [
+): (iter: AsyncIterableIterator<T>) => [
   AsyncIterableIterator<S>,
   AsyncIterableIterator<SetComplement<T, S>>
 ]
