@@ -48,6 +48,9 @@ Utilities returning multiple iterables
 * [multiPartition](#multi-partition) ([async](#async-multi-partition))
 * [splitAt](#split-at) ([async](#async-split-at))
 
+Decorators
+* [interleaveGenerator](#interleave-generator) ([async](#async-interleave-generator))
+
 Others
 * [iterable](#iterable) ([async](#async-iterable))
 * [toArray](#to-array) ([async](#async-to-array))
@@ -662,7 +665,83 @@ Memory wise, the two iterables try to be as conservative as possible. But you ha
 ## async-split-at
 Same as asyncSplitAt but works on both sync and async iterables.
 
-# Others
+# Decorators
+These are higher order functions over generators: they take a generator function as a parameter and return a generator function, which makes them suitable for use as es6 decorators. Note that es6 decorators do not yet support functions which are not class methods.
+
+## interleave-generator
+Helps you write an interleaving generator function by decorating it. The basic API is:
+```ts
+decoratedFn = interleaveGenerator(suppliedFn)
+// where decoratedFn has the desired external-facing API:
+decoratedFn(a: A, b: B, c: C) => IterableIterator<A | B | C>
+```
+
+`suppliedFn` gains access to a more powerful API for inteleaving: in particular each input iterable is buffered so that it is possible to easily look ahead to see if another item exists.
+
+The buffers are instances of an internal class called `InterleaveBuffer`:
+```js
+class InterleaveBuffer<T> {
+  // To be sure that your output is the same size as your combined inputs always call canTake before take.
+  canTake(): boolean
+
+  // Equivalent to iterator.next().value, but returns undefined if the iterator is done.
+  take(): T
+}
+```
+`suppliedFn` also receives an additional first argument, `canTakeAny()` which returns true if there is any buffer which still `canTake()`. Here is what an expected usage might look like:
+
+```js
+const aabbInterleave = interleaveGenerator(function* (canTakeAny, a, b) {
+  while (canTakeAny()) {
+    if (a.canTake()) yield a.take();
+    if (a.canTake()) yield a.take();
+    if (b.canTake()) yield b.take();
+    if (b.canTake()) yield b.take();
+  }
+})([1, 2, 3, 4], [5, 6, 7]) // [1, 2, 5, 6, 3, 4, 7]
+```
+
+## async-interleave-generator
+Helps you write an async interleaving generator function by decorating it. The basic API is:
+```ts
+decoratedAsyncFn = asyncInterleaveGenerator(suppliedAsyncFn)
+// where decoratedFn has the desired external-facing API:
+decoratedAsyncFn(a: A, b: B, c: C) => AsyncIterableIterator<A | B | C>
+```
+
+`suppliedAsyncFn` gains access to a more powerful API for inteleaving: in particular each input iterable is buffered so that it is possible to easily look ahead to see if another item exists.
+
+The buffers are instances of an internal class called `AsyncInterleaveBuffer`:
+```js
+class AsyncInterleaveBuffer<T> {
+  // To be sure that your output is the same size as your combined inputs always call canTake before take.
+  canTake(): Promise<boolean>
+
+  // Equivalent to (await iterator.next()).value, but returns undefined if the iterator is done.
+  take(): Promise<T>
+}
+```
+`suppliedFn` also receives an additional first argument, `canTakeAny()` which returns a Promise which resolves to the first buffer that is ready to produce an item, or null if no buffer `canTake()`. Here is what an expected usage might look like:
+
+```js
+const aabbInterleave = asyncInterleaveGenerator(async function* (canTakeAny, a, b) {
+  while (await canTakeAny()) {
+    if (await a.canTake()) yield await a.take();
+    if (await a.canTake()) yield await a.take();
+    if (await b.canTake()) yield await b.take();
+    if (await b.canTake()) yield await b.take();
+  }
+})([1, 2, 3, 4], [5, 6, 7]) // [1, 2, 5, 6, 3, 4, 7]
+```
+The API also makes it simple to interleave with result ordering determined by the order in which items resolve, like so:
+```js
+const asyncInterleaveReady = asyncInterleaveGenerator(async function * (canTakeAny) {
+  let buffer
+  while ((buffer = await canTakeAny())) yield (await buffer.take())
+})
+```
+
+# Utilities
 
 ## iterable
 Takes an iterator, and returns an iterable. All iter-tools functions expect iterables, as do `Array.from` and `for ... of`. Usually however this function is not neccessary, as generator functions (which most iter-tools functions are under the hood) return iterables. If the argument is already an iterable it is returned as is. The example shows a rare case when `iterable` is necessary.

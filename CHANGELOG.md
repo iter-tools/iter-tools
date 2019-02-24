@@ -16,6 +16,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
  - splitAt/asyncSplitAt
  - multiPartition/asyncMultiPartition
  - call, apply
+ - interleaveGenerator
 
 ### Changes
  - takeSorted/asyncTakeSorted optional comparator is now the first argument
