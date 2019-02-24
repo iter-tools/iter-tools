@@ -26,13 +26,13 @@ export default function fork (iterable) {
     }
   }
 
-  function * generateFork (a) {
+  function * generateFork (cons) {
     try {
       iterableCounter++
       yield 'ready' // the function generator is ready
       while (true) {
-        if (!a.isEmpty()) {
-          yield a.shift()
+        if (!cons.isEmpty()) {
+          yield cons.shift()
         } else if (done) {
           return doneValue
         } else {

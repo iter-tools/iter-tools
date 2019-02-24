@@ -3,7 +3,6 @@ const { groupBy, asyncGroupBy, asyncToArray } = require('..')
 
 describe('groupBy', function () {
   it('groupBy main cursor', function () {
-    // const iter = groupBy(undefined, 'AAABBAACCCCD')
     const iter = groupBy('AAABBAACCCCD')
     let next
     next = iter.next()
@@ -54,8 +53,8 @@ describe('groupBy', function () {
     expect(next.done).toBe(true)
   })
 
-  it('groupBy secondary', function () {
-    const iter = groupBy(undefined, 'AAABBAACCCCD')
+  it.only('groupBy secondary', function () {
+    const iter = groupBy('AAABBAACCCCD')
     let next
     next = iter.next()
     expect(next.value[0]).toBe('A')
@@ -77,7 +76,7 @@ describe('groupBy', function () {
   })
 
   it('groupBy secondary (consume partially)', function () {
-    const iter = groupBy(undefined, 'AAABBAACCCCD')
+    const iter = groupBy('AAABBAACCCCD')
     let next
     next = iter.next()
     expect(next.value[0]).toBe('A')
