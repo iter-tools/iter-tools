@@ -20,12 +20,12 @@ module.exports = {
     }),
     makeProject({
       name: 'es2015'
-    }),
+    })
   ].concat(
     process.env.CI
       ? makeProject({
-          name: 'es2018'
-        })
+        name: 'es2018'
+      })
       : []
   )
 }

@@ -24,7 +24,15 @@ function * asyncMultiPartition (func, iter) {
         }
 
         const { value, done } = await iterator.next()
-        if (done) break
+        if (done) {
+          // given that the previous happens asynchronously
+          // some other iterator might have populated the queue
+          // so I have to flush it, before consider this done
+          while (!queues[queueId].isEmpty()) {
+            yield queues[queueId].shift()
+          }
+          break
+        }
 
         const chosen = await func(value)
         if (chosen < maxQueues) { // throw away item if queue doesn't exist
