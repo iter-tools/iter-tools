@@ -23,4 +23,4 @@ function reduce (initial, func, iterable) {
   }
 }
 
-export default iterableCurry(reduce, 2, 3)
+export default iterableCurry(reduce, false, 1, 2)

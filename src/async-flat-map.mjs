@@ -8,4 +8,4 @@ async function * asyncFlatMap (concurrency = 1, func, iterable) {
   }
 }
 
-export default asyncIterableCurry(asyncFlatMap, 2, 3)
+export default asyncIterableCurry(asyncFlatMap, false, 1, 2)

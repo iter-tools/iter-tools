@@ -36,4 +36,4 @@ async function * asyncGroupBy (selector = (key) => key, iterable) {
   }
 }
 
-export default asyncIterableCurry(asyncGroupBy, 1, 2)
+export default asyncIterableCurry(asyncGroupBy, false, 0, 1)

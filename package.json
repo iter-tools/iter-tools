@@ -20,7 +20,7 @@
     "build:es5-cjs": "cross-env BABEL_ENV=cjs babel --config-file ./babel-es5.config.js -x \".mjs\" src -d es5",
     "build:es2015": "babel --keep-file-extension --config-file ./babel-es2015.config.js -x \".mjs\" src -d es2015",
     "build:es2015-cjs": "cross-env BABEL_ENV=cjs babel --config-file ./babel-es2015.config.js -x \".mjs\" src -d es2015",
-    "build:es2018": "mkdirp es2018 && copyfiles -f src/*.mjs es2018",
+    "build:es2018": "babel --keep-file-extension --config-file ./babel-es2018.config.js -x \".mjs\" src -d es2018",
     "build:es2018-cjs": "cross-env BABEL_ENV=cjs babel --config-file ./babel-es2018.config.js -x \".mjs\" src -d es2018",
     "build:copyts": "copyfiles -f src/*.ts es5 && copyfiles -f src/*.ts es2015 && copyfiles -f src/*.ts es2018",
     "tslint": "tslint -c tslint.json -p . 'src/**/*.ts'",

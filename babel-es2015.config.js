@@ -1,5 +1,6 @@
 module.exports = {
   plugins: [
+    './babel-plugin-pure-curry',
     '@babel/plugin-proposal-async-generator-functions'
   ],
   env: {

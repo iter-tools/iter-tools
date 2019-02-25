@@ -36,4 +36,4 @@ function * groupBy (key = (k) => k, iterable) {
   }
 }
 
-export default iterableCurry(groupBy, 1, 2)
+export default iterableCurry(groupBy, false, 0, 1)
