@@ -7,7 +7,7 @@ export function curry (fn, expectedArgsLength = fn.length, appliedArgs = []) {
   }
 }
 
-function unshiftUndefineds(args, by) {
+function unshiftUndefineds (args, by) {
   if (by) {
     const argsLength = args.length
     for (let i = argsLength - 1; i >= 0; i--) {
@@ -17,7 +17,7 @@ function unshiftUndefineds(args, by) {
   }
 }
 
-function variadicCurryWithValidationInner(
+function variadicCurryWithValidationInner (
   isIterable,
   lastArgumentName,
   applyOnIterableArgs,

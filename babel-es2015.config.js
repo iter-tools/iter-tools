@@ -1,14 +1,14 @@
 module.exports = {
-  plugins: [
-    './babel-plugin-pure-curry',
-    '@babel/plugin-proposal-async-generator-functions'
-  ],
+  plugins: ["@babel/plugin-proposal-async-generator-functions"],
   env: {
+    es: {
+      plugins: ["./babel-plugin-pure-curry"]
+    },
     cjs: {
       plugins: [
-        'add-module-exports',
-        '@babel/plugin-transform-modules-commonjs'
+        "add-module-exports",
+        "@babel/plugin-transform-modules-commonjs"
       ]
     }
   }
-}
+};
