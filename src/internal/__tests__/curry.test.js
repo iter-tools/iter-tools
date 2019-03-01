@@ -41,7 +41,20 @@ describe('variadicCurryWithValidation', function () {
     const f = variadicCurryWithValidation((x) => x === null, 'null', (x) => 0, func, false)
     expect(() => f(1)(2)(3)).toThrowError(new Error('func takes up to 2 arguments, followed by null. You already passed 3 arguments and the last argument was not null'))
   })
-  it('works on functions which take a variable number of iterables', function () {
+  describe('currying a variadic function', function () {
+    const makeSentenceFn = () => variadicCurryWithValidation(word => /^[a-z]/.test(word), 'word', _ => _, function sentence (greeting, strs) { return greeting + ' ' + strs.join(' ') + '.' }, true, 1, 1)
 
+    it('works', function () {
+      const sentence = makeSentenceFn()
+      expect(sentence('Hello')('darkness', 'my', 'old', 'friend')).toBe('Hello darkness my old friend.') // I've come to talk with you again
+      expect(sentence('Goodbye', 'leggy', 'blonde,', 'goodbye')).toBe('Goodbye leggy blonde, goodbye.')
+    })
+    it('throws when called incorrectly', function () {
+      const sentence = makeSentenceFn()
+      const expectedError = 'sentence takes up to 1 arguments, followed by ...words. You already passed 4 arguments and the following arguments were not all words'
+      // Yes our sentence function is too simple to undertstand proper nouns.
+      expect(() => sentence('So long,', 'Frank', 'Lloyd', 'Wright')).toThrow(expectedError)
+      expect(() => sentence('So long,', 'frank', 'Lloyd', 'wright')).toThrow(expectedError)
+    })
   })
 })

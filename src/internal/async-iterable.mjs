@@ -31,7 +31,7 @@ export function isValidAsyncIterableArgument (i) {
 export const asyncIterableCurry = (fn, variadic = false, minArgs, maxArgs) => {
   return variadicCurryWithValidation(
     isValidAsyncIterableArgument,
-    variadic ? 'asyncIterable' : '...asyncIterables',
+    'asyncIterable',
     ensureAsyncIterable,
     fn,
     variadic,

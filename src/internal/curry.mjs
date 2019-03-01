@@ -29,26 +29,32 @@ function variadicCurryWithValidationInner (
 ) {
   if (args.length > minConfigArgs) {
     let iterableArgsStart = -1
+    let allArgsIterable = true
     if (variadic) {
       iterableArgsStart = args.findIndex((arg, i) => isIterable(arg) && i >= minConfigArgs)
+
+      for (let i = iterableArgsStart; i < args.length; i++) {
+        allArgsIterable = allArgsIterable && isIterable(args[i])
+      }
     } else if (isIterable(args[args.length - 1])) {
       // Non-variadic functions are allowed to have more than one iterable-looking parameter
       iterableArgsStart = args.length - 1
     }
 
-    if (args.length > maxConfigArgs && iterableArgsStart === -1) {
-      throw new Error(`${fn.name} takes up to ${maxConfigArgs} arguments, followed by ${lastArgumentName}. You already passed ${args.length} arguments and the last argument was not ${lastArgumentName}`)
+    if (args.length > maxConfigArgs && (iterableArgsStart === -1 || !allArgsIterable)) {
+      const lastArgumentNameOrNames = variadic ? `...${lastArgumentName}s` : lastArgumentName
+      const baseMessage = `${fn.name} takes up to ${minConfigArgs} arguments, followed by ${lastArgumentNameOrNames}. You already passed ${args.length} arguments`
+      if (variadic) {
+        throw new Error(`${baseMessage} and the following arguments were not all ${lastArgumentName}s`)
+      } else {
+        throw new Error(`${baseMessage} and the last argument was not ${lastArgumentName}`)
+      }
     }
 
     if (iterableArgsStart >= 0) {
       // We have received all the config args we are going to get
 
       for (let i = iterableArgsStart; i < args.length; i++) {
-        if (!isIterable(args[i])) {
-          throw new Error(
-            `${fn.name} expects its arguments to end with ${variadic ? '' : 'an'} ${lastArgumentName}. ${variadic ? 'Some passed arguments were not iterable.' : ''}`
-          )
-        }
         args[i] = applyOnIterableArgs(args[i])
       }
 

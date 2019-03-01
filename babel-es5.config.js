@@ -1,10 +1,10 @@
 module.exports = {
   plugins: [
-    ["@babel/plugin-transform-runtime", { useESModules: true, corejs: 2 }]
+    ['@babel/plugin-transform-runtime', { useESModules: true, corejs: 2 }]
   ],
   presets: [
     [
-      "@babel/preset-env",
+      '@babel/preset-env',
       {
         modules: false
       }
@@ -12,15 +12,15 @@ module.exports = {
   ],
   env: {
     test: {
-      plugins: [["@babel/plugin-transform-runtime", { corejs: 2 }]]
+      plugins: [['@babel/plugin-transform-runtime', { corejs: 2 }]]
     },
     es: {
-      plugins: ["./babel-plugin-pure-curry"]
+      plugins: ['./babel-plugin-pure-curry']
     },
     cjs: {
       plugins: [
-        "add-module-exports",
-        ["@babel/plugin-transform-runtime", { corejs: 2 }]
+        'add-module-exports',
+        ['@babel/plugin-transform-runtime', { corejs: 2 }]
       ]
     }
   }
