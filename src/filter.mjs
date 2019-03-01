@@ -9,4 +9,4 @@ function * filter (func, iterable) {
   }
 }
 
-export default iterableCurry(filter)
+export default iterableCurry(filter, false)
