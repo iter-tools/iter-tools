@@ -15,6 +15,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
  - pipe
  - splitAt/asyncSplitAt
  - multiPartition/asyncMultiPartition
+ - mergeAll, asyncMergeAll
+ - call, apply
 
 ### Changes
  - takeSorted/asyncTakeSorted optional comparator is now the first argument

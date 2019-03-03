@@ -150,6 +150,20 @@ export declare function keys (obj: { [id: string]: any }): IterableIterator<stri
 export declare function values<T> (obj: { [id: string]: T }): IterableIterator<T>
 export declare function entries<T> (obj: { [id: string]: T }): IterableIterator<[string, T]>
 
+export declare function apply<Args extends Array<any>, Return> (
+  fn: (...args: Args) => Return,
+  args: Args
+): Return
+export declare function apply<A, Return> (
+  fn: (...args: Array<A>) => Return,
+  args: Iterable<A>
+): Return
+
+export declare function call<Args extends Array<any>, Return> (
+  fn: (...args: Args) => Return,
+  ...args: Args
+): Return
+
 export declare function batch<T> (n: number): (iterable: Iterable<T>) => IterableIterator<T[]>
 export declare function batch<T> (n: number, iterable: Iterable<T>): IterableIterator<T[]>
 
