@@ -474,8 +474,12 @@ export declare function zip<T> (...iterables: Array<Iterable<T>>): IterableItera
 
 // Sync Decorators
 interface InterleaveBuffer<T> {
+  take<T> (): T | undefined
+  canTake (): this is TakableInterleaveBuffer<T>
+}
+
+interface TakableInterleaveBuffer<T> {
   take<T> (): T
-  canTake (): boolean
 }
 
 export declare function interleaveGenerator<T1> (gen: (canTakeAny: () => InterleaveBuffer<T1> | null, b1: InterleaveBuffer<T1>) => any): (i1: Iterable<T1>) => IterableIterator<T1>

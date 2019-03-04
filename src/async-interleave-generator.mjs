@@ -19,16 +19,17 @@ class AsyncInterleaveBuffer {
   }
 
   async canTake () {
-    return (await this._nextPromise).done ? null : this
+    return !(await this._nextPromise).done
   }
 }
 
 export default function interleaveGenerator (generatorFn) {
   return (...iterables) => {
     return (async function * () {
-      const iterators = map(iterable => ensureAsyncIterable(iterable)[Symbol.asyncIterator](), iterables)
-      const buffers = Array.from(map(iterator => new AsyncInterleaveBuffer(iterator), iterators))
-      const canTakeAny = () => raceTo(Boolean, false, map(buffer => buffer.canTake(), buffers))
+      const buffers = iterables.map(iterable =>
+         new AsyncInterleaveBuffer(ensureAsyncIterable(iterable)[Symbol.asyncIterator]())
+      )
+      const canTakeAny = () => raceTo(Boolean, false, map(async buffer => (await buffer.canTake()) ? buffer : null, buffers))
       try {
         yield * generatorFn(canTakeAny, ...buffers)
       } finally {

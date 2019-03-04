@@ -735,9 +735,9 @@ const aabbInterleave = asyncInterleaveGenerator(async function* (canTakeAny, a, 
 ```
 The API also makes it simple to interleave with result ordering determined by the order in which items resolve, like so:
 ```js
-const asyncInterleaveReady = asyncInterleaveGenerator(async function * (canTakeAny) {
+const asyncInterleaveReady = asyncInterleaveGenerator(async function * (findTakable) {
   let buffer
-  while ((buffer = await canTakeAny())) yield (await buffer.take())
+  while ((buffer = await findTakable())) yield (await buffer.take())
 })
 ```
 

@@ -1,5 +1,4 @@
 import { ensureIterable } from './internal/iterable'
-import map from './map'
 
 class InterleaveBuffer {
   constructor (iterator) {
@@ -18,15 +17,14 @@ class InterleaveBuffer {
   }
 
   canTake () {
-    return this._next.done ? null : this
+    return !this._next.done
   }
 }
 
 export default function interleaveGenerator (generatorFn) {
   return (...iterables) => {
     return (function * () {
-      const iterators = map(iterable => ensureIterable(iterable)[Symbol.iterator](), iterables)
-      const buffers = Array.from(map(iterator => new InterleaveBuffer(iterator), iterators))
+      const buffers = iterables.map(iterable => new InterleaveBuffer(ensureIterable(iterable)[Symbol.iterator]()))
       const canTakeAny = () => buffers.find(buffer => buffer.canTake())
       try {
         yield * generatorFn(canTakeAny, ...buffers)
