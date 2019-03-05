@@ -223,16 +223,6 @@ describe('asyncGroupBy', function () {
     // ...
   })
 
-  // it('groupBy using destructuring', async function () {
-  //   const [group1, group2, group3] = asyncGroupBy('AAABBCCCC')
-  //   expect(group1[0]).toBe('A')
-  //   // expect(group2[0]).toBe('B')
-  //   // expect(group3[0]).toBe('C')
-  //   // expect(Array.from(group1[1])).toEqual(['A', 'A', 'A'])
-  //   // expect(Array.from(group2[1])).toEqual(['B', 'B'])
-  //   // expect(Array.from(group3[1])).toEqual(['C', 'C', 'C', 'C'])
-  // })
-
   it('groupBy of null returns empty iterable', async function () {
     expect(await asyncToArray(asyncGroupBy(undefined, null))).toEqual([])
   })
