@@ -1,4 +1,7 @@
 const emptyArr = []
+
+const { hasOwnProperty } = Object.prototype
+
 export default function * values (valuesable) {
   if (valuesable == null) {
     return emptyArr[Symbol.iterator]()
@@ -6,7 +9,7 @@ export default function * values (valuesable) {
     yield * valuesable.values()
   } else if (typeof valuesable === 'object') { // pojo
     for (let key in valuesable) {
-      if (valuesable.hasOwnProperty(key)) {
+      if (hasOwnProperty.call(valuesable, key)) {
         yield valuesable[key]
       }
     }
