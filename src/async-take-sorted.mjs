@@ -15,4 +15,4 @@ async function * asyncTakeSorted (comparator, number, iterable) {
   }
 }
 
-export default asyncIterableCurry(asyncTakeSorted, 2, 3)
+export default asyncIterableCurry(asyncTakeSorted, false, 1, 2)

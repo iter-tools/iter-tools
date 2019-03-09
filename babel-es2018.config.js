@@ -1,8 +1,9 @@
 module.exports = {
-  plugins: [
-    '@babel/plugin-syntax-async-generators'
-  ],
+  plugins: ['@babel/plugin-syntax-async-generators'],
   env: {
+    es: {
+      plugins: ['./babel-plugin-pure-curry']
+    },
     cjs: {
       plugins: [
         'add-module-exports',
@@ -10,4 +11,4 @@ module.exports = {
       ]
     }
   }
-}
+};

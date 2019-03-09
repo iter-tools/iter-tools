@@ -96,4 +96,4 @@ function asyncGroupBy (getKey = (k) => k, iterable) {
   return generateGroups()
 }
 
-export default asyncIterableCurry(asyncGroupBy, 1, 2)
+export default asyncIterableCurry(asyncGroupBy, false, 0, 1)
