@@ -90,4 +90,4 @@ function asyncSplitBy (getKey = (k) => k, iterable) {
   return generateGroups()
 }
 
-export default asyncIterableCurry(asyncSplitBy, 1, 2)
+export default asyncIterableCurry(asyncSplitBy, false, 0, 1)

@@ -90,4 +90,4 @@ function splitBy (getKey = (k) => k, iterable) {
   return generateGroups()
 }
 
-export default iterableCurry(splitBy, 1, 2)
+export default iterableCurry(splitBy, false, 0, 1)
