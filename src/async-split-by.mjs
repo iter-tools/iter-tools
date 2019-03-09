@@ -1,8 +1,8 @@
-import { iterableCurry } from './internal/iterable'
+import { asyncIterableCurry } from './internal/async-iterable'
 import { Exchange } from './internal/queues'
 
-function splitBy (getKey = (k) => k, iterable) {
-  const iterator = iterable[Symbol.iterator]()
+function asyncSplitBy (getKey = (k) => k, iterable) {
+  const iterator = iterable[Symbol.asyncIterator]()
 
   let itemIndex = 0
   let iterableCounter = 0
@@ -20,8 +20,8 @@ function splitBy (getKey = (k) => k, iterable) {
   // return the item and advance the
   // main queue consumer
   // it also clone the head of the queue when the key changes
-  function fetch () {
-    const newItem = iterator.next()
+  async function fetch () {
+    const newItem = await iterator.next()
     if (newItem.done) {
       done = true
       return
@@ -36,16 +36,16 @@ function splitBy (getKey = (k) => k, iterable) {
   }
 
   // close the original iterator if possible
-  function returnIterator () {
+  async function returnIterator () {
     if (noNewIterables && iterableCounter === 0) {
-      if (typeof iterator.return === 'function') iterator.return()
+      if (typeof iterator.return === 'function') await iterator.return()
     }
   }
 
   // generate subgroup where adjacent items have the same key
   // it picks up new item from the buffer. Every instance has
   // its own independent consumer
-  function * generateGroup (groupNumber) {
+  async function * generateGroup (groupNumber) {
     try {
       iterableCounter++
       // the function generator is ready.
@@ -56,7 +56,7 @@ function splitBy (getKey = (k) => k, iterable) {
         const group = groups[groupNumber]
         if (!group || group.consumer.isEmpty()) {
           if (done) return
-          fetch()
+          await fetch()
           continue
         }
         const nextItem = group.consumer.shift()
@@ -68,7 +68,7 @@ function splitBy (getKey = (k) => k, iterable) {
     } finally {
       groups[groupNumber] = undefined
       iterableCounter--
-      returnIterator()
+      await returnIterator()
     }
   }
 
@@ -83,11 +83,11 @@ function splitBy (getKey = (k) => k, iterable) {
       }
     } finally {
       noNewIterables = true
-      returnIterator()
+      returnIterator() // no await
     }
   }
 
   return generateGroups()
 }
 
-export default iterableCurry(splitBy, 1, 2)
+export default asyncIterableCurry(asyncSplitBy, 1, 2)
