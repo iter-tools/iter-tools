@@ -1,6 +1,11 @@
 import assert from 'static-type-assert'
 import * as iter from '../index'
 
+declare const buf: iter.InterleaveBuffer<'x'>
+assert<'x' | undefined>(buf.take())
+assert<boolean>(buf.canTake())
+buf.canTake() && assert<'x'>(buf.take())
+
 assert<
   IterableIterator<string>
 >(
@@ -83,4 +88,43 @@ assert<
       }
     }
   )(['foo'], [2])
+)
+
+assert<
+  IterableIterator<'a' | 'b' | 'c'>
+>(
+  iter.interleaveGenerator<'a', 'b', 'c'>(
+    function * gen (
+      canTakeAny,
+      ...buffers
+    ) {
+      assert<[
+        iter.InterleaveBuffer<'a'>,
+        iter.InterleaveBuffer<'b'>,
+        iter.InterleaveBuffer<'c'>
+      ]>(buffers)
+
+      const buf = canTakeAny()
+      if (buf) if (buf.canTake()) yield buf.take()
+  )(['a'], ['b'], ['c'])
+)
+
+assert<
+  IterableIterator<'a' | 'b' | 'c' | 'd'>
+>(
+  iter.interleaveGenerator<'a', 'b', 'c', 'd'>(
+    function * gen (
+      canTakeAny,
+      ...buffers
+    ) {
+      assert<[
+        iter.InterleaveBuffer<'a'>,
+        iter.InterleaveBuffer<'b'>,
+        iter.InterleaveBuffer<'c'>,
+        iter.InterleaveBuffer<'d'>
+      ]>(buffers)
+
+      const buf = canTakeAny()
+      if (buf) if (buf.canTake()) yield buf.take()
+  )(['a'], ['b'], ['c'], ['d'])
 )
