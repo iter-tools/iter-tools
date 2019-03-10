@@ -10,7 +10,6 @@ function splitBy (getKey = (k) => k, iterable) {
   let iterableCounter = 0
   let noNewIterables = false
   const exchange = new Exchange()
-  const consumer = exchange.getConsumer()
   let done = false
   let groups = []
 
@@ -27,12 +26,12 @@ function splitBy (getKey = (k) => k, iterable) {
       return
     }
     const key = getKey(newItem.value, itemIndex++)
+    const consumer = exchange.getConsumer()
     exchange.push({ value: newItem.value, key })
     if (key !== fetchKey) {
       fetchKey = key
-      groups.push({ consumer: consumer.clone(), key })
+      groups.push({ consumer, key })
     }
-    consumer.shift() // main consumer forllows the queue
   }
 
   // close the original iterator if possible

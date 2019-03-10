@@ -10,7 +10,6 @@ function asyncGroupBy (getKey = (k) => k, iterable) {
   let iterableCounter = 0
   let noNewIterables = false
   const exchange = new Exchange()
-  const consumer = exchange.getConsumer()
   let done = false
   let currentItem
 
@@ -23,8 +22,8 @@ function asyncGroupBy (getKey = (k) => k, iterable) {
       done = true
       return
     }
-    exchange.push({ value: newItem.value, key: await getKey(newItem.value, itemIndex++) })
-    currentItem = consumer.shift()
+    currentItem = { value: newItem.value, key: await getKey(newItem.value, itemIndex++) }
+    exchange.push(currentItem)
   }
 
   // close the original iterator if possible
@@ -82,7 +81,7 @@ function asyncGroupBy (getKey = (k) => k, iterable) {
 
         if (currentItem.key !== currentKey) {
           currentKey = currentItem.key
-          const group = generateGroup(currentItem, consumer.clone())
+          const group = generateGroup(currentItem, exchange.getConsumer())
           await group.next() // ensure finally
           yield [currentItem.key, group]
         }

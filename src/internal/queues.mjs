@@ -47,16 +47,19 @@ class Consumer {
   }
 }
 
-export class Exchange extends Queue {
-  shift () {
-    throw new Error('Unsupported')
+export class Exchange {
+  constructor (queueItem) {
+    this.tail = new QueueItem() // an empty queue points to a tail node
+  }
+
+  push (data) {
+    const newItem = new QueueItem(data)
+    this.tail.previous = newItem
+    this.tail = newItem
   }
 
   getConsumer () {
-    if (!this.head) throw new Error('You can only get a single consumer')
-    const consumer = new Consumer(this.head)
-    this.head = null
-    return consumer
+    return new Consumer(this.tail)
   }
 }
 
