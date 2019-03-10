@@ -1,6 +1,8 @@
 import { asyncIterableCurry } from './internal/async-iterable'
 import { Exchange } from './internal/queues'
 
+const UNIQUE_INITIAL_KEY = {}
+
 function asyncGroupBy (getKey = (k) => k, iterable) {
   const iterator = iterable[Symbol.asyncIterator]()
 
@@ -38,9 +40,7 @@ function asyncGroupBy (getKey = (k) => k, iterable) {
   async function * generateGroup (firstItem, cons) {
     try {
       iterableCounter++
-      // the function generator is ready.
-      // *1*: I use this trick to ensure that finally is called
-      yield 'ready'
+      yield 'ensure finally'
 
       yield firstItem.value
 
@@ -52,7 +52,7 @@ function asyncGroupBy (getKey = (k) => k, iterable) {
         }
         const nextItem = cons.shift()
         if (nextItem.key !== firstItem.key) {
-          return // see *2*
+          return
         }
         yield nextItem.value
       }
@@ -67,13 +67,13 @@ function asyncGroupBy (getKey = (k) => k, iterable) {
   async function * generateGroups () {
     // using an empty object as initial key:
     // it is surely different from any possible key
-    let currentKey = {}
+    let currentKey = UNIQUE_INITIAL_KEY
     try {
       while (true) {
         // I need to fetch a new item if currentItem is undefined (first time)
         // or
         // currentItem.key === currentKey that means that currentItem
-        // a fetch called in a subgroup returned an item of a different key. see *2*
+        // a fetch called in a subgroup returned an item of a different key.
         if (!currentItem || currentItem.key === currentKey) {
           await fetch()
         }
@@ -83,7 +83,7 @@ function asyncGroupBy (getKey = (k) => k, iterable) {
         if (currentItem.key !== currentKey) {
           currentKey = currentItem.key
           const group = generateGroup(currentItem, consumer.clone())
-          await group.next() // see *1*
+          await group.next() // ensure finally
           yield [currentItem.key, group]
         }
       }

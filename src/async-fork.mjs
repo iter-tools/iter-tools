@@ -35,7 +35,7 @@ export default function asyncFork (iterable) {
   async function * generateFork (a) {
     try {
       iterableCounter++
-      yield 'ready' // the function generator is ready
+      yield 'ensure finally'
       while (true) {
         if (!a.isEmpty()) {
           yield a.shift()
@@ -61,7 +61,7 @@ export default function asyncFork (iterable) {
         //
         // the default behaviour of a generator is that finally clause is only called
         // if next was called at least once
-        fork.next()
+        fork.next() // ensure finally
         yield fork
       }
     } finally {

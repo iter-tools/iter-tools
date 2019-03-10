@@ -1,6 +1,8 @@
 import { iterableCurry } from './internal/iterable'
 import { Exchange } from './internal/queues'
 
+const UNIQUE_INITIAL_KEY = {}
+
 function splitBy (getKey = (k) => k, iterable) {
   const iterator = iterable[Symbol.iterator]()
 
@@ -12,9 +14,7 @@ function splitBy (getKey = (k) => k, iterable) {
   let done = false
   let groups = []
 
-  // using an empty object as initial key:
-  // it is surely different from any possible key
-  let fetchKey = {}
+  let fetchKey = UNIQUE_INITIAL_KEY
 
   // fetch new item from Iterator
   // return the item and advance the
@@ -48,9 +48,7 @@ function splitBy (getKey = (k) => k, iterable) {
   function * generateGroup (groupNumber) {
     try {
       iterableCounter++
-      // the function generator is ready.
-      // *1*: I use this trick to ensure that finally is called
-      yield 'ready'
+      yield 'ensure finally'
 
       while (true) {
         const group = groups[groupNumber]
@@ -61,7 +59,7 @@ function splitBy (getKey = (k) => k, iterable) {
         }
         const nextItem = group.consumer.shift()
         if (nextItem.key !== group.key) {
-          return // see *2*
+          return
         }
         yield nextItem.value
       }
@@ -78,7 +76,7 @@ function splitBy (getKey = (k) => k, iterable) {
     try {
       while (true) {
         const group = generateGroup(groupCounter++)
-        group.next() // see *1*
+        group.next() // ensure finally
         yield group
       }
     } finally {

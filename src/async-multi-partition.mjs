@@ -15,7 +15,7 @@ function * asyncMultiPartition (func, iter) {
   }
 
   async function * part (queueId) {
-    yield 'ready'
+    yield 'ensure finally'
     queues[queueId] = queues[queueId] || new Queue()
     try {
       while (true) {
@@ -50,8 +50,7 @@ function * asyncMultiPartition (func, iter) {
   try {
     while (true) {
       const iter = part(queueNumber++)
-      // this ensure to call the finally clause of iter
-      iter.next()
+      iter.next() // ensure finally
       yield iter
     }
   } finally {
