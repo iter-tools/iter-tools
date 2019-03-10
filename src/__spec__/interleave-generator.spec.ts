@@ -106,6 +106,7 @@ assert<
 
       const buf = canTakeAny()
       if (buf) if (buf.canTake()) yield buf.take()
+    }
   )(['a'], ['b'], ['c'])
 )
 
@@ -126,5 +127,6 @@ assert<
 
       const buf = canTakeAny()
       if (buf) if (buf.canTake()) yield buf.take()
+    }
   )(['a'], ['b'], ['c'], ['d'])
 )
