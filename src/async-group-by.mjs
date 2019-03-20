@@ -22,4 +22,4 @@ async function * asyncGroupBy (getKey = (k) => k, iterable) {
   }
 }
 
-export default asyncIterableCurry(asyncGroupBy, false, 0, 1)
+export default asyncIterableCurry(asyncGroupBy, {variadic: false}, 0, 1)

@@ -17,12 +17,55 @@ function unshiftUndefineds (args, by) {
   }
 }
 
+function BaseIterable (fn, variadic, args, iterableArgs) {
+  this._fn = fn
+  this._args = args
+  this._variadic = variadic
+  this._iterableArgs = iterableArgs
+  this._staticIterator = null
+}
+
+Object.assign(BaseIterable.prototype, {
+  __iterate () {
+    return this._variadic ? this._fn(...this._args, this._iterableArgs) : this._fn(...this._args)
+  },
+
+  next () {
+    this._staticIterator = this._staticIterator || this.__iterate()
+    return this._staticIterator.next()
+  },
+
+  return (...args) {
+    if (typeof this._staticIterator.return === 'function') this._staticIterator.return(...args)
+  }
+})
+
+function Iterable () { BaseIterable.apply(this, arguments) }
+
+Iterable.prototype = Object.assign(Object.create(BaseIterable.prototype), {
+  constructor: Iterable,
+  [Symbol.iterator] () {
+    return this.__iterate()
+  }
+})
+
+function AsyncIterable () { BaseIterable.apply(this, arguments) }
+
+AsyncIterable.prototype = Object.assign(Object.create(BaseIterable.prototype), {
+  constructor: AsyncIterable,
+  [Symbol.asyncIterator] () {
+    return this.__iterate()
+  }
+})
+
 function variadicCurryWithValidationInner (
   isIterable,
-  lastArgumentName,
+  iterableType,
   applyOnIterableArgs,
   fn,
   variadic,
+  reduces,
+  forceSync,
   minConfigArgs,
   maxConfigArgs,
   args
@@ -42,12 +85,12 @@ function variadicCurryWithValidationInner (
     }
 
     if (args.length > maxConfigArgs && (iterableArgsStart === -1 || !allArgsIterable)) {
-      const lastArgumentNameOrNames = variadic ? `...${lastArgumentName}s` : lastArgumentName
-      const baseMessage = `${fn.name} takes up to ${minConfigArgs} arguments, followed by ${lastArgumentNameOrNames}. You already passed ${args.length} arguments`
+      const iterableTypeOrNames = variadic ? `...${iterableType}s` : iterableType
+      const baseMessage = `${fn.name} takes up to ${maxConfigArgs} arguments, followed by ${iterableTypeOrNames}. You already passed ${args.length} arguments`
       if (variadic) {
-        throw new Error(`${baseMessage} and the following arguments were not all ${lastArgumentName}s`)
+        throw new Error(`${baseMessage} and the following arguments were not all ${iterableType}s`)
       } else {
-        throw new Error(`${baseMessage} and the last argument was not ${lastArgumentName}`)
+        throw new Error(`${baseMessage} and the last argument was not ${iterableType}`)
       }
     }
 
@@ -60,13 +103,15 @@ function variadicCurryWithValidationInner (
 
       unshiftUndefineds(args, maxConfigArgs - iterableArgsStart)
 
+      const IterableClass = iterableType === 'asyncIterable' && !forceSync ? AsyncIterable : Iterable
+
       if (variadic) {
         const iterableArgs = args.slice(iterableArgsStart)
         args.splice(iterableArgsStart)
 
-        return fn(...args, iterableArgs)
+        return reduces ? fn(...args, iterableArgs) : new IterableClass(fn, true, args, iterableArgs)
       } else {
-        return fn(...args)
+        return reduces ? fn(...args) : new IterableClass(fn, false, args)
       }
     } else {
       // We have not received any iterables, but we must be fully configured
@@ -75,10 +120,12 @@ function variadicCurryWithValidationInner (
 
   return variadicCurryWithValidation(
     isIterable,
-    lastArgumentName,
+    iterableType,
     applyOnIterableArgs,
     fn,
     variadic,
+    reduces,
+    forceSync,
     minConfigArgs,
     maxConfigArgs,
     args
@@ -87,12 +134,14 @@ function variadicCurryWithValidationInner (
 
 export function variadicCurryWithValidation (
   isIterable,
-  lastArgumentName,
+  iterableType,
   applyOnIterableArgs,
   fn,
   variadic,
+  reduces,
+  forceSync,
   minConfigArgs = fn.length - 1,
-  maxConfigArgs = fn.length - 1,
+  maxConfigArgs = variadic ? fn.length : fn.length - 1,
   previousArgs = []
 ) {
   return (...args) => {
@@ -100,10 +149,12 @@ export function variadicCurryWithValidation (
 
     return variadicCurryWithValidationInner(
       isIterable,
-      lastArgumentName,
+      iterableType,
       applyOnIterableArgs,
       fn,
       variadic,
+      reduces,
+      forceSync,
       minConfigArgs,
       maxConfigArgs,
       args
