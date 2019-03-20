@@ -35,8 +35,8 @@ class BaseIterable {
     return this._staticIterator.next()
   }
 
-  return(...args) {
-    if (typeof this._staticIterator.return === "function") this._staticIterator.return(...args);
+  return (...args) {
+    if (typeof this._staticIterator.return === 'function') this._staticIterator.return(...args)
   }
 }
 
@@ -52,11 +52,6 @@ class AsyncIterable extends BaseIterable {
   }
 }
 
-const iterablesByType = {
-  iterable: Iterable,
-  asyncIterable: AsyncIterable
-}
-
 function variadicCurryWithValidationInner (
   isIterable,
   iterableType,
@@ -64,6 +59,7 @@ function variadicCurryWithValidationInner (
   fn,
   variadic,
   reduces,
+  forceSync,
   minConfigArgs,
   maxConfigArgs,
   args
@@ -101,7 +97,7 @@ function variadicCurryWithValidationInner (
 
       unshiftUndefineds(args, maxConfigArgs - iterableArgsStart)
 
-      const IterableClass = iterablesByType[iterableType]
+      const IterableClass = iterableType === 'asyncIterable' && !forceSync ? AsyncIterable : Iterable
 
       if (variadic) {
         const iterableArgs = args.slice(iterableArgsStart)
@@ -123,6 +119,7 @@ function variadicCurryWithValidationInner (
     fn,
     variadic,
     reduces,
+    forceSync,
     minConfigArgs,
     maxConfigArgs,
     args
@@ -136,6 +133,7 @@ export function variadicCurryWithValidation (
   fn,
   variadic,
   reduces,
+  forceSync,
   minConfigArgs = fn.length - 1,
   maxConfigArgs = fn.length - 1,
   previousArgs = []
@@ -150,6 +148,7 @@ export function variadicCurryWithValidation (
       fn,
       variadic,
       reduces,
+      forceSync,
       minConfigArgs,
       maxConfigArgs,
       args

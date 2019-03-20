@@ -29,6 +29,7 @@ export const iterableCurry = (fn, { variadic = false, reduces = false } = {}, mi
     fn,
     variadic,
     reduces,
+    false,
     minArgs,
     maxArgs
   )

@@ -6,4 +6,4 @@ function asyncPartition (func, iter) {
   return [first, second]
 }
 
-export default asyncIterableCurry(asyncPartition)
+export default asyncIterableCurry(asyncPartition, {reduces: true})
