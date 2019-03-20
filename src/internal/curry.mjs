@@ -17,40 +17,46 @@ function unshiftUndefineds (args, by) {
   }
 }
 
-class BaseIterable {
-  constructor (fn, variadic, args, iterableArgs) {
-    this._fn = fn
-    this._args = args
-    this._variadic = variadic
-    this._iterableArgs = iterableArgs
-    this._staticIterator = null
-  }
+function BaseIterable (fn, variadic, args, iterableArgs) {
+  this._fn = fn
+  this._args = args
+  this._variadic = variadic
+  this._iterableArgs = iterableArgs
+  this._staticIterator = null
+}
 
-  _iterate () {
+Object.assign(BaseIterable.prototype, {
+  __iterate () {
     return this._variadic ? this._fn(...this._args, this._iterableArgs) : this._fn(...this._args)
-  }
+  },
 
   next () {
-    this._staticIterator = this._staticIterator || this._iterate()
+    this._staticIterator = this._staticIterator || this.__iterate()
     return this._staticIterator.next()
-  }
+  },
 
   return (...args) {
     if (typeof this._staticIterator.return === 'function') this._staticIterator.return(...args)
   }
-}
+})
 
-class Iterable extends BaseIterable {
+function Iterable () { BaseIterable.apply(this, arguments) }
+
+Iterable.prototype = Object.assign(Object.create(BaseIterable.prototype), {
+  constructor: Iterable,
   [Symbol.iterator] () {
-    return this._iterate()
+    return this.__iterate()
   }
-}
+})
 
-class AsyncIterable extends BaseIterable {
+function AsyncIterable () { BaseIterable.apply(this, arguments) }
+
+AsyncIterable.prototype = Object.assign(Object.create(BaseIterable.prototype), {
+  constructor: AsyncIterable,
   [Symbol.asyncIterator] () {
-    return this._iterate()
+    return this.__iterate()
   }
-}
+})
 
 function variadicCurryWithValidationInner (
   isIterable,
