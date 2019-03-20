@@ -12,4 +12,4 @@ function find (func, iterable) {
   return undefined
 }
 
-export default iterableCurry(find)
+export default iterableCurry(find, {reduces: true})

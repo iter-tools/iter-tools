@@ -21,13 +21,14 @@ export function isValidIterableArgument (i) {
   return i == null || isIterable(i)
 }
 
-export const iterableCurry = (fn, variadic = false, minArgs, maxArgs) => {
+export const iterableCurry = (fn, { variadic = false, reduces = false } = {}, minArgs, maxArgs) => {
   return variadicCurryWithValidation(
     isValidIterableArgument,
     'iterable',
     ensureIterable,
     fn,
     variadic,
+    reduces,
     minArgs,
     maxArgs
   )
