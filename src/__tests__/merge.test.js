@@ -35,7 +35,7 @@ describe('merge', function () {
   })
 })
 
-describe('asyncMerge', function () {
+describe.skip('asyncMerge', function () {
   it('interleaves 2 sorted sequences', async function () {
     const iter = asyncMerge(asyncMergeByComparison((a, b) => a - b), [[1, 2, 5, 6], [3, 4]])
     expect(await asyncToArray(iter)).toEqual([1, 2, 3, 4, 5, 6])

@@ -10,4 +10,4 @@ function every (func, iterable) {
   return true
 }
 
-export default iterableCurry(every)
+export default iterableCurry(every, { reduces: true })

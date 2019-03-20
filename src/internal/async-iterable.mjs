@@ -28,13 +28,15 @@ export function isValidAsyncIterableArgument (i) {
   return isAsyncIterable(i) || isValidIterableArgument(i)
 }
 
-export const asyncIterableCurry = (fn, variadic = false, minArgs, maxArgs) => {
+export const asyncIterableCurry = (fn, { variadic = false, reduces = false, forceSync = false } = {}, minArgs, maxArgs) => {
   return variadicCurryWithValidation(
     isValidAsyncIterableArgument,
     'asyncIterable',
     ensureAsyncIterable,
     fn,
     variadic,
+    reduces,
+    forceSync,
     minArgs,
     maxArgs
   )

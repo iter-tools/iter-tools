@@ -23,4 +23,4 @@ async function asyncReduce (initial, func, iterable) {
   }
 }
 
-export default asyncIterableCurry(asyncReduce, false, 1, 2)
+export default asyncIterableCurry(asyncReduce, {variadic: false, reduces: true}, 1, 2)
