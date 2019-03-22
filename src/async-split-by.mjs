@@ -24,7 +24,7 @@ function asyncSplitBy (getKey = (k) => k, iterable) {
       done = true
       return
     }
-    const key = getKey(newItem.value, itemIndex++)
+    const key = await getKey(newItem.value, itemIndex++)
     const consumer = exchange.getConsumer()
     exchange.push({ value: newItem.value, key })
     if (key !== fetchKey) {
