@@ -6,3 +6,7 @@
 .editorconfig
 .eslintignore
 .eslintrc.js
+tsconfig*
+tslint*
+.babelrc
+test-setup.js
