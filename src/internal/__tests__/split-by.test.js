@@ -1,5 +1,7 @@
 /* eslint-env node, jest */
-const { splitBy, asyncSplitBy, asyncToArray } = require('..')
+const { asyncToArray } = require('../..')
+const splitBy = require('../split-by')
+const asyncSplitBy = require('../async-split-by')
 
 describe('splitBy', function () {
   it('splitBy', function () {

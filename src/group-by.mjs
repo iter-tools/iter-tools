@@ -1,5 +1,5 @@
 import { iterableCurry } from './internal/iterable'
-import splitBy from './split-by'
+import splitBy from './internal/split-by'
 
 function * cons (item, iterable) {
   yield item

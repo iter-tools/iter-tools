@@ -1,5 +1,5 @@
 import { asyncIterableCurry } from './internal/async-iterable'
-import asyncSplitBy from './async-split-by'
+import asyncSplitBy from './internal/async-split-by'
 
 async function * cons (item, iterable) {
   yield item

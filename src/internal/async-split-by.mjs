@@ -1,5 +1,5 @@
-import { asyncIterableCurry } from './internal/async-iterable'
-import { Exchange } from './internal/queues'
+import { asyncIterableCurry } from './async-iterable'
+import { Exchange } from './queues'
 
 const UNIQUE_INITIAL_KEY = {}
 
