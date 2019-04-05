@@ -167,6 +167,12 @@ function areEqual (iter1, iter2) {
 }
 ```
 
+## Use the same iterable more than once
+fork creates clones of an iterable. You can use that whenever you need to concume an iterable multiple times. For example multiplying an iterable by itself:
+```js
+const pow = (iter, n) => product(...slice(n, fork(iter)))
+```
+
 ## Your recipe here!
 
 If you have uncovered a use case where iterators can enhance the performance, readability, or maintainability of a particular coding task please submit a pull request to the cookbook!
