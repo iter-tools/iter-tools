@@ -168,9 +168,56 @@ function areEqual (iter1, iter2) {
 ```
 
 ## Use the same iterable more than once
-fork creates clones of an iterable. You can use that whenever you need to concume an iterable multiple times. For example multiplying an iterable by itself:
+*Fork* creates clones of an iterable. You can use that whenever you need to concume an iterable multiple times. For example multiplying an iterable by itself:
 ```js
 const pow = (iter, n) => product(...slice(n, fork(iter)))
+```
+
+## Building a data pipeline
+A data pipeline is a set of transformations that can be applied to an iterable. To build one, you leverage the currying and the *pipe* utility function:
+```js
+const dataPipeline = pipe(
+  filter((n) => n % 2 === 0), // filter even numbers
+  map((n) => n * n) // square numbers
+)
+
+for (const n of dataPipeline(iterable)) {
+  // n is a square of an even number
+}
+```
+There are cases where you need to process data in parallel and applying different transformations. You can do so, using *fork* to clone the iterable, applying different transformations to the clones, and joining the iterable back together using for example *zip* or *merge*.
+```js
+const dataPipeline = pipe(
+  fork,
+  ([iter1, iter2]) => zip(filter((n) => n % 2 === 0, iter1), map((n) => n * n, iter2))
+)
+
+for (const [n1, n2] of dataPipeline(iterable)) {
+  // n1 is always even
+  // n2 is always a square
+  // the for loop ends when the even numbers are over
+  // because -zip- stops when the shortest sequence is exhausted
+}
+```
+You can have a more readable version applying the transformations, and joining back the iterables in two different phases
+```js
+const filterEven = filter((n) => n % 2 === 0)
+const mapSquare = map((n) => n * n)
+const dataPipeline = pipe(
+  fork,
+  ([iter1, iter2]) => [filterEven(iter1), mapSquare(iter2)]
+  (iters) => zip(...iters)
+)
+```
+The last step can be shortened using the *apply* helper:
+```js
+const filterEven = filter((n) => n % 2 === 0)
+const mapSquare = map((n) => n * n)
+const dataPipeline = pipe(
+  fork,
+  ([iter1, iter2]) => [filterEven(iter1), mapSquare(iter2)]
+  apply(zip)
+)
 ```
 
 ## Your recipe here!
