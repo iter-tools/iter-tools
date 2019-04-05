@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
  - iter, asyncIter
 
 ### Renamed
- - pipe to pipeline
+ - pipe to execPipe
 
 ### Added
  - pipe

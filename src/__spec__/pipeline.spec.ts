@@ -1,9 +1,9 @@
 import assert from 'static-type-assert'
-import { pipeline, range, map, filter } from '../index'
+import { execPipe, range, map, filter } from '../index'
 
 assert<
   IterableIterator<number>
->(pipeline(
+>(execPipe(
   range(10),
   filter(x => {
     assert<number>(x)
@@ -17,7 +17,7 @@ assert<
 
 assert<
   IterableIterator<0 | 1 | 2 | 3>
->(pipeline(
+>(execPipe(
   range(10),
   filter(x => {
     assert<number>(x)
@@ -33,7 +33,7 @@ assert<
   })
 ))
 
-assert<4>(pipeline(
+assert<4>(execPipe(
   0 as 0,
   x => {
     assert<0>(x)

@@ -78,7 +78,7 @@ Combinatory generators
 Utilities
 * [compose](#compose)
 * [pipe](#pipe)
-* [pipeline](#pipeline)
+* [execPipe](#exec-pipe)
 * [call](#call)
 * [apply](#apply)
 
@@ -978,7 +978,7 @@ const iter = compose(
 
 iter([1, 2, 3, 4]) // 5, 7
 ```
-Note: it is equivalent to *pipe* but it works right to left!
+Note: it works right to left, so the first transformation used is filter and the second is map.
 
 ## pipe
 This is a classic composition function that can be used to assemble multiple functions that take an iterable and return an iterable.
@@ -992,11 +992,10 @@ iter([1, 2, 3, 4]) // 5, 7
 ```
 Note: it is equivalent to *compose* but it works left to right!
 
-
-## pipeline
-Pipeline allows to run an iterable through several functions. The first argument is an iterable, the following are functions that takes an iterable and return an iterable.
+## exec-pipe
+*execPipe* allows to run an iterable through several functions. The first argument is an iterable, the following are functions that takes an iterable and return an iterable.
 ```js
-const iter = pipeline(
+const iter = execPipe(
   [1, 2, 3, 4],
   filter((x % 2) === 0)
   map((x) =>  x + 3),
@@ -1004,14 +1003,7 @@ const iter = pipeline(
 
 iter // 5, 7
 ```
-The previous example is equivalent to the *compose* and *pipe* ones (note that *pipeline* works left to right like *pipe*).
-
-## Issues and limitations
-There are a few limitations that you need to be aware of.
-First of all, when you consume an iterator object (using next) you are mutating the object for good.
-Some of these functions makes an in memory copy of the output. For example: cycle, product or tee. They do that in a efficient lazy way. Still you need to consider that.
-Also with the iterator protocol you can create infinite iterables (repeat, cycle, count etc.). These iterables can't be used by all generators. For example combinatory generators require finite iterables.
-Some of the obvious things you can do with arrays, are not efficients with iterables. For example: sorting, shuffling and in general all operations that rely on having the full array at your disposal. In that case the way to go is to convert the iterable in an array and use that.
+The previous example is equivalent to the *compose* and *pipe* ones (note that *execPipe* works left to right like *pipe*).
 
 ## call
 call is a convenience method. Its implementation is:
@@ -1026,6 +1018,13 @@ apply is a convenience method. Its implementation is:
 (fn, args = []) => fn(...args)
 ```
 `apply` has three main differences from `Function.prototype.apply`. It does not take a `thisArg`, the args to apply may be specified as an iterable, and if you do not pass the `args` iterable, the result is a partial application, not a no-args call to `fn`.
+
+## Issues and limitations
+There are a few limitations that you need to be aware of.
+First of all, when you consume an iterator object (using next) you are mutating the object for good.
+Some of these functions makes an in memory copy of the output. For example: cycle, product or tee. They do that in a efficient lazy way. Still you need to consider that.
+Also with the iterator protocol you can create infinite iterables (repeat, cycle, count etc.). These iterables can't be used by all generators. For example combinatory generators require finite iterables.
+Some of the obvious things you can do with arrays, are not efficients with iterables. For example: sorting, shuffling and in general all operations that rely on having the full array at your disposal. In that case the way to go is to convert the iterable in an array and use that.
 
 
 ## Acknowledgements
