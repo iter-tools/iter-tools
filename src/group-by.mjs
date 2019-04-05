@@ -1,38 +1,24 @@
 import { iterableCurry } from './internal/iterable'
+import splitBy from './internal/split-by'
 
-function * groupBy (key = (k) => k, iterable) {
+function * cons (item, iterable) {
+  yield item
+  yield * iterable
+}
+
+function car (iterable) {
   const iterator = iterable[Symbol.iterator]()
+  const {done, value} = iterator.next()
+  if (done) return []
+  return [value, iterator]
+}
 
-  let currentItem
-  let currentKey, previousKey
-
-  function * group () {
-    while (true) {
-      yield currentItem.value
-      currentItem = iterator.next()
-      if (currentItem.done) return
-      currentKey = key(currentItem.value)
-      if (previousKey !== currentKey) {
-        return
-      }
-    }
-  };
-
-  try {
-    currentItem = iterator.next()
-
-    while (true) {
-      if (currentItem.done) return
-      currentKey = key(currentItem.value)
-      if (previousKey !== currentKey) {
-        previousKey = currentKey
-        yield [currentKey, group()]
-      } else {
-        currentItem = iterator.next()
-      }
-    }
-  } finally { // calling close on the main iterable, closes the input iterable
-    if (typeof iterator.return === 'function') iterator.return()
+function * groupBy (getKey = (k) => k, iterable) {
+  for (const subseq of splitBy(getKey, iterable)) {
+    const [first, rest] = car(subseq)
+    if (rest === undefined) return
+    const key = getKey(first)
+    yield [key, cons(first, rest)]
   }
 }
 

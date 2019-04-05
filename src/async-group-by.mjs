@@ -1,38 +1,24 @@
 import { asyncIterableCurry } from './internal/async-iterable'
+import asyncSplitBy from './internal/async-split-by'
 
-async function * asyncGroupBy (selector = (key) => key, iterable) {
+async function * cons (item, iterable) {
+  yield item
+  yield * iterable
+}
+
+async function car (iterable) {
   const iterator = iterable[Symbol.asyncIterator]()
+  const {done, value} = await iterator.next()
+  if (done) return []
+  return [value, iterator]
+}
 
-  let currentItem
-  let currentKey, previousKey
-
-  async function * group () {
-    while (true) {
-      yield currentItem.value
-      currentItem = await iterator.next()
-      if (currentItem.done) return
-      currentKey = await selector(currentItem.value)
-      if (previousKey !== currentKey) {
-        return
-      }
-    }
-  }
-
-  try {
-    currentItem = await iterator.next()
-
-    while (true) {
-      if (currentItem.done) return
-      currentKey = await selector(currentItem.value)
-      if (previousKey !== currentKey) {
-        previousKey = currentKey
-        yield [currentKey, group()]
-      } else {
-        currentItem = await iterator.next()
-      }
-    }
-  } finally { // calling close on the main iterable, closes the input iterable
-    if (typeof iterator.return === 'function') await iterator.return()
+async function * asyncGroupBy (getKey = (k) => k, iterable) {
+  for await (const subseq of asyncSplitBy(getKey, iterable)) {
+    const [first, rest] = await car(subseq)
+    if (rest === undefined) return
+    const key = await getKey(first)
+    yield [key, cons(first, rest)]
   }
 }
 

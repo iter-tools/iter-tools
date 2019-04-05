@@ -3,7 +3,6 @@ const { groupBy, asyncGroupBy, asyncToArray } = require('..')
 
 describe('groupBy', function () {
   it('groupBy main cursor', function () {
-    // const iter = groupBy(undefined, 'AAABBAACCCCD')
     const iter = groupBy('AAABBAACCCCD')
     let next
     next = iter.next()
@@ -55,7 +54,7 @@ describe('groupBy', function () {
   })
 
   it('groupBy secondary', function () {
-    const iter = groupBy(undefined, 'AAABBAACCCCD')
+    const iter = groupBy('AAABBAACCCCD')
     let next
     next = iter.next()
     expect(next.value[0]).toBe('A')
@@ -77,7 +76,7 @@ describe('groupBy', function () {
   })
 
   it('groupBy secondary (consume partially)', function () {
-    const iter = groupBy(undefined, 'AAABBAACCCCD')
+    const iter = groupBy('AAABBAACCCCD')
     let next
     next = iter.next()
     expect(next.value[0]).toBe('A')
@@ -87,7 +86,19 @@ describe('groupBy', function () {
     expect(next.value[1].next().done).toBe(true)
     next = iter.next()
     expect(next.value[0]).toBe('B')
+    next = iter.next()
+    expect(next.value[0]).toBe('A')
     // ...
+  })
+
+  it('groupBy using destructuring', function () {
+    const [group1, group2, group3] = groupBy('AAABBCCCC')
+    expect(group1[0]).toBe('A')
+    expect(group2[0]).toBe('B')
+    expect(group3[0]).toBe('C')
+    expect(Array.from(group1[1])).toEqual(['A', 'A', 'A'])
+    expect(Array.from(group2[1])).toEqual(['B', 'B'])
+    expect(Array.from(group3[1])).toEqual(['C', 'C', 'C', 'C'])
   })
 
   it('groupBy of null returns empty iterable', function () {
