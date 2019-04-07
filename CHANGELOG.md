@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ## [7.0.0] - UNRELEASED
 ### Removed
  - iter, asyncIter
+ - chain, asyncChain (replaced by concat, asyncConcat)
+ - count (use range instead)
+ - zipLongest, asyncZipLongest (replaced by zipAll, asyncZipAll)
 
 ### Renamed
  - pipe to execPipe

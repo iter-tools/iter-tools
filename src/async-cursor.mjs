@@ -1,5 +1,5 @@
 import { asyncIterableCurry } from './internal/async-iterable'
-import asyncChain from './async-chain'
+import asyncConcat from './async-concat'
 import repeat from './repeat'
 
 import CircularBuffer from './internal/circular-buffer'
@@ -13,7 +13,7 @@ async function * asyncCursor ({ size, trailing, filler }, iterable) {
 
   if (trailing) {
     let index = 0
-    for await (const item of asyncChain(iterable, repeat(filler, size - 1))) {
+    for await (const item of asyncConcat(iterable, repeat(filler, size - 1))) {
       circular.push(item)
       if (index + 1 >= size) {
         yield circular.readOnlyCopy

@@ -167,7 +167,6 @@ export declare function call<Args extends Array<any>, Return> (
 export declare function batch<T> (n: number): (iterable: Iterable<T>) => IterableIterator<T[]>
 export declare function batch<T> (n: number, iterable: Iterable<T>): IterableIterator<T[]>
 
-export declare function chain<T> (...iterables: Array<Iterable<T>>): IterableIterator<T>
 export declare function concat<T> (...iterables: Array<Iterable<T>>): IterableIterator<T>
 
 export declare const combinations: CombinationsPermutations
@@ -179,8 +178,6 @@ export declare function compress<T> (iterable: Iterable<T>, compress: Iterable<b
 
 export declare function consume<T> (func: (item: T) => void): (iterable: Iterable<T>) => void
 export declare function consume<T> (func: (item: T) => void, iterable: Iterable<T>): void
-
-export declare function count (opts: number | { start: number, end?: number, step?: number }): IterableIterator<number>
 
 export declare function cycle<Iter extends Iterable<any>> (iterable: Iter):
   Iter extends any[] ? IterableIterator<UnionFromTuple<Iter>> : ToIterator<Iter>
@@ -468,7 +465,6 @@ export declare function tee<T> (iterable: Iterable<T>, n?: number): IterableIter
 
 export declare function toArray<T> (iterable: Iterable<T>): T[]
 
-export declare function zipLongest<T> (...iterables: Array<Iterable<T>>): IterableIterator<T[]>
 export declare function zipAll<T> (...iterables: Array<Iterable<T>>): IterableIterator<T[]>
 export declare function zip<T> (...iterables: Array<Iterable<T>>): IterableIterator<T[]>
 
@@ -476,7 +472,6 @@ export declare function zip<T> (...iterables: Array<Iterable<T>>): IterableItera
 export declare function asyncBatch<T> (n: number): (iterable: AsyncIterableLike<T>) => AsyncIterableIterator<T>
 export declare function asyncBatch<T> (n: number, iterable: AsyncIterableLike<T>): AsyncIterableIterator<T>
 
-export declare function asyncChain<T> (...iterables: Array<AsyncIterableLike<T>>): AsyncIterableIterator<T>
 export declare function asyncConcat<T> (...iterables: Array<AsyncIterableLike<T>>): AsyncIterableIterator<T>
 
 export declare function asyncConsume<T> (func: (item: T) => MaybePromise<void>): (iterable: AsyncIterableLike<T>) => void
@@ -735,7 +730,6 @@ export declare function asyncTee<T> (iterable: AsyncIterableLike<T>, n?: number)
 
 export declare function asyncToArray<T> (iterable: AsyncIterableLike<T>): Promise<T[]>
 
-export declare function asyncZipLongest<T> (...iterables: Array<AsyncIterableLike<T>>): AsyncIterableIterator<T[]>
 export declare function asyncZipAll<T> (...iterables: Array<AsyncIterableLike<T>>): AsyncIterableIterator<T[]>
 
 export declare function asyncZip<T> (...iterables: Array<AsyncIterableLike<T>>): AsyncIterableIterator<T[]>

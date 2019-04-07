@@ -1,6 +1,6 @@
 import { iterableCurry } from './internal/iterable'
 import CircularBuffer from './internal/circular-buffer'
-import chain from './chain'
+import concat from './concat'
 import repeat from './repeat'
 
 function * cursor ({ size, trailing, filler }, iterable) {
@@ -10,7 +10,7 @@ function * cursor ({ size, trailing, filler }, iterable) {
 
   if (trailing) {
     let index = 0
-    for (const item of chain(iterable, repeat(filler, size - 1))) {
+    for (const item of concat(iterable, repeat(filler, size - 1))) {
       circular.push(item)
       if (index + 1 >= size) {
         yield circular.readOnlyCopy
