@@ -86,7 +86,7 @@ function variadicCurryWithValidationInner (
 
     if (args.length > maxConfigArgs && (iterableArgsStart === -1 || !allArgsIterable)) {
       const iterableTypeOrNames = variadic ? `...${iterableType}s` : iterableType
-      const baseMessage = `${fn.name} takes up to ${minConfigArgs} arguments, followed by ${iterableTypeOrNames}. You already passed ${args.length} arguments`
+      const baseMessage = `${fn.name} takes up to ${maxConfigArgs} arguments, followed by ${iterableTypeOrNames}. You already passed ${args.length} arguments`
       if (variadic) {
         throw new Error(`${baseMessage} and the following arguments were not all ${iterableType}s`)
       } else {
@@ -141,7 +141,7 @@ export function variadicCurryWithValidation (
   reduces,
   forceSync,
   minConfigArgs = fn.length - 1,
-  maxConfigArgs = fn.length - 1,
+  maxConfigArgs = variadic ? fn.length : fn.length - 1,
   previousArgs = []
 ) {
   return (...args) => {
