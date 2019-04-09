@@ -147,7 +147,7 @@ All iter-tools functions expect iterables, as do `Array.from` and `for ... of`. 
 const myRangeIterator = {
   value: 1,
   next: () => ({ value: this.value++, done: false } }),
-  [Symbol.iterator](): return this
+  [Symbol.iterator]() { return this }
 }
 
 slice(3, iterable(myRangeIterator)) // 1, 2, 3
@@ -157,7 +157,7 @@ slice(3, iterable(myRangeIterator)) // 1, 2, 3
 const myAsyncRangeIterator = {
   value: 1,
   next: () => Promise.resolve({ value: this.value++, done: false } }),
-  [Symbol.asyncIterator](): return this
+  [Symbol.iterator]() { return this }
 }
 
 asyncSlice(3, asyncIterable(myAsyncRangeIterator)) // 1, 2, 3
