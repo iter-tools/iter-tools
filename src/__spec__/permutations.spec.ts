@@ -3,19 +3,19 @@ import * as iter from '../index'
 
 assert<
   Iterable<[number, number, number]>
->(iter.permutations([0, 1, 2, 3], 3))
+>(iter.permutations(3, [0, 1, 2, 3]))
 
 assert<
   Iterable<number[]>
->(iter.permutations([0, 1, 2, 3], Number()))
+>(iter.permutations(Number(), [0, 1, 2, 3]))
 
 assert<
   Iterable<number[]>
->(iter.permutations([0, 1, 2, 3], 999))
+>(iter.permutations(999, [0, 1, 2, 3]))
 
 assert<
   Iterable<[string, string, string]>
->(iter.permutations('', 3))
+>(iter.permutations(3, ''))
 
 assert<
   Iterable<[number, number, number, number]>

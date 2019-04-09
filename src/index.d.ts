@@ -17,8 +17,8 @@ type MaybePromise<T> = T | Promise<T>
  * Function signature of `permutations` and `combinations`
  */
 interface CombinationsPermutations {
-  <Iter extends Iterable<any>>(iterable: Iter, r?: undefined): CombinationsPermutationsByIterable<Iter>
-  <T, R extends number>(iterable: Iterable<T>, r: R): CombinationsPermutationsByLength<T, R>
+  <Iter extends Iterable<any>>(iterable: Iter): CombinationsPermutationsByIterable<Iter>
+  <T, R extends number>(r: R, iterable: Iterable<T>): CombinationsPermutationsByLength<T, R>
 }
 
 type CombinationsPermutationsByIterable<Iter extends Iterable<any>> =

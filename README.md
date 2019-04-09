@@ -65,7 +65,7 @@ Strings manipulation
 * [splitLines](#split-lines) ([async](#async-split-lines))
 * [regexpExecIter](#regexp-exec-iter) ([async](#async-regexp-exec-iter))
 
-Combinatory generators
+Combinatory iterables
 * [product](#product)
 * [permutations](#permutations)
 * [combinationsWithReplacement](#combinations-with-replacement)
@@ -876,7 +876,7 @@ Note:
 ## async-regexp-exec-iter
 The same as regexpExecIter but for async iterables.
 
-# Combinatory generators
+# Combinatory iterables
 
 ## product
 This returns the cartesian product of 2 or more iterables. It is equivalent to a nested loop for every iterable.
@@ -905,7 +905,7 @@ iter.getSize() === 8
 It returns permutations of length n of an iterable. n defaults to the length of the iterable.
 ```js
 permutations(range(2)); // [0, 1] [1, 0]
-permutations([1, 2, 3, 4], 2);
+permutations(2, [1, 2, 3, 4]);
 // returns:
   // [ 1, 2 ],
   // [ 1, 3 ],
@@ -920,6 +920,11 @@ permutations([1, 2, 3, 4], 2);
   // [ 4, 2 ],
   // [ 4, 3 ]
 ```
+It can be curried:
+```js
+const permutation2 = permutations(2)
+permutation2([1, 2, 3, 4]);
+```
 You can get the number of items calling the method *getSize* without actually emitting the sequence:
 ```js
 const iter = permutations(range(2)); // [0, 1] [1, 0]
@@ -930,7 +935,7 @@ iter.getSize() === 2
 It returns combinations of length n of an iterable. n defaults to the length of the iterable.
 ```js
 combinations(range(2)); // [0, 1]
-combinations([1, 2, 3, 4], 2);
+combinations(2, [1, 2, 3, 4]);
 // returns:
 // [ 1, 2 ],
 // [ 1, 3 ],
@@ -939,6 +944,12 @@ combinations([1, 2, 3, 4], 2);
 // [ 2, 4 ],
 // [ 3, 4 ]
 ```
+It can be curried:
+```js
+const combinations2 = combinations(2)
+combinations2([1, 2, 3, 4]);
+```
+
 You can get the number of items calling the method *getSize* without actually emitting the sequence:
 ```js
 const iter = combinations([1, 2, 3, 4], 2);
@@ -949,7 +960,7 @@ iter.getSize() === 6
 It returns combinations with replacement of length n of an iterable. n defaults to the length of the iterable.
 ```js
 combinationsWithReplacement(range(2)); // [0, 0] [0, 1] [1, 1]
-combinationsWithReplacement([1, 2, 3, 4], 2);
+combinationsWithReplacement(2, [1, 2, 3, 4]);
 // returns:
 // [ 1, 1 ],
 // [ 1, 2 ],
@@ -962,6 +973,12 @@ combinationsWithReplacement([1, 2, 3, 4], 2);
 // [ 3, 4 ],
 // [ 4, 4 ]
 ```
+It can be curried:
+```js
+const combinationsWithReplacement2 = combinationsWithReplacement(2)
+combinationsWithReplacement2([1, 2, 3, 4]);
+```
+
 You can get the number of items calling the method *getSize* without actually emitting the sequence:
 ```js
 const iter = combinationsWithReplacement([1, 2, 3, 4], 2);
