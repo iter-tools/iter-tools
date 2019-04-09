@@ -19,7 +19,7 @@ assert<
 assert<
   Iterable<[string, string, string]>
 >(iter.product(
-  iter.iterable(''),
-  iter.iterable(''),
-  iter.iterable('')
+  '',
+  '',
+  ''
 ))

@@ -19,7 +19,7 @@ assert<
 
 assert<
   Iterable<[string, string, string]>
->(iter.combinations(iter.iterable(''), 3))
+>(iter.combinations('', 3))
 
 assert<
   Iterable<[number, number, number, number]>
@@ -27,4 +27,4 @@ assert<
 
 assert<
   Iterable<string[]>
->(iter.combinations(iter.iterable('')))
+>(iter.combinations(''))

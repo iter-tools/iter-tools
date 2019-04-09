@@ -15,7 +15,7 @@ assert<
 
 assert<
   Iterable<[string, string, string]>
->(iter.permutations(iter.iterable(''), 3))
+>(iter.permutations('', 3))
 
 assert<
   Iterable<[number, number, number, number]>
@@ -23,4 +23,4 @@ assert<
 
 assert<
   Iterable<string[]>
->(iter.permutations(iter.iterable('')))
+>(iter.permutations(''))

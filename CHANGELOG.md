@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
  - chain, asyncChain (replaced by concat, asyncConcat)
  - count (use range instead)
  - zipLongest, asyncZipLongest (replaced by zipAll, asyncZipAll)
+ - iterable, asyncIterable
 
 ### Renamed
  - pipe to execPipe

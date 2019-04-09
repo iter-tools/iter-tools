@@ -1,5 +1,5 @@
 /* eslint-env node, jest */
-const { compress, asyncCompress, asyncToArray, asyncIterable, range } = require('..')
+const { compress, asyncCompress, asyncToArray, range } = require('..')
 
 describe('compress', function () {
   it('compress iterables', function () {
@@ -10,7 +10,7 @@ describe('compress', function () {
 
 describe('asyncCompress', function () {
   it('compress iterables', async function () {
-    const iter = asyncCompress(asyncIterable(range(10)), [0, 1, 0, 1, 1])
+    const iter = asyncCompress(range(10), [0, 1, 0, 1, 1])
     expect(await asyncToArray(iter)).toEqual([1, 3, 4])
   })
 })

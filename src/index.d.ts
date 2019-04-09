@@ -287,12 +287,6 @@ export declare function groupBy<T, K> (
 export declare function interpose<T, I> (interposeItem: I): (iter: Iterable<T>) => IterableIterator<T | I>
 export declare function interpose<T, I> (interposeItem: I, iter: Iterable<T>): IterableIterator<T | I>
 
-export declare function iterable<T> (
-  iterator: {
-    readonly next: () => IteratorResult<T>
-  } | Iterable<T>
-): Iterable<T>
-
 export declare function map<T, O> (func: (item: T) => O): (iter: Iterable<T>) => IterableIterator<O>
 export declare function map<T, O> (func: (item: T) => O, iter: Iterable<T>): IterableIterator<O>
 
@@ -625,12 +619,6 @@ export declare function asyncGroupBy<T, K> (
 
 export declare function asyncInterpose<T, I> (interposeItem: I): (iter: AsyncIterableLike<T>) => AsyncIterableIterator<T | I>
 export declare function asyncInterpose<T, I> (interposeItem: I, iter: AsyncIterableLike<T>): AsyncIterableIterator<T | I>
-
-export declare function asyncIterable<T> (
-  asyncIterator: {
-    readonly next: () => Promise<IteratorResult<T>>
-  } | AsyncIterableLike<T>
-): AsyncIterable<T>
 
 export declare function asyncMap<T, O> (func: (item: T) => MaybePromise<O>):
   (iter: AsyncIterableLike<T>) => AsyncIterableIterator<O>

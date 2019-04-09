@@ -17,7 +17,7 @@ assert<
 
 assert<
   IterableIterator<string>
->(iter.cycle(iter.iterable('')))
+>(iter.cycle(''))
 
 assert<
   IterableIterator<0 | 1 | 2>

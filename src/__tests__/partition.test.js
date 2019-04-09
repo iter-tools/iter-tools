@@ -5,11 +5,8 @@ const {
   zip,
   asyncPartition,
   asyncZip,
-  asyncToArray,
-  asyncIterable
+  asyncToArray
 } = require('..')
-
-const asyncRange = (...args) => asyncIterable(range(...args))
 
 describe('partition', function () {
   describe('evens and odds', function () {
@@ -111,7 +108,7 @@ describe('asyncPartition', function () {
 
     describe('async iterable', function () {
       it('empty iterable', async function () {
-        const [evens, odds] = asyncPartition(predicate, asyncIterable([]))
+        const [evens, odds] = asyncPartition(predicate, [])
 
         expect([
           await asyncToArray(evens),
@@ -119,8 +116,8 @@ describe('asyncPartition', function () {
         ]).toEqual([[], []])
       })
 
-      it('asyncRange(10)', async function () {
-        const [evens, odds] = asyncPartition(predicate, asyncRange(10))
+      it('range(10)', async function () {
+        const [evens, odds] = asyncPartition(predicate, range(10))
 
         expect([
           await asyncToArray(evens),
@@ -133,7 +130,7 @@ describe('asyncPartition', function () {
 
       it('calls func once for each item', async function () {
         const func = jest.fn(predicate)
-        const [evens, odds] = asyncPartition(func, asyncRange(10))
+        const [evens, odds] = asyncPartition(func, range(10))
         await asyncToArray(evens)
         await asyncToArray(odds)
         expect(func.mock.calls).toEqual(
@@ -142,7 +139,7 @@ describe('asyncPartition', function () {
       })
 
       it('iterate both evens and odds at the same time', async function () {
-        const [evens, odds] = asyncPartition(predicate, asyncRange(10))
+        const [evens, odds] = asyncPartition(predicate, range(10))
         const zipped = await asyncToArray(asyncZip(evens, odds))
         expect(zipped).toEqual([
           [0, 1],
@@ -205,7 +202,7 @@ describe('asyncPartition', function () {
 
     describe('async iterable', function () {
       it('empty iterable', async function () {
-        const [evens, odds] = asyncPartition(predicate, asyncIterable([]))
+        const [evens, odds] = asyncPartition(predicate, [])
 
         expect([
           await asyncToArray(evens),
@@ -213,8 +210,8 @@ describe('asyncPartition', function () {
         ]).toEqual([[], []])
       })
 
-      it('asyncRange(10)', async function () {
-        const [evens, odds] = asyncPartition(predicate, asyncRange(10))
+      it('range(10)', async function () {
+        const [evens, odds] = asyncPartition(predicate, range(10))
 
         expect([
           await asyncToArray(evens),
@@ -227,7 +224,7 @@ describe('asyncPartition', function () {
 
       it('calls func once for each item', async function () {
         const func = jest.fn(predicate)
-        const [evens, odds] = asyncPartition(func, asyncRange(10))
+        const [evens, odds] = asyncPartition(func, range(10))
         await asyncToArray(evens)
         await asyncToArray(odds)
         expect(func.mock.calls).toEqual(
@@ -236,7 +233,7 @@ describe('asyncPartition', function () {
       })
 
       it('iterate both evens and odds at the same time', async function () {
-        const [evens, odds] = asyncPartition(predicate, asyncRange(10))
+        const [evens, odds] = asyncPartition(predicate, range(10))
         const zipped = await asyncToArray(asyncZip(evens, odds))
         expect(zipped).toEqual([
           [0, 1],

@@ -6,7 +6,7 @@ Iter-tools
 
 iter-tools is an utility toolbox that allows you to unleash the power and expressiveness of iterables.
 
-If you want some ideas about how and when Iterators and iter-tools can help you out, take a look at [The Cookbook](https://github.com/sithmel/iter-tools/blob/master/COOKBOOK.md).
+If you want some ideas about how and when Iterables and iter-tools can help you out, take a look at [The Cookbook](https://github.com/sithmel/iter-tools/blob/master/COOKBOOK.md).
 
 Create iterables
 * [range](#range)
@@ -46,7 +46,6 @@ Utilities returning multiple iterables
 * [splitAt](#split-at) ([async](#async-split-at))
 
 Others
-* [iterable](#iterable) ([async](#async-iterable))
 * [toArray](#to-array) ([async](#async-to-array))
 * [execute](#execute) ([async](#async-execute))
 * [consume](#consume) ([async](#async-consume))
@@ -85,7 +84,7 @@ This should help clarify the documentation. You can also get more informations h
 * **Async Iterator**: an object implementing the async iterator protocol (the method next that returns a promise etc.)
 * An object is **iterable** if it implements the @@iterator method, meaning that the object (or one of the objects up its prototype chain) must have a property with a @@iterator key which is available via constant Symbol.iterator. You can call this function without arguments to get an object implementing the **iterator** protocol.
 * An object is **async iterable** if it implements the @@asyncIterator method, meaning that the object (or one of the objects up its prototype chain) must have a property with a @@asyncIterator key which is available via constant Symbol.asyncIterator. You can call this function without arguments to get an object implementing the **async iterator** protocol.
-* **Generator function**: a function returning an **generator object**
+* **Generator function**: a function returning a **generator object**
 * **Async generator function**: a function returning an **async generator object**
 * **Generator object**: an object supporting both **iterable** and **iterator** protocol
 * **Async generator object**: an object supporting both **async iterable** and **async iterator** protocol
@@ -94,20 +93,42 @@ For example:
 ```js
 // iterator
 const iterator = {
-  value: 1,
+  value: 0,
   next() {
     return { value: this.value++, done: false }
   }
 }
 
 // iterable
-const obj = {
+const iterable = {
   [Symbol.iterator]: iterator
+}
+
+// both iterable and iterator
+const both = {
+  value: 0,
+  next() {
+    return { value: this.value++, done: false }
+  },
+  [Symbol.iterator]: this // every new iterable will use the same state "value"
+}
+
+// both iterable and iterator using a class
+class Iterable {
+  constructor() {
+    this.value = 0
+  }
+  next() {
+    return { value: this.value++, done: false }
+  }
+  [Symbol.iterator]() {
+    return new Iterable() // every new iterable will use a new state "value"
+  }
 }
 
 // generator function
 function * genFunc() {
-  i = 1
+  i = 0
   yield i++
 }
 
@@ -120,6 +141,27 @@ typeof genObj[Symbol.iterator] === 'function'
 typeof genObj.next === 'function'
 ```
 
+#### iter-tools iterables and asyncIterables
+All iter-tools functions expect iterables, as do `Array.from` and `for ... of`. Generator functions (which most iter-tools functions are under the hood) return iterables. If you are not using a generator function, don't forget that your object must implement *Symbol.iterator* or *Symbol.asyncIterator* (if asynchronous). For example:
+```js
+const myRangeIterator = {
+  value: 1,
+  next: () => ({ value: this.value++, done: false } }),
+  [Symbol.iterator](): return this
+}
+
+slice(3, iterable(myRangeIterator)) // 1, 2, 3
+```
+
+```js
+const myAsyncRangeIterator = {
+  value: 1,
+  next: () => Promise.resolve({ value: this.value++, done: false } }),
+  [Symbol.asyncIterator](): return this
+}
+
+asyncSlice(3, asyncIterable(myAsyncRangeIterator)) // 1, 2, 3
+```
 
 #### Javascript support
 Every module is available in 3 ecmascript editions: ES5, ES2015, ES2018.
@@ -149,7 +191,7 @@ Async iterators are a new feature introduced by ES2018. Iter-tools implements an
 * they return either an async iterable (asyncMap, asyncFilter for example) or a promise returning a value (asyncReduce for example)
 * whenever they take a function as argument, this can return a value or a promise
 
-# Create iterators
+# Create iterables
 ## Range
 Create an iterable returning a sequence of numbers (the sequence can be infinite)
 ```js
@@ -645,28 +687,6 @@ Memory wise, the two iterables try to be as conservative as possible. But you ha
 Same as asyncSplitAt but works on both sync and async iterables.
 
 # Others
-
-## iterable
-Takes an iterator, and returns an iterable. All iter-tools functions expect iterables, as do `Array.from` and `for ... of`. Usually however this function is not neccessary, as generator functions (which most iter-tools functions are under the hood) return iterables. If the argument is already an iterable it is returned as is. The example shows a rare case when `iterable` is necessary.
-```js
-const myRangeIterator = {
-  value: 1,
-  next: () => ({ value: this.value++, done: false } })
-}
-
-slice(3, iterable(myRangeIterator)) // 1, 2, 3
-```
-
-## async-iterable
-Same as iterable, but receives an asyncIterator as its argument. If the argument is an asyncIterable, it is returned as is. Otherwise if the argument is an iterable, it is returned as an asyncIterable
-```js
-const myAsyncRangeIterator = {
-  value: 1,
-  next: () => Promise.resolve({ value: this.value++, done: false } })
-}
-
-asyncSlice(3, asyncIterable(myAsyncRangeIterator)) // 1, 2, 3
-```
 
 ## to-array
 Transform an iterable to an array. toArray is implemented as Array.from. It is included for consistency since Array.from has no counterpart for use with async iterators.

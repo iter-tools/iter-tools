@@ -1,5 +1,5 @@
 /* eslint-env node, jest */
-const { reduce, asyncReduce, asyncIterable, range } = require('..')
+const { reduce, asyncReduce, range } = require('..')
 
 describe('reduce', function () {
   it('sums an array', function () {
@@ -51,27 +51,27 @@ describe('asyncReduce', function () {
   })
 
   it('sums a range', async function () {
-    const sum = await asyncReduce((acc = 0, x) => acc + x, asyncIterable(range(4)))
+    const sum = await asyncReduce((acc = 0, x) => acc + x, range(4))
     expect(sum).toBe(6)
   })
 
   it('sums using the initial value as the initial value', async function () {
-    const sum = await asyncReduce((acc, x) => acc + x, asyncIterable(range({start: 2, end: 4})))
+    const sum = await asyncReduce((acc, x) => acc + x, range({start: 2, end: 4}))
     expect(sum).toBe(5)
   })
 
   it('returns specified initial value when iterable is empty', async function () {
-    const sum = await asyncReduce(0, (acc, x) => acc + x, asyncIterable([]))
+    const sum = await asyncReduce(0, (acc, x) => acc + x, [])
     expect(sum).toBe(0)
   })
 
   it('throws when no initial value specified and iterable is empty', async function () {
-    expect(asyncReduce((acc, x) => acc + x, asyncIterable([]))).rejects.toThrow()
+    expect(asyncReduce((acc, x) => acc + x, [])).rejects.toThrow()
   })
 
   it('sums a range (using curry)', async function () {
     const sum = asyncReduce((acc = 0, x) => acc + x)
-    expect(await sum(asyncIterable(range(4)))).toBe(6)
+    expect(await sum(range(4))).toBe(6)
   })
 
   it('sums synchronous iterables', async function () {

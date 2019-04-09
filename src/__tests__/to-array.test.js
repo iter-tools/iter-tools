@@ -1,5 +1,5 @@
 /* eslint-env node, jest */
-const { toArray, asyncToArray, asyncIterable, range } = require('..')
+const { toArray, asyncToArray, range } = require('..')
 
 describe('toArray', function () {
   it('works', function () {
@@ -10,7 +10,7 @@ describe('toArray', function () {
 
 describe('asyncToArray', async function () {
   it('works', async function () {
-    const iterable = asyncIterable(range({ start: 1, end: 4 }))
+    const iterable = range({ start: 1, end: 4 })
     expect(await asyncToArray(iterable)).toEqual([1, 2, 3])
   })
 })
