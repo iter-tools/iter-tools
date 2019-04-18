@@ -646,7 +646,7 @@ for (const [n, nsquared] of zip(proxy1, map(square, proxy1))) {
 ```
 
 ## async-fork
-Same as fork but works on both sync and async iterables.
+Same as fork but works on both sync and async iterables. Note: it returns an iterable of asyncIterables.
 
 ## partition
 Takes a condition function and an iterable, divides the iterable into 2, one contains items that satisfy the condition function, one contains item that don't.
