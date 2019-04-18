@@ -600,8 +600,8 @@ export declare function asyncFlatMap<T, O> (concurrency: number, func: (item: T)
     AsyncIterableIterator<O>
 
 export declare function asyncFork<T> (asyncIterable: AsyncIterableLike<T>): IterableIterator<AsyncIterableIterator<T>>
-export declare function asyncFork<T> (n: number): (iterable: asyncIterable<T>) => IterableIterator<AsyncIterableIterator<T>>
-export declare function asyncFork<T> (n: number, iterable: asyncIterable<T>): IterableIterator<AsyncIterableIterator<T>>
+export declare function asyncFork<T> (n: number): (asyncIterable: AsyncIterableLike<T>) => IterableIterator<AsyncIterableIterator<T>>
+export declare function asyncFork<T> (n: number, asyncIterable: AsyncIterableLike<T>): IterableIterator<AsyncIterableIterator<T>>
 
 export declare function asyncGroupBy (key: null):
   <T>(iterable: AsyncIterableLike<T>) => AsyncIterableIterator<[T, AsyncIterableIterator<T>]>
