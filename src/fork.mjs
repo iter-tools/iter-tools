@@ -1,7 +1,7 @@
 import { ensureIterable } from './internal/iterable'
 import { Exchange } from './internal/queues'
 
-export default function fork (iterable) {
+function fork (n = Infinity, iterable) {
   const iterator = ensureIterable(iterable)[Symbol.iterator]()
 
   let iterableCounter = 0
@@ -48,7 +48,8 @@ export default function fork (iterable) {
   function * generateForks () {
     try {
       const consumer = exchange.getConsumer()
-      while (true) {
+      let counter = 0
+      while (counter++ < n) {
         const fork = generateFork(consumer.clone())
         fork.next() // ensure finally
         yield fork
@@ -58,6 +59,20 @@ export default function fork (iterable) {
       returnIterator()
     }
   }
-
   return generateForks()
+}
+
+export default function curriedFork (...args) {
+  if (args.length === 2) {
+    return fork(...args)
+  }
+
+  if (args.length === 0) {
+    return fork
+  }
+
+  if (typeof args[0] === 'number') {
+    return (...args2) => curriedFork(args[0], ...args2)
+  }
+  return fork(undefined, args[0])
 }

@@ -604,16 +604,6 @@ groupBySquare([1, 1, 1, 1, -1, -1, -1, 4]);
 ## async-group-by
 Same as groupBy but works on both sync and async iterables. The first argument can be a function returning synchronously or a promise.
 
-## tee (DEPRECATED use *fork* instead)
-It returns 2 or more copies of an iterable. In reality they are not copies (it is not possible) they are distinct iterables sharing the original one and caching the values when one of the copy pull a new value from the original iterable.
-```js
-tee(range(3)); // [iter1, iter2]
-tee(range(3), 4); // [iter1, iter2, iter3, iter4]
-```
-
-## async-tee (DEPRECATED use *asyncFork* instead)
-Same as tee but works on both sync and async iterables.
-
 ## fork
 fork returns an iterable that yields buffered proxies of the input iterable:
 ```js
@@ -627,9 +617,17 @@ Array.from(proxy3)
 ```
 This is highly useful because iterables do not guarantee that they may be iterated over more than once. Fork guarantees that you can iterate over its source as many times as you need to. It accomplishes this by caching values to the extent that it needs to.
 
-Fork's iterable of copies is infinite, so you can always create another fork on demand. However, while fork may still need to create another copy, it must keep a complete cache of all the data from the beginning of the source iterable. This means that in no circumstance may fork be used as a truly infinite iterable of infinte iterables without, well, infinite memory cost. For example:
+It can also take as first argument the length of the iterable returned (the number of forks in other words).
 ```js
-for (const proxy of slice(2, fork(originalIterable))) {
+const proxies = fork(3, originalIterable)
+```
+And it can be curried:
+```js
+const proxies = fork(3)(originalIterable)
+```
+If you don't specify a number as first argument, fork's iterable of copies is infinite, so you can always create another fork on demand. However, while fork may still need to create another copy, it must keep a complete cache of all the data from the beginning of the source iterable. This means that in no circumstance may fork be used as a truly infinite iterable of infinte iterables without, well, infinite memory cost. For example:
+```js
+for (const proxy of fork(2, originalIterable)) {
   // if you consume proxy inside this loop
   // fork will cache every single item yielded by originalIterable
 }
@@ -892,8 +890,8 @@ product([1, 2], [3, 4], [5, 6]);
 // [2, 4, 5],
 // [2, 4, 6]
 
-// You can use tee for multiplying the same iterable for itself.
-product(...tee(range(2))); // [0, 0]  [0, 1]  [1, 0]  [1, 1]
+// You can use fork for multiplying the same iterable for itself.
+product(...fork(range(2))); // [0, 0]  [0, 1]  [1, 0]  [1, 1]
 ```
 You can get the number of items calling the method *getSize* without actually emitting the sequence:
 ```js
@@ -1024,7 +1022,7 @@ apply is a convenience method. Its implementation is:
 ## Issues and limitations
 There are a few limitations that you need to be aware of.
 First of all, when you consume an iterator object (using next) you are mutating the object for good.
-Some of these functions makes an in memory copy of the output. For example: cycle, product or tee. They do that in a efficient lazy way. Still you need to consider that.
+Some of these functions makes an in memory copy of the output. For example: cycle, product or fork. They do that in a efficient lazy way. Still you need to consider that.
 Also with the iterator protocol you can create infinite iterables (repeat, cycle, count etc.). These iterables can't be used by all generators. For example combinatory generators require finite iterables.
 Some of the obvious things you can do with arrays, are not efficients with iterables. For example: sorting, shuffling and in general all operations that rely on having the full array at your disposal. In that case the way to go is to convert the iterable in an array and use that.
 

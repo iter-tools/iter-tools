@@ -47,6 +47,24 @@ describe('fork', function () {
     )
   })
 
+  it('can take a number as first argument', function () {
+    const gen = fork(3, makeIterable())
+    expect(
+      Array.from(gen).map(iter => Array.from(iter))
+    ).toEqual(
+      Array(3).fill(Array.from(makeIterable()))
+    )
+  })
+
+  it('can be curried', function () {
+    const gen = fork(3)(makeIterable())
+    expect(
+      Array.from(gen).map(iter => Array.from(iter))
+    ).toEqual(
+      Array(3).fill(Array.from(makeIterable()))
+    )
+  })
+
   it('it does not matter which order the fork iterables are consumed in', function () {
     const [a, b, c] = fork(makeIterable())
     expect(
@@ -150,6 +168,26 @@ describe('asyncFork', function () {
 
     expect(
       await Promise.all([a, b, c].map(iter => asyncToArray(iter)))
+    ).toEqual(
+      Array(3).fill(originalIter)
+    )
+  })
+
+  it('can take a number as first argument', async function () {
+    const gen = asyncFork(3, asyncMakeIterable())
+    const originalIter = await asyncToArray(asyncMakeIterable())
+    expect(
+      await Promise.all(Array.from(gen).map(iter => asyncToArray(iter)))
+    ).toEqual(
+      Array(3).fill(originalIter)
+    )
+  })
+
+  it('can be curried', async function () {
+    const gen = asyncFork(3)(makeIterable())
+    const originalIter = await asyncToArray(asyncMakeIterable())
+    expect(
+      await Promise.all(Array.from(gen).map(iter => asyncToArray(iter)))
     ).toEqual(
       Array(3).fill(originalIter)
     )

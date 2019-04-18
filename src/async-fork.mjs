@@ -1,7 +1,7 @@
 import { ensureAsyncIterable } from './internal/async-iterable'
 import { Exchange } from './internal/queues'
 
-export default function asyncFork (iterable) {
+function asyncFork (n = Infinity, iterable) {
   const iterator = ensureAsyncIterable(iterable)[Symbol.asyncIterator]()
   let iterableCounter = 0
   let noNewIterables = false
@@ -54,7 +54,8 @@ export default function asyncFork (iterable) {
   function * generateForks () {
     try {
       const consumer = exchange.getConsumer()
-      while (true) {
+      let counter = 0
+      while (counter++ < n) {
         const fork = generateFork(consumer.clone())
         // this first call to "next" allows to initiate the function generator
         // this ensures that "iterableCounter" will be always increased and decreased
@@ -69,6 +70,20 @@ export default function asyncFork (iterable) {
       returnIterator()
     }
   }
-
   return generateForks()
+}
+
+export default function curriedAsyncFork (...args) {
+  if (args.length === 2) {
+    return asyncFork(...args)
+  }
+
+  if (args.length === 0) {
+    return asyncFork
+  }
+
+  if (typeof args[0] === 'number') {
+    return (...args2) => curriedAsyncFork(args[0], ...args2)
+  }
+  return asyncFork(undefined, args[0])
 }
