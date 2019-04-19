@@ -6,6 +6,11 @@ describe('size', function () {
     expect(size([1, 2, 3, 4, 5, 6])).toBe(6)
   })
 
+  it('return length of null', function () {
+    expect(size(null)).toBe(0)
+    expect(size(undefined)).toBe(0)
+  })
+
   it('return number of items in iterable', function () {
     expect(size(range({ start: 1, end: 7 }))).toBe(6)
   })

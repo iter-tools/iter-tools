@@ -10,7 +10,7 @@ export function ensureIterable (i) {
     return emptyArr[Symbol.iterator]()
   } else if (!isIterable(i)) {
     if (typeof i.next === 'function') {
-      throw new TypeError('Iterators are not supported arguments to iter-tools. You must wrap them using the `iterable` method.')
+      throw new TypeError('Iterators are not supported arguments to iter-tools. It must be an iterable. For example: { [Symbol.iterator] : () => currentArgument }')
     }
     throw new TypeError('The argument is not an iterable or null')
   }
