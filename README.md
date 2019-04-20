@@ -3,7 +3,7 @@ Iter-tools
 [![Build Status](https://travis-ci.org/sithmel/iter-tools.svg?branch=master)](https://travis-ci.org/sithmel/iter-tools)
 ![coverage functions](coverage/badge-functions.svg?sanitize=true)
 [![npm version](https://img.shields.io/npm/v/iter-tools.svg)](https://www.npmjs.com/package/iter-tools)
-[![Gitter chat](https://badges.gitter.im/gitterHQ/gitter.png)](https://gitter.im/gitterHQ/gitter)
+[![Gitter chat](https://badges.gitter.im/gitterHQ/gitter.png)](https://gitter.im/iter-tools/community)
 
 iter-tools is an utility toolbox that allows you to unleash the power and expressiveness of iterables.
 
