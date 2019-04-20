@@ -1,10 +1,10 @@
-import { iterableCurry } from './iterable'
+import { ensureIterable } from './iterable'
 import { Exchange } from './queues'
 
 const UNIQUE_INITIAL_KEY = {}
 
-function splitBy (getKey = (k) => k, iterable) {
-  const iterator = iterable[Symbol.iterator]()
+export default function splitBy (getKey = (k) => k, iterable) {
+  const iterator = ensureIterable(iterable)[Symbol.iterator]()
 
   let itemIndex = 0
   let iterableCounter = 0
@@ -86,5 +86,3 @@ function splitBy (getKey = (k) => k, iterable) {
 
   return generateGroups()
 }
-
-export default iterableCurry(splitBy, false, 0, 1)
