@@ -20,6 +20,7 @@ module.exports = {
     cjs: {
       plugins: [
         'add-module-exports',
+        '@babel/plugin-transform-modules-commonjs',
         ['@babel/plugin-transform-runtime', { corejs: 2 }]
       ]
     }
