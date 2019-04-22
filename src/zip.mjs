@@ -20,7 +20,7 @@ export default function * zip (...iterables) {
       let i = 0
       let c = 0
       for (const iter of iters) {
-        const {done, value} = iter.next()
+        const { done, value } = iter.next()
         if (done) {
           closeIterators(iters, c) // clean up unfinished iterators
           return

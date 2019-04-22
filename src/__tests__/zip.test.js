@@ -70,7 +70,7 @@ describe('asyncZip', function () {
       }
     }
 
-    const iter = zip(range(2), {[Symbol.iterator]: () => repeatX})
+    const iter = zip(range(2), { [Symbol.iterator]: () => repeatX })
     expect(await asyncToArray(iter)).toEqual([[0, 'x'], [1, 'x']])
     expect(calledClose).toBe(true)
   })

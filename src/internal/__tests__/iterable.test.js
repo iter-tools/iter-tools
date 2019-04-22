@@ -113,9 +113,9 @@ describe('iterableCurry', function () {
     const f2 = (a, b, iterable) => add(a + b, iterable)
     const f1 = (a, iterable) => add(a, iterable)
     const f0 = (iterable) => add(0, iterable)
-    const c2 = iterableCurry(f2, {reduces: true})
-    const c1 = iterableCurry(f1, {reduces: true})
-    const c0 = iterableCurry(f0, {reduces: true})
+    const c2 = iterableCurry(f2, { reduces: true })
+    const c1 = iterableCurry(f1, { reduces: true })
+    const c0 = iterableCurry(f0, { reduces: true })
 
     it('curries', function () {
       expect(c2(1)(2)([4])).toBe(7)
@@ -141,7 +141,7 @@ describe('iterableCurry', function () {
 
   describe('works with variadic functions', function () {
     const f1 = (a, ...iterables) => addAll(a, ...iterables)
-    const c1 = iterableCurry(f1, {variadic: true, reduces: true})
+    const c1 = iterableCurry(f1, { variadic: true, reduces: true })
 
     it('curries', function () {
       expect(c1(1)([2, 4], [8, 16])).toBe(31)

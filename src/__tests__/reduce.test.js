@@ -18,7 +18,7 @@ describe('reduce', function () {
   })
 
   it('sums using the initial value as the initial value', function () {
-    const sum = reduce((acc, x) => acc + x, range({start: 2, end: 4}))
+    const sum = reduce((acc, x) => acc + x, range({ start: 2, end: 4 }))
     expect(sum).toBe(5)
   })
 
@@ -56,7 +56,7 @@ describe('asyncReduce', function () {
   })
 
   it('sums using the initial value as the initial value', async function () {
-    const sum = await asyncReduce((acc, x) => acc + x, range({start: 2, end: 4}))
+    const sum = await asyncReduce((acc, x) => acc + x, range({ start: 2, end: 4 }))
     expect(sum).toBe(5)
   })
 

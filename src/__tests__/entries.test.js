@@ -8,7 +8,7 @@ describe('entries', function () {
     expect(Array.from(entries(map))).toEqual(mapEntries)
   })
   it('works with Objects', function () {
-    const i = entries({'1': 1, '2': 2})
+    const i = entries({ '1': 1, '2': 2 })
     expect(Array.from(i)).toEqual([['1', 1], ['2', 2]])
   })
   it('works with null', function () {

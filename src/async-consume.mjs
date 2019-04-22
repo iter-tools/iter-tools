@@ -7,4 +7,4 @@ async function asyncConsume (func = () => {}, iterable) {
   }
 }
 
-export default asyncIterableCurry(asyncConsume, {variadic: false, reduces: true}, 0, 1)
+export default asyncIterableCurry(asyncConsume, { variadic: false, reduces: true }, 0, 1)

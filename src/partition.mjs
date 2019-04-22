@@ -6,4 +6,4 @@ function partition (func, iter) {
   return [first, second]
 }
 
-export default iterableCurry(partition, {reduces: true})
+export default iterableCurry(partition, { reduces: true })

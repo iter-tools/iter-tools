@@ -7,4 +7,4 @@ function consume (func = () => {}, iterable) {
   }
 }
 
-export default iterableCurry(consume, {variadic: false, reduces: true}, 0, 1)
+export default iterableCurry(consume, { variadic: false, reduces: true }, 0, 1)
