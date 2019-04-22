@@ -1,10 +1,14 @@
 import { ensureAsyncIterable } from './internal/async-iterable'
 
-export default async function * asyncCycle (iterable) {
-  const copy = []
-  for await (const item of ensureAsyncIterable(iterable)) {
-    copy.push(item)
-    yield item
+export default function asyncCycle (iterable) {
+  return {
+    async * [Symbol.asyncIterator] () {
+      const copy = []
+      for await (const item of ensureAsyncIterable(iterable)) {
+        copy.push(item)
+        yield item
+      }
+      yield * asyncCycle(copy)
+    }
   }
-  yield * asyncCycle(copy)
 }

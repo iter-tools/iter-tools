@@ -56,4 +56,14 @@ describe('asyncCycle', function () {
     expect(await iter.next()).toEqual({ value: 1, done: false })
     expect(await iter.next()).toEqual({ value: 2, done: false })
   })
+
+  it('can be reused', async function () {
+    const myCycle = cycle(range(3))
+    const iter1 = asyncCycle(myCycle)[Symbol.asyncIterator]()
+    expect(await iter1.next()).toEqual({ value: 0, done: false })
+    expect(await iter1.next()).toEqual({ value: 1, done: false })
+    const iter2 = asyncCycle(myCycle)[Symbol.asyncIterator]()
+    expect(await iter2.next()).toEqual({ value: 0, done: false })
+    expect(await iter2.next()).toEqual({ value: 1, done: false })
+  })
 })
