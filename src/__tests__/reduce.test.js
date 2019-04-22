@@ -1,5 +1,6 @@
 /* eslint-env node, jest */
 const { reduce, asyncReduce, range } = require('..')
+const { OneTwoThreeIterable, AsyncOneTwoThreeIterable } = require('../internal/test-fixtures')
 
 describe('reduce', function () {
   it('sums an array', function () {
@@ -36,6 +37,17 @@ describe('reduce', function () {
   it('sums a range (using curry)', function () {
     const sum = reduce((acc = 0, x) => acc + x)
     expect(sum(range(4))).toBe(6)
+  })
+
+  it('cleans up iterable', function () {
+    const oneTwoThree = new OneTwoThreeIterable()
+    try {
+      reduce((acc = 0, x) => {
+        throw new Error('ops')
+      }, oneTwoThree)
+    } catch (e) {
+      expect(oneTwoThree).toHaveProperty('isCleanedUp', true)
+    }
   })
 })
 
@@ -77,5 +89,16 @@ describe('asyncReduce', function () {
   it('sums synchronous iterables', async function () {
     const sum = await asyncReduce((acc = 0, x) => acc + x, [0, 1, 2, 3])
     expect(sum).toBe(6)
+  })
+
+  it('cleans up iterable', async function () {
+    const oneTwoThree = new AsyncOneTwoThreeIterable()
+    try {
+      await asyncReduce((acc = 0, x) => {
+        throw new Error('ops')
+      }, oneTwoThree)
+    } catch (e) {
+      expect(oneTwoThree).toHaveProperty('isCleanedUp', true)
+    }
   })
 })

@@ -1,7 +1,7 @@
 /* eslint-env node, jest */
 const { zip, asyncZip, asyncToArray, range } = require('..')
-
 const { slice } = require('..')
+const { OneTwoThreeIterable, AsyncOneTwoThreeIterable } = require('../internal/test-fixtures')
 
 describe('zip', function () {
   it('zips', function () {
@@ -42,6 +42,16 @@ describe('zip', function () {
     expect(Array.from(iter)).toEqual([[0, 'x']])
     expect(repeatX.return).toBeCalled()
   })
+
+  it('cleans up the iterables', function () {
+    const first = new OneTwoThreeIterable()
+    const second = new OneTwoThreeIterable()
+
+    const iter = zip(first, second)
+    expect(Array.from(iter)).toEqual([[1, 1], [2, 2], [3, 3]])
+    expect(first).toHaveProperty('isCleanedUp', true)
+    expect(second).toHaveProperty('isCleanedUp', true)
+  })
 })
 
 describe('asyncZip', function () {
@@ -73,5 +83,15 @@ describe('asyncZip', function () {
     const iter = zip(range(2), { [Symbol.iterator]: () => repeatX })
     expect(await asyncToArray(iter)).toEqual([[0, 'x'], [1, 'x']])
     expect(calledClose).toBe(true)
+  })
+
+  it('cleans up the iterables', async function () {
+    const first = new AsyncOneTwoThreeIterable()
+    const second = new AsyncOneTwoThreeIterable()
+
+    const iter = asyncZip(first, second)
+    expect(await asyncToArray(iter)).toEqual([[1, 1], [2, 2], [3, 3]])
+    expect(first).toHaveProperty('isCleanedUp', true)
+    expect(second).toHaveProperty('isCleanedUp', true)
   })
 })
