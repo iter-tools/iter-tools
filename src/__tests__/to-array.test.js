@@ -8,7 +8,7 @@ describe('toArray', function () {
   })
 })
 
-describe('asyncToArray', async function () {
+describe('asyncToArray', function () {
   it('works', async function () {
     const iterable = range({ start: 1, end: 4 })
     expect(await asyncToArray(iterable)).toEqual([1, 2, 3])
