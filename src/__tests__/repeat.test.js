@@ -6,6 +6,12 @@ describe('repeat', function () {
     expect(Array.from(repeat(10, 3))).toEqual([10, 10, 10])
   })
 
+  it('can be reused', function () {
+    const myRepeat = repeat(10, 3)
+    expect(Array.from(myRepeat)).toEqual([10, 10, 10])
+    expect(Array.from(myRepeat)).toEqual([10, 10, 10])
+  })
+
   it('return infinite repeat', function () {
     const iter = repeat(10)
     expect(iter.next().value).toBe(10)
