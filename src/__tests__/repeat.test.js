@@ -13,7 +13,8 @@ describe('repeat', function () {
   })
 
   it('return infinite repeat', function () {
-    const iter = repeat(10)
+    const iterable = repeat(10)
+    const iter = iterable[Symbol.iterator]()
     expect(iter.next().value).toBe(10)
     expect(iter.next().value).toBe(10)
     expect(iter.next().value).toBe(10)
