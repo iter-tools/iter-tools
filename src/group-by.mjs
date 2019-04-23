@@ -22,4 +22,4 @@ function * groupBy (getKey = (k) => k, iterable) {
   }
 }
 
-export default iterableCurry(groupBy, { variadic: false }, 0, 1)
+export default iterableCurry(groupBy, { variadic: false, minArgs: 0, maxArgs: 1 })

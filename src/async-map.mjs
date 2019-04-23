@@ -92,4 +92,4 @@ async function * asyncMap (concurrency = 1, func, iterable) {
   }
 }
 
-export default asyncIterableCurry(asyncMap, undefined, 1, 2)
+export default asyncIterableCurry(asyncMap, { minArgs: 1, maxArgs: 2 })

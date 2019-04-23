@@ -17,4 +17,4 @@ async function * asyncFilter (concurrency, func, iterable) {
   }
 }
 
-export default asyncIterableCurry(asyncFilter, { variadic: false }, 1, 2)
+export default asyncIterableCurry(asyncFilter, { variadic: false, minArgs: 1, maxArgs: 2 })
