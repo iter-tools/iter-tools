@@ -90,7 +90,7 @@ describe('iterableCurry', function () {
 
   describe('when passed explicit arity', function () {
     const f = (a = goodbye, b = world, c) => iter(a, b)
-    const c = iterableCurry(f, undefined, 0, 2)
+    const c = iterableCurry(f, { minArgs: 0, maxArgs: 2 })
 
     it('curries', function () {
       expect(toArray(c(hello)(world)([]))).toEqual([hello, world])

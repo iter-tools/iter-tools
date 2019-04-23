@@ -23,4 +23,4 @@ function reduce (initial, func, iterable) {
   }
 }
 
-export default iterableCurry(reduce, { variadic: false, reduces: true }, 1, 2)
+export default iterableCurry(reduce, { variadic: false, reduces: true, minArgs: 1, maxArgs: 2 })

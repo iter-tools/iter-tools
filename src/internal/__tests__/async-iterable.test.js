@@ -85,7 +85,7 @@ describe('asyncIterableCurry', function () {
 
   describe('when passed explicit arity', function () {
     const f = (a = goodbye, b = world, c) => iter(a, b)
-    const c = asyncIterableCurry(f, undefined, 0, 2)
+    const c = asyncIterableCurry(f, { minArgs: 0, maxArgs: 2 })
 
     it('curries', async function () {
       expect(await asyncToArray(c(hello)(world)([]))).toEqual([hello, world])
