@@ -11,7 +11,7 @@ describe('keys', function () {
     expect(Array.from(i)).toEqual(['1', '2'])
   })
   it('can be reused', function () {
-    const i = keys({'1': 1, '2': 2})
+    const i = keys({ '1': 1, '2': 2 })
     expect(Array.from(i)).toEqual(['1', '2'])
     expect(Array.from(i)).toEqual(['1', '2'])
   })
