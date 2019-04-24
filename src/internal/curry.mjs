@@ -17,64 +17,27 @@ function unshiftUndefineds (args, by) {
   }
 }
 
-function BaseIterable (fn, variadic, args, iterableArgs) {
-  this._fn = fn
-  this._args = args
-  this._variadic = variadic
-  this._iterableArgs = iterableArgs
-  this._staticIterator = null
-}
-
-Object.assign(BaseIterable.prototype, {
-  __iterate () {
-    return this._variadic ? this._fn(...this._args, this._iterableArgs) : this._fn(...this._args)
-  },
-
-  next () {
-    this._staticIterator = this._staticIterator || this.__iterate()
-    return this._staticIterator.next()
-  },
-
-  return (...args) {
-    if (typeof this._staticIterator.return === 'function') this._staticIterator.return(...args)
-  }
-})
-
-function Iterable () { BaseIterable.apply(this, arguments) }
-
-Iterable.prototype = Object.assign(Object.create(BaseIterable.prototype), {
-  constructor: Iterable,
-  [Symbol.iterator] () {
-    return this.__iterate()
-  }
-})
-
-function AsyncIterable () { BaseIterable.apply(this, arguments) }
-
-AsyncIterable.prototype = Object.assign(Object.create(BaseIterable.prototype), {
-  constructor: AsyncIterable,
-  [Symbol.asyncIterator] () {
-    return this.__iterate()
-  }
-})
-
 function variadicCurryWithValidationInner (
-  isIterable,
-  iterableType,
-  applyOnIterableArgs,
-  fn,
-  variadic,
-  reduces,
-  forceSync,
-  minConfigArgs,
-  maxConfigArgs,
+  config,
   args
 ) {
-  if (args.length > minConfigArgs) {
+  const {
+    fn,
+    variadic,
+    reduces,
+    minArgs,
+    maxArgs,
+    isIterable,
+    iterableType,
+    applyOnIterableArgs,
+    IterableClass
+  } = config
+
+  if (args.length > minArgs) {
     let iterableArgsStart = -1
     let allArgsIterable = true
     if (variadic) {
-      iterableArgsStart = args.findIndex((arg, i) => isIterable(arg) && i >= minConfigArgs)
+      iterableArgsStart = args.findIndex((arg, i) => isIterable(arg) && i >= minArgs)
 
       for (let i = iterableArgsStart; i < args.length; i++) {
         allArgsIterable = allArgsIterable && isIterable(args[i])
@@ -84,9 +47,9 @@ function variadicCurryWithValidationInner (
       iterableArgsStart = args.length - 1
     }
 
-    if (args.length > maxConfigArgs && (iterableArgsStart === -1 || !allArgsIterable)) {
+    if (args.length > maxArgs && (iterableArgsStart === -1 || !allArgsIterable)) {
       const iterableTypeOrNames = variadic ? `...${iterableType}s` : iterableType
-      const baseMessage = `${fn.name} takes up to ${maxConfigArgs} arguments, followed by ${iterableTypeOrNames}. You already passed ${args.length} arguments`
+      const baseMessage = `${fn.name} takes up to ${maxArgs} arguments, followed by ${iterableTypeOrNames}. You already passed ${args.length} arguments`
       if (variadic) {
         throw new Error(`${baseMessage} and the following arguments were not all ${iterableType}s`)
       } else {
@@ -101,17 +64,15 @@ function variadicCurryWithValidationInner (
         args[i] = applyOnIterableArgs(args[i])
       }
 
-      unshiftUndefineds(args, maxConfigArgs - iterableArgsStart)
-
-      const IterableClass = iterableType === 'asyncIterable' && !forceSync ? AsyncIterable : Iterable
+      unshiftUndefineds(args, maxArgs - iterableArgsStart)
 
       if (variadic) {
         const iterableArgs = args.slice(iterableArgsStart)
         args.splice(iterableArgsStart)
 
-        return reduces ? fn(...args, iterableArgs) : new IterableClass(fn, true, args, iterableArgs)
+        return reduces ? fn(...args, iterableArgs) : new IterableClass(config, args, iterableArgs)
       } else {
-        return reduces ? fn(...args) : new IterableClass(fn, false, args)
+        return reduces ? fn(...args) : new IterableClass(config, args)
       }
     } else {
       // We have not received any iterables, but we must be fully configured
@@ -119,44 +80,20 @@ function variadicCurryWithValidationInner (
   }
 
   return variadicCurryWithValidation(
-    isIterable,
-    iterableType,
-    applyOnIterableArgs,
-    fn,
-    variadic,
-    reduces,
-    forceSync,
-    minConfigArgs,
-    maxConfigArgs,
+    config,
     args
   )
 }
 
 export function variadicCurryWithValidation (
-  isIterable,
-  iterableType,
-  applyOnIterableArgs,
-  fn,
-  variadic,
-  reduces,
-  forceSync,
-  minConfigArgs = fn.length - 1,
-  maxConfigArgs = variadic ? fn.length : fn.length - 1,
+  config,
   previousArgs = []
 ) {
   return (...args) => {
     args.unshift(...previousArgs)
 
     return variadicCurryWithValidationInner(
-      isIterable,
-      iterableType,
-      applyOnIterableArgs,
-      fn,
-      variadic,
-      reduces,
-      forceSync,
-      minConfigArgs,
-      maxConfigArgs,
+      config,
       args
     )
   }

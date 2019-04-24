@@ -26,6 +26,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
  - takeSorted/asyncTakeSorted optional comparator is now the first argument
  - optional arguments can no longer have "undefined" as argument. This is at odds with considering undefined as a valid iterable.
  - asyncFlatMap takes an extra "concurrency" argument (default 1)
+ - permutations, combinations, combinationsWithReplacement: order of arguments is changed. Curry support
 
 ### Fixed
  - asyncMap, asyncFilter: they didn't work correctly with concurrency greater than 1

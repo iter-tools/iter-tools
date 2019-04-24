@@ -8,7 +8,7 @@ async function * cons (item, iterable) {
 
 async function car (iterable) {
   const iterator = iterable[Symbol.asyncIterator]()
-  const {done, value} = await iterator.next()
+  const { done, value } = await iterator.next()
   if (done) return []
   return [value, iterator]
 }
@@ -22,4 +22,4 @@ async function * asyncGroupBy (getKey = (k) => k, iterable) {
   }
 }
 
-export default asyncIterableCurry(asyncGroupBy, {variadic: false}, 0, 1)
+export default asyncIterableCurry(asyncGroupBy, { variadic: false, minArgs: 0, maxArgs: 1 })

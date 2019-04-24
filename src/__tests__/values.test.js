@@ -7,7 +7,7 @@ describe('values', function () {
     expect(Array.from(values(map))).toEqual(Array.from(map.values()))
   })
   it('works with Objects', function () {
-    const i = values({'1': 1, '2': 2})
+    const i = values({ '1': 1, '2': 2 })
     expect(Array.from(i)).toEqual([1, 2])
   })
   it('can be reused', function () {

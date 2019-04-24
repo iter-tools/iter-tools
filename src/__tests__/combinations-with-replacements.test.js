@@ -21,7 +21,7 @@ describe('combinationsWithReplacement', function () {
   })
 
   it('returns combinationsWithReplacement (max n)', function () {
-    const iter = combinationsWithReplacement([1, 2, 3, 4], 2)
+    const iter = combinationsWithReplacement(2, [1, 2, 3, 4])
     expect(iter.getSize()).toEqual(10)
     const expected = [
       [ 1, 1 ],

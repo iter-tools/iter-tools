@@ -21,7 +21,7 @@ describe('permutations', function () {
   })
 
   it('returns permutations', function () {
-    const iter = permutations([1, 2, 3, 4], 2)
+    const iter = permutations(2, [1, 2, 3, 4])
     expect(iter.getSize()).toEqual(12)
     const expected = [ [ 1, 2 ],
       [ 1, 3 ],

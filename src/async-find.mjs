@@ -10,4 +10,4 @@ async function asyncFind (func, iterable) {
   return undefined
 }
 
-export default asyncIterableCurry(asyncFind, {reduces: true})
+export default asyncIterableCurry(asyncFind, { reduces: true })

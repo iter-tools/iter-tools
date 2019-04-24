@@ -1,7 +1,7 @@
 import map from './map'
 import range from './range'
 import product from './product'
-import { ensureIterable } from './internal/iterable'
+import { iterableCurry } from './internal/iterable'
 import { combinationsWithReplacementSize } from './internal/math'
 
 function isSorted (arr) {
@@ -15,8 +15,8 @@ function isSorted (arr) {
   return true
 }
 
-export default function combinationsWithReplacement (iterable, r) {
-  const arr = Array.from(ensureIterable(iterable))
+function combinationsWithReplacement (r, iterable) {
+  const arr = Array.from(iterable)
   const len = arr.length
   r = r === undefined ? len : r
   return {
@@ -33,3 +33,5 @@ export default function combinationsWithReplacement (iterable, r) {
     }
   }
 }
+
+export default iterableCurry(combinationsWithReplacement, false, 0, 1)

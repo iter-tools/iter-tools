@@ -10,4 +10,4 @@ async function asyncSome (func, iterable) {
   return false
 }
 
-export default asyncIterableCurry(asyncSome, {reduces: true})
+export default asyncIterableCurry(asyncSome, { reduces: true })

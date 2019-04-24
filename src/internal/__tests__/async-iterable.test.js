@@ -85,7 +85,7 @@ describe('asyncIterableCurry', function () {
 
   describe('when passed explicit arity', function () {
     const f = (a = goodbye, b = world, c) => iter(a, b)
-    const c = asyncIterableCurry(f, undefined, 0, 2)
+    const c = asyncIterableCurry(f, { minArgs: 0, maxArgs: 2 })
 
     it('curries', async function () {
       expect(await asyncToArray(c(hello)(world)([]))).toEqual([hello, world])
@@ -108,9 +108,9 @@ describe('asyncIterableCurry', function () {
     const f2 = (a, b, iterable) => add(a + b, iterable)
     const f1 = (a, iterable) => add(a, iterable)
     const f0 = (iterable) => add(0, iterable)
-    const c2 = asyncIterableCurry(f2, {reduces: true})
-    const c1 = asyncIterableCurry(f1, {reduces: true})
-    const c0 = asyncIterableCurry(f0, {reduces: true})
+    const c2 = asyncIterableCurry(f2, { reduces: true })
+    const c1 = asyncIterableCurry(f1, { reduces: true })
+    const c0 = asyncIterableCurry(f0, { reduces: true })
 
     it('curries', async function () {
       expect(await c2(1)(2)([4])).toBe(7)
@@ -136,7 +136,7 @@ describe('asyncIterableCurry', function () {
 
   describe('works with variadic functions', function () {
     const f1 = (a, ...iterables) => addAll(a, ...iterables)
-    const c1 = asyncIterableCurry(f1, {variadic: true, reduces: true})
+    const c1 = asyncIterableCurry(f1, { variadic: true, reduces: true })
 
     it('curries', async function () {
       expect(await c1(1)([2, 4], [8, 16])).toBe(31)

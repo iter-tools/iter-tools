@@ -5,4 +5,4 @@ function asyncSplitAt (index, iterable) {
   return asyncSplitBy((item, i) => i >= index, iterable)
 }
 
-export default asyncIterableCurry(asyncSplitAt, {forceSync: true})
+export default asyncIterableCurry(asyncSplitAt, { forceSync: true })
