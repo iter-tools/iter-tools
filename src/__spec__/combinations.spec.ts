@@ -3,23 +3,23 @@ import * as iter from '../index'
 
 assert<
   Iterable<[number, number, number]>
->(iter.combinations([0, 1, 2, 3], 3))
+>(iter.combinations(3, [0, 1, 2, 3]))
 
 assert<
   number
->(iter.combinations([0, 1, 2, 3], 3).getSize())
+>(iter.combinations(3, [0, 1, 2, 3]).getSize())
 
 assert<
   Iterable<number[]>
->(iter.combinations([0, 1, 2, 3], Number()))
+>(iter.combinations(Number(), [0, 1, 2, 3]))
 
 assert<
   Iterable<number[]>
->(iter.combinations([0, 1, 2, 3], 999))
+>(iter.combinations(999, [0, 1, 2, 3]))
 
 assert<
   Iterable<[string, string, string]>
->(iter.combinations('', 3))
+>(iter.combinations(3, ''))
 
 assert<
   Iterable<[number, number, number, number]>
