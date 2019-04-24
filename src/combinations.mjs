@@ -35,4 +35,4 @@ function combinations (r, iterable) {
   }
 }
 
-export default iterableCurry(combinations, { variadic: true, minArgs: 0, maxArgs: 1 })
+export default iterableCurry(combinations, { reduces: true, variadic: false, minArgs: 0, maxArgs: 1 })

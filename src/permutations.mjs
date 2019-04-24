@@ -24,4 +24,4 @@ function permutations (r, iterable) {
   }
 }
 
-export default iterableCurry(permutations, { variadic: true, minArgs: 0, maxArgs: 1 })
+export default iterableCurry(permutations, { reduces: true, variadic: false, minArgs: 0, maxArgs: 1 })
