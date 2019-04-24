@@ -11,6 +11,11 @@ describe('entries', function () {
     const i = entries({ '1': 1, '2': 2 })
     expect(Array.from(i)).toEqual([['1', 1], ['2', 2]])
   })
+  it('can be reused', function () {
+    const i = entries({ '1': 1, '2': 2 })
+    expect(Array.from(i)).toEqual([['1', 1], ['2', 2]])
+    expect(Array.from(i)).toEqual([['1', 1], ['2', 2]])
+  })
   it('works with null', function () {
     const i = entries(null)
     expect(Array.from(i)).toEqual([])

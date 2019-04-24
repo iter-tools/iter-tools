@@ -8,9 +8,15 @@ describe('permutations', function () {
     expect(Array.from(iter)).toEqual([])
   })
 
-  it('returns permutations', function () {
+  it.only('returns permutations', function () {
+    const iter = permutations(2, [1, 2])
+    // expect(iter.getSize()).toEqual(2)
+    expect(Array.from(iter)).toEqual([[1, 2], [2, 1]])
+  })
+
+  it('can be reused', function () {
     const iter = permutations([1, 2])
-    expect(iter.getSize()).toEqual(2)
+    expect(Array.from(iter)).toEqual([[1, 2], [2, 1]])
     expect(Array.from(iter)).toEqual([[1, 2], [2, 1]])
   })
 

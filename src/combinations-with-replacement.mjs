@@ -34,4 +34,4 @@ function combinationsWithReplacement (r, iterable) {
   }
 }
 
-export default iterableCurry(combinationsWithReplacement, false, 0, 1)
+export default iterableCurry(combinationsWithReplacement, { variadic: true, minArgs: 0, maxArgs: 1 })
