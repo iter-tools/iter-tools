@@ -1,11 +1,11 @@
-import { ensureIterable } from './internal/iterable'
+import { iterableCurry } from './internal/iterable'
 import { permutationsSize } from './internal/math'
 import map from './map'
 import range from './range'
 import product from './product'
 
-export default function permutations (iterable, r) {
-  const arr = Array.from(ensureIterable(iterable))
+function permutations (r, iterable) {
+  const arr = Array.from(iterable)
   const len = arr.length
   r = r === undefined ? len : r
   return {
@@ -23,3 +23,5 @@ export default function permutations (iterable, r) {
     }
   }
 }
+
+export default iterableCurry(permutations, { reduces: true, variadic: false, minArgs: 0, maxArgs: 1 })

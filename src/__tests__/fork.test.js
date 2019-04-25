@@ -1,40 +1,11 @@
 /* eslint-env node, jest */
 const { fork, asyncFork, asyncToArray } = require('..')
+const { OneTwoThreeIterable, AsyncOneTwoThreeIterable } = require('../internal/test-fixtures')
 
 function * makeIterable () {
   yield 1
   yield 2
   yield 3
-}
-
-class OneTwoThreeIterable {
-  constructor () {
-    this._counter = 0
-    this.isCleanedUp = false
-  }
-
-  next () {
-    if (this._counter <= 3) {
-      return {
-        value: ++this._counter,
-        done: false
-      }
-    } else {
-      this.isCleanedUp = true
-      return {
-        value: undefined,
-        done: true
-      }
-    }
-  }
-
-  return () {
-    this.isCleanedUp = true
-  }
-
-  [Symbol.iterator] () {
-    return this
-  }
 }
 
 describe('fork', function () {
@@ -129,36 +100,6 @@ async function * asyncMakeIterable () {
   yield 1
   yield 2
   yield 3
-}
-
-class AsyncOneTwoThreeIterable {
-  constructor () {
-    this._counter = 0
-    this.isCleanedUp = false
-  }
-
-  next () {
-    if (this._counter <= 3) {
-      return Promise.resolve({
-        value: ++this._counter,
-        done: false
-      })
-    } else {
-      this.isCleanedUp = true
-      return Promise.resolve({
-        value: undefined,
-        done: true
-      })
-    }
-  }
-
-  return () {
-    this.isCleanedUp = true
-  }
-
-  [Symbol.asyncIterator] () {
-    return this
-  }
 }
 
 describe('asyncFork', function () {

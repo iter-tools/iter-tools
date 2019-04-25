@@ -60,4 +60,4 @@ function * asyncMultiPartition (func, iter) {
   }
 }
 
-export default asyncIterableCurry(asyncMultiPartition)
+export default asyncIterableCurry(asyncMultiPartition, { forceSync: true })

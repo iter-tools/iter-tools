@@ -1,10 +1,10 @@
-import { asyncIterableCurry } from './async-iterable'
+import { ensureAsyncIterable } from './async-iterable'
 import { Exchange } from './queues'
 
 const UNIQUE_INITIAL_KEY = {}
 
-function asyncSplitBy (getKey = (k) => k, iterable) {
-  const iterator = iterable[Symbol.asyncIterator]()
+export default function asyncSplitBy (getKey = (k) => k, iterable) {
+  const iterator = ensureAsyncIterable(iterable)[Symbol.asyncIterator]()
 
   let itemIndex = 0
   let iterableCounter = 0
@@ -85,5 +85,3 @@ function asyncSplitBy (getKey = (k) => k, iterable) {
 
   return generateGroups()
 }
-
-export default asyncIterableCurry(asyncSplitBy, false, 0, 1)

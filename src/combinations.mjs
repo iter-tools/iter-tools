@@ -1,7 +1,7 @@
 import map from './map'
 import range from './range'
 import permutations from './permutations'
-import { ensureIterable } from './internal/iterable'
+import { iterableCurry } from './internal/iterable'
 import { combinationsSize } from './internal/math'
 
 function isSorted (arr) {
@@ -15,15 +15,15 @@ function isSorted (arr) {
   return true
 }
 
-export default function combinations (iterable, r) {
-  const arr = Array.from(ensureIterable(iterable))
+function combinations (r, iterable) {
+  const arr = Array.from(iterable)
   const len = arr.length
   r = r === undefined ? len : r
   return {
     * [Symbol.iterator] () {
       const mapToIndex = map((i) => arr[i])
 
-      for (let indices of permutations(range(len), r)) {
+      for (let indices of permutations(r, range(len))) {
         if (isSorted(indices)) {
           yield Array.from(mapToIndex(indices))
         }
@@ -34,3 +34,5 @@ export default function combinations (iterable, r) {
     }
   }
 }
+
+export default iterableCurry(combinations, { reduces: true, variadic: false, minArgs: 0, maxArgs: 1 })

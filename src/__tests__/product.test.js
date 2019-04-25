@@ -14,6 +14,12 @@ describe('product', function () {
     expect(Array.from(iter)).toEqual([[1], [2], [3]])
   })
 
+  it('can be reused', function () {
+    const iter = product([1, 2, 3])
+    expect(Array.from(iter)).toEqual([[1], [2], [3]])
+    expect(Array.from(iter)).toEqual([[1], [2], [3]])
+  })
+
   it('returns double', function () {
     const iter = product([1, 2], [3, 4])
     expect(iter.getSize()).toEqual(4)

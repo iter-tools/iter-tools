@@ -7,6 +7,12 @@ describe('regexpSplit', function () {
     const iter = regexpSplit(re, 'ab s   d')
     expect(Array.from(iter)).toEqual('ab s   d'.split(re))
   })
+  it('can be reused', function () {
+    const re = /\s+/g
+    const iter = regexpSplit(re, 'ab s   d')
+    expect(Array.from(iter)).toEqual('ab s   d'.split(re))
+    expect(Array.from(iter)).toEqual('ab s   d'.split(re))
+  })
   it('can be curried', function () {
     const re = /\s+/g
     const splitter = regexpSplit(re)

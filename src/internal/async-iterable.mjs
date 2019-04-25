@@ -1,4 +1,4 @@
-import { ensureIterable, isValidIterableArgument } from './iterable'
+import { BaseIterable, Iterable, ensureIterable, isValidIterableArgument } from './iterable'
 import { variadicCurryWithValidation } from './curry'
 
 export function isAsyncIterable (i) {
@@ -28,14 +28,31 @@ export function isValidAsyncIterableArgument (i) {
   return isAsyncIterable(i) || isValidIterableArgument(i)
 }
 
-export const asyncIterableCurry = (fn, variadic = false, minArgs, maxArgs) => {
-  return variadicCurryWithValidation(
-    isValidAsyncIterableArgument,
-    'asyncIterable',
-    ensureAsyncIterable,
+export function AsyncIterable () { BaseIterable.apply(this, arguments) }
+
+AsyncIterable.prototype = Object.assign(Object.create(BaseIterable.prototype), {
+  constructor: AsyncIterable,
+  [Symbol.asyncIterator] () {
+    return this.__iterate()
+  }
+})
+
+function combineFunctionConfig (fn, fnConfig) {
+  const { variadic, reduces, minArgs, maxArgs, forceSync } = fnConfig
+
+  return {
     fn,
-    variadic,
-    minArgs,
-    maxArgs
-  )
+    variadic: !!variadic,
+    reduces: !!reduces,
+    minArgs: minArgs === undefined ? fn.length - 1 : minArgs,
+    maxArgs: maxArgs === undefined ? variadic ? fn.length : fn.length - 1 : maxArgs,
+    isIterable: isValidAsyncIterableArgument,
+    iterableType: 'asyncIterable',
+    applyOnIterableArgs: ensureAsyncIterable,
+    IterableClass: forceSync ? Iterable : AsyncIterable
+  }
+}
+
+export const asyncIterableCurry = (fn, config = {}) => {
+  return variadicCurryWithValidation(combineFunctionConfig(fn, config))
 }

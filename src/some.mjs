@@ -10,4 +10,4 @@ function some (func, iterable) {
   return false
 }
 
-export default iterableCurry(some)
+export default iterableCurry(some, { reduces: true })

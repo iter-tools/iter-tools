@@ -3,10 +3,36 @@ Iter-tools
 [![Build Status](https://travis-ci.org/sithmel/iter-tools.svg?branch=master)](https://travis-ci.org/sithmel/iter-tools)
 ![coverage functions](coverage/badge-functions.svg?sanitize=true)
 [![npm version](https://img.shields.io/npm/v/iter-tools.svg)](https://www.npmjs.com/package/iter-tools)
+[![Gitter chat](https://badges.gitter.im/gitterHQ/gitter.png)](https://gitter.im/iter-tools/community)
 
-iter-tools is an utility toolbox that allows you to unleash the power and expressiveness of iterables.
+iter-tools is designed to be a standard library of utilities for working with iterables. All javascript data types designed for the storage of data (namely Array, Map, and Set) are iterable, and iter-tools also includes some utilities that will help you work with objects. Working with iterables has powerful benefits:
+- The functional style helps you eliminate null pointer errors
+- It helps you use Maps and Sets, which otherwise have no tooling, yet offer attractive benefits like excellent performance, any-type keys, and the guarantee that prototype and data won't accidentally intermingle, causing difficult-to-find bugs.
+- It helps you create applications whose memory usage can be more highly optimized, helping you avoid costly garbage collections.
+- APIs which accept iterables are immediately compatible with almost any kind of data structure, including custom implementations such as those provided by Immutable.js
 
-If you want some ideas about how and when Iterables and iter-tools can help you out, take a look at [The Cookbook](https://github.com/sithmel/iter-tools/blob/master/COOKBOOK.md).
+If you want even more ideas about how and when Iterables and iter-tools can help you out, take a look at [The Cookbook](https://github.com/sithmel/iter-tools/blob/master/COOKBOOK.md).
+
+## Why iter-tools?
+
+Iter-tools is at present the only fully-featured library of its kind. Here is what it supports:
+
+- **Isomorphic**: The tools run equally well in a browser and in node.js.
+
+- **Currying/Partial Application**: iter-tools methods can be passed their arguments all at once, or can be incrementally configured. E.g. either `map(x => ++x)(iterable)` is valid. Omitting the iterable argument allows methods to be pipelined easily, as the output of one simple transform will be suitable as the only unbound argument for the next. Iter-tools provides `pipe` and `execPipe` functions for this kind of chaining.
+
+- **null/undefined are empty iterables**: iter-tools methods treat both null and undefined as empty iterables. This allows you to write transforms on array-ish data without first needing to check whether the array exists.
+
+- **Multiple iteration**: iter-tools transforms (as of v7.0.0) can be evluated multiple times if the source iterator can be. Not all iterables can be evaluated multiple times though: generator functions, notably, cannot be. Arrays, Maps, and Sets (and null/undefined) always can be. All iter-tools functions returning iterables (range, cycle for example), are designed to be iterated multiple times.
+
+- **Iterator closing**: The iterator protocol specifies a `return()` method, which can be used to prematurely terminate iteration. If iteration is terminated by code external to the iterator, the iterator's return method gives it a chance to clean up, releasing any resources which it requested in order to do its iteration. Resources might include file handles, network sockets, or event handlers, for example. This behavior makes iter-tools the only library known to the authors which is entirely safe for working with these kinds of iterators.
+
+- **Async/sync parity**: The tools are implemented for both synchronous and asynchronous iterables, and additionally the asynchronous versions can be used on sync iterables. It is not recommended however to ignore the sync versions, as they will be an order of magnitude faster on data which is really available synchronously.
+
+- **Pay what you need on web**: Iter-tools is designed to be modular, meaning that only the methods you actually use end up being bundled and shipped if you are using a supported bundler. Webpack/uglify are capable of tree-shaking iter-tools, as is Rollup after v1.3.0. If you are not using a bundler that supports tree-shaking, you can still transpile an expression like `import { map, filter } from "iter-tools"` into imports of individual files: `iter-tools/es5/map` and `iter-tools/es5/filter`. To do this use the `iter-tools-explode-imports` package.
+
+
+## API
 
 Create iterables
 * [range](#range)
@@ -65,7 +91,7 @@ Strings manipulation
 * [splitLines](#split-lines) ([async](#async-split-lines))
 * [regexpExecIter](#regexp-exec-iter) ([async](#async-regexp-exec-iter))
 
-Combinatory generators
+Combinatory iterables
 * [product](#product)
 * [permutations](#permutations)
 * [combinationsWithReplacement](#combinations-with-replacement)
@@ -101,7 +127,7 @@ const iterator = {
 
 // iterable
 const iterable = {
-  [Symbol.iterator]: iterator
+  [Symbol.iterator]: () => iterator
 }
 
 // both iterable and iterator
@@ -874,7 +900,7 @@ Note:
 ## async-regexp-exec-iter
 The same as regexpExecIter but for async iterables.
 
-# Combinatory generators
+# Combinatory iterables
 
 ## product
 This returns the cartesian product of 2 or more iterables. It is equivalent to a nested loop for every iterable.
@@ -903,7 +929,7 @@ iter.getSize() === 8
 It returns permutations of length n of an iterable. n defaults to the length of the iterable.
 ```js
 permutations(range(2)); // [0, 1] [1, 0]
-permutations([1, 2, 3, 4], 2);
+permutations(2, [1, 2, 3, 4]);
 // returns:
   // [ 1, 2 ],
   // [ 1, 3 ],
@@ -918,6 +944,11 @@ permutations([1, 2, 3, 4], 2);
   // [ 4, 2 ],
   // [ 4, 3 ]
 ```
+It can be curried:
+```js
+const permutation2 = permutations(2)
+permutation2([1, 2, 3, 4]);
+```
 You can get the number of items calling the method *getSize* without actually emitting the sequence:
 ```js
 const iter = permutations(range(2)); // [0, 1] [1, 0]
@@ -928,7 +959,7 @@ iter.getSize() === 2
 It returns combinations of length n of an iterable. n defaults to the length of the iterable.
 ```js
 combinations(range(2)); // [0, 1]
-combinations([1, 2, 3, 4], 2);
+combinations(2, [1, 2, 3, 4]);
 // returns:
 // [ 1, 2 ],
 // [ 1, 3 ],
@@ -937,6 +968,12 @@ combinations([1, 2, 3, 4], 2);
 // [ 2, 4 ],
 // [ 3, 4 ]
 ```
+It can be curried:
+```js
+const combinations2 = combinations(2)
+combinations2([1, 2, 3, 4]);
+```
+
 You can get the number of items calling the method *getSize* without actually emitting the sequence:
 ```js
 const iter = combinations([1, 2, 3, 4], 2);
@@ -947,7 +984,7 @@ iter.getSize() === 6
 It returns combinations with replacement of length n of an iterable. n defaults to the length of the iterable.
 ```js
 combinationsWithReplacement(range(2)); // [0, 0] [0, 1] [1, 1]
-combinationsWithReplacement([1, 2, 3, 4], 2);
+combinationsWithReplacement(2, [1, 2, 3, 4]);
 // returns:
 // [ 1, 1 ],
 // [ 1, 2 ],
@@ -960,6 +997,12 @@ combinationsWithReplacement([1, 2, 3, 4], 2);
 // [ 3, 4 ],
 // [ 4, 4 ]
 ```
+It can be curried:
+```js
+const combinationsWithReplacement2 = combinationsWithReplacement(2)
+combinationsWithReplacement2([1, 2, 3, 4]);
+```
+
 You can get the number of items calling the method *getSize* without actually emitting the sequence:
 ```js
 const iter = combinationsWithReplacement([1, 2, 3, 4], 2);

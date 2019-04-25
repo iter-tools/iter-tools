@@ -3,12 +3,13 @@ import { ensureIterable } from './internal/iterable'
 const TypedArrayProto = Object.getPrototypeOf(Int8Array)
 
 export default function size (iterable) {
-  if (Array.isArray(iterable)) return iterable.length
-  if (iterable instanceof Map || iterable instanceof Set) return iterable.size
-  if (Object.getPrototypeOf(iterable) === TypedArrayProto) return iterable.length
+  const iter = ensureIterable(iterable)
+  if (Array.isArray(iter)) return iter.length
+  if (iter instanceof Map || iter instanceof Set) return iter.size
+  if (Object.getPrototypeOf(iter) === TypedArrayProto) return iter.length
   let size = 0
   // eslint-disable-next-line
-  for (const _ of ensureIterable(iterable)) {
+  for (const _ of iter) {
     size++
   }
   return size

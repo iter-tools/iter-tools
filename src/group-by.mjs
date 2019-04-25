@@ -8,7 +8,7 @@ function * cons (item, iterable) {
 
 function car (iterable) {
   const iterator = iterable[Symbol.iterator]()
-  const {done, value} = iterator.next()
+  const { done, value } = iterator.next()
   if (done) return []
   return [value, iterator]
 }
@@ -22,4 +22,4 @@ function * groupBy (getKey = (k) => k, iterable) {
   }
 }
 
-export default iterableCurry(groupBy, false, 0, 1)
+export default iterableCurry(groupBy, { variadic: false, minArgs: 0, maxArgs: 1 })
