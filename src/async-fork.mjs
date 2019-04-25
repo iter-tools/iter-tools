@@ -54,8 +54,7 @@ function asyncFork (n = Infinity, iterable) {
   function * generateForks () {
     try {
       const consumer = exchange.getConsumer()
-      let counter = 0
-      while (counter++ < n) {
+      for (let counter = 0; counter < n; counter++) {
         const fork = generateFork(consumer.clone())
         // this first call to "next" allows to initiate the function generator
         // this ensures that "iterableCounter" will be always increased and decreased

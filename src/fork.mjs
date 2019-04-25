@@ -48,9 +48,13 @@ function fork (n = Infinity, iterable) {
   function * generateForks () {
     try {
       const consumer = exchange.getConsumer()
-      let counter = 0
-      while (counter++ < n) {
+      for (let counter = 0; counter < n; counter++) {
         const fork = generateFork(consumer.clone())
+        // this first call to "next" allows to initiate the function generator
+        // this ensures that "iterableCounter" will be always increased and decreased
+        //
+        // the default behaviour of a generator is that finally clause is only called
+        // if next was called at least once
         fork.next() // ensure finally
         yield fork
       }
