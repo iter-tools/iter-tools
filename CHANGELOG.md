@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
  - count (use range instead)
  - zipLongest, asyncZipLongest (replaced by zipAll, asyncZipAll)
  - iterable, asyncIterable
+ - tee, asyncTee
 
 ### Renamed
  - pipe to execPipe
@@ -26,6 +27,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
  - takeSorted/asyncTakeSorted optional comparator is now the first argument
  - optional arguments can no longer have "undefined" as argument. This is at odds with considering undefined as a valid iterable.
  - asyncFlatMap takes an extra "concurrency" argument (default 1)
+ - fork/asyncFork takes an extra optional argument with the number of forks
  - permutations, combinations, combinationsWithReplacement: order of arguments is changed. Curry support
 
 ### Fixed

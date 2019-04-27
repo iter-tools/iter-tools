@@ -270,6 +270,8 @@ export declare function flatMap<T, O> (
 ): IterableIterator<O>
 
 export declare function fork<T> (iterable: Iterable<T>): IterableIterator<IterableIterator<T>>
+export declare function fork<T> (n: number): (iterable: Iterable<T>) => IterableIterator<IterableIterator<T>>
+export declare function fork<T> (n: number, iterable: Iterable<T>): IterableIterator<IterableIterator<T>>
 
 export declare function groupBy (key: null):
   <T>(iterable: Iterable<T>) => IterableIterator<[T, IterableIterator<T>]>
@@ -452,11 +454,6 @@ export declare function takeSorted<T> (
     iterable?: Iterable<T>
 ): IterableIterator<T>
 
-/**
- * @deprecated Use `fork` instead
- */
-export declare function tee<T> (iterable: Iterable<T>, n?: number): IterableIterator<IterableIterator<T>>
-
 export declare function toArray<T> (iterable: Iterable<T>): T[]
 
 export declare function zipAll<T> (...iterables: Array<Iterable<T>>): IterableIterator<T[]>
@@ -603,6 +600,8 @@ export declare function asyncFlatMap<T, O> (concurrency: number, func: (item: T)
     AsyncIterableIterator<O>
 
 export declare function asyncFork<T> (asyncIterable: AsyncIterableLike<T>): IterableIterator<AsyncIterableIterator<T>>
+export declare function asyncFork<T> (n: number): (asyncIterable: AsyncIterableLike<T>) => IterableIterator<AsyncIterableIterator<T>>
+export declare function asyncFork<T> (n: number, asyncIterable: AsyncIterableLike<T>): IterableIterator<AsyncIterableIterator<T>>
 
 export declare function asyncGroupBy (key: null):
   <T>(iterable: AsyncIterableLike<T>) => AsyncIterableIterator<[T, AsyncIterableIterator<T>]>
@@ -710,11 +709,6 @@ export declare function asyncTakeSorted<T> (func: (item: T) => boolean, n: numbe
 export declare function asyncTakeSorted<T> (n: number): (iterable: AsyncIterableLike<T>) => AsyncIterableLike<T>
 export declare function asyncTakeSorted<T> (n: number, iterable?: AsyncIterableLike<T>):
     AsyncIterableLike<T>
-
-/**
- * @deprecated Use `asyncFork` instead
- */
-export declare function asyncTee<T> (iterable: AsyncIterableLike<T>, n?: number): IterableIterator<AsyncIterableIterator<T>>
 
 export declare function asyncToArray<T> (iterable: AsyncIterableLike<T>): Promise<T[]>
 
