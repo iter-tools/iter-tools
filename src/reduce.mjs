@@ -19,7 +19,7 @@ function reduce (initial, func, iterable) {
     }
     return acc
   } finally { // close the iterable in case of exceptions
-    if (typeof iterable.return === 'function') iterable.return()
+    if (typeof iterator.return === 'function') iterator.return()
   }
 }
 

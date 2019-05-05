@@ -19,7 +19,7 @@ async function asyncReduce (initial, func, iterable) {
     }
     return acc
   } finally { // close the iterable in case of exceptions
-    if (typeof iterable.return === 'function') await iterable.return()
+    if (typeof iterator.return === 'function') await iterator.return()
   }
 }
 
