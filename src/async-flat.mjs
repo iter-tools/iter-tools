@@ -1,31 +1,19 @@
 import { asyncIterableCurry } from './internal/async-iterable'
 
-const defaultShouldIFlat = (depth) => {
-  if (typeof depth === 'function') {
-    return depth
-  }
-  if (typeof depth === 'number') {
-    return (currentDepth, iter) =>
-      currentDepth <= depth &&
-      (typeof iter[Symbol.iterator] === 'function' || typeof iter[Symbol.asyncIterator] === 'function') &&
-      typeof iter !== 'string'
-  }
-  throw new Error('async-flat: "depth" can be a function or a number')
-}
+const defaultShouldFlat = item => (typeof item[Symbol.iterator] === 'function' || typeof item[Symbol.asyncIterator] === 'function') && typeof item !== 'string'
 
-function asyncFlat (shouldIFlat = 1, iterable) {
-  shouldIFlat = defaultShouldIFlat(shouldIFlat)
-  async function * _asyncFlat (currentDepth, iterable) {
-    if (await shouldIFlat(currentDepth, iterable)) {
-      for await (const iter of iterable) {
-        yield * _asyncFlat(currentDepth + 1, iter)
+function flat (shouldFlat = defaultShouldFlat, depth = 1, iterable) {
+  async function * _flat (currentDepth, iterable) {
+    for await (const item of iterable) {
+      if (currentDepth < depth && (await shouldFlat(item))) {
+        yield * _flat(currentDepth + 1, item)
+      } else {
+        yield item
       }
-    } else {
-      yield iterable
     }
   }
 
-  return _asyncFlat(0, iterable)
+  return _flat(0, iterable)
 }
 
-export default asyncIterableCurry(asyncFlat, { variadic: false, minArgs: 0, maxArgs: 1 })
+export default asyncIterableCurry(flat, { minArgs: 0, maxArgs: 2 })

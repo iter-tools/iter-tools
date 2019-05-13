@@ -1,28 +1,19 @@
 import { iterableCurry } from './internal/iterable'
 
-const defaultShouldIFlat = (depth) => {
-  if (typeof depth === 'function') {
-    return depth
-  }
-  if (typeof depth === 'number') {
-    return (currentDepth, iter) =>
-      currentDepth <= depth && typeof iter[Symbol.iterator] === 'function' && typeof iter !== 'string'
-  }
-  throw new Error('flat: "depth" can be a function or a number')
-}
+const defaultShouldFlat = item => typeof item[Symbol.iterator] === 'function' && typeof item !== 'string'
 
-function flat (shouldIFlat = 1, iterable) {
-  shouldIFlat = defaultShouldIFlat(shouldIFlat)
+function flat (shouldFlat = defaultShouldFlat, depth = 1, iterable) {
   function * _flat (currentDepth, iterable) {
-    if (shouldIFlat(currentDepth, iterable)) {
-      for (const iter of iterable) {
-        yield * _flat(currentDepth + 1, iter)
+    for (const item of iterable) {
+      if (currentDepth < depth && shouldFlat(item)) {
+        yield * _flat(currentDepth + 1, item)
+      } else {
+        yield item
       }
-    } else {
-      yield iterable
     }
   }
+
   return _flat(0, iterable)
 }
 
-export default iterableCurry(flat, { variadic: false, minArgs: 0, maxArgs: 1 })
+export default iterableCurry(flat, { minArgs: 0, maxArgs: 2 })
