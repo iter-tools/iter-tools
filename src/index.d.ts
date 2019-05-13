@@ -256,11 +256,14 @@ export declare function flat<
 > (depth: Depth, iter: Iter): FlatReturn<Depth, Iter>
 export declare function flat (depth: number, iter: Iterable<any>): IterableIterator<any>
 export declare function flat (
-  shouldFlat: (depth: number, iter: any) => boolean,
+  shouldFlat: (item: any) => boolean,
+  depth: number,
   iter: Iterable<any>
 ): IterableIterator<any>
-export declare function flat (shouldFlat: (depth: number, iter: any) => boolean):
-  (iter: Iterable<any>) => IterableIterator<any>
+export declare function flat (
+  shouldFlat: (item: any) => boolean,
+  depth: number
+): (iter: Iterable<any>) => IterableIterator<any>
 
 export declare function flatMap<T, O> (func: (item: T) => Iterable<O>):
   (iter: Iterable<T>) => IterableIterator<O>
@@ -582,13 +585,16 @@ export declare function asyncFlat<
   Depth extends ReasonableNumber,
   Iter extends AsyncIterableLike<any>
 > (depth: Depth, iter: Iter): AsyncFlatReturn<Depth, Iter>
-export declare function asyncFlat (depth: number, iter: AsyncIterableLike<any>): AsyncIterableIterator<any>
+export declare function asyncFlat (depth: number, item: AsyncIterableLike<any>): AsyncIterableIterator<any>
 export declare function asyncFlat (
-  shouldFlat: (depth: number, iter: any) => MaybePromise<boolean>,
+  shouldFlat: (item: any) => MaybePromise<boolean>,
+  depth: number,
   iter: AsyncIterableLike<any>
 ): AsyncIterableIterator<any>
-export declare function asyncFlat (shouldFlat: (depth: number, iter: any) => MaybePromise<boolean>):
-  (iter: AsyncIterable<any>) => AsyncIterableIterator<any>
+export declare function asyncFlat (
+  shouldFlat: (item: any) => MaybePromise<boolean>,
+  depth: number
+): (iter: AsyncIterable<any>) => AsyncIterableIterator<any>
 
 export declare function asyncFlatMap<T, O> (func: (item: T) => MaybePromise<AsyncIterableLike<O>>):
     (iter: AsyncIterableLike<T>) => AsyncIterableIterator<O>

@@ -43,7 +43,7 @@ describe('flat', function () {
   })
 
   it('flats using custom function', function () {
-    const iter = flat((depth, iter) => !(typeof iter === 'string' && iter.length === 1), [['a', 'b'], ['c', ['d', 'e']], [['fghi']]])
+    const iter = flat(iter => !(typeof iter === 'string' && iter.length === 1), Infinity, [['a', 'b'], ['c', ['d', 'e']], [['fghi']]])
     expect(Array.from(iter)).toEqual(['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i'])
   })
 })
@@ -90,12 +90,12 @@ describe('asyncFlat', function () {
   })
 
   it('flats using custom function', async function () {
-    const iter = asyncFlat((depth, iter) => !(typeof iter === 'string' && iter.length === 1), [['a', 'b'], ['c', ['d', 'e']], [['fghi']]])
+    const iter = asyncFlat(iter => !(typeof iter === 'string' && iter.length === 1), Infinity, [['a', 'b'], ['c', ['d', 'e']], [['fghi']]])
     expect(await asyncToArray(iter)).toEqual(['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i'])
   })
 
   it('flats using custom function (using a promise)', async function () {
-    const iter = asyncFlat(async (depth, iter) => !(typeof iter === 'string' && iter.length === 1), [['a', 'b'], ['c', ['d', 'e']], [['fghi']]])
+    const iter = asyncFlat(async iter => !(typeof iter === 'string' && iter.length === 1), Infinity, [['a', 'b'], ['c', ['d', 'e']], [['fghi']]])
     expect(await asyncToArray(iter)).toEqual(['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i'])
   })
 })
