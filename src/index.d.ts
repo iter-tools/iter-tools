@@ -460,8 +460,8 @@ export declare function zipAll<T> (...iterables: Array<Iterable<T>>): IterableIt
 export declare function zip<T> (...iterables: Array<Iterable<T>>): IterableIterator<T[]>
 
 // Async
-export declare function asyncBatch<T> (n: number): (iterable: AsyncIterableLike<T>) => AsyncIterableIterator<T>
-export declare function asyncBatch<T> (n: number, iterable: AsyncIterableLike<T>): AsyncIterableIterator<T>
+export declare function asyncBatch<T> (n: number): (iterable: AsyncIterableLike<T>) => AsyncIterableIterator<T[]>
+export declare function asyncBatch<T> (n: number, iterable: AsyncIterableLike<T>): AsyncIterableIterator<T[]>
 
 export declare function asyncConcat<T> (...iterables: Array<AsyncIterableLike<T>>): AsyncIterableIterator<T>
 
