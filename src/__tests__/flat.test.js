@@ -23,8 +23,8 @@ describe('flat', function () {
   })
 
   it('flats iterable depth 0', function () {
-    const iter = flat(0, [[1, 2], [3, 4], [5]])
-    expect(Array.from(iter)).toEqual([[1, 2], [3, 4], [5]])
+    const iter = flat(0, [[1, 2], [3]])
+    expect(Array.from(iter)).toEqual([[1, 2], [3]])
   })
 
   it('flats iterable depth 2', function () {
@@ -45,6 +45,18 @@ describe('flat', function () {
   it('flats using custom function', function () {
     const iter = flat(iter => !(typeof iter === 'string' && iter.length === 1), Infinity, [['a', 'b'], ['c', ['d', 'e']], [['fghi']]])
     expect(Array.from(iter)).toEqual(['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i'])
+  })
+
+  describe('repects options passed as an object', function () {
+    it('flats iterable depth 2', function () {
+      const iter = flat({ depth: 2 }, [[1, 2], [3, [4, 5]], [[6]]])
+      expect(Array.from(iter)).toEqual([1, 2, 3, 4, 5, 6])
+    })
+
+    it('flats using custom function', function () {
+      const iter = flat({ shouldFlat: iter => !(typeof iter === 'string' && iter.length === 1), depth: Infinity }, [['a', 'b'], ['c', ['d', 'e']], [['fghi']]])
+      expect(Array.from(iter)).toEqual(['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i'])
+    })
   })
 })
 
@@ -97,5 +109,17 @@ describe('asyncFlat', function () {
   it('flats using custom function (using a promise)', async function () {
     const iter = asyncFlat(async iter => !(typeof iter === 'string' && iter.length === 1), Infinity, [['a', 'b'], ['c', ['d', 'e']], [['fghi']]])
     expect(await asyncToArray(iter)).toEqual(['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i'])
+  })
+
+  describe('repects options passed as an object', function () {
+    it('flats iterable depth 2', async function () {
+      const iter = asyncFlat({ depth: 2 }, [[1, 2], [3, [4, 5]], [[6]]])
+      expect(await asyncToArray(iter)).toEqual([1, 2, 3, 4, 5, 6])
+    })
+
+    it('flats using custom function', async function () {
+      const iter = asyncFlat({ shouldFlat: iter => !(typeof iter === 'string' && iter.length === 1), depth: Infinity }, [['a', 'b'], ['c', ['d', 'e']], [['fghi']]])
+      expect(await asyncToArray(iter)).toEqual(['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i'])
+    })
   })
 })

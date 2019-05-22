@@ -391,6 +391,11 @@ const isString = item => typeof item === 'string' && item.length > 1
 flat(isString, Infinity, ['hel', ['lo', ''], ['world']]); // h e l l o w o r l d
 ```
 
+Finally for maximum readability you can specify flat's options as an object, like so:
+```js
+flat({ shouldFlat: isString, depth: Infinity }, ['hel', ['lo', ''], ['world']]); // h e l l o w o r l d
+```
+
 ## async-flat
 Same as flat but works on both sync and async iterables.
 
