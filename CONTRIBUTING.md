@@ -5,6 +5,13 @@ Working on an open source project like this should be a rewarding and instructiv
 
 Most of the contributors are working at this project in their free time. So the first rule is to not expect someone to answer you immediately, just like no one expects you to do the same. We love open sources but everyone has more important commitments (job family etc.)
 
+## Templates
+Some of the sources of this project are created from templates in order to ease the difficulty of maintaining highly similar sync and async versions of the functions. It is not possible to combine these functions at runtime because yield expressions for a generator cannot be called from any nested function.
+
+When developing, you will want to `npm run generate:watch`. This will ensure that all files generated from templates are updated on the fly. Having the generated files checked in to git ensures that is always possible to see the history of the library's actual executable code on Github.
+
+If you are looking at `.template.js` file you should see some variable names beginning with `$`, which are exported by the async macro. Theseare used to mark differences between the implementations of the sync and async functions. Look at the referenced macro file for more detailed information, including all the possible kinds of transformations.
+
 ## Coding conventions
 This project uses ESLINT with [standard](https://standardjs.com/). Just run ```npm run lint``` to check if your code is ok. Also we use 2 spaces for indentation.
 
