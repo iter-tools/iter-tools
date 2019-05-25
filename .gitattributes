@@ -1,0 +1,7 @@
+# @generated
+# It should not be necessary to edit this file directly.
+# The template for this file is: templates/gitattributes-file.js
+
+.gitattributes linguist-generated=true
+src/__test__/fns.js linguist-generated=true
+src/__test__/async-fns.js linguist-generated=true
