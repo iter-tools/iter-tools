@@ -44,13 +44,13 @@ Create iterables
 
 Transform a single iterable
 * [cursor](#cursor) ([async](#async-cursor))
-* [map](#map) ([async](#async-map))
-* [filter](#filter) ([async](#async-filter))
+* [map](#map) ([async](#async-map)) ([parallel-async](#async-map-parallel))
+* [filter](#filter) ([async](#async-filter)) ([parallel-async](#async-filter-parallel))
 * [takeWhile](#take-while) ([async](#async-take-while))
 * [dropWhile](#drop-while) ([async](#async-drop-while))
 * [slice](#slice) ([async](#async-slice))
 * [flat](#flat) ([async](#async-flat))
-* [flatMap](#flat-map) ([async](#async-flat-map))
+* [flatMap](#flat-map) ([async](#async-flat-map)) ([parallel-async](#async-flat-map-parallel))
 * [reduce](#reduce) ([async](#async-reduce))
 * [batch](#batch) ([async](#async-batch))
 * [takeSorted](#take-sorted) ([async](#async-take-sorted))
@@ -314,37 +314,51 @@ map(x => x * x, range(4)); // 0, 1, 4, 9
 ```
 
 ## async-map
-The same as map but working with sync and async iterables. The first argument can be a function returning synchronously or a promise.
+The same as map but works with sync and async iterables. If the mapper callback returns a promise, it will be awaited.
 ```js
-await asyncMap(animal => animal.kind, [
-  Promise.resolve({type: 'cat'}),
-  Promise.resolve({type: 'dog'})
+await asyncMap(animal => Promise.resolve(animal.kind), [
+  {type: 'cat'},
+  {type: 'dog'}
 ]); // ['cat', 'dog']
 ```
-It can also use as extra argument, the concurrency level (default 1):
+
+## async-map-parallel
+A variant of map with more complicated logic that can optimize when you have both an async mapper callback and an
+async souce iterable. It starts fetching the next item in the source iterable while waiting for the async callback
+to resolve. The optional concurrency paramater dictates how many items can be read ahead from the source iterable while
+still waiting for the results of previous mapper callbacks.
+
+The default concurrency is 4.
 ```js
-await asyncMap(2, asyncFunction, iterable);
+await asyncMapParallel(asyncMapper, asyncIterable);
+await asyncMapParallel(10, asyncMapper, asyncIterable);
 ```
-If this is used, more than one asyncFunction can run concurrently. This also means that the input will be consumed eagerly. **Do not use it if consuming the iterable leads to a side effect.**
 
 ## filter
 The equivalent of the array "filter" function.
 ```js
 filter(isEven, range(4)); // 0, 2
 await asyncFilter(animal => animal.kind.slice(1) === 'at', [
-  Promise.resolve({type: 'cat'}),
-  Promise.resolve({type: 'rat'}),
-  Promise.resolve({type: 'dog'}),
+  {type: 'cat'},
+  {type: 'rat'},
+  {type: 'dog'},
 ]) // [{type: 'cat'}, {type: 'rat'}]
 ```
 
 ## async-filter
-See filter. The first argument can be a function returning synchronously or a promise.
-It can also use as extra argument, the concurrency level (default 1):
+The same as filter but works with sync and async iterables. If the mapper callback returns a promise, it will be awaited.
+
+## async-filter-parallel
+A variant of filter with more complicated logic that can optimize when you have both an async filter predicate and an
+async souce iterable. It starts fetching the next item in the source iterable while waiting for the async predicate
+to resolve. The optional concurrency paramater dictates how many items can be read ahead from the source iterable while
+still waiting for the results of previous async predicates.
+
+The default concurrency is 4.
 ```js
-await asyncFilter(2, asyncFunction, iterable);
+await asyncFilterParallel(asyncPredicate, asyncIterable);
+await asyncFilterParallel(10, asyncPredicate, asyncIterable);
 ```
-If this is used, more than one asyncFunction can run concurrently. This also means that the input will be consumed eagerly. **Do not use it if consuming the iterable leads to a side effect.**
 
 ## take-while
 It returns values as soon as the function is true. Then it stops.
@@ -407,11 +421,18 @@ flatMap(x => [x, x * x], range(4)); // 0, 0, 1, 1, 2, 4, 3, 9
 
 ## async-flat-map
 Same as flatMap but works on both sync and async iterables.
-It can also use as extra argument, the concurrency level (default 1):
+
+## async-flat-map-parallel
+A variant of flatMap with more complicated logic that can optimize when you have both an async mapper callback and an
+async souce iterable. It starts fetching the next item in the source iterable while waiting for the async callback
+to resolve. The optional concurrency paramater dictates how many items can be read ahead from the source iterable while
+still waiting for the results of previous mapper callbacks.
+
+The default concurrency is 4.
 ```js
-await asyncFlatMap(2, asyncFunction, iterable);
+await asyncFlatMapParallel(asyncMapper, asyncIterable);
+await asyncFlatMapParallel(10, asyncMapper, asyncIterable);
 ```
-If this is used, more than one asyncFunction can run concurrently. This also means that the input will be consumed eagerly. **Do not use it if consuming the iterable leads to a side effect.**
 
 ## reduce
 This is an implementation of the reduce that consumes an iterable instead of an array (have a look at Array.prototype.reduce).

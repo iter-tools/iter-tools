@@ -1,8 +1,7 @@
-/* eslint-env node, jest */
-const { call } = require('..')
+import { call } from '..'
 
-describe('call', function () {
-  it('calls the passed function', function () {
+describe('call', () => {
+  it('calls the passed function', () => {
     const testFn = jest.fn()
     call(testFn)
     expect(testFn).toHaveBeenCalledTimes(1)
@@ -12,7 +11,7 @@ describe('call', function () {
     expect(testFn).toHaveBeenCalledTimes(2)
   })
 
-  it('passes the function the extra arguments provided to it', function () {
+  it('passes the function the extra arguments provided to it', () => {
     const testFn = jest.fn()
     call(testFn, 2, 3)
     expect(testFn).toHaveBeenCalledTimes(1)

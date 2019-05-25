@@ -1,4 +1,9 @@
-import { BaseIterable, Iterable, ensureIterable, isValidIterableArgument } from './iterable'
+import {
+  BaseIterable,
+  Iterable,
+  ensureIterable as ensureSyncIterable,
+  isValidIterableArgument
+} from './iterable'
 import { variadicCurryWithValidation } from './curry'
 
 export function isAsyncIterable (i) {
@@ -20,9 +25,11 @@ export function ensureAsyncIterable (i) {
   if (isAsyncIterable(i)) {
     return i
   } else {
-    return asyncify(ensureIterable(i))
+    return asyncify(ensureSyncIterable(i))
   }
 }
+
+export const ensureIterable = ensureAsyncIterable
 
 export function isValidAsyncIterableArgument (i) {
   return isAsyncIterable(i) || isValidIterableArgument(i)
@@ -56,3 +63,5 @@ function combineFunctionConfig (fn, fnConfig) {
 export const asyncIterableCurry = (fn, config = {}) => {
   return variadicCurryWithValidation(combineFunctionConfig(fn, config))
 }
+
+export const iterableCurry = asyncIterableCurry

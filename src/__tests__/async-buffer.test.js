@@ -1,4 +1,3 @@
-/* eslint-env node, jest */
 const { asyncBuffer, asyncToArray } = require('..')
 const delay = require('../internal/delay')
 

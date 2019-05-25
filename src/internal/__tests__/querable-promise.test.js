@@ -1,9 +1,8 @@
-/* eslint-env node, jest */
-const querablePromise = require('../querable-promise')
-const delay = require('../delay')
+import querablePromise from '../querable-promise'
+import delay from '../delay'
 
-describe('querablePromise', function () {
-  it('wrap promise and adds methods (fulfilled)', async function () {
+describe('querablePromise', () => {
+  it('wrap promise and adds methods (fulfilled)', async () => {
     const tenMs = querablePromise(delay(10, 'done'))
     expect(tenMs.isPending()).toBe(true)
     const result = await tenMs
@@ -11,7 +10,7 @@ describe('querablePromise', function () {
     expect(result).toBe('done')
   })
 
-  it('wrap promise and adds methods (rejected)', async function () {
+  it('wrap promise and adds methods (rejected)', async () => {
     const tenMs = querablePromise(delay(10, new Error('oh no')))
     expect(tenMs.isPending()).toBe(true)
     try {

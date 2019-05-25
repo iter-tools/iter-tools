@@ -1,8 +1,7 @@
-/* eslint-env node, jest */
-const { cloneRegexp, isRegExp } = require('../regexp')
+import { cloneRegexp, isRegExp } from '../regexp'
 
-describe('cloneRegexp', function () {
-  it('clones', function () {
+describe('cloneRegexp', () => {
+  it('clones', () => {
     const clone = cloneRegexp(/abc/i, { global: true })
     expect(clone.source).toBe('abc')
     expect(clone.global).toBe(true)
@@ -11,13 +10,13 @@ describe('cloneRegexp', function () {
   })
 })
 
-describe('isRegExp', function () {
-  it('detects a regexp', function () {
+describe('isRegExp', () => {
+  it('detects a regexp', () => {
     expect(isRegExp(/a/)).toBe(true)
     expect(isRegExp(new RegExp('a'))).toBe(true)
   })
 
-  it('detects if it is not a re', function () {
+  it('detects if it is not a re', () => {
     expect(isRegExp(null)).toBe(false)
     expect(isRegExp(undefined)).toBe(false)
     expect(isRegExp(1)).toBe(false)

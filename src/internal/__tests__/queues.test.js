@@ -1,5 +1,4 @@
-/* eslint-env node, jest */
-const { Queue, Exchange } = require('../queues')
+import { Queue, Exchange } from '../queues'
 
 describe('Queue', () => {
   it('queues', () => {

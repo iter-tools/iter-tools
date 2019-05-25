@@ -12,6 +12,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
  - zipLongest, asyncZipLongest (replaced by zipAll, asyncZipAll)
  - iterable, asyncIterable
  - tee, asyncTee
+ - removed concurrency argument from asyncMap, asyncFilter, asyncFlatMap
 
 ### Renamed
  - pipe to execPipe
@@ -21,6 +22,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
  - splitAt/asyncSplitAt
  - multiPartition/asyncMultiPartition
  - call, apply
+ - asyncMapParallel, asyncFilterParallel, asyncFlatMapParallel
 
 ### Changes
  - all functions return iterables that can consumed multiple times

@@ -1,4 +1,3 @@
-/* eslint-env node, jest */
 const {
   merge,
   asyncMerge,
