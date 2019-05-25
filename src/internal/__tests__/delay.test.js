@@ -1,14 +1,13 @@
-/* eslint-env node, jest */
-const delay = require('../delay')
+import delay from '../delay'
 
-describe('delay', function () {
-  it('delay (fulfilled)', async function () {
+describe('delay', () => {
+  it('delay (fulfilled)', async () => {
     const tenMs = delay(10, 'done')
     const result = await tenMs
     expect(result).toBe('done')
   })
 
-  it('delay (rejected)', async function () {
+  it('delay (rejected)', async () => {
     const tenMs = delay(10, new Error('oh no'))
     try {
       await tenMs

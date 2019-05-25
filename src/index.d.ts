@@ -545,16 +545,17 @@ export declare function asyncFilter<T> (
   func: (item: T) => MaybePromise<boolean>,
   iterable: AsyncIterableLike<T>
 ): AsyncIterableIterator<T>
-export declare function asyncFilter<S extends T, T> (concurrency: number, func: (item: T) => item is S):
+
+export declare function asyncFilterParallel<S extends T, T> (concurrency: number, func: (item: T) => item is S):
   (iterable: AsyncIterableLike<T>) => AsyncIterableIterator<S>
-export declare function asyncFilter<S extends T, T> (
+export declare function asyncFilterParallel<S extends T, T> (
   concurrency: number,
   func: (item: T) => item is S,
   iterable: AsyncIterableLike<T>
 ): AsyncIterableIterator<S>
-export declare function asyncFilter<T> (concurrency: number, func: (item: T) => MaybePromise<boolean>):
+export declare function asyncFilterParallel<T> (concurrency: number, func: (item: T) => MaybePromise<boolean>):
   (iterable: AsyncIterableLike<T>) => AsyncIterableIterator<T>
-export declare function asyncFilter<T> (
+export declare function asyncFilterParallel<T> (
   concurrency: number,
   func: (item: T) => MaybePromise<boolean>,
   iterable: AsyncIterableLike<T>
@@ -600,9 +601,10 @@ export declare function asyncFlatMap<T, O> (func: (item: T) => MaybePromise<Asyn
     (iter: AsyncIterableLike<T>) => AsyncIterableIterator<O>
 export declare function asyncFlatMap<T, O> (func: (item: T) => MaybePromise<AsyncIterableLike<O>>, iter: AsyncIterableLike<T>):
     AsyncIterableIterator<O>
-export declare function asyncFlatMap<T, O> (concurrency: number, func: (item: T) => MaybePromise<AsyncIterableLike<O>>):
+
+export declare function asyncFlatMapParallel<T, O> (concurrency: number, func: (item: T) => MaybePromise<AsyncIterableLike<O>>):
     (iter: AsyncIterableLike<T>) => AsyncIterableIterator<O>
-export declare function asyncFlatMap<T, O> (concurrency: number, func: (item: T) => MaybePromise<AsyncIterableLike<O>>, iter: AsyncIterableLike<T>):
+export declare function asyncFlatMapParallel<T, O> (concurrency: number, func: (item: T) => MaybePromise<AsyncIterableLike<O>>, iter: AsyncIterableLike<T>):
     AsyncIterableIterator<O>
 
 export declare function asyncFork<T> (asyncIterable: AsyncIterableLike<T>): IterableIterator<AsyncIterableIterator<T>>
@@ -633,7 +635,8 @@ export declare function asyncMap<T, O> (
 ): AsyncIterableIterator<O>
 export declare function asyncMap<T, O> (concurrency: number, func: (item: T) => MaybePromise<O>):
   (iter: AsyncIterableLike<T>) => AsyncIterableIterator<O>
-export declare function asyncMap<T, O> (
+
+export declare function asyncMapParallel<T, O> (
   concurrency: number,
   func: (item: T) => MaybePromise<O>,
   iter: AsyncIterableLike<T>

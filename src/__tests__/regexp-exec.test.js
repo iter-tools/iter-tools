@@ -1,8 +1,7 @@
-/* eslint-env node, jest */
-const { regexpExec } = require('..')
+import { regexpExec } from '..'
 
-describe('regexpExec', function () {
-  it('should find matches', function () {
+describe('regexpExec', () => {
+  it('should find matches', () => {
     const re = /[0-9]{4}/
     const iter = regexpExec(re, '10/2/2013, 03/03/2015 12/4/1997')
     const results = []
@@ -12,7 +11,7 @@ describe('regexpExec', function () {
     expect(results).toEqual(['2013', '2015', '1997'])
   })
 
-  it('can be reused', function () {
+  it('can be reused', () => {
     const re = /[0-9]{4}/
     const iter = regexpExec(re, '10/2/2013, 03/03/2015 12/4/1997')
     const results = []
@@ -27,7 +26,7 @@ describe('regexpExec', function () {
     expect(results2).toEqual(['2013', '2015', '1997'])
   })
 
-  it('can be curried', function () {
+  it('can be curried', () => {
     const re = /[0-9]{4}/
     const iter = regexpExec(re)
     const results = []

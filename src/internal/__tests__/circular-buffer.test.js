@@ -1,8 +1,7 @@
-/* eslint-env node, jest */
-const CircularBuffer = require('../circular-buffer')
+import CircularBuffer from '../circular-buffer'
 
-describe('circularArray', function () {
-  it('is iterable', function () {
+describe('circularArray', () => {
+  it('is iterable', () => {
     const a = new CircularBuffer(3)
     a.push(1)
     a.push(2)
@@ -12,7 +11,7 @@ describe('circularArray', function () {
     expect(Array.from(a)).toEqual([3, 4, 5])
   })
 
-  it('mixes write and read', function () {
+  it('mixes write and read', () => {
     const a = new CircularBuffer(3)
     a.push(1)
     a.push(2)

@@ -34,7 +34,7 @@ export default class CircularBuffer {
     const array = this._array
     const head = this._head = (array.length + this._head - 1) % array.length
 
-    const displacedItem = array[head]
+    const displacedItem = array.length ? array[head] : newItem
     array[head] = newItem
 
     if (!this.isFull()) {
@@ -48,10 +48,17 @@ export default class CircularBuffer {
   shift () {
     if (this._size > 0) {
       const array = this._array
-      const head = this._head
       --this._size
 
-      return array[(head + this.size) % array.length]
+      return array[(this._head + this._size) % array.length]
+    }
+  }
+
+  peek () {
+    if (this._size > 0) {
+      const array = this._array
+
+      return array[(this._head + this._size - 1) % array.length]
     }
   }
 
@@ -70,6 +77,10 @@ export default class CircularBuffer {
 
   get size () {
     return this._size
+  }
+
+  get capacity () {
+    return this._array.length
   }
 
   isFull () {

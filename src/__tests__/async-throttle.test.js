@@ -1,4 +1,3 @@
-/* eslint-env node, jest */
 const { asyncThrottle, asyncToArray, range } = require('..')
 
 describe('asyncThrottle', function () {
