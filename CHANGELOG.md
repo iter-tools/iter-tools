@@ -25,6 +25,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
  - multiPartition/asyncMultiPartition
  - call, apply
  - asyncMapParallel, asyncFilterParallel, asyncFlatMapParallel
+ - interleave
 
 ### Changes
  - All functions return iterables that can consumed multiple times.

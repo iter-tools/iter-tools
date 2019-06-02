@@ -7,7 +7,7 @@ module.exports = (impl, generatedFrom) =>
  * More information can be found in CONTRIBUTING.md
  */
  
-/* eslint-disable no-unused-vars */
+/* eslint-disable no-unused-vars,import/no-duplicates */
 
 ${impl}
 `;

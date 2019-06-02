@@ -1,8 +1,9 @@
+const { join } = require('path');
 const babelJest = require('babel-jest');
 
 module.exports = function(configFile) {
   return babelJest.createTransformer({
-    configFile: './' + configFile,
+    configFile: join(__dirname, '..', configFile),
     // prettier-ignore
     plugins: [
       /**

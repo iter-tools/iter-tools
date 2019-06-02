@@ -9,7 +9,7 @@ class TypesGenerator extends BaseAsyncGenerator {
     const asyncTypes = '$*.d.ts';
     this.glob = [
       join('src', asyncTypes),
-      join('src/internal', asyncTypes),
+      join('src/internal/**', asyncTypes),
       'src/**/__spec__/$*.spec.ts',
     ];
   }

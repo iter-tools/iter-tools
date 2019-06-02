@@ -2,7 +2,7 @@
   "compilerOptions": {
     "target": "es2017",
     "module": "commonjs",
-    "lib": ["es2017", "es2018", "esnext"],
+    "lib": ["es2017", "es2018", "esnext", "dom"],
     "noEmit": true,
     "declaration": false,
     "strict": true,
