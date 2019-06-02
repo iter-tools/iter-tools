@@ -5,6 +5,8 @@ export function isAsyncIterable(i) {
   return Boolean(i != null && i[Symbol.asyncIterator]);
 }
 
+export const asyncIsIterable = isAsyncIterable;
+
 export async function* asyncify(iterable) {
   if (isAsyncIterable(iterable)) {
     yield* iterable;
@@ -47,7 +49,7 @@ function combineFunctionConfig(fn, fnConfig) {
     variadic: !!variadic,
     reduces: !!reduces,
     minArgs: minArgs === undefined ? fn.length - 1 : minArgs,
-    maxArgs: maxArgs === undefined ? (variadic ? fn.length : fn.length - 1) : maxArgs,
+    maxArgs: maxArgs === undefined ? fn.length - 1 : maxArgs,
     isIterable: isValidAsyncIterableArgument,
     iterableType: 'asyncIterable',
     applyOnIterableArgs: asyncEnsureIterable,

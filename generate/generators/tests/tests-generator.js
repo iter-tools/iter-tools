@@ -8,7 +8,7 @@ class TypeTestGenerator extends BaseAsyncGenerator {
   constructor(options) {
     super(options);
 
-    this.glob = 'src/__tests__/**/$*.test.js';
+    this.glob = 'src/**/__tests__/$*.test.js';
   }
 
   getDestName(basename) {

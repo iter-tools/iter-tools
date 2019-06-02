@@ -6,7 +6,7 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-/* eslint-disable no-unused-vars */
+/* eslint-disable no-unused-vars,import/no-duplicates */
 
 import { asyncZip, asyncToArray, asyncSlice, range } from '..';
 import { AsyncOneTwoThreeIterable } from './__framework__/fixtures';

@@ -73,7 +73,7 @@ function combineFunctionConfig(fn, fnConfig) {
     variadic: !!variadic,
     reduces: !!reduces,
     minArgs: minArgs === undefined ? fn.length - 1 : minArgs,
-    maxArgs: maxArgs === undefined ? (variadic ? fn.length : fn.length - 1) : maxArgs,
+    maxArgs: maxArgs === undefined ? fn.length - 1 : maxArgs,
     isIterable: isValidIterableArgument,
     iterableType: 'iterable',
     applyOnIterableArgs: ensureIterable,

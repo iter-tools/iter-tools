@@ -10,7 +10,7 @@ class MethodsGenerator extends BaseAsyncGenerator {
     super(options);
 
     const asyncMethods = '$*.js';
-    this.glob = [join('src', asyncMethods), join('src/internal', asyncMethods)];
+    this.glob = [join('src', asyncMethods), join('src/internal/', asyncMethods)];
   }
 
   getDestName(basename) {
