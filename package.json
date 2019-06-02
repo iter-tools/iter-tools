@@ -70,6 +70,7 @@
     "@babel/core": "^7.4.3",
     "@babel/plugin-proposal-async-generator-functions": "^7.2.0",
     "@babel/plugin-syntax-async-generators": "^7.2.0",
+    "@babel/plugin-syntax-decorators": "^7.2.0",
     "@babel/plugin-syntax-typescript": "^7.3.3",
     "@babel/plugin-transform-flow-strip-types": "^7.4.4",
     "@babel/plugin-transform-modules-commonjs": "^7.4.3",

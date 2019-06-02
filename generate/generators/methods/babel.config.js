@@ -9,6 +9,7 @@ module.exports = api => {
     babelrc: false,
     plugins: [
       '@babel/plugin-syntax-typescript',
+      ['@babel/plugin-syntax-decorators', { decoratorsBeforeExport: false }],
       [join(__dirname, 'babel-plugin-$-identifiers-and-imports'), { ASYNC }],
       ['macros', { async: { ASYNC } }],
       // use dead code elimination to clean up if(false) {} and if(true) {}
