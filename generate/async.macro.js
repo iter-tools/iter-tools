@@ -22,6 +22,14 @@ const rename = require('./rename');
  *                                   $async`fn`
  *           'fn'                      <--->                   'asyncFn'
  *
+ *
+ *     class Class() {            class Class() {           class Class() {
+ *                                   @$async
+ *                                   method() {}
+ *        method() {}                  <--->                  async method() {}
+ *     }                          }                         }
+ *
+ *
  *                             $await(anyExpression)
  *       anyExpression                 <--->               await anyExpression
  *
@@ -55,19 +63,20 @@ function asyncMacro({ references, babel, config: { ASYNC } }) {
   }
 
   for (const reference of [].concat(references.$async || [], references.$await || [])) {
+    const { node, parent } = reference.parentPath;
     const refName = reference.node.name;
 
-    switch (reference.parent.type) {
+    switch (node.type) {
       case 'ExpressionStatement': {
         const nextStatement = getNextStatement(reference);
 
-        if (refName === '$async' && nextStatement.type === 'FunctionDeclaration') {
+        if (refName === '$async' && t.isFunctionDeclaration(nextStatement)) {
           // $async; function foo() {}
 
           if (ASYNC) {
             nextStatement.async = true;
           }
-        } else if (refName === '$await' && nextStatement.type === 'ForOfStatement') {
+        } else if (refName === '$await' && t.isForOfStatement(nextStatement)) {
           // $await; for { const foo of bar }
 
           if (ASYNC) {
@@ -83,7 +92,7 @@ function asyncMacro({ references, babel, config: { ASYNC } }) {
 
         if (
           refName === '$async' &&
-          (argument.type === 'FunctionExpression' || argument.type === 'ArrowFunctionExpression')
+          (t.isFunctionExpression(argument) || t.isArrowFunctionExpression(argument))
         ) {
           // $async(function() {})
           // $async(() => {})
@@ -103,6 +112,8 @@ function asyncMacro({ references, babel, config: { ASYNC } }) {
         break;
       }
       case 'TaggedTemplateExpression':
+        // $async`fnName`
+
         if (refName === '$async') {
           const { quasi } = reference.parentPath.node;
           if (!quasi.quasis.length === 1) {
@@ -112,6 +123,19 @@ function asyncMacro({ references, babel, config: { ASYNC } }) {
           reference.parentPath.replaceWith(t.stringLiteral(rename(name, ASYNC)));
         } else {
           throw new Error(`${refName} cannot be used as a template tag`);
+        }
+        break;
+      case 'Decorator':
+        // class {
+        //   @$async
+        //   method() {}
+        // }
+
+        if (t.isClassMethod(parent)) {
+          if (ASYNC) {
+            parent.async = true;
+          }
+          parent.decorators = parent.decorators.filter(dec => dec !== node);
         }
         break;
     }
