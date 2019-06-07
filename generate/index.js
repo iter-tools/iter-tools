@@ -7,11 +7,13 @@ const parseArgs = require('minimist');
 const sane = require('sane');
 const camelcase = require('camelcase');
 
-const generatedFunctionFile = require('./templates/generated-function-file');
-const generatedTestFile = require('./templates/generated-test-file');
-const generationErrorFile = require('./templates/generation-error-file');
-const gitattributesFile = require('./templates/gitattributes-file');
-const test$File = require('./templates/test-$-file');
+const generatedFunctionFile = require('../templates/generated-function-file');
+const generatedTestFile = require('../templates/generated-test-file');
+const generationErrorFile = require('../templates/generation-error-file');
+const gitattributesFile = require('../templates/gitattributes-file');
+const test$File = require('../templates/test-$-file');
+
+const { wait, debounce } = require('./utils');
 
 const argv = parseArgs(process.argv.slice(2), { alias: { w: 'watch' } });
 
@@ -19,7 +21,8 @@ const linter = new CLIEngine({ fix: true });
 
 const { dirname, relative, join, resolve, basename } = path;
 
-const srcDir = './src';
+const rootDir = resolve(__dirname, '..');
+const srcDir = resolve(rootDir, 'src');
 const templateRegex = /(.*)\.template\.js$/;
 const ADD = 'ADD';
 const REMOVE = 'REMOVE';
@@ -96,18 +99,18 @@ function processPath(templateFilename, operation, generatedPaths) {
   }
 }
 
-function updateMonolithicFiles(paths, generatedPaths) {
-  fs.writeFileSync('.gitattributes', gitattributesFile(generatedPaths));
+const updateMonolithicFiles = debounce((paths, generatedPaths) => {
+  fs.writeFileSync(join(rootDir, '.gitattributes'), gitattributesFile(generatedPaths));
 
   const fns = [...paths]
     .filter(path => publicTemplateRegex.test(path))
     .map(path => camelcase(publicTemplateRegex.exec(path)[1]));
 
-  fs.writeFileSync('./src/__tests__/fns.js', test$File(fns, false));
-  fs.writeFileSync('./src/__tests__/async-fns.js', test$File(fns, true));
-}
+  fs.writeFileSync(join(srcDir, '__tests__/fns.js'), test$File(fns, false));
+  fs.writeFileSync(join(srcDir, '__tests__/async-fns.js'), test$File(fns, true));
+}, 50);
 
-recursive(resolve(__dirname, srcDir)).then(initialPaths => {
+recursive(resolve(srcDir)).then(initialPaths => {
   const generatedPaths = new Set();
   const paths = new Set();
 
@@ -123,7 +126,7 @@ recursive(resolve(__dirname, srcDir)).then(initialPaths => {
   };
 
   for (const absPath of initialPaths) {
-    const path = relative(__dirname, absPath)
+    const path = relative(resolve(__dirname, '..'), absPath)
     if (templateRegex.test(path)) paths.add(path);
   }
 
@@ -137,8 +140,8 @@ recursive(resolve(__dirname, srcDir)).then(initialPaths => {
     console.log('Initial generation completed; watching for changes...')
     const watcher = sane(srcDir, { glob: '**/*.template.js' });
 
-    watcher.on('change', path => processPath(join(srcDir, path)));
-    watcher.on('add', path => addPath(join(srcDir, path)));
-    watcher.on('delete', path => removePath(join(srcDir, path)));
+    watcher.on('change', path => processPath(join('src', path)));
+    watcher.on('add', path => addPath(join('src', path)));
+    watcher.on('delete', path => removePath(join('src', path)));
   }
 }).catch(handleError);
