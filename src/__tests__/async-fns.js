@@ -17,8 +17,8 @@ import {
   asyncFilter,
   asyncFind,
   asyncFirst,
-  asyncFlatMap,
   asyncFlat,
+  asyncFlatMap,
   asyncFork,
   asyncGroupBy,
   asyncInterpose,
@@ -37,8 +37,8 @@ import {
   asyncTakeWhile,
   asyncTap,
   asyncToArray,
-  asyncZipAll,
-  asyncZip
+  asyncZip,
+  asyncZipAll
 } from '..'
 
 export * from '..'
@@ -55,8 +55,8 @@ export const $execute = asyncExecute
 export const $filter = asyncFilter
 export const $find = asyncFind
 export const $first = asyncFirst
-export const $flatMap = asyncFlatMap
 export const $flat = asyncFlat
+export const $flatMap = asyncFlatMap
 export const $fork = asyncFork
 export const $groupBy = asyncGroupBy
 export const $interpose = asyncInterpose
@@ -75,5 +75,5 @@ export const $takeSorted = asyncTakeSorted
 export const $takeWhile = asyncTakeWhile
 export const $tap = asyncTap
 export const $toArray = asyncToArray
-export const $zipAll = asyncZipAll
 export const $zip = asyncZip
+export const $zipAll = asyncZipAll

@@ -17,8 +17,8 @@ import {
   filter,
   find,
   first,
-  flatMap,
   flat,
+  flatMap,
   fork,
   groupBy,
   interpose,
@@ -37,8 +37,8 @@ import {
   takeWhile,
   tap,
   toArray,
-  zipAll,
-  zip
+  zip,
+  zipAll
 } from '..'
 
 export * from '..'
@@ -55,8 +55,8 @@ export const $execute = execute
 export const $filter = filter
 export const $find = find
 export const $first = first
-export const $flatMap = flatMap
 export const $flat = flat
+export const $flatMap = flatMap
 export const $fork = fork
 export const $groupBy = groupBy
 export const $interpose = interpose
@@ -75,5 +75,5 @@ export const $takeSorted = takeSorted
 export const $takeWhile = takeWhile
 export const $tap = tap
 export const $toArray = toArray
-export const $zipAll = zipAll
 export const $zip = zip
+export const $zipAll = zipAll

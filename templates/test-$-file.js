@@ -1,7 +1,13 @@
-const capitalize = str => str.slice(0, 1).toUpperCase() + str.slice(1)
-const asyncize = str => `async${capitalize(str)}`
+const { basename } = require('path');
+const camelcase = require('camelcase');
+const { matcher } = require('micromatch');
 
-module.exports = (fns, $isAsync) =>
+const capitalize = str => str.slice(0, 1).toUpperCase() + str.slice(1);
+const name = (fn, ASYNC) => ASYNC ? `async${capitalize(fn)}` : fn;
+
+const isFunctionTemplate = matcher("src/*.template.js");
+
+const template = (fns, ASYNC) =>
 `/**
  * @generated
  * It should not be necessary to edit this file directly.
@@ -9,10 +15,22 @@ module.exports = (fns, $isAsync) =>
  */
 
 import {
-${fns.map(fn => `  ${$isAsync ? asyncize(fn) : fn}`).join(',\n')}
+${fns.map(fn => `  ${name(fn, ASYNC)}`).join(',\n')}
 } from '..'
 
 export * from '..'
 
-${fns.map(fn => `export const $${fn} = ${$isAsync ? asyncize(fn) : fn}`).join('\n')}
-`
+${fns.map(fn => `export const $${fn} = ${name(fn, ASYNC)}`).join('\n')}
+`;
+
+module.exports = (paths, ASYNC) => {
+  return (
+    template(
+      [...paths]
+        .filter(path => isFunctionTemplate(path))
+        .map(path => camelcase(basename(path, '.template.js')))
+        .sort(),
+      ASYNC,
+    )
+  );
+}
