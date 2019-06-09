@@ -18,10 +18,12 @@ class FileCache extends Map {
   }
 
   cache(path, attributes) {
-    return this.set(path, {
-      mtime: mtime(join(this.rootDir, path)),
-      ...attributes
-    });
+    return this.set(path, Object.assign(
+      {
+        mtime: mtime(join(this.rootDir, path)),
+      },
+      attributes
+    ));
   }
 
   isStale(path) {

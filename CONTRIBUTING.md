@@ -1,9 +1,11 @@
 # How to contribute
 
-If you are here you are finding iter-tools useful and you would like to contribute. Thank you!
-Working on an open source project like this should be a rewarding and instructive experience. I hope you will find it a pleasant experience. Please refer to the [code of conduct](CODE_OF_CONDUCT.md).
+We hope you are finding iter-tools useful and are glad you would like to contribute. Thank you!
+Working on an open source project like this should be a rewarding and instructive experience. To keep it that way we do enforce a [code of conduct](CODE_OF_CONDUCT.md), so be sure to read and follow it.
 
-Most of the contributors are working at this project in their free time. So the first rule is to not expect someone to answer you immediately, just like no one expects you to do the same. We love open sources but everyone has more important commitments (job family etc.)
+Most of the contributors are working at this project in their free time. So the first rule is to not expect someone to answer you immediately, just like no one expects you to do the same. We love open sources but everyone has more important commitments (job, family, etc).
+
+To contribute you will need at least node version 8. We do test our code against language functionality (async generators) that exists only in node 10, but our CI environment will handle that for you.
 
 ## Templates
 Some of the sources of this project are created from templates in order to ease the difficulty of maintaining highly similar sync and async versions of the functions. It is not possible to combine these functions at runtime because yield expressions for a generator cannot be called from any nested function.
