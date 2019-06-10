@@ -1,12 +1,12 @@
-function wait(ms) {
+function delay(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-function debounce(fn, waitMs) {
+function debounce(fn, ms) {
   let promise;
 
   return (...args) => {
-    const thisPromise = promise = wait(waitMs).then(() => {
+    const thisPromise = promise = delay(ms).then(() => {
       if (promise === thisPromise) {
         promise = null;
         fn(...args);
@@ -15,4 +15,4 @@ function debounce(fn, waitMs) {
   };
 }
 
-module.exports = { wait, debounce };
+module.exports = { delay, debounce };

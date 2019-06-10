@@ -1,4 +1,4 @@
-import { delay } from './__framework__/utils'
+import delay from '../internal/delay'
 import { asyncMapParallel, asyncToArray, range } from '..'
 
 describe('asyncMapParallel', () => {

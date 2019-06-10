@@ -16,7 +16,7 @@ const test$File = require('../templates/test-$-file');
 
 const { argv } = require('./argv');
 
-const { wait, debounce } = require('./utils');
+const { debounce } = require('./utils');
 const { isGeneratedFromTemplate } = require('./comments');
 const FileCache = require('./file-cache');
 const traverse = require('./traverse');
