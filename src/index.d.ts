@@ -117,34 +117,6 @@ type AsyncFlatReturn<
   AsyncIterableElement<Iter>
 >>
 
-/**
- * Functions of type `MergePickFunc` is
- * to be used as `pickFunc` parameter of `merge()`.
- *
- * This function decides what sequence to use.
- *
- * @param items An array of iterators corresponding to respective iterables passed to `merge()`.
- * @return Index of chosen sequence.
- */
-export interface MergePickFunc<Value> {
-  (items: ReadonlyArray<IteratorResult<Value> | null>): number
-}
-
-/**
- * Functions of type `AsyncMergePickFunc` is
- * to be used as `pickFunc` parameter of `asyncMerge()`.
- *
- * This function decides what sequence to use.
- *
- * @param items An array of iterators corresponding to respective iterables passed to `asyncMerge()`.
- * @return Index of chosen sequence.
- */
-export interface AsyncMergePickFunc<Value> {
-  (items: ReadonlyArray<
-    Promise<IteratorResult<Value> | null>
-  >): number
-}
-
 // Sync
 export declare function keys (obj: { [id: string]: any }): IterableIterator<string>
 export declare function values<T> (obj: { [id: string]: T }): IterableIterator<T>
@@ -294,9 +266,6 @@ export declare function interpose<T, I> (interposeItem: I, iter: Iterable<T>): I
 
 export declare function map<T, O> (func: (item: T) => O): (iter: Iterable<T>) => IterableIterator<O>
 export declare function map<T, O> (func: (item: T) => O, iter: Iterable<T>): IterableIterator<O>
-
-export declare function merge<T> (pickFunc: MergePickFunc<T>): (iterables: ReadonlyArray<Iterable<T>>) => IterableIterator<T>
-export declare function merge<T> (pickFunc: MergePickFunc<T>, iterables: ReadonlyArray<Iterable<T>>): IterableIterator<T>
 
 export declare function multiPartition<T> (
   func: (item: T) => number,
@@ -642,9 +611,6 @@ export declare function asyncMapParallel<T, O> (
   iter: AsyncIterableLike<T>
 ): AsyncIterableIterator<O>
 
-export declare function asyncMerge<T> (pickFunc: AsyncMergePickFunc<T>): (iterables: ReadonlyArray<AsyncIterableLike<T>>) => AsyncIterableIterator<T>
-export declare function asyncMerge<T> (pickFunc: AsyncMergePickFunc<T>, iterables: ReadonlyArray<AsyncIterableLike<T>>): AsyncIterableIterator<T>
-
 export declare function asyncMultiPartition<T> (
   func: (item: T) => number,
   iter: AsyncIterableIterator<T>
@@ -756,11 +722,3 @@ export declare function asyncBuffer<T> (n: number, iterable: AsyncIterableLike<T
 
 export declare function asyncThrottle<T> (n: number): (iterable: AsyncIterableLike<T>) => AsyncIterableIterator<T>
 export declare function asyncThrottle<T> (n: number, iterable: AsyncIterableLike<T>): AsyncIterableIterator<T>
-
-// merge helpers
-export declare function mergeByComparison<T> (comparator: (a: T, b: T) => number): MergePickFunc<T>
-export declare function mergeByChance (weights: ReadonlyArray<number>): MergePickFunc<any>
-export declare function mergeByPosition (step?: number): MergePickFunc<any>
-export declare function asyncMergeByComparison<T> (comparator: (a: T, b: T) => number): AsyncMergePickFunc<T>
-export declare function asyncMergeByChance (weights: ReadonlyArray<number>): AsyncMergePickFunc<any>
-export declare function asyncMergeByPosition (step?: number): AsyncMergePickFunc<any>

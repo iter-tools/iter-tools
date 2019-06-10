@@ -12,6 +12,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
  - zipLongest, asyncZipLongest (replaced by zipAll, asyncZipAll)
  - iterable, asyncIterable
  - tee, asyncTee
+ - merge, asyncMerge, mergeByComparison, mergeByChance, mergeByPosition, asyncMergeByComparison, asyncMergeByChance, asyncMergeByPosition
  - removed concurrency argument from asyncMap, asyncFilter, asyncFlatMap
 
 ### Renamed
