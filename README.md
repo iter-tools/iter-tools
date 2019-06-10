@@ -762,7 +762,7 @@ asyncEvery((n) => n % 2 === 0, asyncIter([2, 4, 6])) // returns a promise that r
 ```
 
 ## async-throttle
-It wraps an async iterable and ensures that every item is yielded with an interval of n ms (it can be curried).
+Rate-limits its source iterable, ensuring that every item is yielded at an interval of at least n ms (it can be curried).
 ```js
 asyncThrottle(10, iterable);
 ```
