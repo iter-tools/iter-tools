@@ -8,12 +8,12 @@ module.exports = {
   env: { es6: true },
   overrides: [
     {
-      files: ['*.template.js'],
+      files: ['$*.js'],
       rules: {
         'no-unused-expressions': 'off'
       }
     }, {
-      files: ['**/__tests__/**/*.test.*(template.)*(m)js'],
+      files: ['**/__tests__/**/*.test.*(m)js'],
       env: {
         node: true,
         jest: true

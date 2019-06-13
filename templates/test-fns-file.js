@@ -5,13 +5,13 @@ const { matcher } = require('micromatch');
 const capitalize = str => str.slice(0, 1).toUpperCase() + str.slice(1);
 const name = (fn, ASYNC) => ASYNC ? `async${capitalize(fn)}` : fn;
 
-const isFunctionTemplate = matcher("src/*.template.js");
+const isFunctionTemplate = matcher("src/$*.js");
 
 const template = (fns, ASYNC) =>
 `/**
  * @generated
  * It should not be necessary to edit this file directly.
- * The template for this file is: templates/test-$-file.js
+ * The template for this file is: templates/test-fns-file.js
  */
 
 import {
@@ -28,7 +28,7 @@ module.exports = (paths, ASYNC) => {
     template(
       [...paths]
         .filter(path => isFunctionTemplate(path))
-        .map(path => camelcase(basename(path, '.template.js')))
+        .map(path => camelcase(basename(path, '.js').slice(1)))
         .sort(),
       ASYNC,
     )

@@ -25,7 +25,7 @@
     "build:es2018": "cross-env BABEL_ENV=es babel --keep-file-extension --config-file ./babel-es2018.config.js -x .mjs src -d es2018",
     "build:es2018-cjs": "cross-env BABEL_ENV=cjs babel --config-file ./babel-es2018.config.js -x .mjs src -d es2018",
     "build:copyts": "copyfiles -f src/*.ts es5 && copyfiles -f src/*.ts es2015 && copyfiles -f src/*.ts es2018",
-    "verify": "run-s generate build verify:* test",
+    "verify": "run-s build verify:* test",
     "verify:git-clean": "node ./verify-git-clean.js",
     "tslint": "tslint -c tslint.json -p . 'src/**/*.ts'",
     "tslint:fix": "npm run tslint -- --fix",
