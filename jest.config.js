@@ -6,7 +6,7 @@ function makeProject (projectConfig) {
     transform: {
       '.*': '<rootDir>/transformers/' + projectConfig.name
     },
-    testMatch: ['**/__tests__/**/*.test.*(m)js']
+    testMatch: ['**/__tests__/**/!($)*.test.*(m)js']
   }, projectConfig)
 }
 

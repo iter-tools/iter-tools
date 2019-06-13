@@ -12,7 +12,7 @@ Some of the sources of this project are created from templates in order to ease 
 
 When developing, you will want to `npm run generate:watch`. This will ensure that all files generated from templates are updated on the fly. Having the generated files checked in to git ensures that is always possible to see the history of the library's actual executable code on Github.
 
-If you are looking at `.template.js` file you should see some variable names beginning with `$`, which are exported by the async macro. Theseare used to mark differences between the implementations of the sync and async functions. Look at the referenced macro file for more detailed information, including all the possible kinds of transformations.
+If you are looking at file with a name like `$some-method.js` you should see some variable names beginning with `$`, which are exported by the async macro. Theseare used to mark differences between the implementations of the sync and async functions. Look at the referenced macro file for more detailed information, including all the possible kinds of transformations.
 
 ## Coding conventions
 This project uses ESLINT with [standard](https://standardjs.com/). Just run ```npm run lint``` to check if your code is ok. Also we use 2 spaces for indentation.
