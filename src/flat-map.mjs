@@ -6,13 +6,13 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { iterableCurry } from './internal/iterable'
-import map from './map'
+import { iterableCurry } from './internal/iterable';
+import map from './map';
 
-function * flatMap (func, iterable) {
+function* flatMap(func, iterable) {
   for (const item of map(func, iterable)) {
-    yield * item
+    yield* item;
   }
 }
 
-export default iterableCurry(flatMap)
+export default iterableCurry(flatMap);

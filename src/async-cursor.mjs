@@ -6,38 +6,34 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { asyncIterableCurry } from './internal/async-iterable'
-import CircularBuffer from './internal/circular-buffer'
-import concat from './async-concat'
-import repeat from './repeat'
+import { asyncIterableCurry } from './internal/async-iterable';
+import CircularBuffer from './internal/circular-buffer';
+import concat from './async-concat';
+import repeat from './repeat';
 
-async function * asyncCursor ({
-  size,
-  trailing,
-  filler
-}, iterable) {
-  const circular = new CircularBuffer(size)
-  circular.fill(filler)
-  iterable = iterable[Symbol.asyncIterator]()
+async function* asyncCursor({ size, trailing, filler }, iterable) {
+  const circular = new CircularBuffer(size);
+  circular.fill(filler);
+  iterable = iterable[Symbol.asyncIterator]();
 
   if (trailing) {
-    let index = 0
+    let index = 0;
 
     for await (const item of concat(iterable, repeat(filler, size - 1))) {
-      circular.push(item)
+      circular.push(item);
 
       if (index + 1 >= size) {
-        yield circular.readOnlyCopy
+        yield circular.readOnlyCopy;
       }
 
-      index++
+      index++;
     }
   } else {
     for await (const item of iterable) {
-      circular.push(item)
-      yield circular.readOnlyCopy
+      circular.push(item);
+      yield circular.readOnlyCopy;
     }
   }
 }
 
-export default asyncIterableCurry(asyncCursor)
+export default asyncIterableCurry(asyncCursor);

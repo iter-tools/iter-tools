@@ -1,23 +1,24 @@
 module.exports = {
-  extends: 'standard',
+  extends: ['standard', 'prettier'],
   parser: 'babel-eslint',
   parserOptions: {
     ecmaVersion: 2017,
-    sourceType: 'module'
+    sourceType: 'module',
   },
   env: { es6: true },
   overrides: [
     {
       files: ['$*.js'],
       rules: {
-        'no-unused-expressions': 'off'
-      }
-    }, {
+        'no-unused-expressions': 'off',
+      },
+    },
+    {
       files: ['**/__tests__/**/*.test.*(m)js'],
       env: {
         node: true,
-        jest: true
-      }
-    }
-  ]
+        jest: true,
+      },
+    },
+  ],
 };

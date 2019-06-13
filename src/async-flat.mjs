@@ -6,34 +6,34 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { asyncIterableCurry } from './internal/async-iterable'
+import { asyncIterableCurry } from './internal/async-iterable';
 
-const defaultShouldFlat = item => (typeof item[Symbol.iterator] === 'function' || typeof item[Symbol.asyncIterator] === 'function') && typeof item !== 'string'
+const defaultShouldFlat = item =>
+  (typeof item[Symbol.iterator] === 'function' ||
+    typeof item[Symbol.asyncIterator] === 'function') &&
+  typeof item !== 'string';
 
-function asyncFlat (shouldFlat = defaultShouldFlat, depthOrOptions = 1, iterable) {
-  let depth = depthOrOptions
+function asyncFlat(shouldFlat = defaultShouldFlat, depthOrOptions = 1, iterable) {
+  let depth = depthOrOptions;
 
   if (depthOrOptions && typeof depthOrOptions === 'object') {
-    ({
-      shouldFlat = defaultShouldFlat,
-      depth = 1
-    } = depthOrOptions)
+    ({ shouldFlat = defaultShouldFlat, depth = 1 } = depthOrOptions);
   }
 
-  async function * _flat (currentDepth, iterable) {
+  async function* _flat(currentDepth, iterable) {
     for await (const item of iterable) {
       if (currentDepth < depth && (await shouldFlat(item))) {
-        yield * _flat(currentDepth + 1, item)
+        yield* _flat(currentDepth + 1, item);
       } else {
-        yield item
+        yield item;
       }
     }
   }
 
-  return _flat(0, iterable)
+  return _flat(0, iterable);
 }
 
 export default asyncIterableCurry(asyncFlat, {
   minArgs: 0,
-  maxArgs: 2
-})
+  maxArgs: 2,
+});

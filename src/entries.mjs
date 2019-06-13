@@ -1,21 +1,22 @@
-const emptyArr = []
+const emptyArr = [];
 
-const { hasOwnProperty } = Object.prototype
+const { hasOwnProperty } = Object.prototype;
 
-export default function entries (entriesable) {
+export default function entries(entriesable) {
   return {
-    * [Symbol.iterator] () {
+    *[Symbol.iterator]() {
       if (entriesable == null) {
-        return emptyArr[Symbol.iterator]()
+        return emptyArr[Symbol.iterator]();
       } else if (typeof entriesable.entries === 'function') {
-        yield * entriesable.entries()
-      } else if (typeof entriesable === 'object') { // pojo
+        yield* entriesable.entries();
+      } else if (typeof entriesable === 'object') {
+        // pojo
         for (let key in entriesable) {
           if (hasOwnProperty.call(entriesable, key)) {
-            yield [key, entriesable[key]]
+            yield [key, entriesable[key]];
           }
         }
       }
-    }
-  }
+    },
+  };
 }

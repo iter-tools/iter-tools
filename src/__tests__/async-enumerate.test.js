@@ -8,20 +8,25 @@
 
 /* eslint-disable no-unused-vars */
 
-import { asyncEnumerate, asyncToArray, range } from '../..'
+import { asyncEnumerate, asyncToArray, range } from '..';
 describe('asyncEnumerate', () => {
   it('enumerates iterables', async () => {
-    const iter = asyncEnumerate(range({
-      start: 1,
-      end: 4
-    }))
-    expect((await asyncToArray(iter))).toEqual([[0, 1], [1, 2], [2, 3]])
-  })
+    const iter = asyncEnumerate(
+      range({
+        start: 1,
+        end: 4,
+      }),
+    );
+    expect(await asyncToArray(iter)).toEqual([[0, 1], [1, 2], [2, 3]]);
+  });
   it('enumerates iterables with start', async () => {
-    const iter = asyncEnumerate(range({
-      start: 1,
-      end: 4
-    }), 3)
-    expect((await asyncToArray(iter))).toEqual([[3, 1], [4, 2], [5, 3]])
-  })
-})
+    const iter = asyncEnumerate(
+      range({
+        start: 1,
+        end: 4,
+      }),
+      3,
+    );
+    expect(await asyncToArray(iter)).toEqual([[3, 1], [4, 2], [5, 3]]);
+  });
+});

@@ -6,19 +6,19 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { asyncIterableCurry } from './internal/async-iterable'
+import { asyncIterableCurry } from './internal/async-iterable';
 
-async function * asyncInterpose (interposeItem, iterable) {
-  let first = true
+async function* asyncInterpose(interposeItem, iterable) {
+  let first = true;
 
   for await (const item of iterable) {
     if (!first) {
-      yield interposeItem
+      yield interposeItem;
     }
 
-    yield item
-    first = false
+    yield item;
+    first = false;
   }
 }
 
-export default asyncIterableCurry(asyncInterpose)
+export default asyncIterableCurry(asyncInterpose);

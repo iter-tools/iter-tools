@@ -1,15 +1,17 @@
-import { $async, $await } from '../generate/async.macro'
+import { $async, $await } from '../generate/async.macro';
 
-import { $iterableCurry } from './internal/$iterable'
+import { $iterableCurry } from './internal/$iterable';
 
-$async; function $every (func, iterable) {
-  let c = 0
-  $await; for (const item of iterable) {
-    if (!($await(func(item, c++)))) {
-      return false
+$async;
+function $every(func, iterable) {
+  let c = 0;
+  $await;
+  for (const item of iterable) {
+    if (!$await(func(item, c++))) {
+      return false;
     }
   }
-  return true
+  return true;
 }
 
-export default $iterableCurry($every, { reduces: true })
+export default $iterableCurry($every, { reduces: true });

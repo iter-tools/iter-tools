@@ -6,13 +6,16 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import compose from './compose'
-import zip from './zip'
-import filter from './filter'
-import map from './map'
+import compose from './compose';
+import zip from './zip';
+import filter from './filter';
+import map from './map';
 
-function compress (...args) {
-  return compose(map(entry => entry[0]), filter(entry => entry[1]), (iterable, compress) => zip(iterable, compress))(...args)
+function compress(iterable, compress) {
+  return compose(
+    map(entry => entry[0]),
+    filter(entry => entry[1]),
+  )(zip(iterable, compress));
 }
 
-export { compress as default }
+export { compress as default };

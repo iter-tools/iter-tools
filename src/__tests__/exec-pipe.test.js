@@ -1,11 +1,18 @@
-import { map, filter, execPipe } from '../..'
+import { execPipe } from '..';
 
-const bump = x => x + 3
-const isEven = x => (x % 2) === 0
-
-describe('execPipe', () => {
+describe('pipe', () => {
   it('works', () => {
-    const iter = execPipe([1, 2, 3, 4], map(bump), filter(isEven))
-    expect(Array.from(iter)).toEqual([4, 6])
-  })
-})
+    const a = (str: string) => `b(${str})`;
+    const b = (str: string) => `a(${str})`;
+
+    expect(execPipe('input', b, a)).toBe('b(a(input))');
+  });
+
+  it('works with types', () => {
+    expect(execPipe(0, Boolean)).toBe(false);
+  });
+
+  it('is the identity function when no functions are passed', () => {
+    expect(execPipe(true)).toBe(true);
+  });
+});

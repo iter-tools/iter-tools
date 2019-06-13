@@ -1,6 +1,6 @@
-const { createMacro } = require('babel-plugin-macros')
-const { expression } = require('@babel/template')
-const rename = require('./rename')
+const { createMacro } = require('babel-plugin-macros');
+const { expression } = require('@babel/template');
+const rename = require('./rename');
 
 /**
  * This is a babel macro which you can import the following symbols:
@@ -42,94 +42,97 @@ const rename = require('./rename')
  * https://github.com/kentcdodds/babel-plugin-macros
  */
 
-function asyncMacro ({ references, babel, config: { ASYNC } }) {
-  const t = babel.types
+function asyncMacro({ references, babel, config: { ASYNC } }) {
+  const t = babel.types;
 
   for (const reference of references.$isAsync || []) {
-    reference.replaceWith(t.booleanLiteral(!!ASYNC))
+    reference.replaceWith(t.booleanLiteral(!!ASYNC));
   }
 
   for (const reference of references.$iteratorSymbol || []) {
-    const { ast } = expression
-    reference.replaceWith(ASYNC ? ast`Symbol.asyncIterator` : ast`Symbol.iterator`)
+    const { ast } = expression;
+    reference.replaceWith(ASYNC ? ast`Symbol.asyncIterator` : ast`Symbol.iterator`);
   }
 
   for (const reference of [].concat(references.$async || [], references.$await || [])) {
-    const refName = reference.node.name
+    const refName = reference.node.name;
 
     switch (reference.parent.type) {
       case 'ExpressionStatement': {
-        const nextStatement = getNextStatement(reference)
+        const nextStatement = getNextStatement(reference);
 
         if (refName === '$async' && nextStatement.type === 'FunctionDeclaration') {
           // $async; function foo() {}
 
           if (ASYNC) {
-            nextStatement.async = true
+            nextStatement.async = true;
           }
         } else if (refName === '$await' && nextStatement.type === 'ForOfStatement') {
           // $await; for { const foo of bar }
 
           if (ASYNC) {
-            nextStatement.await = true
+            nextStatement.await = true;
           }
         }
 
-        reference.remove()
-        break
+        reference.remove();
+        break;
       }
       case 'CallExpression': {
-        let argument = getOnlyArgument(reference, refName)
+        let argument = getOnlyArgument(reference, refName);
 
-        if (refName === '$async' && (argument.type === 'FunctionExpression' || argument.type === 'ArrowFunctionExpression')) {
+        if (
+          refName === '$async' &&
+          (argument.type === 'FunctionExpression' || argument.type === 'ArrowFunctionExpression')
+        ) {
           // $async(function() {})
           // $async(() => {})
 
           if (ASYNC) {
-            argument.async = true
+            argument.async = true;
           }
         } else if (refName === '$await') {
           // $await(someExpression)
 
           if (ASYNC) {
-            argument = t.awaitExpression(argument)
+            argument = t.awaitExpression(argument);
           }
         }
 
-        reference.parentPath.replaceWith(argument)
-        break
+        reference.parentPath.replaceWith(argument);
+        break;
       }
       case 'TaggedTemplateExpression':
         if (refName === '$async') {
-          const { quasi } = reference.parentPath.node
+          const { quasi } = reference.parentPath.node;
           if (!quasi.quasis.length === 1) {
-            throw new Error('Interpolation not supported for $async`fnName`')
+            throw new Error('Interpolation not supported for $async`fnName`');
           }
-          const name = quasi.quasis[0].value.raw
-          reference.parentPath.replaceWith(t.stringLiteral(rename(name, ASYNC)))
+          const name = quasi.quasis[0].value.raw;
+          reference.parentPath.replaceWith(t.stringLiteral(rename(name, ASYNC)));
         } else {
-          throw new Error(`${refName} cannot be used as a template tag`)
+          throw new Error(`${refName} cannot be used as a template tag`);
         }
-        break
+        break;
     }
   }
 }
 
-function getNextStatement (reference) {
-  const { container } = reference.parentPath
-  const parentNode = reference.parent
-  const loopIdx = container.findIndex(node => node === parentNode) + 1
-  return container[loopIdx]
+function getNextStatement(reference) {
+  const { container } = reference.parentPath;
+  const parentNode = reference.parent;
+  const loopIdx = container.findIndex(node => node === parentNode) + 1;
+  return container[loopIdx];
 }
 
-function getOnlyArgument (reference, refName) {
-  const { arguments: args } = reference.parent
+function getOnlyArgument(reference, refName) {
+  const { arguments: args } = reference.parent;
 
   if (args.length !== 1) {
-    throw new Error(`The ${refName}() macro takes exactly one argument`)
+    throw new Error(`The ${refName}() macro takes exactly one argument`);
   }
 
-  return args[0]
+  return args[0];
 }
 
-module.exports = createMacro(asyncMacro, { configName: 'async' })
+module.exports = createMacro(asyncMacro, { configName: 'async' });

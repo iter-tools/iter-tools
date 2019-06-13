@@ -8,27 +8,36 @@
 
 /* eslint-disable no-unused-vars */
 
-import { dropWhile, asyncDropWhile, toArray, asyncToArray, range } from '../..'
+import { dropWhile, asyncDropWhile, toArray, asyncToArray, range } from '..';
 describe('dropWhile', () => {
   it('dropWhile on array', () => {
-    const iter = dropWhile(item => item % 2 === 0, [2, 2, 3, 2, 2, 2])
-    expect(toArray(iter)).toEqual([3, 2, 2, 2])
-  })
+    const iter = dropWhile(item => item % 2 === 0, [2, 2, 3, 2, 2, 2]);
+    expect(toArray(iter)).toEqual([3, 2, 2, 2]);
+  });
   it('dropWhile on iterable', () => {
-    const iter = dropWhile(item => item !== 4, range({
-      start: 1,
-      end: 7
-    }))
-    expect(toArray(iter)).toEqual([4, 5, 6])
-  })
+    const iter = dropWhile(
+      item => item !== 4,
+      range({
+        start: 1,
+        end: 7,
+      }),
+    );
+    expect(toArray(iter)).toEqual([4, 5, 6]);
+  });
   it('dropWhile on iterable (curried version)', () => {
-    const iter = dropWhile(item => item !== 4)
-    expect(toArray(iter(range({
-      start: 1,
-      end: 7
-    })))).toEqual([4, 5, 6])
-  })
+    const iter = dropWhile(item => item !== 4);
+    expect(
+      toArray(
+        iter(
+          range({
+            start: 1,
+            end: 7,
+          }),
+        ),
+      ),
+    ).toEqual([4, 5, 6]);
+  });
   it('dropWhile on null', () => {
-    expect(toArray(dropWhile(item => item, null))).toEqual([])
-  })
-})
+    expect(toArray(dropWhile((item: any) => item, null))).toEqual([]);
+  });
+});

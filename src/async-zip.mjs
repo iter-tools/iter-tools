@@ -6,45 +6,42 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { asyncEnsureIterable } from './internal/async-iterable'
-import map from './map'
+import { asyncEnsureIterable } from './internal/async-iterable';
+import map from './map';
 
-async function * asyncZip (...iterables) {
-  const iters = iterables.map(arg => asyncEnsureIterable(arg)[Symbol.asyncIterator]())
+async function* asyncZip(...iterables) {
+  const iters = iterables.map(arg => asyncEnsureIterable(arg)[Symbol.asyncIterator]());
   const itersDone = iters.map(iter => ({
     done: false,
-    iter
-  }))
+    iter,
+  }));
 
   try {
     while (true) {
-      const results = map(iter => iter.next(), iters)
-      const syncResults = await Promise.all(results)
-      const zipped = new Array(iters.length)
-      let i = 0
-      let allDone = true
-      let done = false
+      const results = map(iter => iter.next(), iters);
+      const syncResults = await Promise.all(results);
+      const zipped = new Array(iters.length);
+      let i = 0;
+      let allDone = true;
+      let done = false;
 
       for (const result of syncResults) {
-        allDone = allDone && result.done
-        done = done || result.done
-        itersDone[i].done = result.done
-        zipped[i] = result.value
-        i++
+        allDone = allDone && result.done;
+        done = done || result.done;
+        itersDone[i].done = result.done;
+        zipped[i] = result.value;
+        i++;
       }
 
-      if (done) break
-      yield zipped
-      if (allDone) break
+      if (done) break;
+      yield zipped;
+      if (allDone) break;
     }
   } finally {
-    for (const {
-      iter,
-      done
-    } of itersDone) {
-      if (!done && typeof iter.return === 'function') await iter.return()
+    for (const { iter, done } of itersDone) {
+      if (!done && typeof iter.return === 'function') await iter.return();
     }
   }
 }
 
-export default asyncZip
+export default asyncZip;

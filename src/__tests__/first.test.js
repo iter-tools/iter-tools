@@ -8,14 +8,14 @@
 
 /* eslint-disable no-unused-vars */
 
-import { first, range } from '../..'
+import { first, range } from '..';
 describe('first', () => {
   it('returns first item', () => {
-    const iter = range(10)
-    expect(first(iter)).toBe(0)
-  })
+    const iter = range(10);
+    expect(first(iter)).toBe(0);
+  });
   it('returns no items', () => {
-    const iter = range(0)
-    expect(first(iter)).toBe(undefined)
-  })
-})
+    const iter = range(0);
+    expect(first(iter)).toBe(undefined);
+  });
+});

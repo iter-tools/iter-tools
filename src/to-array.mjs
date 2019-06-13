@@ -6,16 +6,16 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { ensureIterable } from './internal/iterable'
+import { ensureIterable } from './internal/iterable';
 
-function toArray (iterable) {
-  const out = []
+function toArray(iterable) {
+  const out = [];
 
   for (const item of ensureIterable(iterable)) {
-    out.push(item)
+    out.push(item);
   }
 
-  return out
+  return out;
 }
 
-export default toArray
+export default toArray;

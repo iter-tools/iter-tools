@@ -8,14 +8,14 @@
 
 /* eslint-disable no-unused-vars */
 
-import { asyncFirst, range } from '../..'
+import { asyncFirst, range } from '..';
 describe('asyncFirst', () => {
   it('returns first item', async () => {
-    const iter = range(10)
-    expect((await asyncFirst(iter))).toBe(0)
-  })
+    const iter = range(10);
+    expect(await asyncFirst(iter)).toBe(0);
+  });
   it('returns no items', async () => {
-    const iter = range(0)
-    expect((await asyncFirst(iter))).toBe(undefined)
-  })
-})
+    const iter = range(0);
+    expect(await asyncFirst(iter)).toBe(undefined);
+  });
+});

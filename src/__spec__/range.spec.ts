@@ -1,18 +1,10 @@
-import assert from 'static-type-assert'
-import * as iter from '../index'
+import assert from 'static-type-assert';
+import { range } from '..';
 
-assert<
-  IterableIterator<0 | 1 | 2>
->(iter.range(3))
+declare var Ø: never;
 
-assert<
-  IterableIterator<number>
->(iter.range(200))
+assert<IterableIterator<number>>(range(Ø as number));
 
-assert<
-  IterableIterator<number>
->(iter.range({ start: 2 }))
+assert<IterableIterator<number>>(range(Ø as { start: 2 }));
 
-assert<
-  IterableIterator<number>
->(iter.range())
+assert<IterableIterator<number>>(range());

@@ -6,15 +6,15 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { iterableCurry } from './internal/iterable'
+import { iterableCurry } from './internal/iterable';
 
-function * tap (func, iterable) {
-  let c = 0
+function* tap(func, iterable) {
+  let c = 0;
 
   for (const item of iterable) {
-    func(item, c++)
-    yield item
+    func(item, c++);
+    yield item;
   }
 }
 
-export default iterableCurry(tap)
+export default iterableCurry(tap);

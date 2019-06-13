@@ -6,17 +6,14 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { asyncEnsureIterable } from './internal/async-iterable'
+import { asyncEnsureIterable } from './internal/async-iterable';
 
-async function asyncFirst (iterable) {
-  const iter = asyncEnsureIterable(iterable)[Symbol.asyncIterator]()
-  const {
-    value,
-    done
-  } = await iter.next()
-  if (done) return undefined
-  if (typeof iter.return === 'function') await iter.return()
-  return value
+async function asyncFirst(iterable) {
+  const iter = asyncEnsureIterable(iterable)[Symbol.asyncIterator]();
+  const { value, done } = await iter.next();
+  if (done) return undefined;
+  if (typeof iter.return === 'function') await iter.return();
+  return value;
 }
 
-export default asyncFirst
+export default asyncFirst;

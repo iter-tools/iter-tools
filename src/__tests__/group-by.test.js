@@ -8,105 +8,101 @@
 
 /* eslint-disable no-unused-vars */
 
-import { groupBy, asyncGroupBy, toArray } from '../..'
+import { groupBy, asyncGroupBy, toArray } from '..';
 describe('groupBy', () => {
   it('main cursor', () => {
-    const iter = groupBy(undefined, 'AAABBAACCCCD')
-    let next = iter.next()
-    expect(next.value[0]).toBe('A')
-    next = iter.next()
-    expect(next.value[0]).toBe('B')
-    next = iter.next()
-    expect(next.value[0]).toBe('A')
-    next = iter.next()
-    expect(next.value[0]).toBe('C')
-    next = iter.next()
-    expect(next.value[0]).toBe('D')
-    next = iter.next()
-    expect(next.done).toBe(true)
-  })
+    const iter = groupBy(null, 'AAABBAACCCCD');
+    let next = iter.next();
+    expect(next.value[0]).toBe('A');
+    next = iter.next();
+    expect(next.value[0]).toBe('B');
+    next = iter.next();
+    expect(next.value[0]).toBe('A');
+    next = iter.next();
+    expect(next.value[0]).toBe('C');
+    next = iter.next();
+    expect(next.value[0]).toBe('D');
+    next = iter.next();
+    expect(next.done).toBe(true);
+  });
   it('with key function', () => {
-    const iter = groupBy(item => item.toLowerCase(), 'AaaBbaACccCD')
-    let next = iter.next()
-    expect(next.value[0]).toBe('a')
-    next = iter.next()
-    expect(next.value[0]).toBe('b')
-    next = iter.next()
-    expect(next.value[0]).toBe('a')
-    next = iter.next()
-    expect(next.value[0]).toBe('c')
-    next = iter.next()
-    expect(next.value[0]).toBe('d')
-    next = iter.next()
-    expect(next.done).toBe(true)
-  })
+    const iter = groupBy(item => item.toLowerCase(), 'AaaBbaACccCD');
+    let next = iter.next();
+    expect(next.value[0]).toBe('a');
+    next = iter.next();
+    expect(next.value[0]).toBe('b');
+    next = iter.next();
+    expect(next.value[0]).toBe('a');
+    next = iter.next();
+    expect(next.value[0]).toBe('c');
+    next = iter.next();
+    expect(next.value[0]).toBe('d');
+    next = iter.next();
+    expect(next.done).toBe(true);
+  });
   it('main cursor (curried)', () => {
-    const iter = groupBy()('AAABBAACCCCD')
-    let next = iter.next()
-    expect(next.value[0]).toBe('A')
-    next = iter.next()
-    expect(next.value[0]).toBe('B')
-    next = iter.next()
-    expect(next.value[0]).toBe('A')
-    next = iter.next()
-    expect(next.value[0]).toBe('C')
-    next = iter.next()
-    expect(next.value[0]).toBe('D')
-    next = iter.next()
-    expect(next.done).toBe(true)
-  })
+    const iter = groupBy(null)('AAABBAACCCCD');
+    let next = iter.next();
+    expect(next.value[0]).toBe('A');
+    next = iter.next();
+    expect(next.value[0]).toBe('B');
+    next = iter.next();
+    expect(next.value[0]).toBe('A');
+    next = iter.next();
+    expect(next.value[0]).toBe('C');
+    next = iter.next();
+    expect(next.value[0]).toBe('D');
+    next = iter.next();
+    expect(next.done).toBe(true);
+  });
   it('secondary', () => {
-    const iter = groupBy(undefined, 'AAABBAACCCCD')
-    let next = iter.next()
-    expect(next.value[0]).toBe('A')
-    expect(toArray(next.value[1])).toEqual(['A', 'A', 'A'])
-    next = iter.next()
-    expect(next.value[0]).toBe('B')
-    expect(toArray(next.value[1])).toEqual(['B', 'B'])
-    next = iter.next()
-    expect(next.value[0]).toBe('A')
-    expect(toArray(next.value[1])).toEqual(['A', 'A'])
-    next = iter.next()
-    expect(next.value[0]).toBe('C')
-    expect(toArray(next.value[1])).toEqual(['C', 'C', 'C', 'C'])
-    next = iter.next()
-    expect(next.value[0]).toBe('D')
-    expect(toArray(next.value[1])).toEqual(['D'])
-    next = iter.next()
-    expect(next.done).toBe(true)
-  })
+    const iter = groupBy(null, 'AAABBAACCCCD');
+    let next = iter.next();
+    expect(next.value[0]).toBe('A');
+    expect(toArray(next.value[1])).toEqual(['A', 'A', 'A']);
+    next = iter.next();
+    expect(next.value[0]).toBe('B');
+    expect(toArray(next.value[1])).toEqual(['B', 'B']);
+    next = iter.next();
+    expect(next.value[0]).toBe('A');
+    expect(toArray(next.value[1])).toEqual(['A', 'A']);
+    next = iter.next();
+    expect(next.value[0]).toBe('C');
+    expect(toArray(next.value[1])).toEqual(['C', 'C', 'C', 'C']);
+    next = iter.next();
+    expect(next.value[0]).toBe('D');
+    expect(toArray(next.value[1])).toEqual(['D']);
+    next = iter.next();
+    expect(next.done).toBe(true);
+  });
   it('secondary (consume partially)', () => {
-    const iter = groupBy(undefined, 'AAABBAACCCCD')
-    let next = iter.next()
-    expect(next.value[0]).toBe('A')
-    expect(next.value[1].next().value).toBe('A')
-    expect(next.value[1].next().value).toBe('A')
-    expect(next.value[1].next().value).toBe('A')
-    expect(next.value[1].next().done).toBe(true)
-    next = iter.next()
-    expect(next.value[0]).toBe('B')
-    next = iter.next()
-    expect(next.value[0]).toBe('A')
-  })
+    const iter = groupBy(null, 'AAABBAACCCCD');
+    let next = iter.next();
+    expect(next.value[0]).toBe('A');
+    expect(next.value[1].next().value).toBe('A');
+    expect(next.value[1].next().value).toBe('A');
+    expect(next.value[1].next().value).toBe('A');
+    expect(next.value[1].next().done).toBe(true);
+    next = iter.next();
+    expect(next.value[0]).toBe('B');
+    next = iter.next();
+    expect(next.value[0]).toBe('A');
+  });
   it('null returns empty iterable', () => {
-    expect(toArray(groupBy(undefined, null))).toEqual([])
-  })
+    expect(toArray(groupBy(null, null))).toEqual([]);
+    expect(toArray(groupBy(null)(null))).toEqual([]);
+  });
   it('groupBy of undefined returns empty iterable', () => {
-    expect(toArray(groupBy(undefined, undefined))).toEqual([])
-  })
-  it('groupBy of undefined returns empty iterable 2', () => {
-    expect(toArray(groupBy(undefined))).toEqual([])
-  })
-  it('groupBy of undefined returns empty iterable 3', () => {
-    expect(toArray(groupBy()(undefined))).toEqual([])
-  })
+    expect(toArray(groupBy(undefined, undefined))).toEqual([]);
+    expect(toArray(groupBy(undefined)(undefined))).toEqual([]);
+  });
   it('groupBy using destructuring', () => {
-    const [group1, group2, group3] = groupBy('AAABBCCCC')
-    expect(group1[0]).toBe('A')
-    expect(group2[0]).toBe('B')
-    expect(group3[0]).toBe('C')
-    expect(Array.from(group1[1])).toEqual(['A', 'A', 'A'])
-    expect(Array.from(group2[1])).toEqual(['B', 'B'])
-    expect(Array.from(group3[1])).toEqual(['C', 'C', 'C', 'C'])
-  })
-})
+    const [group1, group2, group3] = groupBy(null, 'AAABBCCCC');
+    expect(group1[0]).toBe('A');
+    expect(group2[0]).toBe('B');
+    expect(group3[0]).toBe('C');
+    expect(Array.from(group1[1])).toEqual(['A', 'A', 'A']);
+    expect(Array.from(group2[1])).toEqual(['B', 'B']);
+    expect(Array.from(group3[1])).toEqual(['C', 'C', 'C', 'C']);
+  });
+});

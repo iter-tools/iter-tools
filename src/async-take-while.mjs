@@ -6,21 +6,21 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { asyncIterableCurry } from './internal/async-iterable'
+import { asyncIterableCurry } from './internal/async-iterable';
 
-async function * asyncTakeWhile (func, i) {
-  let take = true
-  let c = 0
+async function* asyncTakeWhile(func, i) {
+  let take = true;
+  let c = 0;
 
   for await (const item of i) {
-    take = await func(item, c++)
+    take = await func(item, c++);
 
     if (take) {
-      yield item
+      yield item;
     } else {
-      break
+      break;
     }
   }
 }
 
-export default asyncIterableCurry(asyncTakeWhile)
+export default asyncIterableCurry(asyncTakeWhile);

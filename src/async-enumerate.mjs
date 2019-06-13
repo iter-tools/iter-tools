@@ -6,13 +6,16 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import range from './range'
-import zip from './async-zip'
+import range from './range';
+import zip from './async-zip';
 
-function asyncEnumerate (iterable, start = 0) {
-  return zip(range({
-    start
-  }), iterable)
+function asyncEnumerate(iterable, start = 0) {
+  return zip(
+    range({
+      start,
+    }),
+    iterable,
+  );
 }
 
-export { asyncEnumerate as default }
+export { asyncEnumerate as default };

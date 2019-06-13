@@ -6,34 +6,32 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { iterableCurry } from './internal/iterable'
-import splitBy from './internal/split-by'
+import { iterableCurry } from './internal/iterable';
+import splitBy from './internal/split-by';
 
-function * cons (item, iterable) {
-  yield item
-  yield * iterable
+function* cons(item, iterable) {
+  yield item;
+  yield* iterable;
 }
 
-function car (iterable) {
-  const iterator = iterable[Symbol.iterator]()
-  const {
-    done,
-    value
-  } = iterator.next()
-  if (done) return []
-  return [value, iterator]
+function car(iterable) {
+  const iterator = iterable[Symbol.iterator]();
+  const { done, value } = iterator.next();
+  if (done) return [];
+  return [value, iterator];
 }
 
-function * groupBy (getKey = k => k, iterable) {
-  for (const subseq of splitBy(getKey, iterable)) {
-    const [first, rest] = car(subseq)
-    if (rest === undefined) return
-    const key = getKey(first)
-    yield [key, cons(first, rest)]
+function* groupBy(getKey, iterable) {
+  const _getKey = getKey || (k => k);
+
+  for (const subseq of splitBy(_getKey, iterable)) {
+    const [first, rest] = car(subseq);
+    if (rest === undefined) return;
+
+    const key = _getKey(first);
+
+    yield [key, cons(first, rest)];
   }
 }
 
-export default iterableCurry(groupBy, {
-  minArgs: 0,
-  maxArgs: 1
-})
+export default iterableCurry(groupBy);

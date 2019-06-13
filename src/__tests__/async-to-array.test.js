@@ -8,9 +8,9 @@
 
 /* eslint-disable no-unused-vars */
 
-import { asyncToArray, range } from '../..'
+import { asyncToArray, range } from '..';
 describe('asyncToArray', () => {
   it('works', async () => {
-    expect((await asyncToArray(range(3)))).toEqual([0, 1, 2])
-  })
-})
+    expect(await asyncToArray(range(3))).toEqual([0, 1, 2]);
+  });
+});

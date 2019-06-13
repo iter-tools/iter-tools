@@ -6,16 +6,16 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { iterableCurry } from './internal/iterable'
+import { iterableCurry } from './internal/iterable';
 
-function * filter (func, iterable) {
-  let c = 0
+function* filter(func, iterable) {
+  let c = 0;
 
   for (const item of iterable) {
     if (func(item, c++)) {
-      yield item
+      yield item;
     }
   }
 }
 
-export default iterableCurry(filter)
+export default iterableCurry(filter);

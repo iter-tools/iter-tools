@@ -1,25 +1,16 @@
-import assert from 'static-type-assert'
-import * as iter from '../index'
+import assert from 'static-type-assert';
+import { product } from '..';
 
-assert<
-  Iterable<[0 | 1 | 2, 3 | 4 | 5]>
->(iter.product(
-  [0, 1, 2] as [0, 1, 2],
-  [3, 4, 5] as [3, 4, 5]
-))
+declare var Ø: never;
 
-assert<
-  Iterable<[number, number, number]>
->(iter.product([0, 1, 2], [3, 4, 5], [7, 8, 9]))
+assert<Iterable<[0 | 1 | 2, 3 | 4 | 5]>>(
+  product(Ø as [0, 1, 2], Ø as [3, 4, 5]),
+);
 
-assert<
-  number
->(iter.product([0, 1, 2], [3, 4, 5], [7, 8, 9]).getSize())
+assert<Iterable<[number, number, number]>>(
+  product(Ø as Array<number>, Ø as Array<number>, Ø as Array<number>),
+);
 
-assert<
-  Iterable<[string, string, string]>
->(iter.product(
-  '',
-  '',
-  ''
-))
+assert<number>(product(Ø as Array<number>, Ø as Array<number>, Ø as Array<number>).getSize());
+
+assert<Iterable<[string, string, string]>>(product(Ø as string, Ø as string, Ø as string));

@@ -1,16 +1,23 @@
-import { map, filter, pipe } from '../..'
-
-const bump = x => x + 3
-const isEven = x => (x % 2) === 0
+import { pipe } from '..';
 
 describe('pipe', () => {
-  it('composes iterables', () => {
-    const iter = pipe(map(bump), filter(isEven))
-    expect(Array.from(iter([1, 2, 3, 4]))).toEqual([4, 6])
-  })
+  it('works', () => {
+    const a = (str: string) => `b(${str})`;
+    const b = (str: string) => `a(${str})`;
 
-  it('composes iterables (check order)', () => {
-    const iter = pipe(filter(isEven), map(bump))
-    expect(Array.from(iter([1, 2, 3, 4]))).toEqual([5, 7])
-  })
-})
+    expect(
+      pipe(
+        b,
+        a,
+      )('input'),
+    ).toBe('b(a(input))');
+  });
+
+  it('works with types', () => {
+    expect(pipe(Boolean)(0)).toBe(false);
+  });
+
+  it('is the identity function when no functions are passed', () => {
+    expect(pipe()(true)).toBe(true);
+  });
+});

@@ -6,13 +6,16 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import range from './range'
-import zip from './zip'
+import range from './range';
+import zip from './zip';
 
-function enumerate (iterable, start = 0) {
-  return zip(range({
-    start
-  }), iterable)
+function enumerate(iterable, start = 0) {
+  return zip(
+    range({
+      start,
+    }),
+    iterable,
+  );
 }
 
-export { enumerate as default }
+export { enumerate as default };

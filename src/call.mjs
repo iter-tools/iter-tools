@@ -1,3 +1,3 @@
-export default function call (fn, ...args) {
-  return fn(...args)
+export default function call(fn, ...args) {
+  return fn(...args);
 }

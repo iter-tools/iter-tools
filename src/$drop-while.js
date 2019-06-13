@@ -1,20 +1,22 @@
-import { $async, $await } from '../generate/async.macro'
+import { $async, $await } from '../generate/async.macro';
 
-import { $iterableCurry } from './internal/$iterable'
+import { $iterableCurry } from './internal/$iterable';
 
-$async; function * $dropWhile (func, iterable) {
-  let drop = true
-  let c = 0
-  $await; for (const item of iterable) {
+$async;
+function* $dropWhile(func, iterable) {
+  let drop = true;
+  let c = 0;
+  $await;
+  for (const item of iterable) {
     if (!drop) {
-      yield item
+      yield item;
     } else {
-      drop = $await(func(item, c++))
+      drop = $await(func(item, c++));
       if (!drop) {
-        yield item
+        yield item;
       }
     }
   }
 }
 
-export default $iterableCurry($dropWhile)
+export default $iterableCurry($dropWhile);

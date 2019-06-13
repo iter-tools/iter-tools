@@ -6,84 +6,87 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import CircularBuffer from './internal/circular-buffer'
-import { iterableCurry } from './internal/iterable'
+import CircularBuffer from './internal/circular-buffer';
+import { iterableCurry } from './internal/iterable';
 
-function bufferedSlice (iterable, start, end, step) {
-  const bufferSize = Math.abs(start)
-  const buffer = new CircularBuffer(bufferSize)
-  let counter = 0
+function bufferedSlice(iterable, start, end, step) {
+  const bufferSize = Math.abs(start);
+  const buffer = new CircularBuffer(bufferSize);
+  let counter = 0;
 
   for (const item of iterable) {
-    buffer.push(item)
-    counter++
+    buffer.push(item);
+    counter++;
   }
 
-  let newEnd
+  let newEnd;
 
   if (isFinite(end) && end > 0) {
-    newEnd = end - (counter - bufferSize)
-    if (newEnd < 0) return []
+    newEnd = end - (counter - bufferSize);
+    if (newEnd < 0) return [];
   } else {
-    newEnd = end
+    newEnd = end;
   }
 
-  return simpleSlice(buffer, 0, newEnd, step)
+  return simpleSlice(buffer, 0, newEnd, step);
 }
 
-function * simpleSlice (iterable, start, end, step) {
-  let currentPos = 0
-  let nextValidPos = start
-  const bufferSize = Math.abs(end)
-  let buffer
-  let counter = 0
+function* simpleSlice(iterable, start, end, step) {
+  let currentPos = 0;
+  let nextValidPos = start;
+  const bufferSize = Math.abs(end);
+  let buffer;
+  let counter = 0;
 
   if (end < 0) {
-    buffer = new CircularBuffer(bufferSize)
+    buffer = new CircularBuffer(bufferSize);
   }
 
   for (let item of iterable) {
     if (buffer) {
-      item = buffer.push(item)
-      counter++
+      item = buffer.push(item);
+      counter++;
 
       if (counter <= bufferSize) {
-        continue
+        continue;
       }
     }
 
     if (currentPos >= end && end >= 0) {
-      break
+      break;
     }
 
     if (nextValidPos === currentPos) {
-      yield item
-      nextValidPos += step
+      yield item;
+      nextValidPos += step;
     }
 
-    currentPos++
+    currentPos++;
   }
 }
 
-function * slice (opts, iterable) {
-  let start, step, end
-  opts = typeof opts === 'number' ? {
-    end: opts,
-    start: 0
-  } : opts
-  step = opts.step === undefined ? 1 : opts.step
-  end = opts.end === undefined ? Infinity : opts.end
-  start = opts.start ? opts.start : 0
+function* slice(opts, iterable) {
+  let start, step, end;
+  opts =
+    typeof opts === 'number'
+      ? {
+          end: opts,
+          start: 0,
+        }
+      : opts;
+  step = opts.step === undefined ? 1 : opts.step;
+  end = opts.end === undefined ? Infinity : opts.end;
+  start = opts.start ? opts.start : 0;
 
   if (step <= 0) {
-    throw new TypeError('Cannot slice with step <= 0')
+    throw new TypeError('Cannot slice with step <= 0');
   }
 
   if (start >= 0) {
-    yield * simpleSlice(iterable, start, end, step)
+    yield* simpleSlice(iterable, start, end, step);
   } else {
-    yield * bufferedSlice(iterable, start, end, step)
+    yield* bufferedSlice(iterable, start, end, step);
   }
 }
 
-export default iterableCurry(slice)
+export default iterableCurry(slice);

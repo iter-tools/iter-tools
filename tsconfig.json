@@ -8,9 +8,16 @@
     "strict": true,
     "moduleResolution": "node",
     "esModuleInterop": true,
-    "pretty": true
+    "pretty": true,
+    "allowJs": true,
+    "types": ["jest"]
   },
   "include": [
-    "src/__spec__"
+    "src/**/__tests__/*.ts",
+    "src/**/__spec__/*.ts"
+  ],
+  "exclude": [
+    "src/**/__tests__/$*.ts}",
+    "src/**/__spec__/$*.ts"
   ]
 }
