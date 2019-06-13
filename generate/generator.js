@@ -8,11 +8,11 @@ const sane = require('sane');
 const { matcher } = require('micromatch');
 const log = require('loglevel');
 
-const generatedFunctionFile = require('../templates/generated-function-file');
-const generatedTestFile = require('../templates/generated-test-file');
-const generationErrorFile = require('../templates/generation-error-file');
-const gitattributesFile = require('../templates/gitattributes-file');
-const testFnsFile = require('../templates/test-fns-file');
+const generatedFunctionFile = require('./templates/generated-function-file');
+const generatedTestFile = require('./templates/generated-test-file');
+const generationErrorFile = require('./templates/generation-error-file');
+const gitattributesFile = require('./templates/gitattributes-file');
+const testFnsFile = require('./templates/test-fns-file');
 
 const { argv } = require('./argv');
 
