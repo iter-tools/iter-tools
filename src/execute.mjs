@@ -6,10 +6,10 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-function * execute (func, ...args) {
+function* execute(func, ...args) {
   while (true) {
-    yield func(...args)
+    yield func(...args);
   }
 }
 
-export default execute
+export default execute;

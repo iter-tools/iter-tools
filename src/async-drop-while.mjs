@@ -6,23 +6,23 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { asyncIterableCurry } from './internal/async-iterable'
+import { asyncIterableCurry } from './internal/async-iterable';
 
-async function * asyncDropWhile (func, iterable) {
-  let drop = true
-  let c = 0
+async function* asyncDropWhile(func, iterable) {
+  let drop = true;
+  let c = 0;
 
   for await (const item of iterable) {
     if (!drop) {
-      yield item
+      yield item;
     } else {
-      drop = await func(item, c++)
+      drop = await func(item, c++);
 
       if (!drop) {
-        yield item
+        yield item;
       }
     }
   }
 }
 
-export default asyncIterableCurry(asyncDropWhile)
+export default asyncIterableCurry(asyncDropWhile);

@@ -8,32 +8,32 @@
 
 /* eslint-disable no-unused-vars */
 
-import { partition, asyncPartition, zip, asyncZip, toArray, asyncToArray, range } from '../..'
+import { partition, asyncPartition, zip, asyncZip, toArray, asyncToArray, range } from '..';
 describe('partition', () => {
   describe('sync predicate', () => {
-    const predicate = n => n % 2 === 0
+    const predicate = (n: number) => n % 2 === 0;
 
     describe('sync iterable', () => {
       it('empty iterable', () => {
-        const [evens, odds] = partition(predicate, [])
-        expect([toArray(evens), toArray(odds)]).toEqual([[], []])
-      })
+        const [evens, odds] = partition(predicate, []);
+        expect([toArray(evens), toArray(odds)]).toEqual([[], []]);
+      });
       it('range(10)', () => {
-        const [evens, odds] = partition(predicate, range(10))
-        expect([toArray(evens), toArray(odds)]).toEqual([[0, 2, 4, 6, 8], [1, 3, 5, 7, 9]])
-      })
+        const [evens, odds] = partition(predicate, range(10));
+        expect([toArray(evens), toArray(odds)]).toEqual([[0, 2, 4, 6, 8], [1, 3, 5, 7, 9]]);
+      });
       it('calls func once for each item', () => {
-        const func = jest.fn(predicate)
-        const [evens, odds] = partition(func, range(10))
-        toArray(evens)
-        toArray(odds)
-        expect(func.mock.calls).toEqual(Array.from(range(10)).map(x => [x]))
-      })
+        const func = jest.fn(predicate);
+        const [evens, odds] = partition(func, range(10));
+        toArray(evens);
+        toArray(odds);
+        expect(func.mock.calls).toEqual(Array.from(range(10)).map(x => [x]));
+      });
       it('iterate both evens and odds at the same time', () => {
-        const [evens, odds] = partition(predicate, range(10))
-        const zipped = toArray(zip(evens, odds))
-        expect(zipped).toEqual([[0, 1], [2, 3], [4, 5], [6, 7], [8, 9]])
-      })
-    })
-  })
-})
+        const [evens, odds] = partition(predicate, range(10));
+        const zipped = toArray(zip(evens, odds));
+        expect(zipped).toEqual([[0, 1], [2, 3], [4, 5], [6, 7], [8, 9]]);
+      });
+    });
+  });
+});

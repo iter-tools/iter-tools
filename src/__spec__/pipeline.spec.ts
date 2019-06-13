@@ -1,54 +1,31 @@
-import assert from 'static-type-assert'
-import { execPipe, range, map, filter } from '../index'
+import assert from 'static-type-assert';
+import { execPipe, map, filter } from '..';
 
-assert<
-  IterableIterator<number>
->(execPipe(
-  range(10),
-  filter(x => {
-    assert<number>(x)
-    return x % 2 === 1
-  }),
-  map(x => {
-    assert<number>(x)
-    return x + 2
-  })
-))
+declare var Ø: never;
 
-assert<
-  IterableIterator<0 | 1 | 2 | 3>
->(execPipe(
-  range(10),
-  filter(x => {
-    assert<number>(x)
-    return x % 2 === 1
-  }),
-  map(x => {
-    assert<number>(x)
-    return x + 2
-  }),
-  filter((x): x is 0 | 1 | 2 | 3 => {
-    assert<number>(x)
-    return x < 5
-  })
-))
+assert<IterableIterator<number>>(
+  execPipe(
+    Ø as Iterable<number>,
+    filter(Ø as (x: number) => boolean),
+    map(Ø as (x: number) => number),
+  ),
+);
 
-assert<4>(execPipe(
-  0 as 0,
-  x => {
-    assert<0>(x)
-    return 1 as 1
-  },
-  x => {
-    assert<1>(x)
-    return 2 as 2
-  },
-  x => {
-    assert<2>(x)
-    return 3 as 3
-  },
-  x => {
-    assert<3>(x)
-    return 4 as 4
-  }
-))
+assert<IterableIterator<0 | 1 | 2 | 3>>(
+  execPipe(
+    Ø as Iterable<number>,
+    filter(Ø as (x: number) => boolean),
+    map(Ø as (x: number) => number),
+    filter(Ø as (x: number) => x is 0 | 1 | 2 | 3),
+  ),
+);
+
+assert<4>(
+  execPipe(
+    Ø as 0,
+    Ø as (x: 0) => 1,
+    Ø as (x: 1) => 2,
+    Ø as (x: 2) => 3,
+    Ø as (x: 3) => 4,
+  ),
+);

@@ -1,6 +1,8 @@
-import assert from 'static-type-assert'
-import * as iter from '../index'
+import assert from 'static-type-assert';
+import { call } from '..';
 
-declare function add (a: number, b: number): number
+declare var Ø: never;
 
-assert<number>(iter.call(add, 1, 1))
+declare function add(a: number, b: number): number;
+
+assert<number>(call(add, Ø as number, Ø as number));

@@ -6,15 +6,15 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { asyncIterableCurry } from './internal/async-iterable'
+import { asyncIterableCurry } from './internal/async-iterable';
 
-async function * asyncTap (func, iterable) {
-  let c = 0
+async function* asyncTap(func, iterable) {
+  let c = 0;
 
   for await (const item of iterable) {
-    func(item, c++)
-    yield item
+    func(item, c++);
+    yield item;
   }
 }
 
-export default asyncIterableCurry(asyncTap)
+export default asyncIterableCurry(asyncTap);

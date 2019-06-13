@@ -8,51 +8,51 @@
 
 /* eslint-disable no-unused-vars */
 
-import { asyncExecute } from '../..'
+import { asyncExecute } from '..';
 describe('asyncExecute', () => {
   it('executes forever', async () => {
-    const iter = asyncExecute(() => 1)
-    expect((await iter.next())).toEqual({
+    const iter = asyncExecute(() => 1);
+    expect(await iter.next()).toEqual({
       value: 1,
-      done: false
-    })
-    expect((await iter.next())).toEqual({
+      done: false,
+    });
+    expect(await iter.next()).toEqual({
       value: 1,
-      done: false
-    })
-    expect((await iter.next())).toEqual({
+      done: false,
+    });
+    expect(await iter.next()).toEqual({
       value: 1,
-      done: false
-    })
-  })
+      done: false,
+    });
+  });
   it('can be passed additional arguments', async () => {
-    const iter = asyncExecute((a, b) => a + b + 1, 4, 6)
-    expect((await iter.next())).toEqual({
+    const iter = asyncExecute((a, b) => a + b + 1, 4, 6);
+    expect(await iter.next()).toEqual({
       value: 11,
-      done: false
-    })
-    expect((await iter.next())).toEqual({
+      done: false,
+    });
+    expect(await iter.next()).toEqual({
       value: 11,
-      done: false
-    })
-    expect((await iter.next())).toEqual({
+      done: false,
+    });
+    expect(await iter.next()).toEqual({
       value: 11,
-      done: false
-    })
-  })
+      done: false,
+    });
+  });
   it('executes forever (with promise value)', async () => {
-    const iter = asyncExecute(() => Promise.resolve(1))
-    expect((await iter.next())).toEqual({
+    const iter = asyncExecute(() => Promise.resolve(1));
+    expect(await iter.next()).toEqual({
       value: 1,
-      done: false
-    })
-    expect((await iter.next())).toEqual({
+      done: false,
+    });
+    expect(await iter.next()).toEqual({
       value: 1,
-      done: false
-    })
-    expect((await iter.next())).toEqual({
+      done: false,
+    });
+    expect(await iter.next()).toEqual({
       value: 1,
-      done: false
-    })
-  })
-})
+      done: false,
+    });
+  });
+});

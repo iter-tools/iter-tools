@@ -8,111 +8,107 @@
 
 /* eslint-disable no-unused-vars */
 
-import { groupBy, asyncGroupBy, asyncToArray } from '../..'
+import { groupBy, asyncGroupBy, asyncToArray } from '..';
 describe('asyncGroupBy', () => {
   it('main cursor', async () => {
-    const iter = asyncGroupBy(undefined, 'AAABBAACCCCD')
-    let next = await iter.next()
-    expect(next.value[0]).toBe('A')
-    next = await iter.next()
-    expect(next.value[0]).toBe('B')
-    next = await iter.next()
-    expect(next.value[0]).toBe('A')
-    next = await iter.next()
-    expect(next.value[0]).toBe('C')
-    next = await iter.next()
-    expect(next.value[0]).toBe('D')
-    next = await iter.next()
-    expect(next.done).toBe(true)
-  })
+    const iter = asyncGroupBy(null, 'AAABBAACCCCD');
+    let next = await iter.next();
+    expect(next.value[0]).toBe('A');
+    next = await iter.next();
+    expect(next.value[0]).toBe('B');
+    next = await iter.next();
+    expect(next.value[0]).toBe('A');
+    next = await iter.next();
+    expect(next.value[0]).toBe('C');
+    next = await iter.next();
+    expect(next.value[0]).toBe('D');
+    next = await iter.next();
+    expect(next.done).toBe(true);
+  });
   it('with key function', async () => {
-    const iter = asyncGroupBy(item => item.toLowerCase(), 'AaaBbaACccCD')
-    let next = await iter.next()
-    expect(next.value[0]).toBe('a')
-    next = await iter.next()
-    expect(next.value[0]).toBe('b')
-    next = await iter.next()
-    expect(next.value[0]).toBe('a')
-    next = await iter.next()
-    expect(next.value[0]).toBe('c')
-    next = await iter.next()
-    expect(next.value[0]).toBe('d')
-    next = await iter.next()
-    expect(next.done).toBe(true)
-  })
+    const iter = asyncGroupBy(item => item.toLowerCase(), 'AaaBbaACccCD');
+    let next = await iter.next();
+    expect(next.value[0]).toBe('a');
+    next = await iter.next();
+    expect(next.value[0]).toBe('b');
+    next = await iter.next();
+    expect(next.value[0]).toBe('a');
+    next = await iter.next();
+    expect(next.value[0]).toBe('c');
+    next = await iter.next();
+    expect(next.value[0]).toBe('d');
+    next = await iter.next();
+    expect(next.done).toBe(true);
+  });
   it('main cursor (curried)', async () => {
-    const iter = asyncGroupBy()('AAABBAACCCCD')
-    let next = await iter.next()
-    expect(next.value[0]).toBe('A')
-    next = await iter.next()
-    expect(next.value[0]).toBe('B')
-    next = await iter.next()
-    expect(next.value[0]).toBe('A')
-    next = await iter.next()
-    expect(next.value[0]).toBe('C')
-    next = await iter.next()
-    expect(next.value[0]).toBe('D')
-    next = await iter.next()
-    expect(next.done).toBe(true)
-  })
+    const iter = asyncGroupBy(null)('AAABBAACCCCD');
+    let next = await iter.next();
+    expect(next.value[0]).toBe('A');
+    next = await iter.next();
+    expect(next.value[0]).toBe('B');
+    next = await iter.next();
+    expect(next.value[0]).toBe('A');
+    next = await iter.next();
+    expect(next.value[0]).toBe('C');
+    next = await iter.next();
+    expect(next.value[0]).toBe('D');
+    next = await iter.next();
+    expect(next.done).toBe(true);
+  });
   it('secondary', async () => {
-    const iter = asyncGroupBy(undefined, 'AAABBAACCCCD')
-    let next = await iter.next()
-    expect(next.value[0]).toBe('A')
-    expect((await asyncToArray(next.value[1]))).toEqual(['A', 'A', 'A'])
-    next = await iter.next()
-    expect(next.value[0]).toBe('B')
-    expect((await asyncToArray(next.value[1]))).toEqual(['B', 'B'])
-    next = await iter.next()
-    expect(next.value[0]).toBe('A')
-    expect((await asyncToArray(next.value[1]))).toEqual(['A', 'A'])
-    next = await iter.next()
-    expect(next.value[0]).toBe('C')
-    expect((await asyncToArray(next.value[1]))).toEqual(['C', 'C', 'C', 'C'])
-    next = await iter.next()
-    expect(next.value[0]).toBe('D')
-    expect((await asyncToArray(next.value[1]))).toEqual(['D'])
-    next = await iter.next()
-    expect(next.done).toBe(true)
-  })
+    const iter = asyncGroupBy(null, 'AAABBAACCCCD');
+    let next = await iter.next();
+    expect(next.value[0]).toBe('A');
+    expect(await asyncToArray(next.value[1])).toEqual(['A', 'A', 'A']);
+    next = await iter.next();
+    expect(next.value[0]).toBe('B');
+    expect(await asyncToArray(next.value[1])).toEqual(['B', 'B']);
+    next = await iter.next();
+    expect(next.value[0]).toBe('A');
+    expect(await asyncToArray(next.value[1])).toEqual(['A', 'A']);
+    next = await iter.next();
+    expect(next.value[0]).toBe('C');
+    expect(await asyncToArray(next.value[1])).toEqual(['C', 'C', 'C', 'C']);
+    next = await iter.next();
+    expect(next.value[0]).toBe('D');
+    expect(await asyncToArray(next.value[1])).toEqual(['D']);
+    next = await iter.next();
+    expect(next.done).toBe(true);
+  });
   it('secondary (consume partially)', async () => {
-    const iter = asyncGroupBy(undefined, 'AAABBAACCCCD')
-    let next = await iter.next()
-    expect(next.value[0]).toBe('A')
-    expect((await next.value[1].next()).value).toBe('A')
-    expect((await next.value[1].next()).value).toBe('A')
-    expect((await next.value[1].next()).value).toBe('A')
-    expect((await next.value[1].next()).done).toBe(true)
-    next = await iter.next()
-    expect(next.value[0]).toBe('B')
-    next = await iter.next()
-    expect(next.value[0]).toBe('A')
-  })
+    const iter = asyncGroupBy(null, 'AAABBAACCCCD');
+    let next = await iter.next();
+    expect(next.value[0]).toBe('A');
+    expect((await next.value[1].next()).value).toBe('A');
+    expect((await next.value[1].next()).value).toBe('A');
+    expect((await next.value[1].next()).value).toBe('A');
+    expect((await next.value[1].next()).done).toBe(true);
+    next = await iter.next();
+    expect(next.value[0]).toBe('B');
+    next = await iter.next();
+    expect(next.value[0]).toBe('A');
+  });
   it('null returns empty iterable', async () => {
-    expect((await asyncToArray(asyncGroupBy(undefined, null)))).toEqual([])
-  })
+    expect(await asyncToArray(asyncGroupBy(null, null))).toEqual([]);
+    expect(await asyncToArray(asyncGroupBy(null)(null))).toEqual([]);
+  });
   it('groupBy of undefined returns empty iterable', async () => {
-    expect((await asyncToArray(asyncGroupBy(undefined, undefined)))).toEqual([])
-  })
-  it('groupBy of undefined returns empty iterable 2', async () => {
-    expect((await asyncToArray(asyncGroupBy(undefined)))).toEqual([])
-  })
-  it('groupBy of undefined returns empty iterable 3', async () => {
-    expect((await asyncToArray(asyncGroupBy()(undefined)))).toEqual([])
-  })
+    expect(await asyncToArray(asyncGroupBy(undefined, undefined))).toEqual([]);
+    expect(await asyncToArray(asyncGroupBy(undefined)(undefined))).toEqual([]);
+  });
   it('uses key function returning a promise', async () => {
-    const iter = asyncGroupBy(async item => item.toLowerCase(), 'AaaBbaACccCD')
-    let next = await iter.next()
-    expect(next.value[0]).toBe('a')
-    next = await iter.next()
-    expect(next.value[0]).toBe('b')
-    next = await iter.next()
-    expect(next.value[0]).toBe('a')
-    next = await iter.next()
-    expect(next.value[0]).toBe('c')
-    next = await iter.next()
-    expect(next.value[0]).toBe('d')
-    next = await iter.next()
-    expect(next.done).toBe(true)
-  })
-})
+    const iter = asyncGroupBy(async item => item.toLowerCase(), 'AaaBbaACccCD');
+    let next = await iter.next();
+    expect(next.value[0]).toBe('a');
+    next = await iter.next();
+    expect(next.value[0]).toBe('b');
+    next = await iter.next();
+    expect(next.value[0]).toBe('a');
+    next = await iter.next();
+    expect(next.value[0]).toBe('c');
+    next = await iter.next();
+    expect(next.value[0]).toBe('d');
+    next = await iter.next();
+    expect(next.done).toBe(true);
+  });
+});

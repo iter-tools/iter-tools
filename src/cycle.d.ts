@@ -1,2 +1,5 @@
-import { cycle } from './index'
-export default cycle
+import { IterableLike } from './internal/iterable';
+
+declare function cycle<T = any>(iterable: IterableLike<T>): IterableIterator<T>;
+
+export default cycle;

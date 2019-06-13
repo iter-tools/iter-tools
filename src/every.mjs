@@ -6,20 +6,20 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { iterableCurry } from './internal/iterable'
+import { iterableCurry } from './internal/iterable';
 
-function every (func, iterable) {
-  let c = 0
+function every(func, iterable) {
+  let c = 0;
 
   for (const item of iterable) {
     if (!func(item, c++)) {
-      return false
+      return false;
     }
   }
 
-  return true
+  return true;
 }
 
 export default iterableCurry(every, {
-  reduces: true
-})
+  reduces: true,
+});

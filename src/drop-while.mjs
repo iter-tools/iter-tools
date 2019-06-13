@@ -6,23 +6,23 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { iterableCurry } from './internal/iterable'
+import { iterableCurry } from './internal/iterable';
 
-function * dropWhile (func, iterable) {
-  let drop = true
-  let c = 0
+function* dropWhile(func, iterable) {
+  let drop = true;
+  let c = 0;
 
   for (const item of iterable) {
     if (!drop) {
-      yield item
+      yield item;
     } else {
-      drop = func(item, c++)
+      drop = func(item, c++);
 
       if (!drop) {
-        yield item
+        yield item;
       }
     }
   }
 }
 
-export default iterableCurry(dropWhile)
+export default iterableCurry(dropWhile);

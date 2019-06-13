@@ -6,92 +6,95 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { asyncEnsureIterable } from './internal/async-iterable'
-import { Exchange } from './internal/queues'
+import { asyncEnsureIterable } from './internal/async-iterable';
+import { Exchange } from './internal/queues';
 
-function asyncFork (n = Infinity, iterable) {
-  const iterator = asyncEnsureIterable(iterable)[Symbol.asyncIterator]()
-  let iterableCounter = 0
-  let noNewIterables = false
-  const exchange = new Exchange()
-  let done = false
-  let doneValue
+function asyncFork(n = Infinity, iterable) {
+  const iterator = asyncEnsureIterable(iterable)[Symbol.asyncIterator]();
+  let iterableCounter = 0;
+  let noNewIterables = false;
+  const exchange = new Exchange();
+  let done = false;
+  let doneValue;
 
-  function fetch () {
+  function fetch() {
     return new Promise((resolve, reject) => {
-      iterator.next().then(newItem => {
-        if (newItem.done) {
-          done = true
-          doneValue = newItem.value
-          return resolve()
-        } else {
-          exchange.push(newItem.value)
-          return resolve()
-        }
-      }).catch(err => reject(err))
-    })
+      iterator
+        .next()
+        .then(newItem => {
+          if (newItem.done) {
+            done = true;
+            doneValue = newItem.value;
+            return resolve();
+          } else {
+            exchange.push(newItem.value);
+            return resolve();
+          }
+        })
+        .catch(err => reject(err));
+    });
   }
 
-  async function returnIterator () {
+  async function returnIterator() {
     if (noNewIterables && iterableCounter === 0) {
-      if (typeof iterator.return === 'function') await iterator.return()
+      if (typeof iterator.return === 'function') await iterator.return();
     }
   }
 
-  async function * generateFork (a) {
+  async function* generateFork(a) {
     try {
-      iterableCounter++
-      yield 'ensure finally'
+      iterableCounter++;
+      yield 'ensure finally';
 
       while (true) {
         if (!a.isEmpty()) {
-          yield a.shift()
+          yield a.shift();
         } else if (done) {
-          return doneValue
+          return doneValue;
         } else {
-          await fetch()
+          await fetch();
         }
       }
     } finally {
-      iterableCounter--
-      await returnIterator()
+      iterableCounter--;
+      await returnIterator();
     }
   }
 
-  return (function * generateForks () {
+  return (function* generateForks() {
     try {
-      const consumer = exchange.getConsumer()
+      const consumer = exchange.getConsumer();
 
       for (let counter = 0; counter < n; counter++) {
-        const fork = generateFork(consumer.clone()) // this first call to "next" allows to initiate the function generator
+        const fork = generateFork(consumer.clone()); // this first call to "next" allows to initiate the function generator
         // this ensures that "iterableCounter" will be always increased and decreased
         //
         // the default behaviour of a generator is that finally clause is only called
         // if next was called at least once
 
-        fork.next() // ensure finally
+        fork.next(); // ensure finally
 
-        yield fork
+        yield fork;
       }
     } finally {
-      noNewIterables = true
-      returnIterator()
+      noNewIterables = true;
+      returnIterator();
     }
-  }())
+  })();
 }
 
-export default function curriedFork (...args) {
+export default function curriedFork(...args) {
   if (args.length === 2) {
-    return asyncFork(...args)
+    return asyncFork(...args);
   }
 
   if (args.length === 0) {
-    return asyncFork
+    return asyncFork;
   }
 
   if (typeof args[0] === 'number') {
-    return (...args2) => curriedFork(args[0], ...args2)
+    return (...args2) => curriedFork(args[0], ...args2);
   }
 
-  return asyncFork(undefined, args[0])
+  return asyncFork(undefined, args[0]);
 }

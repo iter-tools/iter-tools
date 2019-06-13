@@ -8,81 +8,81 @@
 
 /* eslint-disable no-unused-vars */
 
-import { asyncCycle, range } from '../..'
+import { asyncCycle, range } from '..';
 describe('asyncCycle', () => {
   it('return infinite cycle', async () => {
-    const iter = asyncCycle([1, 2, 3])[Symbol.asyncIterator]()
-    expect((await iter.next())).toEqual({
+    const iter = asyncCycle([1, 2, 3])[Symbol.asyncIterator]();
+    expect(await iter.next()).toEqual({
       value: 1,
-      done: false
-    })
-    expect((await iter.next())).toEqual({
+      done: false,
+    });
+    expect(await iter.next()).toEqual({
       value: 2,
-      done: false
-    })
-    expect((await iter.next())).toEqual({
+      done: false,
+    });
+    expect(await iter.next()).toEqual({
       value: 3,
-      done: false
-    })
-    expect((await iter.next())).toEqual({
+      done: false,
+    });
+    expect(await iter.next()).toEqual({
       value: 1,
-      done: false
-    })
-    expect((await iter.next())).toEqual({
+      done: false,
+    });
+    expect(await iter.next()).toEqual({
       value: 2,
-      done: false
-    })
-    expect((await iter.next())).toEqual({
+      done: false,
+    });
+    expect(await iter.next()).toEqual({
       value: 3,
-      done: false
-    })
-  })
+      done: false,
+    });
+  });
   it('return infinite cycle (from iterator)', async () => {
-    const iter = asyncCycle(range(3))[Symbol.asyncIterator]()
-    expect((await iter.next())).toEqual({
+    const iter = asyncCycle(range(3))[Symbol.asyncIterator]();
+    expect(await iter.next()).toEqual({
       value: 0,
-      done: false
-    })
-    expect((await iter.next())).toEqual({
+      done: false,
+    });
+    expect(await iter.next()).toEqual({
       value: 1,
-      done: false
-    })
-    expect((await iter.next())).toEqual({
+      done: false,
+    });
+    expect(await iter.next()).toEqual({
       value: 2,
-      done: false
-    })
-    expect((await iter.next())).toEqual({
+      done: false,
+    });
+    expect(await iter.next()).toEqual({
       value: 0,
-      done: false
-    })
-    expect((await iter.next())).toEqual({
+      done: false,
+    });
+    expect(await iter.next()).toEqual({
       value: 1,
-      done: false
-    })
-    expect((await iter.next())).toEqual({
+      done: false,
+    });
+    expect(await iter.next()).toEqual({
       value: 2,
-      done: false
-    })
-  })
+      done: false,
+    });
+  });
   it('can be reused', async () => {
-    const myCycle = asyncCycle(range(3))
-    const iter1 = myCycle[Symbol.asyncIterator]()
-    expect((await iter1.next())).toEqual({
+    const myCycle = asyncCycle(range(3));
+    const iter1 = myCycle[Symbol.asyncIterator]();
+    expect(await iter1.next()).toEqual({
       value: 0,
-      done: false
-    })
-    expect((await iter1.next())).toEqual({
+      done: false,
+    });
+    expect(await iter1.next()).toEqual({
       value: 1,
-      done: false
-    })
-    const iter2 = myCycle[Symbol.asyncIterator]()
-    expect((await iter2.next())).toEqual({
+      done: false,
+    });
+    const iter2 = myCycle[Symbol.asyncIterator]();
+    expect(await iter2.next()).toEqual({
       value: 0,
-      done: false
-    })
-    expect((await iter2.next())).toEqual({
+      done: false,
+    });
+    expect(await iter2.next()).toEqual({
       value: 1,
-      done: false
-    })
-  })
-})
+      done: false,
+    });
+  });
+});

@@ -8,20 +8,25 @@
 
 /* eslint-disable no-unused-vars */
 
-import { enumerate, toArray, range } from '../..'
+import { enumerate, toArray, range } from '..';
 describe('enumerate', () => {
   it('enumerates iterables', () => {
-    const iter = enumerate(range({
-      start: 1,
-      end: 4
-    }))
-    expect(toArray(iter)).toEqual([[0, 1], [1, 2], [2, 3]])
-  })
+    const iter = enumerate(
+      range({
+        start: 1,
+        end: 4,
+      }),
+    );
+    expect(toArray(iter)).toEqual([[0, 1], [1, 2], [2, 3]]);
+  });
   it('enumerates iterables with start', () => {
-    const iter = enumerate(range({
-      start: 1,
-      end: 4
-    }), 3)
-    expect(toArray(iter)).toEqual([[3, 1], [4, 2], [5, 3]])
-  })
-})
+    const iter = enumerate(
+      range({
+        start: 1,
+        end: 4,
+      }),
+      3,
+    );
+    expect(toArray(iter)).toEqual([[3, 1], [4, 2], [5, 3]]);
+  });
+});

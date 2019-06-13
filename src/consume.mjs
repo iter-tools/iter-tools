@@ -6,18 +6,18 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { iterableCurry } from './internal/iterable'
+import { iterableCurry } from './internal/iterable';
 
-function consume (func = () => {}, iterable) {
-  let c = 0
+function consume(func = () => {}, iterable) {
+  let c = 0;
 
   for (const item of iterable) {
-    func(item, c++)
+    func(item, c++);
   }
 }
 
 export default iterableCurry(consume, {
   reduces: true,
   minArgs: 0,
-  maxArgs: 1
-})
+  maxArgs: 1,
+});

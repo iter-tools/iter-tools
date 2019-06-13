@@ -6,16 +6,16 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { asyncIterableCurry } from './internal/async-iterable'
+import { asyncIterableCurry } from './internal/async-iterable';
 
-async function * asyncFilter (func, iterable) {
-  let c = 0
+async function* asyncFilter(func, iterable) {
+  let c = 0;
 
   for await (const item of iterable) {
     if (await func(item, c++)) {
-      yield item
+      yield item;
     }
   }
 }
 
-export default asyncIterableCurry(asyncFilter)
+export default asyncIterableCurry(asyncFilter);

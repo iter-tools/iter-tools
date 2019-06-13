@@ -8,36 +8,36 @@
 
 /* eslint-disable no-unused-vars */
 
-import { execute, asyncExecute } from '../..'
+import { execute, asyncExecute } from '..';
 describe('execute', () => {
   it('executes forever', () => {
-    const iter = execute(() => 1)
+    const iter = execute(() => 1);
     expect(iter.next()).toEqual({
       value: 1,
-      done: false
-    })
+      done: false,
+    });
     expect(iter.next()).toEqual({
       value: 1,
-      done: false
-    })
+      done: false,
+    });
     expect(iter.next()).toEqual({
       value: 1,
-      done: false
-    })
-  })
+      done: false,
+    });
+  });
   it('can be passed additional arguments', () => {
-    const iter = execute((a, b) => a + b + 1, 4, 6)
+    const iter = execute((a, b) => a + b + 1, 4, 6);
     expect(iter.next()).toEqual({
       value: 11,
-      done: false
-    })
+      done: false,
+    });
     expect(iter.next()).toEqual({
       value: 11,
-      done: false
-    })
+      done: false,
+    });
     expect(iter.next()).toEqual({
       value: 11,
-      done: false
-    })
-  })
-})
+      done: false,
+    });
+  });
+});

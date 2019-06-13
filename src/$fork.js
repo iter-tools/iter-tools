@@ -1,100 +1,103 @@
-import { $isAsync, $async, $await, $iteratorSymbol } from '../generate/async.macro'
+import { $isAsync, $async, $await, $iteratorSymbol } from '../generate/async.macro';
 
-import { $ensureIterable } from './internal/$iterable'
-import { Exchange } from './internal/queues'
+import { $ensureIterable } from './internal/$iterable';
+import { Exchange } from './internal/queues';
 
-function $fork (n = Infinity, iterable) {
-  const iterator = $ensureIterable(iterable)[$iteratorSymbol]()
-  let iterableCounter = 0
-  let noNewIterables = false
-  const exchange = new Exchange()
-  let done = false
-  let doneValue
+function $fork(n = Infinity, iterable) {
+  const iterator = $ensureIterable(iterable)[$iteratorSymbol]();
+  let iterableCounter = 0;
+  let noNewIterables = false;
+  const exchange = new Exchange();
+  let done = false;
+  let doneValue;
 
-  function fetch () {
+  function fetch() {
     if ($isAsync) {
       return new Promise((resolve, reject) => {
-        iterator.next()
-          .then((newItem) => {
+        iterator
+          .next()
+          .then(newItem => {
             if (newItem.done) {
-              done = true
-              doneValue = newItem.value
-              return resolve()
+              done = true;
+              doneValue = newItem.value;
+              return resolve();
             } else {
-              exchange.push(newItem.value)
-              return resolve()
+              exchange.push(newItem.value);
+              return resolve();
             }
           })
-          .catch((err) => reject(err))
-      })
+          .catch(err => reject(err));
+      });
     } else {
-      const newItem = iterator.next()
+      const newItem = iterator.next();
       if (newItem.done) {
-        done = true
-        doneValue = newItem.value
+        done = true;
+        doneValue = newItem.value;
       } else {
-        exchange.push(newItem.value)
+        exchange.push(newItem.value);
       }
     }
   }
 
-  $async; function returnIterator () {
+  $async;
+  function returnIterator() {
     if (noNewIterables && iterableCounter === 0) {
-      if (typeof iterator.return === 'function') $await(iterator.return())
+      if (typeof iterator.return === 'function') $await(iterator.return());
     }
   }
 
-  $async; function * generateFork (a) {
+  $async;
+  function* generateFork(a) {
     try {
-      iterableCounter++
-      yield 'ensure finally'
+      iterableCounter++;
+      yield 'ensure finally';
       while (true) {
         if (!a.isEmpty()) {
-          yield a.shift()
+          yield a.shift();
         } else if (done) {
-          return doneValue
+          return doneValue;
         } else {
-          $await(fetch())
+          $await(fetch());
         }
       }
     } finally {
-      iterableCounter--
-      $await(returnIterator())
+      iterableCounter--;
+      $await(returnIterator());
     }
   }
 
-  function * generateForks () {
+  function* generateForks() {
     try {
-      const consumer = exchange.getConsumer()
+      const consumer = exchange.getConsumer();
       for (let counter = 0; counter < n; counter++) {
-        const fork = generateFork(consumer.clone())
+        const fork = generateFork(consumer.clone());
         // this first call to "next" allows to initiate the function generator
         // this ensures that "iterableCounter" will be always increased and decreased
         //
         // the default behaviour of a generator is that finally clause is only called
         // if next was called at least once
-        fork.next() // ensure finally
-        yield fork
+        fork.next(); // ensure finally
+        yield fork;
       }
     } finally {
-      noNewIterables = true
-      returnIterator()
+      noNewIterables = true;
+      returnIterator();
     }
   }
-  return generateForks()
+  return generateForks();
 }
 
-export default function curriedFork (...args) {
+export default function curriedFork(...args) {
   if (args.length === 2) {
-    return $fork(...args)
+    return $fork(...args);
   }
 
   if (args.length === 0) {
-    return $fork
+    return $fork;
   }
 
   if (typeof args[0] === 'number') {
-    return (...args2) => curriedFork(args[0], ...args2)
+    return (...args2) => curriedFork(args[0], ...args2);
   }
-  return $fork(undefined, args[0])
+  return $fork(undefined, args[0]);
 }

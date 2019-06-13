@@ -6,24 +6,27 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { iterableCurry } from './internal/iterable'
+import { iterableCurry } from './internal/iterable';
 
-function * batch (number, iterable) {
-  if (typeof number !== 'number' || number < 1) throw new Error('batch size should be a number, greater than zero')
-  let batch = []
+function* batch(number, iterable) {
+  if (typeof number !== 'number' || number < 1) {
+    throw new Error('batch size should be a number, greater than zero');
+  }
+
+  let batch = [];
 
   for (const item of iterable) {
-    batch.push(item)
+    batch.push(item);
 
     if (batch.length === number) {
-      yield batch
-      batch = []
+      yield batch;
+      batch = [];
     }
   }
 
   if (batch.length) {
-    yield batch
+    yield batch;
   }
 }
 
-export default iterableCurry(batch)
+export default iterableCurry(batch);

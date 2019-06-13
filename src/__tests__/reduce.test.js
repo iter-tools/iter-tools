@@ -8,50 +8,53 @@
 
 /* eslint-disable no-unused-vars */
 
-import { asyncReduce, reduce, range } from '../..'
-import { OneTwoThreeIterable } from './__framework__/fixtures'
+import { Promise, IterableLike } from '../internal/iterable';
+import { asyncReduce, reduce, range } from '..';
+import { OneTwoThreeIterable } from './__framework__/fixtures';
 describe('reduce', () => {
   it('sums an array', () => {
-    const sum = reduce((acc = 0, x) => acc + x, [0, 1, 2, 3])
-    expect(sum).toBe(6)
-  })
+    expect(reduce((acc = 0, x) => acc + x, [0, 1, 2, 3])).toBe(6);
+  });
   it('sums a range', () => {
-    const sum = reduce((acc = 0, x) => acc + x, range(4))
-    expect(sum).toBe(6)
-  })
+    expect(reduce((acc = 0, x) => acc + x, range(4))).toBe(6);
+  });
   it('sums using a specified initial value', () => {
-    const sum = reduce(1, (acc, x) => acc + x, range(4))
-    expect(sum).toBe(7)
-  })
+    expect(reduce(1, (acc, x) => acc + x, range(4))).toBe(7);
+  });
   it('sums using the initial value as the initial value', () => {
-    const sum = reduce((acc, x) => acc + x, range({
-      start: 2,
-      end: 4
-    }))
-    expect(sum).toBe(5)
-  })
+    expect(
+      reduce(
+        (acc, x) => acc + x,
+        range({
+          start: 2,
+          end: 4,
+        }),
+      ),
+    ).toBe(5);
+  });
   it('returns specified initial value when iterable is empty', () => {
-    const sum = reduce(0, (acc, x) => acc + x, [])
-    expect(sum).toBe(0)
-  })
+    expect(reduce(0, (acc, x) => acc + x, [])).toBe(0);
+  });
   it('throws when no initial value specified and iterable is empty', () => {
     expect(() => {
-      reduce((acc, x) => acc + x, [])
-    }).toThrow()
-  })
+      reduce((acc, x) => acc + x, []);
+    }).toThrow();
+  });
   it('sums a range (using curry)', () => {
-    const sum = reduce((acc = 0, x) => acc + x)
-    expect(sum(range(4))).toBe(6)
-  })
+    const sum: (iterable: IterableLike<number>) => Promise<number> = reduce(
+      (acc = 0, x) => acc + x,
+    );
+    expect(sum(range(4))).toBe(6);
+  });
   it('cleans up iterable', () => {
-    const oneTwoThree = new OneTwoThreeIterable()
+    const oneTwoThree = new OneTwoThreeIterable();
 
     try {
       reduce((acc = 0, x) => {
-        throw new Error('ops')
-      }, oneTwoThree)
+        throw new Error('ops');
+      }, oneTwoThree);
     } catch (e) {
-      expect(oneTwoThree).toHaveProperty('isCleanedUp', true)
+      expect(oneTwoThree).toHaveProperty('isCleanedUp', true);
     }
-  })
-})
+  });
+});

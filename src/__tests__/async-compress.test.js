@@ -8,10 +8,10 @@
 
 /* eslint-disable no-unused-vars */
 
-import { asyncCompress, asyncToArray, range } from '../..'
+import { asyncCompress, asyncToArray, range } from '..';
 describe('asyncCompress', () => {
   it('compress iterables', async () => {
-    const iter = asyncCompress(range(10), [0, 1, 0, 1, 1])
-    expect((await asyncToArray(iter))).toEqual([1, 3, 4])
-  })
-})
+    const iter = asyncCompress(range(10), [false, true, false, true, true]);
+    expect(await asyncToArray(iter)).toEqual([1, 3, 4]);
+  });
+});

@@ -6,13 +6,16 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import compose from './compose'
-import asyncZip from './async-zip'
-import asyncFilter from './async-filter'
-import asyncMap from './async-map'
+import compose from './compose';
+import asyncZip from './async-zip';
+import asyncFilter from './async-filter';
+import asyncMap from './async-map';
 
-function asyncCompress (...args) {
-  return compose(asyncMap(entry => entry[0]), asyncFilter(entry => entry[1]), (iterable, compress) => asyncZip(iterable, compress))(...args)
+function asyncCompress(iterable, compress) {
+  return compose(
+    asyncMap(entry => entry[0]),
+    asyncFilter(entry => entry[1]),
+  )(asyncZip(iterable, compress));
 }
 
-export { asyncCompress as default }
+export { asyncCompress as default };

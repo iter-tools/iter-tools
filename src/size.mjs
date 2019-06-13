@@ -6,23 +6,23 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { ensureIterable } from './internal/iterable'
-const TypedArrayProto = Object.getPrototypeOf(Int8Array)
+import { ensureIterable } from './internal/iterable';
+const TypedArrayProto = Object.getPrototypeOf(Int8Array);
 
-function size (iterable) {
-  const iter = ensureIterable(iterable)
-  if (Array.isArray(iter)) return iter.length
-  if (iter instanceof Map || iter instanceof Set) return iter.size
-  if (Object.getPrototypeOf(iter) === TypedArrayProto) return iter.length
-  let size = 0
+function size(iterable) {
+  const iter = ensureIterable(iterable);
+  if (Array.isArray(iter)) return iter.length;
+  if (iter instanceof Map || iter instanceof Set) return iter.size;
+  if (Object.getPrototypeOf(iter) === TypedArrayProto) return iter.length;
+  let size = 0;
   /* eslint-disable no-unused-vars */
 
   for (const _ of iter) {
     /* eslint-enable no-unused-vars */
-    size++
+    size++;
   }
 
-  return size
+  return size;
 }
 
-export default size
+export default size;

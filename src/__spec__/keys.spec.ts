@@ -1,14 +1,10 @@
-import assert from 'static-type-assert'
-import * as iter from '../index'
+import assert from 'static-type-assert';
+import { keys } from '..';
 
-assert<
-  IterableIterator<string>
->(iter.keys({ foo: '', bar: null }))
+declare var Ø: never;
 
-assert<
-  IterableIterator<string>
->(iter.keys({}))
+assert<IterableIterator<string>>(keys(Ø as { foo: string, bar: null }));
 
-assert<
-  IterableIterator<string>
->(iter.keys({ 0: '', 1: null }))
+assert<IterableIterator<string>>(keys(Ø as {}));
+
+assert<IterableIterator<string>>(keys(Ø as { 0: string, 1: null }));

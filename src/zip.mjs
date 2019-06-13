@@ -6,45 +6,42 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { ensureIterable } from './internal/iterable'
-import map from './map'
+import { ensureIterable } from './internal/iterable';
+import map from './map';
 
-function * zip (...iterables) {
-  const iters = iterables.map(arg => ensureIterable(arg)[Symbol.iterator]())
+function* zip(...iterables) {
+  const iters = iterables.map(arg => ensureIterable(arg)[Symbol.iterator]());
   const itersDone = iters.map(iter => ({
     done: false,
-    iter
-  }))
+    iter,
+  }));
 
   try {
     while (true) {
-      const results = map(iter => iter.next(), iters)
-      const syncResults = results
-      const zipped = new Array(iters.length)
-      let i = 0
-      let allDone = true
-      let done = false
+      const results = map(iter => iter.next(), iters);
+      const syncResults = results;
+      const zipped = new Array(iters.length);
+      let i = 0;
+      let allDone = true;
+      let done = false;
 
       for (const result of syncResults) {
-        allDone = allDone && result.done
-        done = done || result.done
-        itersDone[i].done = result.done
-        zipped[i] = result.value
-        i++
+        allDone = allDone && result.done;
+        done = done || result.done;
+        itersDone[i].done = result.done;
+        zipped[i] = result.value;
+        i++;
       }
 
-      if (done) break
-      yield zipped
-      if (allDone) break
+      if (done) break;
+      yield zipped;
+      if (allDone) break;
     }
   } finally {
-    for (const {
-      iter,
-      done
-    } of itersDone) {
-      if (!done && typeof iter.return === 'function') iter.return()
+    for (const { iter, done } of itersDone) {
+      if (!done && typeof iter.return === 'function') iter.return();
     }
   }
 }
 
-export default zip
+export default zip;

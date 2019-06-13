@@ -1,19 +1,21 @@
-import { $async, $await } from '../generate/async.macro'
+import { $async, $await } from '../generate/async.macro';
 
-import { $iterableCurry } from './internal/$iterable'
+import { $iterableCurry } from './internal/$iterable';
 
-$async; function * $takeWhile (func, i) {
-  let take = true
-  let c = 0
+$async;
+function* $takeWhile(func, i) {
+  let take = true;
+  let c = 0;
 
-  $await; for (const item of i) {
-    take = $await(func(item, c++))
+  $await;
+  for (const item of i) {
+    take = $await(func(item, c++));
     if (take) {
-      yield item
+      yield item;
     } else {
-      break
+      break;
     }
   }
 }
 
-export default $iterableCurry($takeWhile)
+export default $iterableCurry($takeWhile);

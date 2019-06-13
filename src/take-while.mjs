@@ -6,21 +6,21 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { iterableCurry } from './internal/iterable'
+import { iterableCurry } from './internal/iterable';
 
-function * takeWhile (func, i) {
-  let take = true
-  let c = 0
+function* takeWhile(func, i) {
+  let take = true;
+  let c = 0;
 
   for (const item of i) {
-    take = func(item, c++)
+    take = func(item, c++);
 
     if (take) {
-      yield item
+      yield item;
     } else {
-      break
+      break;
     }
   }
 }
 
-export default iterableCurry(takeWhile)
+export default iterableCurry(takeWhile);

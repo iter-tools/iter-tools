@@ -6,20 +6,20 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { iterableCurry } from './internal/iterable'
+import { iterableCurry } from './internal/iterable';
 
-function find (func, iterable) {
-  let c = 0
+function find(func, iterable) {
+  let c = 0;
 
   for (const item of iterable) {
     if (func(item, c++)) {
-      return item
+      return item;
     }
   }
 
-  return undefined
+  return undefined;
 }
 
 export default iterableCurry(find, {
-  reduces: true
-})
+  reduces: true,
+});

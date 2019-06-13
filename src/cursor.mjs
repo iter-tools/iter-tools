@@ -6,38 +6,34 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { iterableCurry } from './internal/iterable'
-import CircularBuffer from './internal/circular-buffer'
-import concat from './concat'
-import repeat from './repeat'
+import { iterableCurry } from './internal/iterable';
+import CircularBuffer from './internal/circular-buffer';
+import concat from './concat';
+import repeat from './repeat';
 
-function * cursor ({
-  size,
-  trailing,
-  filler
-}, iterable) {
-  const circular = new CircularBuffer(size)
-  circular.fill(filler)
-  iterable = iterable[Symbol.iterator]()
+function* cursor({ size, trailing, filler }, iterable) {
+  const circular = new CircularBuffer(size);
+  circular.fill(filler);
+  iterable = iterable[Symbol.iterator]();
 
   if (trailing) {
-    let index = 0
+    let index = 0;
 
     for (const item of concat(iterable, repeat(filler, size - 1))) {
-      circular.push(item)
+      circular.push(item);
 
       if (index + 1 >= size) {
-        yield circular.readOnlyCopy
+        yield circular.readOnlyCopy;
       }
 
-      index++
+      index++;
     }
   } else {
     for (const item of iterable) {
-      circular.push(item)
-      yield circular.readOnlyCopy
+      circular.push(item);
+      yield circular.readOnlyCopy;
     }
   }
 }
 
-export default iterableCurry(cursor)
+export default iterableCurry(cursor);

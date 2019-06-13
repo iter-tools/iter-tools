@@ -6,14 +6,14 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import multiPartition from './multi-partition'
-import { iterableCurry } from './internal/iterable'
+import multiPartition from './multi-partition';
+import { iterableCurry } from './internal/iterable';
 
-function partition (func, iter) {
-  const [first, second] = multiPartition(item => func(item) ? 0 : 1, iter)
-  return [first, second]
+function partition(func, iter) {
+  const [first, second] = multiPartition(item => (func(item) ? 0 : 1), iter);
+  return [first, second];
 }
 
 export default iterableCurry(partition, {
-  reduces: true
-})
+  reduces: true,
+});

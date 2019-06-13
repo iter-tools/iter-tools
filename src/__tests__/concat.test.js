@@ -8,13 +8,16 @@
 
 /* eslint-disable no-unused-vars */
 
-import { concat, toArray, range } from '../..'
+import { concat, toArray, range } from '..';
 describe('concat', () => {
   it('concats iterables', () => {
-    const iter = concat(range({
-      start: 1,
-      end: 3
-    }), [3, 4])
-    expect(toArray(iter)).toEqual([1, 2, 3, 4])
-  })
-})
+    const iter = concat(
+      range({
+        start: 1,
+        end: 3,
+      }),
+      [3, 4],
+    );
+    expect(toArray(iter)).toEqual([1, 2, 3, 4]);
+  });
+});

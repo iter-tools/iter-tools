@@ -6,12 +6,12 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { ensureIterable } from './internal/iterable'
+import { ensureIterable } from './internal/iterable';
 
-function * concat (...arrayOfIter) {
-  for (const iterable of arrayOfIter) {
-    yield * ensureIterable(iterable)
+function* concat(...iterables) {
+  for (const iterable of iterables) {
+    yield* ensureIterable(iterable);
   }
 }
 
-export default concat
+export default concat;

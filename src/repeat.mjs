@@ -1,10 +1,10 @@
-export default function repeat (obj, nTimes = Infinity) {
+export default function repeat(obj, nTimes = Infinity) {
   return {
-    * [Symbol.iterator] () {
-      let times = nTimes
+    *[Symbol.iterator]() {
+      let times = nTimes;
       while (times--) {
-        yield obj
+        yield obj;
       }
-    }
-  }
+    },
+  };
 }

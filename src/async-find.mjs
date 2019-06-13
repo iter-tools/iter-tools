@@ -6,20 +6,20 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { asyncIterableCurry } from './internal/async-iterable'
+import { asyncIterableCurry } from './internal/async-iterable';
 
-async function asyncFind (func, iterable) {
-  let c = 0
+async function asyncFind(func, iterable) {
+  let c = 0;
 
   for await (const item of iterable) {
     if (await func(item, c++)) {
-      return item
+      return item;
     }
   }
 
-  return undefined
+  return undefined;
 }
 
 export default asyncIterableCurry(asyncFind, {
-  reduces: true
-})
+  reduces: true,
+});

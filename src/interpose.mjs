@@ -6,19 +6,19 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { iterableCurry } from './internal/iterable'
+import { iterableCurry } from './internal/iterable';
 
-function * interpose (interposeItem, iterable) {
-  let first = true
+function* interpose(interposeItem, iterable) {
+  let first = true;
 
   for (const item of iterable) {
     if (!first) {
-      yield interposeItem
+      yield interposeItem;
     }
 
-    yield item
-    first = false
+    yield item;
+    first = false;
   }
 }
 
-export default iterableCurry(interpose)
+export default iterableCurry(interpose);

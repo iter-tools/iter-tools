@@ -8,10 +8,10 @@
 
 /* eslint-disable no-unused-vars */
 
-import { compress, toArray, range } from '../..'
+import { compress, toArray, range } from '..';
 describe('compress', () => {
   it('compress iterables', () => {
-    const iter = compress(range(10), [0, 1, 0, 1, 1])
-    expect(toArray(iter)).toEqual([1, 3, 4])
-  })
-})
+    const iter = compress(range(10), [false, true, false, true, true]);
+    expect(toArray(iter)).toEqual([1, 3, 4]);
+  });
+});

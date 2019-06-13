@@ -6,16 +6,16 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { asyncEnsureIterable } from './internal/async-iterable'
+import { asyncEnsureIterable } from './internal/async-iterable';
 
-async function asyncToArray (iterable) {
-  const out = []
+async function asyncToArray(iterable) {
+  const out = [];
 
   for await (const item of asyncEnsureIterable(iterable)) {
-    out.push(item)
+    out.push(item);
   }
 
-  return out
+  return out;
 }
 
-export default asyncToArray
+export default asyncToArray;

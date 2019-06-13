@@ -6,28 +6,28 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import Heap from 'little-ds-toolkit/lib/heap'
-import { iterableCurry } from './internal/iterable'
+import Heap from 'little-ds-toolkit/lib/heap';
+import { iterableCurry } from './internal/iterable';
 
-function * takeSorted (comparator, number, iterable) {
-  const heap = new Heap(comparator)
+function* takeSorted(comparator, number, iterable) {
+  const heap = new Heap(comparator);
 
   for (const item of iterable) {
-    heap.push(item)
+    heap.push(item);
 
     if (heap.size() > number) {
-      heap.pop()
+      heap.pop();
     }
   }
 
-  const len = heap.size()
+  const len = heap.size();
 
   for (let i = 0; i < len; i++) {
-    yield heap.pop()
+    yield heap.pop();
   }
 }
 
 export default iterableCurry(takeSorted, {
   minArgs: 1,
-  maxArgs: 2
-})
+  maxArgs: 2,
+});

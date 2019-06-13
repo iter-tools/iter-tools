@@ -6,40 +6,40 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { asyncIterableCurry } from './internal/async-iterable'
+import { asyncIterableCurry } from './internal/async-iterable';
 
-async function asyncReduce (initial, func, iterable) {
-  let c = 0
-  let acc = initial
-  const iterator = iterable[Symbol.asyncIterator]()
+async function asyncReduce(initial, func, iterable) {
+  let c = 0;
+  let acc = initial;
+  const iterator = iterable[Symbol.asyncIterator]();
 
   try {
     if (initial === undefined) {
-      const firstResult = await iterator.next()
+      const firstResult = await iterator.next();
 
       if (firstResult.done) {
-        throw new Error('Cannot reduce: no initial value specified and iterable was empty')
+        throw new Error('Cannot reduce: no initial value specified and iterable was empty');
       }
 
-      acc = firstResult.value
-      c = 1
+      acc = firstResult.value;
+      c = 1;
     }
 
-    let result
+    let result;
 
     while (!(result = await iterator.next()).done) {
-      acc = await func(acc, result.value, c++)
+      acc = await func(acc, result.value, c++);
     }
 
-    return acc
+    return acc;
   } finally {
     // close the iterator in case of exceptions
-    if (typeof iterator.return === 'function') await iterator.return()
+    if (typeof iterator.return === 'function') await iterator.return();
   }
 }
 
 export default asyncIterableCurry(asyncReduce, {
   reduces: true,
   minArgs: 1,
-  maxArgs: 2
-})
+  maxArgs: 2,
+});
