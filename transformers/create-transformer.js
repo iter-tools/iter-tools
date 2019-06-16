@@ -6,7 +6,7 @@ module.exports = function (configFile) {
     plugins: [
       'add-module-exports',
       '@babel/plugin-transform-modules-commonjs',
-      './generate/babel-plugin-resolve-$-import-paths',
+      './generate/babel-plugin-$-identifiers-and-imports',
     ]
     // presets: ["jest"] // something else is loading this I guess...
   })

@@ -1,4 +1,4 @@
-import { asyncFilterParallel, asyncToArray, range } from '..'
+import { asyncFilterParallel, asyncToArray, range } from '../..'
 
 describe('asyncFilterParallel', () => {
   it('returns filtered iterable', async () => {

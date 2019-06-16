@@ -1,4 +1,4 @@
-import { product } from '..'
+import { product } from '../..'
 
 describe('product', () => {
   it('returns empty', () => {

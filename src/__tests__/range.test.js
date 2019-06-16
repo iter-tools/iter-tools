@@ -1,4 +1,4 @@
-import { range } from '..'
+import { range } from '../..'
 
 describe('range', () => {
   it('return simple range', () => {

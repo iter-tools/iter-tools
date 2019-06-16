@@ -1,9 +1,7 @@
-import { $isAsync, $async, $await } from '../macros/async.macro'
-import { $takeSorted, $toArray } from './$fns'
+import { $async, $await } from '../../generate/async.macro'
+import { $takeSorted, $toArray } from '../..'
 
-const $methodName = $isAsync ? 'asyncTakeSorted' : 'takeSorted'
-
-describe($methodName, () => {
+describe($async`takeSorted`, () => {
   it('return smallest iterable', $async(() => {
     const smallest3 = $takeSorted(3, [99, 12, 4, 6, 97, 44, 66, 77, 98])
     expect($await($toArray(smallest3))).toEqual([97, 98, 99])

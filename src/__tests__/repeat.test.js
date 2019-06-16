@@ -1,4 +1,4 @@
-import { repeat } from '..'
+import { repeat } from '../..'
 
 describe('repeat', () => {
   it('return simple repeat', () => {

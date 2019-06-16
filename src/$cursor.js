@@ -1,11 +1,11 @@
-import { $async, $await, $iteratorSymbol } from './macros/async.macro'
+import { $async, $await, $iteratorSymbol } from '../generate/async.macro'
 
-import { iterableCurry } from './internal/$iterable'
+import { $iterableCurry } from './internal/$iterable'
 import CircularBuffer from './internal/circular-buffer'
 import concat from './$concat'
 import repeat from './repeat'
 
-$async; function * cursor ({ size, trailing, filler }, iterable) {
+$async; function * $cursor ({ size, trailing, filler }, iterable) {
   const circular = new CircularBuffer(size)
 
   circular.fill(filler)
@@ -29,4 +29,4 @@ $async; function * cursor ({ size, trailing, filler }, iterable) {
   }
 }
 
-export default iterableCurry(cursor)
+export default $iterableCurry($cursor)

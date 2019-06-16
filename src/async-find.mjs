@@ -6,9 +6,9 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { iterableCurry } from './internal/async-iterable'
+import { asyncIterableCurry } from './internal/async-iterable'
 
-async function find (func, iterable) {
+async function asyncFind (func, iterable) {
   let c = 0
 
   for await (const item of iterable) {
@@ -20,6 +20,6 @@ async function find (func, iterable) {
   return undefined
 }
 
-export default iterableCurry(find, {
+export default asyncIterableCurry(asyncFind, {
   reduces: true
 })

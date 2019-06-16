@@ -1,4 +1,4 @@
-import { regexpSplit } from '..'
+import { regexpSplit } from '../..'
 
 describe('regexpSplit', () => {
   it('should split with global re', () => {

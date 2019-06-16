@@ -1,8 +1,8 @@
-import { $async, $await } from './macros/async.macro'
+import { $async, $await } from '../generate/async.macro'
 
-import { iterableCurry } from './internal/$iterable'
+import { $iterableCurry } from './internal/$iterable'
 
-$async; function some (func, iterable) {
+$async; function $some (func, iterable) {
   let c = 0
   $await; for (const item of iterable) {
     if ($await(func(item, c++))) {
@@ -12,4 +12,4 @@ $async; function some (func, iterable) {
   return false
 }
 
-export default iterableCurry(some, { reduces: true })
+export default $iterableCurry($some, { reduces: true })

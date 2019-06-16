@@ -1,9 +1,9 @@
-import { $isAsync, $async, $await, $iteratorSymbol } from './macros/async.macro'
+import { $isAsync, $async, $await, $iteratorSymbol } from '../generate/async.macro'
 
 import { Queue, fakeQueue } from './internal/queues'
-import { iterableCurry } from './internal/$iterable'
+import { $iterableCurry } from './internal/$iterable'
 
-function * multiPartition (func, iter) {
+function * $multiPartition (func, iter) {
   const queues = []
   let maxQueues = Infinity
   let queueNumber = 0
@@ -64,4 +64,4 @@ function * multiPartition (func, iter) {
   }
 }
 
-export default iterableCurry(multiPartition, { forceSync: true })
+export default $iterableCurry($multiPartition, { forceSync: true })

@@ -8,10 +8,9 @@
 
 /* eslint-disable no-unused-vars */
 
-import { $toArray, range } from './async-fns'
-const $methodName = 'asyncToArray'
-describe($methodName, () => {
+import { asyncToArray, range } from '../..'
+describe('asyncToArray', () => {
   it('works', async () => {
-    expect((await $toArray(range(3)))).toEqual([0, 1, 2])
+    expect((await asyncToArray(range(3)))).toEqual([0, 1, 2])
   })
 })

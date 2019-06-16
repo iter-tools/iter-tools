@@ -1,9 +1,7 @@
-import { $isAsync, $async, $await } from '../macros/async.macro'
-import { $some, asyncSome } from './$fns'
+import { $isAsync, $async, $await } from '../../generate/async.macro'
+import { $some, asyncSome } from '../..'
 
-const $methodName = $isAsync ? 'asyncSome' : 'some'
-
-describe($methodName, () => {
+describe($async`some`, () => {
   it('returns true if at least one item is true', $async(() => {
     expect($await($some((n) => n % 2 === 0, [1, 2, 3, 4, 5, 6]))).toBe(true)
   }))

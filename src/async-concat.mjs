@@ -6,12 +6,12 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { ensureIterable } from './internal/async-iterable'
+import { asyncEnsureIterable } from './internal/async-iterable'
 
-async function * concat (...arrayOfIter) {
+async function * asyncConcat (...arrayOfIter) {
   for (const iterable of arrayOfIter) {
-    yield * ensureIterable(iterable)
+    yield * asyncEnsureIterable(iterable)
   }
 }
 
-export default concat
+export default asyncConcat

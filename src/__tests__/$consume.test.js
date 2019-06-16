@@ -1,9 +1,7 @@
-import { $isAsync, $async, $await } from '../macros/async.macro'
-import { $consume } from './$fns'
+import { $async, $await } from '../../generate/async.macro'
+import { $consume } from '../..'
 
-const $methodName = $isAsync ? 'asyncConsume' : 'consume'
-
-describe($methodName, () => {
+describe($async`consume`, () => {
   it('consumes an iterable', $async(() => {
     const arr = []
     $await($consume((item) => arr.push(item), [1, 2, 3]))

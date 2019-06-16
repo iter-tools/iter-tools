@@ -6,11 +6,11 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { ensureIterable } from './internal/async-iterable'
+import { asyncEnsureIterable } from './internal/async-iterable'
 const TypedArrayProto = Object.getPrototypeOf(Int8Array)
 
-async function size (iterable) {
-  const iter = ensureIterable(iterable)
+async function asyncSize (iterable) {
+  const iter = asyncEnsureIterable(iterable)
   if (Array.isArray(iter)) return iter.length
   if (iter instanceof Map || iter instanceof Set) return iter.size
   if (Object.getPrototypeOf(iter) === TypedArrayProto) return iter.length
@@ -25,4 +25,4 @@ async function size (iterable) {
   return size
 }
 
-export default size
+export default asyncSize

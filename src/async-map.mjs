@@ -6,9 +6,9 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { iterableCurry } from './internal/async-iterable'
+import { asyncIterableCurry } from './internal/async-iterable'
 
-async function * map (func, iterable) {
+async function * asyncMap (func, iterable) {
   let c = 0
 
   for await (const item of iterable) {
@@ -16,4 +16,4 @@ async function * map (func, iterable) {
   }
 }
 
-export default iterableCurry(map)
+export default asyncIterableCurry(asyncMap)

@@ -1,9 +1,7 @@
-import { $isAsync, $async, $await } from '../macros/async.macro'
-import { $map, asyncMap, $toArray, asyncToArray, range } from './$fns'
+import { $isAsync, $async, $await } from '../../generate/async.macro'
+import { $map, asyncMap, $toArray, asyncToArray, range } from '../..'
 
-const $methodName = $isAsync ? 'asyncMap' : 'map'
-
-describe($methodName, () => {
+describe($async`map`, () => {
   it('returns mapped iterable', $async(() => {
     const iter = $map((item) => item * 2, [1, 2, 3])
     expect($await($toArray(iter))).toEqual([2, 4, 6])

@@ -1,4 +1,4 @@
-import { regexpExec } from '..'
+import { regexpExec } from '../..'
 
 describe('regexpExec', () => {
   it('should find matches', () => {

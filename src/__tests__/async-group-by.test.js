@@ -8,11 +8,10 @@
 
 /* eslint-disable no-unused-vars */
 
-import { $groupBy, groupBy, asyncGroupBy, $toArray } from './async-fns'
-const methodName = 'asyncGroupBy'
-describe(methodName, () => {
+import { groupBy, asyncGroupBy, asyncToArray } from '../..'
+describe('asyncGroupBy', () => {
   it('main cursor', async () => {
-    const iter = $groupBy(undefined, 'AAABBAACCCCD')
+    const iter = asyncGroupBy(undefined, 'AAABBAACCCCD')
     let next = await iter.next()
     expect(next.value[0]).toBe('A')
     next = await iter.next()
@@ -27,7 +26,7 @@ describe(methodName, () => {
     expect(next.done).toBe(true)
   })
   it('with key function', async () => {
-    const iter = $groupBy(item => item.toLowerCase(), 'AaaBbaACccCD')
+    const iter = asyncGroupBy(item => item.toLowerCase(), 'AaaBbaACccCD')
     let next = await iter.next()
     expect(next.value[0]).toBe('a')
     next = await iter.next()
@@ -42,7 +41,7 @@ describe(methodName, () => {
     expect(next.done).toBe(true)
   })
   it('main cursor (curried)', async () => {
-    const iter = $groupBy()('AAABBAACCCCD')
+    const iter = asyncGroupBy()('AAABBAACCCCD')
     let next = await iter.next()
     expect(next.value[0]).toBe('A')
     next = await iter.next()
@@ -57,27 +56,27 @@ describe(methodName, () => {
     expect(next.done).toBe(true)
   })
   it('secondary', async () => {
-    const iter = $groupBy(undefined, 'AAABBAACCCCD')
+    const iter = asyncGroupBy(undefined, 'AAABBAACCCCD')
     let next = await iter.next()
     expect(next.value[0]).toBe('A')
-    expect((await $toArray(next.value[1]))).toEqual(['A', 'A', 'A'])
+    expect((await asyncToArray(next.value[1]))).toEqual(['A', 'A', 'A'])
     next = await iter.next()
     expect(next.value[0]).toBe('B')
-    expect((await $toArray(next.value[1]))).toEqual(['B', 'B'])
+    expect((await asyncToArray(next.value[1]))).toEqual(['B', 'B'])
     next = await iter.next()
     expect(next.value[0]).toBe('A')
-    expect((await $toArray(next.value[1]))).toEqual(['A', 'A'])
+    expect((await asyncToArray(next.value[1]))).toEqual(['A', 'A'])
     next = await iter.next()
     expect(next.value[0]).toBe('C')
-    expect((await $toArray(next.value[1]))).toEqual(['C', 'C', 'C', 'C'])
+    expect((await asyncToArray(next.value[1]))).toEqual(['C', 'C', 'C', 'C'])
     next = await iter.next()
     expect(next.value[0]).toBe('D')
-    expect((await $toArray(next.value[1]))).toEqual(['D'])
+    expect((await asyncToArray(next.value[1]))).toEqual(['D'])
     next = await iter.next()
     expect(next.done).toBe(true)
   })
   it('secondary (consume partially)', async () => {
-    const iter = $groupBy(undefined, 'AAABBAACCCCD')
+    const iter = asyncGroupBy(undefined, 'AAABBAACCCCD')
     let next = await iter.next()
     expect(next.value[0]).toBe('A')
     expect((await next.value[1].next()).value).toBe('A')
@@ -90,16 +89,16 @@ describe(methodName, () => {
     expect(next.value[0]).toBe('A')
   })
   it('null returns empty iterable', async () => {
-    expect((await $toArray($groupBy(undefined, null)))).toEqual([])
+    expect((await asyncToArray(asyncGroupBy(undefined, null)))).toEqual([])
   })
   it('groupBy of undefined returns empty iterable', async () => {
-    expect((await $toArray($groupBy(undefined, undefined)))).toEqual([])
+    expect((await asyncToArray(asyncGroupBy(undefined, undefined)))).toEqual([])
   })
   it('groupBy of undefined returns empty iterable 2', async () => {
-    expect((await $toArray($groupBy(undefined)))).toEqual([])
+    expect((await asyncToArray(asyncGroupBy(undefined)))).toEqual([])
   })
   it('groupBy of undefined returns empty iterable 3', async () => {
-    expect((await $toArray($groupBy()(undefined)))).toEqual([])
+    expect((await asyncToArray(asyncGroupBy()(undefined)))).toEqual([])
   })
   it('uses key function returning a promise', async () => {
     const iter = asyncGroupBy(async item => item.toLowerCase(), 'AaaBbaACccCD')

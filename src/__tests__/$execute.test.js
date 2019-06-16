@@ -1,9 +1,7 @@
-import { $isAsync, $async, $await } from '../macros/async.macro'
-import { $execute, asyncExecute } from './$fns'
+import { $isAsync, $async, $await } from '../../generate/async.macro'
+import { $execute, asyncExecute } from '../..'
 
-const $methodName = $isAsync ? 'asyncExecute' : 'execute'
-
-describe($methodName, () => {
+describe($async`execute`, () => {
   it('executes forever', $async(() => {
     const iter = $execute(() => 1)
     expect($await(iter.next())).toEqual({ value: 1, done: false })

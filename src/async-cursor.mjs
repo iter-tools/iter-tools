@@ -6,12 +6,12 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { iterableCurry } from './internal/async-iterable'
+import { asyncIterableCurry } from './internal/async-iterable'
 import CircularBuffer from './internal/circular-buffer'
 import concat from './async-concat'
 import repeat from './repeat'
 
-async function * cursor ({
+async function * asyncCursor ({
   size,
   trailing,
   filler
@@ -40,4 +40,4 @@ async function * cursor ({
   }
 }
 
-export default iterableCurry(cursor)
+export default asyncIterableCurry(asyncCursor)

@@ -1,11 +1,8 @@
-import { $isAsync, $async, $await } from '../macros/async.macro'
-import { $reduce, asyncReduce, reduce, range } from './$fns'
-import { OneTwoThreeIterable, AsyncOneTwoThreeIterable } from './__framework__/fixtures'
+import { $isAsync, $async, $await } from '../../generate/async.macro'
+import { $reduce, asyncReduce, reduce, range } from '../..'
+import { $OneTwoThreeIterable } from './__framework__/fixtures'
 
-const $methodName = $isAsync ? 'asyncReduce' : 'reduce'
-const $OneTwoThreeIterable = $isAsync ? AsyncOneTwoThreeIterable : OneTwoThreeIterable
-
-describe($methodName, () => {
+describe($async`reduce`, () => {
   it('sums an array', $async(() => {
     const sum = $await($reduce((acc = 0, x) => acc + x, [0, 1, 2, 3]))
     expect(sum).toBe(6)

@@ -8,28 +8,27 @@
 
 /* eslint-disable no-unused-vars */
 
-import { $dropWhile, asyncDropWhile, $toArray, asyncToArray, range } from './fns'
-const $methodName = 'dropWhile'
-describe($methodName, () => {
+import { dropWhile, asyncDropWhile, toArray, asyncToArray, range } from '../..'
+describe('dropWhile', () => {
   it('dropWhile on array', () => {
-    const iter = $dropWhile(item => item % 2 === 0, [2, 2, 3, 2, 2, 2])
-    expect($toArray(iter)).toEqual([3, 2, 2, 2])
+    const iter = dropWhile(item => item % 2 === 0, [2, 2, 3, 2, 2, 2])
+    expect(toArray(iter)).toEqual([3, 2, 2, 2])
   })
   it('dropWhile on iterable', () => {
-    const iter = $dropWhile(item => item !== 4, range({
+    const iter = dropWhile(item => item !== 4, range({
       start: 1,
       end: 7
     }))
-    expect($toArray(iter)).toEqual([4, 5, 6])
+    expect(toArray(iter)).toEqual([4, 5, 6])
   })
   it('dropWhile on iterable (curried version)', () => {
-    const iter = $dropWhile(item => item !== 4)
-    expect($toArray(iter(range({
+    const iter = dropWhile(item => item !== 4)
+    expect(toArray(iter(range({
       start: 1,
       end: 7
     })))).toEqual([4, 5, 6])
   })
   it('dropWhile on null', () => {
-    expect($toArray($dropWhile(item => item, null))).toEqual([])
+    expect(toArray(dropWhile(item => item, null))).toEqual([])
   })
 })

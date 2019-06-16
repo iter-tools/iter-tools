@@ -8,21 +8,20 @@
 
 /* eslint-disable no-unused-vars */
 
-import { $enumerate, $toArray, range } from './async-fns'
-const $methodName = 'asyncEnumerate'
-describe($methodName, () => {
+import { asyncEnumerate, asyncToArray, range } from '../..'
+describe('asyncEnumerate', () => {
   it('enumerates iterables', async () => {
-    const iter = $enumerate(range({
+    const iter = asyncEnumerate(range({
       start: 1,
       end: 4
     }))
-    expect((await $toArray(iter))).toEqual([[0, 1], [1, 2], [2, 3]])
+    expect((await asyncToArray(iter))).toEqual([[0, 1], [1, 2], [2, 3]])
   })
   it('enumerates iterables with start', async () => {
-    const iter = $enumerate(range({
+    const iter = asyncEnumerate(range({
       start: 1,
       end: 4
     }), 3)
-    expect((await $toArray(iter))).toEqual([[3, 1], [4, 2], [5, 3]])
+    expect((await asyncToArray(iter))).toEqual([[3, 1], [4, 2], [5, 3]])
   })
 })

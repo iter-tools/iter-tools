@@ -8,13 +8,10 @@
 
 /* eslint-disable no-unused-vars */
 
-// Note: cycle is not templated so it is not in ./$fns
-import { cycle, asyncCycle, range } from '..'
-const $cycle = asyncCycle
-const $methodName = 'asyncCycle'
-describe($methodName, () => {
+import { asyncCycle, range } from '../..'
+describe('asyncCycle', () => {
   it('return infinite cycle', async () => {
-    const iter = $cycle([1, 2, 3])[Symbol.asyncIterator]()
+    const iter = asyncCycle([1, 2, 3])[Symbol.asyncIterator]()
     expect((await iter.next())).toEqual({
       value: 1,
       done: false
@@ -41,7 +38,7 @@ describe($methodName, () => {
     })
   })
   it('return infinite cycle (from iterator)', async () => {
-    const iter = $cycle(range(3))[Symbol.asyncIterator]()
+    const iter = asyncCycle(range(3))[Symbol.asyncIterator]()
     expect((await iter.next())).toEqual({
       value: 0,
       done: false
@@ -68,7 +65,7 @@ describe($methodName, () => {
     })
   })
   it('can be reused', async () => {
-    const myCycle = $cycle(range(3))
+    const myCycle = asyncCycle(range(3))
     const iter1 = myCycle[Symbol.asyncIterator]()
     expect((await iter1.next())).toEqual({
       value: 0,

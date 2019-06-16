@@ -6,9 +6,9 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { iterableCurry } from './internal/async-iterable'
+import { asyncIterableCurry } from './internal/async-iterable'
 
-async function * tap (func, iterable) {
+async function * asyncTap (func, iterable) {
   let c = 0
 
   for await (const item of iterable) {
@@ -17,4 +17,4 @@ async function * tap (func, iterable) {
   }
 }
 
-export default iterableCurry(tap)
+export default asyncIterableCurry(asyncTap)

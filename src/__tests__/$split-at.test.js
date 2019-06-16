@@ -1,9 +1,7 @@
-import { $isAsync, $async, $await } from '../macros/async.macro'
-import { $splitAt, $toArray, slice, range } from './$fns'
+import { $async, $await } from '../../generate/async.macro'
+import { $splitAt, $toArray, slice, range } from '../..'
 
-const $methodName = $isAsync ? 'asyncSplitAt' : 'splitAt'
-
-describe($methodName, () => {
+describe($async`splitAt`, () => {
   it('works when the halves are consumed in order', $async(() => {
     const [first, second] = $splitAt(3, slice(6, range()))
     expect([

@@ -6,11 +6,11 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { ensureIterable } from './internal/async-iterable'
+import { asyncEnsureIterable } from './internal/async-iterable'
 import map from './map'
 
-async function * zip (...iterables) {
-  const iters = iterables.map(arg => ensureIterable(arg)[Symbol.asyncIterator]())
+async function * asyncZip (...iterables) {
+  const iters = iterables.map(arg => asyncEnsureIterable(arg)[Symbol.asyncIterator]())
   const itersDone = iters.map(iter => ({
     done: false,
     iter
@@ -47,4 +47,4 @@ async function * zip (...iterables) {
   }
 }
 
-export default zip
+export default asyncZip

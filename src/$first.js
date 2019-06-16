@@ -1,9 +1,9 @@
-import { $async, $await, $iteratorSymbol } from './macros/async.macro'
+import { $async, $await, $iteratorSymbol } from '../generate/async.macro'
 
-import { ensureIterable } from './internal/$iterable'
+import { $ensureIterable } from './internal/$iterable'
 
-$async; function first (iterable) {
-  const iter = ensureIterable(iterable)[$iteratorSymbol]()
+$async; function $first (iterable) {
+  const iter = $ensureIterable(iterable)[$iteratorSymbol]()
   const { value, done } = $await(iter.next())
 
   if (done) return undefined
@@ -13,4 +13,4 @@ $async; function first (iterable) {
   return value
 }
 
-export default first
+export default $first

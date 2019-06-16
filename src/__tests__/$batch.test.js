@@ -1,9 +1,7 @@
-import { $isAsync, $async, $await } from '../macros/async.macro'
-import { $batch, $toArray, range } from './$fns'
+import { $async, $await } from '../../generate/async.macro'
+import { $batch, $toArray, range } from '../..'
 
-const $methodName = $isAsync ? 'asyncBatch' : 'batch'
-
-describe($methodName, () => {
+describe($async`batch`, () => {
   it('returns an iterable with batches', $async(() => {
     const iter = $batch(2, [1, 2, 3, 4, 5, 6, 7, 8, 9])
     expect($await($toArray(iter))).toEqual([[1, 2], [3, 4], [5, 6], [7, 8], [9]])

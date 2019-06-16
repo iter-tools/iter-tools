@@ -1,9 +1,9 @@
-import { $async, $await } from './macros/async.macro'
+import { $async, $await } from '../generate/async.macro'
 
-$async; function * execute (func, ...args) {
+$async; function * $execute (func, ...args) {
   while (true) {
     yield $await(func(...args))
   }
 }
 
-export default execute
+export default $execute

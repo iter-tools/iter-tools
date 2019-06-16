@@ -6,9 +6,9 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { iterableCurry } from './internal/async-iterable'
+import { asyncIterableCurry } from './internal/async-iterable'
 
-async function * dropWhile (func, iterable) {
+async function * asyncDropWhile (func, iterable) {
   let drop = true
   let c = 0
 
@@ -25,4 +25,4 @@ async function * dropWhile (func, iterable) {
   }
 }
 
-export default iterableCurry(dropWhile)
+export default asyncIterableCurry(asyncDropWhile)

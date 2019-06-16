@@ -1,4 +1,4 @@
-import { apply } from '..'
+import { apply } from '../..'
 
 describe('apply', () => {
   it('passes the function the iterable of arguments provided to it', () => {

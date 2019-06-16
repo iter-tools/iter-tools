@@ -6,9 +6,9 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { iterableCurry } from './internal/async-iterable'
+import { asyncIterableCurry } from './internal/async-iterable'
 
-async function consume (func = () => {}, iterable) {
+async function asyncConsume (func = () => {}, iterable) {
   let c = 0
 
   for await (const item of iterable) {
@@ -16,7 +16,7 @@ async function consume (func = () => {}, iterable) {
   }
 }
 
-export default iterableCurry(consume, {
+export default asyncIterableCurry(asyncConsume, {
   reduces: true,
   minArgs: 0,
   maxArgs: 1

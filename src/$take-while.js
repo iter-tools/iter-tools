@@ -1,8 +1,8 @@
-import { $async, $await } from './macros/async.macro'
+import { $async, $await } from '../generate/async.macro'
 
-import { iterableCurry } from './internal/$iterable'
+import { $iterableCurry } from './internal/$iterable'
 
-$async; function * takeWhile (func, i) {
+$async; function * $takeWhile (func, i) {
   let take = true
   let c = 0
 
@@ -16,4 +16,4 @@ $async; function * takeWhile (func, i) {
   }
 }
 
-export default iterableCurry(takeWhile)
+export default $iterableCurry($takeWhile)

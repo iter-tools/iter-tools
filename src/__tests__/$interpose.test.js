@@ -1,9 +1,7 @@
-import { $isAsync, $async, $await } from '../macros/async.macro'
-import { $interpose, $toArray, range } from './$fns'
+import { $async, $await } from '../../generate/async.macro'
+import { $interpose, $toArray, range } from '../..'
 
-const methodName = $isAsync ? 'asyncInterpose' : 'interpose'
-
-describe(methodName, () => {
+describe($async`interpose`, () => {
   it('interposes items into array', $async(() => {
     const iter = $interpose(9, [1, 2, 3])
     expect($await($toArray(iter))).toEqual([1, 9, 2, 9, 3])

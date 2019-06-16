@@ -1,7 +1,7 @@
 import {
   BaseIterable,
   Iterable,
-  ensureIterable as ensureSyncIterable,
+  ensureIterable,
   isValidIterableArgument
 } from './iterable'
 import { variadicCurryWithValidation } from './curry'
@@ -21,15 +21,13 @@ export async function * asyncify (iterable) {
   }
 }
 
-export function ensureAsyncIterable (i) {
+export function asyncEnsureIterable (i) {
   if (isAsyncIterable(i)) {
     return i
   } else {
-    return asyncify(ensureSyncIterable(i))
+    return asyncify(ensureIterable(i))
   }
 }
-
-export const ensureIterable = ensureAsyncIterable
 
 export function isValidAsyncIterableArgument (i) {
   return isAsyncIterable(i) || isValidIterableArgument(i)
@@ -55,7 +53,7 @@ function combineFunctionConfig (fn, fnConfig) {
     maxArgs: maxArgs === undefined ? variadic ? fn.length : fn.length - 1 : maxArgs,
     isIterable: isValidAsyncIterableArgument,
     iterableType: 'asyncIterable',
-    applyOnIterableArgs: ensureAsyncIterable,
+    applyOnIterableArgs: asyncEnsureIterable,
     IterableClass: forceSync ? Iterable : AsyncIterable
   }
 }
@@ -63,5 +61,3 @@ function combineFunctionConfig (fn, fnConfig) {
 export const asyncIterableCurry = (fn, config = {}) => {
   return variadicCurryWithValidation(combineFunctionConfig(fn, config))
 }
-
-export const iterableCurry = asyncIterableCurry

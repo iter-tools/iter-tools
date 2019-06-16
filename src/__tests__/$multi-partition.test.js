@@ -1,17 +1,14 @@
-import { $isAsync, $async, $await } from '../macros/async.macro'
+import { $async, $await } from '../../generate/async.macro'
 import {
   $multiPartition,
   $map,
   $toArray,
   range,
   slice
-} from './$fns'
-import { OneTwoThreeIterable, AsyncOneTwoThreeIterable } from './__framework__/fixtures'
+} from '../..'
+import { $OneTwoThreeIterable } from './__framework__/fixtures'
 
-const $OneTwoThreeIterable = $isAsync ? AsyncOneTwoThreeIterable : OneTwoThreeIterable
-const $methodName = $isAsync ? 'asyncMultiPartition' : 'multiPartition'
-
-describe($methodName, () => {
+describe($async`multiPartition`, () => {
   const allToArray = (...args) => $toArray($map($toArray, args))
   const func = x => x % 4
 

@@ -1,6 +1,6 @@
-import { $async, $await, $isAsync } from './macros/async.macro'
+import { $async, $await, $isAsync } from '../generate/async.macro'
 
-import { iterableCurry } from './internal/$iterable'
+import { $iterableCurry } from './internal/$iterable'
 
 const defaultShouldFlat = item =>
   (
@@ -10,7 +10,7 @@ const defaultShouldFlat = item =>
   ) &&
   typeof item !== 'string'
 
-function flat (shouldFlat = defaultShouldFlat, depthOrOptions = 1, iterable) {
+function $flat (shouldFlat = defaultShouldFlat, depthOrOptions = 1, iterable) {
   let depth = depthOrOptions
   if (depthOrOptions && typeof depthOrOptions === 'object') {
     ({ shouldFlat = defaultShouldFlat, depth = 1 } = depthOrOptions)
@@ -29,4 +29,4 @@ function flat (shouldFlat = defaultShouldFlat, depthOrOptions = 1, iterable) {
   return _flat(0, iterable)
 }
 
-export default iterableCurry(flat, { minArgs: 0, maxArgs: 2 })
+export default $iterableCurry($flat, { minArgs: 0, maxArgs: 2 })

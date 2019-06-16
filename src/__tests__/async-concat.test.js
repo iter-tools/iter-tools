@@ -8,14 +8,13 @@
 
 /* eslint-disable no-unused-vars */
 
-import { $concat, $toArray, range } from './async-fns'
-const $methodName = 'asyncConcat'
-describe($methodName, () => {
+import { asyncConcat, asyncToArray, range } from '../..'
+describe('asyncConcat', () => {
   it('concats iterables', async () => {
-    const iter = $concat(range({
+    const iter = asyncConcat(range({
       start: 1,
       end: 3
     }), [3, 4])
-    expect((await $toArray(iter))).toEqual([1, 2, 3, 4])
+    expect((await asyncToArray(iter))).toEqual([1, 2, 3, 4])
   })
 })

@@ -1,4 +1,4 @@
-import { combinations } from '..'
+import { combinations } from '../..'
 
 describe('combinations', () => {
   it('returns empty', () => {

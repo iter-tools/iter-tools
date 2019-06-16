@@ -6,9 +6,9 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { iterableCurry } from './internal/async-iterable'
+import { asyncIterableCurry } from './internal/async-iterable'
 
-async function * batch (number, iterable) {
+async function * asyncBatch (number, iterable) {
   if (typeof number !== 'number' || number < 1) throw new Error('batch size should be a number, greater than zero')
   let batch = []
 
@@ -26,4 +26,4 @@ async function * batch (number, iterable) {
   }
 }
 
-export default iterableCurry(batch)
+export default asyncIterableCurry(asyncBatch)

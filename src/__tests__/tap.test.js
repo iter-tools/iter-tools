@@ -8,23 +8,22 @@
 
 /* eslint-disable no-unused-vars */
 
-import { $tap, $toArray, range } from './fns'
-const $methodName = 'tap'
-describe($methodName, () => {
+import { tap, toArray, range } from '../..'
+describe('tap', () => {
   it('return tapped iterable', () => {
-    const iter = $tap(item => item * 2, [1, 2, 3])
-    expect($toArray(iter)).toEqual([1, 2, 3])
+    const iter = tap(item => item * 2, [1, 2, 3])
+    expect(toArray(iter)).toEqual([1, 2, 3])
   })
   it('return tapped iterable from iterable', () => {
-    const iter = $tap(item => item * 2, range({
+    const iter = tap(item => item * 2, range({
       start: 1,
       end: 4
     }))
-    expect($toArray(iter)).toEqual([1, 2, 3])
+    expect(toArray(iter)).toEqual([1, 2, 3])
   })
   it('return tapped iterable (curried version)', () => {
-    const iter = $tap(item => item * 2)
-    expect($toArray(iter(range({
+    const iter = tap(item => item * 2)
+    expect(toArray(iter(range({
       start: 1,
       end: 4
     })))).toEqual([1, 2, 3])

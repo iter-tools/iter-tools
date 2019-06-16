@@ -8,28 +8,27 @@
 
 /* eslint-disable no-unused-vars */
 
-import { $filter, asyncFilter, $toArray, asyncToArray, range } from './fns'
-const $methodName = 'filter'
-describe($methodName, () => {
+import { filter, asyncFilter, toArray, asyncToArray, range } from '../..'
+describe('filter', () => {
   it('returns filtered iterable', () => {
-    const iter = $filter(item => item % 2 === 0, [1, 2, 3, 4, 5, 6])
-    expect($toArray(iter)).toEqual([2, 4, 6])
+    const iter = filter(item => item % 2 === 0, [1, 2, 3, 4, 5, 6])
+    expect(toArray(iter)).toEqual([2, 4, 6])
   })
   it('returns filtered iterable from iterable', () => {
-    const iter = $filter(item => item % 2 === 0, range({
+    const iter = filter(item => item % 2 === 0, range({
       start: 1,
       end: 7
     }))
-    expect($toArray(iter)).toEqual([2, 4, 6])
+    expect(toArray(iter)).toEqual([2, 4, 6])
   })
   it('returns filtered iterable (curried version)', () => {
-    const iter = $filter(item => item % 2 === 0)
-    expect($toArray(iter(range({
+    const iter = filter(item => item % 2 === 0)
+    expect(toArray(iter(range({
       start: 1,
       end: 7
     })))).toEqual([2, 4, 6])
   })
   it('returns empty iterable from null', () => {
-    expect($toArray($filter(item => item, null))).toEqual([])
+    expect(toArray(filter(item => item, null))).toEqual([])
   })
 })

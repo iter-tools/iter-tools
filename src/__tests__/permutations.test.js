@@ -1,4 +1,4 @@
-import { permutations } from '..'
+import { permutations } from '../..'
 
 describe('permutations', () => {
   it('returns empty', () => {

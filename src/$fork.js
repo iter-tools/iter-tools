@@ -1,10 +1,10 @@
-import { $isAsync, $async, $await, $iteratorSymbol } from './macros/async.macro'
+import { $isAsync, $async, $await, $iteratorSymbol } from '../generate/async.macro'
 
-import { ensureIterable } from './internal/$iterable'
+import { $ensureIterable } from './internal/$iterable'
 import { Exchange } from './internal/queues'
 
-function fork (n = Infinity, iterable) {
-  const iterator = ensureIterable(iterable)[$iteratorSymbol]()
+function $fork (n = Infinity, iterable) {
+  const iterator = $ensureIterable(iterable)[$iteratorSymbol]()
   let iterableCounter = 0
   let noNewIterables = false
   const exchange = new Exchange()
@@ -86,15 +86,15 @@ function fork (n = Infinity, iterable) {
 
 export default function curriedFork (...args) {
   if (args.length === 2) {
-    return fork(...args)
+    return $fork(...args)
   }
 
   if (args.length === 0) {
-    return fork
+    return $fork
   }
 
   if (typeof args[0] === 'number') {
     return (...args2) => curriedFork(args[0], ...args2)
   }
-  return fork(undefined, args[0])
+  return $fork(undefined, args[0])
 }

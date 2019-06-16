@@ -1,9 +1,7 @@
-import { $isAsync, $async, $await } from '../macros/async.macro'
-import { $takeWhile, $toArray, range } from './$fns'
+import { $isAsync, $async, $await } from '../../generate/async.macro'
+import { $takeWhile, $toArray, range } from '../..'
 
-const $methodName = $isAsync ? 'asyncTakeWhile' : 'takeWhile'
-
-describe($methodName, () => {
+describe($async`takeWhile`, () => {
   it('takeWhile on array', $async(() => {
     const iter = $takeWhile((item) => item % 2 === 0, [2, 2, 3, 2, 2, 2])
     expect($await($toArray(iter))).toEqual([2, 2])

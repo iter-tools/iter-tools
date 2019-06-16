@@ -6,9 +6,9 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { iterableCurry } from './internal/async-iterable'
+import { asyncIterableCurry } from './internal/async-iterable'
 
-async function * filter (func, iterable) {
+async function * asyncFilter (func, iterable) {
   let c = 0
 
   for await (const item of iterable) {
@@ -18,4 +18,4 @@ async function * filter (func, iterable) {
   }
 }
 
-export default iterableCurry(filter)
+export default asyncIterableCurry(asyncFilter)

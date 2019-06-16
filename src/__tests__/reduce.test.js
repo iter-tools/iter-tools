@@ -8,32 +8,30 @@
 
 /* eslint-disable no-unused-vars */
 
-import { $reduce, asyncReduce, reduce, range } from './fns'
-import { OneTwoThreeIterable, AsyncOneTwoThreeIterable } from './__framework__/fixtures'
-const $methodName = 'reduce'
-const $OneTwoThreeIterable = OneTwoThreeIterable
-describe($methodName, () => {
+import { asyncReduce, reduce, range } from '../..'
+import { OneTwoThreeIterable } from './__framework__/fixtures'
+describe('reduce', () => {
   it('sums an array', () => {
-    const sum = $reduce((acc = 0, x) => acc + x, [0, 1, 2, 3])
+    const sum = reduce((acc = 0, x) => acc + x, [0, 1, 2, 3])
     expect(sum).toBe(6)
   })
   it('sums a range', () => {
-    const sum = $reduce((acc = 0, x) => acc + x, range(4))
+    const sum = reduce((acc = 0, x) => acc + x, range(4))
     expect(sum).toBe(6)
   })
   it('sums using a specified initial value', () => {
-    const sum = $reduce(1, (acc, x) => acc + x, range(4))
+    const sum = reduce(1, (acc, x) => acc + x, range(4))
     expect(sum).toBe(7)
   })
   it('sums using the initial value as the initial value', () => {
-    const sum = $reduce((acc, x) => acc + x, range({
+    const sum = reduce((acc, x) => acc + x, range({
       start: 2,
       end: 4
     }))
     expect(sum).toBe(5)
   })
   it('returns specified initial value when iterable is empty', () => {
-    const sum = $reduce(0, (acc, x) => acc + x, [])
+    const sum = reduce(0, (acc, x) => acc + x, [])
     expect(sum).toBe(0)
   })
   it('throws when no initial value specified and iterable is empty', () => {
@@ -42,14 +40,14 @@ describe($methodName, () => {
     }).toThrow()
   })
   it('sums a range (using curry)', () => {
-    const sum = $reduce((acc = 0, x) => acc + x)
+    const sum = reduce((acc = 0, x) => acc + x)
     expect(sum(range(4))).toBe(6)
   })
   it('cleans up iterable', () => {
-    const oneTwoThree = new $OneTwoThreeIterable()
+    const oneTwoThree = new OneTwoThreeIterable()
 
     try {
-      $reduce((acc = 0, x) => {
+      reduce((acc = 0, x) => {
         throw new Error('ops')
       }, oneTwoThree)
     } catch (e) {

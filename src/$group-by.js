@@ -1,6 +1,6 @@
-import { $async, $await, $iteratorSymbol } from './macros/async.macro'
+import { $async, $await, $iteratorSymbol } from '../generate/async.macro'
 
-import { iterableCurry } from './internal/$iterable'
+import { $iterableCurry } from './internal/$iterable'
 import splitBy from './internal/$split-by'
 
 $async; function * cons (item, iterable) {
@@ -15,7 +15,7 @@ $async; function car (iterable) {
   return [value, iterator]
 }
 
-$async; function * groupBy (getKey = (k) => k, iterable) {
+$async; function * $groupBy (getKey = (k) => k, iterable) {
   $await; for (const subseq of splitBy(getKey, iterable)) {
     const [first, rest] = $await(car(subseq))
     if (rest === undefined) return
@@ -24,4 +24,4 @@ $async; function * groupBy (getKey = (k) => k, iterable) {
   }
 }
 
-export default iterableCurry(groupBy, { minArgs: 0, maxArgs: 1 })
+export default $iterableCurry($groupBy, { minArgs: 0, maxArgs: 1 })

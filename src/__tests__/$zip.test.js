@@ -1,11 +1,8 @@
-import { $isAsync, $async, $await } from '../macros/async.macro'
-import { $zip, $toArray, $slice, range } from './$fns'
-import { OneTwoThreeIterable, AsyncOneTwoThreeIterable } from './__framework__/fixtures'
+import { $async, $await } from '../../generate/async.macro'
+import { $zip, $toArray, $slice, range } from '../..'
+import { $OneTwoThreeIterable } from './__framework__/fixtures'
 
-const $OneTwoThreeIterable = $isAsync ? AsyncOneTwoThreeIterable : OneTwoThreeIterable
-const $methodName = $isAsync ? 'asyncZip' : 'zip'
-
-describe($methodName, () => {
+describe($async`zip`, () => {
   it('zips', $async(() => {
     const iter = $zip([1, 2, 3], [4, 5, 6], [7, 8, 9])
     expect($await($toArray(iter))).toEqual([[1, 4, 7], [2, 5, 8], [3, 6, 9]])

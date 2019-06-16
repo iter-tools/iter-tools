@@ -8,11 +8,10 @@
 
 /* eslint-disable no-unused-vars */
 
-import { $compress, $toArray, range } from './async-fns'
-const $methodName = 'asyncCompress'
-describe($methodName, () => {
+import { asyncCompress, asyncToArray, range } from '../..'
+describe('asyncCompress', () => {
   it('compress iterables', async () => {
-    const iter = $compress(range(10), [0, 1, 0, 1, 1])
-    expect((await $toArray(iter))).toEqual([1, 3, 4])
+    const iter = asyncCompress(range(10), [0, 1, 0, 1, 1])
+    expect((await asyncToArray(iter))).toEqual([1, 3, 4])
   })
 })

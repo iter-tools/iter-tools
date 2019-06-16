@@ -6,10 +6,10 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { ensureIterable } from './internal/async-iterable'
+import { asyncEnsureIterable } from './internal/async-iterable'
 
-async function first (iterable) {
-  const iter = ensureIterable(iterable)[Symbol.asyncIterator]()
+async function asyncFirst (iterable) {
+  const iter = asyncEnsureIterable(iterable)[Symbol.asyncIterator]()
   const {
     value,
     done
@@ -19,4 +19,4 @@ async function first (iterable) {
   return value
 }
 
-export default first
+export default asyncFirst

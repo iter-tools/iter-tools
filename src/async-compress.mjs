@@ -7,9 +7,12 @@
  */
 
 import compose from './compose'
-import zip from './async-zip'
-import filter from './async-filter'
-import map from './async-map'
-export default function compress (...args) {
-  return compose(map(entry => entry[0]), filter(entry => entry[1]), (iterable, compress) => zip(iterable, compress))(...args)
+import asyncZip from './async-zip'
+import asyncFilter from './async-filter'
+import asyncMap from './async-map'
+
+function asyncCompress (...args) {
+  return compose(asyncMap(entry => entry[0]), asyncFilter(entry => entry[1]), (iterable, compress) => asyncZip(iterable, compress))(...args)
 }
+
+export { asyncCompress as default }

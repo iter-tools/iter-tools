@@ -1,4 +1,4 @@
-import { entries } from '..'
+import { entries } from '../..'
 
 describe('entries', () => {
   it('works with Map', () => {

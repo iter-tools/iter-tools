@@ -8,28 +8,27 @@
 
 /* eslint-disable no-unused-vars */
 
-import { $map, asyncMap, $toArray, asyncToArray, range } from './fns'
-const $methodName = 'map'
-describe($methodName, () => {
+import { map, asyncMap, toArray, asyncToArray, range } from '../..'
+describe('map', () => {
   it('returns mapped iterable', () => {
-    const iter = $map(item => item * 2, [1, 2, 3])
-    expect($toArray(iter)).toEqual([2, 4, 6])
+    const iter = map(item => item * 2, [1, 2, 3])
+    expect(toArray(iter)).toEqual([2, 4, 6])
   })
   it('returns mapped iterable from iterable', () => {
-    const iter = $map(item => item * 2, range({
+    const iter = map(item => item * 2, range({
       start: 1,
       end: 4
     }))
-    expect($toArray(iter)).toEqual([2, 4, 6])
+    expect(toArray(iter)).toEqual([2, 4, 6])
   })
   it('returns mapped iterable (curried version)', () => {
-    const iter = $map(item => item * 2)
-    expect($toArray(iter(range({
+    const iter = map(item => item * 2)
+    expect(toArray(iter(range({
       start: 1,
       end: 4
     })))).toEqual([2, 4, 6])
   })
   it('returns empty iterable from null', () => {
-    expect($toArray($map(item => item * 2, null))).toEqual([])
+    expect(toArray(map(item => item * 2, null))).toEqual([])
   })
 })

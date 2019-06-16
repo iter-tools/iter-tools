@@ -1,9 +1,7 @@
-import { $isAsync, $async, $await } from '../macros/async.macro'
-import { $first, range } from './$fns'
+import { $async, $await } from '../../generate/async.macro'
+import { $first, range } from '../..'
 
-const $methodName = $isAsync ? 'asyncFirst' : 'first'
-
-describe($methodName, () => {
+describe($async`first`, () => {
   it('returns first item', $async(() => {
     const iter = range(10)
     expect($await($first(iter))).toBe(0)

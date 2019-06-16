@@ -8,10 +8,9 @@
 
 /* eslint-disable no-unused-vars */
 
-import { $toArray, range } from './fns'
-const $methodName = 'toArray'
-describe($methodName, () => {
+import { toArray, range } from '../..'
+describe('toArray', () => {
   it('works', () => {
-    expect($toArray(range(3))).toEqual([0, 1, 2])
+    expect(toArray(range(3))).toEqual([0, 1, 2])
   })
 })

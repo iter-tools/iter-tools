@@ -8,15 +8,14 @@
 
 /* eslint-disable no-unused-vars */
 
-import { $splitLines, $toArray } from './fns'
-const $methodName = 'splitLines'
-describe($methodName, () => {
+import { splitLines, toArray } from '../..'
+describe('splitLines', () => {
   it('should split 1', () => {
-    const iter = $splitLines(['aa', '\nb', 'cc'])
-    expect($toArray(iter)).toEqual(['aa', 'bcc'])
+    const iter = splitLines(['aa', '\nb', 'cc'])
+    expect(toArray(iter)).toEqual(['aa', 'bcc'])
   })
   it('should split 2', () => {
-    const iter = $splitLines(['aa\n', 'b ', 'cc\n'])
-    expect($toArray(iter)).toEqual(['aa', 'b cc', ''])
+    const iter = splitLines(['aa\n', 'b ', 'cc\n'])
+    expect(toArray(iter)).toEqual(['aa', 'b cc', ''])
   })
 })

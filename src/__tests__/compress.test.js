@@ -8,11 +8,10 @@
 
 /* eslint-disable no-unused-vars */
 
-import { $compress, $toArray, range } from './fns'
-const $methodName = 'compress'
-describe($methodName, () => {
+import { compress, toArray, range } from '../..'
+describe('compress', () => {
   it('compress iterables', () => {
-    const iter = $compress(range(10), [0, 1, 0, 1, 1])
-    expect($toArray(iter)).toEqual([1, 3, 4])
+    const iter = compress(range(10), [0, 1, 0, 1, 1])
+    expect(toArray(iter)).toEqual([1, 3, 4])
   })
 })
