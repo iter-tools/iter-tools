@@ -8,32 +8,31 @@
 
 /* eslint-disable no-unused-vars */
 
-import { $takeWhile, $toArray, range } from './async-fns'
-const $methodName = 'asyncTakeWhile'
-describe($methodName, () => {
+import { asyncTakeWhile, asyncToArray, range } from '../..'
+describe('asyncTakeWhile', () => {
   it('takeWhile on array', async () => {
-    const iter = $takeWhile(item => item % 2 === 0, [2, 2, 3, 2, 2, 2])
-    expect((await $toArray(iter))).toEqual([2, 2])
+    const iter = asyncTakeWhile(item => item % 2 === 0, [2, 2, 3, 2, 2, 2])
+    expect((await asyncToArray(iter))).toEqual([2, 2])
   })
   it('takeWhile on iterable', async () => {
-    const iter = $takeWhile(item => item !== 4, range({
+    const iter = asyncTakeWhile(item => item !== 4, range({
       start: 1,
       end: 7
     }))
-    expect((await $toArray(iter))).toEqual([1, 2, 3])
+    expect((await asyncToArray(iter))).toEqual([1, 2, 3])
   })
   it('takeWhile on iterable (curried version)', async () => {
-    const iter = $takeWhile(item => item !== 4)
-    expect((await $toArray(iter(range({
+    const iter = asyncTakeWhile(item => item !== 4)
+    expect((await asyncToArray(iter(range({
       start: 1,
       end: 7
     }))))).toEqual([1, 2, 3])
   })
   it('takeWhile on empty iterable', async () => {
-    expect((await $toArray($takeWhile(item => item, null)))).toEqual([])
+    expect((await asyncToArray(asyncTakeWhile(item => item, null)))).toEqual([])
   })
   it('takeWhile on array (using a promise)', async () => {
-    const iter = $takeWhile(item => Promise.resolve(item % 2 === 0), [2, 2, 3, 2, 2, 2])
-    expect((await $toArray(iter))).toEqual([2, 2])
+    const iter = asyncTakeWhile(item => Promise.resolve(item % 2 === 0), [2, 2, 3, 2, 2, 2])
+    expect((await asyncToArray(iter))).toEqual([2, 2])
   })
 })

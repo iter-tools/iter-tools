@@ -12,7 +12,6 @@ const generatedFunctionFile = require('./templates/generated-function-file');
 const generatedTestFile = require('./templates/generated-test-file');
 const generationErrorFile = require('./templates/generation-error-file');
 const gitattributesFile = require('./templates/gitattributes-file');
-const testFnsFile = require('./templates/test-fns-file');
 
 const { argv } = require('./argv');
 
@@ -20,9 +19,8 @@ const { debounce } = require('./utils');
 const { isGeneratedFromTemplate } = require('./comments');
 const FileCache = require('./file-cache');
 const traverse = require('./traverse');
+const rootDir = require('./root-dir');
 
-const rootDir = resolve(__dirname, '..');
-const srcDir = resolve(rootDir, 'src');
 const ADD = 'ADD';
 const REMOVE = 'REMOVE';
 const isTemplate = matcher("src/**/$*.js");
@@ -92,8 +90,6 @@ class Generator {
       this.generatedPaths.cache(path, { monolithic: true });
     }
 
-    writeTemplate('src/__tests__/fns.js', testFnsFile(this.paths, false));
-    writeTemplate('src/__tests__/async-fns.js', testFnsFile(this.paths, true));
     writeTemplate('.gitattributes', gitattributesFile(this.generatedPaths));
   }
 

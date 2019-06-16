@@ -6,9 +6,9 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { iterableCurry } from './internal/async-iterable'
+import { asyncIterableCurry } from './internal/async-iterable'
 
-async function * interpose (interposeItem, iterable) {
+async function * asyncInterpose (interposeItem, iterable) {
   let first = true
 
   for await (const item of iterable) {
@@ -21,4 +21,4 @@ async function * interpose (interposeItem, iterable) {
   }
 }
 
-export default iterableCurry(interpose)
+export default asyncIterableCurry(asyncInterpose)

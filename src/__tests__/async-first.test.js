@@ -8,15 +8,14 @@
 
 /* eslint-disable no-unused-vars */
 
-import { $first, range } from './async-fns'
-const $methodName = 'asyncFirst'
-describe($methodName, () => {
+import { asyncFirst, range } from '../..'
+describe('asyncFirst', () => {
   it('returns first item', async () => {
     const iter = range(10)
-    expect((await $first(iter))).toBe(0)
+    expect((await asyncFirst(iter))).toBe(0)
   })
   it('returns no items', async () => {
     const iter = range(0)
-    expect((await $first(iter))).toBe(undefined)
+    expect((await asyncFirst(iter))).toBe(undefined)
   })
 })

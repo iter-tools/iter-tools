@@ -1,8 +1,8 @@
-import { $async, $await } from './macros/async.macro'
+import { $async, $await } from '../generate/async.macro'
 
-import { iterableCurry } from './internal/$iterable'
+import { $iterableCurry } from './internal/$iterable'
 
-$async; function * batch (number, iterable) {
+$async; function * $batch (number, iterable) {
   if (typeof number !== 'number' || number < 1) throw new Error('batch size should be a number, greater than zero')
   let batch = []
   $await; for (const item of iterable) {
@@ -17,4 +17,4 @@ $async; function * batch (number, iterable) {
   }
 }
 
-export default iterableCurry(batch)
+export default $iterableCurry($batch)

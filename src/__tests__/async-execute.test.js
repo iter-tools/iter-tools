@@ -8,11 +8,10 @@
 
 /* eslint-disable no-unused-vars */
 
-import { $execute, asyncExecute } from './async-fns'
-const $methodName = 'asyncExecute'
-describe($methodName, () => {
+import { asyncExecute } from '../..'
+describe('asyncExecute', () => {
   it('executes forever', async () => {
-    const iter = $execute(() => 1)
+    const iter = asyncExecute(() => 1)
     expect((await iter.next())).toEqual({
       value: 1,
       done: false
@@ -27,7 +26,7 @@ describe($methodName, () => {
     })
   })
   it('can be passed additional arguments', async () => {
-    const iter = $execute((a, b) => a + b + 1, 4, 6)
+    const iter = asyncExecute((a, b) => a + b + 1, 4, 6)
     expect((await iter.next())).toEqual({
       value: 11,
       done: false

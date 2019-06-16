@@ -1,8 +1,8 @@
-import { $async, $await } from './macros/async.macro'
+import { $async, $await } from '../generate/async.macro'
 
-import { iterableCurry } from './internal/$iterable'
+import { $iterableCurry } from './internal/$iterable'
 
-$async; function * interpose (interposeItem, iterable) {
+$async; function * $interpose (interposeItem, iterable) {
   let first = true
   $await; for (const item of iterable) {
     if (!first) {
@@ -13,4 +13,4 @@ $async; function * interpose (interposeItem, iterable) {
   }
 }
 
-export default iterableCurry(interpose)
+export default $iterableCurry($interpose)

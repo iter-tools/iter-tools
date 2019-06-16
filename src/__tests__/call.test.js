@@ -1,4 +1,4 @@
-import { call } from '..'
+import { call } from '../..'
 
 describe('call', () => {
   it('calls the passed function', () => {

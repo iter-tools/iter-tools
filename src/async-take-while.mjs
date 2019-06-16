@@ -6,9 +6,9 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { iterableCurry } from './internal/async-iterable'
+import { asyncIterableCurry } from './internal/async-iterable'
 
-async function * takeWhile (func, i) {
+async function * asyncTakeWhile (func, i) {
   let take = true
   let c = 0
 
@@ -23,4 +23,4 @@ async function * takeWhile (func, i) {
   }
 }
 
-export default iterableCurry(takeWhile)
+export default asyncIterableCurry(asyncTakeWhile)

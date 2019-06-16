@@ -6,10 +6,10 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-async function * execute (func, ...args) {
+async function * asyncExecute (func, ...args) {
   while (true) {
     yield await func(...args)
   }
 }
 
-export default execute
+export default asyncExecute

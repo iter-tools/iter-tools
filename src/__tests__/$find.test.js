@@ -1,9 +1,7 @@
-import { $isAsync, $async, $await } from '../macros/async.macro'
-import { $find, asyncFind, range } from './$fns'
+import { $isAsync, $async, $await } from '../../generate/async.macro'
+import { $find, asyncFind, range } from '../..'
 
-const $methodName = $isAsync ? 'asyncFind' : 'find'
-
-describe($methodName, () => {
+describe($async`find`, () => {
   it('returns found item', $async(() => {
     const found = $find((item) => item === 5, [1, 2, 3, 4, 5, 6])
     expect($await(found)).toBe(5)

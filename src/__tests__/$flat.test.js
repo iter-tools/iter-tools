@@ -1,9 +1,7 @@
-import { $isAsync, $async, $await } from '../macros/async.macro'
-import { $flat, asyncFlat, $toArray, asyncToArray } from './$fns'
+import { $isAsync, $async, $await } from '../../generate/async.macro'
+import { $flat, asyncFlat, $toArray, asyncToArray } from '../..'
 
-const methodName = $isAsync ? 'asyncFlat' : 'flat'
-
-describe(methodName, () => {
+describe($async`flat`, () => {
   it('flats iterable', $async(() => {
     const iter = $flat(1, [[1, 2], [3, 4], [5]])
     expect($await($toArray(iter))).toEqual([1, 2, 3, 4, 5])

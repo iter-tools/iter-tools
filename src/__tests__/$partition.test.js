@@ -1,9 +1,7 @@
-import { $isAsync, $async, $await } from '../macros/async.macro'
-import { $partition, asyncPartition, $zip, asyncZip, $toArray, asyncToArray, range } from './$fns'
+import { $isAsync, $async, $await } from '../../generate/async.macro'
+import { $partition, asyncPartition, $zip, asyncZip, $toArray, asyncToArray, range } from '../..'
 
-const methodName = $isAsync ? 'asyncPartition' : 'partition'
-
-describe(methodName, () => {
+describe($async`partition`, () => {
   describe('sync predicate', () => {
     const predicate = n => n % 2 === 0
 

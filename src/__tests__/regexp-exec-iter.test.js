@@ -8,45 +8,44 @@
 
 /* eslint-disable no-unused-vars */
 
-import { $regexpExecIter, $toArray } from './fns'
-const $methodName = 'regexpExecIter'
-describe($methodName, () => {
-  const getMatchesArray = iter => $toArray(iter).map(matches => matches[0])
+import { regexpExecIter, toArray } from '../..'
+describe('regexpExecIter', () => {
+  const getMatchesArray = iter => toArray(iter).map(matches => matches[0])
 
   it('should exec 1', () => {
     const re = /a+/g
-    const iter = $regexpExecIter(re, ['aa', 'ba', 'cac'])
+    const iter = regexpExecIter(re, ['aa', 'ba', 'cac'])
     expect(getMatchesArray(iter)).toEqual(['aa', 'a', 'a'])
   })
   it('should exec 2', () => {
     const re = /ca+t/g
-    const iter = $regexpExecIter(re, ['caat', 'ca', 'dogcat'])
+    const iter = regexpExecIter(re, ['caat', 'ca', 'dogcat'])
     expect(getMatchesArray(iter)).toEqual(['caat', 'cat'])
   })
   it('should exec 3', () => {
     const re = /ca+t/g
-    const iter = $regexpExecIter(re, ['caa', 'a', 'tdogca', 't'])
+    const iter = regexpExecIter(re, ['caa', 'a', 'tdogca', 't'])
     expect(getMatchesArray(iter)).toEqual(['caaat', 'cat'])
   })
   it('should exec 4', () => {
     const re = /ca+t/g
-    const iter = $regexpExecIter(re, ['caa', 'a', 'tdogca', 'tcatx'])
+    const iter = regexpExecIter(re, ['caa', 'a', 'tdogca', 'tcatx'])
     expect(getMatchesArray(iter)).toEqual(['caaat', 'cat', 'cat'])
   })
   it('can be curried', () => {
     const re = /a+/g
-    const aRE = $regexpExecIter(re)
+    const aRE = regexpExecIter(re)
     const iter = aRE(['aa', 'ba', 'cac'])
     expect(getMatchesArray(iter)).toEqual(['aa', 'a', 'a'])
   })
   it('should exec (nothing to exec)', () => {
     const re = /a+/g
-    const iter = $regexpExecIter(re, ['xbsd'])
+    const iter = regexpExecIter(re, ['xbsd'])
     expect(getMatchesArray(iter)).toEqual([])
   })
   it('should exec (no iterables)', () => {
     const re = /a+/g
-    const iter = $regexpExecIter(re, null)
+    const iter = regexpExecIter(re, null)
     expect(getMatchesArray(iter)).toEqual([])
   })
 })

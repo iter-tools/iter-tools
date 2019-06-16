@@ -6,10 +6,10 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { iterableCurry } from './internal/async-iterable'
+import { asyncIterableCurry } from './internal/async-iterable'
 import regexSplit from './regexp-split'
 
-async function * regexpSplitIter (re, iterable) {
+async function * asyncRegexpSplitIter (re, iterable) {
   let buffer = ''
   let queue
   let mergeEmpty = false
@@ -42,4 +42,4 @@ async function * regexpSplitIter (re, iterable) {
   }
 }
 
-export default iterableCurry(regexpSplitIter)
+export default asyncIterableCurry(asyncRegexpSplitIter)

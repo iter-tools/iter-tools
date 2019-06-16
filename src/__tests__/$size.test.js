@@ -1,9 +1,7 @@
-import { $isAsync, $async, $await } from '../macros/async.macro'
-import { $size, range } from './$fns'
+import { $async, $await } from '../../generate/async.macro'
+import { $size, range } from '../..'
 
-const $methodName = $isAsync ? 'asyncSize' : 'size'
-
-describe($methodName, () => {
+describe($async`size`, () => {
   it('return length of array', $async(() => {
     expect($await($size([1, 2, 3, 4, 5, 6]))).toBe(6)
   }))

@@ -8,15 +8,14 @@
 
 /* eslint-disable no-unused-vars */
 
-import { $splitLines, $toArray } from './async-fns'
-const $methodName = 'asyncSplitLines'
-describe($methodName, () => {
+import { asyncSplitLines, asyncToArray } from '../..'
+describe('asyncSplitLines', () => {
   it('should split 1', async () => {
-    const iter = $splitLines(['aa', '\nb', 'cc'])
-    expect((await $toArray(iter))).toEqual(['aa', 'bcc'])
+    const iter = asyncSplitLines(['aa', '\nb', 'cc'])
+    expect((await asyncToArray(iter))).toEqual(['aa', 'bcc'])
   })
   it('should split 2', async () => {
-    const iter = $splitLines(['aa\n', 'b ', 'cc\n'])
-    expect((await $toArray(iter))).toEqual(['aa', 'b cc', ''])
+    const iter = asyncSplitLines(['aa\n', 'b ', 'cc\n'])
+    expect((await asyncToArray(iter))).toEqual(['aa', 'b cc', ''])
   })
 })

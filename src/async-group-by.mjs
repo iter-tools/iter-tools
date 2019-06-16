@@ -6,7 +6,7 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { iterableCurry } from './internal/async-iterable'
+import { asyncIterableCurry } from './internal/async-iterable'
 import splitBy from './internal/async-split-by'
 
 async function * cons (item, iterable) {
@@ -24,7 +24,7 @@ async function car (iterable) {
   return [value, iterator]
 }
 
-async function * groupBy (getKey = k => k, iterable) {
+async function * asyncGroupBy (getKey = k => k, iterable) {
   for await (const subseq of splitBy(getKey, iterable)) {
     const [first, rest] = await car(subseq)
     if (rest === undefined) return
@@ -33,7 +33,7 @@ async function * groupBy (getKey = k => k, iterable) {
   }
 }
 
-export default iterableCurry(groupBy, {
+export default asyncIterableCurry(asyncGroupBy, {
   minArgs: 0,
   maxArgs: 1
 })

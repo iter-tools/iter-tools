@@ -7,9 +7,9 @@
  */
 
 import { Queue, fakeQueue } from './internal/queues'
-import { iterableCurry } from './internal/async-iterable'
+import { asyncIterableCurry } from './internal/async-iterable'
 
-function * multiPartition (func, iter) {
+function * asyncMultiPartition (func, iter) {
   const queues = []
   let maxQueues = Infinity
   let queueNumber = 0
@@ -78,6 +78,6 @@ function * multiPartition (func, iter) {
   }
 }
 
-export default iterableCurry(multiPartition, {
+export default asyncIterableCurry(asyncMultiPartition, {
   forceSync: true
 })

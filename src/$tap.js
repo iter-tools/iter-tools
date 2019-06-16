@@ -1,8 +1,8 @@
-import { $async, $await } from './macros/async.macro'
+import { $async, $await } from '../generate/async.macro'
 
-import { iterableCurry } from './internal/$iterable'
+import { $iterableCurry } from './internal/$iterable'
 
-$async; function * tap (func, iterable) {
+$async; function * $tap (func, iterable) {
   let c = 0
   $await; for (const item of iterable) {
     func(item, c++)
@@ -10,4 +10,4 @@ $async; function * tap (func, iterable) {
   }
 }
 
-export default iterableCurry(tap)
+export default $iterableCurry($tap)

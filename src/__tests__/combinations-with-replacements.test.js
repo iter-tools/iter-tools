@@ -1,4 +1,4 @@
-import { combinationsWithReplacement } from '..'
+import { combinationsWithReplacement } from '../..'
 
 describe('combinationsWithReplacement', () => {
   it('returns empty', () => {

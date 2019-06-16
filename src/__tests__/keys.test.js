@@ -1,4 +1,4 @@
-import { keys } from '..'
+import { keys } from '../..'
 
 describe('keys', () => {
   it('works with Map', () => {

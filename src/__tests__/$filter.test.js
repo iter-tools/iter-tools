@@ -1,9 +1,7 @@
-import { $isAsync, $async, $await } from '../macros/async.macro'
-import { $filter, asyncFilter, $toArray, asyncToArray, range } from './$fns'
+import { $isAsync, $async, $await } from '../../generate/async.macro'
+import { $filter, asyncFilter, $toArray, asyncToArray, range } from '../..'
 
-const $methodName = $isAsync ? 'asyncFilter' : 'filter'
-
-describe($methodName, () => {
+describe($async`filter`, () => {
   it('returns filtered iterable', $async(() => {
     const iter = $filter((item) => item % 2 === 0, [1, 2, 3, 4, 5, 6])
     expect($await($toArray(iter))).toEqual([2, 4, 6])

@@ -6,9 +6,9 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { iterableCurry } from './internal/async-iterable'
+import { asyncIterableCurry } from './internal/async-iterable'
 
-async function reduce (initial, func, iterable) {
+async function asyncReduce (initial, func, iterable) {
   let c = 0
   let acc = initial
   const iterator = iterable[Symbol.asyncIterator]()
@@ -38,7 +38,7 @@ async function reduce (initial, func, iterable) {
   }
 }
 
-export default iterableCurry(reduce, {
+export default asyncIterableCurry(asyncReduce, {
   reduces: true,
   minArgs: 1,
   maxArgs: 2

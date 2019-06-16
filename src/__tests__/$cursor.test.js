@@ -1,9 +1,7 @@
-import { $isAsync, $async, $await } from '../macros/async.macro'
-import { $cursor, $map, $toArray } from './$fns'
+import { $async, $await } from '../../generate/async.macro'
+import { $cursor, $map, $toArray } from '../..'
 
-const $methodName = $isAsync ? 'asyncCursor' : 'cursor'
-
-describe($methodName, () => {
+describe($async`cursor`, () => {
   it('frames iterable', $async(() => {
     const iter = $cursor({ size: 3 }, [1, 2, 3, 4, 5])
     expect($await($toArray($map(wndw => [...wndw], iter)))).toEqual([

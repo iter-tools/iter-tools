@@ -8,17 +8,16 @@
 
 /* eslint-disable no-unused-vars */
 
-import { $consume } from './async-fns'
-const $methodName = 'asyncConsume'
-describe($methodName, () => {
+import { asyncConsume } from '../..'
+describe('asyncConsume', () => {
   it('consumes an iterable', async () => {
     const arr = []
-    await $consume(item => arr.push(item), [1, 2, 3])
+    await asyncConsume(item => arr.push(item), [1, 2, 3])
     expect(arr).toEqual([1, 2, 3])
   })
   it('consumes an iterable using a promise', async () => {
     const arr = []
-    await $consume(item => {
+    await asyncConsume(item => {
       arr.push(item)
       return Promise.resolve(0)
     }, [1, 2, 3])
@@ -26,7 +25,7 @@ describe($methodName, () => {
   })
   it('consumes an iterable (curried)', async () => {
     const arr = []
-    const consumePush = $consume(item => arr.push(item))
+    const consumePush = asyncConsume(item => arr.push(item))
     await consumePush([1, 2, 3])
     expect(arr).toEqual([1, 2, 3])
   })

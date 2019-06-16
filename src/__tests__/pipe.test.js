@@ -1,4 +1,4 @@
-import { map, filter, pipe } from '..'
+import { map, filter, pipe } from '../..'
 
 const bump = x => x + 3
 const isEven = x => (x % 2) === 0

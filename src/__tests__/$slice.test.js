@@ -1,9 +1,7 @@
-import { $isAsync, $async, $await } from '../macros/async.macro'
-import { $slice, $toArray } from './$fns'
+import { $async, $await } from '../../generate/async.macro'
+import { $slice, $toArray } from '../..'
 
-const $methodName = $isAsync ? 'asyncSlice' : 'slice'
-
-describe($methodName, () => {
+describe($async`slice`, () => {
   const list = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
 
   it('returns simple slice', $async(() => {

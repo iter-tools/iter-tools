@@ -8,62 +8,61 @@
 
 /* eslint-disable no-unused-vars */
 
-import { $regexpSplitIter, $toArray } from './fns'
-const $methodName = 'regexpSplitIter'
-describe($methodName, () => {
+import { regexpSplitIter, toArray } from '../..'
+describe('regexpSplitIter', () => {
   it('should split 1', () => {
     const re = /\s+/g
-    const iter = $regexpSplitIter(re, ['aa', 'b', 'cc'])
-    expect($toArray(iter)).toEqual(['aabcc'])
+    const iter = regexpSplitIter(re, ['aa', 'b', 'cc'])
+    expect(toArray(iter)).toEqual(['aabcc'])
   })
   it('should split 2', () => {
     const re = /\s+/g
-    const iter = $regexpSplitIter(re, ['aa', ' b ', 'cc'])
-    expect($toArray(iter)).toEqual(['aa', 'b', 'cc'])
+    const iter = regexpSplitIter(re, ['aa', ' b ', 'cc'])
+    expect(toArray(iter)).toEqual(['aa', 'b', 'cc'])
   })
   it('should split 3', () => {
     const re = /\s+/g
-    const iter = $regexpSplitIter(re, [' aa', ' b ', '    cc '])
-    expect($toArray(iter)).toEqual(['', 'aa', 'b', 'cc', ''])
+    const iter = regexpSplitIter(re, [' aa', ' b ', '    cc '])
+    expect(toArray(iter)).toEqual(['', 'aa', 'b', 'cc', ''])
   })
   it('should split 4', () => {
     const re = /\s+/g
-    const iter = $regexpSplitIter(re, ['aa     ', '', ' b ', '    cc '])
-    expect($toArray(iter)).toEqual(['aa', 'b', 'cc', ''])
+    const iter = regexpSplitIter(re, ['aa     ', '', ' b ', '    cc '])
+    expect(toArray(iter)).toEqual(['aa', 'b', 'cc', ''])
   })
   it('should split 5', () => {
     const re = /\s+/g
-    const iter = $regexpSplitIter(re, ['aa     ', ' ', '', ' ', 'b ', '    cc '])
-    expect($toArray(iter)).toEqual(['aa', 'b', 'cc', ''])
+    const iter = regexpSplitIter(re, ['aa     ', ' ', '', ' ', 'b ', '    cc '])
+    expect(toArray(iter)).toEqual(['aa', 'b', 'cc', ''])
   })
   it('should split 6', () => {
     const re = /\s+/g
-    const iter = $regexpSplitIter(re, ['', ' aa', ' b ', '    cc ', ''])
-    expect($toArray(iter)).toEqual(['', 'aa', 'b', 'cc', ''])
+    const iter = regexpSplitIter(re, ['', ' aa', ' b ', '    cc ', ''])
+    expect(toArray(iter)).toEqual(['', 'aa', 'b', 'cc', ''])
   })
   it('should split 7', () => {
     const re = /\s+/g
-    const iter = $regexpSplitIter(re, [' ', ' aa', ' b ', '    cc ', ' '])
-    expect($toArray(iter)).toEqual(['', 'aa', 'b', 'cc', ''])
+    const iter = regexpSplitIter(re, [' ', ' aa', ' b ', '    cc ', ' '])
+    expect(toArray(iter)).toEqual(['', 'aa', 'b', 'cc', ''])
   })
   it('can be curried', () => {
     const re = /\s+/g
-    const splitter = $regexpSplitIter(re)
+    const splitter = regexpSplitIter(re)
     const iter1 = splitter(['aa', ' b ', 'cc'])
-    expect($toArray(iter1)).toEqual(['aa', 'b', 'cc'])
+    expect(toArray(iter1)).toEqual(['aa', 'b', 'cc'])
   })
   it('should split (nothing to split)', () => {
     const re = /\s+/g
-    const iter = $regexpSplitIter(re, ['absd'])
-    expect($toArray(iter)).toEqual(['absd'])
+    const iter = regexpSplitIter(re, ['absd'])
+    expect(toArray(iter)).toEqual(['absd'])
   })
   it('should split (no iterables)', () => {
     const re = /\s+/g
-    const iter = $regexpSplitIter(re, null)
-    expect($toArray(iter)).toEqual([])
+    const iter = regexpSplitIter(re, null)
+    expect(toArray(iter)).toEqual([])
   })
   it('should split with empty string', () => {
-    const iter = $regexpSplitIter('', ['ab', 'c'])
-    expect($toArray(iter)).toEqual(['a', 'b', 'c'])
+    const iter = regexpSplitIter('', ['ab', 'c'])
+    expect(toArray(iter)).toEqual(['a', 'b', 'c'])
   })
 })

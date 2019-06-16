@@ -65,7 +65,7 @@ function * simpleSlice (iterable, start, end, step) {
   }
 }
 
-function * asyncSlice (opts, iterable) {
+function * slice (opts, iterable) {
   let start, step, end
   opts = typeof opts === 'number' ? {
     end: opts,
@@ -86,4 +86,4 @@ function * asyncSlice (opts, iterable) {
   }
 }
 
-export default iterableCurry(asyncSlice)
+export default iterableCurry(slice)

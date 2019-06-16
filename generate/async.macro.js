@@ -1,5 +1,6 @@
 const { createMacro } = require('babel-plugin-macros')
 const { expression } = require('@babel/template')
+const rename = require('./rename')
 
 /**
  * This is a babel macro which you can import the following symbols:
@@ -17,6 +18,9 @@ const { expression } = require('@babel/template')
  *
  *                           $async; function fn() {}
  *     function fn() {}                <--->              async function fn() {}
+ *
+ *                                   $async`fn`
+ *           'fn'                      <--->                   'asyncFn'
  *
  *                             $await(anyExpression)
  *       anyExpression                 <--->               await anyExpression
@@ -95,6 +99,18 @@ function asyncMacro ({ references, babel, config: { ASYNC } }) {
         reference.parentPath.replaceWith(argument)
         break
       }
+      case 'TaggedTemplateExpression':
+        if (refName === '$async') {
+          const { quasi } = reference.parentPath.node
+          if (!quasi.quasis.length === 1) {
+            throw new Error('Interpolation not supported for $async`fnName`')
+          }
+          const name = quasi.quasis[0].value.raw
+          reference.parentPath.replaceWith(t.stringLiteral(rename(name, ASYNC)))
+        } else {
+          throw new Error(`${refName} cannot be used as a template tag`)
+        }
+        break
     }
   }
 }

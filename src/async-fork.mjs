@@ -6,11 +6,11 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { ensureIterable } from './internal/async-iterable'
+import { asyncEnsureIterable } from './internal/async-iterable'
 import { Exchange } from './internal/queues'
 
-function fork (n = Infinity, iterable) {
-  const iterator = ensureIterable(iterable)[Symbol.asyncIterator]()
+function asyncFork (n = Infinity, iterable) {
+  const iterator = asyncEnsureIterable(iterable)[Symbol.asyncIterator]()
   let iterableCounter = 0
   let noNewIterables = false
   const exchange = new Exchange()
@@ -82,16 +82,16 @@ function fork (n = Infinity, iterable) {
 
 export default function curriedFork (...args) {
   if (args.length === 2) {
-    return fork(...args)
+    return asyncFork(...args)
   }
 
   if (args.length === 0) {
-    return fork
+    return asyncFork
   }
 
   if (typeof args[0] === 'number') {
     return (...args2) => curriedFork(args[0], ...args2)
   }
 
-  return fork(undefined, args[0])
+  return asyncFork(undefined, args[0])
 }

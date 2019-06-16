@@ -1,4 +1,4 @@
-import { values } from '..'
+import { values } from '../..'
 
 describe('values', () => {
   it('works with Map', () => {

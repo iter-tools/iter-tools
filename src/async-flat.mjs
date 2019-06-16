@@ -6,11 +6,11 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { iterableCurry } from './internal/async-iterable'
+import { asyncIterableCurry } from './internal/async-iterable'
 
 const defaultShouldFlat = item => (typeof item[Symbol.iterator] === 'function' || typeof item[Symbol.asyncIterator] === 'function') && typeof item !== 'string'
 
-function flat (shouldFlat = defaultShouldFlat, depthOrOptions = 1, iterable) {
+function asyncFlat (shouldFlat = defaultShouldFlat, depthOrOptions = 1, iterable) {
   let depth = depthOrOptions
 
   if (depthOrOptions && typeof depthOrOptions === 'object') {
@@ -33,7 +33,7 @@ function flat (shouldFlat = defaultShouldFlat, depthOrOptions = 1, iterable) {
   return _flat(0, iterable)
 }
 
-export default iterableCurry(flat, {
+export default asyncIterableCurry(asyncFlat, {
   minArgs: 0,
   maxArgs: 2
 })

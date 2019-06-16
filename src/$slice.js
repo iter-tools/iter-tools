@@ -1,7 +1,7 @@
-import { $async, $await } from './macros/async.macro'
+import { $async, $await } from '../generate/async.macro'
 
 import CircularBuffer from './internal/circular-buffer'
-import { iterableCurry } from './internal/$iterable'
+import { $iterableCurry } from './internal/$iterable'
 
 $async; function bufferedSlice (iterable, start, end, step) {
   const bufferSize = Math.abs(start)
@@ -55,7 +55,7 @@ $async; function * simpleSlice (iterable, start, end, step) {
   }
 }
 
-$async; function * asyncSlice (opts, iterable) {
+$async; function * $slice (opts, iterable) {
   let start, step, end
   opts = typeof opts === 'number' ? { end: opts, start: 0 } : opts
 
@@ -74,4 +74,4 @@ $async; function * asyncSlice (opts, iterable) {
   }
 }
 
-export default iterableCurry(asyncSlice)
+export default $iterableCurry($slice)

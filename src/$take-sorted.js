@@ -1,9 +1,9 @@
-import { $async, $await } from './macros/async.macro'
+import { $async, $await } from '../generate/async.macro'
 
 import Heap from 'little-ds-toolkit/lib/heap'
-import { iterableCurry } from './internal/$iterable'
+import { $iterableCurry } from './internal/$iterable'
 
-$async; function * takeSorted (comparator, number, iterable) {
+$async; function * $takeSorted (comparator, number, iterable) {
   const heap = new Heap(comparator)
   $await; for (const item of iterable) {
     heap.push(item)
@@ -17,4 +17,4 @@ $async; function * takeSorted (comparator, number, iterable) {
   }
 }
 
-export default iterableCurry(takeSorted, { minArgs: 1, maxArgs: 2 })
+export default $iterableCurry($takeSorted, { minArgs: 1, maxArgs: 2 })

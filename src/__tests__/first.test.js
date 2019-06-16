@@ -8,15 +8,14 @@
 
 /* eslint-disable no-unused-vars */
 
-import { $first, range } from './fns'
-const $methodName = 'first'
-describe($methodName, () => {
+import { first, range } from '../..'
+describe('first', () => {
   it('returns first item', () => {
     const iter = range(10)
-    expect($first(iter)).toBe(0)
+    expect(first(iter)).toBe(0)
   })
   it('returns no items', () => {
     const iter = range(0)
-    expect($first(iter)).toBe(undefined)
+    expect(first(iter)).toBe(undefined)
   })
 })

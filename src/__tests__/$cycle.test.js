@@ -1,11 +1,7 @@
-import { $isAsync, $async, $await, $iteratorSymbol } from '../macros/async.macro'
-// Note: cycle is not templated so it is not in ./$fns
-import { cycle, asyncCycle, range } from '..'
+import { $async, $await, $iteratorSymbol } from '../../generate/async.macro'
+import { $cycle, range } from '../..'
 
-const $cycle = $isAsync ? asyncCycle : cycle
-const $methodName = $isAsync ? 'asyncCycle' : 'cycle'
-
-describe($methodName, () => {
+describe($async`cycle`, () => {
   it('return infinite cycle', $async(() => {
     const iter = $cycle([1, 2, 3])[$iteratorSymbol]()
     expect($await(iter.next())).toEqual({ value: 1, done: false })

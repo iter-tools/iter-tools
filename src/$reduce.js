@@ -1,8 +1,8 @@
-import { $iteratorSymbol, $async, $await } from './macros/async.macro'
+import { $iteratorSymbol, $async, $await } from '../generate/async.macro'
 
-import { iterableCurry } from './internal/$iterable'
+import { $iterableCurry } from './internal/$iterable'
 
-$async; function reduce (initial, func, iterable) {
+$async; function $reduce (initial, func, iterable) {
   let c = 0
   let acc = initial
   const iterator = iterable[$iteratorSymbol]()
@@ -25,4 +25,4 @@ $async; function reduce (initial, func, iterable) {
   }
 }
 
-export default iterableCurry(reduce, { reduces: true, minArgs: 1, maxArgs: 2 })
+export default $iterableCurry($reduce, { reduces: true, minArgs: 1, maxArgs: 2 })

@@ -8,17 +8,16 @@
 
 /* eslint-disable no-unused-vars */
 
-import { $consume } from './fns'
-const $methodName = 'consume'
-describe($methodName, () => {
+import { consume } from '../..'
+describe('consume', () => {
   it('consumes an iterable', () => {
     const arr = []
-    $consume(item => arr.push(item), [1, 2, 3])
+    consume(item => arr.push(item), [1, 2, 3])
     expect(arr).toEqual([1, 2, 3])
   })
   it('consumes an iterable using a promise', () => {
     const arr = []
-    $consume(item => {
+    consume(item => {
       arr.push(item)
       return Promise.resolve(0)
     }, [1, 2, 3])
@@ -26,7 +25,7 @@ describe($methodName, () => {
   })
   it('consumes an iterable (curried)', () => {
     const arr = []
-    const consumePush = $consume(item => arr.push(item))
+    const consumePush = consume(item => arr.push(item))
     consumePush([1, 2, 3])
     expect(arr).toEqual([1, 2, 3])
   })

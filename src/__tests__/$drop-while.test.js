@@ -1,9 +1,7 @@
-import { $isAsync, $async, $await } from '../macros/async.macro'
-import { $dropWhile, asyncDropWhile, $toArray, asyncToArray, range } from './$fns'
+import { $isAsync, $async, $await } from '../../generate/async.macro'
+import { $dropWhile, asyncDropWhile, $toArray, asyncToArray, range } from '../..'
 
-const $methodName = $isAsync ? 'asyncDropWhile' : 'dropWhile'
-
-describe($methodName, () => {
+describe($async`dropWhile`, () => {
   it('dropWhile on array', $async(() => {
     const iter = $dropWhile((item) => item % 2 === 0, [2, 2, 3, 2, 2, 2])
     expect($await($toArray(iter))).toEqual([3, 2, 2, 2])

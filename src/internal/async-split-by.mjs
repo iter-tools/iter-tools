@@ -1,10 +1,10 @@
-import { ensureAsyncIterable } from './async-iterable'
+import { asyncEnsureIterable } from './async-iterable'
 import { Exchange } from './queues'
 
 const UNIQUE_INITIAL_KEY = {}
 
 export default function asyncSplitBy (getKey = (k) => k, iterable) {
-  const iterator = ensureAsyncIterable(iterable)[Symbol.asyncIterator]()
+  const iterator = asyncEnsureIterable(iterable)[Symbol.asyncIterator]()
 
   let itemIndex = 0
   let iterableCounter = 0

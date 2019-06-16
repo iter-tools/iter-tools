@@ -1,8 +1,8 @@
-import { $async, $await } from './macros/async.macro'
+import { $async, $await } from '../generate/async.macro'
 
-import { iterableCurry } from './internal/$iterable'
+import { $iterableCurry } from './internal/$iterable'
 
-$async; function * dropWhile (func, iterable) {
+$async; function * $dropWhile (func, iterable) {
   let drop = true
   let c = 0
   $await; for (const item of iterable) {
@@ -17,4 +17,4 @@ $async; function * dropWhile (func, iterable) {
   }
 }
 
-export default iterableCurry(dropWhile)
+export default $iterableCurry($dropWhile)

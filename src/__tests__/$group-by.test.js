@@ -1,9 +1,7 @@
-import { $isAsync, $async, $await } from '../macros/async.macro'
-import { $groupBy, groupBy, asyncGroupBy, $toArray } from './$fns'
+import { $isAsync, $async, $await } from '../../generate/async.macro'
+import { $groupBy, groupBy, asyncGroupBy, $toArray } from '../..'
 
-const methodName = $isAsync ? 'asyncGroupBy' : 'groupBy'
-
-describe(methodName, () => {
+describe($async`groupBy`, () => {
   it('main cursor', $async(() => {
     const iter = $groupBy(undefined, 'AAABBAACCCCD')
     let next

@@ -1,9 +1,9 @@
-import { $async, $await } from './macros/async.macro'
+import { $async, $await } from '../generate/async.macro'
 
-import { iterableCurry } from './internal/$iterable'
+import { $iterableCurry } from './internal/$iterable'
 import regexExec from './regexp-exec'
 
-$async; function * regexpExecIter (re, iterable) {
+$async; function * $regexpExecIter (re, iterable) {
   let matches
   let buffer = ''
   $await; for (const chunk of iterable) {
@@ -28,4 +28,4 @@ $async; function * regexpExecIter (re, iterable) {
   }
 }
 
-export default iterableCurry(regexpExecIter)
+export default $iterableCurry($regexpExecIter)

@@ -1,9 +1,7 @@
-import { $isAsync, $async, $await } from '../macros/async.macro'
-import { $splitLines, $toArray } from './$fns'
+import { $async, $await } from '../../generate/async.macro'
+import { $splitLines, $toArray } from '../..'
 
-const $methodName = $isAsync ? 'asyncSplitLines' : 'splitLines'
-
-describe($methodName, () => {
+describe($async`splitLines`, () => {
   it('should split 1', $async(() => {
     const iter = $splitLines(['aa', '\nb', 'cc'])
     expect($await($toArray(iter))).toEqual(['aa', 'bcc'])

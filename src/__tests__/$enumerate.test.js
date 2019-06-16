@@ -1,9 +1,7 @@
-import { $isAsync, $async, $await } from '../macros/async.macro'
-import { $enumerate, $toArray, range } from './$fns'
+import { $async, $await } from '../../generate/async.macro'
+import { $enumerate, $toArray, range } from '../..'
 
-const $methodName = $isAsync ? 'asyncEnumerate' : 'enumerate'
-
-describe($methodName, () => {
+describe($async`enumerate`, () => {
   it('enumerates iterables', $async(() => {
     const iter = $enumerate(range({ start: 1, end: 4 }))
     expect($await($toArray(iter))).toEqual([[0, 1], [1, 2], [2, 3]])

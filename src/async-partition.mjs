@@ -7,13 +7,13 @@
  */
 
 import multiPartition from './async-multi-partition'
-import { iterableCurry } from './internal/async-iterable'
+import { asyncIterableCurry } from './internal/async-iterable'
 
-function partition (func, iter) {
+function asyncPartition (func, iter) {
   const [first, second] = multiPartition(async item => (await func(item)) ? 0 : 1, iter)
   return [first, second]
 }
 
-export default iterableCurry(partition, {
+export default asyncIterableCurry(asyncPartition, {
   reduces: true
 })

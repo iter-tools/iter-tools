@@ -6,10 +6,10 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { iterableCurry } from './internal/async-iterable'
+import { asyncIterableCurry } from './internal/async-iterable'
 import regexExec from './regexp-exec'
 
-async function * regexpExecIter (re, iterable) {
+async function * asyncRegexpExecIter (re, iterable) {
   let matches
   let buffer = ''
 
@@ -40,4 +40,4 @@ async function * regexpExecIter (re, iterable) {
   }
 }
 
-export default iterableCurry(regexpExecIter)
+export default asyncIterableCurry(asyncRegexpExecIter)

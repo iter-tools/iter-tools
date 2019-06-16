@@ -1,9 +1,9 @@
-import { ensureAsyncIterable, isAsyncIterable, asyncIterableCurry, asyncify } from '../async-iterable'
+import { asyncEnsureIterable, isAsyncIterable, asyncIterableCurry, asyncify } from '../async-iterable'
 import { range, asyncToArray } from '../..'
 
-describe('ensureAsyncIterable', () => {
+describe('asyncEnsureIterable', () => {
   it('transform sync iter to async', async () => {
-    const iter = ensureAsyncIterable(range({ start: 1, end: 4 }))
+    const iter = asyncEnsureIterable(range({ start: 1, end: 4 }))
     expect(await iter.next()).toEqual({ value: 1, done: false })
     expect(await iter.next()).toEqual({ value: 2, done: false })
     expect(await iter.next()).toEqual({ value: 3, done: false })

@@ -1,9 +1,9 @@
-import { $async, $await } from './macros/async.macro'
+import { $async, $await } from '../generate/async.macro'
 
-import { iterableCurry } from './internal/$iterable'
+import { $iterableCurry } from './internal/$iterable'
 import regexSplit from './regexp-split'
 
-$async; function * regexpSplitIter (re, iterable) {
+$async; function * $regexpSplitIter (re, iterable) {
   let buffer = ''
   let queue
   let mergeEmpty = false
@@ -30,4 +30,4 @@ $async; function * regexpSplitIter (re, iterable) {
   }
 }
 
-export default iterableCurry(regexpSplitIter)
+export default $iterableCurry($regexpSplitIter)
