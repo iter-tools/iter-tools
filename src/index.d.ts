@@ -390,6 +390,15 @@ export declare function slice<T> (
   },
   iterable: Iterable<T>
 ): IterableIterator<T>
+export declare function slice<T> (
+  opts: number | {
+    readonly start?: number
+    readonly end?: number
+    readonly step?: number
+  }
+): (
+  iterable: Iterable<T>
+) => IterableIterator<T>
 
 export declare function some<T> (func: (item: T) => boolean): (iterable: Iterable<T>) => boolean
 export declare function some<T> (func: (item: T) => boolean, iterable: Iterable<T>): boolean
@@ -665,6 +674,15 @@ export declare function asyncSlice<T> (
   },
   iterable: AsyncIterableLike<T>
 ): AsyncIterableIterator<T>
+export declare function asyncSlice<T> (
+  opts: number | {
+    readonly start?: number
+    readonly end?: number
+    readonly step?: number
+  }
+): (
+  iterable: AsyncIterableLike<T>
+) => AsyncIterableIterator<T>
 
 export declare function asyncTakeWhile<T> (func: (item: T) => MaybePromise<boolean>):
   (iterable: AsyncIterableLike<T>) => AsyncIterableIterator<T>
