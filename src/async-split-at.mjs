@@ -7,10 +7,21 @@
  */
 
 import { asyncIterableCurry } from './internal/async-iterable';
-import asyncSplitBy from './internal/async-split-by';
+import asyncGroupBy from './async-group-by';
 
-function asyncSplitAt(index, iterable) {
-  return asyncSplitBy((item, i) => i >= index, iterable);
+async function* empty() {}
+
+function* asyncSplitAt(index, iterable) {
+  const groupedIter = asyncGroupBy((_item, i) => i >= index, iterable)[Symbol.asyncIterator]();
+
+  for (let i = 0; i <= 1; i++) {
+    const item = groupedIter.next(); // prettier-ignore
+
+    yield (async function*() {
+      const { value, done } = await item;
+      yield* done ? empty() : value[1];
+    })();
+  }
 }
 
 export default asyncIterableCurry(asyncSplitAt, {

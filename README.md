@@ -1,6 +1,6 @@
 Iter-tools
 ==========
-[![Build Status](https://travis-ci.org/sithmel/iter-tools.svg?branch=master)](https://travis-ci.org/sithmel/iter-tools)
+[![Build Status](https://travis-ci.org/iter-tools/iter-tools.svg?branch=master)](https://travis-ci.org/iter-tools/iter-tools)
 ![coverage functions](coverage/badge-functions.svg?sanitize=true)
 [![npm version](https://img.shields.io/npm/v/iter-tools.svg)](https://www.npmjs.com/package/iter-tools)
 [![Gitter chat](https://badges.gitter.im/gitterHQ/gitter.png)](https://gitter.im/iter-tools/community)
@@ -11,7 +11,7 @@ iter-tools is designed to be a standard library of utilities for working with it
 - It helps you create applications whose memory usage can be more highly optimized, helping you avoid costly garbage collections.
 - APIs which accept iterables are immediately compatible with almost any kind of data structure, including custom implementations such as those provided by Immutable.js
 
-If you want even more ideas about how and when Iterables and iter-tools can help you out, take a look at [The Cookbook](https://github.com/sithmel/iter-tools/blob/master/COOKBOOK.md).
+If you want even more ideas about how and when Iterables and iter-tools can help you out, take a look at [The Cookbook](https://github.com/iter-tools/iter-tools/blob/master/COOKBOOK.md).
 
 ## Why iter-tools?
 
@@ -66,8 +66,6 @@ Combine multiple iterables
 Utilities returning multiple iterables
 * [groupBy](#group-by) ([async](#group-by))
 * [fork](#fork) ([async](#async-fork))
-* [partition](#partition) ([async](#async-partition))
-* [multiPartition](#multi-partition) ([async](#async-multi-partition))
 * [splitAt](#split-at) ([async](#async-split-at))
 
 Others
@@ -607,30 +605,6 @@ for (const [n, nsquared] of zip(proxy1, map(square, proxy1))) {
 
 ## async-fork
 Same as fork but works on both sync and async iterables. Note: it returns an iterable of asyncIterables.
-
-## partition
-Takes a condition function and an iterable, divides the iterable into 2, one contains items that satisfy the condition function, one contains item that don't.
-```js
-const [evens, odds] = partition(x => x % 2 === 0, range(10))
-Array.from(evens) // [0, 2, 4, 6, 8]
-Array.from(odds) // [1, 3, 5, 7, 9]
-```
-
-## async-partition
-Same as partition but works on both sync and async iterables.
-
-## multi-partition
-This function allows to partition an iterables in an arbitrary number of iterables. Which iterable will be based on the index returned by the function passed as a first argument.
-```js
-const [first, second, third] = partition(x => x % 3, range(9))
-Array.from(first)  // [0, 3, 6]
-Array.from(second) // [1, 4, 7]
-Array.from(third)  // [2, 5, 8]
-```
-
-
-## async-multi-partition
-This is equivalent to the multiPartition function but works for sync and async iterables.
 
 ## split-at
 It returns an iterable containing 2 slices of the input iterable. The first spans from the beginning to the chosen position. The second from the chosen position to the end.

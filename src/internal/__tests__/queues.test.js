@@ -17,11 +17,11 @@ describe('Queue', () => {
 describe('Exchange', () => {
   it('works while open', () => {
     const exchange = new Exchange();
-    const consumer1 = exchange.getConsumer();
+    const consumer1 = exchange.spawnConsumerAtRoot();
     exchange.push(1);
     exchange.push(2);
-    const consumer2 = consumer1.clone();
-    const consumer3 = consumer1.clone();
+    const consumer2 = exchange.spawnConsumerAtRoot();
+    const consumer3 = exchange.spawnConsumerAtRoot();
     exchange.push(3);
 
     expect(consumer1.isEmpty()).toBe(false);
@@ -55,10 +55,10 @@ describe('Exchange', () => {
 
   it('works after closed', () => {
     const exchange = new Exchange();
-    const consumer1 = exchange.getConsumer();
+    const consumer1 = exchange.spawnConsumerAtRoot();
     exchange.push(1);
     exchange.push(2);
-    const consumer2 = consumer1.clone();
+    const consumer2 = exchange.spawnConsumerAtRoot();
     exchange.push(3);
 
     expect(consumer1.isEmpty()).toBe(false);

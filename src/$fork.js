@@ -3,88 +3,95 @@ import { $isAsync, $async, $await, $iteratorSymbol } from '../generate/async.mac
 import { $ensureIterable } from './internal/$iterable';
 import { Exchange } from './internal/queues';
 
-function $fork(n = Infinity, iterable) {
-  const iterator = $ensureIterable(iterable)[$iteratorSymbol]();
-  let iterableCounter = 0;
-  let noNewIterables = false;
-  const exchange = new Exchange();
-  let done = false;
-  let doneValue;
+function fetch(state) {
+  const { exchange, iterator } = state;
 
-  function fetch() {
-    if ($isAsync) {
-      return new Promise((resolve, reject) => {
-        iterator
-          .next()
-          .then(newItem => {
-            if (newItem.done) {
-              done = true;
-              doneValue = newItem.value;
-              return resolve();
-            } else {
-              exchange.push(newItem.value);
-              return resolve();
-            }
-          })
-          .catch(err => reject(err));
-      });
+  if ($isAsync) {
+    return new Promise((resolve, reject) => {
+      iterator
+        .next()
+        .then(newItem => {
+          if (newItem.done) {
+            state.done = true;
+            state.doneValue = newItem.value;
+            return resolve();
+          } else {
+            exchange.push(newItem.value);
+            return resolve();
+          }
+        })
+        .catch(err => reject(err));
+    });
+  } else {
+    const newItem = iterator.next();
+    if (newItem.done) {
+      state.done = true;
+      state.doneValue = newItem.value;
     } else {
-      const newItem = iterator.next();
-      if (newItem.done) {
-        done = true;
-        doneValue = newItem.value;
+      exchange.push(newItem.value);
+    }
+  }
+}
+
+$async;
+function returnIterator(state) {
+  const { exchange, iterableCounter, iterator } = state;
+
+  if (!exchange.hasRoot() && iterableCounter === 0) {
+    if (typeof iterator.return === 'function') $await(iterator.return());
+  }
+}
+
+$async;
+function* generateFork(state, consumer) {
+  try {
+    state.iterableCounter++;
+    yield 'ensure finally';
+    while (true) {
+      if (!consumer.isEmpty()) {
+        yield consumer.shift();
+      } else if (state.done) {
+        return state.doneValue;
       } else {
-        exchange.push(newItem.value);
+        $await(fetch(state));
       }
     }
+  } finally {
+    state.iterableCounter--;
+    $await(returnIterator(state));
   }
+}
 
-  $async;
-  function returnIterator() {
-    if (noNewIterables && iterableCounter === 0) {
-      if (typeof iterator.return === 'function') $await(iterator.return());
-    }
-  }
+function* generateForks(state, n) {
+  const { exchange } = state;
 
-  $async;
-  function* generateFork(a) {
-    try {
-      iterableCounter++;
-      yield 'ensure finally';
-      while (true) {
-        if (!a.isEmpty()) {
-          yield a.shift();
-        } else if (done) {
-          return doneValue;
-        } else {
-          $await(fetch());
-        }
-      }
-    } finally {
-      iterableCounter--;
-      $await(returnIterator());
+  try {
+    for (let counter = 0; counter < n; counter++) {
+      const fork = generateFork(state, exchange.spawnConsumerAtRoot());
+      // this first call to "next" allows to initiate the function generator
+      // this ensures that "iterableCounter" will be always increased and decreased
+      //
+      // the default behaviour of a generator is that finally clause is only called
+      // if next was called at least once
+      fork.next(); // ensure finally
+      yield fork;
     }
+  } finally {
+    exchange.discardRoot();
+    returnIterator(state);
   }
+}
 
-  function* generateForks() {
-    try {
-      const consumer = exchange.getConsumer();
-      for (let counter = 0; counter < n; counter++) {
-        const fork = generateFork(consumer.clone());
-        // this first call to "next" allows to initiate the function generator
-        // this ensures that "iterableCounter" will be always increased and decreased
-        //
-        // the default behaviour of a generator is that finally clause is only called
-        // if next was called at least once
-        fork.next(); // ensure finally
-        yield fork;
-      }
-    } finally {
-      noNewIterables = true;
-      returnIterator();
-    }
-  }
-  return generateForks();
+function $fork(n = Infinity, iterable) {
+  const state = {
+    iterator: $ensureIterable(iterable)[$iteratorSymbol](),
+    iterableCounter: 0,
+    exchange: new Exchange(),
+    done: false,
+    doneValue: undefined,
+  };
+
+  return generateForks(state, n);
 }
 
 export default function curriedFork(...args) {
