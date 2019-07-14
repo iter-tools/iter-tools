@@ -7,30 +7,86 @@
  */
 
 import { iterableCurry } from './internal/iterable';
-import splitBy from './internal/split-by';
+import { WeakExchange } from './internal/queues';
 
-function* cons(item, iterable) {
-  yield item;
-  yield* iterable;
+function fetch(state, getKey, expectedKey = {}) {
+  const { iterator, weakExchange } = state;
+  const { done, value } = iterator.next();
+  state.done = done;
+
+  if (!done) {
+    const key = getKey(value, state.idx++);
+    state.item = {
+      value,
+      key,
+    };
+
+    if (expectedKey !== key) {
+      state.consumer = weakExchange.spawnConsumer();
+    }
+
+    weakExchange.push(state.item);
+  }
 }
 
-function car(iterable) {
-  const iterator = iterable[Symbol.iterator]();
-  const { done, value } = iterator.next();
-  if (done) return [];
-  return [value, iterator];
+function returnIterator(state) {
+  const { groupsConsumed, done, idx, nGroups, iterator } = state;
+
+  if (groupsConsumed && !done && idx === nGroups) {
+    if (typeof iterator.return === 'function') iterator.return();
+  }
+}
+
+function fetchGroup(state, getKey, key) {
+  while (!state.done && state.item.key === key) fetch(state, getKey, key);
+}
+
+function* generateGroup(state, getKey, key, consumer) {
+  try {
+    yield 'ensure finally';
+
+    do {
+      if (consumer.peek().key !== key) break;
+      const cachedItem = consumer.shift();
+      if (consumer.isEmpty()) fetch(state, getKey, key);
+      yield cachedItem.value;
+    } while (!(state.done && consumer.isEmpty()));
+  } finally {
+    returnIterator(state);
+  }
 }
 
 function* groupBy(getKey, iterable) {
-  const _getKey = getKey || (k => k);
+  const state = {
+    iterator: null,
+    idx: 0,
+    weakExchange: new WeakExchange(),
+    consumer: null,
+    done: false,
+    item: null,
+    nGroups: 0,
+    groupsConsumed: false,
+  };
 
-  for (const subseq of splitBy(_getKey, iterable)) {
-    const [first, rest] = car(subseq);
-    if (rest === undefined) return;
+  const _getKey = getKey == null ? k => k : getKey;
 
-    const key = _getKey(first);
+  try {
+    state.iterator = iterable[Symbol.iterator]();
+    state.consumer = state.weakExchange.spawnConsumer();
+    fetch(state, _getKey);
 
-    yield [key, cons(first, rest)];
+    while (!state.done) {
+      const { key } = state.item;
+      state.nGroups++;
+      const group = generateGroup(state, _getKey, key, state.consumer);
+      group.next(); // ensure finally
+
+      yield [key, group];
+      fetchGroup(state, _getKey, key);
+    }
+  } finally {
+    state.groupsConsumed = true;
+    returnIterator(state);
   }
 }
 

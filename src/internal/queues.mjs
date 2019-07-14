@@ -1,66 +1,104 @@
 class QueueItem {
   constructor(data) {
     this.data = data;
-    this.previous = null;
+    this.next = null;
   }
 }
 
 export class Queue {
   constructor() {
-    this.head = new QueueItem(); // an empty queue points to a head node
-    this.tail = this.head; // initially head and tail are the same
+    this.head = this.tail = new QueueItem(null);
+  }
+
+  peek() {
+    return this.head.next.data;
+  }
+
+  shift() {
+    if (this.isEmpty()) throw new Error('Cannot shift empty queue');
+    const { data } = this.head.next;
+    this.head = this.head.next;
+
+    return data;
   }
 
   push(data) {
     const newItem = new QueueItem(data);
-    this.tail.previous = newItem;
-    this.tail = newItem;
-  }
-
-  shift() {
-    if (this.isEmpty()) throw new Error('Queue is empty');
-    const data = this.head.previous.data;
-    this.head = this.head.previous;
-    return data;
+    this.tail.next = this.tail = newItem;
   }
 
   isEmpty() {
-    return !this.head.previous;
+    return !this.head.next;
   }
 }
 
 class Consumer {
-  constructor(queueItem) {
-    this.queueItem = queueItem;
+  constructor(head) {
+    this.head = head;
   }
-  isEmpty() {
-    return !this.queueItem.previous;
+
+  peek() {
+    return this.head.next.data;
   }
+
   shift() {
-    if (this.isEmpty()) throw new Error('Queue is empty');
-    const data = this.queueItem.previous.data;
-    this.queueItem = this.queueItem.previous;
+    if (this.isEmpty()) throw new Error('Cannot shift empty queue');
+    const { data } = this.head.next;
+    this.head = this.head.next;
     return data;
   }
-  clone() {
-    return new Consumer(this.queueItem);
+
+  isEmpty() {
+    return !this.head.next;
   }
 }
 
-export class Exchange {
-  constructor(queueItem) {
-    this.tail = new QueueItem(); // an empty queue points to a tail node
+/**
+ * Exchanges are a specialized kind of singly linked queues. Conceptually they represent a single queue, but
+ * they employ many consumers (heads) each of which consume the queue data at their own pace. A reference
+ * to the original head is kept up until `noMoreConsumers` is called, at which point the earlier items can
+ * be garbage collected.
+ *
+ * 0  ->  1  ->  2  ->  3  ->  4  ->  5  ->  6  ->  7  ->  8  ->  9
+ * ^                          <-|     ^             ^             ^
+ * Root  ...  GC'd when no root |     Head 1        Head 2        Tail
+ */
+export class Exchange extends Queue {
+  shift() {
+    throw new Error('Unsupported');
   }
 
-  push(data) {
-    const newItem = new QueueItem(data);
-    this.tail.previous = newItem;
-    this.tail = newItem;
+  hasRoot() {
+    return !!this.head;
   }
 
-  getConsumer() {
+  spawnConsumerAtRoot() {
+    if (!this.head)
+      throw new Error('You cannot spawn a new consumer after setting calling noMoreConsumers');
+    return new Consumer(this.head);
+  }
+
+  discardRoot() {
+    // Allow the GC to collect items
+    this.head = null;
+  }
+}
+
+/**
+ * A WeakExchange is like an exchange but it never has a root, and spawned consumers will not have access
+ * to items pushed to the exchange prior to the consumers' spawning.
+ */
+export class WeakExchange extends Queue {
+  constructor() {
+    super();
+    this.head = null;
+  }
+
+  shift() {
+    throw new Error('Unsupported');
+  }
+
+  spawnConsumer() {
     return new Consumer(this.tail);
   }
 }
-
-export const fakeQueue = { push: () => {} };

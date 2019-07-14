@@ -11,6 +11,16 @@ import { iterableCurry } from './internal/iterable';
 const defaultShouldFlat = item =>
   typeof item[Symbol.iterator] === 'function' && typeof item !== 'string';
 
+function* flatInternal(shouldFlat, depth, currentDepth, iterable) {
+  for (const item of iterable) {
+    if (currentDepth < depth && shouldFlat(item)) {
+      yield* flatInternal(shouldFlat, depth, currentDepth + 1, item);
+    } else {
+      yield item;
+    }
+  }
+}
+
 function flat(shouldFlat = defaultShouldFlat, depthOrOptions = 1, iterable) {
   let depth = depthOrOptions;
 
@@ -18,17 +28,7 @@ function flat(shouldFlat = defaultShouldFlat, depthOrOptions = 1, iterable) {
     ({ shouldFlat = defaultShouldFlat, depth = 1 } = depthOrOptions);
   }
 
-  function* _flat(currentDepth, iterable) {
-    for (const item of iterable) {
-      if (currentDepth < depth && shouldFlat(item)) {
-        yield* _flat(currentDepth + 1, item);
-      } else {
-        yield item;
-      }
-    }
-  }
-
-  return _flat(0, iterable);
+  return flatInternal(shouldFlat, depth, 0, iterable);
 }
 
 export default iterableCurry(flat, {

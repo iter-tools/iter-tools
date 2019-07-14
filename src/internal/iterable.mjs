@@ -1,6 +1,6 @@
 import { variadicCurryWithValidation } from './curry';
 
-const emptyArr = [];
+function* empty() {}
 
 export function isIterable(i) {
   return Boolean(i != null && i[Symbol.iterator]);
@@ -8,7 +8,7 @@ export function isIterable(i) {
 
 export function ensureIterable(i) {
   if (i == null) {
-    return emptyArr[Symbol.iterator]();
+    return empty();
   } else if (!isIterable(i)) {
     if (typeof i.next === 'function') {
       throw new TypeError(
