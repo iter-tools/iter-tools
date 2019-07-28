@@ -1,5 +1,5 @@
-import { AsyncIterableLike } from './internal/async-iterable';
+import { AsyncInputIterable } from './internal/async-iterable';
 
-declare function asyncCycle<T = any>(iterable: AsyncIterableLike<T>): AsyncIterableIterator<T>;
+declare function asyncCycle<T = any>(iterable: AsyncInputIterable<T>): AsyncIterableIterator<T>;
 
 export default asyncCycle;

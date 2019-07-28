@@ -1,4 +1,4 @@
-import { $Promise, $IterableLike } from '../internal/$iterable';
+import { $Promise, $InputIterable } from '../internal/$iterable';
 import { $isAsync, $async, $await } from '../../generate/async.macro';
 import { $reduce, asyncReduce, reduce, range } from '..';
 import { $OneTwoThreeIterable } from './__framework__/fixtures';
@@ -62,7 +62,7 @@ describe($async`reduce`, () => {
   it(
     'sums a range (using curry)',
     $async(() => {
-      const sum: (iterable: $IterableLike<number>) => $Promise<number> = $reduce(
+      const sum: (iterable: $InputIterable<number>) => $Promise<number> = $reduce(
         (acc = 0, x) => acc + x,
       );
       expect($await(sum(range(4)))).toBe(6);

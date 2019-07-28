@@ -8,7 +8,7 @@
 
 /* eslint-disable no-unused-vars */
 
-import { Promise, IterableLike } from '../internal/iterable';
+import { Promise, InputIterable } from '../internal/iterable';
 import { asyncReduce, reduce, range } from '..';
 import { OneTwoThreeIterable } from './__framework__/fixtures';
 describe('reduce', () => {
@@ -41,7 +41,7 @@ describe('reduce', () => {
     }).toThrow();
   });
   it('sums a range (using curry)', () => {
-    const sum: (iterable: IterableLike<number>) => Promise<number> = reduce(
+    const sum: (iterable: InputIterable<number>) => Promise<number> = reduce(
       (acc = 0, x) => acc + x,
     );
     expect(sum(range(4))).toBe(6);

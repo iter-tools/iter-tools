@@ -7,15 +7,15 @@
  */
 
 import {
-  AsyncIterableLike,
+  AsyncInputIterable,
   AsyncIterableIterator,
   AsyncMaybePromise,
 } from './internal/async-iterable';
 declare function asyncTap<T = any>(
   func: (item: T, i: number) => AsyncMaybePromise<any>,
-): (iterable: AsyncIterableLike<T>) => AsyncIterableIterator<T>;
+): (iterable: AsyncInputIterable<T>) => AsyncIterableIterator<T>;
 declare function asyncTap<T = any>(
   func: (item: T, i: number) => AsyncMaybePromise<any>,
-  iterable: AsyncIterableLike<T>,
+  iterable: AsyncInputIterable<T>,
 ): AsyncIterableIterator<T>;
 export default asyncTap;

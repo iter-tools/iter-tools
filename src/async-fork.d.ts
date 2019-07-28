@@ -7,15 +7,15 @@
  */
 
 import { GeneratorIterator as SyncGeneratorIterator } from './internal/iterable';
-import { AsyncIterableLike, AsyncGeneratorIterator } from './internal/async-iterable';
+import { AsyncInputIterable, AsyncGeneratorIterator } from './internal/async-iterable';
 declare function asyncFork<T = any>(
-  iterable: AsyncIterableLike<T>,
+  iterable: AsyncInputIterable<T>,
 ): SyncGeneratorIterator<AsyncGeneratorIterator<T>>;
 declare function asyncFork<T = any>(
   n: number,
-): (iterable: AsyncIterableLike<T>) => SyncGeneratorIterator<AsyncGeneratorIterator<T>>;
+): (iterable: AsyncInputIterable<T>) => SyncGeneratorIterator<AsyncGeneratorIterator<T>>;
 declare function asyncFork<T = any>(
   n: number,
-  iterable: AsyncIterableLike<T>,
+  iterable: AsyncInputIterable<T>,
 ): SyncGeneratorIterator<AsyncGeneratorIterator<T>>;
 export default asyncFork;

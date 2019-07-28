@@ -7,12 +7,12 @@
  */
 
 import { GeneratorIterator as SyncGeneratorIterator } from './internal/iterable';
-import { AsyncIterableLike, AsyncGeneratorIterator } from './internal/async-iterable';
+import { AsyncInputIterable, AsyncGeneratorIterator } from './internal/async-iterable';
 declare function asyncSplitAt(
   position: number,
-): <T = any>(iterable: AsyncIterableLike<T>) => SyncGeneratorIterator<AsyncGeneratorIterator<T>>;
+): <T = any>(iterable: AsyncInputIterable<T>) => SyncGeneratorIterator<AsyncGeneratorIterator<T>>;
 declare function asyncSplitAt<T = any>(
   position: number,
-  iterable: AsyncIterableLike<T>,
+  iterable: AsyncInputIterable<T>,
 ): SyncGeneratorIterator<AsyncGeneratorIterator<T>>;
 export default asyncSplitAt;

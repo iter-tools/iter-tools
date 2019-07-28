@@ -7,15 +7,15 @@
  */
 
 import {
-  AsyncIterableLike,
+  AsyncInputIterable,
   AsyncIterableIterator,
   AsyncMaybePromise,
 } from './internal/async-iterable';
 declare function asyncFlatMap<O, T = any>(
-  func: (item: T) => AsyncMaybePromise<AsyncIterableLike<O>>,
-): (iter: AsyncIterableLike<T>) => AsyncIterableIterator<O>;
+  func: (item: T) => AsyncMaybePromise<AsyncInputIterable<O>>,
+): (iter: AsyncInputIterable<T>) => AsyncIterableIterator<O>;
 declare function asyncFlatMap<O, T = any>(
-  func: (item: T) => AsyncMaybePromise<AsyncIterableLike<O>>,
-  iter: AsyncIterableLike<T>,
+  func: (item: T) => AsyncMaybePromise<AsyncInputIterable<O>>,
+  iter: AsyncInputIterable<T>,
 ): AsyncIterableIterator<O>;
 export default asyncFlatMap;

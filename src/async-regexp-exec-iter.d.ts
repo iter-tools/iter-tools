@@ -6,12 +6,12 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { AsyncIterableLike, AsyncIterableIterator } from './internal/async-iterable';
+import { AsyncInputIterable, AsyncIterableIterator } from './internal/async-iterable';
 declare function asyncRegexpExecIter(
   re: RegExp,
-): (iterable: AsyncIterableLike<string>) => AsyncIterableIterator<string>;
+): (iterable: AsyncInputIterable<string>) => AsyncIterableIterator<string>;
 declare function asyncRegexpExecIter(
   re: RegExp,
-  iterable: AsyncIterableLike<string>,
+  iterable: AsyncInputIterable<string>,
 ): AsyncIterableIterator<string>;
 export default asyncRegexpExecIter;

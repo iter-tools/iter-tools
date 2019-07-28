@@ -1,7 +1,7 @@
-import { $IterableLike, $IterableIterator } from './internal/$iterable';
+import { $InputIterable, $IterableIterator } from './internal/$iterable';
 
 declare function $enumerate<T = any>(
-  iterable: $IterableLike<T>,
+  iterable: $InputIterable<T>,
   start?: number,
 ): $IterableIterator<[number, T]>;
 

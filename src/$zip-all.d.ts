@@ -1,7 +1,7 @@
-import { $IterableLike, $IterableIterator } from './internal/$iterable';
+import { $InputIterable, $IterableIterator } from './internal/$iterable';
 
 declare function $zipAll<T = any>(
-  ...iterables: Array<$IterableLike<T>>
+  ...iterables: Array<$InputIterable<T>>
 ): $IterableIterator<Array<T | undefined>>;
 
 export default $zipAll;

@@ -1,20 +1,20 @@
-import { $IterableLike, $IterableIterator, $MaybePromise } from './internal/$iterable';
+import { $InputIterable, $IterableIterator, $MaybePromise } from './internal/$iterable';
 
 declare function $takeSorted<T = any>(
   n: number,
-): (iterable: $IterableLike<T>) => $IterableIterator<T>;
-
-declare function $takeSorted<T = any>(
-  func: (a: T, b: T) => number,
-  n: number,
-): (iterable: $IterableLike<T>) => $IterableIterator<T>;
-
-declare function $takeSorted<T = any>(n: number, iterable: $IterableLike<T>): $IterableIterator<T>;
+): (iterable: $InputIterable<T>) => $IterableIterator<T>;
 
 declare function $takeSorted<T = any>(
   func: (a: T, b: T) => number,
   n: number,
-  iterable: $IterableLike<T>,
+): (iterable: $InputIterable<T>) => $IterableIterator<T>;
+
+declare function $takeSorted<T = any>(n: number, iterable: $InputIterable<T>): $IterableIterator<T>;
+
+declare function $takeSorted<T = any>(
+  func: (a: T, b: T) => number,
+  n: number,
+  iterable: $InputIterable<T>,
 ): $IterableIterator<T>;
 
 export default $takeSorted;

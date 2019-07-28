@@ -6,7 +6,7 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { IterableLike, IterableIterator } from './internal/iterable';
+import { InputIterable, IterableIterator } from './internal/iterable';
 declare function slice<T = any>(
   opts:
     | number
@@ -15,7 +15,7 @@ declare function slice<T = any>(
         readonly end?: number;
         readonly step?: number;
       },
-): (iterable: IterableLike<T>) => IterableIterator<T>;
+): (iterable: InputIterable<T>) => IterableIterator<T>;
 declare function slice<T = any>(
   opts:
     | number
@@ -24,6 +24,6 @@ declare function slice<T = any>(
         readonly end?: number;
         readonly step?: number;
       },
-  iterable: IterableLike<T>,
+  iterable: InputIterable<T>,
 ): IterableIterator<T>;
 export default slice;

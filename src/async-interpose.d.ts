@@ -6,12 +6,12 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { AsyncIterableLike, AsyncIterableIterator } from './internal/async-iterable';
+import { AsyncInputIterable, AsyncIterableIterator } from './internal/async-iterable';
 declare function asyncInterpose<I>(
   interposeItem: I,
-): <T = any>(iterable: AsyncIterableLike<T>) => AsyncIterableIterator<T | I>;
+): <T = any>(iterable: AsyncInputIterable<T>) => AsyncIterableIterator<T | I>;
 declare function asyncInterpose<I, T = any>(
   interposeItem: I,
-  iterable: AsyncIterableLike<T>,
+  iterable: AsyncInputIterable<T>,
 ): AsyncIterableIterator<T | I>;
 export default asyncInterpose;

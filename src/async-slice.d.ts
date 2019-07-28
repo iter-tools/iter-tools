@@ -6,7 +6,7 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { AsyncIterableLike, AsyncIterableIterator } from './internal/async-iterable';
+import { AsyncInputIterable, AsyncIterableIterator } from './internal/async-iterable';
 declare function asyncSlice<T = any>(
   opts:
     | number
@@ -15,7 +15,7 @@ declare function asyncSlice<T = any>(
         readonly end?: number;
         readonly step?: number;
       },
-): (iterable: AsyncIterableLike<T>) => AsyncIterableIterator<T>;
+): (iterable: AsyncInputIterable<T>) => AsyncIterableIterator<T>;
 declare function asyncSlice<T = any>(
   opts:
     | number
@@ -24,6 +24,6 @@ declare function asyncSlice<T = any>(
         readonly end?: number;
         readonly step?: number;
       },
-  iterable: AsyncIterableLike<T>,
+  iterable: AsyncInputIterable<T>,
 ): AsyncIterableIterator<T>;
 export default asyncSlice;

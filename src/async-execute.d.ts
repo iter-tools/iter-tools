@@ -7,7 +7,7 @@
  */
 
 import {
-  AsyncIterableLike,
+  AsyncInputIterable,
   AsyncIterableIterator,
   AsyncMaybePromise,
 } from './internal/async-iterable';

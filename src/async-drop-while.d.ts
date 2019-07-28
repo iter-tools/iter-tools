@@ -7,15 +7,15 @@
  */
 
 import {
-  AsyncIterableLike,
+  AsyncInputIterable,
   AsyncIterableIterator,
   AsyncMaybePromise,
 } from './internal/async-iterable';
 declare function asyncDropWhile<T = any>(
   func: (item: T, i: number) => AsyncMaybePromise<boolean>,
-): (iterable: AsyncIterableLike<T>) => AsyncIterableIterator<T>;
+): (iterable: AsyncInputIterable<T>) => AsyncIterableIterator<T>;
 declare function asyncDropWhile<T = any>(
   func: (item: T, i: number) => AsyncMaybePromise<boolean>,
-  iterable: AsyncIterableLike<T>,
+  iterable: AsyncInputIterable<T>,
 ): AsyncIterableIterator<T>;
 export default asyncDropWhile;

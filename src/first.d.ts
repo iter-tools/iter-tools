@@ -6,8 +6,8 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { IterableLike, Iterable, Promise } from './internal/iterable';
-declare function first<Iter extends IterableLike<any>>(
+import { InputIterable, Iterable, Promise } from './internal/iterable';
+declare function first<Iter extends InputIterable<any>>(
   iterable: Iter,
 ): Iter extends [infer First, ...Array<any>]
   ? Promise<First>

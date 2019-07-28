@@ -7,12 +7,12 @@
  */
 
 import {
-  AsyncIterableLike,
-  AsyncDefinedIterableLike,
+  AsyncInputIterable,
+  AsyncDefinedInputIterable,
   AsyncIterableIterator,
   AsyncMaybePromise,
 } from './internal/async-iterable';
-type AsyncFlattened<T> = T extends Array<infer U> ? U : T extends ReadonlyArray<infer U> ? U : T extends AsyncDefinedIterableLike<infer U> ? U : T; // prettier-ignore
+type AsyncFlattened<T> = T extends Array<infer U> ? U : T extends ReadonlyArray<infer U> ? U : T extends AsyncDefinedInputIterable<infer U> ? U : T; // prettier-ignore
 
 declare function asyncFlat<U>(depth: 0, iterable: U): AsyncIterableIterator<AsyncFlattened<U>>; // prettier-ignore
 
@@ -60,14 +60,14 @@ declare function asyncFlat(
 declare function asyncFlat(
   shouldFlat: (item: any) => AsyncMaybePromise<boolean>,
   depth: number,
-  iter: AsyncIterableLike<any>,
+  iter: AsyncInputIterable<any>,
 ): AsyncIterableIterator<any>;
-declare function asyncFlat(iterable: AsyncIterableLike<any>): AsyncIterableIterator<any>;
+declare function asyncFlat(iterable: AsyncInputIterable<any>): AsyncIterableIterator<any>;
 declare function asyncFlat(
   depth: number,
-  iterable: AsyncIterableLike<any>,
+  iterable: AsyncInputIterable<any>,
 ): AsyncIterableIterator<any>;
 declare function asyncFlat(
   depth?: number,
-): (iterable: AsyncIterableLike<any>) => AsyncIterableIterator<any>;
+): (iterable: AsyncInputIterable<any>) => AsyncIterableIterator<any>;
 export default asyncFlat;

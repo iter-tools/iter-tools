@@ -6,9 +6,9 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { AsyncIterableLike, AsyncIterableIterator } from './internal/async-iterable';
+import { AsyncInputIterable, AsyncIterableIterator } from './internal/async-iterable';
 declare function asyncCompress<T = any>(
-  iterable: AsyncIterableLike<T>,
-  compress: AsyncIterableLike<boolean>,
+  iterable: AsyncInputIterable<T>,
+  compress: AsyncInputIterable<boolean>,
 ): AsyncIterableIterator<T>;
 export default asyncCompress;

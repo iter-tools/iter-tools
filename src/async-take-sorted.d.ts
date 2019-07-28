@@ -7,24 +7,24 @@
  */
 
 import {
-  AsyncIterableLike,
+  AsyncInputIterable,
   AsyncIterableIterator,
   AsyncMaybePromise,
 } from './internal/async-iterable';
 declare function asyncTakeSorted<T = any>(
   n: number,
-): (iterable: AsyncIterableLike<T>) => AsyncIterableIterator<T>;
+): (iterable: AsyncInputIterable<T>) => AsyncIterableIterator<T>;
 declare function asyncTakeSorted<T = any>(
   func: (a: T, b: T) => number,
   n: number,
-): (iterable: AsyncIterableLike<T>) => AsyncIterableIterator<T>;
+): (iterable: AsyncInputIterable<T>) => AsyncIterableIterator<T>;
 declare function asyncTakeSorted<T = any>(
   n: number,
-  iterable: AsyncIterableLike<T>,
+  iterable: AsyncInputIterable<T>,
 ): AsyncIterableIterator<T>;
 declare function asyncTakeSorted<T = any>(
   func: (a: T, b: T) => number,
   n: number,
-  iterable: AsyncIterableLike<T>,
+  iterable: AsyncInputIterable<T>,
 ): AsyncIterableIterator<T>;
 export default asyncTakeSorted;

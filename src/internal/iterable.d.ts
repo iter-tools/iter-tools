@@ -1,5 +1,5 @@
-export type DefinedIterableLike<T> = Iterable<T>;
-export type IterableLike<T> = DefinedIterableLike<T> | null | undefined;
+export type DefinedInputIterable<T> = Iterable<T>;
+export type InputIterable<T> = DefinedInputIterable<T> | null | undefined;
 
 type _Iterable<T> = Iterable<T>;
 export { _Iterable as Iterable };

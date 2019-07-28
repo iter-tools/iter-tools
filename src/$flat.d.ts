@@ -1,6 +1,6 @@
 import {
-  $IterableLike,
-  $DefinedIterableLike,
+  $InputIterable,
+  $DefinedInputIterable,
   $IterableIterator,
   $MaybePromise,
 } from './internal/$iterable';
@@ -9,7 +9,7 @@ type $Flattened<T> = T extends Array<infer U>
   ? U
   : T extends ReadonlyArray<infer U>
   ? U
-  : T extends $DefinedIterableLike<infer U>
+  : T extends $DefinedInputIterable<infer U>
   ? U
   : T;
 
@@ -50,11 +50,11 @@ declare function $flat(depth: 7): <U>(iterable: U) => $IterableIterator<$Flatten
 declare function $flat(
   shouldFlat: (item: any) => $MaybePromise<boolean>,
   depth: number,
-  iter: $IterableLike<any>,
+  iter: $InputIterable<any>,
 ): $IterableIterator<any>;
 
-declare function $flat(iterable: $IterableLike<any>): $IterableIterator<any>;
-declare function $flat(depth: number, iterable: $IterableLike<any>): $IterableIterator<any>;
-declare function $flat(depth?: number): (iterable: $IterableLike<any>) => $IterableIterator<any>;
+declare function $flat(iterable: $InputIterable<any>): $IterableIterator<any>;
+declare function $flat(depth: number, iterable: $InputIterable<any>): $IterableIterator<any>;
+declare function $flat(depth?: number): (iterable: $InputIterable<any>) => $IterableIterator<any>;
 
 export default $flat;

@@ -6,8 +6,8 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { AsyncIterableLike, AsyncIterableIterator } from './internal/async-iterable';
+import { AsyncInputIterable, AsyncIterableIterator } from './internal/async-iterable';
 declare function asyncSplitLines(
-  iterable: AsyncIterableLike<string>,
+  iterable: AsyncInputIterable<string>,
 ): AsyncIterableIterator<string>;
 export default asyncSplitLines;

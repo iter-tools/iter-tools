@@ -6,12 +6,12 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { IterableLike, IterableIterator, MaybePromise } from './internal/iterable';
+import { InputIterable, IterableIterator, MaybePromise } from './internal/iterable';
 declare function tap<T = any>(
   func: (item: T, i: number) => MaybePromise<any>,
-): (iterable: IterableLike<T>) => IterableIterator<T>;
+): (iterable: InputIterable<T>) => IterableIterator<T>;
 declare function tap<T = any>(
   func: (item: T, i: number) => MaybePromise<any>,
-  iterable: IterableLike<T>,
+  iterable: InputIterable<T>,
 ): IterableIterator<T>;
 export default tap;

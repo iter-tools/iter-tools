@@ -6,19 +6,19 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { IterableLike, IterableIterator, MaybePromise } from './internal/iterable';
+import { InputIterable, IterableIterator, MaybePromise } from './internal/iterable';
 declare function filter<S extends T, T = any>(
   func: (item: T, i: number) => item is S,
-): (iterable: IterableLike<T>) => IterableIterator<S>;
+): (iterable: InputIterable<T>) => IterableIterator<S>;
 declare function filter<T = any>(
   func: (item: T, i: number) => MaybePromise<boolean>,
-): (iterable: IterableLike<T>) => IterableIterator<T>;
+): (iterable: InputIterable<T>) => IterableIterator<T>;
 declare function filter<S extends T, T = any>(
   func: (item: T, i: number) => item is S,
-  iterable: IterableLike<T>,
+  iterable: InputIterable<T>,
 ): IterableIterator<S>;
 declare function filter<T = any>(
   func: (item: T, i: number) => MaybePromise<boolean>,
-  iterable: IterableLike<T>,
+  iterable: InputIterable<T>,
 ): IterableIterator<T>;
 export default filter;

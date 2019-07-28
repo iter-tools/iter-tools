@@ -6,6 +6,6 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { IterableLike, IterableIterator } from './internal/iterable';
-declare function splitLines(iterable: IterableLike<string>): IterableIterator<string>;
+import { InputIterable, IterableIterator } from './internal/iterable';
+declare function splitLines(iterable: InputIterable<string>): IterableIterator<string>;
 export default splitLines;

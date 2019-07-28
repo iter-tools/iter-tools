@@ -6,12 +6,12 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { AsyncPromise, AsyncIterableLike } from './internal/async-iterable';
+import { AsyncPromise, AsyncInputIterable } from './internal/async-iterable';
 declare function asyncConsume<T = any>(
   func: (item: T, i: number) => void,
-): (iterable: AsyncIterableLike<T>) => AsyncPromise<void>;
+): (iterable: AsyncInputIterable<T>) => AsyncPromise<void>;
 declare function asyncConsume<T = any>(
   func: (item: T, i: number) => void,
-  iterable: AsyncIterableLike<T>,
+  iterable: AsyncInputIterable<T>,
 ): AsyncPromise<void>;
 export default asyncConsume;

@@ -6,8 +6,8 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { AsyncIterableLike, AsyncPromise } from './internal/async-iterable';
-declare function asyncSize<Iter extends AsyncIterableLike<any>>(
+import { AsyncInputIterable, AsyncPromise } from './internal/async-iterable';
+declare function asyncSize<Iter extends AsyncInputIterable<any>>(
   iterable: Iter,
 ): AsyncPromise<Iter extends any[] ? Iter['length'] : number>;
 export default asyncSize;

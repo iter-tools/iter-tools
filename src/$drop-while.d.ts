@@ -1,12 +1,12 @@
-import { $IterableLike, $IterableIterator, $MaybePromise } from './internal/$iterable';
+import { $InputIterable, $IterableIterator, $MaybePromise } from './internal/$iterable';
 
 declare function $dropWhile<T = any>(
   func: (item: T, i: number) => $MaybePromise<boolean>,
-): (iterable: $IterableLike<T>) => $IterableIterator<T>;
+): (iterable: $InputIterable<T>) => $IterableIterator<T>;
 
 declare function $dropWhile<T = any>(
   func: (item: T, i: number) => $MaybePromise<boolean>,
-  iterable: $IterableLike<T>,
+  iterable: $InputIterable<T>,
 ): $IterableIterator<T>;
 
 export default $dropWhile;

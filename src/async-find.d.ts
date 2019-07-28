@@ -6,19 +6,19 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { AsyncIterableLike, AsyncPromise, AsyncMaybePromise } from './internal/async-iterable';
+import { AsyncInputIterable, AsyncPromise, AsyncMaybePromise } from './internal/async-iterable';
 declare function asyncFind<S extends T, T = any>(
   func: (item: T, i: number) => item is S,
-): (iterable: AsyncIterableLike<T>) => AsyncPromise<S | null>;
+): (iterable: AsyncInputIterable<T>) => AsyncPromise<S | null>;
 declare function asyncFind<T = any>(
   func: (item: T, i: number) => AsyncMaybePromise<boolean>,
-): (iterable: AsyncIterableLike<T>) => AsyncPromise<T | null>;
+): (iterable: AsyncInputIterable<T>) => AsyncPromise<T | null>;
 declare function asyncFind<S extends T, T = any>(
   func: (item: T, i: number) => item is S,
-  iterable: AsyncIterableLike<T>,
+  iterable: AsyncInputIterable<T>,
 ): AsyncPromise<S | undefined>;
 declare function asyncFind<T = any>(
   func: (item: T, i: number) => AsyncMaybePromise<boolean>,
-  iterable: AsyncIterableLike<T>,
+  iterable: AsyncInputIterable<T>,
 ): AsyncPromise<T | undefined>;
 export default asyncFind;

@@ -1,6 +1,6 @@
-import { $IterableLike, $Iterable, $Promise } from './internal/$iterable';
+import { $InputIterable, $Iterable, $Promise } from './internal/$iterable';
 
-declare function $first<Iter extends $IterableLike<any>>(
+declare function $first<Iter extends $InputIterable<any>>(
   iterable: Iter,
 ): Iter extends [infer First, ...Array<any>]
   ? $Promise<First>

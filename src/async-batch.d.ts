@@ -6,12 +6,12 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { AsyncIterableLike, AsyncIterableIterator } from './internal/async-iterable';
+import { AsyncInputIterable, AsyncIterableIterator } from './internal/async-iterable';
 declare function asyncBatch(
   n: number,
-): <T>(iterable: AsyncIterableLike<T>) => AsyncIterableIterator<T[]>;
+): <T>(iterable: AsyncInputIterable<T>) => AsyncIterableIterator<T[]>;
 declare function asyncBatch<T = any>(
   n: number,
-  iterable: AsyncIterableLike<T>,
+  iterable: AsyncInputIterable<T>,
 ): AsyncIterableIterator<T[]>;
 export default asyncBatch;

@@ -7,13 +7,13 @@
  */
 
 import { Repeat8 } from './internal/types/utility';
-import { AsyncIterableLike, AsyncIterableIterator } from './internal/async-iterable';
+import { AsyncInputIterable, AsyncIterableIterator } from './internal/async-iterable';
 declare function asyncCursor<Size extends number, Filler = undefined, T = any>(
   opts: {
     readonly size: Size;
     readonly trailing?: boolean;
     readonly filler?: Filler;
   },
-  iterable: AsyncIterableLike<T>,
+  iterable: AsyncInputIterable<T>,
 ): AsyncIterableIterator<Repeat8<T | Filler, Size>>;
 export default asyncCursor;
