@@ -1,0 +1,3 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`reduce throws when no initial value specified and iterable is empty 1`] = `"Cannot reduce: no initial value specified and iterable was empty"`;

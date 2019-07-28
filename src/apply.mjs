@@ -1,9 +1,7 @@
 import { curry } from './internal/curry';
 
-const emptyArray = [];
-
-function apply(fn, args = emptyArray) {
-  return fn(...args);
+function apply(fn, args = []) {
+  return fn(...(args === null ? [] : args));
 }
 
 export default curry(apply, 2);

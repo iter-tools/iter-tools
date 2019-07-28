@@ -46,6 +46,7 @@ describe('asyncReduce', () => {
       }
 
       expect(error).toBeInstanceOf(Error);
+      expect(error.message).toMatchSnapshot();
     }
   });
   it('sums a range (using curry)', async () => {

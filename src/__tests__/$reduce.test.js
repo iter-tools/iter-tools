@@ -51,10 +51,11 @@ describe($async`reduce`, () => {
         }
 
         expect(error).toBeInstanceOf(Error);
+        expect(error.message).toMatchSnapshot();
       } else {
         expect(() => {
           reduce((acc, x) => acc + x, []);
-        }).toThrow();
+        }).toThrowErrorMatchingSnapshot();
       }
     }),
   );

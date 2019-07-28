@@ -1,6 +1,6 @@
 import { variadicCurryWithValidation } from './curry';
 
-function* empty() {}
+export function* empty() {}
 
 export function isIterable(i) {
   return Boolean(i != null && i[Symbol.iterator]);

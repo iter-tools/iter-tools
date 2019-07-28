@@ -38,7 +38,7 @@ describe('reduce', () => {
   it('throws when no initial value specified and iterable is empty', () => {
     expect(() => {
       reduce((acc, x) => acc + x, []);
-    }).toThrow();
+    }).toThrowErrorMatchingSnapshot();
   });
   it('sums a range (using curry)', () => {
     const sum: (iterable: InputIterable<number>) => Promise<number> = reduce(

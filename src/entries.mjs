@@ -1,4 +1,4 @@
-const emptyArr = [];
+import { empty } from './internal/iterable';
 
 const { hasOwnProperty } = Object.prototype;
 
@@ -6,7 +6,7 @@ export default function entries(entriesable) {
   return {
     *[Symbol.iterator]() {
       if (entriesable == null) {
-        return emptyArr[Symbol.iterator]();
+        return empty();
       } else if (typeof entriesable.entries === 'function') {
         yield* entriesable.entries();
       } else if (typeof entriesable === 'object') {
