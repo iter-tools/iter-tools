@@ -8,14 +8,14 @@
 
 import {
   AsyncInputIterable,
-  AsyncIterableIterator,
+  AsyncGeneratorIterator,
   AsyncMaybePromise,
 } from './internal/async-iterable';
 declare function asyncMap<O, T = any>(
   func: (item: T) => AsyncMaybePromise<O>,
-): (iterable: AsyncInputIterable<T>) => AsyncIterableIterator<O>;
+): (iterable: AsyncInputIterable<T>) => AsyncGeneratorIterator<O>;
 declare function asyncMap<O, T = any>(
   func: (item: T) => AsyncMaybePromise<O>,
   iterable: AsyncInputIterable<T>,
-): AsyncIterableIterator<O>;
+): AsyncGeneratorIterator<O>;
 export default asyncMap;

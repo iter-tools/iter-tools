@@ -8,23 +8,23 @@
 
 import {
   AsyncInputIterable,
-  AsyncIterableIterator,
+  AsyncGeneratorIterator,
   AsyncMaybePromise,
 } from './internal/async-iterable';
 declare function asyncTakeSorted<T = any>(
   n: number,
-): (iterable: AsyncInputIterable<T>) => AsyncIterableIterator<T>;
+): (iterable: AsyncInputIterable<T>) => AsyncGeneratorIterator<T>;
 declare function asyncTakeSorted<T = any>(
   func: (a: T, b: T) => number,
   n: number,
-): (iterable: AsyncInputIterable<T>) => AsyncIterableIterator<T>;
+): (iterable: AsyncInputIterable<T>) => AsyncGeneratorIterator<T>;
 declare function asyncTakeSorted<T = any>(
   n: number,
   iterable: AsyncInputIterable<T>,
-): AsyncIterableIterator<T>;
+): AsyncGeneratorIterator<T>;
 declare function asyncTakeSorted<T = any>(
   func: (a: T, b: T) => number,
   n: number,
   iterable: AsyncInputIterable<T>,
-): AsyncIterableIterator<T>;
+): AsyncGeneratorIterator<T>;
 export default asyncTakeSorted;

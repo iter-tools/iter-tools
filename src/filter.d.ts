@@ -6,19 +6,19 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { InputIterable, IterableIterator, MaybePromise } from './internal/iterable';
+import { InputIterable, GeneratorIterator, MaybePromise } from './internal/iterable';
 declare function filter<S extends T, T = any>(
   func: (item: T, i: number) => item is S,
-): (iterable: InputIterable<T>) => IterableIterator<S>;
+): (iterable: InputIterable<T>) => GeneratorIterator<S>;
 declare function filter<T = any>(
   func: (item: T, i: number) => MaybePromise<boolean>,
-): (iterable: InputIterable<T>) => IterableIterator<T>;
+): (iterable: InputIterable<T>) => GeneratorIterator<T>;
 declare function filter<S extends T, T = any>(
   func: (item: T, i: number) => item is S,
   iterable: InputIterable<T>,
-): IterableIterator<S>;
+): GeneratorIterator<S>;
 declare function filter<T = any>(
   func: (item: T, i: number) => MaybePromise<boolean>,
   iterable: InputIterable<T>,
-): IterableIterator<T>;
+): GeneratorIterator<T>;
 export default filter;

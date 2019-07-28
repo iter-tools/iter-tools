@@ -1,9 +1,9 @@
-import { $IterableIterator } from '../internal/$iterable';
+import { $GeneratorIterator } from '../internal/$iterable';
 import { $async, $await } from '../../generate/async.macro';
 import { $regexpExecIter, $toArray } from '..';
 
 describe($async`regexpExecIter`, () => {
-  const getMatchesArray = $async((iter: $IterableIterator<string>) =>
+  const getMatchesArray = $async((iter: $GeneratorIterator<string>) =>
     $await($toArray(iter)).map(matches => matches[0]),
   );
 

@@ -8,23 +8,23 @@
 
 import {
   AsyncInputIterable,
-  AsyncIterableIterator,
+  AsyncGeneratorIterator,
   AsyncMaybePromise,
 } from './internal/async-iterable';
 declare function asyncGroupBy(
   key: null | undefined,
 ): <T = any>(
   iterable: AsyncInputIterable<T>,
-) => AsyncIterableIterator<[T, AsyncIterableIterator<T>]>;
+) => AsyncGeneratorIterator<[T, AsyncGeneratorIterator<T>]>;
 declare function asyncGroupBy<K, T = any>(
   key: (item: T) => AsyncMaybePromise<K>,
-): (iterable: AsyncInputIterable<T>) => AsyncIterableIterator<[K, AsyncIterableIterator<T>]>;
+): (iterable: AsyncInputIterable<T>) => AsyncGeneratorIterator<[K, AsyncGeneratorIterator<T>]>;
 declare function asyncGroupBy<T = any>(
   key: null | undefined,
   iterable: AsyncInputIterable<T>,
-): AsyncIterableIterator<[T, AsyncIterableIterator<T>]>;
+): AsyncGeneratorIterator<[T, AsyncGeneratorIterator<T>]>;
 declare function asyncGroupBy<K, T = any>(
   key: (item: T) => AsyncMaybePromise<K>,
   iterable: AsyncInputIterable<T>,
-): AsyncIterableIterator<[K, AsyncIterableIterator<T>]>;
+): AsyncGeneratorIterator<[K, AsyncGeneratorIterator<T>]>;
 export default asyncGroupBy;

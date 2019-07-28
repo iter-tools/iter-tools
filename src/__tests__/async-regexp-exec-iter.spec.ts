@@ -6,10 +6,10 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { AsyncIterableIterator } from '../internal/async-iterable';
+import { AsyncGeneratorIterator } from '../internal/async-iterable';
 import { asyncRegexpExecIter, asyncToArray } from '..';
 describe('asyncRegexpExecIter', () => {
-  const getMatchesArray = async (iter: AsyncIterableIterator<string>) =>
+  const getMatchesArray = async (iter: AsyncGeneratorIterator<string>) =>
     (await asyncToArray(iter)).map(matches => matches[0]);
 
   it('should exec 1', async () => {

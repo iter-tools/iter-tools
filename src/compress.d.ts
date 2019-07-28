@@ -6,9 +6,9 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { InputIterable, IterableIterator } from './internal/iterable';
+import { InputIterable, GeneratorIterator } from './internal/iterable';
 declare function compress<T = any>(
   iterable: InputIterable<T>,
   compress: InputIterable<boolean>,
-): IterableIterator<T>;
+): GeneratorIterator<T>;
 export default compress;

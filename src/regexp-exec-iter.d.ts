@@ -6,12 +6,12 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { InputIterable, IterableIterator } from './internal/iterable';
+import { InputIterable, GeneratorIterator } from './internal/iterable';
 declare function regexpExecIter(
   re: RegExp,
-): (iterable: InputIterable<string>) => IterableIterator<string>;
+): (iterable: InputIterable<string>) => GeneratorIterator<string>;
 declare function regexpExecIter(
   re: RegExp,
   iterable: InputIterable<string>,
-): IterableIterator<string>;
+): GeneratorIterator<string>;
 export default regexpExecIter;

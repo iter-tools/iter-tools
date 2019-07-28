@@ -1,9 +1,10 @@
 import assert from 'static-type-assert';
+import { GeneratorIterator } from '../internal/iterable';
 import { execPipe, map, filter } from '..';
 
 declare var Ø: never;
 
-assert<IterableIterator<number>>(
+assert<GeneratorIterator<number>>(
   execPipe(
     Ø as Iterable<number>,
     filter(Ø as (x: number) => boolean),
@@ -11,7 +12,7 @@ assert<IterableIterator<number>>(
   ),
 );
 
-assert<IterableIterator<0 | 1 | 2 | 3>>(
+assert<GeneratorIterator<0 | 1 | 2 | 3>>(
   execPipe(
     Ø as Iterable<number>,
     filter(Ø as (x: number) => boolean),

@@ -1,12 +1,12 @@
-import { AsyncInputIterable } from './internal/async-iterable';
+import { AsyncInputIterable, AsyncGeneratorIterator } from './internal/async-iterable';
 
 declare function asyncBuffer<T>(
   n: number,
-): (iterable: AsyncInputIterable<T>) => AsyncIterableIterator<T>;
+): (iterable: AsyncInputIterable<T>) => AsyncGeneratorIterator<T>;
 
 declare function asyncBuffer<T>(
   n: number,
   iterable: AsyncInputIterable<T>,
-): AsyncIterableIterator<T>;
+): AsyncGeneratorIterator<T>;
 
 export default asyncBuffer;

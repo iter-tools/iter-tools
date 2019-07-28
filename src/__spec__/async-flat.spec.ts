@@ -7,14 +7,14 @@
  */
 
 import assert from 'static-type-assert';
-import { AsyncIterable, AsyncIterableIterator } from '../internal/async-iterable';
+import { AsyncIterable, AsyncGeneratorIterator } from '../internal/async-iterable';
 import { asyncFlat } from '..';
 declare var Ø: never; // asyncFlat(iterable)
 
 assert<{
-  'depth = 0': AsyncIterableIterator<0 | 1 | 2>;
-  'depth = 1': AsyncIterableIterator<0 | 1 | 2 | 3>;
-  'depth = 2': AsyncIterableIterator<0 | 1 | [2]>;
+  'depth = 0': AsyncGeneratorIterator<0 | 1 | 2>;
+  'depth = 1': AsyncGeneratorIterator<0 | 1 | 2 | 3>;
+  'depth = 2': AsyncGeneratorIterator<0 | 1 | [2]>;
 }>({
   'depth = 0': asyncFlat(Ø as [0, 1, 2]),
   'depth = 1': asyncFlat(Ø as [0, [1], [2, 3]]),
@@ -22,9 +22,9 @@ assert<{
 }); // asyncFlat(0, iterable)
 
 assert<{
-  'depth = 0': AsyncIterableIterator<0 | 1 | 2>;
-  'depth = 1': AsyncIterableIterator<0 | [1] | [2, 3]>;
-  'depth = 2': AsyncIterableIterator<0 | [1] | [[2]]>;
+  'depth = 0': AsyncGeneratorIterator<0 | 1 | 2>;
+  'depth = 1': AsyncGeneratorIterator<0 | [1] | [2, 3]>;
+  'depth = 2': AsyncGeneratorIterator<0 | [1] | [[2]]>;
 }>({
   'depth = 0': asyncFlat(0, Ø as [0, 1, 2]),
   'depth = 1': asyncFlat(0, Ø as [0, [1], [2, 3]]),
@@ -32,9 +32,9 @@ assert<{
 }); // asyncFlat(1, iterable)
 
 assert<{
-  'depth = 0': AsyncIterableIterator<0 | 1 | 2>;
-  'depth = 1': AsyncIterableIterator<0 | 1 | 2 | 3>;
-  'depth = 2': AsyncIterableIterator<0 | 1 | [2]>;
+  'depth = 0': AsyncGeneratorIterator<0 | 1 | 2>;
+  'depth = 1': AsyncGeneratorIterator<0 | 1 | 2 | 3>;
+  'depth = 2': AsyncGeneratorIterator<0 | 1 | [2]>;
 }>({
   'depth = 0': asyncFlat(1, Ø as [0, 1, 2]),
   'depth = 1': asyncFlat(1, Ø as [0, [1], [2, 3]]),
@@ -42,9 +42,9 @@ assert<{
 }); // asyncFlat(n, iterable)
 
 assert<{
-  'depth = 0': AsyncIterableIterator<any>;
-  'depth = 1': AsyncIterableIterator<any>;
-  'depth = 2': AsyncIterableIterator<any>;
+  'depth = 0': AsyncGeneratorIterator<any>;
+  'depth = 1': AsyncGeneratorIterator<any>;
+  'depth = 2': AsyncGeneratorIterator<any>;
 }>({
   'depth = 0': asyncFlat(Ø as number, Ø as [0, 1, 2]),
   'depth = 1': asyncFlat(Ø as number, Ø as [0, [1], [2, 3]]),
@@ -52,9 +52,9 @@ assert<{
 }); // asyncFlat(0)(iterable)
 
 assert<{
-  'depth = 0': AsyncIterableIterator<0 | 1 | 2>;
-  'depth = 1': AsyncIterableIterator<0 | [1] | [2, 3]>;
-  'depth = 2': AsyncIterableIterator<0 | [1] | [[2]]>;
+  'depth = 0': AsyncGeneratorIterator<0 | 1 | 2>;
+  'depth = 1': AsyncGeneratorIterator<0 | [1] | [2, 3]>;
+  'depth = 2': AsyncGeneratorIterator<0 | [1] | [[2]]>;
 }>({
   'depth = 0': asyncFlat(0)(Ø as [0, 1, 2]),
   'depth = 1': asyncFlat(0)(Ø as [0, [1], [2, 3]]),
@@ -62,9 +62,9 @@ assert<{
 }); // asyncFlat(1)(iterable)
 
 assert<{
-  'depth = 0': AsyncIterableIterator<0 | 1 | 2>;
-  'depth = 1': AsyncIterableIterator<0 | 1 | 2 | 3>;
-  'depth = 2': AsyncIterableIterator<0 | 1 | [2]>;
+  'depth = 0': AsyncGeneratorIterator<0 | 1 | 2>;
+  'depth = 1': AsyncGeneratorIterator<0 | 1 | 2 | 3>;
+  'depth = 2': AsyncGeneratorIterator<0 | 1 | [2]>;
 }>({
   'depth = 0': asyncFlat(1)(Ø as [0, 1, 2]),
   'depth = 1': asyncFlat(1)(Ø as [0, [1], [2, 3]]),
@@ -72,30 +72,30 @@ assert<{
 }); // asyncFlat(n)(iterable)
 
 assert<{
-  'depth = 0': AsyncIterableIterator<any>;
-  'depth = 1': AsyncIterableIterator<any>;
-  'depth = 2': AsyncIterableIterator<any>;
+  'depth = 0': AsyncGeneratorIterator<any>;
+  'depth = 1': AsyncGeneratorIterator<any>;
+  'depth = 2': AsyncGeneratorIterator<any>;
 }>({
   'depth = 0': asyncFlat((Ø as number))((Ø as [0, 1, 2])),
   'depth = 1': asyncFlat((Ø as number))((Ø as [0, [1], [2, 3]])),
   'depth = 2': asyncFlat((Ø as number))((Ø as [0, [1], [[2]]]))
 }); // prettier-ignore
 
-assert<AsyncIterableIterator<number>>(asyncFlat(0, (Ø as AsyncIterable<number>))); // prettier-ignore
+assert<AsyncGeneratorIterator<number>>(asyncFlat(0, (Ø as AsyncIterable<number>))); // prettier-ignore
 
-assert<AsyncIterableIterator<number>>(asyncFlat(1, (Ø as AsyncIterable<AsyncIterable<number>>))); // prettier-ignore
+assert<AsyncGeneratorIterator<number>>(asyncFlat(1, (Ø as AsyncIterable<AsyncIterable<number>>))); // prettier-ignore
 
-assert<AsyncIterableIterator<number>>(asyncFlat(2, (Ø as AsyncIterable<AsyncIterable<AsyncIterable<number>>>))); // prettier-ignore
+assert<AsyncGeneratorIterator<number>>(asyncFlat(2, (Ø as AsyncIterable<AsyncIterable<AsyncIterable<number>>>))); // prettier-ignore
 
-assert<AsyncIterableIterator<number>>(asyncFlat(3, (Ø as AsyncIterable<AsyncIterable<AsyncIterable<AsyncIterable<number>>>>))); // prettier-ignore
+assert<AsyncGeneratorIterator<number>>(asyncFlat(3, (Ø as AsyncIterable<AsyncIterable<AsyncIterable<AsyncIterable<number>>>>))); // prettier-ignore
 
-assert<AsyncIterableIterator<number>>(asyncFlat(4, (Ø as AsyncIterable<AsyncIterable<AsyncIterable<AsyncIterable<AsyncIterable<number>>>>>))); // prettier-ignore
+assert<AsyncGeneratorIterator<number>>(asyncFlat(4, (Ø as AsyncIterable<AsyncIterable<AsyncIterable<AsyncIterable<AsyncIterable<number>>>>>))); // prettier-ignore
 
-assert<AsyncIterableIterator<number>>(asyncFlat(5, (Ø as AsyncIterable<AsyncIterable<AsyncIterable<AsyncIterable<AsyncIterable<AsyncIterable<number>>>>>>))); // prettier-ignore
+assert<AsyncGeneratorIterator<number>>(asyncFlat(5, (Ø as AsyncIterable<AsyncIterable<AsyncIterable<AsyncIterable<AsyncIterable<AsyncIterable<number>>>>>>))); // prettier-ignore
 
-assert<AsyncIterableIterator<number>>(asyncFlat(6, (Ø as AsyncIterable<AsyncIterable<AsyncIterable<AsyncIterable<AsyncIterable<AsyncIterable<AsyncIterable<number>>>>>>>))); // prettier-ignore
+assert<AsyncGeneratorIterator<number>>(asyncFlat(6, (Ø as AsyncIterable<AsyncIterable<AsyncIterable<AsyncIterable<AsyncIterable<AsyncIterable<AsyncIterable<number>>>>>>>))); // prettier-ignore
 
-assert<AsyncIterableIterator<number>>(
+assert<AsyncGeneratorIterator<number>>(
   asyncFlat(7, Ø as AsyncIterable<
     AsyncIterable<
       AsyncIterable<

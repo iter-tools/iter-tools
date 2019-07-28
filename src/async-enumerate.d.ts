@@ -6,9 +6,9 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { AsyncInputIterable, AsyncIterableIterator } from './internal/async-iterable';
+import { AsyncInputIterable, AsyncGeneratorIterator } from './internal/async-iterable';
 declare function asyncEnumerate<T = any>(
   iterable: AsyncInputIterable<T>,
   start?: number,
-): AsyncIterableIterator<[number, T]>;
+): AsyncGeneratorIterator<[number, T]>;
 export default asyncEnumerate;

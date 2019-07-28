@@ -6,12 +6,12 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { InputIterable, IterableIterator, MaybePromise } from './internal/iterable';
+import { InputIterable, GeneratorIterator, MaybePromise } from './internal/iterable';
 declare function flatMap<O, T = any>(
   func: (item: T) => MaybePromise<InputIterable<O>>,
-): (iter: InputIterable<T>) => IterableIterator<O>;
+): (iter: InputIterable<T>) => GeneratorIterator<O>;
 declare function flatMap<O, T = any>(
   func: (item: T) => MaybePromise<InputIterable<O>>,
   iter: InputIterable<T>,
-): IterableIterator<O>;
+): GeneratorIterator<O>;
 export default flatMap;

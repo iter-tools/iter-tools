@@ -8,11 +8,11 @@
 
 import {
   AsyncInputIterable,
-  AsyncIterableIterator,
+  AsyncGeneratorIterator,
   AsyncMaybePromise,
 } from './internal/async-iterable';
 declare function asyncExecute<T, Args extends any[] = any[]>(
   func: (...args: Args) => AsyncMaybePromise<T>,
   ...args: Args
-): AsyncIterableIterator<T>;
+): AsyncGeneratorIterator<T>;
 export default asyncExecute;

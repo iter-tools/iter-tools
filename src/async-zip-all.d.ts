@@ -6,8 +6,8 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { AsyncInputIterable, AsyncIterableIterator } from './internal/async-iterable';
+import { AsyncInputIterable, AsyncGeneratorIterator } from './internal/async-iterable';
 declare function asyncZipAll<T = any>(
   ...iterables: Array<AsyncInputIterable<T>>
-): AsyncIterableIterator<Array<T | undefined>>;
+): AsyncGeneratorIterator<Array<T | undefined>>;
 export default asyncZipAll;

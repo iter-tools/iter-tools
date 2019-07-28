@@ -4,9 +4,6 @@ export type AsyncInputIterable<T> = null | undefined | AsyncDefinedInputIterable
 type _AsyncIterable<T> = AsyncIterable<T>;
 export { _AsyncIterable as AsyncIterable };
 
-type _AsyncIterableIterator<T> = AsyncIterableIterator<T>;
-export { _AsyncIterableIterator as AsyncIterableIterator };
-
 export interface AsyncGeneratorIterator<T> {
   next(value?: any): Promise<IteratorResult<T>>;
   return(value?: any): Promise<IteratorResult<T>>;

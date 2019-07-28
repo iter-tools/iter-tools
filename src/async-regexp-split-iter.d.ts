@@ -6,12 +6,12 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { AsyncInputIterable, AsyncIterableIterator } from './internal/async-iterable';
+import { AsyncInputIterable, AsyncGeneratorIterator } from './internal/async-iterable';
 declare function asyncRegexpSplitIter(
   re: RegExp | string,
-): (iterable: AsyncInputIterable<string>) => AsyncIterableIterator<string>;
+): (iterable: AsyncInputIterable<string>) => AsyncGeneratorIterator<string>;
 declare function asyncRegexpSplitIter(
   re: RegExp | string,
   iterable: AsyncInputIterable<string>,
-): AsyncIterableIterator<string>;
+): AsyncGeneratorIterator<string>;
 export default asyncRegexpSplitIter;

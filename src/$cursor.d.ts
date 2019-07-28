@@ -1,5 +1,5 @@
 import { Repeat8 } from './internal/types/utility';
-import { $InputIterable, $IterableIterator } from './internal/$iterable';
+import { $InputIterable, $GeneratorIterator } from './internal/$iterable';
 
 declare function $cursor<Size extends number, Filler = undefined, T = any>(
   opts: {
@@ -8,6 +8,6 @@ declare function $cursor<Size extends number, Filler = undefined, T = any>(
     readonly filler?: Filler;
   },
   iterable: $InputIterable<T>,
-): $IterableIterator<Repeat8<T | Filler, Size>>;
+): $GeneratorIterator<Repeat8<T | Filler, Size>>;
 
 export default $cursor;

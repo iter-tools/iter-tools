@@ -8,21 +8,21 @@
 
 import {
   AsyncInputIterable,
-  AsyncIterableIterator,
+  AsyncGeneratorIterator,
   AsyncMaybePromise,
 } from './internal/async-iterable';
 declare function asyncFilter<S extends T, T = any>(
   func: (item: T, i: number) => item is S,
-): (iterable: AsyncInputIterable<T>) => AsyncIterableIterator<S>;
+): (iterable: AsyncInputIterable<T>) => AsyncGeneratorIterator<S>;
 declare function asyncFilter<T = any>(
   func: (item: T, i: number) => AsyncMaybePromise<boolean>,
-): (iterable: AsyncInputIterable<T>) => AsyncIterableIterator<T>;
+): (iterable: AsyncInputIterable<T>) => AsyncGeneratorIterator<T>;
 declare function asyncFilter<S extends T, T = any>(
   func: (item: T, i: number) => item is S,
   iterable: AsyncInputIterable<T>,
-): AsyncIterableIterator<S>;
+): AsyncGeneratorIterator<S>;
 declare function asyncFilter<T = any>(
   func: (item: T, i: number) => AsyncMaybePromise<boolean>,
   iterable: AsyncInputIterable<T>,
-): AsyncIterableIterator<T>;
+): AsyncGeneratorIterator<T>;
 export default asyncFilter;

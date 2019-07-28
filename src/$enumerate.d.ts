@@ -1,8 +1,8 @@
-import { $InputIterable, $IterableIterator } from './internal/$iterable';
+import { $InputIterable, $GeneratorIterator } from './internal/$iterable';
 
 declare function $enumerate<T = any>(
   iterable: $InputIterable<T>,
   start?: number,
-): $IterableIterator<[number, T]>;
+): $GeneratorIterator<[number, T]>;
 
 export default $enumerate;

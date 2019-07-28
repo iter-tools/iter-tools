@@ -7,12 +7,12 @@
  */
 
 import assert from 'static-type-assert';
-import { AsyncIterableIterator } from '../internal/async-iterable';
+import { AsyncGeneratorIterator } from '../internal/async-iterable';
 import { asyncExecute } from '..';
 declare var Ø: never;
-assert<AsyncIterableIterator<123>>(asyncExecute(Ø as () => 123));
-assert<AsyncIterableIterator<123>>(
+assert<AsyncGeneratorIterator<123>>(asyncExecute(Ø as () => 123));
+assert<AsyncGeneratorIterator<123>>(
   asyncExecute(Ø as <T>(x: T, ...args: Array<unknown>) => T, Ø as 123, Ø as 456),
 );
-assert<AsyncIterableIterator<[]>>(asyncExecute((...args) => args));
-assert<AsyncIterableIterator<[0, 1, 2]>>(asyncExecute((...args) => args, Ø as 0, Ø as 1, Ø as 2));
+assert<AsyncGeneratorIterator<[]>>(asyncExecute((...args) => args));
+assert<AsyncGeneratorIterator<[0, 1, 2]>>(asyncExecute((...args) => args, Ø as 0, Ø as 1, Ø as 2));

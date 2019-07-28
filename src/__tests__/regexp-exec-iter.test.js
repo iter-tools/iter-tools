@@ -8,10 +8,10 @@
 
 /* eslint-disable no-unused-vars */
 
-import { IterableIterator } from '../internal/iterable';
+import { GeneratorIterator } from '../internal/iterable';
 import { regexpExecIter, toArray } from '..';
 describe('regexpExecIter', () => {
-  const getMatchesArray = (iter: IterableIterator<string>) =>
+  const getMatchesArray = (iter: GeneratorIterator<string>) =>
     toArray(iter).map(matches => matches[0]);
 
   it('should exec 1', () => {

@@ -1,5 +1,5 @@
-import { $InputIterable, $IterableIterator } from './internal/$iterable';
+import { $InputIterable, $GeneratorIterator } from './internal/$iterable';
 
-declare function $concat<T = any>(...iterables: Array<$InputIterable<T>>): $IterableIterator<T>;
+declare function $concat<T = any>(...iterables: Array<$InputIterable<T>>): $GeneratorIterator<T>;
 
 export default $concat;

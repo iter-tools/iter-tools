@@ -4,9 +4,6 @@ export type InputIterable<T> = DefinedInputIterable<T> | null | undefined;
 type _Iterable<T> = Iterable<T>;
 export { _Iterable as Iterable };
 
-type _IterableIterator<T> = IterableIterator<T>;
-export { _IterableIterator as IterableIterator };
-
 export interface GeneratorIterator<T> {
   next(value?: any): IteratorResult<T>;
   return(value?: any): IteratorResult<T>;

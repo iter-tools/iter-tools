@@ -1,4 +1,4 @@
-import { $InputIterable, $IterableIterator } from './internal/$iterable';
+import { $InputIterable, $GeneratorIterator } from './internal/$iterable';
 
 declare function $slice<T = any>(
   opts:
@@ -8,7 +8,7 @@ declare function $slice<T = any>(
         readonly end?: number;
         readonly step?: number;
       },
-): (iterable: $InputIterable<T>) => $IterableIterator<T>;
+): (iterable: $InputIterable<T>) => $GeneratorIterator<T>;
 
 declare function $slice<T = any>(
   opts:
@@ -19,6 +19,6 @@ declare function $slice<T = any>(
         readonly step?: number;
       },
   iterable: $InputIterable<T>,
-): $IterableIterator<T>;
+): $GeneratorIterator<T>;
 
 export default $slice;
