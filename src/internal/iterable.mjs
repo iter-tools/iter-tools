@@ -37,6 +37,11 @@ Object.assign(BaseIterable.prototype, {
     return variadic ? fn(...this._args, this._iterableArgs) : fn(...this._args);
   },
 
+  throw() {
+    this._staticIterator = this._staticIterator || this.__iterate();
+    return this._staticIterator.throw();
+  },
+
   next() {
     this._staticIterator = this._staticIterator || this.__iterate();
     return this._staticIterator.next();
