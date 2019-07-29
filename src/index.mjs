@@ -47,6 +47,7 @@ export { default as takeWhile } from './take-while';
 export { default as tap } from './tap';
 export { default as takeSorted } from './take-sorted';
 export { default as toArray } from './to-array';
+export { default as when } from './when';
 export { default as values } from './values';
 export { default as zipAll } from './zip-all';
 export { default as zip } from './zip';

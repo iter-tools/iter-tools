@@ -103,6 +103,7 @@ Utilities
 * [execPipe](#exec-pipe)
 * [call](#call)
 * [apply](#apply)
+* [when](#when)
 
 ## Definitions
 This should help clarify the documentation. You can also get more informations here: https://developer.mozilla.org/en/docs/Web/JavaScript/Guide/Iterators_and_Generators and here: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols
@@ -1086,6 +1087,39 @@ apply is a convenience method. Its implementation is:
 ```
 `apply` has three main differences from `Function.prototype.apply`. It does not take a `thisArg`, the args to apply may be specified as an iterable, and if you do not pass the `args` iterable, the result is a partial application, not a no-args call to `fn`.
 
+## when
+when is a helper you can use with es6 spread syntax (the `...` operator). In particular it helps avoid an unnecessarily difficult to read pattern that frequently causes code formatters (prettier, specifically) to emit an undesireable number of lines:
+```js
+const always = true;
+const sometimes = Math.random() > .5;
+
+const arr = [
+  always,
+  ...(
+    sometimes ? [ sometimes ] : []
+  )
+]; // [true, true] OR [true]
+```
+
+Instead, you can use the when method like so:
+```js
+const whenArr = [
+  always,
+  ...when(sometimes, [ sometimes ]),
+]; // [true, true] OR [true]
+```
+
+The pattern works equally well with objects.
+```js
+const whenObj = {
+  always,
+  ...when(sometimes, { sometimes }),
+}; // { always: true } OR { always: true, somtimes: true }
+```
+
+Note that the empty result of spread is both an empty object and an empty iterable at the same time. This means that `[...when(false, null)]` and `{...when(false, null)}` are both valid (same for `undefined`).
+
+
 ## Issues and limitations
 There are a few limitations that you need to be aware of.
 First of all, when you consume an iterator object (using next) you are mutating the object for good.
@@ -1095,5 +1129,4 @@ Some of the obvious things you can do with arrays, are not efficients with itera
 
 
 ## Acknowledgements
-Of course I give a lot of credit to the great itertools Python library.
-It doesn't want to be a mere port, but a properly documented and resonably performant Javascript alternative.
+Of course I give a lot of credit to the great itertools Python library. It doesn't want to be a mere port, but a properly documented and resonably performant Javascript alternative.
