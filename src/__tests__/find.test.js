@@ -15,8 +15,12 @@ describe('find', () => {
     expect(found).toBe(5);
   });
   it('returns undefined if no item found', () => {
-    const found = find(item => item === 100, [1, 2, 3, 4, 5, 6]);
+    const found = find(_ => false, [1, 2, 3, 4, 5, 6]);
     expect(found).toBe(undefined);
+  });
+  it('returns notFoundValue if specified and no item found', () => {
+    const found = find(0, _ => false, [1, 2, 3, 4, 5, 6]);
+    expect(found).toBe(0);
   });
   it('returns found item from iterable', () => {
     const found = find(

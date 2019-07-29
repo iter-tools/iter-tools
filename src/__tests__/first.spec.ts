@@ -8,12 +8,16 @@
 
 import { first, range } from '..';
 describe('first', () => {
-  it('returns first item', () => {
-    const iter = range(10);
-    expect(first(iter)).toBe(0);
+  describe('when iterable contains items', () => {
+    it('returns first item', () => {
+      const iter = range(10);
+      expect(first(iter)).toBe(0);
+    });
   });
-  it('returns no items', () => {
-    const iter = range(0);
-    expect(first(iter)).toBe(undefined);
+  describe('when iterable is empty', () => {
+    it('returns undefined', () => {
+      const iter = range(0);
+      expect(first(iter)).toBe(undefined);
+    });
   });
 });

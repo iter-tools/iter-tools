@@ -13,8 +13,16 @@ describe($async`find`, () => {
   it(
     'returns undefined if no item found',
     $async(() => {
-      const found = $find(item => item === 100, [1, 2, 3, 4, 5, 6]);
+      const found = $find(_ => false, [1, 2, 3, 4, 5, 6]);
       expect($await(found)).toBe(undefined);
+    }),
+  );
+
+  it(
+    'returns notFoundValue if specified and no item found',
+    $async(() => {
+      const found = $find(0, _ => false, [1, 2, 3, 4, 5, 6]);
+      expect($await(found)).toBe(0);
     }),
   );
 

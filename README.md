@@ -76,6 +76,7 @@ Others
 * [execute](#execute) ([async](#async-execute))
 * [consume](#consume) ([async](#async-consume))
 * [first](#first) ([async](#async-first))
+* [firstOr](#first-or) ([async](#async-first-or))
 * [find](#find) ([async](#async-find))
 * [tap](#tap) ([async](#async-tap))
 * [size](#size) ([async](#async-size))
@@ -713,18 +714,34 @@ consume((item) => console.log(item), [1, 2, 3]) // prints 1, 2, 3
 The equivalent of consume, for async iterables. It returns a promise. The argument can be a function returning a promise.
 
 ## first
-It returns the fist item from an iterable.
+It returns the first item from an iterable.
 ```js
 first([1, 2, 3]) // 1
+first([]) // undefined
 ```
 
 ## async-first
-It returns the fist item from an async iterable. It returns a promise.
+It returns a Promise of the first item from an async iterable.
+
+## first-or
+It returns the first item from an iterable, or a default value if the iterable is empty.
+```js
+firstOr(0, [1, 2, 3]) // 1
+firstOr(0, []) // 0
+```
+
+## async-first-or
+It returns a Promise of the first item from an async iterable, or a default value if the iterable is empty.
 
 ## find
 The equivalent of the array "find" function (it can be curried).
 ```js
-find(animal => animal.kind === 'dog', [{type: 'cat'}, {type: 'dog'}])
+find(animal => animal.kind === 'dog', [{type: 'cat'}, {type: 'dog'}]) // {type: 'dog'}
+```
+
+Find also takes an optional value to be returned if no value is found:
+```js
+find({type: 'pet'}, animal => animal.kind === 'dog', []) // {type: 'pet'}
 ```
 
 ## async-find

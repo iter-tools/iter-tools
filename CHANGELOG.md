@@ -13,7 +13,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
  - iterable, asyncIterable
  - tee, asyncTee
  - merge, asyncMerge, mergeByComparison, mergeByChance, mergeByPosition, asyncMergeByComparison, asyncMergeByChance, asyncMergeByPosition
- - Removed concurrency argument from asyncMap, asyncFilter, asyncFlatMap.
+ - Removed concurrency argument from asyncMap and asyncFilter.
  - Extra arguments removed from chaining methods (compose, pipe, pipeExec). Previously all initial arguments were given to the outermost function in the chain.
 
 ### Renamed
@@ -22,17 +22,17 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Added
  - pipe
  - splitAt/asyncSplitAt
- - multiPartition/asyncMultiPartition
  - call, apply
+ - firstOr
  - asyncMapParallel, asyncFilterParallel, asyncFlatMapParallel
  - interleave
 
 ### Changes
  - All functions return iterables that can consumed multiple times.
  - takeSorted/asyncTakeSorted optional comparator is now the first argument.
- - Optional arguments can no longer have "undefined" as argument. This is at odds with considering undefined as a valid iterable.
- - asyncFlatMap takes an extra "concurrency" argument (default 1).
- - fork/asyncFork takes an extra optional argument with the number of forks.
+ - Optional configuration arguments can no longer be undefined. This was at odds with considering undefined as a valid iterable.
+ - find takes an extra optional argument: the value to return if the nothing is found.
+ - fork/asyncFork takes an extra optional argument: the number of forks.
  - permutations, combinations, combinationsWithReplacement: order of arguments is changed. Can now be curried.
  - groupBy()/asyncGroupBy(null) now return a partial application instead of an iterable.
  - For most Typescript generic method types, the order of the generics has changed. (Note: this only matters if you are explicitly providing values for the generics.)

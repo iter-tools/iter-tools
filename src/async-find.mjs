@@ -8,7 +8,7 @@
 
 import { asyncIterableCurry } from './internal/async-iterable';
 
-async function asyncFind(func, iterable) {
+async function asyncFind(notFoundValue, func, iterable) {
   let c = 0;
 
   for await (const item of iterable) {
@@ -17,9 +17,11 @@ async function asyncFind(func, iterable) {
     }
   }
 
-  return undefined;
+  return notFoundValue;
 }
 
 export default asyncIterableCurry(asyncFind, {
   reduces: true,
+  minArgs: 1,
+  maxArgs: 2,
 });

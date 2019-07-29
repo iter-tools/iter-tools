@@ -6,14 +6,10 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { asyncEnsureIterable } from './internal/async-iterable';
+import asyncFirstOr from './async-first-or';
 
-async function asyncFirst(iterable) {
-  const iter = asyncEnsureIterable(iterable)[Symbol.asyncIterator]();
-  const { value, done } = await iter.next();
-  if (done) return undefined;
-  if (typeof iter.return === 'function') await iter.return();
-  return value;
+function asyncFirst(iterable) {
+  return asyncFirstOr(undefined, iterable);
 }
 
 export default asyncFirst;
