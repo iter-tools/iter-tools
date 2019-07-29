@@ -182,6 +182,7 @@ src/__tests__/tap.test.js linguist-generated=true
 src/__tests__/to-array.spec.ts linguist-generated=true
 src/__tests__/to-array.test.js linguist-generated=true
 src/__tests__/values.spec.ts linguist-generated=true
+src/__tests__/when.spec.ts linguist-generated=true
 src/__tests__/zip-all.spec.ts linguist-generated=true
 src/__tests__/zip-all.test.js linguist-generated=true
 src/__tests__/zip.spec.ts linguist-generated=true

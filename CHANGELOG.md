@@ -25,6 +25,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
  - splitAt/asyncSplitAt
  - call, apply
  - firstOr
+ - when
  - asyncMapParallel, asyncFilterParallel, asyncFlatMapParallel
  - interleave, asyncInterleave, asyncInterleaveReady
 
