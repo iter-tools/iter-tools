@@ -6,14 +6,10 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { ensureIterable } from './internal/iterable';
+import firstOr from './first-or';
 
 function first(iterable) {
-  const iter = ensureIterable(iterable)[Symbol.iterator]();
-  const { value, done } = iter.next();
-  if (done) return undefined;
-  if (typeof iter.return === 'function') iter.return();
-  return value;
+  return firstOr(undefined, iterable);
 }
 
 export default first;

@@ -3,7 +3,7 @@ import { $async, $await } from '../generate/async.macro';
 import { $iterableCurry } from './internal/$iterable';
 
 $async;
-function $find(func, iterable) {
+function $find(notFoundValue, func, iterable) {
   let c = 0;
   $await;
   for (const item of iterable) {
@@ -11,7 +11,11 @@ function $find(func, iterable) {
       return item;
     }
   }
-  return undefined;
+  return notFoundValue;
 }
 
-export default $iterableCurry($find, { reduces: true });
+export default $iterableCurry($find, {
+  reduces: true,
+  minArgs: 1,
+  maxArgs: 2,
+});

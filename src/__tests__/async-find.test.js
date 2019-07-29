@@ -15,8 +15,12 @@ describe('asyncFind', () => {
     expect(await found).toBe(5);
   });
   it('returns undefined if no item found', async () => {
-    const found = asyncFind(item => item === 100, [1, 2, 3, 4, 5, 6]);
+    const found = asyncFind(_ => false, [1, 2, 3, 4, 5, 6]);
     expect(await found).toBe(undefined);
+  });
+  it('returns notFoundValue if specified and no item found', async () => {
+    const found = asyncFind(0, _ => false, [1, 2, 3, 4, 5, 6]);
+    expect(await found).toBe(0);
   });
   it('returns found item from iterable', async () => {
     const found = asyncFind(

@@ -9,10 +9,10 @@
 import { AsyncInputIterable, AsyncPromise, AsyncMaybePromise } from './internal/async-iterable';
 declare function asyncFind<S extends T, T = any>(
   func: (item: T, i: number) => item is S,
-): (iterable: AsyncInputIterable<T>) => AsyncPromise<S | null>;
+): (iterable: AsyncInputIterable<T>) => AsyncPromise<S | undefined>;
 declare function asyncFind<T = any>(
   func: (item: T, i: number) => AsyncMaybePromise<boolean>,
-): (iterable: AsyncInputIterable<T>) => AsyncPromise<T | null>;
+): (iterable: AsyncInputIterable<T>) => AsyncPromise<T | undefined>;
 declare function asyncFind<S extends T, T = any>(
   func: (item: T, i: number) => item is S,
   iterable: AsyncInputIterable<T>,
@@ -21,4 +21,22 @@ declare function asyncFind<T = any>(
   func: (item: T, i: number) => AsyncMaybePromise<boolean>,
   iterable: AsyncInputIterable<T>,
 ): AsyncPromise<T | undefined>;
+declare function asyncFind<NF, S extends T, T = any>(
+  notFoundValue: NF,
+  func: (item: T, i: number) => item is S,
+): (iterable: AsyncInputIterable<T>) => AsyncPromise<S | NF>;
+declare function asyncFind<NF, T = any>(
+  notFoundValue: NF,
+  func: (item: T, i: number) => AsyncMaybePromise<boolean>,
+): (iterable: AsyncInputIterable<T>) => AsyncPromise<T | NF>;
+declare function asyncFind<NF, S extends T, T = any>(
+  notFoundValue: NF,
+  func: (item: T, i: number) => item is S,
+  iterable: AsyncInputIterable<T>,
+): AsyncPromise<S | NF>;
+declare function asyncFind<NF, T = any>(
+  notFoundValue: NF,
+  func: (item: T, i: number) => AsyncMaybePromise<boolean>,
+  iterable: AsyncInputIterable<T>,
+): AsyncPromise<T | NF>;
 export default asyncFind;

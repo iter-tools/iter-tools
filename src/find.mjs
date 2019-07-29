@@ -8,7 +8,7 @@
 
 import { iterableCurry } from './internal/iterable';
 
-function find(func, iterable) {
+function find(notFoundValue, func, iterable) {
   let c = 0;
 
   for (const item of iterable) {
@@ -17,9 +17,11 @@ function find(func, iterable) {
     }
   }
 
-  return undefined;
+  return notFoundValue;
 }
 
 export default iterableCurry(find, {
   reduces: true,
+  minArgs: 1,
+  maxArgs: 2,
 });
