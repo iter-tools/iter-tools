@@ -76,7 +76,7 @@ function* $groupBy(getKey, iterable) {
 
     while (!state.done) {
       const { key } = state.item;
-      
+
       state.nGroups++;
 
       const group = $await(generateGroup(state, _getKey, key, state.consumer));

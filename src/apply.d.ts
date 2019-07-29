@@ -1,4 +1,7 @@
-declare function apply<Return, A = any>(fn: (...args: Array<A>) => Return, args: Iterable<A> | null | undefined): Return;
+declare function apply<Return, A = any>(
+  fn: (...args: Array<A>) => Return,
+  args: Iterable<A> | null | undefined,
+): Return;
 
 declare function apply<Args extends Array<any>, Return>(
   fn: (...args: Args) => Return,
