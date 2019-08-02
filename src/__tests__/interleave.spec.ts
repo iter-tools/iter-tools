@@ -7,8 +7,7 @@
  */
 
 import { Promise } from '../internal/iterable';
-import InterleaveBuffer from '../internal/interleave/buffer';
-import { interleave, asyncInterleave, toArray, asyncToArray } from '..';
+import { interleave, InterleaveBuffer, toArray, asyncToArray } from '..';
 
 function wait(ms: number) {
   return new Promise(resolve => setTimeout(resolve, ms));
