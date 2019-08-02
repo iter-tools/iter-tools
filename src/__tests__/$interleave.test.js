@@ -1,7 +1,6 @@
 import { $isAsync, $async, $await } from '../../generate/async.macro';
 import { $Promise } from '../internal/$iterable';
-import $InterleaveBuffer from '../internal/interleave/$buffer';
-import { $interleave, interleave, asyncInterleave, $toArray, asyncToArray } from '..';
+import { $interleave, $InterleaveBuffer, $toArray, asyncToArray } from '..';
 
 function wait(ms: number) {
   return new Promise(resolve => setTimeout(resolve, ms));
@@ -38,7 +37,7 @@ describe($methodName, () => {
 
   if ($isAsync) {
     it('can use the return value of canTakeAny to interleave by promise readiness', async () => {
-      const interleaveReady = asyncInterleave(async function*(canTakeAny) {
+      const interleaveReady = $interleave(async function*(canTakeAny) {
         let buffer = await canTakeAny();
 
         while (buffer) {
@@ -65,7 +64,7 @@ describe($methodName, () => {
     });
   } else {
     it('can use the return value of canTakeAny to do concatenation', () => {
-      const concatenate = interleave(function*(
+      const concatenate = $interleave(function*(
         canTakeAny: () => $Promise<$InterleaveBuffer<number> | null>,
         a: $InterleaveBuffer<number>,
         b: $InterleaveBuffer<number>,

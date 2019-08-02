@@ -91,3 +91,7 @@ export { default as asyncRegexpSplitIter } from './async-regexp-split-iter';
 export { default as asyncRegexpExecIter } from './async-regexp-exec-iter';
 export { default as asyncBuffer } from './async-buffer';
 export { default as asyncThrottle } from './async-throttle';
+
+// Interfaces
+export { default as InterleaveBuffer } from './internal/interleave/buffer';
+export { default as AsyncInterleaveBuffer } from './internal/interleave/async-buffer';

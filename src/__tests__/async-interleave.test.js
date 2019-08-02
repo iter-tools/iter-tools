@@ -9,8 +9,7 @@
 /* eslint-disable no-unused-vars,import/no-duplicates */
 
 import { AsyncPromise } from '../internal/async-iterable';
-import AsyncInterleaveBuffer from '../internal/interleave/async-buffer';
-import { interleave, asyncInterleave, asyncToArray } from '..';
+import { asyncInterleave, AsyncInterleaveBuffer, asyncToArray } from '..';
 
 function wait(ms: number) {
   return new Promise(resolve => setTimeout(resolve, ms));
