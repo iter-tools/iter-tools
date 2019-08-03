@@ -7,11 +7,11 @@ export function curry(fn, expectedArgsLength = fn.length, appliedArgs = []) {
   };
 }
 
-function unshiftUndefineds(args, by) {
-  if (by) {
+function insertUndefineds(args, at, count) {
+  if (count > 0) {
     const argsLength = args.length;
-    for (let i = argsLength - 1; i >= 0; i--) {
-      args[i + by] = args[i];
+    for (let i = argsLength - 1; i >= at; i--) {
+      args[i + count] = args[i];
       args[i] = undefined;
     }
   }
@@ -22,6 +22,7 @@ function variadicCurryWithValidationInner(config, args) {
     fn,
     variadic,
     reduces,
+    optionalArgsAtEnd,
     minArgs,
     maxArgs,
     isIterable,
@@ -61,11 +62,15 @@ function variadicCurryWithValidationInner(config, args) {
         args[i] = applyOnIterableArgs(args[i]);
       }
 
-      unshiftUndefineds(args, maxArgs - iterableArgsStart);
+      insertUndefineds(
+        args,
+        optionalArgsAtEnd ? iterableArgsStart : 0,
+        maxArgs - iterableArgsStart,
+      );
 
       if (variadic) {
-        const iterableArgs = args.slice(iterableArgsStart);
-        args.splice(iterableArgsStart);
+        const iterableArgs = args.slice(maxArgs);
+        args.splice(maxArgs);
 
         return reduces ? fn(...args, iterableArgs) : new IterableClass(config, args, iterableArgs);
       } else {

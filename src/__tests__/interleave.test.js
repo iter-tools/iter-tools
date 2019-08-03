@@ -8,15 +8,14 @@
 
 /* eslint-disable no-unused-vars,import/no-duplicates */
 
-import { Promise } from '../internal/iterable';
+import { Promise, Iterable } from '../internal/iterable';
 import { interleave, InterleaveBuffer, toArray, asyncToArray } from '..';
 
 function wait(ms: number) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-const methodName = 'interleave';
-describe(methodName, () => {
+describe('interleave', () => {
   const a = [1, 2, 3];
   const b = [4, 5, 6];
   const c = [7, 8, 9];
@@ -34,6 +33,19 @@ describe(methodName, () => {
       }
     });
     expect(toArray(roundRobin(a, b, c))).toEqual([1, 4, 7, 2, 5, 8, 3, 6, 9]);
+  });
+  it('can be passed options for the generator', () => {
+    const options = {};
+    expect.assertions(1);
+    toArray(
+      interleave(
+        function*(o: {}): Iterable<any> {
+          expect(o).toBe(options);
+        },
+        options,
+        null,
+      ),
+    );
   });
   it('can use the return value of canTakeAny to do concatenation', () => {
     const concatenate = interleave(function*(

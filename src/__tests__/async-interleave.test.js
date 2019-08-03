@@ -8,15 +8,14 @@
 
 /* eslint-disable no-unused-vars,import/no-duplicates */
 
-import { AsyncPromise } from '../internal/async-iterable';
+import { AsyncPromise, AsyncIterable } from '../internal/async-iterable';
 import { asyncInterleave, AsyncInterleaveBuffer, asyncToArray } from '..';
 
 function wait(ms: number) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-const asyncMethodName = 'asyncInterleave';
-describe(asyncMethodName, () => {
+describe('asyncInterleave', () => {
   const a = [1, 2, 3];
   const b = [4, 5, 6];
   const c = [7, 8, 9];
@@ -34,6 +33,19 @@ describe(asyncMethodName, () => {
       }
     });
     expect(await asyncToArray(roundRobin(a, b, c))).toEqual([1, 4, 7, 2, 5, 8, 3, 6, 9]);
+  });
+  it('can be passed options for the generator', async () => {
+    const options = {};
+    expect.assertions(1);
+    await asyncToArray(
+      asyncInterleave(
+        async function*(o: {}): AsyncIterable<any> {
+          expect(o).toBe(options);
+        },
+        options,
+        null,
+      ),
+    );
   });
   it('can use the return value of canTakeAny to interleave by promise readiness', async () => {
     const interleaveReady = asyncInterleave(async function*(canTakeAny) {
