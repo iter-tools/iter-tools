@@ -12,7 +12,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
  - zipLongest, asyncZipLongest (replaced by zipAll, asyncZipAll)
  - iterable, asyncIterable
  - tee, asyncTee
- - merge, asyncMerge, mergeByComparison, mergeByChance, mergeByPosition, asyncMergeByComparison, asyncMergeByChance, asyncMergeByPosition
+ - merge, asyncMerge, mergeByComparison, mergeByChance, mergeByPosition, asyncMergeByComparison, asyncMergeByChance, asyncMergeByPosition. Instead use either collate or interleave.
  - Removed concurrency argument from asyncMap, asyncFilter, asyncFlatMap.
  - Extra arguments removed from chaining methods (compose, pipe, pipeExec). Previously all initial arguments were given to the outermost function in the chain.
 
@@ -21,6 +21,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Added
  - pipe
+ - collate
  - splitAt/asyncSplitAt
  - multiPartition/asyncMultiPartition
  - call, apply
