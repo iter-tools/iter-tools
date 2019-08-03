@@ -4,6 +4,7 @@
 export { default as apply } from './apply';
 export { default as batch } from './batch';
 export { default as call } from './call';
+export { default as collate } from './collate';
 export { default as concat } from './concat';
 export { default as consume } from './consume';
 export { default as combinationsWithReplacement } from './combinations-with-replacement';
@@ -53,6 +54,7 @@ export { default as values } from './values';
 export { default as zipAll } from './zip-all';
 export { default as zip } from './zip';
 export { default as asyncBatch } from './async-batch';
+export { default as asyncCollate } from './async-collate';
 export { default as asyncConcat } from './async-concat';
 export { default as asyncCompress } from './async-compress';
 export { default as asyncConsume } from './async-consume';
