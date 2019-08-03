@@ -42,12 +42,13 @@ AsyncIterable.prototype = Object.assign(Object.create(BaseIterable.prototype), {
 });
 
 function combineFunctionConfig(fn, fnConfig) {
-  const { variadic, reduces, minArgs, maxArgs, forceSync } = fnConfig;
+  const { variadic, reduces, optionalArgsAtEnd, minArgs, maxArgs, forceSync } = fnConfig;
 
   return {
     fn,
     variadic: !!variadic,
     reduces: !!reduces,
+    optionalArgsAtEnd: !!optionalArgsAtEnd,
     minArgs: minArgs === undefined ? fn.length - 1 : minArgs,
     maxArgs: maxArgs === undefined ? fn.length - 1 : maxArgs,
     isIterable: isValidAsyncIterableArgument,

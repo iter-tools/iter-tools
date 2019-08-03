@@ -1,14 +1,12 @@
 import { $isAsync, $async, $await } from '../../generate/async.macro';
-import { $Promise } from '../internal/$iterable';
+import { $Promise, $Iterable } from '../internal/$iterable';
 import { $interleave, $InterleaveBuffer, $toArray, asyncToArray } from '..';
 
 function wait(ms: number) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-const $methodName = $isAsync ? 'asyncInterleave' : 'interleave';
-
-describe($methodName, () => {
+describe($async`interleave`, () => {
   const a = [1, 2, 3];
   const b = [4, 5, 6];
   const c = [7, 8, 9];
@@ -32,6 +30,26 @@ describe($methodName, () => {
       );
 
       expect($await($toArray(roundRobin(a, b, c)))).toEqual([1, 4, 7, 2, 5, 8, 3, 6, 9]);
+    }),
+  );
+
+  it(
+    'can be passed options for the generator',
+    $async(() => {
+      const options = {};
+
+      expect.assertions(1);
+      $await(
+        $toArray(
+          $interleave(
+            $async(function*(o: {}): $Iterable<any> {
+              expect(o).toBe(options);
+            }),
+            options,
+            null,
+          ),
+        ),
+      );
     }),
   );
 
