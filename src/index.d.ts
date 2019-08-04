@@ -74,6 +74,7 @@ export { default as asyncFlatMapParallel } from './async-flat-map-parallel';
 export { default as asyncFork } from './async-fork';
 export { default as asyncGroupBy } from './async-group-by';
 export { default as asyncInterleave } from './async-interleave';
+export { default as asyncInterleaveReady } from './async-interleave-ready';
 export { default as asyncInterpose } from './async-interpose';
 export { default as asyncMap } from './async-map';
 export { default as asyncMapParallel } from './async-map-parallel';

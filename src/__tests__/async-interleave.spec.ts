@@ -8,11 +8,6 @@
 
 import { AsyncPromise, AsyncIterable } from '../internal/async-iterable';
 import { asyncInterleave, AsyncInterleaveBuffer, asyncToArray } from '..';
-
-function wait(ms: number) {
-  return new Promise(resolve => setTimeout(resolve, ms));
-}
-
 describe('asyncInterleave', () => {
   const a = [1, 2, 3];
   const b = [4, 5, 6];
@@ -44,31 +39,5 @@ describe('asyncInterleave', () => {
         null,
       ),
     );
-  });
-  it('can use the return value of canTakeAny to interleave by promise readiness', async () => {
-    const interleaveReady = asyncInterleave(async function*(canTakeAny) {
-      let buffer = await canTakeAny();
-
-      while (buffer) {
-        yield await buffer.take();
-        buffer = await canTakeAny();
-      }
-    });
-
-    const a = (async function*() {
-      await wait(10);
-      yield 1;
-      await wait(30);
-      yield 2;
-    })();
-
-    const b = (async function*() {
-      await wait(20);
-      yield 3;
-      await wait(10);
-      yield 4;
-    })();
-
-    expect(await asyncToArray(interleaveReady(a, b))).toEqual([1, 3, 4, 2]);
   });
 });
