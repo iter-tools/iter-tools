@@ -62,14 +62,12 @@ Combine multiple iterables
 * [zipAll](#zip-all) ([async](#async-zip-all))
 * [enumerate](#enumerate) ([async](#async-enumerate))
 * [compress](#compress) ([async](#async-compress))
+* [interleave](#interleave) ([async](#async-interleave))
 
 Utilities returning multiple iterables
 * [groupBy](#group-by) ([async](#group-by))
 * [fork](#fork) ([async](#async-fork))
 * [splitAt](#split-at) ([async](#async-split-at))
-
-Decorators
-* [interleave](#interleave) ([async](#async-interleave))
 
 Others
 * [toArray](#to-array) ([async](#async-to-array))
@@ -576,7 +574,20 @@ interleave(function* (canTakeAny, a, b) {
     if (b.canTake()) yield b.take();
     if (b.canTake()) yield b.take();
   }
-}, [1, 2, 3, 4], [5, 6, 7]) // [1, 2, 5, 6, 3, 4, 7]
+}, [1, 2, 5, 6], [3, 4, 7]) // [1, 2, 3, 4, 5, 6, 7]
+```
+
+There is also an overload of `interleave` which allows you to pass an `options` argument to `generateInterleaved`. This allows you to create interleaves which are parameterized, like so:
+```js
+const roundRobin = interleave(function* (options, canTakeAny, ...buffers) {
+  let i = options.start || 0;
+  while (canTakeAny()) {
+    yield buffers[i];
+    i = (i + 1) % buffers.length;
+  }
+})
+
+roundRobin({ start: 1 }, [2, 4, 6], [1, 3, 5]) // [1, 2, 3, 4, 5, 6]
 ```
 
 ## async-interleave
