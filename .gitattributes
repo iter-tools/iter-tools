@@ -62,6 +62,7 @@ src/__tests__/async-fork.spec.ts linguist-generated=true
 src/__tests__/async-fork.test.js linguist-generated=true
 src/__tests__/async-group-by.spec.ts linguist-generated=true
 src/__tests__/async-group-by.test.js linguist-generated=true
+src/__tests__/async-interleave-ready.spec.ts linguist-generated=true
 src/__tests__/async-interleave.spec.ts linguist-generated=true
 src/__tests__/async-interleave.test.js linguist-generated=true
 src/__tests__/async-interpose.spec.ts linguist-generated=true
