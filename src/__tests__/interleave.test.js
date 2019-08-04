@@ -9,12 +9,7 @@
 /* eslint-disable no-unused-vars,import/no-duplicates */
 
 import { Promise, Iterable } from '../internal/iterable';
-import { interleave, InterleaveBuffer, toArray, asyncToArray } from '..';
-
-function wait(ms: number) {
-  return new Promise(resolve => setTimeout(resolve, ms));
-}
-
+import { interleave, InterleaveBuffer, toArray } from '..';
 describe('interleave', () => {
   const a = [1, 2, 3];
   const b = [4, 5, 6];
@@ -47,20 +42,22 @@ describe('interleave', () => {
       ),
     );
   });
-  it('can use the return value of canTakeAny to do concatenation', () => {
-    const concatenate = interleave(function*(
-      canTakeAny: () => Promise<InterleaveBuffer<number> | null>,
-      a: InterleaveBuffer<number>,
-      b: InterleaveBuffer<number>,
-      c: InterleaveBuffer<number>,
-    ) {
-      let buffer = canTakeAny();
+  describe('the return value of canTakeAny', () => {
+    it('can be used to do concatenation', () => {
+      const concatenate = interleave(function*(
+        canTakeAny: () => Promise<InterleaveBuffer<number> | null>,
+        a: InterleaveBuffer<number>,
+        b: InterleaveBuffer<number>,
+        c: InterleaveBuffer<number>,
+      ) {
+        let buffer = canTakeAny();
 
-      while (buffer) {
-        yield buffer.take();
-        buffer = canTakeAny();
-      }
+        while (buffer) {
+          yield buffer.take();
+          buffer = canTakeAny();
+        }
+      });
+      expect(Array.from(concatenate(a, b, c))).toEqual([1, 2, 3, 4, 5, 6, 7, 8, 9]);
     });
-    expect(Array.from(concatenate(a, b, c))).toEqual([1, 2, 3, 4, 5, 6, 7, 8, 9]);
   });
 });

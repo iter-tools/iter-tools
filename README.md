@@ -62,14 +62,13 @@ Combine multiple iterables
 * [zipAll](#zip-all) ([async](#async-zip-all))
 * [enumerate](#enumerate) ([async](#async-enumerate))
 * [compress](#compress) ([async](#async-compress))
+* [interleave](#interleave) ([async](#async-interleave))
+* [asyncInterleaveReady](#async-interleave-ready)
 
 Utilities returning multiple iterables
 * [groupBy](#group-by) ([async](#group-by))
 * [fork](#fork) ([async](#async-fork))
 * [splitAt](#split-at) ([async](#async-split-at))
-
-Decorators
-* [interleave](#interleave) ([async](#async-interleave))
 
 Others
 * [toArray](#to-array) ([async](#async-to-array))
@@ -612,6 +611,12 @@ const aabbInterleave = asyncInterleave(async function* (canTakeAny, a, b) {
     if (await b.canTake()) yield await b.take();
   }
 })
+```
+
+## async-interleave-ready
+This method takes multiple async iterables, and yields items from each of them in the order that that their item promises resolve.
+```js
+asyncInterleaveReady(aItems, bItems);
 ```
 
 
