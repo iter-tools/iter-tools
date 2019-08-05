@@ -5,7 +5,7 @@ describe($async`splitAt`, () => {
   it(
     'works when the halves are consumed in order',
     $async(() => {
-      const [first, second] = $splitAt(3, slice(6, range()));
+      const [first, second] = $splitAt(3, slice(0, 6, range()));
       expect([$await($toArray(first)), $await($toArray(second))]).toEqual([[0, 1, 2], [3, 4, 5]]);
     }),
   );
@@ -13,7 +13,7 @@ describe($async`splitAt`, () => {
   it(
     'works when the source is exhuasted while the first half is being consumed',
     $async(() => {
-      const [first, second] = $splitAt(3, slice(2, range()));
+      const [first, second] = $splitAt(3, slice(0, 2, range()));
       expect([$await($toArray(first)), $await($toArray(second))]).toEqual([[0, 1], []]);
     }),
   );
@@ -21,7 +21,7 @@ describe($async`splitAt`, () => {
   it(
     'works when the source is exhuasted while the second half is being consumed',
     $async(() => {
-      const [first, second] = $splitAt(3, slice(4, range()));
+      const [first, second] = $splitAt(3, slice(0, 4, range()));
       expect([$await($toArray(first)), $await($toArray(second))]).toEqual([[0, 1, 2], [3]]);
     }),
   );
@@ -29,7 +29,7 @@ describe($async`splitAt`, () => {
   it(
     'works when the second half is consumed before the first',
     $async(() => {
-      const [first, second] = $splitAt(3, slice(6, range()));
+      const [first, second] = $splitAt(3, slice(0, 6, range()));
       expect([$await($toArray(second)), $await($toArray(first))]).toEqual([[3, 4, 5], [0, 1, 2]]);
     }),
   );

@@ -43,7 +43,7 @@ describe('zipAll', () => {
   });
   it('closes when stopping earlier', () => {
     const oneTwoThree = new OneTwoThreeIterable();
-    const iter = slice(2, zipAll(range(2), oneTwoThree));
+    const iter = slice(0, 2, zipAll(range(2), oneTwoThree));
     expect(toArray(iter)).toEqual([[0, 1], [1, 2]]);
     expect(oneTwoThree).toHaveProperty('isCleanedUp', true);
   });

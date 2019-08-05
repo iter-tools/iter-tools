@@ -65,23 +65,7 @@ function* simpleSlice(iterable, start, end, step) {
   }
 }
 
-function* slice(opts, iterable) {
-  let start, step, end;
-  opts =
-    typeof opts === 'number'
-      ? {
-          end: opts,
-          start: 0,
-        }
-      : opts;
-  step = opts.step === undefined ? 1 : opts.step;
-  end = opts.end === undefined ? Infinity : opts.end;
-  start = opts.start ? opts.start : 0;
-
-  if (step <= 0) {
-    throw new TypeError('Cannot slice with step <= 0');
-  }
-
+function* slice(start, end, step, iterable) {
   if (start >= 0) {
     yield* simpleSlice(iterable, start, end, step);
   } else {
@@ -89,4 +73,33 @@ function* slice(opts, iterable) {
   }
 }
 
-export default iterableCurry(slice);
+export default iterableCurry(slice, {
+  validateArgs(args) {
+    let [optsOrStart = 0, end = Infinity, step = 1] = args;
+    let start = typeof optsOrStart === 'number' ? optsOrStart : undefined;
+
+    if (optsOrStart && typeof optsOrStart === 'object') {
+      ({ start = 0, end = Infinity, step = 1 } = optsOrStart);
+    }
+
+    if (typeof start !== 'number') {
+      throw new TypeError('The specified start was not a number');
+    }
+
+    if (typeof end !== 'number') {
+      throw new TypeError('The specified end was not a number');
+    }
+
+    if (typeof step !== 'number' || step <= 0) {
+      throw new TypeError('The specified step was not a number > 0');
+    }
+
+    args[0] = start;
+    args[1] = end;
+    args[2] = step;
+  },
+
+  optionalArgsAtEnd: true,
+  minArgs: 0,
+  maxArgs: 3,
+});

@@ -46,7 +46,7 @@ describe('asyncZipAll', () => {
   it('closes when stopping earlier', async () => {
     // broken if transpiled with es5 loose
     const asyncOneTwoThree = new AsyncOneTwoThreeIterable();
-    const iter = asyncSlice(2, asyncZipAll(range(2), asyncOneTwoThree));
+    const iter = asyncSlice(0, 2, asyncZipAll(range(2), asyncOneTwoThree));
     expect(await asyncToArray(iter)).toEqual([[0, 1], [1, 2]]);
     expect(asyncOneTwoThree).toHaveProperty('isCleanedUp', true);
   });
