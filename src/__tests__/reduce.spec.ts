@@ -7,7 +7,7 @@
  */
 
 import { Promise, InputIterable } from '../internal/iterable';
-import { asyncReduce, reduce, range } from '..';
+import { reduce, range } from '..';
 import { OneTwoThreeIterable } from './__framework__/fixtures';
 describe('reduce', () => {
   it('sums an array', () => {
@@ -34,9 +34,16 @@ describe('reduce', () => {
     expect(reduce(0, (acc, x) => acc + x, [])).toBe(0);
   });
   it('throws when no initial value specified and iterable is empty', () => {
-    expect(() => {
+    let error;
+
+    try {
       reduce((acc, x) => acc + x, []);
-    }).toThrowErrorMatchingSnapshot();
+    } catch (e) {
+      error = e;
+    }
+
+    expect(error).toBeInstanceOf(Error);
+    expect(error.message).toMatchSnapshot();
   });
   it('sums a range (using curry)', () => {
     const sum: (iterable: InputIterable<number>) => Promise<number> = reduce(

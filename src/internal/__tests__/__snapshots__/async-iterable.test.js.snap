@@ -1,0 +1,15 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`asyncIterableCurry throws with too many args 1`] = `"f2 takes up to 2 arguments, followed by asyncIterable. You already passed 3 arguments and the last argument was not asyncIterable"`;
+
+exports[`asyncIterableCurry throws with too many args 2`] = `"f1 takes up to 1 arguments, followed by asyncIterable. You already passed 2 arguments and the last argument was not asyncIterable"`;
+
+exports[`asyncIterableCurry throws with too many args 3`] = `"f0 takes up to 0 arguments, followed by asyncIterable. You already passed 1 arguments and the last argument was not asyncIterable"`;
+
+exports[`asyncIterableCurry works with reducing functions throws with too many args 1`] = `"f2 takes up to 2 arguments, followed by asyncIterable. You already passed 3 arguments and the last argument was not asyncIterable"`;
+
+exports[`asyncIterableCurry works with reducing functions throws with too many args 2`] = `"f1 takes up to 1 arguments, followed by asyncIterable. You already passed 2 arguments and the last argument was not asyncIterable"`;
+
+exports[`asyncIterableCurry works with reducing functions throws with too many args 3`] = `"f0 takes up to 0 arguments, followed by asyncIterable. You already passed 1 arguments and the last argument was not asyncIterable"`;
+
+exports[`asyncIterableCurry works with variadic functions throws with too many args 1`] = `"f1 takes up to 1 arguments, followed by ...asyncIterables. You already passed 2 arguments and the following arguments were not all asyncIterables"`;

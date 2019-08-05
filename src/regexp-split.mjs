@@ -2,12 +2,16 @@ import { cloneRegexp, isRegExp } from './internal/regexp';
 import { curry } from './internal/curry';
 
 function regexpSplit(re, str) {
+  if (!(re == null || isRegExp(re) || typeof re === 'string')) {
+    throw new Error('regexpSplit: the first argument must be a string or a regular expression');
+  }
+
+  if (typeof str !== 'string') {
+    throw new Error('regexpSplit: the second argument must be a string');
+  }
+
   return {
     *[Symbol.iterator]() {
-      if (typeof str !== 'string') {
-        throw new Error('regexpSplit: the second argument should be a string');
-      }
-
       if (!re) {
         yield* str;
         return;
@@ -17,11 +21,7 @@ function regexpSplit(re, str) {
         re = new RegExp(re, 'g');
       }
 
-      if (!isRegExp(re)) {
-        throw new Error('regexpSplit: the first argument can be a string or a regular expression');
-      }
-
-      if (re && !re.global) {
+      if (!re.global) {
         re = cloneRegexp(re, { global: true });
       }
 

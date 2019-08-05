@@ -9,7 +9,7 @@
 /* eslint-disable no-unused-vars,import/no-duplicates */
 
 import { AsyncPromise, AsyncInputIterable } from '../internal/async-iterable';
-import { asyncReduce, reduce, range } from '..';
+import { asyncReduce, range } from '..';
 import { AsyncOneTwoThreeIterable } from './__framework__/fixtures';
 describe('asyncReduce', () => {
   it('sums an array', async () => {
@@ -36,18 +36,16 @@ describe('asyncReduce', () => {
     expect(await asyncReduce(0, (acc, x) => acc + x, [])).toBe(0);
   });
   it('throws when no initial value specified and iterable is empty', async () => {
-    {
-      let error;
+    let error;
 
-      try {
-        await asyncReduce((acc, x) => acc + x, []);
-      } catch (e) {
-        error = e;
-      }
-
-      expect(error).toBeInstanceOf(Error);
-      expect(error.message).toMatchSnapshot();
+    try {
+      await asyncReduce((acc, x) => acc + x, []);
+    } catch (e) {
+      error = e;
     }
+
+    expect(error).toBeInstanceOf(Error);
+    expect(error.message).toMatchSnapshot();
   });
   it('sums a range (using curry)', async () => {
     const sum: (iterable: AsyncInputIterable<number>) => AsyncPromise<number> = asyncReduce(

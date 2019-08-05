@@ -8,17 +8,13 @@
 
 import { iterableCurry } from './internal/iterable';
 
-function* batch(number, iterable) {
-  if (typeof number !== 'number' || number < 1) {
-    throw new Error('batch size should be a number, greater than zero');
-  }
-
+function* batch(size, iterable) {
   let batch = [];
 
   for (const item of iterable) {
     batch.push(item);
 
-    if (batch.length === number) {
+    if (batch.length === size) {
       yield batch;
       batch = [];
     }
@@ -29,4 +25,10 @@ function* batch(number, iterable) {
   }
 }
 
-export default iterableCurry(batch);
+export default iterableCurry(batch, {
+  validateArgs(size) {
+    if (typeof size !== 'number' || size < 1) {
+      throw new Error('batch size should be a number greater than zero');
+    }
+  },
+});

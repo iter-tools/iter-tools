@@ -50,4 +50,7 @@ describe('asyncBatch', () => {
   it('returns an empty iterable when passed null', async () => {
     expect(await asyncToArray(asyncBatch(2, null))).toEqual([]);
   });
+  it('errors when passed size <= 0', async () => {
+    expect(() => asyncBatch(0, [])).toThrowErrorMatchingSnapshot();
+  });
 });

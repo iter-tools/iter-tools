@@ -48,4 +48,7 @@ describe('batch', () => {
   it('returns an empty iterable when passed null', () => {
     expect(toArray(batch(2, null))).toEqual([]);
   });
+  it('errors when passed size <= 0', () => {
+    expect(() => batch(0, [])).toThrowErrorMatchingSnapshot();
+  });
 });

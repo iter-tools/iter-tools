@@ -8,10 +8,10 @@
 
 import { AsyncInputIterable, AsyncGeneratorIterator } from './internal/async-iterable';
 declare function asyncBatch(
-  n: number,
+  size: number,
 ): <T>(iterable: AsyncInputIterable<T>) => AsyncGeneratorIterator<T[]>;
 declare function asyncBatch<T = any>(
-  n: number,
+  size: number,
   iterable: AsyncInputIterable<T>,
 ): AsyncGeneratorIterator<T[]>;
 export default asyncBatch;

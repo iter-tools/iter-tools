@@ -46,4 +46,11 @@ describe($async`batch`, () => {
       expect($await($toArray($batch(2, null)))).toEqual([]);
     }),
   );
+
+  it(
+    'errors when passed size <= 0',
+    $async(() => {
+      expect(() => $batch(0, [])).toThrowErrorMatchingSnapshot();
+    }),
+  );
 });

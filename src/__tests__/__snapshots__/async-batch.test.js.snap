@@ -1,0 +1,3 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`asyncBatch errors when passed size <= 0 1`] = `"batch size should be a number greater than zero"`;

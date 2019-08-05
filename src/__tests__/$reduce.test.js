@@ -1,6 +1,6 @@
 import { $Promise, $InputIterable } from '../internal/$iterable';
-import { $isAsync, $async, $await } from '../../generate/async.macro';
-import { $reduce, asyncReduce, reduce, range } from '..';
+import { $async, $await } from '../../generate/async.macro';
+import { $reduce, range } from '..';
 import { $OneTwoThreeIterable } from './__framework__/fixtures';
 
 describe($async`reduce`, () => {
@@ -42,21 +42,15 @@ describe($async`reduce`, () => {
   it(
     'throws when no initial value specified and iterable is empty',
     $async(() => {
-      if ($isAsync) {
-        let error;
-        try {
-          $await(asyncReduce((acc, x) => acc + x, []));
-        } catch (e) {
-          error = e;
-        }
-
-        expect(error).toBeInstanceOf(Error);
-        expect(error.message).toMatchSnapshot();
-      } else {
-        expect(() => {
-          reduce((acc, x) => acc + x, []);
-        }).toThrowErrorMatchingSnapshot();
+      let error;
+      try {
+        $await($reduce((acc, x) => acc + x, []));
+      } catch (e) {
+        error = e;
       }
+
+      expect(error).toBeInstanceOf(Error);
+      expect(error.message).toMatchSnapshot();
     }),
   );
 

@@ -117,21 +117,9 @@ describe('asyncIterableCurry', () => {
     expect(await asyncToArray(c0()()([]))).toEqual([]);
   });
   it('throws with too many args', () => {
-    expect(() => c2(hello)(goodbye)(world)([])).toThrowError(
-      new Error(
-        `f2 takes up to 2 arguments, followed by ${'asyncIterable'}. You already passed 3 arguments and the last argument was not ${'asyncIterable'}`,
-      ),
-    );
-    expect(() => c1(hello)(world)([])).toThrowError(
-      new Error(
-        `f1 takes up to 1 arguments, followed by ${'asyncIterable'}. You already passed 2 arguments and the last argument was not ${'asyncIterable'}`,
-      ),
-    );
-    expect(() => c0(hello)([])).toThrowError(
-      new Error(
-        `f0 takes up to 0 arguments, followed by ${'asyncIterable'}. You already passed 1 arguments and the last argument was not ${'asyncIterable'}`,
-      ),
-    );
+    expect(() => c2(hello)(goodbye)(world)([])).toThrowErrorMatchingSnapshot();
+    expect(() => c1(hello)(world)([])).toThrowErrorMatchingSnapshot();
+    expect(() => c0(hello)([])).toThrowErrorMatchingSnapshot();
   });
   describe('when passed explicit arity', () => {
     const f = (a = goodbye, b = world, c) => iter(a, b);
@@ -202,21 +190,9 @@ describe('asyncIterableCurry', () => {
       expect(await c0()([1])).toBe(1);
     });
     it('throws with too many args', () => {
-      expect(() => c2(1)(2)(3)([])).toThrowError(
-        new Error(
-          `f2 takes up to 2 arguments, followed by ${'asyncIterable'}. You already passed 3 arguments and the last argument was not ${'asyncIterable'}`,
-        ),
-      );
-      expect(() => c1(1)(2)([])).toThrowError(
-        new Error(
-          `f1 takes up to 1 arguments, followed by ${'asyncIterable'}. You already passed 2 arguments and the last argument was not ${'asyncIterable'}`,
-        ),
-      );
-      expect(() => c0(1)([])).toThrowError(
-        new Error(
-          `f0 takes up to 0 arguments, followed by ${'asyncIterable'}. You already passed 1 arguments and the last argument was not ${'asyncIterable'}`,
-        ),
-      );
+      expect(() => c2(1)(2)(3)([])).toThrowErrorMatchingSnapshot();
+      expect(() => c1(1)(2)([])).toThrowErrorMatchingSnapshot();
+      expect(() => c0(1)([])).toThrowErrorMatchingSnapshot();
     });
   });
   describe('works with variadic functions', () => {
@@ -239,9 +215,7 @@ describe('asyncIterableCurry', () => {
       expect(await c1(1)()([2, 4])).toBe(7);
     });
     it('throws with too many args', () => {
-      expect(() => c1(1)(2)([4, 8])).toThrow(
-        `f1 takes up to 1 arguments, followed by ...${'asyncIterable'}s. You already passed 2 arguments and the following arguments were not all ${'asyncIterable'}s`,
-      );
+      expect(() => c1(1)(2)([4, 8])).toThrowErrorMatchingSnapshot();
     });
   });
 });

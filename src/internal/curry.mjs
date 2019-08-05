@@ -20,6 +20,7 @@ function insertUndefineds(args, at, count) {
 function variadicCurryWithValidationInner(config, args) {
   const {
     fn,
+    validateArgs,
     variadic,
     reduces,
     optionalArgsAtEnd,
@@ -47,7 +48,9 @@ function variadicCurryWithValidationInner(config, args) {
 
     if (args.length > maxArgs && (iterableArgsStart === -1 || !allArgsIterable)) {
       const iterableTypeOrNames = variadic ? `...${iterableType}s` : iterableType;
-      const baseMessage = `${fn.name} takes up to ${maxArgs} arguments, followed by ${iterableTypeOrNames}. You already passed ${args.length} arguments`;
+      const baseMessage =
+        `${fn.name} takes up to ${maxArgs} arguments, followed by ${iterableTypeOrNames}. ` +
+        `You already passed ${args.length} arguments`;
       if (variadic) {
         throw new Error(`${baseMessage} and the following arguments were not all ${iterableType}s`);
       } else {
@@ -68,8 +71,11 @@ function variadicCurryWithValidationInner(config, args) {
         maxArgs - iterableArgsStart,
       );
 
+      validateArgs(...args);
+
       if (variadic) {
         const iterableArgs = args.slice(maxArgs);
+
         args.splice(maxArgs);
 
         return reduces ? fn(...args, iterableArgs) : new IterableClass(config, args, iterableArgs);
