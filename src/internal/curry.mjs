@@ -71,7 +71,7 @@ function variadicCurryWithValidationInner(config, args) {
         maxArgs - iterableArgsStart,
       );
 
-      validateArgs(...args);
+      validateArgs(args);
 
       if (variadic) {
         const iterableArgs = args.slice(maxArgs);

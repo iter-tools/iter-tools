@@ -121,6 +121,40 @@ describe('asyncIterableCurry', () => {
     expect(() => c1(hello)(world)([])).toThrowErrorMatchingSnapshot();
     expect(() => c0(hello)([])).toThrowErrorMatchingSnapshot();
   });
+  describe('validates args', () => {
+    it('can stop method execution by throwing an error', () => {
+      const helloImpl = jest.fn();
+      const hello = asyncIterableCurry(helloImpl, {
+        minArgs: 1,
+        maxArgs: 1,
+
+        validateArgs(args) {
+          const [world] = args;
+
+          if (!(world instanceof World)) {
+            throw new Error('Expected the world');
+          }
+        },
+      });
+      expect(() => hello(null, [])).toThrowErrorMatchingSnapshot();
+      expect(helloImpl).not.toHaveBeenCalled();
+    });
+    it('can alter arguments', async () => {
+      const empty = (async function*() {})();
+
+      const helloImpl = jest.fn(async function*() {});
+      const hello = asyncIterableCurry(helloImpl, {
+        minArgs: 1,
+        maxArgs: 1,
+
+        validateArgs(args) {
+          args[0] = world;
+        },
+      });
+      await asyncToArray(hello(null, empty));
+      expect(helloImpl).toHaveBeenCalledWith(world, empty);
+    });
+  });
   describe('when passed explicit arity', () => {
     const f = (a = goodbye, b = world, c) => iter(a, b);
 

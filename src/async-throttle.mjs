@@ -12,7 +12,7 @@ async function* asyncThrottle(ms, iterable) {
 }
 
 export default asyncIterableCurry(asyncThrottle, {
-  validateArgs(ms) {
+  validateArgs([ms]) {
     if (typeof ms !== 'number' || ms <= 0) {
       throw new Error('The first argument (ms) should be a number greater than 0');
     }

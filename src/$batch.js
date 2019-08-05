@@ -19,7 +19,7 @@ function* $batch(size, iterable) {
 }
 
 export default $iterableCurry($batch, {
-  validateArgs(size) {
+  validateArgs([size]) {
     if (typeof size !== 'number' || size < 1) {
       throw new TypeError('batch size should be a number greater than zero');
     }
