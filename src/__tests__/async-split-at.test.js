@@ -11,19 +11,19 @@
 import { asyncSplitAt, asyncToArray, slice, range } from '..';
 describe('asyncSplitAt', () => {
   it('works when the halves are consumed in order', async () => {
-    const [first, second] = asyncSplitAt(3, slice(6, range()));
+    const [first, second] = asyncSplitAt(3, slice(0, 6, range()));
     expect([await asyncToArray(first), await asyncToArray(second)]).toEqual([[0, 1, 2], [3, 4, 5]]);
   });
   it('works when the source is exhuasted while the first half is being consumed', async () => {
-    const [first, second] = asyncSplitAt(3, slice(2, range()));
+    const [first, second] = asyncSplitAt(3, slice(0, 2, range()));
     expect([await asyncToArray(first), await asyncToArray(second)]).toEqual([[0, 1], []]);
   });
   it('works when the source is exhuasted while the second half is being consumed', async () => {
-    const [first, second] = asyncSplitAt(3, slice(4, range()));
+    const [first, second] = asyncSplitAt(3, slice(0, 4, range()));
     expect([await asyncToArray(first), await asyncToArray(second)]).toEqual([[0, 1, 2], [3]]);
   });
   it('works when the second half is consumed before the first', async () => {
-    const [first, second] = asyncSplitAt(3, slice(6, range()));
+    const [first, second] = asyncSplitAt(3, slice(0, 6, range()));
     expect([await asyncToArray(second), await asyncToArray(first)]).toEqual([[3, 4, 5], [0, 1, 2]]);
   });
   it('works when the sources are consumed alterantely', async () => {

@@ -11,19 +11,19 @@
 import { splitAt, toArray, slice, range } from '..';
 describe('splitAt', () => {
   it('works when the halves are consumed in order', () => {
-    const [first, second] = splitAt(3, slice(6, range()));
+    const [first, second] = splitAt(3, slice(0, 6, range()));
     expect([toArray(first), toArray(second)]).toEqual([[0, 1, 2], [3, 4, 5]]);
   });
   it('works when the source is exhuasted while the first half is being consumed', () => {
-    const [first, second] = splitAt(3, slice(2, range()));
+    const [first, second] = splitAt(3, slice(0, 2, range()));
     expect([toArray(first), toArray(second)]).toEqual([[0, 1], []]);
   });
   it('works when the source is exhuasted while the second half is being consumed', () => {
-    const [first, second] = splitAt(3, slice(4, range()));
+    const [first, second] = splitAt(3, slice(0, 4, range()));
     expect([toArray(first), toArray(second)]).toEqual([[0, 1, 2], [3]]);
   });
   it('works when the second half is consumed before the first', () => {
-    const [first, second] = splitAt(3, slice(6, range()));
+    const [first, second] = splitAt(3, slice(0, 6, range()));
     expect([toArray(second), toArray(first)]).toEqual([[3, 4, 5], [0, 1, 2]]);
   });
   it('works when the sources are consumed alterantely', () => {

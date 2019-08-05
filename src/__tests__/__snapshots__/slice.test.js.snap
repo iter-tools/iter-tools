@@ -1,0 +1,7 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`slice when given invalid parameters 1`] = `"The specified start was not a number"`;
+
+exports[`slice when given invalid parameters 2`] = `"The specified end was not a number"`;
+
+exports[`slice when given invalid parameters 3`] = `"The specified step was not a number > 0"`;
