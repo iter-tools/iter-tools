@@ -1,4 +1,3 @@
-// tslint:disable:unified-signatures
 /// <reference lib="es2018" />
 /// <reference lib="esnext.asynciterable" />
 
