@@ -2,9 +2,6 @@ import { asyncify, asyncIterableCurry } from './internal/async-iterable';
 import { Queue } from './internal/queues';
 
 async function* asyncBuffer(bufferSize, iterable) {
-  if (typeof bufferSize !== 'number' || bufferSize <= 0) {
-    throw new Error('The first argument (bufferSize) should be a number greater than 0');
-  }
   const iterator = asyncify(iterable)[Symbol.asyncIterator]();
   const buffer = new Queue();
 
@@ -24,4 +21,10 @@ async function* asyncBuffer(bufferSize, iterable) {
   }
 }
 
-export default asyncIterableCurry(asyncBuffer);
+export default asyncIterableCurry(asyncBuffer, {
+  validateArgs([bufferSize]) {
+    if (typeof bufferSize !== 'number' || bufferSize <= 0) {
+      throw new Error('The first argument (bufferSize) should be a number greater than 0');
+    }
+  },
+});

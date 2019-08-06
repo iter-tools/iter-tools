@@ -3,11 +3,11 @@ import { curry } from './internal/curry';
 
 function regexpExec(re, str) {
   if (!isRegExp(re)) {
-    throw new Error('regexpExec: the first argument can be a string or a regular expression');
+    throw new TypeError('regexpExec: the first argument can be a string or a regular expression');
   }
 
   if (typeof str !== 'string') {
-    throw new Error('regexpExec: the second argument should be a string');
+    throw new TypeError('regexpExec: the second argument should be a string');
   }
 
   return {

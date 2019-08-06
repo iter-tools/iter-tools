@@ -3,11 +3,11 @@ import { curry } from './internal/curry';
 
 function regexpSplit(re, str) {
   if (!(re == null || isRegExp(re) || typeof re === 'string')) {
-    throw new Error('regexpSplit: the first argument must be a string or a regular expression');
+    throw new TypeError('regexpSplit: the first argument must be a string or a regular expression');
   }
 
   if (typeof str !== 'string') {
-    throw new Error('regexpSplit: the second argument must be a string');
+    throw new TypeError('regexpSplit: the second argument must be a string');
   }
 
   return {
