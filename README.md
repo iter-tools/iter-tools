@@ -77,6 +77,7 @@ Others
 * [first](#first) ([async](#async-first))
 * [firstOr](#first-or) ([async](#async-first-or))
 * [find](#find) ([async](#async-find))
+* [isEmpty](#is-empty) ([async](#async-is-empty))
 * [tap](#tap) ([async](#async-tap))
 * [size](#size) ([async](#async-size))
 * [some](#some) ([async](#async-some))
@@ -793,6 +794,18 @@ await asyncFind(animal => animal.kind === 'dog', [
   Promise.resolve({type: 'dog'})
 ]) // {type: 'dog'}
 ```
+
+## is-empty
+Returns true if the input iterable contains no items.
+```js
+isEmpty([]) // true
+isEmpty(null) // true
+isEmpty(range(1)) // false
+isEmpty([undefined]) // false
+```
+
+## async-is-empty
+See isEmpty
 
 ## tap
 Tap is not unlike a forEach method, and like forEach is usually used to express side effects. Without breaking a chain of composition, it allows you access to the value yielded to it. Tap always yields the same value it received. Tap can be curried.
