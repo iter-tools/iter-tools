@@ -41,9 +41,6 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
  - groupBy()/asyncGroupBy(null) now return a partial application instead of an iterable.
  - For most Typescript generic method types, the order of the generics has changed. (Note: this only matters if you are explicitly providing values for the generics.)
 
-### Fixed
- - asyncMap, asyncFilter: they didn't work correctly with concurrency greater than 1
-
 ## [6.2.3] - 2019-1-23
 ### Added
  -  flat, asyncFlat, cursor, asyncCursor, merge, asyncMerge, pipe, partition, async-partition
