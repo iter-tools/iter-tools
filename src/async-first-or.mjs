@@ -6,7 +6,7 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { asyncEnsureIterable } from './internal/async-iterable';
+import { asyncEnsureIterable, asyncIterableCurry } from './internal/async-iterable';
 
 async function asyncFirstOr(whenEmpty, iterable) {
   const iter = asyncEnsureIterable(iterable)[Symbol.asyncIterator]();
@@ -16,4 +16,6 @@ async function asyncFirstOr(whenEmpty, iterable) {
   return value;
 }
 
-export default asyncFirstOr;
+export default asyncIterableCurry(asyncFirstOr, {
+  reduces: true,
+});

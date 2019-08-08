@@ -1,6 +1,6 @@
 import { $async } from '../generate/async.macro';
 
-import { $ensureIterable } from './internal/$iterable';
+import { $wrapWithMethodIterable, $ensureIterable } from './internal/$iterable';
 
 $async;
 function* $concat(...iterables) {
@@ -9,4 +9,4 @@ function* $concat(...iterables) {
   }
 }
 
-export default $concat;
+export default $wrapWithMethodIterable($concat);

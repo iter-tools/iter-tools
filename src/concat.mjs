@@ -6,7 +6,7 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { ensureIterable } from './internal/iterable';
+import { wrapWithMethodIterable, ensureIterable } from './internal/iterable';
 
 function* concat(...iterables) {
   for (const iterable of iterables) {
@@ -14,4 +14,4 @@ function* concat(...iterables) {
   }
 }
 
-export default concat;
+export default wrapWithMethodIterable(concat);

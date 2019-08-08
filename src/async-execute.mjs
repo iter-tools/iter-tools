@@ -6,10 +6,12 @@
  * More information can be found in CONTRIBUTING.md
  */
 
+import { asyncWrapWithMethodIterable } from './internal/async-iterable';
+
 async function* asyncExecute(func, ...args) {
   while (true) {
     yield await func(...args);
   }
 }
 
-export default asyncExecute;
+export default asyncWrapWithMethodIterable(asyncExecute);

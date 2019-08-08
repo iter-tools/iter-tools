@@ -6,11 +6,11 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { asyncEnsureIterable } from './internal/async-iterable';
+import { asyncIterableCurry } from './internal/async-iterable';
 import map from './map';
 
-async function* asyncZipAll(...iterables) {
-  const iters = iterables.map(arg => asyncEnsureIterable(arg)[Symbol.asyncIterator]());
+async function* asyncZipAll(iterables) {
+  const iters = iterables.map(arg => arg[Symbol.asyncIterator]());
   const itersDone = iters.map(iter => ({
     done: false,
     iter,
@@ -41,4 +41,6 @@ async function* asyncZipAll(...iterables) {
   }
 }
 
-export default asyncZipAll;
+export default asyncIterableCurry(asyncZipAll, {
+  variadic: true,
+});

@@ -1,10 +1,10 @@
+import { asyncWrapWithMethodIterable } from './internal/async-iterable';
+
 import asyncToArray from './async-to-array';
 import cycle from './cycle';
 
-export default function asyncCycle(iterable) {
-  return {
-    async *[Symbol.asyncIterator]() {
-      yield* cycle(await asyncToArray(iterable));
-    },
-  };
+async function* asyncCycle(iterable) {
+  yield* cycle(await asyncToArray(iterable));
 }
+
+export default asyncWrapWithMethodIterable(asyncCycle);

@@ -18,4 +18,4 @@ function compress(iterable, compress) {
   )(zip(iterable, compress));
 }
 
-export { compress as default };
+export default compress;

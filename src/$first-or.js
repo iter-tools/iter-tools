@@ -1,6 +1,6 @@
 import { $async, $await, $iteratorSymbol } from '../generate/async.macro';
 
-import { $ensureIterable } from './internal/$iterable';
+import { $ensureIterable, $iterableCurry } from './internal/$iterable';
 
 $async;
 function $firstOr(whenEmpty, iterable) {
@@ -14,4 +14,6 @@ function $firstOr(whenEmpty, iterable) {
   return value;
 }
 
-export default $firstOr;
+export default $iterableCurry($firstOr, {
+  reduces: true,
+});

@@ -18,4 +18,4 @@ function asyncCompress(iterable, compress) {
   )(asyncZip(iterable, compress));
 }
 
-export { asyncCompress as default };
+export default asyncCompress;

@@ -6,10 +6,12 @@
  * More information can be found in CONTRIBUTING.md
  */
 
+import { wrapWithMethodIterable } from './internal/iterable';
+
 function* execute(func, ...args) {
   while (true) {
     yield func(...args);
   }
 }
 
-export default execute;
+export default wrapWithMethodIterable(execute);

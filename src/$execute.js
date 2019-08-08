@@ -1,4 +1,5 @@
 import { $async, $await } from '../generate/async.macro';
+import { $wrapWithMethodIterable } from './internal/$iterable';
 
 $async;
 function* $execute(func, ...args) {
@@ -7,4 +8,4 @@ function* $execute(func, ...args) {
   }
 }
 
-export default $execute;
+export default $wrapWithMethodIterable($execute);

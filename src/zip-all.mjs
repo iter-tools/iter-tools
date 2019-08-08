@@ -6,11 +6,11 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { ensureIterable } from './internal/iterable';
+import { iterableCurry } from './internal/iterable';
 import map from './map';
 
-function* zipAll(...iterables) {
-  const iters = iterables.map(arg => ensureIterable(arg)[Symbol.iterator]());
+function* zipAll(iterables) {
+  const iters = iterables.map(arg => arg[Symbol.iterator]());
   const itersDone = iters.map(iter => ({
     done: false,
     iter,
@@ -41,4 +41,6 @@ function* zipAll(...iterables) {
   }
 }
 
-export default zipAll;
+export default iterableCurry(zipAll, {
+  variadic: true,
+});

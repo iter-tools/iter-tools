@@ -6,7 +6,7 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { ensureIterable } from './internal/iterable';
+import { ensureIterable, iterableCurry } from './internal/iterable';
 
 function firstOr(whenEmpty, iterable) {
   const iter = ensureIterable(iterable)[Symbol.iterator]();
@@ -16,4 +16,6 @@ function firstOr(whenEmpty, iterable) {
   return value;
 }
 
-export default firstOr;
+export default iterableCurry(firstOr, {
+  reduces: true,
+});

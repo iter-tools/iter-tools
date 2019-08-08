@@ -1,15 +1,13 @@
-import { ensureIterable } from './internal/iterable';
+import { ensureIterable, wrapWithMethodIterable } from './internal/iterable';
 
-export default function cycle(iterable) {
-  return {
-    *[Symbol.iterator]() {
-      if (Array.isArray(iterable)) {
-        while (true) {
-          yield* iterable;
-        }
-      } else {
-        yield* cycle([...ensureIterable(iterable)]);
-      }
-    },
-  };
+function* cycle(iterable) {
+  if (Array.isArray(iterable)) {
+    while (true) {
+      yield* iterable;
+    }
+  } else {
+    yield* cycle([...ensureIterable(iterable)]);
+  }
 }
+
+export default wrapWithMethodIterable(cycle);
