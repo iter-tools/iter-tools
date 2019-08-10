@@ -55,6 +55,7 @@ Transform a single iterable
 * [batch](#batch) ([async](#async-batch))
 * [takeSorted](#take-sorted) ([async](#async-take-sorted))
 * [interpose](#interpose) ([async](#async-interpose))
+* [wrap](#wrap) ([async](#async-wrap))
 
 Combine multiple iterables
 * [concat](#concat) ([async](#async-concat))
@@ -487,6 +488,23 @@ interpose(null, [1, 2, 3]) // 1, null, 2, null, 3
 
 ## async-interpose
 Same as interpose, but works on both sync and async iterables.
+
+## wrap
+Yields the items in its source iterable. Its main purposes include allowing potentially null iterables to be treated as non-null iterables, and to give non-iter-tools iterables iter-tools iterable semantics.
+```js
+const maybeIterable = Math.random() > 0.5 ? [1, 2, 3] : null;
+
+[...wrap(maybeIterable)]; // [1, 2, 3] OR []
+```
+
+## async-wrap
+Yields the items in its source iterable. Its main purposes include allowing potentially null iterables to be treated as non-null iterables, turning synchronous iterables into async iterables, and to give non-iter-tools iterables iter-tools iterable semantics.
+
+Here is an example of using asyncWrap to turn a sync iterable into an async one:
+```js
+const item = await asyncWrap([1, 2, 3])[Symbol.asyncIterator]().next()
+item.value; // 1
+```
 
 # Combine multiple iterators
 

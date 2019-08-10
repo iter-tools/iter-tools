@@ -53,6 +53,7 @@ export { default as takeSorted } from './take-sorted';
 export { default as toArray } from './to-array';
 export { default as when } from './when';
 export { default as values } from './values';
+export { default as wrap } from './wrap';
 export { default as zipAll } from './zip-all';
 export { default as zip } from './zip';
 export { default as asyncBatch } from './async-batch';
@@ -98,6 +99,7 @@ export { default as asyncRegexpSplitIter } from './async-regexp-split-iter';
 export { default as asyncRegexpExecIter } from './async-regexp-exec-iter';
 export { default as asyncBuffer } from './async-buffer';
 export { default as asyncThrottle } from './async-throttle';
+export { default as asyncWrap } from './async-wrap';
 
 // Interfaces
 export { default as InterleaveBuffer } from './internal/interleave/buffer';
