@@ -20,10 +20,23 @@ describe($async`zipAll`, () => {
   );
 
   it(
-    'zip stopping early',
+    'fills with undefined when some iterables are exhausted',
     $async(() => {
       const iter = $zipAll(range({ start: 1, end: 4 }), range({ start: 4, end: 6 }), [7, 8]);
       expect($await($toArray(iter))).toEqual([[1, 4, 7], [2, 5, 8], [3, undefined, undefined]]);
+    }),
+  );
+
+  it(
+    'fills with filler when some iterables are exhausted',
+    $async(() => {
+      const iter = $zipAll(
+        { filler: null },
+        range({ start: 1, end: 4 }),
+        range({ start: 4, end: 6 }),
+        [7, 8],
+      );
+      expect($await($toArray(iter))).toEqual([[1, 4, 7], [2, 5, 8], [3, null, null]]);
     }),
   );
 

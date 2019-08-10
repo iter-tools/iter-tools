@@ -7,6 +7,12 @@
  */
 
 import { AsyncInputIterable, AsyncGeneratorIterator } from './internal/async-iterable';
+declare function asyncZipAll<F, T = any>(
+  options: {
+    filler?: F;
+  },
+  ...iterables: Array<AsyncInputIterable<T>>
+): AsyncGeneratorIterator<Array<T | F>>;
 declare function asyncZipAll<T = any>(
   ...iterables: Array<AsyncInputIterable<T>>
 ): AsyncGeneratorIterator<Array<T | undefined>>;

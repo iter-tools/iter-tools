@@ -29,7 +29,7 @@ describe('zipAll', () => {
     );
     expect(toArray(iter)).toEqual([[1, 4, 7], [2, 5, 8], [3, 6, 9]]);
   });
-  it('zip stopping early', () => {
+  it('fills with undefined when some iterables are exhausted', () => {
     const iter = zipAll(
       range({
         start: 1,
@@ -42,6 +42,23 @@ describe('zipAll', () => {
       [7, 8],
     );
     expect(toArray(iter)).toEqual([[1, 4, 7], [2, 5, 8], [3, undefined, undefined]]);
+  });
+  it('fills with filler when some iterables are exhausted', () => {
+    const iter = zipAll(
+      {
+        filler: null,
+      },
+      range({
+        start: 1,
+        end: 4,
+      }),
+      range({
+        start: 4,
+        end: 6,
+      }),
+      [7, 8],
+    );
+    expect(toArray(iter)).toEqual([[1, 4, 7], [2, 5, 8], [3, null, null]]);
   });
   it('closes when stopping earlier', () => {
     // broken if transpiled with es5 loose

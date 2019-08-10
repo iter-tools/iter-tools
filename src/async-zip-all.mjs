@@ -9,7 +9,7 @@
 import { asyncIterableCurry } from './internal/async-iterable';
 import map from './map';
 
-async function* asyncZipAll(iterables) {
+async function* asyncZipAll({ filler } = {}, iterables) {
   const iters = iterables.map(arg => arg[Symbol.asyncIterator]());
   const itersDone = iters.map(iter => ({
     done: false,
@@ -27,7 +27,7 @@ async function* asyncZipAll(iterables) {
       for (const { value, done } of syncResults) {
         allDone = allDone && done;
         itersDone[i].done = done;
-        zipped[i] = done ? undefined : value;
+        zipped[i] = done ? filler : value;
         i++;
       }
 
@@ -43,4 +43,6 @@ async function* asyncZipAll(iterables) {
 
 export default asyncIterableCurry(asyncZipAll, {
   variadic: true,
+  minArgs: 0,
+  maxArgs: 1,
 });
