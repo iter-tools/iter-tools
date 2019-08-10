@@ -31,7 +31,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
  - asyncMapParallel, asyncFilterParallel, asyncFlatMapParallel
  - interleave, asyncInterleave, asyncInterleaveReady
 
-### Changes
+### Changed
  - **IMPORTANT**; **BREAKING**: slice(n) is now equivalent to [].slice(n), not [].slice(0, n). You should now write slice(0, n, iterable).
  - All functions return iterables that can consumed multiple times.
  - takeSorted/asyncTakeSorted optional comparator is now the first argument.
