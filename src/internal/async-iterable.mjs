@@ -1,4 +1,9 @@
-import { BaseIterable, Iterable, ensureIterable, isValidIterableArgument } from './iterable';
+import {
+  BaseMethodIterable,
+  MethodIterable,
+  ensureIterable,
+  isValidIterableArgument,
+} from './iterable';
 import { variadicCurryWithValidation } from './curry';
 
 export function isAsyncIterable(i) {
@@ -30,18 +35,18 @@ export function isValidAsyncIterableArgument(i) {
   return isAsyncIterable(i) || isValidIterableArgument(i);
 }
 
-export function AsyncIterable() {
-  BaseIterable.apply(this, arguments);
+export function AsyncMethodIterable(...args) {
+  BaseMethodIterable.apply(this, args);
 }
 
-AsyncIterable.prototype = Object.assign(Object.create(BaseIterable.prototype), {
-  constructor: AsyncIterable,
+AsyncMethodIterable.prototype = Object.assign(Object.create(BaseMethodIterable.prototype), {
+  constructor: AsyncMethodIterable,
   [Symbol.asyncIterator]() {
     return this.__iterate();
   },
 });
 
-function combineFunctionConfig(fn, fnConfig) {
+function makeFunctionConfig(fn, fnConfig = {}) {
   const {
     validateArgs,
     variadic,
@@ -63,10 +68,18 @@ function combineFunctionConfig(fn, fnConfig) {
     isIterable: isValidAsyncIterableArgument,
     iterableType: 'asyncIterable',
     applyOnIterableArgs: asyncEnsureIterable,
-    IterableClass: forceSync ? Iterable : AsyncIterable,
+    IterableClass: forceSync ? MethodIterable : AsyncMethodIterable,
   };
 }
 
-export const asyncIterableCurry = (fn, config = {}) => {
-  return variadicCurryWithValidation(combineFunctionConfig(fn, config));
+export function asyncWrapWithMethodIterable(fn, config) {
+  const fnConfig = makeFunctionConfig(fn, config);
+  return (...args) => {
+    fnConfig.validateArgs(args);
+    return new AsyncMethodIterable(fnConfig, args);
+  };
+}
+
+export const asyncIterableCurry = (fn, config) => {
+  return variadicCurryWithValidation(makeFunctionConfig(fn, config));
 };

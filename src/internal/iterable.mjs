@@ -24,14 +24,14 @@ export function isValidIterableArgument(i) {
   return i == null || isIterable(i);
 }
 
-export function BaseIterable(config, args, iterableArgs) {
+export function BaseMethodIterable(config, args, iterableArgs) {
   this._config = config;
   this._args = args;
   this._iterableArgs = iterableArgs;
   this._staticIterator = null;
 }
 
-Object.assign(BaseIterable.prototype, {
+Object.assign(BaseMethodIterable.prototype, {
   __iterate() {
     const { variadic, fn } = this._config;
     return variadic ? fn(...this._args, this._iterableArgs) : fn(...this._args);
@@ -54,18 +54,18 @@ Object.assign(BaseIterable.prototype, {
   },
 });
 
-export function Iterable() {
-  BaseIterable.apply(this, arguments);
+export function MethodIterable(...args) {
+  BaseMethodIterable.apply(this, args);
 }
 
-Iterable.prototype = Object.assign(Object.create(BaseIterable.prototype), {
-  constructor: Iterable,
+MethodIterable.prototype = Object.assign(Object.create(BaseMethodIterable.prototype), {
+  constructor: MethodIterable,
   [Symbol.iterator]() {
     return this.__iterate();
   },
 });
 
-function combineFunctionConfig(fn, fnConfig) {
+function makeFunctionConfig(fn, fnConfig = {}) {
   const { validateArgs, variadic, reduces, optionalArgsAtEnd, minArgs, maxArgs } = fnConfig;
 
   return {
@@ -79,10 +79,18 @@ function combineFunctionConfig(fn, fnConfig) {
     isIterable: isValidIterableArgument,
     iterableType: 'iterable',
     applyOnIterableArgs: ensureIterable,
-    IterableClass: Iterable,
+    IterableClass: MethodIterable,
   };
 }
 
-export const iterableCurry = (fn, config = {}) => {
-  return variadicCurryWithValidation(combineFunctionConfig(fn, config));
+export function wrapWithMethodIterable(fn, config) {
+  const fnConfig = makeFunctionConfig(fn, config);
+  return (...args) => {
+    fnConfig.validateArgs(args);
+    return new MethodIterable(fnConfig, args);
+  };
+}
+
+export const iterableCurry = (fn, config) => {
+  return variadicCurryWithValidation(makeFunctionConfig(fn, config));
 };
