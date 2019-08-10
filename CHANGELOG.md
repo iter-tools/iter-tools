@@ -37,6 +37,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
  - takeSorted/asyncTakeSorted optional comparator is now the first argument.
  - Optional configuration arguments can no longer be undefined. This was at odds with considering undefined as a valid iterable.
  - find takes an extra optional argument: the value to return if the nothing is found.
+ - range can now called as either `range(end)` or `range(start, end, step)`. This matches Python.
  - fork/asyncFork takes an extra optional argument: the number of forks.
  - permutations, combinations, combinationsWithReplacement: order of arguments is changed. Can now be curried.
  - groupBy()/asyncGroupBy(null) now return a partial application instead of an iterable.

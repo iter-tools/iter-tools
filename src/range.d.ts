@@ -1,8 +1,9 @@
 import { GeneratorIterator } from './internal/iterable';
 
-declare function range<R extends number>(r: R): GeneratorIterator<number>;
+declare function range(end: number): GeneratorIterator<number>;
+declare function range(start: number, end: number, step?: number): GeneratorIterator<number>;
 declare function range(opts: {
-  start: number;
+  start?: number;
   end?: number;
   step?: number;
 }): GeneratorIterator<number>;
