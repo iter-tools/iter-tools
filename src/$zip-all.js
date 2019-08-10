@@ -4,7 +4,7 @@ import { $iterableCurry } from './internal/$iterable';
 import map from './map';
 
 $async;
-function* $zipAll(iterables) {
+function* $zipAll({ filler } = {}, iterables) {
   const iters = iterables.map(arg => arg[$iteratorSymbol]());
   const itersDone = iters.map(iter => ({ done: false, iter }));
 
@@ -20,7 +20,7 @@ function* $zipAll(iterables) {
       for (const { value, done } of syncResults) {
         allDone = allDone && done;
         itersDone[i].done = done;
-        zipped[i] = done ? undefined : value;
+        zipped[i] = done ? filler : value;
         i++;
       }
 
@@ -36,4 +36,6 @@ function* $zipAll(iterables) {
 
 export default $iterableCurry($zipAll, {
   variadic: true,
+  minArgs: 0,
+  maxArgs: 1,
 });
