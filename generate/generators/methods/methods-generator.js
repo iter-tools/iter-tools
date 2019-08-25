@@ -1,4 +1,4 @@
-const { join, resolve } = require('path');
+const { resolve } = require('path');
 const loglevel = require('loglevel');
 
 const BaseAsyncGenerator = require('../base-async-generator');
@@ -9,8 +9,8 @@ class MethodsGenerator extends BaseAsyncGenerator {
   constructor(options) {
     super(options);
 
-    const asyncMethods = '$*.js';
-    this.glob = [join('src', asyncMethods), join('src/internal/', asyncMethods)];
+    this.glob = ['src/**/$*.js'];
+    this.ignored = [...this.ignored, '**/__*__/**'];
   }
 
   getDestName(basename) {

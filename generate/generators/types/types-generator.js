@@ -1,4 +1,4 @@
-const { join, resolve } = require('path');
+const { resolve } = require('path');
 
 const BaseAsyncGenerator = require('../base-async-generator');
 
@@ -6,10 +6,8 @@ class TypesGenerator extends BaseAsyncGenerator {
   constructor(options) {
     super(options);
 
-    const asyncTypes = '$*.d.ts';
     this.glob = [
-      join('src', asyncTypes),
-      join('src/internal/**', asyncTypes),
+      'src/**/$*.d.ts',
       'src/**/__spec__/$*.spec.ts',
     ];
   }
