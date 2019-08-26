@@ -7,7 +7,7 @@
  */
 
 import { iterableCurry } from '../../internal/iterable';
-import map from '../map/map';
+import map from '../$map/map';
 
 function* zip(iterables) {
   const iters = iterables.map(arg => arg[Symbol.iterator]());

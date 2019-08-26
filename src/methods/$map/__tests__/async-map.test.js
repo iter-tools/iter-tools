@@ -8,7 +8,7 @@
 
 /* eslint-disable no-unused-vars,import/no-duplicates */
 
-import { asyncMap, asyncToArray, range } from '../..';
+import { asyncMap, asyncToArray, range } from '../../..';
 describe('asyncMap', () => {
   it('returns mapped iterable', async () => {
     const iter = asyncMap(item => item * 2, [1, 2, 3]);
