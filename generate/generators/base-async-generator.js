@@ -1,19 +1,13 @@
 const { dirname, relative, join, basename } = require('path');
 const babel = require('@babel/core');
 const prettier = require('prettier');
+const completeExtname = require('path-complete-extname');
 
 const generatedFunctionFile = require('./_templates/generated-function-file');
 const generationErrorFile = require('./_templates/generation-error-file');
 const gitattributesFile = require('./_templates/gitattributes-file');
 
 const BaseGenerator = require('./base-generator');
-
-const matchBaseExt = /^([^.]*)(\..*)$/;
-function parseFileName(path) {
-  const match = matchBaseExt.exec(basename(path));
-  const [, base, ext] = match || [];
-  return { base, ext };
-}
 
 class BaseAsyncGenerator extends BaseGenerator {
   constructor(options) {
@@ -24,7 +18,8 @@ class BaseAsyncGenerator extends BaseGenerator {
 
   getDestPath(templatePath, { ASYNC }) {
     const dir = dirname(templatePath);
-    const { base, ext } = parseFileName(templatePath);
+    const ext = completeExtname(templatePath);
+    const base = basename(templatePath, ext);
     const destName = this.getDestName(base, ext);
     return join(dir, ASYNC ? `async-${destName}` : destName);
   }

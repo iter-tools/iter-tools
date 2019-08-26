@@ -57,7 +57,10 @@ class Generator {
         } catch (e) {}
       } else {
         try {
-          this.write(destPath, this.generatePath(sourceFilename, destPath, configuration));
+          const content = this.generatePath(sourceFilename, destPath, configuration);
+          if (content !== null) {
+            this.write(destPath, content);
+          }
         } catch (e) {
           console.warn(`Failed generating ${destPath}`);
           handleError(e);

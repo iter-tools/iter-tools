@@ -1,52 +1,46 @@
-const { dirname, relative, join } = require('path');
+const { dirname, basename, relative, join, normalize } = require('path');
+const camelcase = require('camelcase');
+const completeExtname = require('path-complete-extname');
 
 const BaseGenerator = require('../base-generator');
+const generatedFunctionFile = require('../_templates/generated-function-file');
+const generationErrorFile = require('../_templates/generation-error-file');
+const gitattributesFile = require('../_templates/gitattributes-file');
 
 class MethodsLinksGenerator extends BaseGenerator {
   constructor(options) {
     super(options);
 
-    this.glob = ['src/**/$*.js'];
+    this.glob = ['src/methods/*/[^$]*.(mjs|d.ts)'];
     this.ignored = [...this.ignored, '**/__*__/**'];
   }
 
-  getDestPath(templatePath, { ASYNC }) {
-    const dir = dirname(templatePath);
-    const { base, ext } = parseFileName(templatePath);
-    const destName = this.getDestName(base, ext);
-    return join(dir, ASYNC ? `async-${destName}` : destName);
+  getDestPath(implPath) {
+    const dir = dirname(implPath);
+    const file = basename(implPath);
+
+    return normalize(join(dir, '../..', file));
   }
 
-  getDestName(starMatch, ext) {
-    throw new Error('getDestName must be implemented');
-  }
-
-  generatePath(templatePath, destPath, { ASYNC }) {
+  generatePath(implPath, destPath) {
     let content;
-    let generatedFrom = relative(dirname(destPath), templatePath);
+    let generatedFrom = relative(dirname(destPath), implPath);
 
-    const impl = `import { default as  } from './methods/'`
+    const extName = completeExtname(implPath);
+    const moduleName = basename(implPath, extName);
+    const methodName = camelcase(basename(implPath, extName));
+    const methodDirName = basename(dirname(implPath));
+
+    const impl = `import ${methodName} from './methods/${methodDirName}/${moduleName}';\n\nexport default ${methodName};`;
 
     try {
-      content = this.applyTemplate(impl, generatedFrom);
+      content = generatedFunctionFile(impl, generatedFrom);
     } catch (e) {
-      console.warn(`Failed generating ${templatePath}`);
-      content = this.applyErrorTemplate(e, generatedFrom);
+      console.warn(`Failed generating ${implPath}`);
+      content = generationErrorFile(e, generatedFrom);
     }
 
     return content;
-  }
-
-  applyTemplate(source, generatedFrom) {
-    return generatedFunctionFile(source, generatedFrom);
-  }
-
-  applyErrorTemplate(error, generatedFrom) {
-    return generationErrorFile(error, generatedFrom);
-  }
-
-  getBabelConfigPath() {
-    return join(__dirname, 'babel.config.js');
   }
 
   afterPathsChanged() {
@@ -56,4 +50,4 @@ class MethodsLinksGenerator extends BaseGenerator {
   }
 }
 
-export default MethodsLinksGenerator;
+module.exports = MethodsLinksGenerator;

@@ -6,4 +6,6 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-export { default as when } from './methods/when/when.mjs'
+import when from './methods/when/when';
+
+export default when;

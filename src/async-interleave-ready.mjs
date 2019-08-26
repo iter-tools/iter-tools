@@ -6,4 +6,6 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-export { default as asyncInterleaveReady } from './methods/async-interleave-ready/async-interleave-ready.mjs'
+import asyncInterleaveReady from './methods/async-interleave-ready/async-interleave-ready';
+
+export default asyncInterleaveReady;

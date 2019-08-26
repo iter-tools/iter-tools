@@ -3,6 +3,7 @@ const camelize = require('camelize');
 
 const MultiGenerator = require('./generator/multi-generator');
 const MethodsGenerator = require('./generators/methods');
+const MethodsLinksGenerator = require('./generators/methods-links');
 const TestsGenerator = require('./generators/tests');
 const TypesGenerator = require('./generators/types');
 const TypeTestsGenerator = require('./generators/type-tests');
@@ -35,7 +36,7 @@ if (argv.help) {
   console.log(usage);
 } else {
   const generator = new MultiGenerator(
-    [MethodsGenerator, TestsGenerator, TypesGenerator, TypeTestsGenerator],
+    [MethodsGenerator, MethodsLinksGenerator, TestsGenerator, TypesGenerator, TypeTestsGenerator],
     argv,
   );
 
