@@ -1,13 +1,11 @@
 const rename = require('../../rename');
 function renameImport(path, ASYNC) {
-  return path.replace(/(^|.\/)\$([^/]*)$/, ASYNC ? '$1async-$2' : '$1$2')
+  return path.replace(/(^|.\/)\$([^/]*)$/, ASYNC ? '$1async-$2' : '$1$2');
 }
 
 // Copied w/ minor changes. TODO, see if this can be exposed or reused somehow?
 const renameVisitor = {
-  ReferencedIdentifier({
-    node
-  }, state) {
+  ReferencedIdentifier({ node }, state) {
     if (node.name === state.name) {
       node.name = state.newName;
     }
@@ -19,13 +17,13 @@ const renameVisitor = {
     }
   },
 
-  "AssignmentExpression|Declaration"(path, state) {
+  'AssignmentExpression|Declaration'(path, state) {
     const ids = path.getOuterBindingIdentifiers();
 
     for (const name in ids) {
       if (name === state.name) ids[name].name = state.newName;
     }
-  }
+  },
 };
 
 module.exports = function resolveDollarIdentifiersAndImports({ types: t }, { ASYNC }) {
@@ -75,9 +73,7 @@ module.exports = function resolveDollarIdentifiersAndImports({ types: t }, { ASY
         // Therefore we must work at a lower level.
 
         const binding = path.scope.getBinding(name);
-        const {
-          scope,
-        } = binding;
+        const { scope } = binding;
         const newName = rename(name.slice(1), ASYNC);
 
         scope.traverse(scope.block, renameVisitor, { name, newName, binding });
@@ -110,7 +106,6 @@ module.exports = function resolveDollarIdentifiersAndImports({ types: t }, { ASY
       const { source, specifiers } = path.node;
       if (source) {
         source.value = renameImport(source.value, ASYNC);
-
 
         for (const specifier of specifiers) {
           if (specifier.exported.name.startsWith('$')) {

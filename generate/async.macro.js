@@ -73,7 +73,11 @@ function asyncMacro({ references, babel, config: { ASYNC } }) {
         if (refName === '$async' && t.isFunctionDeclaration(nextStatement)) {
           // $async; function foo() {}
           if (ASYNC) nextStatement.async = true;
-        } else if (refName === '$async' && t.isExportNamedDeclaration(nextStatement) && t.isFunctionDeclaration(nextStatement.declaration)) {
+        } else if (
+          refName === '$async' &&
+          t.isExportNamedDeclaration(nextStatement) &&
+          t.isFunctionDeclaration(nextStatement.declaration)
+        ) {
           // $async; export function foo() {}
           if (ASYNC) nextStatement.declaration.async = true;
         } else if (refName === '$await' && t.isForOfStatement(nextStatement)) {
