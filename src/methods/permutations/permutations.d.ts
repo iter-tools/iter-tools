@@ -1,4 +1,4 @@
-import { CombinationsPermutations } from './internal/types/combinations';
+import { CombinationsPermutations } from '../../internal/types/combinations';
 
 declare const permutations: CombinationsPermutations;
 

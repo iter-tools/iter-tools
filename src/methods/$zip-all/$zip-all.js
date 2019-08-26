@@ -1,7 +1,7 @@
 import { $isAsync, $async, $await, $iteratorSymbol } from '../../../generate/async.macro';
 
 import { $iterableCurry } from '../../internal/$iterable';
-import map from '../map/map';
+import map from '../$map/map';
 
 $async;
 function* $zipAll({ filler } = {}, iterables) {

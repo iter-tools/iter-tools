@@ -2,7 +2,7 @@ import { $async, $await, $iteratorSymbol } from '../../../generate/async.macro';
 
 import { $iterableCurry } from '../../internal/$iterable';
 import CircularBuffer from '../../internal/circular-buffer';
-import concat from '../concat/$concat';
+import concat from '../$concat/$concat';
 import repeat from '../repeat/repeat';
 
 $async;

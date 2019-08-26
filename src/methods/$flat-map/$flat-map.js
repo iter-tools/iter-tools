@@ -1,7 +1,7 @@
 import { $async, $await } from '../../../generate/async.macro';
 
 import { $iterableCurry } from '../../internal/$iterable';
-import map from '../map/$map';
+import map from '../$map/$map';
 
 $async;
 function* $flatMap(func, iterable) {

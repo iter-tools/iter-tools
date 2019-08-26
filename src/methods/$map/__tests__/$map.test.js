@@ -1,5 +1,5 @@
 import { $isAsync, $async, $await } from '../../../../generate/async.macro';
-import { $map, asyncMap, $toArray, asyncToArray, range } from '../..';
+import { $map, asyncMap, $toArray, asyncToArray, range } from '../../..';
 
 describe($async`map`, () => {
   it(

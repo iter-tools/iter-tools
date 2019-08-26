@@ -8,7 +8,7 @@
 
 import { asyncIterableCurry } from '../../internal/async-iterable';
 import CircularBuffer from '../../internal/circular-buffer';
-import concat from '../concat/async-concat';
+import concat from '../$concat/async-concat';
 import repeat from '../repeat/repeat';
 
 async function* asyncCursor({ size, trailing, filler }, iterable) {
