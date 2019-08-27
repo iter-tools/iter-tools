@@ -13,6 +13,10 @@ iter-tools is designed to be a standard library of utilities for working with it
 
 If you want even more ideas about how and when Iterables and iter-tools can help you out, take a look at [The Cookbook](https://github.com/iter-tools/iter-tools/blob/master/COOKBOOK.md).
 
+## API docs
+
+You can see the API docs on npm: https://www.npmjs.com/package/iter-tools. We are also in the process of building a documentation website that will be signficantly more usable.
+
 ## Why iter-tools?
 
 Iter-tools is at present the only fully-featured library of its kind. Here is what it supports:
