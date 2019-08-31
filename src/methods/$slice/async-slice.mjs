@@ -28,10 +28,10 @@ async function bufferedSlice(iterable, start, end, step) {
     newEnd = end;
   }
 
-  return simpleSlice(buffer, 0, newEnd, step);
+  return asyncSimpleSlice(buffer, 0, newEnd, step);
 }
 
-async function* simpleSlice(iterable, start, end, step) {
+async function* asyncSimpleSlice(iterable, start, end, step) {
   let currentPos = 0;
   let nextValidPos = start;
   const bufferSize = Math.abs(end);
@@ -65,14 +65,14 @@ async function* simpleSlice(iterable, start, end, step) {
   }
 }
 
-async function* asyncSlice(start, end, step, iterable) {
+export { asyncSimpleSlice as $simpleSlice };
+export async function* asyncSlice(start, end, step, iterable) {
   if (start >= 0) {
-    yield* simpleSlice(iterable, start, end, step);
+    yield* asyncSimpleSlice(iterable, start, end, step);
   } else {
     yield* await bufferedSlice(iterable, start, end, step);
   }
 }
-
 export default asyncIterableCurry(asyncSlice, {
   validateArgs(args) {
     let [optsOrStart = 0, end = Infinity, step = 1] = args;

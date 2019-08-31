@@ -77,7 +77,7 @@ function* generateForks(state, n) {
   }
 }
 
-function asyncFork(n = Infinity, iterable) {
+export function asyncFork(n = Infinity, iterable) {
   const state = {
     iterator: asyncEnsureIterable(iterable)[Symbol.asyncIterator](),
     iterableCounter: 0,
@@ -87,7 +87,6 @@ function asyncFork(n = Infinity, iterable) {
   };
   return generateForks(state, n);
 }
-
 export default function curriedFork(...args) {
   if (args.length === 2) {
     return asyncFork(...args);

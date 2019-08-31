@@ -7,11 +7,11 @@
  */
 
 import { asyncIterableCurry } from '../../internal/async-iterable';
-import asyncGroupBy from '../$group-by/async-group-by';
+import { asyncGroupBy } from '../$group-by/async-group-by';
 
 async function* empty() {}
 
-function* asyncSplitAt(index, iterable) {
+export function* asyncSplitAt(index, iterable) {
   const groupedIter = asyncGroupBy((_item, i) => i >= index, iterable)[Symbol.asyncIterator]();
 
   for (let i = 0; i <= 1; i++) {
@@ -23,7 +23,6 @@ function* asyncSplitAt(index, iterable) {
     })();
   }
 }
-
 export default asyncIterableCurry(asyncSplitAt, {
   forceSync: true,
 });

@@ -11,8 +11,8 @@ combinations(2, [1, 2, 3, 4]);
 // [ 3, 4 ]
 ```
 
-You can get the number of items calling the method *getSize* without actually emitting the sequence:
+The number of items that will be yielded is accessable through a `size` property.
+Note that the actual combinations are not computed in the example below
 ```js
-const iter = combinations([1, 2, 3, 4], 2);
-iter.getSize() === 6
+combinations([1, 2, 3, 4], 2).size === 6;
 ```

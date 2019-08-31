@@ -7,7 +7,7 @@
  */
 
 import { iterableCurry } from '../../internal/iterable';
-import interleave from '../$interleave/interleave';
+import { interleave } from '../$interleave/interleave';
 
 function* byPosition({ start, step }, canTakeAny, ...buffers) {
   start = start % buffers.length;
@@ -40,8 +40,7 @@ const defaultOptions = {
   start: 0,
   step: 1,
 };
-
-function collate(start = 0, stepOrComparatorOrOptions = 1, iterables) {
+export function collate(start = 0, stepOrComparatorOrOptions = 1, iterables) {
   let by;
   let options;
 
@@ -65,9 +64,8 @@ function collate(start = 0, stepOrComparatorOrOptions = 1, iterables) {
     );
   }
 
-  return interleave(by, options, ...iterables);
+  return interleave(by, options, iterables);
 }
-
 export default iterableCurry(collate, {
   variadic: true,
   minArgs: 0,

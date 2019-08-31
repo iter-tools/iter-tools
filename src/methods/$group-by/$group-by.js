@@ -54,7 +54,7 @@ function* generateGroup(state, getKey, key, consumer) {
 }
 
 $async;
-function* $groupBy(getKey, iterable) {
+export function* $groupBy(getKey, iterable) {
   const state = {
     iterator: null,
     idx: 0,

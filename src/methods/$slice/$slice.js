@@ -22,11 +22,11 @@ function bufferedSlice(iterable, start, end, step) {
   } else {
     newEnd = end;
   }
-  return simpleSlice(buffer, 0, newEnd, step);
+  return $simpleSlice(buffer, 0, newEnd, step);
 }
 
 $async;
-function* simpleSlice(iterable, start, end, step) {
+export function* $simpleSlice(iterable, start, end, step) {
   let currentPos = 0;
   let nextValidPos = start;
   const bufferSize = Math.abs(end);
@@ -60,9 +60,9 @@ function* simpleSlice(iterable, start, end, step) {
 }
 
 $async;
-function* $slice(start, end, step, iterable) {
+export function* $slice(start, end, step, iterable) {
   if (start >= 0) {
-    yield* simpleSlice(iterable, start, end, step);
+    yield* $simpleSlice(iterable, start, end, step);
   } else {
     yield* $await(bufferedSlice(iterable, start, end, step));
   }

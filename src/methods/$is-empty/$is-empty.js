@@ -1,10 +1,10 @@
 import { $async, $await } from '../../../generate/async.macro';
-import $firstOr from '../$first-or/$first-or';
+import { $firstOr } from '../$first-or/$first-or';
 
 const NONE = {};
 
 $async;
-function $isEmpty(iterable) {
+export function $isEmpty(iterable) {
   return $await($firstOr(NONE, iterable)) === NONE;
 }
 

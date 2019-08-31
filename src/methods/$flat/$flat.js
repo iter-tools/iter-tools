@@ -20,7 +20,7 @@ function* $flatInternal(shouldFlat, depth, currentDepth, iterable) {
   }
 }
 
-function $flat(shouldFlat = defaultShouldFlat, depthOrOptions = 1, iterable) {
+export function $flat(shouldFlat = defaultShouldFlat, depthOrOptions = 1, iterable) {
   let depth = depthOrOptions;
   if (depthOrOptions && typeof depthOrOptions === 'object') {
     ({ shouldFlat = defaultShouldFlat, depth = 1 } = depthOrOptions);

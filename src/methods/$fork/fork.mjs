@@ -72,7 +72,7 @@ function* generateForks(state, n) {
   }
 }
 
-function fork(n = Infinity, iterable) {
+export function fork(n = Infinity, iterable) {
   const state = {
     iterator: ensureIterable(iterable)[Symbol.iterator](),
     iterableCounter: 0,
@@ -82,7 +82,6 @@ function fork(n = Infinity, iterable) {
   };
   return generateForks(state, n);
 }
-
 export default function curriedFork(...args) {
   if (args.length === 2) {
     return fork(...args);

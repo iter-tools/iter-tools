@@ -1,11 +1,11 @@
 import { $isAsync, $async, $iteratorSymbol } from '../../../generate/async.macro';
 import { $iterableCurry } from '../../internal/$iterable';
-import $groupBy from '../$group-by/$group-by';
+import { $groupBy } from '../$group-by/$group-by';
 
 $async;
 function* empty() {}
 
-function* $splitAt(index, iterable) {
+export function* $splitAt(index, iterable) {
   const groupedIter = $groupBy((_item, i) => i >= index, iterable)[$iteratorSymbol]();
   for (let i = 0; i <= 1; i++) {
     const item = groupedIter.next();

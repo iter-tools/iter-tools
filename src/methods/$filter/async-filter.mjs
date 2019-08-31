@@ -7,8 +7,7 @@
  */
 
 import { asyncIterableCurry } from '../../internal/async-iterable';
-
-async function* asyncFilter(func, iterable) {
+export async function* asyncFilter(func, iterable) {
   let c = 0;
 
   for await (const item of iterable) {
@@ -17,5 +16,4 @@ async function* asyncFilter(func, iterable) {
     }
   }
 }
-
 export default asyncIterableCurry(asyncFilter);

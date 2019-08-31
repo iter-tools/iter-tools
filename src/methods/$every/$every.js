@@ -3,7 +3,7 @@ import { $async, $await } from '../../../generate/async.macro';
 import { $iterableCurry } from '../../internal/$iterable';
 
 $async;
-function $every(func, iterable) {
+export function $every(func, iterable) {
   let c = 0;
   $await;
   for (const item of iterable) {

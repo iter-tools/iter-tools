@@ -1,10 +1,10 @@
 import { $async, $await } from '../../../generate/async.macro';
 
 import { $iterableCurry } from '../../internal/$iterable';
-import regexExec from '../regexp-exec/regexp-exec';
+import { regexpExec } from '../regexp-exec/regexp-exec';
 
 $async;
-function* $regexpExecIter(re, iterable) {
+export function* $regexpExecIter(re, iterable) {
   let matches;
   let buffer = '';
   $await;
@@ -13,7 +13,7 @@ function* $regexpExecIter(re, iterable) {
     let lastIndex = 0;
     matches = [];
     buffer += chunk;
-    for (const match of regexExec(re, buffer)) {
+    for (const match of regexpExec(re, buffer)) {
       if (match[0] === '') {
         continue;
       }

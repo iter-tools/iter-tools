@@ -8,10 +8,9 @@
 
 import { iterableCurry } from '../../internal/iterable';
 import CircularBuffer from '../../internal/circular-buffer';
-import concat from '../$concat/concat';
-import repeat from '../repeat/repeat';
-
-function* cursor({ size, trailing, filler }, iterable) {
+import { concat } from '../$concat/concat';
+import { repeat } from '../repeat/repeat';
+export function* cursor({ size, trailing, filler }, iterable) {
   const circular = new CircularBuffer(size);
   circular.fill(filler);
   iterable = iterable[Symbol.iterator]();
@@ -35,5 +34,4 @@ function* cursor({ size, trailing, filler }, iterable) {
     }
   }
 }
-
 export default iterableCurry(cursor);

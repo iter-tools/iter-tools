@@ -1,6 +1,6 @@
-import $firstOr from '../$first-or/$first-or';
+import { $firstOr } from '../$first-or/$first-or';
 
-function $first(iterable) {
+export function $first(iterable) {
   return $firstOr(undefined, iterable);
 }
 

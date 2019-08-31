@@ -2,8 +2,8 @@ import { $async, $iteratorSymbol } from '../../../generate/async.macro';
 import { $wrapWithMethodIterable, $ensureIterable } from '../../internal/$iterable';
 
 $async;
-function* $identity(iterable) {
+export function* $wrap(iterable) {
   yield* $ensureIterable(iterable)[$iteratorSymbol]();
 }
 
-export default $wrapWithMethodIterable($identity);
+export default $wrapWithMethodIterable($wrap);

@@ -7,7 +7,7 @@
  */
 
 import { asyncIterableCurry } from '../../internal/async-iterable';
-import asyncInterleave from '../$interleave/async-interleave';
+import { asyncInterleave } from '../$interleave/async-interleave';
 
 async function* asyncByPosition({ start, step }, canTakeAny, ...buffers) {
   start = start % buffers.length;
@@ -40,8 +40,7 @@ const defaultOptions = {
   start: 0,
   step: 1,
 };
-
-function asyncCollate(start = 0, stepOrComparatorOrOptions = 1, iterables) {
+export function asyncCollate(start = 0, stepOrComparatorOrOptions = 1, iterables) {
   let by;
   let options;
 
@@ -65,9 +64,8 @@ function asyncCollate(start = 0, stepOrComparatorOrOptions = 1, iterables) {
     );
   }
 
-  return asyncInterleave(by, options, ...iterables);
+  return asyncInterleave(by, options, iterables);
 }
-
 export default asyncIterableCurry(asyncCollate, {
   variadic: true,
   minArgs: 0,

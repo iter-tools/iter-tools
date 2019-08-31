@@ -1,10 +1,10 @@
 import { $isAsync, $async, $await, $iteratorSymbol } from '../../../generate/async.macro';
 
 import { $iterableCurry } from '../../internal/$iterable';
-import map from '../$map/map';
+import { map } from '../$map/map';
 
 $async;
-function* $zipAll({ filler } = {}, iterables) {
+export function* $zipAll({ filler } = {}, iterables) {
   const iters = iterables.map(arg => arg[$iteratorSymbol]());
   const itersDone = iters.map(iter => ({ done: false, iter }));
 

@@ -7,4 +7,5 @@
  */
 
 import asyncRegExpSplitIter from '../$regexp-split-iter/async-regexp-split-iter';
-export default asyncRegExpSplitIter(/(\r\n|[\n\v\f\r\x85\u2028\u2029])/g);
+export const splitLines = asyncRegExpSplitIter(/(\r\n|[\n\v\f\r\x85\u2028\u2029])/g);
+export default splitLines;

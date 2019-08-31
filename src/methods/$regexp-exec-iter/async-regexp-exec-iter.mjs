@@ -7,9 +7,8 @@
  */
 
 import { asyncIterableCurry } from '../../internal/async-iterable';
-import regexExec from '../regexp-exec/regexp-exec';
-
-async function* asyncRegexpExecIter(re, iterable) {
+import { regexpExec } from '../regexp-exec/regexp-exec';
+export async function* asyncRegexpExecIter(re, iterable) {
   let matches;
   let buffer = '';
 
@@ -19,7 +18,7 @@ async function* asyncRegexpExecIter(re, iterable) {
     matches = [];
     buffer += chunk;
 
-    for (const match of regexExec(re, buffer)) {
+    for (const match of regexpExec(re, buffer)) {
       if (match[0] === '') {
         continue;
       }
@@ -39,5 +38,4 @@ async function* asyncRegexpExecIter(re, iterable) {
     yield* matches;
   }
 }
-
 export default asyncIterableCurry(asyncRegexpExecIter);

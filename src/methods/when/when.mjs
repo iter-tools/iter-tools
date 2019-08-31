@@ -12,7 +12,7 @@ const emptySpreadable = Object.freeze(
   }),
 );
 
-function when(condition, value) {
+export function when(condition, value) {
   if (
     value != null &&
     !(typeof value[Symbol.iterator] === 'function' || typeof value === 'object')

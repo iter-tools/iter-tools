@@ -1,3 +1,5 @@
-export default function execPipe(value, ...fns) {
+export function execPipe(value, ...fns) {
   return fns.reduce((value, fn) => fn(value), value);
 }
+
+export default execPipe;

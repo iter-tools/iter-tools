@@ -7,9 +7,8 @@
  */
 
 import { iterableCurry } from '../../internal/iterable';
-import regexExec from '../regexp-exec/regexp-exec';
-
-function* regexpExecIter(re, iterable) {
+import { regexpExec } from '../regexp-exec/regexp-exec';
+export function* regexpExecIter(re, iterable) {
   let matches;
   let buffer = '';
 
@@ -19,7 +18,7 @@ function* regexpExecIter(re, iterable) {
     matches = [];
     buffer += chunk;
 
-    for (const match of regexExec(re, buffer)) {
+    for (const match of regexpExec(re, buffer)) {
       if (match[0] === '') {
         continue;
       }
@@ -39,5 +38,4 @@ function* regexpExecIter(re, iterable) {
     yield* matches;
   }
 }
-
 export default iterableCurry(regexpExecIter);

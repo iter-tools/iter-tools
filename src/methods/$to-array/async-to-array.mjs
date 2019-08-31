@@ -7,8 +7,7 @@
  */
 
 import { asyncEnsureIterable } from '../../internal/async-iterable';
-
-async function asyncToArray(iterable) {
+export async function asyncToArray(iterable) {
   const out = [];
 
   for await (const item of asyncEnsureIterable(iterable)) {
@@ -17,5 +16,4 @@ async function asyncToArray(iterable) {
 
   return out;
 }
-
 export default asyncToArray;

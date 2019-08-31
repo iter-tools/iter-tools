@@ -6,11 +6,9 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import asyncFirstOr from '../$first-or/async-first-or';
+import { asyncFirstOr } from '../$first-or/async-first-or';
 const NONE = {};
-
-async function asyncIsEmpty(iterable) {
+export async function asyncIsEmpty(iterable) {
   return (await asyncFirstOr(NONE, iterable)) === NONE;
 }
-
 export default asyncIsEmpty;

@@ -1,7 +1,7 @@
 import { asyncIterableCurry } from '../../internal/async-iterable';
 import ParallelRunner from '../../internal/parallel-runner';
 
-async function* asyncFilterParallel(concurrency = 4, func, iterable) {
+export async function* asyncFilterParallel(concurrency = 4, func, iterable) {
   let c = 0;
 
   const mapped = new ParallelRunner(

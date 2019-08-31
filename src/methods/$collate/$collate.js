@@ -2,7 +2,7 @@ import { $async, $await } from '../../../generate/async.macro';
 
 import { $iterableCurry } from '../../internal/$iterable';
 
-import $interleave from '../$interleave/$interleave';
+import { $interleave } from '../$interleave/$interleave';
 
 $async;
 function* $byPosition({ start, step }, canTakeAny, ...buffers) {
@@ -36,7 +36,7 @@ const defaultOptions = {
   step: 1,
 };
 
-function $collate(start = 0, stepOrComparatorOrOptions = 1, iterables) {
+export function $collate(start = 0, stepOrComparatorOrOptions = 1, iterables) {
   let by;
   let options;
   if (typeof stepOrComparatorOrOptions === 'function') {
@@ -57,7 +57,7 @@ function $collate(start = 0, stepOrComparatorOrOptions = 1, iterables) {
     );
   }
 
-  return $interleave(by, options, ...iterables);
+  return $interleave(by, options, iterables);
 }
 
 export default $iterableCurry($collate, {

@@ -1,6 +1,6 @@
 import { ensureIterable, wrapWithMethodIterable } from '../../internal/iterable';
 
-function* cycle(iterable) {
+export function* cycle(iterable) {
   if (Array.isArray(iterable)) {
     while (true) {
       yield* iterable;

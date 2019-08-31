@@ -7,8 +7,7 @@
  */
 
 import { asyncIterableCurry } from '../../internal/async-iterable';
-
-async function* asyncBatch(size, iterable) {
+export async function* asyncBatch(size, iterable) {
   let batch = [];
 
   for await (const item of iterable) {
@@ -24,7 +23,6 @@ async function* asyncBatch(size, iterable) {
     yield batch;
   }
 }
-
 export default asyncIterableCurry(asyncBatch, {
   validateArgs([size]) {
     if (typeof size !== 'number' || size < 1) {

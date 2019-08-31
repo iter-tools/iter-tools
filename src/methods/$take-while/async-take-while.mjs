@@ -7,8 +7,7 @@
  */
 
 import { asyncIterableCurry } from '../../internal/async-iterable';
-
-async function* asyncTakeWhile(func, i) {
+export async function* asyncTakeWhile(func, i) {
   let take = true;
   let c = 0;
 
@@ -22,5 +21,4 @@ async function* asyncTakeWhile(func, i) {
     }
   }
 }
-
 export default asyncIterableCurry(asyncTakeWhile);

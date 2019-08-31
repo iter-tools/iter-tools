@@ -16,13 +16,9 @@ permutations(2, [1, 2, 3, 4]);
   // [ 4, 2 ],
   // [ 4, 3 ]
 ```
-It can be curried:
+
+The number of items that will be yielded is accessable through a `size` property.
+Note that the actual combinations are not computed in the example below
 ```js
-const permutation2 = permutations(2)
-permutation2([1, 2, 3, 4]);
-```
-You can get the number of items calling the method *getSize* without actually emitting the sequence:
-```js
-const iter = permutations(range(2)); // [0, 1] [1, 0]
-iter.getSize() === 2
+permutations(range(2)).size === 2;
 ```

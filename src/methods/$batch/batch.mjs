@@ -7,8 +7,7 @@
  */
 
 import { iterableCurry } from '../../internal/iterable';
-
-function* batch(size, iterable) {
+export function* batch(size, iterable) {
   let batch = [];
 
   for (const item of iterable) {
@@ -24,7 +23,6 @@ function* batch(size, iterable) {
     yield batch;
   }
 }
-
 export default iterableCurry(batch, {
   validateArgs([size]) {
     if (typeof size !== 'number' || size < 1) {

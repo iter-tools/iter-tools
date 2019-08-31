@@ -3,7 +3,7 @@ import { $async, $await } from '../../../generate/async.macro';
 import { $iterableCurry } from '../../internal/$iterable';
 
 $async;
-function* $takeWhile(func, i) {
+export function* $takeWhile(func, i) {
   let take = true;
   let c = 0;
 
