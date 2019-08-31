@@ -8,7 +8,7 @@
 
 import { asyncIterableCurry } from '../../internal/async-iterable';
 import { regexpSplit } from '../regexp-split/regexp-split';
-export async function* asyncRegexpSplitIter(re, iterable) {
+export async function* asyncRegexpSplitIter(iterable, re) {
   let buffer = '';
   let queue;
   let mergeEmpty = false;
@@ -18,7 +18,7 @@ export async function* asyncRegexpSplitIter(re, iterable) {
     queue = [];
     buffer += chunk;
 
-    for (const strIter of regexpSplit(re, buffer)) {
+    for (const strIter of regexpSplit(buffer, re)) {
       if (mergeEmpty && strIter === '') {
         mergeEmpty = false;
         continue;

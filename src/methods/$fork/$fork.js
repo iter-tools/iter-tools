@@ -1,6 +1,6 @@
 import { $isAsync, $async, $await, $iteratorSymbol } from '../../../generate/async.macro';
 
-import { $ensureIterable } from '../../internal/$iterable';
+import { $ensureIterable, $isIterable } from '../../internal/$iterable';
 import { Exchange } from '../../internal/queues';
 
 function fetch(state) {
@@ -82,7 +82,7 @@ function* generateForks(state, n) {
   }
 }
 
-export function $fork(n = Infinity, iterable) {
+export function $fork(iterable, n = Infinity) {
   const state = {
     iterator: $ensureIterable(iterable)[$iteratorSymbol](),
     iterableCounter: 0,
@@ -95,16 +95,18 @@ export function $fork(n = Infinity, iterable) {
 }
 
 export default function curriedFork(...args) {
-  if (args.length === 2) {
-    return $fork(...args);
+  if (args.length >= 2) {
+    const [n, iterable] = args;
+    return $fork(iterable, n);
   }
 
   if (args.length === 0) {
     return $fork;
   }
 
-  if (typeof args[0] === 'number') {
-    return (...args2) => curriedFork(args[0], ...args2);
+  if ($isIterable(args[0])) {
+    return $fork(args[0], undefined);
+  } else {
+    return iterable => $fork(iterable, args[0]);
   }
-  return $fork(undefined, args[0]);
 }

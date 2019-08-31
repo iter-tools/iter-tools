@@ -3,7 +3,7 @@ import { $async, $await } from '../../../generate/async.macro';
 import { $iterableCurry } from '../../internal/$iterable';
 
 $async;
-export function* $batch(size, iterable) {
+export function* $batch(iterable, size) {
   let batch = [];
   $await;
   for (const item of iterable) {

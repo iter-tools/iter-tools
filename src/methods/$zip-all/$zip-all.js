@@ -4,13 +4,13 @@ import { $iterableCurry } from '../../internal/$iterable';
 import { map } from '../$map/map';
 
 $async;
-export function* $zipAll({ filler } = {}, iterables) {
+export function* $zipAll(iterables, { filler } = {}) {
   const iters = iterables.map(arg => arg[$iteratorSymbol]());
   const itersDone = iters.map(iter => ({ done: false, iter }));
 
   try {
     while (true) {
-      const results = map(iter => iter.next(), iters);
+      const results = map(iters, iter => iter.next());
       const syncResults = $isAsync ? $await(Promise.all(results)) : results;
 
       const zipped = new Array(iters.length);

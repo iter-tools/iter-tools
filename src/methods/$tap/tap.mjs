@@ -7,7 +7,7 @@
  */
 
 import { iterableCurry } from '../../internal/iterable';
-export function* tap(func, iterable) {
+export function* tap(iterable, func) {
   let c = 0;
 
   for (const item of iterable) {

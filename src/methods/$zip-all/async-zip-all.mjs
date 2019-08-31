@@ -8,7 +8,7 @@
 
 import { asyncIterableCurry } from '../../internal/async-iterable';
 import { map } from '../$map/map';
-export async function* asyncZipAll({ filler } = {}, iterables) {
+export async function* asyncZipAll(iterables, { filler } = {}) {
   const iters = iterables.map(arg => arg[Symbol.asyncIterator]());
   const itersDone = iters.map(iter => ({
     done: false,
@@ -17,7 +17,7 @@ export async function* asyncZipAll({ filler } = {}, iterables) {
 
   try {
     while (true) {
-      const results = map(iter => iter.next(), iters);
+      const results = map(iters, iter => iter.next());
       const syncResults = await Promise.all(results);
       const zipped = new Array(iters.length);
       let i = 0;

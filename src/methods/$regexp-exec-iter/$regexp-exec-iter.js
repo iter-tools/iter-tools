@@ -4,7 +4,7 @@ import { $iterableCurry } from '../../internal/$iterable';
 import { regexpExec } from '../regexp-exec/regexp-exec';
 
 $async;
-export function* $regexpExecIter(re, iterable) {
+export function* $regexpExecIter(iterable, re) {
   let matches;
   let buffer = '';
   $await;
@@ -13,7 +13,7 @@ export function* $regexpExecIter(re, iterable) {
     let lastIndex = 0;
     matches = [];
     buffer += chunk;
-    for (const match of regexpExec(re, buffer)) {
+    for (const match of regexpExec(buffer, re)) {
       if (match[0] === '') {
         continue;
       }

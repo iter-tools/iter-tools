@@ -10,7 +10,7 @@ import { asyncIterableCurry } from '../../internal/async-iterable';
 import CircularBuffer from '../../internal/circular-buffer';
 import { asyncConcat } from '../$concat/async-concat';
 import { repeat } from '../repeat/repeat';
-export async function* asyncCursor({ size, trailing, filler }, iterable) {
+export async function* asyncCursor(iterable, { size, trailing, filler }) {
   const circular = new CircularBuffer(size);
   circular.fill(filler);
   iterable = iterable[Symbol.asyncIterator]();

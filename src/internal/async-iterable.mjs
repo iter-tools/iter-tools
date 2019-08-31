@@ -46,6 +46,16 @@ AsyncMethodIterable.prototype = Object.assign(Object.create(BaseMethodIterable.p
   },
 });
 
+function AsyncSimpleMethodIterable(...args) {
+  AsyncMethodIterable.apply(this, args);
+}
+
+AsyncSimpleMethodIterable.prototype = Object.assign(Object.create(AsyncMethodIterable.prototype), {
+  __iterate() {
+    return this._fn(...this._args);
+  },
+});
+
 function makeFunctionConfig(fn, fnConfig = {}) {
   const {
     validateArgs,
@@ -72,11 +82,10 @@ function makeFunctionConfig(fn, fnConfig = {}) {
   };
 }
 
-export function asyncWrapWithMethodIterable(fn, config) {
-  const fnConfig = makeFunctionConfig(fn, config);
+export function asyncWrapWithMethodIterable(fn, { validateArgs = _ => _ } = {}) {
   return (...args) => {
-    fnConfig.validateArgs(args);
-    return new AsyncMethodIterable(fnConfig, args);
+    validateArgs(args);
+    return new AsyncSimpleMethodIterable(fn, args);
   };
 }
 

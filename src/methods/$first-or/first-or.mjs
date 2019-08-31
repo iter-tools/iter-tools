@@ -7,7 +7,7 @@
  */
 
 import { ensureIterable, iterableCurry } from '../../internal/iterable';
-export function firstOr(whenEmpty, iterable) {
+export function firstOr(iterable, whenEmpty) {
   const iter = ensureIterable(iterable)[Symbol.iterator]();
   const { value, done } = iter.next();
   if (done) return whenEmpty;

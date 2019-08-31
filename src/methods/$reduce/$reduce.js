@@ -3,7 +3,7 @@ import { $iteratorSymbol, $async, $await } from '../../../generate/async.macro';
 import { $iterableCurry } from '../../internal/$iterable';
 
 $async;
-export function $reduce(initial, func, iterable) {
+export function $reduce(iterable, initial, func) {
   let c = 0;
   let acc = initial;
   const iterator = iterable[$iteratorSymbol]();

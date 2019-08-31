@@ -1,7 +1,7 @@
 import { cloneRegexp, isRegExp } from '../../internal/regexp';
 import { stringCurry } from '../../internal/string';
 
-export function* regexpSplit(re, str) {
+export function* regexpSplit(str, re) {
   if (!re) {
     yield* str;
     return;

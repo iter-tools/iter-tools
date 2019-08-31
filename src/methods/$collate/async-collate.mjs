@@ -40,7 +40,7 @@ const defaultOptions = {
   start: 0,
   step: 1,
 };
-export function asyncCollate(start = 0, stepOrComparatorOrOptions = 1, iterables) {
+export function asyncCollate(iterables, start = 0, stepOrComparatorOrOptions = 1) {
   let by;
   let options;
 
@@ -64,7 +64,7 @@ export function asyncCollate(start = 0, stepOrComparatorOrOptions = 1, iterables
     );
   }
 
-  return asyncInterleave(by, options, iterables);
+  return asyncInterleave(iterables, by, options);
 }
 export default asyncIterableCurry(asyncCollate, {
   variadic: true,

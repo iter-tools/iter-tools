@@ -9,6 +9,6 @@
 import { firstOr } from '../$first-or/first-or';
 const NONE = {};
 export function isEmpty(iterable) {
-  return firstOr(NONE, iterable) === NONE;
+  return firstOr(iterable, NONE) === NONE;
 }
 export default isEmpty;

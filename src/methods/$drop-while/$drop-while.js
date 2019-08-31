@@ -3,7 +3,7 @@ import { $async, $await } from '../../../generate/async.macro';
 import { $iterableCurry } from '../../internal/$iterable';
 
 $async;
-function* $dropWhile(func, iterable) {
+function* $dropWhile(iterable, func) {
   let drop = true;
   let c = 0;
   $await;

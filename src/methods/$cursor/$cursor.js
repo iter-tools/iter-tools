@@ -6,7 +6,7 @@ import { $concat } from '../$concat/$concat';
 import { repeat } from '../repeat/repeat';
 
 $async;
-export function* $cursor({ size, trailing, filler }, iterable) {
+export function* $cursor(iterable, { size, trailing, filler }) {
   const circular = new CircularBuffer(size);
 
   circular.fill(filler);

@@ -8,7 +8,7 @@
 
 import { iterableCurry } from '../../internal/iterable';
 import { map } from '../$map/map';
-export function* zipAll({ filler } = {}, iterables) {
+export function* zipAll(iterables, { filler } = {}) {
   const iters = iterables.map(arg => arg[Symbol.iterator]());
   const itersDone = iters.map(iter => ({
     done: false,
@@ -17,7 +17,7 @@ export function* zipAll({ filler } = {}, iterables) {
 
   try {
     while (true) {
-      const results = map(iter => iter.next(), iters);
+      const results = map(iters, iter => iter.next());
       const syncResults = results;
       const zipped = new Array(iters.length);
       let i = 0;

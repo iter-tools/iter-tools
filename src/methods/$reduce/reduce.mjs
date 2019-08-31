@@ -7,7 +7,7 @@
  */
 
 import { iterableCurry } from '../../internal/iterable';
-export function reduce(initial, func, iterable) {
+export function reduce(iterable, initial, func) {
   let c = 0;
   let acc = initial;
   const iterator = iterable[Symbol.iterator]();

@@ -36,7 +36,7 @@ const defaultOptions = {
   step: 1,
 };
 
-export function $collate(start = 0, stepOrComparatorOrOptions = 1, iterables) {
+export function $collate(iterables, start = 0, stepOrComparatorOrOptions = 1) {
   let by;
   let options;
   if (typeof stepOrComparatorOrOptions === 'function') {
@@ -57,7 +57,7 @@ export function $collate(start = 0, stepOrComparatorOrOptions = 1, iterables) {
     );
   }
 
-  return $interleave(by, options, iterables);
+  return $interleave(iterables, by, options);
 }
 
 export default $iterableCurry($collate, {

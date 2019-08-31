@@ -5,8 +5,8 @@ import { $groupBy } from '../$group-by/$group-by';
 $async;
 function* empty() {}
 
-export function* $splitAt(index, iterable) {
-  const groupedIter = $groupBy((_item, i) => i >= index, iterable)[$iteratorSymbol]();
+export function* $splitAt(iterable, index) {
+  const groupedIter = $groupBy(iterable, (_item, i) => i >= index)[$iteratorSymbol]();
   for (let i = 0; i <= 1; i++) {
     const item = groupedIter.next();
 

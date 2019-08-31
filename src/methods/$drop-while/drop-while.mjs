@@ -8,7 +8,7 @@
 
 import { iterableCurry } from '../../internal/iterable';
 
-function* dropWhile(func, iterable) {
+function* dropWhile(iterable, func) {
   let drop = true;
   let c = 0;
 

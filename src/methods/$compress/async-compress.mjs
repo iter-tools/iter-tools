@@ -10,6 +10,6 @@ import asyncZip from '../$zip/async-zip';
 import { asyncFilter } from '../$filter/async-filter';
 import { asyncMap } from '../$map/async-map';
 export function asyncCompress(iterable, compress) {
-  return asyncMap(entry => entry[0], asyncFilter(entry => entry[1], asyncZip(iterable, compress)));
+  return asyncMap(asyncFilter(asyncZip(iterable, compress), entry => entry[1]), entry => entry[0]);
 }
 export default asyncCompress;

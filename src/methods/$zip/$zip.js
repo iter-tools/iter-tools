@@ -10,7 +10,7 @@ export function* $zip(iterables) {
 
   try {
     while (true) {
-      const results = map(iter => iter.next(), iters);
+      const results = map(iters, iter => iter.next());
       const syncResults = $isAsync ? $await(Promise.all(results)) : results;
 
       const zipped = new Array(iters.length);

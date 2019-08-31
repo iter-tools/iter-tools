@@ -7,7 +7,7 @@
  */
 
 import { iterableCurry } from '../../internal/iterable';
-export function find(notFoundValue, func, iterable) {
+export function find(iterable, notFoundValue, func) {
   let c = 0;
 
   for (const item of iterable) {

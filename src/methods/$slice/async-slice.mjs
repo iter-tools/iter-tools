@@ -66,7 +66,7 @@ async function* asyncSimpleSlice(iterable, start, end, step) {
 }
 
 export { asyncSimpleSlice as $simpleSlice };
-export async function* asyncSlice(start, end, step, iterable) {
+export async function* asyncSlice(iterable, start, end, step) {
   if (start >= 0) {
     yield* asyncSimpleSlice(iterable, start, end, step);
   } else {

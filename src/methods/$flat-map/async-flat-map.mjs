@@ -8,8 +8,8 @@
 
 import { asyncIterableCurry } from '../../internal/async-iterable';
 import { asyncMap } from '../$map/async-map';
-export async function* asyncFlatMap(func, iterable) {
-  for await (const item of asyncMap(func, iterable)) {
+export async function* asyncFlatMap(iterable, func) {
+  for await (const item of asyncMap(iterable, func)) {
     yield* item;
   }
 }

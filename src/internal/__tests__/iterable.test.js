@@ -71,9 +71,9 @@ function addAll(initial, iterables) {
 }
 
 describe('iterableCurry', () => {
-  const f2 = (a, b, iterable) => iter(a, b);
+  const f2 = (iterable, a, b) => iter(a, b);
 
-  const f1 = (a, iterable) => iter(a);
+  const f1 = (iterable, a) => iter(a);
 
   const f0 = iterable => iter();
 
@@ -140,11 +140,11 @@ describe('iterableCurry', () => {
         },
       });
       toArray(hello(null, empty));
-      expect(helloImpl).toHaveBeenCalledWith(world, empty);
+      expect(helloImpl).toHaveBeenCalledWith(empty, world);
     });
   });
   describe('when passed explicit arity', () => {
-    const f = (a = goodbye, b = world, c) => iter(a, b);
+    const f = (c, a = goodbye, b = world) => iter(a, b);
 
     const c = iterableCurry(f, {
       minArgs: 0,
@@ -175,9 +175,9 @@ describe('iterableCurry', () => {
     });
   });
   describe('works with reducing functions', () => {
-    const f2 = (a, b, iterable) => add(a + b, iterable);
+    const f2 = (iterable, a, b) => add(a + b, iterable);
 
-    const f1 = (a, iterable) => add(a, iterable);
+    const f1 = (iterable, a) => add(a, iterable);
 
     const f0 = iterable => add(0, iterable);
 
@@ -218,7 +218,7 @@ describe('iterableCurry', () => {
     });
   });
   describe('works with variadic functions', () => {
-    const f1 = (a, iterables) => addAll(a, iterables);
+    const f1 = (iterables, a) => addAll(a, iterables);
     /* eslint-disable no-unused-expressions */
 
     f1.name; // Make sure it doesn't get thrown away by babel-minify

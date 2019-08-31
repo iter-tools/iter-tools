@@ -8,6 +8,6 @@
 
 import { asyncFirstOr } from '../$first-or/async-first-or';
 export function asyncFirst(iterable) {
-  return asyncFirstOr(undefined, iterable);
+  return asyncFirstOr(iterable, undefined);
 }
 export default asyncFirst;

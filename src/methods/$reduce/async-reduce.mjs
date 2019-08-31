@@ -7,7 +7,7 @@
  */
 
 import { asyncIterableCurry } from '../../internal/async-iterable';
-export async function asyncReduce(initial, func, iterable) {
+export async function asyncReduce(iterable, initial, func) {
   let c = 0;
   let acc = initial;
   const iterator = iterable[Symbol.asyncIterator]();
