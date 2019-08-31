@@ -7,11 +7,9 @@
  */
 
 import { wrapWithMethodIterable } from '../../internal/iterable';
-
-function* execute(func, ...args) {
+export function* execute(func, ...args) {
   while (true) {
     yield func(...args);
   }
 }
-
 export default wrapWithMethodIterable(execute);

@@ -1,6 +1,6 @@
-import map from '../$map/map';
-import range from '../range/range';
-import product from '../product/product';
+import { map } from '../$map/map';
+import { range } from '../range/range';
+import { product } from '../product/product';
 import { iterableCurry } from '../../internal/iterable';
 import { combinationsWithReplacementSize } from '../../internal/math';
 
@@ -15,16 +15,17 @@ function isSorted(arr) {
   return true;
 }
 
-function combinationsWithReplacement(r, iterable) {
+export function combinationsWithReplacement(r, iterable) {
   const arr = Array.from(iterable);
   const len = arr.length;
   r = r === undefined ? len : r;
   return {
     *[Symbol.iterator]() {
-      const mapToIndex = map(i => arr[i]);
-      for (let indices of product(...map(() => range(len), range(r)))) {
+      const toIndex = i => arr[i];
+
+      for (let indices of product(...map(() => range(0, len), range(0, r)))) {
         if (isSorted(indices)) {
-          yield Array.from(mapToIndex(indices));
+          yield Array.from(map(toIndex, indices));
         }
       }
     },

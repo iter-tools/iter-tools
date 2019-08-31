@@ -7,9 +7,8 @@
  */
 
 import { iterableCurry } from '../../internal/iterable';
-import regexSplit from '../regexp-split/regexp-split';
-
-function* regexpSplitIter(re, iterable) {
+import { regexpSplit } from '../regexp-split/regexp-split';
+export function* regexpSplitIter(re, iterable) {
   let buffer = '';
   let queue;
   let mergeEmpty = false;
@@ -19,7 +18,7 @@ function* regexpSplitIter(re, iterable) {
     queue = [];
     buffer += chunk;
 
-    for (const strIter of regexSplit(re, buffer)) {
+    for (const strIter of regexpSplit(re, buffer)) {
       if (mergeEmpty && strIter === '') {
         mergeEmpty = false;
         continue;
@@ -41,5 +40,4 @@ function* regexpSplitIter(re, iterable) {
     yield* queue;
   }
 }
-
 export default iterableCurry(regexpSplitIter);

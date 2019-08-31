@@ -7,11 +7,11 @@
  */
 
 import { iterableCurry } from '../../internal/iterable';
-import groupBy from '../$group-by/group-by';
+import { groupBy } from '../$group-by/group-by';
 
 function* empty() {}
 
-function* splitAt(index, iterable) {
+export function* splitAt(index, iterable) {
   const groupedIter = groupBy((_item, i) => i >= index, iterable)[Symbol.iterator]();
 
   for (let i = 0; i <= 1; i++) {
@@ -20,7 +20,6 @@ function* splitAt(index, iterable) {
     yield item.done ? empty() : item.value[1];
   }
 }
-
 export default iterableCurry(splitAt, {
   forceSync: true,
 });

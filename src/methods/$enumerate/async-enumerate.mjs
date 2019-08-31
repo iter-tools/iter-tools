@@ -7,12 +7,8 @@
  */
 
 import range from '../range/range';
-import zip from '../$zip/async-zip';
-export default function asyncEnumerate(iterable, start = 0) {
-  return zip(
-    range({
-      start,
-    }),
-    iterable,
-  );
+import asyncZip from '../$zip/async-zip';
+export function asyncEnumerate(iterable, start = 0) {
+  return asyncZip(range(start, Infinity, 1), iterable);
 }
+export default asyncEnumerate;

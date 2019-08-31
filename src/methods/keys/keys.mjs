@@ -2,7 +2,7 @@ import { empty, wrapWithMethodIterable } from '../../internal/iterable';
 
 const { hasOwnProperty } = Object.prototype;
 
-function* keys(keysable) {
+export function* keys(keysable) {
   if (keysable == null) {
     return empty();
   } else if (typeof keysable.keys === 'function') {

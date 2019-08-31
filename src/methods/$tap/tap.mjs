@@ -7,8 +7,7 @@
  */
 
 import { iterableCurry } from '../../internal/iterable';
-
-function* tap(func, iterable) {
+export function* tap(func, iterable) {
   let c = 0;
 
   for (const item of iterable) {
@@ -16,5 +15,4 @@ function* tap(func, iterable) {
     yield item;
   }
 }
-
 export default iterableCurry(tap);

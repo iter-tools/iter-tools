@@ -7,8 +7,7 @@
  */
 
 import { iterableCurry } from '../../internal/iterable';
-
-function every(func, iterable) {
+export function every(func, iterable) {
   let c = 0;
 
   for (const item of iterable) {
@@ -19,7 +18,6 @@ function every(func, iterable) {
 
   return true;
 }
-
 export default iterableCurry(every, {
   reduces: true,
 });

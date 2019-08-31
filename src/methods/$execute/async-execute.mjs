@@ -7,11 +7,9 @@
  */
 
 import { asyncWrapWithMethodIterable } from '../../internal/async-iterable';
-
-async function* asyncExecute(func, ...args) {
+export async function* asyncExecute(func, ...args) {
   while (true) {
     yield await func(...args);
   }
 }
-
 export default asyncWrapWithMethodIterable(asyncExecute);

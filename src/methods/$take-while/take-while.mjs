@@ -7,8 +7,7 @@
  */
 
 import { iterableCurry } from '../../internal/iterable';
-
-function* takeWhile(func, i) {
+export function* takeWhile(func, i) {
   let take = true;
   let c = 0;
 
@@ -22,5 +21,4 @@ function* takeWhile(func, i) {
     }
   }
 }
-
 export default iterableCurry(takeWhile);

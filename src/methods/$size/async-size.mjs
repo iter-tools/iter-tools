@@ -8,8 +8,7 @@
 
 import { asyncEnsureIterable } from '../../internal/async-iterable';
 const TypedArrayProto = Object.getPrototypeOf(Int8Array);
-
-async function asyncSize(iterable) {
+export async function asyncSize(iterable) {
   const iter = asyncEnsureIterable(iterable);
   if (Array.isArray(iter)) return iter.length;
   if (iter instanceof Map || iter instanceof Set) return iter.size;
@@ -24,5 +23,4 @@ async function asyncSize(iterable) {
 
   return size;
 }
-
 export default asyncSize;

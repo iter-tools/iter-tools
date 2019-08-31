@@ -56,7 +56,7 @@ async function* generateGroup(state, getKey, key, consumer) {
   }
 }
 
-async function* asyncGroupBy(getKey, iterable) {
+export async function* asyncGroupBy(getKey, iterable) {
   const state = {
     iterator: null,
     idx: 0,
@@ -89,5 +89,4 @@ async function* asyncGroupBy(getKey, iterable) {
     returnIterator(state);
   }
 }
-
 export default asyncIterableCurry(asyncGroupBy);

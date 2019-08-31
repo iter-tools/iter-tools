@@ -7,12 +7,10 @@
  */
 
 import { asyncIterableCurry } from '../../internal/async-iterable';
-import map from '../$map/async-map';
-
-async function* asyncFlatMap(func, iterable) {
-  for await (const item of map(func, iterable)) {
+import { asyncMap } from '../$map/async-map';
+export async function* asyncFlatMap(func, iterable) {
+  for await (const item of asyncMap(func, iterable)) {
     yield* item;
   }
 }
-
 export default asyncIterableCurry(asyncFlatMap);

@@ -1,10 +1,10 @@
 import { $async, $await } from '../../../generate/async.macro';
 
 import { $iterableCurry } from '../../internal/$iterable';
-import regexSplit from '../regexp-split/regexp-split';
+import { regexpSplit } from '../regexp-split/regexp-split';
 
 $async;
-function* $regexpSplitIter(re, iterable) {
+export function* $regexpSplitIter(re, iterable) {
   let buffer = '';
   let queue;
   let mergeEmpty = false;
@@ -13,7 +13,7 @@ function* $regexpSplitIter(re, iterable) {
     if (chunk === '') continue;
     queue = [];
     buffer += chunk;
-    for (const strIter of regexSplit(re, buffer)) {
+    for (const strIter of regexpSplit(re, buffer)) {
       if (mergeEmpty && strIter === '') {
         mergeEmpty = false;
         continue;

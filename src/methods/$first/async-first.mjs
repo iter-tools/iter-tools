@@ -6,10 +6,8 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import asyncFirstOr from '../$first-or/async-first-or';
-
-function asyncFirst(iterable) {
+import { asyncFirstOr } from '../$first-or/async-first-or';
+export function asyncFirst(iterable) {
   return asyncFirstOr(undefined, iterable);
 }
-
 export default asyncFirst;

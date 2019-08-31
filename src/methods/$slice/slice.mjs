@@ -65,14 +65,14 @@ function* simpleSlice(iterable, start, end, step) {
   }
 }
 
-function* slice(start, end, step, iterable) {
+export { simpleSlice as $simpleSlice };
+export function* slice(start, end, step, iterable) {
   if (start >= 0) {
     yield* simpleSlice(iterable, start, end, step);
   } else {
     yield* bufferedSlice(iterable, start, end, step);
   }
 }
-
 export default iterableCurry(slice, {
   validateArgs(args) {
     let [optsOrStart = 0, end = Infinity, step = 1] = args;

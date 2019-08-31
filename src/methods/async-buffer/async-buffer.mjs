@@ -1,7 +1,7 @@
 import { asyncify, asyncIterableCurry } from '../../internal/async-iterable';
 import { Queue } from '../../internal/queues';
 
-async function* asyncBuffer(bufferSize, iterable) {
+export async function* asyncBuffer(bufferSize, iterable) {
   const iterator = asyncify(iterable)[Symbol.asyncIterator]();
   const buffer = new Queue();
 

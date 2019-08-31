@@ -23,7 +23,7 @@ async function* asyncFlatInternal(shouldFlat, depth, currentDepth, iterable) {
   }
 }
 
-function asyncFlat(shouldFlat = defaultShouldFlat, depthOrOptions = 1, iterable) {
+export function asyncFlat(shouldFlat = defaultShouldFlat, depthOrOptions = 1, iterable) {
   let depth = depthOrOptions;
 
   if (depthOrOptions && typeof depthOrOptions === 'object') {
@@ -32,7 +32,6 @@ function asyncFlat(shouldFlat = defaultShouldFlat, depthOrOptions = 1, iterable)
 
   return asyncFlatInternal(shouldFlat, depth, 0, iterable);
 }
-
 export default asyncIterableCurry(asyncFlat, {
   minArgs: 0,
   maxArgs: 2,

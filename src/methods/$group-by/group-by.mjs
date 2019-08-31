@@ -56,7 +56,7 @@ function* generateGroup(state, getKey, key, consumer) {
   }
 }
 
-function* groupBy(getKey, iterable) {
+export function* groupBy(getKey, iterable) {
   const state = {
     iterator: null,
     idx: 0,
@@ -89,5 +89,4 @@ function* groupBy(getKey, iterable) {
     returnIterator(state);
   }
 }
-
 export default iterableCurry(groupBy);

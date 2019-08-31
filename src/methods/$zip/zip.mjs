@@ -7,9 +7,8 @@
  */
 
 import { iterableCurry } from '../../internal/iterable';
-import map from '../$map/map';
-
-function* zip(iterables) {
+import { map } from '../$map/map';
+export function* zip(iterables) {
   const iters = iterables.map(arg => arg[Symbol.iterator]());
   const itersDone = iters.map(iter => ({
     done: false,
@@ -43,7 +42,6 @@ function* zip(iterables) {
     }
   }
 }
-
 export default iterableCurry(zip, {
   variadic: true,
 });

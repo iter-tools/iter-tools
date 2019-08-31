@@ -9,8 +9,7 @@
 import { asyncEnsureIterable, asyncIterableCurry } from '../../internal/async-iterable';
 import AsyncInterleaveBuffer from '../../internal/interleave/async-buffer';
 import makeCanTakeAny from '../../internal/interleave/async-can-take-any';
-
-async function* interleave(generatorFn, options, iterables) {
+export async function* asyncInterleave(generatorFn, options, iterables) {
   const buffers = iterables.map(
     (iterable, i) =>
       new AsyncInterleaveBuffer(asyncEnsureIterable(iterable)[Symbol.asyncIterator](), i),
@@ -29,8 +28,7 @@ async function* interleave(generatorFn, options, iterables) {
     }
   }
 }
-
-export default asyncIterableCurry(interleave, {
+export default asyncIterableCurry(asyncInterleave, {
   variadic: true,
   optionalArgsAtEnd: true,
   minArgs: 1,

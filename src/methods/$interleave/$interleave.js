@@ -4,7 +4,7 @@ import $InterleaveBuffer from '../../internal/interleave/$buffer';
 import makeCanTakeAny from '../../internal/interleave/$can-take-any';
 
 $async;
-function* interleave(generatorFn, options, iterables) {
+export function* $interleave(generatorFn, options, iterables) {
   const buffers = iterables.map(
     (iterable, i) => new $InterleaveBuffer($ensureIterable(iterable)[$iteratorSymbol](), i),
   );
@@ -24,7 +24,7 @@ function* interleave(generatorFn, options, iterables) {
   }
 }
 
-export default $iterableCurry(interleave, {
+export default $iterableCurry($interleave, {
   variadic: true,
   optionalArgsAtEnd: true,
   minArgs: 1,

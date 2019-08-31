@@ -4,7 +4,7 @@ import Heap from 'little-ds-toolkit/lib/heap';
 import { $iterableCurry } from '../../internal/$iterable';
 
 $async;
-function* $takeSorted(comparator, number, iterable) {
+export function* $takeSorted(comparator, number, iterable) {
   const heap = new Heap(comparator);
   $await;
   for (const item of iterable) {

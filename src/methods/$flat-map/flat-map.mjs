@@ -7,12 +7,10 @@
  */
 
 import { iterableCurry } from '../../internal/iterable';
-import map from '../$map/map';
-
-function* flatMap(func, iterable) {
+import { map } from '../$map/map';
+export function* flatMap(func, iterable) {
   for (const item of map(func, iterable)) {
     yield* item;
   }
 }
-
 export default iterableCurry(flatMap);

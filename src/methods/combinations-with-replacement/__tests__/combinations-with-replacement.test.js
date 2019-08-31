@@ -19,7 +19,7 @@ describe('combinationsWithReplacement', () => {
     expect(Array.from(iter)).toEqual([[1, 1], [1, 2], [2, 2]]);
   });
 
-  it('returns combinationsWithReplacement (max n)', () => {
+  it.only('returns combinationsWithReplacement (max n)', () => {
     const iter = combinationsWithReplacement(2, [1, 2, 3, 4]);
     expect(iter.getSize()).toEqual(10);
     const expected = [

@@ -7,8 +7,7 @@
  */
 
 import { ensureIterable } from '../../internal/iterable';
-
-function toArray(iterable) {
+export function toArray(iterable) {
   const out = [];
 
   for (const item of ensureIterable(iterable)) {
@@ -17,5 +16,4 @@ function toArray(iterable) {
 
   return out;
 }
-
 export default toArray;

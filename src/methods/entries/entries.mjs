@@ -2,7 +2,7 @@ import { empty, wrapWithMethodIterable } from '../../internal/iterable';
 
 const { hasOwnProperty } = Object.prototype;
 
-function* entries(entriesable) {
+export function* entries(entriesable) {
   if (entriesable == null) {
     return empty();
   } else if (typeof entriesable.entries === 'function') {

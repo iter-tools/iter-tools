@@ -6,11 +6,9 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import firstOr from '../$first-or/first-or';
+import { firstOr } from '../$first-or/first-or';
 const NONE = {};
-
-function isEmpty(iterable) {
+export function isEmpty(iterable) {
   return firstOr(NONE, iterable) === NONE;
 }
-
 export default isEmpty;

@@ -7,8 +7,7 @@
  */
 
 import { asyncIterableCurry } from '../../internal/async-iterable';
-
-async function asyncReduce(initial, func, iterable) {
+export async function asyncReduce(initial, func, iterable) {
   let c = 0;
   let acc = initial;
   const iterator = iterable[Symbol.asyncIterator]();
@@ -37,7 +36,6 @@ async function asyncReduce(initial, func, iterable) {
     if (typeof iterator.return === 'function') await iterator.return();
   }
 }
-
 export default asyncIterableCurry(asyncReduce, {
   reduces: true,
   minArgs: 1,

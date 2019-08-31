@@ -12,10 +12,10 @@ product([1, 2], [3, 4], [5, 6]);
 // [2, 4, 6]
 
 // You can use fork for multiplying the same iterable for itself.
-product(...fork(range(2))); // [0, 0]  [0, 1]  [1, 0]  [1, 1]
+product(...fork(2, range(2))); // [0, 0]  [0, 1]  [1, 0]  [1, 1]
 ```
-You can get the number of items calling the method *getSize* without actually emitting the sequence:
+The number of items that will be yielded is accessable through a `size` property.
+Note that the actual combinations are not computed in the example below
 ```js
-const iter = product([1, 2], [3, 4], [5, 6]);
-iter.getSize() === 8
+product([1, 2], [3, 4], [5, 6]).size === 8;
 ```

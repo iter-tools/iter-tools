@@ -82,7 +82,7 @@ function* generateForks(state, n) {
   }
 }
 
-function $fork(n = Infinity, iterable) {
+export function $fork(n = Infinity, iterable) {
   const state = {
     iterator: $ensureIterable(iterable)[$iteratorSymbol](),
     iterableCounter: 0,
