@@ -11,7 +11,7 @@ class TypeTestsGenerator extends BaseGenerator {
     super(options);
 
     this.glob = 'src/**/__tests__/[^$]*.test.js';
-    this.ignored = [...this.ignored, 'src/internal'];
+    this.ignored = [...this.ignored, 'src/internal/**'];
   }
 
   generatePath(testPath, destPath) {
