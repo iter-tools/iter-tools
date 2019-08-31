@@ -7,7 +7,7 @@
  */
 
 import { asyncIterableCurry } from '../../internal/async-iterable';
-export async function asyncConsume(func = () => {}, iterable) {
+export async function asyncConsume(iterable, func = () => {}) {
   let c = 0;
 
   for await (const item of iterable) {

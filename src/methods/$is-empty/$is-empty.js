@@ -5,7 +5,7 @@ const NONE = {};
 
 $async;
 export function $isEmpty(iterable) {
-  return $await($firstOr(NONE, iterable)) === NONE;
+  return $await($firstOr(iterable, NONE)) === NONE;
 }
 
 export default $isEmpty;

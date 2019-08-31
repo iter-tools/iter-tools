@@ -24,17 +24,16 @@ export function isValidIterableArgument(i) {
   return i == null || isIterable(i);
 }
 
-export function BaseMethodIterable(config, args, iterableArgs) {
-  this._config = config;
+export function BaseMethodIterable(fn, args, iterablesArg) {
+  this._fn = fn;
   this._args = args;
-  this._iterableArgs = iterableArgs;
+  this._iterablesArg = iterablesArg;
   this._staticIterator = null;
 }
 
 Object.assign(BaseMethodIterable.prototype, {
   __iterate() {
-    const { variadic, fn } = this._config;
-    return variadic ? fn(...this._args, this._iterableArgs) : fn(...this._args);
+    return this._fn(this._iterablesArg, ...this._args);
   },
 
   throw() {
@@ -65,6 +64,16 @@ MethodIterable.prototype = Object.assign(Object.create(BaseMethodIterable.protot
   },
 });
 
+function SimpleMethodIterable(...args) {
+  MethodIterable.apply(this, args);
+}
+
+SimpleMethodIterable.prototype = Object.assign(Object.create(MethodIterable.prototype), {
+  __iterate() {
+    return this._fn(...this._args);
+  },
+});
+
 function makeFunctionConfig(fn, fnConfig = {}) {
   const { validateArgs, variadic, reduces, optionalArgsAtEnd, minArgs, maxArgs } = fnConfig;
 
@@ -83,11 +92,10 @@ function makeFunctionConfig(fn, fnConfig = {}) {
   };
 }
 
-export function wrapWithMethodIterable(fn, config) {
-  const fnConfig = makeFunctionConfig(fn, config);
+export function wrapWithMethodIterable(fn, { validateArgs = _ => _ } = {}) {
   return (...args) => {
-    fnConfig.validateArgs(args);
-    return new MethodIterable(fnConfig, args);
+    validateArgs(args);
+    return new SimpleMethodIterable(fn, args);
   };
 }
 

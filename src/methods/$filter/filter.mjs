@@ -7,7 +7,7 @@
  */
 
 import { iterableCurry } from '../../internal/iterable';
-export function* filter(func, iterable) {
+export function* filter(iterable, func) {
   let c = 0;
 
   for (const item of iterable) {

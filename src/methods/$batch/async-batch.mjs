@@ -7,7 +7,7 @@
  */
 
 import { asyncIterableCurry } from '../../internal/async-iterable';
-export async function* asyncBatch(size, iterable) {
+export async function* asyncBatch(iterable, size) {
   let batch = [];
 
   for await (const item of iterable) {

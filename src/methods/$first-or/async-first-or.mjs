@@ -7,7 +7,7 @@
  */
 
 import { asyncEnsureIterable, asyncIterableCurry } from '../../internal/async-iterable';
-export async function asyncFirstOr(whenEmpty, iterable) {
+export async function asyncFirstOr(iterable, whenEmpty) {
   const iter = asyncEnsureIterable(iterable)[Symbol.asyncIterator]();
   const { value, done } = await iter.next();
   if (done) return whenEmpty;

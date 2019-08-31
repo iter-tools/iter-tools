@@ -60,7 +60,7 @@ export function* $simpleSlice(iterable, start, end, step) {
 }
 
 $async;
-export function* $slice(start, end, step, iterable) {
+export function* $slice(iterable, start, end, step) {
   if (start >= 0) {
     yield* $simpleSlice(iterable, start, end, step);
   } else {

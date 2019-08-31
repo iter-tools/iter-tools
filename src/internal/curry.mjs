@@ -73,15 +73,11 @@ function variadicCurryWithValidationInner(config, args) {
 
       validateArgs(args);
 
-      if (variadic) {
-        const iterableArgs = args.slice(maxArgs);
+      const iterablesArg = variadic ? args.slice(maxArgs) : args[maxArgs];
 
-        args.splice(maxArgs);
+      args.splice(maxArgs);
 
-        return reduces ? fn(...args, iterableArgs) : new IterableClass(config, args, iterableArgs);
-      } else {
-        return reduces ? fn(...args) : new IterableClass(config, args);
-      }
+      return reduces ? fn(iterablesArg, ...args) : new IterableClass(fn, args, iterablesArg);
     } else {
       // We have not received any iterables, but we must be fully configured
     }

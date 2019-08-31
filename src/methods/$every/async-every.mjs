@@ -7,7 +7,7 @@
  */
 
 import { asyncIterableCurry } from '../../internal/async-iterable';
-export async function asyncEvery(func, iterable) {
+export async function asyncEvery(iterable, func) {
   let c = 0;
 
   for await (const item of iterable) {

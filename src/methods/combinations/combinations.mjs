@@ -15,7 +15,7 @@ function isSorted(arr) {
   return true;
 }
 
-export function combinations(r, iterable) {
+export function combinations(iterable, r) {
   const arr = Array.from(iterable);
   const len = arr.length;
 
@@ -25,9 +25,9 @@ export function combinations(r, iterable) {
     *[Symbol.iterator]() {
       const toIndex = i => arr[i];
 
-      for (let indices of permutations(r, range(0, len))) {
+      for (let indices of permutations(range(0, len), r)) {
         if (isSorted(indices)) {
-          yield Array.from(map(toIndex, indices));
+          yield Array.from(map(indices, toIndex));
         }
       }
     },

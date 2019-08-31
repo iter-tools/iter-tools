@@ -7,7 +7,7 @@
  */
 
 import { iterableCurry } from '../../internal/iterable';
-export function every(func, iterable) {
+export function every(iterable, func) {
   let c = 0;
 
   for (const item of iterable) {

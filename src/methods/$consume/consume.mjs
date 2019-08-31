@@ -7,7 +7,7 @@
  */
 
 import { iterableCurry } from '../../internal/iterable';
-export function consume(func = () => {}, iterable) {
+export function consume(iterable, func = () => {}) {
   let c = 0;
 
   for (const item of iterable) {

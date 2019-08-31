@@ -6,7 +6,7 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { asyncEnsureIterable } from '../../internal/async-iterable';
+import { asyncEnsureIterable, asyncIsIterable } from '../../internal/async-iterable';
 import { Exchange } from '../../internal/queues';
 
 function fetch(state) {
@@ -77,7 +77,7 @@ function* generateForks(state, n) {
   }
 }
 
-export function asyncFork(n = Infinity, iterable) {
+export function asyncFork(iterable, n = Infinity) {
   const state = {
     iterator: asyncEnsureIterable(iterable)[Symbol.asyncIterator](),
     iterableCounter: 0,
@@ -88,17 +88,18 @@ export function asyncFork(n = Infinity, iterable) {
   return generateForks(state, n);
 }
 export default function curriedFork(...args) {
-  if (args.length === 2) {
-    return asyncFork(...args);
+  if (args.length >= 2) {
+    const [n, iterable] = args;
+    return asyncFork(iterable, n);
   }
 
   if (args.length === 0) {
     return asyncFork;
   }
 
-  if (typeof args[0] === 'number') {
-    return (...args2) => curriedFork(args[0], ...args2);
+  if (asyncIsIterable(args[0])) {
+    return asyncFork(args[0], undefined);
+  } else {
+    return iterable => asyncFork(iterable, args[0]);
   }
-
-  return asyncFork(undefined, args[0]);
 }

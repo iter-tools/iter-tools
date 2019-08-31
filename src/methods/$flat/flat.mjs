@@ -21,7 +21,7 @@ function* flatInternal(shouldFlat, depth, currentDepth, iterable) {
   }
 }
 
-export function flat(shouldFlat = defaultShouldFlat, depthOrOptions = 1, iterable) {
+export function flat(iterable, shouldFlat = defaultShouldFlat, depthOrOptions = 1) {
   let depth = depthOrOptions;
 
   if (depthOrOptions && typeof depthOrOptions === 'object') {

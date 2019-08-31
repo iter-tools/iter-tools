@@ -17,7 +17,7 @@ export async function* asyncZip(iterables) {
 
   try {
     while (true) {
-      const results = map(iter => iter.next(), iters);
+      const results = map(iters, iter => iter.next());
       const syncResults = await Promise.all(results);
       const zipped = new Array(iters.length);
       let i = 0;

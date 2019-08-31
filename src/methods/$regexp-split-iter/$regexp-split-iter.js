@@ -4,7 +4,7 @@ import { $iterableCurry } from '../../internal/$iterable';
 import { regexpSplit } from '../regexp-split/regexp-split';
 
 $async;
-export function* $regexpSplitIter(re, iterable) {
+export function* $regexpSplitIter(iterable, re) {
   let buffer = '';
   let queue;
   let mergeEmpty = false;
@@ -13,7 +13,7 @@ export function* $regexpSplitIter(re, iterable) {
     if (chunk === '') continue;
     queue = [];
     buffer += chunk;
-    for (const strIter of regexpSplit(re, buffer)) {
+    for (const strIter of regexpSplit(buffer, re)) {
       if (mergeEmpty && strIter === '') {
         mergeEmpty = false;
         continue;

@@ -8,7 +8,7 @@
 
 import { asyncIterableCurry } from '../../internal/async-iterable';
 
-async function* asyncDropWhile(func, iterable) {
+async function* asyncDropWhile(iterable, func) {
   let drop = true;
   let c = 0;
 

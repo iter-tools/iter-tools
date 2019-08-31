@@ -23,7 +23,7 @@ async function* asyncFlatInternal(shouldFlat, depth, currentDepth, iterable) {
   }
 }
 
-export function asyncFlat(shouldFlat = defaultShouldFlat, depthOrOptions = 1, iterable) {
+export function asyncFlat(iterable, shouldFlat = defaultShouldFlat, depthOrOptions = 1) {
   let depth = depthOrOptions;
 
   if (depthOrOptions && typeof depthOrOptions === 'object') {

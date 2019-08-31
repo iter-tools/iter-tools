@@ -4,7 +4,7 @@ import { map } from '../$map/map';
 import { range } from '../range/range';
 import { product } from '../product/product';
 
-export function permutations(r, iterable) {
+export function permutations(iterable, r) {
   const arr = Array.from(iterable);
   const len = arr.length;
   r = r === undefined ? len : r;
@@ -12,10 +12,10 @@ export function permutations(r, iterable) {
     *[Symbol.iterator]() {
       if (r > len) return;
       const toIndex = i => arr[i];
-      for (const indices of product(...map(() => range(0, len), range(0, r)))) {
+      for (const indices of product(...map(range(0, r), () => range(0, len)))) {
         const set = new Set(indices);
         if (set.size === r) {
-          yield Array.from(map(toIndex, set));
+          yield Array.from(map(set, toIndex));
         }
       }
     },

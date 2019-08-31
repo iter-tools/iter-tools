@@ -56,7 +56,7 @@ async function* generateGroup(state, getKey, key, consumer) {
   }
 }
 
-export async function* asyncGroupBy(getKey, iterable) {
+export async function* asyncGroupBy(iterable, getKey) {
   const state = {
     iterator: null,
     idx: 0,

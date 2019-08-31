@@ -1,7 +1,7 @@
 import { cloneRegexp, isRegExp } from '../../internal/regexp';
 import { stringCurry } from '../../internal/string';
 
-export function* regexpExec(re, str) {
+export function* regexpExec(str, re) {
   if (typeof re === 'string') {
     re = new RegExp(re, 'g');
   }

@@ -9,6 +9,6 @@
 import { asyncFirstOr } from '../$first-or/async-first-or';
 const NONE = {};
 export async function asyncIsEmpty(iterable) {
-  return (await asyncFirstOr(NONE, iterable)) === NONE;
+  return (await asyncFirstOr(iterable, NONE)) === NONE;
 }
 export default asyncIsEmpty;

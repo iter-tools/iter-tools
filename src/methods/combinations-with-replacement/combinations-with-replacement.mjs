@@ -15,7 +15,7 @@ function isSorted(arr) {
   return true;
 }
 
-export function combinationsWithReplacement(r, iterable) {
+export function combinationsWithReplacement(iterable, r) {
   const arr = Array.from(iterable);
   const len = arr.length;
   r = r === undefined ? len : r;
@@ -23,9 +23,9 @@ export function combinationsWithReplacement(r, iterable) {
     *[Symbol.iterator]() {
       const toIndex = i => arr[i];
 
-      for (let indices of product(...map(() => range(0, len), range(0, r)))) {
+      for (let indices of product(...map(range(0, r), () => range(0, len)))) {
         if (isSorted(indices)) {
-          yield Array.from(map(toIndex, indices));
+          yield Array.from(map(indices, toIndex));
         }
       }
     },
