@@ -5,7 +5,6 @@ const completeExtname = require('path-complete-extname');
 
 const generatedFunctionFile = require('./_templates/generated-function-file');
 const generationErrorFile = require('./_templates/generation-error-file');
-const gitattributesFile = require('./_templates/gitattributes-file');
 
 const BaseGenerator = require('./base-generator');
 
@@ -59,12 +58,6 @@ class BaseAsyncGenerator extends BaseGenerator {
 
   getBabelConfigPath() {
     return join(__dirname, 'babel.config.js');
-  }
-
-  afterPathsChanged() {
-    this.generatedPaths.add('.gitattributes');
-
-    this.writeMonolithic('.gitattributes', gitattributesFile(this.generatedPaths));
   }
 }
 
