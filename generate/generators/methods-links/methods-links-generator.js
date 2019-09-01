@@ -5,7 +5,6 @@ const completeExtname = require('path-complete-extname');
 const BaseGenerator = require('../base-generator');
 const generatedFunctionFile = require('../_templates/generated-function-file');
 const generationErrorFile = require('../_templates/generation-error-file');
-const gitattributesFile = require('../_templates/gitattributes-file');
 
 class MethodsLinksGenerator extends BaseGenerator {
   constructor(options) {
@@ -41,12 +40,6 @@ class MethodsLinksGenerator extends BaseGenerator {
     }
 
     return content;
-  }
-
-  afterPathsChanged() {
-    this.generatedPaths.add('.gitattributes');
-
-    this.writeMonolithic('.gitattributes', gitattributesFile(this.generatedPaths));
   }
 }
 

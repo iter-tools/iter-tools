@@ -7,6 +7,7 @@ const MethodsLinksGenerator = require('./generators/methods-links');
 const TestsGenerator = require('./generators/tests');
 const TypesGenerator = require('./generators/types');
 const TypeTestsGenerator = require('./generators/type-tests');
+const MonolithicGenerator = require('./generators/monolithic');
 
 const argv = camelize(
   parseArgs(process.argv.slice(2), {
@@ -36,7 +37,14 @@ if (argv.help) {
   console.log(usage);
 } else {
   const generator = new MultiGenerator(
-    [MethodsGenerator, MethodsLinksGenerator, TestsGenerator, TypesGenerator, TypeTestsGenerator],
+    [
+      MethodsGenerator,
+      MethodsLinksGenerator,
+      TestsGenerator,
+      TypesGenerator,
+      TypeTestsGenerator,
+      MonolithicGenerator,
+    ],
     argv,
   );
 

@@ -1,4 +1,4 @@
-const rename = require('../../rename');
+const { rename } = require('../../names');
 function renameImport(path, ASYNC) {
   return path.replace(/(^|.\/)\$([^/]*)$/, ASYNC ? '$1async-$2' : '$1$2');
 }

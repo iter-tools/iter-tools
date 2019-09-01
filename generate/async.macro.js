@@ -1,6 +1,6 @@
 const { createMacro } = require('babel-plugin-macros');
 const { expression } = require('@babel/template');
-const rename = require('./rename');
+const { rename } = require('./names');
 
 /**
  * This is a babel macro which you can import the following symbols:
