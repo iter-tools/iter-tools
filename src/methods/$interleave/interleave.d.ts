@@ -7,7 +7,7 @@
  */
 
 import { InputIterable, GeneratorIterator, Iterable, Promise } from '../../internal/iterable';
-import InterleaveBuffer from '../../internal/interleave/buffer'; // Without options:
+import InterleaveBuffer from './internal/buffer'; // Without options:
 // #############
 // prettier-ignore
 

@@ -7,8 +7,8 @@
  */
 
 import { ensureIterable, iterableCurry } from '../../internal/iterable';
-import InterleaveBuffer from '../../internal/interleave/buffer';
-import makeCanTakeAny from '../../internal/interleave/can-take-any';
+import InterleaveBuffer from './internal/buffer';
+import makeCanTakeAny from './internal/can-take-any';
 export function* interleave(iterables, generatorFn, options) {
   const buffers = iterables.map(
     (iterable, i) => new InterleaveBuffer(ensureIterable(iterable)[Symbol.iterator](), i),

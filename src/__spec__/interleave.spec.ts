@@ -8,7 +8,7 @@
 
 import assert from 'static-type-assert';
 import { GeneratorIterator, Promise } from '../internal/iterable';
-import InterleaveBuffer from '../internal/interleave/buffer';
+import InterleaveBuffer from '../methods/$interleave/internal/buffer';
 import { interleave } from '..'; // Without options
 // ############
 

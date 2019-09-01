@@ -12,7 +12,7 @@ import {
   AsyncIterable,
   AsyncPromise,
 } from '../../internal/async-iterable';
-import AsyncInterleaveBuffer from '../../internal/interleave/async-buffer'; // Without options:
+import AsyncInterleaveBuffer from './internal/async-buffer'; // Without options:
 // #############
 // prettier-ignore
 

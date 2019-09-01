@@ -2,7 +2,7 @@ import assert from 'static-type-assert';
 
 import { $async, $await } from '../../generate/async.macro';
 import { $GeneratorIterator, $Promise } from  '../internal/$iterable';
-import $InterleaveBuffer from '../internal/interleave/$buffer';
+import $InterleaveBuffer from '../methods/$interleave/internal/$buffer';
 import { $interleave } from '..';
 
 // Without options

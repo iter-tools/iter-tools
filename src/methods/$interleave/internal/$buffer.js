@@ -1,4 +1,4 @@
-import { $async, $await } from '../../../generate/async.macro';
+import { $async, $await } from '../../../../generate/async.macro';
 
 class $InterleaveBuffer {
   constructor(iterator, bufferIndex) {

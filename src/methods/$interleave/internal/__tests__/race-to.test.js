@@ -1,5 +1,5 @@
 import raceTo from '../race-to';
-import delay from '../delay';
+import delay from '../../../../internal/delay';
 
 const isOdd = num => num % 2 === 1;
 

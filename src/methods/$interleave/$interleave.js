@@ -1,7 +1,7 @@
 import { $async, $await, $iteratorSymbol } from '../../../generate/async.macro';
 import { $ensureIterable, $iterableCurry } from '../../internal/$iterable';
-import $InterleaveBuffer from '../../internal/interleave/$buffer';
-import makeCanTakeAny from '../../internal/interleave/$can-take-any';
+import $InterleaveBuffer from './internal/$buffer';
+import $makeCanTakeAny from './internal/$can-take-any';
 
 $async;
 export function* $interleave(iterables, generatorFn, options) {
@@ -10,7 +10,7 @@ export function* $interleave(iterables, generatorFn, options) {
   );
 
   try {
-    const canTakeAny = makeCanTakeAny(buffers);
+    const canTakeAny = $makeCanTakeAny(buffers);
 
     yield* options !== undefined
       ? generatorFn(options, canTakeAny, ...buffers)

@@ -1,5 +1,5 @@
 import { $InputIterable, $GeneratorIterator, $Iterable, $Promise } from '../../internal/$iterable';
-import $InterleaveBuffer from '../../internal/interleave/$buffer';
+import $InterleaveBuffer from './internal/$buffer';
 
 // Without options:
 // #############
