@@ -1,5 +1,3 @@
-const factorialCache = new Map();
-
 let toBigInt;
 try {
   toBigInt = BigInt(1) && (n => BigInt(n)); // eslint-disable-line
@@ -9,10 +7,7 @@ try {
 
 export function factorial(n) {
   if (n === 0 || n === 1) return toBigInt(1);
-  if (!factorialCache.has(n)) {
-    factorialCache.set(n, toBigInt(n) * toBigInt(factorial(n - 1)));
-  }
-  return factorialCache.get(n);
+  return toBigInt(n) * toBigInt(factorial(n - 1));
 }
 
 export function permutationsSize(len, r) {
