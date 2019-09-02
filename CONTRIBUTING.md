@@ -1,11 +1,22 @@
-# How to contribute
+# Contributing
 
-We welcome contributions!
+We welcome contributions! Please read this document. It can save you work!
 
+[Etiquette](#etiquette)  
+[What you need](#what-you-need)  
+[Creating a new method](#creating-a-new-method)  
+[Repository structure](#repository-structure)  
+[Code formatting](#code-formatting)  
+[Making a PR](#making-a-pr)  
+[Prerelease checks](#prerelease-checks)  
+[Publish a prerelease](#publish-a-prerelease)  
+[Publish a new release](#publish-a-new-release)  
+
+## Etiquette
 We hope you are finding iter-tools useful and are glad you would like to contribute. Thank you! Working on an open source project like this should be a rewarding and instructive experience. To keep it that way we will enforce our [code of conduct](CODE_OF_CONDUCT.md), so be sure to read and follow it.
 
 The project is actively maintained, so your issues and PRs will definitely be seen and considered. Here are some great ways to start contributing:
-- Report a bug by creating an issue
+- Creating an issue detailing a problem you've run into
 - Create a bug fix PR for an obvious inconsistency
 - Create a discussion issue to find out if new features or broader changes are feasable
 - Come to our gitter channel and ask a question
@@ -25,12 +36,32 @@ Now you can run the generator one of the following ways:
 
 We recommend that you run the generator in watch mode whenever you are developing. If you do not, you might discover later that tests have been running against old versions of generated code. For more details on the code generator, take a look at its README.
 
-## File structure
+## Creating a new method
+We've made it very easy to get started with creating a new method. Just run:
+```
+npm run create:method
+```
+An interactive prompt will guide you through the choices you need to make.
+
+From there you can fill in your impelementation, tests, types, and README.
+
+Do note that while we want welcome new methods, not all methods belong in iter-tools. Any addition must be discussed, and could be rejected. When we are considering the addition of new methods to the library, we have some basic criteria we use to determine whether a method would add value for us. Indications for creation of a new method are:
+* The need for the implementation is very common.
+* The implementation is complicated and/or bug-prone.
+* The name very clearly implies the implementation.
+
+Indications against the creation of a new method include:
+* Concerns are mixed, such that it would be better to offer two (or more) methods.
+* Nobody knows of a real-world use case for the method.
+
+## Repository structure
 ```
 generate/                Anything pertaining to code generation
 ├─ generator/               Code generator code (which should become its own package)
 ├─ generators/              Code which describes how/when/where to generated each type of file
 └─ async.macro.js           You'll see this imported in most $ files. Read its docs!!
+
+generate-yo/			 The yeoman generation code and templates. Used by the create:method script.
 
 src/
 ├- internal/             Shared code which applies to many methods
@@ -56,28 +87,18 @@ or better yet, configure prettier format-on-save for your editor.
 
 If your text editor has an [editorconfig](http://EditorConfig.org) plugin, your indentation and line settings should already be correct.
 
-## PRs
-We are happy to review and merge PRs. To be accepted a change must have test coverage. If it is an API change, it must also:
-* Have an entry in the CHANGELOG
-* Be documented in the README
-* Have a correct typescript definition
+## Making a PR
+We are happy to review and merge PRs. To be accepted a change must have test coverage. If it is an API change, it must also have:
+* Updated documentation
+* An entry in the CHANGELOG
+* A correct typescript definition
 
 Please ask in the PR if you need any help.
 
-## New methods and features
-New method and feature proposals are welcome, but take into consideration that the scope of this library does have limitations. Any addition must be discussed, and may be rejected. When we are considering the addition of new methods to the library, we have some basic criteria we use to determine whether a method would add value to iter-tools. Indications for creation of a new method are:
-* The need for the implementation is very common.
-* The implementation is complicated and/or bug-prone.
-* The name very clearly implies the implementation.
-
-Indications against the creation of a new method include:
-* Concerns are mixed, such that it would be better to offer two (or more) methods.
-* Nobody knows of a real-world use case for the method.
-
 ## Prerelease checks
 If you want to publish on npm and you have the credentials, you need to:
-* update the **changelog** and the **readme**
-* update the **code coverage** ```npm run coverage```
+* Update the **changelog** with the date and number of the release
+* Update the **code coverage** ```npm run coverage```
 
 ## Publish a prerelease
 You need to bump the version:

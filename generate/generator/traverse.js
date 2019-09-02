@@ -1,5 +1,5 @@
 const { relative } = require('path');
-const recursive = require('recursive-readdir');
+const recursiveRead = require('recursive-readdir');
 const { matcher } = require('micromatch');
 
 function makeMatcher(root, glob) {
@@ -22,7 +22,7 @@ function traverse(root, options) {
 
   const matchesGlob = makeMatcher(root, glob);
 
-  return recursive(root, [makeIgnoreMatcher(root, ignored)]).then(initialPaths => {
+  return recursiveRead(root, [makeIgnoreMatcher(root, ignored)]).then(initialPaths => {
     return initialPaths.filter(path => matchesGlob(path)).map(path => relative(root, path));
   });
 }
