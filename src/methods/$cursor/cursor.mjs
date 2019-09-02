@@ -13,7 +13,6 @@ import { repeat } from '../repeat/repeat';
 export function* cursor(iterable, { size, trailing, filler }) {
   const circular = new CircularBuffer(size);
   circular.fill(filler);
-  iterable = iterable[Symbol.iterator]();
 
   if (trailing) {
     let index = 0;

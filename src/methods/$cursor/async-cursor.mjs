@@ -13,7 +13,6 @@ import { repeat } from '../repeat/repeat';
 export async function* asyncCursor(iterable, { size, trailing, filler }) {
   const circular = new CircularBuffer(size);
   circular.fill(filler);
-  iterable = iterable[Symbol.asyncIterator]();
 
   if (trailing) {
     let index = 0;

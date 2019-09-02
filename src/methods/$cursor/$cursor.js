@@ -1,4 +1,4 @@
-import { $async, $await, $iteratorSymbol } from '../../../generate/async.macro';
+import { $async, $await } from '../../../generate/async.macro';
 
 import { $iterableCurry } from '../../internal/$iterable';
 import CircularBuffer from '../../internal/circular-buffer';
@@ -10,8 +10,6 @@ export function* $cursor(iterable, { size, trailing, filler }) {
   const circular = new CircularBuffer(size);
 
   circular.fill(filler);
-
-  iterable = iterable[$iteratorSymbol]();
 
   if (trailing) {
     let index = 0;
