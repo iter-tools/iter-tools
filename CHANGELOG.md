@@ -41,7 +41,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
  - zipAll now takes optional `filler` argument to use in place of values from exhausted iterables.
  - fork/asyncFork takes an extra optional argument: the number of forks.
  - permutations, combinations, combinationsWithReplacement: order of arguments is changed. Can now be curried.
- - permutations, combinations, and combinationsWithReplacement: getSize() is now just size
+ - permutations, combinations, combinationsWithReplacement, and product: getSize() is now just size
  - groupBy()/asyncGroupBy(null) now return a partial application instead of an iterable.
  - For most Typescript generic method types, the order of the generics has changed. (Note: this only matters if you are explicitly providing values for the generics.)
 

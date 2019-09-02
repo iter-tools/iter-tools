@@ -17,6 +17,6 @@ type ProductReturnElement<Args extends Array<Iterable<any>>, Holder extends any[
 
 declare function product<Args extends Array<Iterable<any>>>(
   ...iterables: Args
-): Iterable<ProductReturnElement<Args>> & { getSize: () => number };
+): Iterable<ProductReturnElement<Args>> & { size: number };
 
 export default product;

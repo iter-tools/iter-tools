@@ -1,26 +1,57 @@
 import { iterableCurry } from '../../internal/iterable';
 import { permutationsSize } from '../../internal/math';
-import { map } from '../$map/map';
-import { range } from '../range/range';
-import { product } from '../product/product';
 
-export function permutations(iterable, r) {
-  const arr = Array.from(iterable);
-  const len = arr.length;
-  r = r === undefined ? len : r;
+function swap(arr, aIdx, bIdx) {
+  const temp = arr[aIdx];
+  arr[aIdx] = arr[bIdx];
+  arr[bIdx] = temp;
+}
+
+function shiftToEnd(arr, idx) {
+  const toShift = arr[idx]; // 1, 2, 3
+  const end = arr.length - 1;
+  for (let i = idx; i < end; i++) {
+    arr[i] = arr[i + 1];
+  }
+  arr[arr.length - 1] = toShift;
+}
+
+export function permutations(iterable, k) {
+  const arr = [...iterable];
+
+  k = k === undefined ? arr.length : k;
+
+  if (k < 0) {
+    throw new TypeError('The k argument to permutations cannot be < 0');
+  }
+
+  let _size = null;
+
   return {
     *[Symbol.iterator]() {
-      if (r > len) return;
-      const toIndex = i => arr[i];
-      for (const indices of product(...map(range(0, r), () => range(0, len)))) {
-        const set = new Set(indices);
-        if (set.size === r) {
-          yield Array.from(map(set, toIndex));
+      const ist = [0]; // i stack
+      let start = 0; // start === ist.length - 1
+
+      while (ist.length > 1 || ist[0] < arr.length) {
+        swap(arr, start, start + ist[start]);
+        if (ist.length === k) {
+          yield arr.slice(0, k);
+          ++ist[start];
+        } else {
+          ist.push(0);
+          start++;
+        }
+
+        while (ist[start] === arr.length - start) {
+          shiftToEnd(arr, start);
+          ist.pop();
+          start--;
+          ist[start]++;
         }
       }
     },
-    getSize() {
-      return permutationsSize(len, r);
+    get size() {
+      return _size === null ? (_size = permutationsSize(arr.length, k)) : _size;
     },
   };
 }

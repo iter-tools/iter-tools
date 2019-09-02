@@ -11,6 +11,6 @@ assert<Iterable<[number, number, number]>>(
   product(Ø as Array<number>, Ø as Array<number>, Ø as Array<number>),
 );
 
-assert<number>(product(Ø as Array<number>, Ø as Array<number>, Ø as Array<number>).getSize());
+assert<number>(product(Ø as Array<number>, Ø as Array<number>, Ø as Array<number>).size);
 
 assert<Iterable<[string, string, string]>>(product(Ø as string, Ø as string, Ø as string));

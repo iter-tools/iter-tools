@@ -5,7 +5,7 @@ declare var Ø: never;
 
 assert<Iterable<[number, number, number]>>(combinations(3, Ø as Array<number>));
 
-assert<number>(combinations(3, Ø as Array<number>).getSize());
+assert<number>(combinations(3, Ø as Array<number>).size);
 
 assert<Iterable<number[]>>(combinations(Ø as number, Ø as Array<number>));
 
