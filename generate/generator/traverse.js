@@ -3,18 +3,18 @@ const recursive = require('recursive-readdir');
 const { matcher } = require('micromatch');
 
 function makeMatcher(root, glob) {
-  let match;
+  let isMatch;
   if (glob == null) return () => true;
-  else if (typeof glob === 'string') match = matcher(glob);
-  else if (Array.isArray(glob)) match = matcher(`(${glob.join('|')})`);
+  else if (typeof glob === 'string') isMatch = matcher(glob);
+  else if (Array.isArray(glob)) isMatch = matcher(`(${glob.join('|')})`);
   else throw new Error('glob configuration was not a string, Array, or null');
 
-  return path => match(relative(root, path));
+  return path => isMatch(relative(root, path));
 }
 
 function makeIgnoreMatcher(root, pattern) {
   const isMatch = matcher(pattern);
-  return (path, stats) => stats.isFile() && isMatch(relative(root, path));
+  return path => isMatch(relative(root, path));
 }
 
 function traverse(root, options) {
