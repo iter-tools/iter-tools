@@ -24,6 +24,7 @@
     "build:es2018": "cross-env BABEL_ENV=es babel --keep-file-extension --config-file ./babel-es2018.config.js -x .mjs src -d es2018",
     "build:es2018-cjs": "cross-env BABEL_ENV=cjs babel --config-file ./babel-es2018.config.js -x .mjs src -d es2018",
     "build:copyts": "copyfiles -f src/*.ts es5 && copyfiles -f src/*.ts es2015 && copyfiles -f src/*.ts es2018",
+    "create:method": "node ./generate-yo method",
     "verify": "run-s generate format verify:* build test",
     "verify:git-clean": "node ./verify-git-clean.js",
     "format": "prettier --write 'src/**/*.{js,mjs,d.ts}' 'generate/**/*.js'",
@@ -88,6 +89,7 @@
     "camelize": "^1.0.0",
     "copyfiles": "^2.0.0",
     "cross-env": "^5.1.6",
+    "decamelize": "^3.2.0",
     "eslint": "^5.16.0",
     "eslint-config-prettier": "^6.0.0",
     "eslint-config-standard": "^12.0.0",
@@ -115,7 +117,9 @@
     "tslint": "^5.16.0",
     "tslint-config-prettier": "^1.18.0",
     "tslint-config-standard": "^8.0.1",
-    "typescript": "^3.4.5"
+    "typescript": "^3.4.5",
+    "yeoman-environment": "^2.4.0",
+    "yeoman-generator": "^4.0.2"
   },
   "resolutions": {
     "babel-core": "7.0.0-bridge.0"

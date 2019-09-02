@@ -7,6 +7,7 @@ function makeProject(projectConfig) {
         '.*': '<rootDir>/transformers/' + projectConfig.name,
       },
       testMatch: ['**/__tests__/**/!($)*.test.*(m)js'],
+      testPathIgnorePatterns: ['generate-yo/generators/[^/]+/templates?']
     },
     projectConfig,
   );
