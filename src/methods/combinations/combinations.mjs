@@ -2,7 +2,12 @@ import { map } from '../$map/map';
 import { range } from '../range/range';
 import { permutations } from '../permutations/permutations';
 import { iterableCurry } from '../../internal/iterable';
-import { combinationsSize } from '../../internal/math';
+import factorial from '../../internal/factorial';
+
+function combinationsSize(len, r) {
+  if (len === 0 || r === 0 || r > len) return 0;
+  return Number(factorial(len) / (factorial(r) * factorial(len - r)));
+}
 
 function isSorted(arr) {
   if (arr.length < 2) return true;

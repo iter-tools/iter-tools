@@ -1,5 +1,5 @@
 import { iterableCurry } from '../../internal/iterable';
-import { permutationsSize } from '../../internal/math';
+import factorial from '../../internal/factorial';
 
 function swap(arr, aIdx, bIdx) {
   const temp = arr[aIdx];
@@ -14,6 +14,11 @@ function shiftToEnd(arr, idx) {
     arr[i] = arr[i + 1];
   }
   arr[arr.length - 1] = toShift;
+}
+
+function permutationsSize(len, r) {
+  if (len === 0 || r === 0 || r > len) return 0;
+  return Number(factorial(len) / factorial(len - r));
 }
 
 export function permutations(iterable, k) {
