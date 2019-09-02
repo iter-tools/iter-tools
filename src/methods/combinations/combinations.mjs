@@ -16,8 +16,9 @@ function isSorted(arr) {
 }
 
 export function combinations(iterable, r) {
-  const arr = Array.from(iterable);
+  const arr = [...iterable];
   const len = arr.length;
+  let _size = null;
 
   r = r === undefined ? len : r;
 
@@ -27,12 +28,13 @@ export function combinations(iterable, r) {
 
       for (let indices of permutations(range(0, len), r)) {
         if (isSorted(indices)) {
-          yield Array.from(map(indices, toIndex));
+          yield [...map(indices, toIndex)];
         }
       }
     },
-    getSize() {
-      return combinationsSize(len, r);
+
+    get size() {
+      return _size === null ? (_size = combinationsSize(len, r)) : _size;
     },
   };
 }

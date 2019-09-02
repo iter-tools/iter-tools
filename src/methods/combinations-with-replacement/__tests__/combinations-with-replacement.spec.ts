@@ -10,12 +10,12 @@ import { combinationsWithReplacement } from '../../..';
 describe('combinationsWithReplacement', () => {
   it('returns empty', () => {
     const iter = combinationsWithReplacement([]);
-    expect(iter.getSize()).toEqual(0);
+    expect(iter.size).toEqual(0);
     expect(Array.from(iter)).toEqual([]);
   });
   it('returns combinationsWithReplacement', () => {
     const iter = combinationsWithReplacement([1, 2]);
-    expect(iter.getSize()).toEqual(3);
+    expect(iter.size).toEqual(3);
     expect(Array.from(iter)).toEqual([[1, 1], [1, 2], [2, 2]]);
   });
   it('can be reused', () => {
@@ -23,9 +23,9 @@ describe('combinationsWithReplacement', () => {
     expect(Array.from(iter)).toEqual([[1, 1], [1, 2], [2, 2]]);
     expect(Array.from(iter)).toEqual([[1, 1], [1, 2], [2, 2]]);
   });
-  it.only('returns combinationsWithReplacement (max n)', () => {
+  it('returns combinationsWithReplacement (max n)', () => {
     const iter = combinationsWithReplacement(2, [1, 2, 3, 4]);
-    expect(iter.getSize()).toEqual(10);
+    expect(iter.size).toEqual(10);
     const expected = [
       [1, 1],
       [1, 2],
