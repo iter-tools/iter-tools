@@ -6,6 +6,7 @@
   "module": "es5/index.mjs",
   "jsnext:main": "es5/index.mjs",
   "typings": "es5/index.d.ts",
+  "sideEffects": false,
   "scripts": {
     "test:js": "jest",
     "test:types": "tsc",
