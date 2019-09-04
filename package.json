@@ -6,6 +6,7 @@
   "module": "es5/index.mjs",
   "jsnext:main": "es5/index.mjs",
   "typings": "es5/index.d.ts",
+  "sideEffects": false,
   "scripts": {
     "lint": "eslint --fix --ext .mjs,.js ./src ./src/__test__ ./benchmarks && npm run tslint",
     "test:es5": "npm run build:es5-cjs && jest --moduleNameMapper '{\"^iter-tools(.*)\": \"<rootDir>/es5$1\"}'",
