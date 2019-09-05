@@ -1,0 +1,1 @@
+`splitOnAnySubseq` is undocumented.

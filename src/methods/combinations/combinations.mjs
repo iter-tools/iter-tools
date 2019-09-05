@@ -1,23 +1,13 @@
+import { iterableCurry } from '../../internal/iterable';
+import factorial from '../../internal/factorial';
 import { map } from '../$map/map';
 import { range } from '../range/range';
 import { permutations } from '../permutations/permutations';
-import { iterableCurry } from '../../internal/iterable';
-import factorial from '../../internal/factorial';
+import { isSorted } from '../$is-sorted/is-sorted';
 
 function combinationsSize(len, r) {
   if (len === 0 || r === 0 || r > len) return 0;
   return Number(factorial(len) / (factorial(r) * factorial(len - r)));
-}
-
-function isSorted(arr) {
-  if (arr.length < 2) return true;
-
-  for (let i = 1; i < arr.length; i++) {
-    if (arr[i - 1] > arr[i]) {
-      return false;
-    }
-  }
-  return true;
 }
 
 export function combinations(iterable, r) {

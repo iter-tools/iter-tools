@@ -8,7 +8,8 @@
 
 import Heap from 'little-ds-toolkit/lib/heap';
 import { iterableCurry } from '../../internal/iterable';
-export function* takeSorted(iterable, comparator, number) {
+import defaultCompare from '../../internal/compare';
+export function* takeSorted(iterable, comparator = defaultCompare, number) {
   const heap = new Heap(comparator);
 
   for (const item of iterable) {

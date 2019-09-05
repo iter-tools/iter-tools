@@ -1,0 +1,1 @@
+`isSorted` is undocumented.

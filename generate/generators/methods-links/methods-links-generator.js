@@ -11,6 +11,7 @@ class MethodsLinksGenerator extends BaseGenerator {
     super(options);
 
     this.glob = ['src/methods/*/[^$]*.{mjs,d.ts}'];
+    this.ignored = ['src/methods/*_/**'];
   }
 
   getDestPath(implPath) {

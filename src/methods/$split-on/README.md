@@ -1,0 +1,1 @@
+`splitOn` is undocumented.
