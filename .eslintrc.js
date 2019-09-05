@@ -6,6 +6,9 @@ module.exports = {
     sourceType: 'module',
   },
   env: { es6: true },
+  rules: {
+    'import/no-duplicates': 'off'
+  },
   overrides: [
     {
       files: ['$*.js'],

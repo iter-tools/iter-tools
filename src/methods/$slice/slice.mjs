@@ -31,7 +31,7 @@ function bufferedSlice(iterable, start, end, step) {
   return simpleSlice(buffer, 0, newEnd, step);
 }
 
-function* simpleSlice(iterable, start, end, step) {
+export function* simpleSlice(iterable, start, end, step) {
   let currentPos = 0;
   let nextValidPos = start;
   const bufferSize = Math.abs(end);
@@ -64,8 +64,6 @@ function* simpleSlice(iterable, start, end, step) {
     currentPos++;
   }
 }
-
-export { simpleSlice as $simpleSlice };
 export function* slice(iterable, start, end, step) {
   if (start >= 0) {
     yield* simpleSlice(iterable, start, end, step);
