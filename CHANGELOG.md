@@ -40,6 +40,15 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
  -  `isEmpty`, `asyncIsEmpty`
  -  `asyncMapParallel`, `asyncFilterParallel`, `asyncFlatMapParallel`
  -  `interleave`, `asyncInterleave`, `asyncInterleaveReady`
+ -  `equal`, `asyncEqual`
+ -  `includes`, `includesAny`, `includesSubseq`, `includesAnySubseq`, `asyncIncludes`, `asyncIncludesAny`, `asyncIncludesSubseq`, `asyncIncludesAnySubseq`
+ -  `startsWith`, `startsWithAny`, `startsWithSubseq`, `startsWithAnySubseq`, `asyncStartsWith`, `asyncStartsWithAny`, `asyncStartsWithSubseq`, `asyncStartsWithAnySubseq`
+ -  `splitOn`, `splitOnAny`, `splitOnSubseq`, `splitOnAnySubseq`, `asyncSplitOn`, `asyncSplitOnAny`, `asyncSplitOnSubseq`, `asyncSplitOnAnySubseq`
+ -  `splitWith`, `asyncSplitWith`
+ -  `splitAt`, `asyncSplitAt`
+ -  `joinWith`, `joinWithSubseq`, `asyncJoinWith`, `asyncJoinWithSubseq`
+ -  `joinAsStringWith`, `asyncJoinAsStringWith`
+ -  `explode`, `asyncExplode`
 
 **Arguments**
  -  [optional] `forks` (count) for `fork` and `asyncFork`

@@ -31,7 +31,7 @@
     "format": "prettier --write 'src/**/*.{js,mjs,d.ts}' 'generate/**/*.js'",
     "lint": "run-s lint:*",
     "lint:ts": "tslint -c tslint.json -p . 'src/**/*.ts'",
-    "lint:js": "eslint --ext .mjs,.js ./src ./src/__tests__ ./generate ./benchmarks",
+    "lint:js": "eslint --ext .mjs,.js ./src ./generate ./benchmarks",
     "prepublishOnly": "npm run build",
     "precommit": "npm run lint"
   },

@@ -1,0 +1,1 @@
+`splitOnAny` is undocumented.
