@@ -1,4 +1,7 @@
+const { basename } = require('path');
+
 const { rename } = require('../../names');
+
 function renameImport(path, ASYNC) {
   return path.replace(/(^|.\/)\$([^/]*)$/, ASYNC ? '$1async-$2' : '$1$2');
 }
@@ -26,61 +29,36 @@ const renameVisitor = {
   },
 };
 
+function forceRename(path, name, newName) {
+  // A normal path.scope.rename will split
+  // ```
+  // export function $foo() {}`
+  // ```
+  // into
+  // ```
+  // function foo() {}
+  // export { foo as $foo }
+  // ```
+  // This is difficult to reverse. It was easier to separate out
+  // the core of the renaming logic.
+
+  const binding = path.scope.getBinding(name);
+  const { scope } = binding;
+
+  scope.traverse(scope.block, renameVisitor, { name, newName, binding });
+
+  scope.removeOwnBinding(name);
+  scope.bindings[newName] = binding;
+  binding.identifier.name = newName;
+}
+
 module.exports = function resolveDollarIdentifiersAndImports({ types: t }, { ASYNC }) {
   const visitor = {
-    ReferencedIdentifier(path, state) {
-      const { node, scope, parentPath } = path;
-      const { name } = node;
-
-      if (name.startsWith('$')) {
-        const newName = rename(name.slice(1), ASYNC);
-
-        scope.rename(name, newName);
-
-        const binding = scope.getBinding(newName);
-
-        if (!binding) {
-          if (parentPath.isTSTypeReference()) {
-            node.name = newName;
-          }
-          return;
-        }
-
-        const { specifiers } = binding.path.parentPath.node;
-
-        if (binding.path.isImportSpecifier()) {
-          if (specifiers.find(specifier => specifier.imported.name === newName)) {
-            binding.path.remove();
-          } else {
-            binding.path.node.imported.name = newName;
-          }
-        }
-      }
-    },
-
-    FunctionDeclaration(path, state) {
+    'VariableDeclarator|ClassDeclaration|FunctionDeclaration'(path, state) {
       const { name } = path.node.id;
 
-      if (name.startsWith('$')) {
-        // Normally we would do this with path.scope.rename
-        // Unfortunately rename would turn
-        // ```
-        //   export function $foo () {}
-        //   // into
-        //   function asyncFoo () {}
-        //   export {asyncFoo as $foo}
-        // ```
-        // Therefore we must work at a lower level.
-
-        const binding = path.scope.getBinding(name);
-        const { scope } = binding;
-        const newName = rename(name.slice(1), ASYNC);
-
-        scope.traverse(scope.block, renameVisitor, { name, newName, binding });
-
-        scope.removeOwnBinding(name);
-        scope.bindings[newName] = binding;
-        binding.identifier.name = newName;
+      if (name && name.startsWith('$')) {
+        forceRename(path, name, rename(name.slice(1), ASYNC));
       }
     },
 
@@ -98,8 +76,49 @@ module.exports = function resolveDollarIdentifiersAndImports({ types: t }, { ASY
     },
 
     ImportDeclaration(path, state) {
-      const { source } = path.node;
+      const { source, specifiers } = path.node;
       source.value = renameImport(source.value, ASYNC);
+
+      if (!ASYNC && basename(source.value).startsWith('async-')) {
+        path.remove();
+        return;
+      }
+
+      const removeSpecifiers = new Set();
+
+      for (const specifier of specifiers) {
+        if (t.isImportSpecifier(specifier)) {
+          const importedName = specifier.imported.name;
+          if (importedName.startsWith('$')) {
+            const newName = rename(importedName.slice(1), ASYNC);
+
+            specifier.imported.name = newName;
+          }
+        }
+      }
+
+      for (const specifier of specifiers) {
+        const localName = specifier.local.name;
+        if (localName.startsWith('$')) {
+          const newName = rename(localName.slice(1), ASYNC);
+
+          if (t.isImportSpecifier(specifier)) {
+            if (
+              specifiers.find(
+                otherSpecifier =>
+                  t.isImportSpecifier(otherSpecifier) &&
+                  otherSpecifier.imported.name === specifier.imported.name &&
+                  otherSpecifier !== specifier,
+              )
+            ) {
+              removeSpecifiers.add(specifier);
+            }
+          }
+          path.scope.rename(localName, newName);
+        }
+      }
+
+      path.node.specifiers = specifiers.filter(s => !removeSpecifiers.has(s));
     },
 
     ExportNamedDeclaration(path, state) {

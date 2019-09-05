@@ -31,7 +31,7 @@ async function bufferedSlice(iterable, start, end, step) {
   return asyncSimpleSlice(buffer, 0, newEnd, step);
 }
 
-async function* asyncSimpleSlice(iterable, start, end, step) {
+export async function* asyncSimpleSlice(iterable, start, end, step) {
   let currentPos = 0;
   let nextValidPos = start;
   const bufferSize = Math.abs(end);
@@ -64,8 +64,6 @@ async function* asyncSimpleSlice(iterable, start, end, step) {
     currentPos++;
   }
 }
-
-export { asyncSimpleSlice as $simpleSlice };
 export async function* asyncSlice(iterable, start, end, step) {
   if (start >= 0) {
     yield* asyncSimpleSlice(iterable, start, end, step);
