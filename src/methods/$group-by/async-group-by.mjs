@@ -86,7 +86,7 @@ export async function* asyncGroupBy(iterable, getKey) {
     }
   } finally {
     state.groupsConsumed = true;
-    returnIterator(state);
+    await returnIterator(state);
   }
 }
 export default asyncIterableCurry(asyncGroupBy);
