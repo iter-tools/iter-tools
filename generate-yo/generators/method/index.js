@@ -1,8 +1,7 @@
 const Generator = require('yeoman-generator');
 const recursiveRead = require('recursive-readdir');
 const decamelize = require('decamelize');
-const { relative, resolve, join } = require('path');
-const fs = require('fs');
+const { relative, join } = require('path');
 
 function throwOnValidationError(message) {
   if (message && typeof message === 'string') {
@@ -90,6 +89,10 @@ class MethodGenerator extends BaseGenerator {
       desc: 'Whether the method returns a single value (as opposed to yielding many).',
       alias: 'r',
     });
+    this.option('maps', {
+      desc: 'Whether the method yields many values (as opposed to returning one).',
+      alias: 'm',
+    });
     this.option('sync', {
       desc: 'Whether the method should have a sync implementation',
       alias: 's',
@@ -106,11 +109,15 @@ class MethodGenerator extends BaseGenerator {
     this._options['skip-install'].hide = true;
     this._options['skip-cache'].hide = true;
 
-    const { name, reduces, both, sync, async } = this.options;
+    const { name, maps, reduces, both, sync, async } = this.options;
+
+    if (maps && reduces) {
+      throw new Error('Cannot specify both --maps and --reduces.');
+    }
 
     this._arguments = {
       name,
-      reduces,
+      reduces: reduces ? true : maps ? false : undefined,
       async: both || (sync && async) ? 'both' : async ? 'async' : sync ? 'sync' : undefined,
     };
 
@@ -134,7 +141,7 @@ class MethodGenerator extends BaseGenerator {
     }
 
     const prompts = makeOtherPrompts(isAsync);
-    const necessaryPrompts = prompts.filter(prompt => this.options[prompt.name] === undefined);
+    const necessaryPrompts = prompts.filter(prompt =>  this._arguments[prompt.name] === undefined);
 
     if (necessaryPrompts.length) {
       Object.assign(this._arguments, await this.prompt(necessaryPrompts));
