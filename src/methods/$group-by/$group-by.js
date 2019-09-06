@@ -89,7 +89,7 @@ export function* $groupBy(iterable, getKey) {
     }
   } finally {
     state.groupsConsumed = true;
-    returnIterator(state);
+    $await(returnIterator(state));
   }
 }
 
