@@ -32,14 +32,9 @@ function debounce(fn, ms) {
   return debounced;
 }
 
-function* filter(predicate, iterable) {
-  for (const item of iterable) {
-    if (predicate(item)) yield item;
-  }
+function handleError(e) {
+  console.error(e);
+  process.exit(1);
 }
 
-function wrapWithArray(maybeArray) {
-  return Array.isArray(maybeArray) ? maybeArray : [maybeArray];
-}
-
-module.exports = { delay, debounce, filter, wrapWithArray };
+module.exports = { delay, debounce, handleError };

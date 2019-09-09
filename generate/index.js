@@ -45,7 +45,10 @@ if (argv.help) {
       TypeTestsGenerator,
       MonolithicGenerator,
     ],
-    argv,
+    {
+      ...argv,
+      alwaysIgnored: ['es5', 'es2015', 'es2018', 'coverage'],
+    },
   );
 
   generator.generate();

@@ -30,7 +30,6 @@ export { default as flat } from './flat';
 export { default as flatMap } from './flat-map';
 export { default as fork } from './fork';
 export { default as groupBy } from './group-by';
-export { default as index } from './index';
 export { default as interleave } from './interleave';
 export { default as interpose } from './interpose';
 export { default as isEmpty } from './is-empty';
