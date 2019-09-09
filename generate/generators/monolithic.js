@@ -12,6 +12,8 @@ class MonoliticGenerator extends Generator {
 
   afterPathsChanged() {
     this.generatedPaths.add('.gitattributes');
+    this.generatedPaths.add('src/index.mjs');
+    this.generatedPaths.add('src/index.d.ts');
 
     this.writeMonolithic('.gitattributes', gitattributesFile(this.generatedPaths));
     this.writeMonolithic('src/index.mjs', indexFile(this.generatedPaths));

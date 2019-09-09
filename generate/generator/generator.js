@@ -1,47 +1,41 @@
 const fs = require('fs');
-const { join } = require('path');
-const sane = require('sane');
 const loglevel = require('loglevel');
-const { path: rootDir } = require('package.root');
 
-const { debounce, filter, wrapWithArray } = require('./utils');
+const { handleError } = require('./utils');
+const { matcher } = require('./matcher');
 const { isGeneratedFromTemplate } = require('./comments');
-const FileCache = require('./file-cache');
-const traverse = require('./traverse');
 
 const log = loglevel.getLogger('generator');
 
 const ADD = 'ADD';
 const REMOVE = 'REMOVE';
 
-function handleError(e) {
-  console.error(e);
-  process.exit(1);
-}
-
 class Generator {
   constructor(options) {
-    const { watch, quiet, multiGenerator } = options;
+    const { watch, multiGenerator } = options;
 
     this.configurations = [null];
-    this.ignored = ['.git', 'node_modules'];
+    this.ignored = [];
     this.glob = '**';
     this.inWatchMode = false;
     this.shouldWatch = watch;
-    this.rootGenerator = multiGenerator || this;
+    this.multiGenerator = multiGenerator;
     this.options = options;
-
-    if (!multiGenerator) {
-      // TODO How can I make this more DRY?
-      this.pathsChanged = debounce(this.pathsChanged.bind(this), 50);
-      this.generatedPaths = multiGenerator ? null : new FileCache();
-
-      log.setLevel(quiet ? 'error' : 'info');
-    }
   }
 
   get generatedPaths() {
-    return this.rootGenerator.generatedPaths;
+    return this.multiGenerator.generatedPaths;
+  }
+
+  resolve(path) {
+    return this.multiGenerator.resolve(path);
+  }
+
+  shouldProcess(path) {
+    this._matcher = this._matcher || matcher(this.glob);
+    this._ignoreMatcher = this._ignoreMatcher || matcher(this.ignored);
+
+    return this._matcher(path) && !this._ignoreMatcher(path);
   }
 
   generatePathPerConfiguration(sourceFilename, operation) {
@@ -69,13 +63,12 @@ class Generator {
     }
   }
 
-  resolve(path) {
-    return join(rootDir, path);
-  }
-
   write(path, content) {
     fs.writeFileSync(this.resolve(path), content);
     this.generatedPaths.add(path);
+    if (!this.inWatchMode) {
+      this.multiGenerator.addPath(path);
+    }
   }
 
   writeMonolithic(path, content) {
@@ -91,59 +84,20 @@ class Generator {
     }
   }
 
-  addPath(path) {
+  pathAdded(path) {
     this.generatePathPerConfiguration(path, ADD);
-    this.rootGenerator.pathsChanged();
   }
 
-  removePath(path) {
+  pathRemoved(path) {
     this.generatePathPerConfiguration(path, REMOVE);
-    this.rootGenerator.pathsChanged();
   }
 
-  updatePath(path) {
+  pathUpdated(path) {
     if (this.generatedPaths.getAttribute(path, 'monolithic')) {
-      this.rootGenerator.pathsChanged();
+      this.pathsChanged();
     } else {
       this.generatePathPerConfiguration(path);
     }
-  }
-
-  getSaneOptions() {
-    const { poll, watchman, watchmanPath } = this.options;
-    return { poll, watchman, watchmanPath };
-  }
-
-  /**
-   * Use a file watcher to incrementally rebuild when files change
-   */
-  watch() {
-    const { ignored, monolithicPaths, glob: _glob } = this;
-    const glob = [...wrapWithArray(_glob), ...monolithicPaths];
-
-    const watcher = sane(rootDir, Object.assign({ glob, ignored }, this.getSaneOptions()));
-
-    this.inWatchMode = true;
-
-    watcher.on('add', path => this.addPath(path));
-    watcher.on('delete', path => this.removePath(path));
-    watcher.on('change', path => this.updatePath(path));
-  }
-
-  initial() {
-    const { ignored, glob, generatedPaths } = this;
-
-    return traverse(rootDir, { glob, ignored })
-      .then(initialPaths => {
-        initialPaths.forEach(path => this.addPath(path));
-
-        this.rootGenerator.pathsChanged.flush();
-
-        this.monolithicPaths = [
-          ...filter(path => generatedPaths.getAttribute(path, 'monolithic'), generatedPaths),
-        ];
-      })
-      .catch(handleError);
   }
 
   /**

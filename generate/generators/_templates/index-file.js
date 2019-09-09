@@ -17,7 +17,7 @@ module.exports = generatedPaths =>
 
 ${[...generatedPaths]
   .map(getMethodName)
-  .filter(Boolean)
+  .filter(name => name && name !== 'index')
   .sort(compareNames)
   .map(name => `export { default as ${camelcase(name)} } from './${name}';`)
   .join('\n')}
