@@ -33,20 +33,23 @@ function variadicCurryWithValidationInner(config, args) {
   } = config;
 
   if (args.length > minArgs) {
-    let iterableArgsStart = -1;
-    let allArgsIterable = true;
-    if (variadic) {
-      iterableArgsStart = args.findIndex((arg, i) => isIterable(arg) && i >= minArgs);
+    let argsIterable = true;
 
+    const iterableArgsStart = variadic
+      ? args.findIndex((arg, i) => isIterable(arg) && i >= minArgs)
+      : Math.min(maxArgs, args.length - 1);
+    const iterableArgsEnd = variadic ? args.length : iterableArgsStart + 1;
+
+    if (variadic) {
       for (let i = iterableArgsStart; i < args.length; i++) {
-        allArgsIterable = allArgsIterable && isIterable(args[i]);
+        argsIterable = argsIterable && isIterable(args[i]);
       }
-    } else if (isIterable(args[args.length - 1])) {
+    } else {
       // Non-variadic functions are allowed to have more than one iterable-looking parameter
-      iterableArgsStart = args.length - 1;
+      argsIterable = isIterable(args[iterableArgsStart]);
     }
 
-    if (args.length > maxArgs && (iterableArgsStart === -1 || !allArgsIterable)) {
+    if (args.length > maxArgs && (iterableArgsStart === -1 || !argsIterable)) {
       const iterableTypeOrNames = variadic ? `...${iterableType}s` : iterableType;
       const baseMessage =
         `${fn.name} takes up to ${maxArgs} arguments, followed by ${iterableTypeOrNames}. ` +
@@ -58,10 +61,10 @@ function variadicCurryWithValidationInner(config, args) {
       }
     }
 
-    if (iterableArgsStart >= 0) {
+    if (iterableArgsStart >= 0 && argsIterable) {
       // We have received all the config args we are going to get
 
-      for (let i = iterableArgsStart; i < args.length; i++) {
+      for (let i = iterableArgsStart; i < iterableArgsEnd; i++) {
         args[i] = applyOnIterableArgs(args[i]);
       }
 

@@ -116,6 +116,11 @@ describe('asyncIterableCurry', () => {
     expect(await asyncToArray(c1()(hello)()([]))).toEqual([hello]);
     expect(await asyncToArray(c0()()([]))).toEqual([]);
   });
+  it('ignores extra arguments after iterable', async () => {
+    expect(await asyncToArray(c2(hello, world, [], 'foo'))).toEqual([hello, world]);
+    expect(await asyncToArray(c1(hello)([], null))).toEqual([hello]);
+    expect(await asyncToArray(c0([], 4))).toEqual([]);
+  });
   it('throws with too many args', () => {
     expect(() => c2(hello)(goodbye)(world)([])).toThrowErrorMatchingSnapshot();
     expect(() => c1(hello)(world)([])).toThrowErrorMatchingSnapshot();

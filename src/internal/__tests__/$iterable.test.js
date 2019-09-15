@@ -112,6 +112,15 @@ describe($async`iterableCurry`, () => {
     }),
   );
 
+  it(
+    'ignores extra arguments after iterable',
+    $async(() => {
+      expect($await($toArray(c2(hello, world, [], 'foo')))).toEqual([hello, world]);
+      expect($await($toArray(c1(hello)([], null)))).toEqual([hello]);
+      expect($await($toArray(c0([], 4)))).toEqual([]);
+    }),
+  );
+
   it('throws with too many args', () => {
     expect(() => c2(hello)(goodbye)(world)([])).toThrowErrorMatchingSnapshot();
     expect(() => c1(hello)(world)([])).toThrowErrorMatchingSnapshot();
