@@ -7,6 +7,7 @@ const MethodsLinksGenerator = require('./generators/methods-links');
 const TestsGenerator = require('./generators/tests');
 const TypesGenerator = require('./generators/types');
 const TypeTestsGenerator = require('./generators/type-tests');
+const ApiMDGenerator = require('./generators/api-md');
 const MonolithicGenerator = require('./generators/monolithic');
 
 const argv = camelize(
@@ -43,6 +44,7 @@ if (argv.help) {
       TestsGenerator,
       TypesGenerator,
       TypeTestsGenerator,
+      ApiMDGenerator,
       MonolithicGenerator,
     ],
     {

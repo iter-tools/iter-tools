@@ -3,6 +3,7 @@
 # The template for this file is: generate/templates/gitattributes-file.js
 
 .gitattributes linguist-generated=true
+API.md linguist-generated=true
 src/__spec__/async-execute.spec.ts linguist-generated=true
 src/__spec__/async-filter.spec.ts linguist-generated=true
 src/__spec__/async-find.spec.ts linguist-generated=true
@@ -325,6 +326,7 @@ src/methods/$execute/async-execute.d.ts linguist-generated=true
 src/methods/$execute/async-execute.mjs linguist-generated=true
 src/methods/$execute/execute.d.ts linguist-generated=true
 src/methods/$execute/execute.mjs linguist-generated=true
+src/methods/$filter/__tests__/async-filter-parallel.spec.ts linguist-generated=true
 src/methods/$filter/__tests__/async-filter.spec.ts linguist-generated=true
 src/methods/$filter/__tests__/async-filter.test.js linguist-generated=true
 src/methods/$filter/__tests__/filter.spec.ts linguist-generated=true
@@ -491,6 +493,7 @@ src/methods/$join/async-join.d.ts linguist-generated=true
 src/methods/$join/async-join.mjs linguist-generated=true
 src/methods/$join/join.d.ts linguist-generated=true
 src/methods/$join/join.mjs linguist-generated=true
+src/methods/$map/__tests__/async-map-parallel.spec.ts linguist-generated=true
 src/methods/$map/__tests__/async-map.spec.ts linguist-generated=true
 src/methods/$map/__tests__/async-map.test.js linguist-generated=true
 src/methods/$map/__tests__/map.spec.ts linguist-generated=true
@@ -681,9 +684,7 @@ src/methods/$zip/zip.d.ts linguist-generated=true
 src/methods/$zip/zip.mjs linguist-generated=true
 src/methods/apply/__tests__/apply.spec.ts linguist-generated=true
 src/methods/async-buffer/__tests__/async-buffer.spec.ts linguist-generated=true
-src/methods/async-filter-parallel/__tests__/async-filter-parallel.spec.ts linguist-generated=true
 src/methods/async-interleave-ready/__tests__/async-interleave-ready.spec.ts linguist-generated=true
-src/methods/async-map-parallel/__tests__/async-map-parallel.spec.ts linguist-generated=true
 src/methods/async-throttle/__tests__/async-throttle.spec.ts linguist-generated=true
 src/methods/call/__tests__/call.spec.ts linguist-generated=true
 src/methods/combinations-with-replacement/__tests__/combinations-with-replacement.spec.ts linguist-generated=true

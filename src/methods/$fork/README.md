@@ -37,6 +37,3 @@ for (const [n, nsquared] of zip(proxy1, map(square, proxy1))) {
   console.log(`${n} squared is ${nsquared}`)
 }
 ```
-
-Async notes:
- -  Returns an iterable of async iterables

@@ -1,6 +1,6 @@
 const { basename } = require('path');
 
-const { rename } = require('../../names');
+const { renameDollar } = require('../../names');
 
 function renameImport(path, ASYNC) {
   return path.replace(/(^|.\/)\$([^/]*)$/, ASYNC ? '$1async-$2' : '$1$2');
@@ -58,7 +58,7 @@ module.exports = function resolveDollarIdentifiersAndImports({ types: t }, { ASY
       const { name } = path.node.id;
 
       if (name && name.startsWith('$')) {
-        forceRename(path, name, rename(name.slice(1), ASYNC));
+        forceRename(path, name, renameDollar(name, ASYNC));
       }
     },
 
@@ -69,7 +69,7 @@ module.exports = function resolveDollarIdentifiersAndImports({ types: t }, { ASY
       if (name.startsWith('$') && /\.d\.ts$/.test(state.filename)) {
         // Babel doesn't understand the scope of type definitions.
         // Instead we just rename the symbols where we find them.
-        const newName = rename(name.slice(1), ASYNC);
+        const newName = renameDollar(name, ASYNC);
 
         node.name = newName;
       }
@@ -90,7 +90,7 @@ module.exports = function resolveDollarIdentifiersAndImports({ types: t }, { ASY
         if (t.isImportSpecifier(specifier)) {
           const importedName = specifier.imported.name;
           if (importedName.startsWith('$')) {
-            const newName = rename(importedName.slice(1), ASYNC);
+            const newName = renameDollar(importedName, ASYNC);
 
             specifier.imported.name = newName;
           }
@@ -100,7 +100,7 @@ module.exports = function resolveDollarIdentifiersAndImports({ types: t }, { ASY
       for (const specifier of specifiers) {
         const localName = specifier.local.name;
         if (localName.startsWith('$')) {
-          const newName = rename(localName.slice(1), ASYNC);
+          const newName = renameDollar(localName, ASYNC);
 
           if (t.isImportSpecifier(specifier)) {
             if (
@@ -128,7 +128,7 @@ module.exports = function resolveDollarIdentifiersAndImports({ types: t }, { ASY
 
         for (const specifier of specifiers) {
           if (specifier.exported.name.startsWith('$')) {
-            specifier.exported.name = rename(specifier.exported.name.slice(1), ASYNC);
+            specifier.exported.name = renameDollar(specifier.exported.name, ASYNC);
           }
         }
       }

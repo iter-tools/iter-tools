@@ -15,7 +15,7 @@ If you want even more ideas about how and when Iterables and iter-tools can help
 
 ## API docs
 
-You can see the API docs on npm: https://www.npmjs.com/package/iter-tools. We are also in the process of building a documentation website that will be signficantly more usable.
+Please read our [API docs](https://github.com/iter-tools/iter-tools/blob/master/API.md)!
 
 ## Why iter-tools?
 

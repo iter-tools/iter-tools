@@ -15,6 +15,3 @@ You can also curry it:
 ```js
 collate((a, b) => a - b)([[1, 2, 5, 6], [3, 4]]) // 1, 2, 3, 4, 5, 6
 ```
-
-Async notes:
- -  `asyncCollate` comparator function is still synchronous
