@@ -12,6 +12,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
  -  `iterable`, `asyncIterable`
  -  `tee`, `asyncTee`
  -  `merge`, `asyncMerge` (Instead use either `collate` or `interleave`.)
+ -  `splitLines`, `asyncSplitLines`
 
 **Aliases**
  -  `count` was an alias for `range`
