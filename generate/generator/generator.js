@@ -11,6 +11,13 @@ const ADD = 'ADD';
 const REMOVE = 'REMOVE';
 
 class Generator {
+  static get ADD() {
+    return ADD;
+  }
+  static get REMOVE() {
+    return REMOVE;
+  }
+
   constructor(options) {
     const { watch, multiGenerator } = options;
 
@@ -39,6 +46,9 @@ class Generator {
   }
 
   generatePathPerConfiguration(sourceFilename, operation) {
+    if (this.recordOperation) this.recordOperation(sourceFilename, operation);
+    if (!this.getDestPath) return;
+
     for (const configuration of this.configurations) {
       const destPath = this.getDestPath(sourceFilename, configuration);
 

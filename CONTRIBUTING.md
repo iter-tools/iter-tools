@@ -25,6 +25,7 @@ The project is actively maintained, so your issues and PRs will definitely be se
 ## What you need
 To contribute you will need at least node version 8. We do test our code against language functionality (async generators) that exists only in node 10+, but our CI environment will handle that for you.
 
+### The code generator
 You'll also need to run our code generator.
 First install its dependencies with `npm install`
 Now you can run the generator one of the following ways:
