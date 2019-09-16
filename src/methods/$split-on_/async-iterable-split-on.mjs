@@ -80,7 +80,9 @@ async function* generateSubsequence(state, onSubseqs, consumer, isFirst) {
 }
 
 async function* asyncIterableSplitOn(iterable, config, on) {
-  const onSubseqs = (await asyncToAnySubseq(config, on)).filter(subseq => subseq.length);
+  const onSubseqs = (await asyncToAnySubseq(config, on))
+    .filter(subseq => subseq.length)
+    .sort((a, b) => b.length - a.length);
   const maxMatchLength = onSubseqs.reduce((max, { length }) => Math.max(max, length), 1);
   const state = {
     iterator: null,

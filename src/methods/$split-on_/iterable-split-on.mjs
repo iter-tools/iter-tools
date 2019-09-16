@@ -80,7 +80,9 @@ function* generateSubsequence(state, onSubseqs, consumer, isFirst) {
 }
 
 function* iterableSplitOn(iterable, config, on) {
-  const onSubseqs = toAnySubseq(config, on).filter(subseq => subseq.length);
+  const onSubseqs = toAnySubseq(config, on)
+    .filter(subseq => subseq.length)
+    .sort((a, b) => b.length - a.length);
   const maxMatchLength = onSubseqs.reduce((max, { length }) => Math.max(max, length), 1);
   const state = {
     iterator: null,

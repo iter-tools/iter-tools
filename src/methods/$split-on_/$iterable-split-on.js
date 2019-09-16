@@ -78,7 +78,9 @@ function* generateSubsequence(state, onSubseqs, consumer, isFirst) {
 
 $async;
 function* $iterableSplitOn(iterable, config, on) {
-  const onSubseqs = $await($toAnySubseq(config, on)).filter(subseq => subseq.length);
+  const onSubseqs = $await($toAnySubseq(config, on))
+    .filter(subseq => subseq.length)
+    .sort((a, b) => b.length - a.length);
 
   const maxMatchLength = onSubseqs.reduce((max, { length }) => Math.max(max, length), 1);
 

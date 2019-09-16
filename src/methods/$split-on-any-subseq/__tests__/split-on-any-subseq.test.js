@@ -15,6 +15,43 @@ describe('splitOnAnySubseq', () => {
       toArray(map(group => toArray(group), splitOnAnySubseq([[2, 2], [3, 3]], [1, 2, 2, 3, 3, 4]))),
     ).toEqual([[1], [], [4]]);
   });
+  it('splits on the longest subsequence that matches', () => {
+    expect(
+      toArray(
+        map(group => toArray(group), splitOnAnySubseq([[2, 2, 3], [2, 3]], [1, 2, 2, 3, 3, 4])),
+      ),
+    ).toEqual([[1], [3, 4]]);
+    expect(
+      toArray(
+        map(group => toArray(group), splitOnAnySubseq([[2, 3], [2, 2, 3]], [1, 2, 2, 3, 3, 4])),
+      ),
+    ).toEqual([[1], [3, 4]]);
+    expect(
+      toArray(
+        map(group => toArray(group), splitOnAnySubseq([[2, 2, 3], [2, 2]], [1, 2, 2, 3, 3, 4])),
+      ),
+    ).toEqual([[1], [3, 4]]);
+    expect(
+      toArray(
+        map(group => toArray(group), splitOnAnySubseq([[2, 2], [2, 2, 3]], [1, 2, 2, 3, 3, 4])),
+      ),
+    ).toEqual([[1], [3, 4]]);
+  });
+  it('should only start matching again after a consumed split ends', () => {
+    expect(
+      toArray(
+        map(
+          group => toArray(group),
+          splitOnAnySubseq([[2, 3], [3, 2]], [1, 2, 3, 2, 2, 3, 2, 3, 4]),
+        ),
+      ),
+    ).toEqual([[1], [2], [], [4]]);
+    expect(
+      toArray(
+        map(group => toArray(group), splitOnAnySubseq([[2, 3], [2, 2, 3]], [1, 2, 2, 3, 3, 4])),
+      ),
+    ).toEqual([[1], [3, 4]]);
+  });
   it('does not split on the empty subsequence', () => {
     expect(
       toArray(map(group => toArray(group), splitOnAnySubseq([[], [null]], [1, 2, null, 4]))),
