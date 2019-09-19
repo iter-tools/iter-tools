@@ -11,8 +11,6 @@ jobs:
         npm-script:
           - test:js
           - test:types
-          - verify
-          - verify:git-clean
           - lint:js
           - lint:ts
     steps:
