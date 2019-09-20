@@ -1,27 +1,67 @@
 name: Node CI
 on: [push, pull_request]
 jobs:
-  test:
+  test-js:
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
-      matrix:
-        node-version:
-          - 10.x
-        npm-script:
-          - test:js
-          - test:types
-          - lint:js
-          - lint:ts
     steps:
       - uses: actions/checkout@v1
-      - name: Use Node.js ${{ matrix.node-version }}
+      - name: Use Node.js 10.x
         uses: actions/setup-node@v1
         with:
-          node-version: ${{ matrix.node-version }}
+          node-version: 10.x
       - name: Install dependencies
         run: npm ci
       - name: Test
         env:
           CI: 'true'
-        run: npm run ${{ matrix.npm-script }}
+        run: npm run test:js
+  test-types:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    steps:
+      - uses: actions/checkout@v1
+      - name: Use Node.js 10.x
+        uses: actions/setup-node@v1
+        with:
+          node-version: 10.x
+      - name: Install dependencies
+        run: npm ci
+      - name: Test
+        env:
+          CI: 'true'
+        run: npm run test:types
+  lint-js:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    steps:
+      - uses: actions/checkout@v1
+      - name: Use Node.js 10.x
+        uses: actions/setup-node@v1
+        with:
+          node-version: 10.x
+      - name: Install dependencies
+        run: npm ci
+      - name: Test
+        env:
+          CI: 'true'
+        run: npm run lint:js
+  lint-ts:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    steps:
+      - uses: actions/checkout@v1
+      - name: Use Node.js 10.x
+        uses: actions/setup-node@v1
+        with:
+          node-version: 10.x
+      - name: Install dependencies
+        run: npm ci
+      - name: Test
+        env:
+          CI: 'true'
+        run: npm run lint:ts
