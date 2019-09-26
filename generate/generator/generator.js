@@ -37,7 +37,7 @@ class Generator {
   debounce(method) {
     const debounced = debounce(method.bind(this), 50);
 
-    this.multiGenerator.debouncedMethods.push(debounced);
+    this.multiGenerator.debouncedMethods.unshift(debounced);
     return debounced;
   }
 
