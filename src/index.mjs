@@ -52,7 +52,6 @@ export { default as product } from './product';
 export { default as range } from './range';
 export { default as reduce } from './reduce';
 export { default as regexpExec } from './regexp-exec';
-export { default as regexpSplit } from './regexp-split';
 export { default as repeat } from './repeat';
 export { default as size } from './size';
 export { default as slice } from './slice';

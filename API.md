@@ -80,7 +80,6 @@ Reduce an iterable to a single value
 Work with Regular Expressions
 
 [regexpExec](#regexp-exec)  
-[regexpSplit](#regexp-split)  
 
 Combinatory iterables
 
@@ -491,10 +490,15 @@ splitOnSubseq([0, 0], [1, 0, 0, 2, 0, 0, 3]) // Iterable[[1], [2], [3]]
 See [splitOnSubseq](#split-on-subseq)
 
 ### splitWith
-Splits a sequence into multiple subsequences by running a predicate function against each item in the original. The splits occur where the predicate returns a truthy value, and the items which match the predicate will not be in any of the output subsequences
+Splits a sequence into multiple subsequences by running a predicate function against each item in the original. The splits occur where the predicate returns a truthy value, and the items which match the predicate will not be in any of the output subsequences.
+
+You may also specify a regex predicate, in which case the behavior will match `str.split(RegExp)`.
 
 ```js
-splitWith(x => x == null, [1, null, 2, undefined, 3]) // Iterable[Iterable[1], Iterable[2], Iterable[3]]
+splitWith(
+  x => x == null,
+  [1, null, 2, undefined, 3]
+) // Iterable[Iterable[1], Iterable[2], Iterable[3]]
 ```
 
 ### asyncSplitWith
@@ -913,9 +917,6 @@ for (let [match] of iter) {
 Notes:
  -  Global regular expressions are mutable; you can't reuse the same object more than once
  -  The destructuring expression [match] extracts only the first match
-
-### regexpSplit
-Undocumented
 
 
 ## Combinatory iterables

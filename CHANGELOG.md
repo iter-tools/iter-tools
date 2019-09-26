@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
  -  `tee`, `asyncTee`
  -  `merge`, `asyncMerge` (Instead use either `collate` or `interleave`.)
  -  `splitLines`, `asyncSplitLines`
+ -  `regexpSplit` (Instead use `splitWith(regexp, str)`.)
 
 **Aliases**
  -  `count` was an alias for `range`

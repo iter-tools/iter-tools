@@ -24,6 +24,10 @@ describe($async`splitWith`, () => {
           '33',
         ]);
       });
+
+      it('should split on a regex', () => {
+        expect($await($toArray($splitWith(/Ø/, '11Ø22Ø33')))).toEqual(['11', '22', '33']);
+      });
     });
   }
 });

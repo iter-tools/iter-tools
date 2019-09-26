@@ -17,5 +17,8 @@ describe('splitWith', () => {
     it('should split on every character which matches the accessor', () => {
       expect(toArray(splitWith(i => i === 'Ø', '11Ø22Ø33'))).toEqual(['11', '22', '33']);
     });
+    it('should split on a regex', () => {
+      expect(toArray(splitWith(/Ø/, '11Ø22Ø33'))).toEqual(['11', '22', '33']);
+    });
   });
 });
