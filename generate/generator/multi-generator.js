@@ -13,14 +13,15 @@ class MultiGenerator {
   constructor(GeneratorClasses, options) {
     this.options = Object.assign({ ignored: [] }, options, { multiGenerator: this });
 
-    this.generators = GeneratorClasses.map(GeneratorClass => new GeneratorClass(this.options));
-
     this.pathsChanged = debounce(this.pathsChanged.bind(this), 50);
+    this.debouncedMethods = [this.pathsChanged];
     this.generatedPaths = new FileCache();
 
     this.alwaysIgnored = ['.git', 'node_modules', ...this.options.ignored];
 
     log.setLevel(options.quiet ? 'error' : 'info');
+
+    this.generators = GeneratorClasses.map(GeneratorClass => new GeneratorClass(this.options));
   }
 
   pathsChanged() {
@@ -36,7 +37,9 @@ class MultiGenerator {
       .then(initialPaths => {
         initialPaths.forEach(path => this.addPath(path));
 
-        this.pathsChanged.flush();
+        for (const debounced of this.debouncedMethods) {
+          debounced.flush();
+        }
 
         if (this.options.watch) {
           log.info('Initial generation completed; watching for changes...');

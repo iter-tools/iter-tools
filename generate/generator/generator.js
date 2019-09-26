@@ -1,7 +1,7 @@
 const fs = require('fs');
 const loglevel = require('loglevel');
 
-const { handleError } = require('./utils');
+const { handleError, debounce } = require('./utils');
 const { matcher } = require('./matcher');
 const { isGeneratedFromTemplate } = require('./comments');
 
@@ -32,6 +32,13 @@ class Generator {
 
   get generatedPaths() {
     return this.multiGenerator.generatedPaths;
+  }
+
+  debounce(method) {
+    const debounced = debounce(method.bind(this), 50);
+
+    this.multiGenerator.debouncedMethods.push(debounced);
+    return debounced;
   }
 
   resolve(path) {

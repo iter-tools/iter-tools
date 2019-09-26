@@ -10,6 +10,8 @@ class MonoliticGenerator extends Generator {
   constructor(options) {
     super(options);
 
+    this.docsChanged = this.debounce(this.docsChanged);
+
     this.glob = ['src/methods/*/{README.md,README.async.md,README.parallel.md,DOCME.json}'];
     this.ignored = ['src/methods/*_/**'];
 
@@ -24,6 +26,7 @@ class MonoliticGenerator extends Generator {
       const content = fs.readFileSync(this.resolve(path));
       this.files.set(path, isJSON ? JSON.parse(content) : content);
     }
+    this.docsChanged();
   }
 
   buildMethods() {
@@ -43,7 +46,7 @@ class MonoliticGenerator extends Generator {
     return methods.filter(m => m.docme);
   }
 
-  afterPathsChanged() {
+  docsChanged() {
     this.writeMonolithic('API.md', apiMdFile(this.buildMethods()));
   }
 }
