@@ -445,31 +445,57 @@ Memory-wise, the two iterables try to be as conservative as possible. But you ha
 See [splitAt](#split-at)
 
 ### splitOn
-`splitOn` is undocumented.
+Splits an iterable into multiple subsequences, generating a new subsequence each time it encounters the specified item.
+
+```js
+splitOn(null, [1, null, 2, null, 3]) // Iterable[[1], [2], [3]]
+```
 
 ### asyncSplitOn
 See [splitOn](#split-on)
 
 ### splitOnAny
-`splitOnAny` is undocumented.
+Splits an iterable into multiple subsequences, generating a new subsequence each time it encounters any one of the the specified items.
+
+```js
+splitOnAny([null, undefined], [1, null, 2, undefined, 3]) // Iterable[[1], [2], [3]]
+```
 
 ### asyncSplitOnAny
 See [splitOnAny](#split-on-any)
 
 ### splitOnAnySubseq
-`splitOnAnySubseq` is undocumented.
+Splits an iterable into multiple subsequences, generating a new subsequence each time it encounters any of the specified sequences of items. When a separator subsequence is matched, it consumes all the matched items, which may not then be used as part of any other separator subsequence.
+
+```js
+splitOnAnySubseq(
+  [
+    ['\r\n'],
+    ['\n'],
+  ],
+  'mixed\r\nline\nterminators'
+) // Iterable['mixed', 'line', 'terminators']
+```
 
 ### asyncSplitOnAnySubseq
 See [splitOnAnySubseq](#split-on-any-subseq)
 
 ### splitOnSubseq
-`splitOnSubseq` is undocumented.
+Splits an iterable into multiple subsequences, generating a new subsequence each time it encounters a sequence of specified items. When a separator subsequence is matched, it consumes all the matched items, which may not then be used as part of another separator subsequence.
+
+```js
+splitOnSubseq([0, 0], [1, 0, 0, 2, 0, 0, 3]) // Iterable[[1], [2], [3]]
+```
 
 ### asyncSplitOnSubseq
 See [splitOnSubseq](#split-on-subseq)
 
 ### splitWith
-`splitWith` is undocumented.
+Splits a sequence into multiple subsequences by running a predicate function against each item in the original. The splits occur where the predicate returns a truthy value, and the items which match the predicate will not be in any of the output subsequences
+
+```js
+splitWith(x => x == null, [1, null, 2, undefined, 3]) // Iterable[Iterable[1], Iterable[2], Iterable[3]]
+```
 
 ### asyncSplitWith
 See [splitWith](#split-with)
@@ -767,7 +793,12 @@ isEmpty([undefined]) // false
 See [isEmpty](#is-empty)
 
 ### isSorted
-`isSorted` is undocumented.
+Returns true if the items in the iterable are sorted according to an optional comparator.
+
+```js
+isSorted([1, 2, 3]) // true
+isSorted((a, b) => b - a, [3, 2, 1]) // true
+```
 
 ### asyncIsSorted
 See [isSorted](#is-sorted)
