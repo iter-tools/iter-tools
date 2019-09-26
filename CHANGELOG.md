@@ -51,6 +51,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
  -  `joinWith`, `joinWithSubseq`, `asyncJoinWith`, `asyncJoinWithSubseq`
  -  `joinAsStringWith`, `asyncJoinAsStringWith`
  -  `explode`, `asyncExplode`
+ -  `reverse`, `asyncReverse`
 
 **Arguments**
  -  [optional] `forks` (count) for `fork` and `asyncFork`

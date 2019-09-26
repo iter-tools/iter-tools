@@ -25,6 +25,7 @@ Transform a single iterable
 [flatMap](#flat-map) ([async](#async-flat-map)) ([parallel-async](#async-flat-map-parallel))  
 [interpose](#interpose) ([async](#async-interpose))   
 [map](#map) ([async](#async-map)) ([parallel-async](#async-map-parallel))  
+[reverse](#reverse) ([async](#async-reverse))   
 [slice](#slice) ([async](#async-slice))   
 [takeWhile](#take-while) ([async](#async-take-while))   
 [tap](#tap) ([async](#async-tap))   
@@ -346,6 +347,14 @@ The default concurrency is 4.
 await asyncMapParallel(asyncMapper, asyncIterable);
 await asyncMapParallel(10, asyncMapper, asyncIterable);
 ```
+
+### reverse
+Reverses an iterable. If the iterable is not an array, this requires caching the whole iterable in memory.
+
+### asyncReverse
+See [reverse](#reverse)
+
+Note: Unlike `reverse`, `asyncReverse` will always make a cache of the entire input, even if the input is an array. If this is not acceptable, ensure that you use `reverse` on arrays.
 
 ### slice
 It returns an iterable that returns a slice of an iterable.
