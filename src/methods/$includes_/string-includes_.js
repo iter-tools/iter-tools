@@ -1,4 +1,4 @@
-function stringIncludes(str, { any }, value) {
+export function stringIncludes_(str, { any }, value) {
   const values = any ? [...value] : [value];
   for (const value of values) {
     if (str.indexOf(value) >= 0) return true;
@@ -6,5 +6,3 @@ function stringIncludes(str, { any }, value) {
 
   return false;
 }
-
-export default stringIncludes;

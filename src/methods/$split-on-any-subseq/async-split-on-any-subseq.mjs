@@ -7,14 +7,14 @@
  */
 
 import { asyncIterableCurry } from '../../internal/async-iterable';
-import asyncInternalSplitOn from '../$split-on_/async-split-on';
+import { asyncSplitOn_ } from '../$split-on_/async-split-on_';
 const config = {
   any: true,
   subseq: true,
 };
 
 function asyncSplitOnAnySubseq(iterable, subseqs) {
-  return asyncInternalSplitOn(iterable, config, subseqs);
+  return asyncSplitOn_(iterable, config, subseqs);
 }
 
 export default asyncIterableCurry(asyncSplitOnAnySubseq);

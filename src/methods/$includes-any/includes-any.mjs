@@ -7,13 +7,13 @@
  */
 
 import { iterableCurry } from '../../internal/iterable';
-import internalIncludes from '../$includes_/includes';
+import { includes_ } from '../$includes_/includes_';
 const config = {
   any: true,
   subseq: false,
 };
 export function includesAny(iterable, value) {
-  return internalIncludes(iterable, config, value);
+  return includes_(iterable, config, value);
 }
 export default iterableCurry(includesAny, {
   reduces: true,

@@ -1,4 +1,4 @@
-function stringStartsWith(str, { any }, value) {
+export function stringStartsWith_(str, { any }, value) {
   const values = any ? [...value] : [value];
   for (const value of values) {
     if (str.indexOf(value) === 0) return true;
@@ -6,5 +6,3 @@ function stringStartsWith(str, { any }, value) {
 
   return false;
 }
-
-export default stringStartsWith;

@@ -1,10 +1,10 @@
 import { $iterableCurry } from '../../internal/$iterable';
-import $internalSplitOn from '../$split-on_/$split-on';
+import { $splitOn_ } from '../$split-on_/$split-on_';
 
 const config = { any: false, subseq: false };
 
 function $splitOn(iterable, value) {
-  return $internalSplitOn(iterable, config, value);
+  return $splitOn_(iterable, config, value);
 }
 
 export default $iterableCurry($splitOn);

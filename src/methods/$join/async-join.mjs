@@ -7,12 +7,12 @@
  */
 
 import { asyncIterableCurry } from '../../internal/async-iterable';
-import asyncInternalJoinWith from '../$join-with_/async-join-with';
+import { asyncJoinWith_ } from '../$join-with_/async-join-with_';
 const config = {
   subseq: true,
 };
 const emptySubseq = [];
 export function asyncJoin(iterable) {
-  return asyncInternalJoinWith(iterable, config, emptySubseq);
+  return asyncJoinWith_(iterable, config, emptySubseq);
 }
 export default asyncIterableCurry(asyncJoin);

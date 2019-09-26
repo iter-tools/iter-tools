@@ -2,12 +2,12 @@ import { $async, $await } from '../../../generate/async.macro';
 
 import { $cursor } from '../$cursor/$cursor';
 import $toAnySubseq from '../../internal/$to-any-subseq';
-import startsWith from '../$starts-with_/iterable-starts-with';
+import { iterableStartsWith_ } from '../$starts-with_/iterable-starts-with_';
 
 const startsWithConfig = { any: true, subseq: true };
 
 $async;
-function $iterableIncludes(iterable, config, value) {
+export function $iterableIncludes_(iterable, config, value) {
   const subseqs = $await($toAnySubseq(config, value));
 
   const maxMatchLength = subseqs.reduce((max, { length }) => Math.max(max, length), 1);
@@ -15,12 +15,10 @@ function $iterableIncludes(iterable, config, value) {
 
   $await;
   for (const buffer of $cursor(iterable, { size: maxMatchLength, trailing: true })) {
-    if (startsWith(buffer, startsWithConfig, subseqs)) {
+    if (iterableStartsWith_(buffer, startsWithConfig, subseqs)) {
       return true;
     }
     hasItems = true;
   }
   return !hasItems && !!subseqs.find(subseq => !subseq.length);
 }
-
-export default $iterableIncludes;

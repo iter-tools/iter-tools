@@ -9,7 +9,7 @@ const noItem = {};
 const zipAllConfig = { filler: noItem };
 
 $async;
-function $startsWith(iterable, config, value) {
+export function $iterableStartsWith_(iterable, config, value) {
   const subseqs = $await($toAnySubseq(config, value));
   const wrappedSubseqs = $isAsync ? subseqs.map(asyncWrap) : subseqs;
   let states = subseqs.map(_ => ({
@@ -38,5 +38,3 @@ function $startsWith(iterable, config, value) {
 
   return true;
 }
-
-export default $startsWith;

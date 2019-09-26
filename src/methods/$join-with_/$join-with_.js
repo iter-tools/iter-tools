@@ -3,7 +3,7 @@ import { $async, $await } from '../../../generate/async.macro';
 import toArray from '../$to-array/to-array';
 
 $async;
-function* $joinWith(iterable, { subseq }, on) {
+export function* $joinWith_(iterable, { subseq }, on) {
   const _on = subseq ? toArray(on) : [on];
 
   let isFirst = true;
@@ -15,5 +15,3 @@ function* $joinWith(iterable, { subseq }, on) {
     isFirst = false;
   }
 }
-
-export default $joinWith;

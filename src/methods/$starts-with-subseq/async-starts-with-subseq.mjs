@@ -7,13 +7,13 @@
  */
 
 import { asyncIterableCurry } from '../../internal/async-iterable';
-import asyncInternalStartsWith from '../$starts-with_/async-starts-with';
+import { asyncStartsWith_ } from '../$starts-with_/async-starts-with_';
 const config = {
   any: false,
   subseq: true,
 };
 export function asyncStartsWithSubseq(iterable, value) {
-  return asyncInternalStartsWith(iterable, config, value);
+  return asyncStartsWith_(iterable, config, value);
 }
 export default asyncIterableCurry(asyncStartsWithSubseq, {
   reduces: true,

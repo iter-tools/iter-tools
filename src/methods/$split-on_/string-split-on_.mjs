@@ -15,7 +15,7 @@ function findNext(str, onStrings, start = 0) {
   return index === Infinity ? null : { index, size };
 }
 
-function* stringSplitOn(str, { any }, on) {
+export function* stringSplitOn_(str, { any }, on) {
   const onStrings = any ? [...wrap(on)] : [on];
 
   if (str === '') return;
@@ -31,5 +31,3 @@ function* stringSplitOn(str, { any }, on) {
   }
   yield str.slice(match.index + match.size);
 }
-
-export default stringSplitOn;
