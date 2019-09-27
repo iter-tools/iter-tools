@@ -7,7 +7,7 @@
  */
 
 import { WeakExchange } from '../../internal/queues';
-import { asyncCursor } from '../$cursor/async-cursor';
+import { asyncWindow } from '../$window/async-window';
 import asyncToAnySubseq from '../../internal/async-to-any-subseq';
 import { iterableStartsWith_ } from '../$starts-with_/iterable-starts-with_';
 const startsWithConfig = {
@@ -95,10 +95,7 @@ export async function* asyncIterableSplitOn_(iterable, config, on) {
   };
 
   try {
-    state.iterator = asyncCursor(iterable, {
-      size: maxMatchLength,
-      trailing: true,
-    })[Symbol.asyncIterator]();
+    state.iterator = asyncWindow(iterable, maxMatchLength)[Symbol.asyncIterator]();
     state.consumer = state.weakExchange.spawnConsumer();
     let isFirst = true; // We must peek the first item to know if we are done before without yielding any subseq
 

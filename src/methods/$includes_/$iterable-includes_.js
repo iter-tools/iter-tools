@@ -1,6 +1,6 @@
 import { $async, $await } from '../../../generate/async.macro';
 
-import { $cursor } from '../$cursor/$cursor';
+import { $window } from '../$window/$window';
 import $toAnySubseq from '../../internal/$to-any-subseq';
 import { iterableStartsWith_ } from '../$starts-with_/iterable-starts-with_';
 
@@ -14,7 +14,7 @@ export function $iterableIncludes_(iterable, config, value) {
   let hasItems = false;
 
   $await;
-  for (const buffer of $cursor(iterable, { size: maxMatchLength, trailing: true })) {
+  for (const buffer of $window(iterable, maxMatchLength)) {
     if (iterableStartsWith_(buffer, startsWithConfig, subseqs)) {
       return true;
     }

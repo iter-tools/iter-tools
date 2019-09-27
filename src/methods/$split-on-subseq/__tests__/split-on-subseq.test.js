@@ -9,7 +9,7 @@
 /* eslint-disable no-unused-vars,import/no-duplicates */
 
 import { splitOnSubseq, map, toArray } from '../../..';
-describe('splitOnSubseqSubseq', () => {
+describe('splitOnSubseq', () => {
   it('can split on subseqences', () => {
     expect(toArray(map(group => toArray(group), splitOnSubseq([2, 3], [1, 2, 3, 4])))).toEqual([
       [1],

@@ -17,7 +17,6 @@ Create iterables from objects
 Transform a single iterable
 
 [batch](#batch) ([async](#async-batch))   
-[cursor](#cursor) ([async](#async-cursor))   
 [dropWhile](#drop-while) ([async](#async-drop-while))   
 [enumerate](#enumerate) ([async](#async-enumerate))   
 [filter](#filter) ([async](#async-filter)) ([parallel-async](#async-filter-parallel))  
@@ -30,6 +29,8 @@ Transform a single iterable
 [takeSorted](#take-sorted) ([async](#async-take-sorted))   
 [takeWhile](#take-while) ([async](#async-take-while))   
 [tap](#tap) ([async](#async-tap))   
+[window](#window) ([async](#async-window))   
+[trailingWindow](#trailing-window) ([async](#async-trailing-window))   
 [wrap](#wrap) ([async](#async-wrap))   
 
 Separate an iterable into multiple iterables
@@ -45,11 +46,11 @@ Separate an iterable into multiple iterables
 
 Combine multiple iterables
 
-[asyncInterleaveReady](#async-interleave-ready)  
 [collate](#collate) ([async](#async-collate))   
 [compress](#compress) ([async](#async-compress))   
 [concat](#concat) ([async](#async-concat))   
 [interleave](#interleave) ([async](#async-interleave))   
+[asyncInterleaveReady](#async-interleave-ready)  
 [join](#join) ([async](#async-join))   
 [joinAsStringWith](#join-as-string-with) ([async](#async-join-as-string-with))   
 [joinWith](#join-with) ([async](#async-join-with))   
@@ -212,21 +213,6 @@ batch(2, range(5)); // [0, 1], [2, 3], [4]
 
 ### asyncBatch
 See [batch](#batch)
-
-### cursor
-It returns every item of the sequence and its n preceding items (or succeeding items). It takes as arguments the window **size** and **trailing** option (default false). When trailing is false every iteration returns an item and its preceding items, when trailing true every iteration returns an item and its succeeding items.
-```js
-cursor({ size: 3 }, [1, 2, 3, 4, 5]); // [undefined, undefined, 1] [undefined, 1, 2] [1, 2, 3] [2, 3, 4] [3, 4, 5]
-
-cursor({ size: 3, trailing: true }, [1, 2, 3, 4, 5]); // [1, 2, 3] [2, 3, 4] [3, 4, 5] [4, 5, undefined] [5, undefined, undefined]
-```
-The option **filler** allows to specify a different value instead of undefined.
-```js
-cursor({ size: 3, filler: 0 }, [1, 2, 3, 4, 5]); // [0, 0, 1] [0, 1, 2] [1, 2, 3] [2, 3, 4] [3, 4, 5]
-```
-
-### asyncCursor
-See [cursor](#cursor)
 
 ### dropWhile
 It starts returning values when the function is false. Then it keeps going until the iterable is exausted.
@@ -412,6 +398,42 @@ compose(
 ### asyncTap
 See [tap](#tap)
 
+### window
+For every item in source, yields a window iterable of size **size** which starts with that item and also contains the next items from source. When there are not enough additional items in source to fill the window, the filler value (default: `undefined`) will be used in place of the missing values.
+
+```js
+window(3, [1, 2, 3, 4, 5]); // [undefined, undefined, 1] [undefined, 1, 2] [1, 2, 3] [2, 3, 4] [3, 4, 5]
+```
+The option **filler** allows to specify a different value instead of undefined.
+```js
+window(3, { filler: 0 }, [1, 2, 3, 4, 5]); // [0, 0, 1] [0, 1, 2] [1, 2, 3] [2, 3, 4] [3, 4, 5]
+```
+**size** can also be specified as a named option.
+```js
+window({ size: 3 });
+```
+
+### asyncWindow
+See [window](#window)
+
+### trailingWindow
+For every item in source, yields a window iterable of size **size** which contains the items leading up to and including that item. When there are not enough prior items to fill the window, the filler value ( default: `undefined`) will be used in place of the missing values.
+
+```js
+trailingWindow(3, [1, 2, 3, 4, 5]); // [undefined, undefined, 1] [undefined, 1, 2] [1, 2, 3] [2, 3, 4] [3, 4, 5]
+```
+The option **filler** allows to specify a different value instead of undefined.
+```js
+trailingWindow(3, { filler: 0 }, [1, 2, 3, 4, 5]); // [0, 0, 1] [0, 1, 2] [1, 2, 3] [2, 3, 4] [3, 4, 5]
+```
+Size can also be specified as a named option.
+```js
+trailingWindow({ size: 3 });
+```
+
+### asyncTrailingWindow
+See [trailingWindow](#trailing-window)
+
 ### wrap
 Yields the items in its source iterable. Its main purposes include allowing potentially null iterables to be treated as non-null iterables, and to give non-iter-tools iterables iter-tools iterable semantics.
 ```js
@@ -537,12 +559,6 @@ See [splitWith](#split-with)
 
 
 ## Combine multiple iterables
-### asyncInterleaveReady
-This method takes multiple async iterables, and yields items from each of them in the order that that their item promises resolve.
-```js
-asyncInterleaveReady(aItems, bItems);
-```
-
 ### collate
 Collate takes multiple iterables and collates them in a single one. The manner or collation can be chosen by specifying either a number or a comparator function.
 
@@ -652,6 +668,12 @@ const aabbInterleave = asyncInterleave(async function* (canTakeAny, a, b) {
 
 ### asyncInterleave
 See [interleave](#interleave)
+
+### asyncInterleaveReady
+This method takes multiple async iterables, and yields items from each of them in the order that that their item promises resolve.
+```js
+asyncInterleaveReady(aItems, bItems);
+```
 
 ### join
 It expects to receive an iterable of iterables to be joined, then yields all items of each joined iterable. It is the inverse of `split`.

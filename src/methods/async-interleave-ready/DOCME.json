@@ -1,3 +1,4 @@
 {
-  "type": "combine"
+  "type": "combine",
+  "alphabetizationName": "interleave-ready"
 }
