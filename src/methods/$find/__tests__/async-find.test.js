@@ -8,57 +8,18 @@
 
 /* eslint-disable no-unused-vars,import/no-duplicates */
 
-import { asyncFind, range } from '../../..';
+import { asyncFind } from '../../..';
 describe('asyncFind', () => {
   it('returns found item', async () => {
-    const found = asyncFind(item => item === 5, [1, 2, 3, 4, 5, 6]);
-    expect(await found).toBe(5);
+    expect(await asyncFind(item => item === 5, [1, 2, 3, 4, 5, 6])).toBe(5);
   });
   it('returns undefined if no item found', async () => {
-    const found = asyncFind(_ => false, [1, 2, 3, 4, 5, 6]);
-    expect(await found).toBe(undefined);
+    expect(await asyncFind(_ => false, [1, 2, 3, 4, 5, 6])).toBe(undefined);
   });
-  it('returns notFoundValue if specified and no item found', async () => {
-    const found = asyncFind(0, _ => false, [1, 2, 3, 4, 5, 6]);
-    expect(await found).toBe(0);
-  });
-  it('returns found item from iterable', async () => {
-    const found = asyncFind(
-      item => item === 5,
-      range({
-        start: 1,
-        end: 7,
-      }),
-    );
-    expect(await found).toBe(5);
-  });
-  it('returns undefined if no item found from iterable', async () => {
-    const found = asyncFind(
-      item => item === 100,
-      range({
-        start: 1,
-        end: 7,
-      }),
-    );
-    expect(await found).toBe(undefined);
-  });
-  it('returns filtered iterable (curried version)', async () => {
-    const findFive = asyncFind(item => item === 5);
-    expect(
-      await findFive(
-        range({
-          start: 1,
-          end: 7,
-        }),
-      ),
-    ).toBe(5);
-  });
-  it('returns undefined if passed null', async () => {
-    const found = asyncFind(item => item, null);
-    expect(await found).toBe(undefined);
+  it('returns undefined when iterable is empty', async () => {
+    expect(await asyncFind(item => item, null)).toBe(undefined);
   });
   it('returns found item (using a promise)', async () => {
-    const found = asyncFind(async item => item === 5, [1, 2, 3, 4, 5, 6]);
-    expect(await found).toBe(5);
+    expect(await asyncFind(async item => item === 5, [1, 2, 3, 4, 5, 6])).toBe(5);
   });
 });
