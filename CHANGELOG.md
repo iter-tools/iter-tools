@@ -38,6 +38,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
  -  `call`, `apply`
  -  `wrap`, `asyncWrap`
  -  `firstOr`, `asyncFirstOr`
+ -  `last`, `asyncLast`
+ -  `lastOr`, `asyncLastOr`
  -  `when`
  -  `isEmpty`, `asyncIsEmpty`
  -  `asyncMapParallel`, `asyncFilterParallel`, `asyncFlatMapParallel`

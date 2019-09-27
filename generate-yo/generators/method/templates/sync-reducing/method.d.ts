@@ -1,7 +1,7 @@
-import { InputIterable, MaybePromise } from '../../internal/iterable';
+import { InputIterable } from '../../internal/iterable';
 
 declare function __method__<T = any>(
   iterable: InputIterable<T>,
-): MaybePromise<T>;
+): T;
 
 export default __method__;

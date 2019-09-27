@@ -70,6 +70,8 @@ Reduce an iterable to a single value
 [includesSubseq](#includes-subseq) ([async](#async-includes-subseq))   
 [isEmpty](#is-empty) ([async](#async-is-empty))   
 [isSorted](#is-sorted) ([async](#async-is-sorted))   
+[last](#last) ([async](#async-last))   
+[lastOr](#last-or) ([async](#async-last-or))   
 [reduce](#reduce) ([async](#async-reduce))   
 [size](#size) ([async](#async-size))   
 [some](#some) ([async](#async-some))   
@@ -753,7 +755,7 @@ find({type: 'pet'}, animal => animal.kind === 'dog', []) // {type: 'pet'}
 See [find](#find)
 
 ### first
-It returns the first item from an iterable.
+It returns the first item from an iterable, or undefined if there are no items.
 ```js
 first([1, 2, 3]) // 1
 first([]) // undefined
@@ -834,6 +836,32 @@ isSorted((a, b) => b - a, [3, 2, 1]) // true
 
 ### asyncIsSorted
 See [isSorted](#is-sorted)
+
+### last
+Returns the last item in an iterable, or undefined if there are no items. If the iterable is not an array, this requires traversing the whole iterable.
+
+```js
+last([1, 2, 3]) // 3
+last([]) // undefined
+```
+
+### asyncLast
+See [last](#last)
+
+Note: Unlike `last`, `asyncLast` will always traverse the entire input iterable, even if it is an array. If this is not acceptable, ensure that you use `last` on arrays.
+
+### lastOr
+Returns the last item in an iterable, or a default value if the iterable is empty. If the iterable is not an array, this requires traversing the whole iterable.
+
+```js
+lastOr(0, [1, 2, 3]) // 3
+lastOr(0, []) // 0
+```
+
+### asyncLastOr
+See [lastOr](#last-or)
+
+Note: Unlike `lastOr`, `asyncLastOr` will always traverse the entire input iterable, even if it is an array. If this is not acceptable, ensure that you use `lastOr` on arrays.
 
 ### reduce
 This is an implementation of the reduce that consumes an iterable instead of an array (have a look at Array.prototype.reduce).
