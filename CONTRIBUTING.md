@@ -98,7 +98,8 @@ Please ask in the PR if you need any help.
 
 ## Prerelease checks
 If you want to publish on npm and you have the credentials, you need to:
-* Update the **changelog** with the date and number of the release
+* Update the **README** to link to API.md in the tree for the release's tag
+* Update the **CHANGELOG** with the date and number of the release
 * Update the **code coverage** ```npm run coverage```
 
 ## Publish a prerelease
