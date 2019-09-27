@@ -13,7 +13,7 @@ describe($async`enumerate`, () => {
   it(
     'enumerates iterables with start',
     $async(() => {
-      const iter = $enumerate(range({ start: 1, end: 4 }), 3);
+      const iter = $enumerate(3, range({ start: 1, end: 4 }));
       expect($await($toArray(iter))).toEqual([[3, 1], [4, 2], [5, 3]]);
     }),
   );

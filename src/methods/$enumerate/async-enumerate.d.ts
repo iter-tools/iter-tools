@@ -9,6 +9,12 @@
 import { AsyncInputIterable, AsyncGeneratorIterator } from '../../internal/async-iterable';
 declare function asyncEnumerate<T = any>(
   iterable: AsyncInputIterable<T>,
-  start?: number,
 ): AsyncGeneratorIterator<[number, T]>;
+declare function asyncEnumerate<T = any>(
+  firstIdx: number,
+  iterable: AsyncInputIterable<T>,
+): AsyncGeneratorIterator<[number, T]>;
+declare function asyncEnumerate(
+  firstIdx: number,
+): <T = any>(iterable: AsyncInputIterable<T>) => AsyncGeneratorIterator<[number, T]>;
 export default asyncEnumerate;

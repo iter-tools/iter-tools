@@ -19,11 +19,11 @@ describe('enumerate', () => {
   });
   it('enumerates iterables with start', () => {
     const iter = enumerate(
+      3,
       range({
         start: 1,
         end: 4,
       }),
-      3,
     );
     expect(toArray(iter)).toEqual([[3, 1], [4, 2], [5, 3]]);
   });

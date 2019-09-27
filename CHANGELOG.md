@@ -68,6 +68,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
  - **IMPORTANT**; **BREAKING**: `slice(n)` is now equivalent to `[].slice(n)`, not `[].slice(0, n)`. You should now write `slice(0, n, iterable)`.
  - All functions return iterables that can consumed multiple times.
  - `takeSorted` and `asyncTakeSorted`: optional comparator is now the first argument.
+ - `enumerate` and `asyncEnumerate`: optional starting idx is now specified before iterable. 
  - Optional configuration arguments can no longer be undefined. This was at odds with considering undefined as a valid iterable.
  - `find` takes an extra optional argument: the value to return if the nothing is found.
  - `range` can now called as either `range(end)` or `range(start, end, step)`. This matches Python.

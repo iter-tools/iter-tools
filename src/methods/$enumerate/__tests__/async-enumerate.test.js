@@ -21,11 +21,11 @@ describe('asyncEnumerate', () => {
   });
   it('enumerates iterables with start', async () => {
     const iter = asyncEnumerate(
+      3,
       range({
         start: 1,
         end: 4,
       }),
-      3,
     );
     expect(await asyncToArray(iter)).toEqual([[3, 1], [4, 2], [5, 3]]);
   });

@@ -6,9 +6,14 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import range from '../range/range';
-import asyncZip from '../$zip/async-zip';
+import { asyncIterableCurry } from '../../internal/async-iterable';
+import { range } from '../range/range';
+import { asyncZip } from '../$zip/async-zip';
+import { asyncWrap } from '../$wrap/async-wrap';
 export function asyncEnumerate(iterable, start = 0) {
-  return asyncZip(range(start, Infinity, 1), iterable);
+  return asyncZip([asyncWrap(range(start, Infinity)), iterable]);
 }
-export default asyncEnumerate;
+export default asyncIterableCurry(asyncEnumerate, {
+  minArgs: 0,
+  maxArgs: 1,
+});
