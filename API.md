@@ -27,6 +27,7 @@ Transform a single iterable
 [map](#map) ([async](#async-map)) ([parallel-async](#async-map-parallel))  
 [reverse](#reverse) ([async](#async-reverse))   
 [slice](#slice) ([async](#async-slice))   
+[takeSorted](#take-sorted) ([async](#async-take-sorted))   
 [takeWhile](#take-while) ([async](#async-take-while))   
 [tap](#tap) ([async](#async-tap))   
 [wrap](#wrap) ([async](#async-wrap))   
@@ -76,7 +77,6 @@ Reduce an iterable to a single value
 [startsWithAny](#starts-with-any) ([async](#async-starts-with-any))   
 [startsWithAnySubseq](#starts-with-any-subseq) ([async](#async-starts-with-any-subseq))   
 [startsWithSubseq](#starts-with-subseq) ([async](#async-starts-with-subseq))   
-[takeSorted](#take-sorted) ([async](#async-take-sorted))   
 
 Work with Regular Expressions
 
@@ -368,6 +368,28 @@ slice({start: 2, end: 6, step: 2}, range(10)); // 2, 4
 
 ### asyncSlice
 See [slice](#slice)
+
+### takeSorted
+Takes an iterable and returns n biggest items sorted from the smallest (the nth order statistic) to the biggest.
+The function is both space efficient (only stores n items) and fast O(m log n), given m as the total items yielded by the iterable.
+```js
+takeSorted(3, [10, 4, 9, 2, 5, 8, 7]) // 5, 4, 2
+```
+It can take as a optional argument a comparator (just like Array.prototype.sort). The default one is:
+```js
+(a, b) => {
+ if (a > b) {
+    return 1
+  } else if (a < b) {
+    return -1
+  } else {
+    return 0
+  }
+}
+```
+
+### asyncTakeSorted
+See [takeSorted](#take-sorted)
 
 ### takeWhile
 It returns values as soon as the function is true. Then it stops.
@@ -886,28 +908,6 @@ startsWithAny([1, 2], [1, 2, 3]) // true
 
 ### asyncStartsWithSubseq
 See [startsWithSubseq](#starts-with-subseq)
-
-### takeSorted
-Takes an iterable and returns n biggest items sorted from the smallest (the nth order statistic) to the biggest.
-The function is both space efficient (only stores n items) and fast O(m log n), given m as the total items yielded by the iterable.
-```js
-takeSorted(3, [10, 4, 9, 2, 5, 8, 7]) // 5, 4, 2
-```
-It can take as a optional argument a comparator (just like Array.prototype.sort). The default one is:
-```js
-(a, b) => {
- if (a > b) {
-    return 1
-  } else if (a < b) {
-    return -1
-  } else {
-    return 0
-  }
-}
-```
-
-### asyncTakeSorted
-See [takeSorted](#take-sorted)
 
 
 ## Work with Regular Expressions
