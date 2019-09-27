@@ -1,21 +1,10 @@
-import { $async, $await } from '../../../generate/async.macro';
-
 import { $iterableCurry } from '../../internal/$iterable';
+import { $findOr } from '../$find-or/$find-or';
 
-$async;
-export function $find(iterable, notFoundValue, func) {
-  let c = 0;
-  $await;
-  for (const item of iterable) {
-    if ($await(func(item, c++))) {
-      return item;
-    }
-  }
-  return notFoundValue;
+export function $find(iterable, func) {
+  return $findOr(iterable, undefined, func);
 }
 
 export default $iterableCurry($find, {
   reduces: true,
-  minArgs: 1,
-  maxArgs: 2,
 });

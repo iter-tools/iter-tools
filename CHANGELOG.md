@@ -37,6 +37,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
  -  `collate`, `asyncCollate`
  -  `call`, `apply`
  -  `wrap`, `asyncWrap`
+ -  `findOr`, `asyncFindOr`
  -  `firstOr`, `asyncFirstOr`
  -  `last`, `asyncLast`
  -  `lastOr`, `asyncLastOr`
@@ -72,7 +73,6 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
  - `takeSorted` and `asyncTakeSorted`: optional comparator is now the first argument.
  - `enumerate` and `asyncEnumerate`: optional starting idx is now specified before iterable. 
  - Optional configuration arguments can no longer be undefined. This was at odds with considering undefined as a valid iterable.
- - `find` takes an extra optional argument: the value to return if the nothing is found.
  - `range` can now called as either `range(end)` or `range(start, end, step)`. This matches Python.
  - `zipAll` now takes optional `filler` argument to use in place of values from exhausted iterables.
  - `fork` and `asyncFork` now take an extra optional argument: the number of forks.

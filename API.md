@@ -62,6 +62,7 @@ Reduce an iterable to a single value
 [equal](#equal) ([async](#async-equal))   
 [every](#every) ([async](#async-every))   
 [find](#find) ([async](#async-find))   
+[findOr](#find-or) ([async](#async-find-or))   
 [first](#first) ([async](#async-first))   
 [firstOr](#first-or) ([async](#async-first-or))   
 [includes](#includes) ([async](#async-includes))   
@@ -741,18 +742,24 @@ every((n) => n % 2 === 0, [2, 4, 6]) // returns true
 See [every](#every)
 
 ### find
-The equivalent of the array "find" function (it can be curried).
+The equivalent of the array "find" function. Takes a **predicate** and returns the first item from the iterable for which the predicate returns true.
+
 ```js
 find(animal => animal.kind === 'dog', [{type: 'cat'}, {type: 'dog'}]) // {type: 'dog'}
 ```
 
-Find also takes an optional value to be returned if no value is found:
-```js
-find({type: 'pet'}, animal => animal.kind === 'dog', []) // {type: 'pet'}
-```
-
 ### asyncFind
 See [find](#find)
+
+### findOr
+Like [find](#find), but also takes a **notFoundValue** which it will return if the source is empty or if **predicate** does not match any items from the source.
+
+```js
+findOr(0, x => x > 10, [1, 2, 3]); // 0
+```
+
+### asyncFindOr
+See [findOr](#find-or)
 
 ### first
 It returns the first item from an iterable, or undefined if there are no items.
