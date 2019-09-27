@@ -12,6 +12,9 @@ import {
   AsyncMaybePromise,
 } from '../../internal/async-iterable';
 declare function asyncTakeSorted<T = any>(
+  iterable: AsyncInputIterable<T>,
+): AsyncGeneratorIterator<T>;
+declare function asyncTakeSorted<T = any>(
   n: number,
 ): (iterable: AsyncInputIterable<T>) => AsyncGeneratorIterator<T>;
 declare function asyncTakeSorted<T = any>(

@@ -5,7 +5,7 @@ import { $iterableCurry } from '../../internal/$iterable';
 import defaultCompare from '../../internal/compare';
 
 $async;
-export function* $takeSorted(iterable, comparator = defaultCompare, number) {
+export function* $takeSorted(iterable, comparator = defaultCompare, number = Infinity) {
   const heap = new Heap(comparator);
   $await;
   for (const item of iterable) {
@@ -20,4 +20,4 @@ export function* $takeSorted(iterable, comparator = defaultCompare, number) {
   }
 }
 
-export default $iterableCurry($takeSorted, { minArgs: 1, maxArgs: 2 });
+export default $iterableCurry($takeSorted, { minArgs: 0, maxArgs: 2 });

@@ -3,7 +3,15 @@ import { $takeSorted, $toArray } from '../../..';
 
 describe($async`takeSorted`, () => {
   it(
-    'return smallest iterable',
+    'yields a sorted iterable if no number is specified',
+    $async(() => {
+      const smallest3 = $takeSorted([99, 12, 4, 6, 97, 44, 66, 77, 98]);
+      expect($await($toArray(smallest3))).toEqual([4, 6, 12, 44, 66, 77, 97, 98, 99]);
+    }),
+  );
+
+  it(
+    'yields n sorted items from the iterable',
     $async(() => {
       const smallest3 = $takeSorted(3, [99, 12, 4, 6, 97, 44, 66, 77, 98]);
       expect($await($toArray(smallest3))).toEqual([97, 98, 99]);
@@ -11,8 +19,9 @@ describe($async`takeSorted`, () => {
       expect($await($toArray(smallest1))).toEqual([99]);
     }),
   );
+
   it(
-    'return smallest iterable, using comparator',
+    'yields items from the iterable sorted with a comparator',
     $async(() => {
       const smallest2 = $takeSorted((a, b) => a.length - b.length, 2, [
         'abc',
@@ -23,13 +32,6 @@ describe($async`takeSorted`, () => {
         'ab',
       ]);
       expect($await($toArray(smallest2))).toEqual(['abcd', 'abcdef']);
-    }),
-  );
-  it(
-    'return smallest iterable, using curry',
-    $async(() => {
-      const smallest3 = $takeSorted(3)([99, 12, 4, 6, 97, 44, 66, 77, 98]);
-      expect($await($toArray(smallest3))).toEqual([97, 98, 99]);
     }),
   );
 });
