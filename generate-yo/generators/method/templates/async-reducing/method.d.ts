@@ -1,7 +1,7 @@
-import { AsyncInputIterable, AsyncMaybePromise } from '../../internal/async-iterable';
+import { AsyncInputIterable } from '../../internal/async-iterable';
 
 declare function __method__<T = any>(
   iterable: AsyncInputIterable<T>,
-): AsyncMaybePromise<T>;
+): Promise<T>;
 
 export default __method__;
