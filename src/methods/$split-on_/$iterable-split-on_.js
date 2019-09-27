@@ -1,7 +1,7 @@
 import { $async, $await, $iteratorSymbol } from '../../../generate/async.macro';
 import { WeakExchange } from '../../internal/queues';
 
-import { $cursor } from '../$cursor/$cursor';
+import { $window } from '../$window/$window';
 import $toAnySubseq from '../../internal/$to-any-subseq';
 import { iterableStartsWith_ } from '../$starts-with_/iterable-starts-with_';
 
@@ -95,7 +95,7 @@ export function* $iterableSplitOn_(iterable, config, on) {
   };
 
   try {
-    state.iterator = $cursor(iterable, { size: maxMatchLength, trailing: true })[$iteratorSymbol]();
+    state.iterator = $window(iterable, maxMatchLength)[$iteratorSymbol]();
     state.consumer = state.weakExchange.spawnConsumer();
 
     let isFirst = true;

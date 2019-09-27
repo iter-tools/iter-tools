@@ -7,7 +7,7 @@
  */
 
 import { WeakExchange } from '../../internal/queues';
-import { cursor } from '../$cursor/cursor';
+import { window } from '../$window/window';
 import toAnySubseq from '../../internal/to-any-subseq';
 import { iterableStartsWith_ } from '../$starts-with_/iterable-starts-with_';
 const startsWithConfig = {
@@ -95,10 +95,7 @@ export function* iterableSplitOn_(iterable, config, on) {
   };
 
   try {
-    state.iterator = cursor(iterable, {
-      size: maxMatchLength,
-      trailing: true,
-    })[Symbol.iterator]();
+    state.iterator = window(iterable, maxMatchLength)[Symbol.iterator]();
     state.consumer = state.weakExchange.spawnConsumer();
     let isFirst = true; // We must peek the first item to know if we are done before without yielding any subseq
 

@@ -6,7 +6,7 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { cursor } from '../$cursor/cursor';
+import { window } from '../$window/window';
 import toAnySubseq from '../../internal/to-any-subseq';
 import { iterableStartsWith_ } from '../$starts-with_/iterable-starts-with_';
 const startsWithConfig = {
@@ -18,10 +18,7 @@ export function iterableIncludes_(iterable, config, value) {
   const maxMatchLength = subseqs.reduce((max, { length }) => Math.max(max, length), 1);
   let hasItems = false;
 
-  for (const buffer of cursor(iterable, {
-    size: maxMatchLength,
-    trailing: true,
-  })) {
+  for (const buffer of window(iterable, maxMatchLength)) {
     if (iterableStartsWith_(buffer, startsWithConfig, subseqs)) {
       return true;
     }

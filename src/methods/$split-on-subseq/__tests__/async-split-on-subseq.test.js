@@ -9,7 +9,7 @@
 /* eslint-disable no-unused-vars,import/no-duplicates */
 
 import { asyncSplitOnSubseq, asyncMap, asyncToArray } from '../../..';
-describe('asyncSplitOnSubseqSubseq', () => {
+describe('asyncSplitOnSubseq', () => {
   it('can split on subseqences', async () => {
     expect(
       await asyncToArray(

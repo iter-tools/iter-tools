@@ -21,8 +21,12 @@ function syncName(name) {
   return name.startsWith('$') ? name[1].toLowerCase() + name.slice(2) : name;
 }
 
+function alphabetizationName(method) {
+  return method.docme.alphabetizationName || method.name;
+}
+
 function compareNames(a, b) {
-  return compare(syncName(a), syncName(b));
+  return compare(syncName(alphabetizationName(a)), syncName(alphabetizationName(b)));
 }
 
 function compareGroups(a, b) {
@@ -77,7 +81,7 @@ const contentsTypeSectionTemplate = (type, body) => `${sections.get(type).title}
 module.exports = methodsWithDollars => {
   const methodGroups = [...groupBy(m => m.docme.type, methodsWithDollars)]
     .sort(([a], [b]) => compareGroups(a, b))
-    .map(([type, methods]) => [type, methods.sort((a, b) => compareNames(a.name, b.name))]);
+    .map(([type, methods]) => [type, methods.sort(compareNames)]);
 
   const docs = methodGroups
     .map(([type, methods]) => {

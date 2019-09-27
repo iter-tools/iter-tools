@@ -1,7 +1,7 @@
 import { $isAsync, $async, $await } from '../../../../generate/async.macro';
 import { $splitOnSubseq, $map, $toArray } from '../../..';
 
-describe($async`splitOnSubseqSubseq`, () => {
+describe($async`splitOnSubseq`, () => {
   it(
     'can split on subseqences',
     $async(() => {

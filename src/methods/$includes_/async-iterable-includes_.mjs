@@ -6,7 +6,7 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { asyncCursor } from '../$cursor/async-cursor';
+import { asyncWindow } from '../$window/async-window';
 import asyncToAnySubseq from '../../internal/async-to-any-subseq';
 import { iterableStartsWith_ } from '../$starts-with_/iterable-starts-with_';
 const startsWithConfig = {
@@ -18,10 +18,7 @@ export async function asyncIterableIncludes_(iterable, config, value) {
   const maxMatchLength = subseqs.reduce((max, { length }) => Math.max(max, length), 1);
   let hasItems = false;
 
-  for await (const buffer of asyncCursor(iterable, {
-    size: maxMatchLength,
-    trailing: true,
-  })) {
+  for await (const buffer of asyncWindow(iterable, maxMatchLength)) {
     if (iterableStartsWith_(buffer, startsWithConfig, subseqs)) {
       return true;
     }
