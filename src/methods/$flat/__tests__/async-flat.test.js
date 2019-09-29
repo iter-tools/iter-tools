@@ -23,7 +23,7 @@ describe('asyncFlat', () => {
     expect(await asyncToArray(iter)).toEqual([1, 2, 3, 4, 5]);
   });
   it('flats iterable, curried (default one level)', async () => {
-    const iter = asyncFlat()([[1, 2], [3, 4], [5]]);
+    const iter = asyncFlat([[1, 2], [3, 4], [5]]);
     expect(await asyncToArray(iter)).toEqual([1, 2, 3, 4, 5]);
   });
   it('flats iterable depth 0', async () => {

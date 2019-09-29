@@ -21,7 +21,7 @@ describe('flat', () => {
     expect(toArray(iter)).toEqual([1, 2, 3, 4, 5]);
   });
   it('flats iterable, curried (default one level)', () => {
-    const iter = flat()([[1, 2], [3, 4], [5]]);
+    const iter = flat([[1, 2], [3, 4], [5]]);
     expect(toArray(iter)).toEqual([1, 2, 3, 4, 5]);
   });
   it('flats iterable depth 0', () => {

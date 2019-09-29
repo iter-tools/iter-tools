@@ -109,17 +109,15 @@ describe('asyncIterableCurry', () => {
     expect(await asyncToArray(c1(hello)([]))).toEqual([hello]);
     expect(await asyncToArray(c0([]))).toEqual([]);
   });
-  it('curries with empty invocations', async () => {
-    expect(await asyncToArray(c2()(hello)(world)([]))).toEqual([hello, world]);
-    expect(await asyncToArray(c2(hello)()(world)([]))).toEqual([hello, world]);
-    expect(await asyncToArray(c2(hello)(world)()([]))).toEqual([hello, world]);
-    expect(await asyncToArray(c1()(hello)()([]))).toEqual([hello]);
-    expect(await asyncToArray(c0()()([]))).toEqual([]);
-  });
   it('ignores extra arguments after iterable', async () => {
     expect(await asyncToArray(c2(hello, world, [], 'foo'))).toEqual([hello, world]);
     expect(await asyncToArray(c1(hello)([], null))).toEqual([hello]);
     expect(await asyncToArray(c0([], 4))).toEqual([]);
+  });
+  it('throws with empty invocations', () => {
+    expect(() => c2()(hello)(world)([])).toThrowErrorMatchingSnapshot();
+    expect(() => c2(hello)()(world)([])).toThrowErrorMatchingSnapshot();
+    expect(() => c2(hello)(world)()([])).toThrowErrorMatchingSnapshot();
   });
   it('throws with too many args', () => {
     expect(() => c2(hello)(goodbye)(world)([])).toThrowErrorMatchingSnapshot();
@@ -178,10 +176,8 @@ describe('asyncIterableCurry', () => {
       expect(await asyncToArray(c(hello)([]))).toEqual([hello, world]);
       expect(await asyncToArray(c([]))).toEqual([goodbye, world]);
     });
-    it('curries with empty invocations', async () => {
-      expect(await asyncToArray(c()(hello)(world)([]))).toEqual([hello, world]);
-      expect(await asyncToArray(c()()(hello)([]))).toEqual([hello, world]);
-      expect(await asyncToArray(c()()()([]))).toEqual([goodbye, world]);
+    it('throws with empty invocations', () => {
+      expect(() => c2()(hello)(world)([])).toThrowErrorMatchingSnapshot();
     });
     it('throws with too many args', () => {
       expect(() => c(hello)(goodbye)(world)([])).toThrowError(
@@ -220,13 +216,9 @@ describe('asyncIterableCurry', () => {
       expect(await c1(1)([2])).toBe(3);
       expect(await c0([1])).toBe(1);
     });
-    it('curries with empty invocations', async () => {
-      expect(await c2()(1, 2, [4])).toBe(7);
-      expect(await c2(1, 2)()([4])).toBe(7);
-      expect(await c2(1)()(2, [4])).toBe(7);
-      expect(await c2(1)()(2)()([4])).toBe(7);
-      expect(await c1(1)()([2])).toBe(3);
-      expect(await c0()([1])).toBe(1);
+    it('throws with empty invocations', () => {
+      expect(() => c2()(1, 2, [4])).toThrowErrorMatchingSnapshot();
+      expect(() => c2(1, 2)()([4])).toThrowErrorMatchingSnapshot();
     });
     it('throws with too many args', () => {
       expect(() => c2(1)(2)(3)([])).toThrowErrorMatchingSnapshot();
@@ -250,8 +242,8 @@ describe('asyncIterableCurry', () => {
       expect(await c1(1)([2, 4], [8, 16])).toBe(31);
       expect(await c1(1)([2, 4])).toBe(7);
     });
-    it('curries with empty invocations', async () => {
-      expect(await c1(1)()([2, 4])).toBe(7);
+    it('throws with empty invocations', () => {
+      expect(() => c1(1)()([2, 4])).toThrowErrorMatchingSnapshot();
     });
     it('throws with too many args', () => {
       expect(() => c1(1)(2)([4, 8])).toThrowErrorMatchingSnapshot();

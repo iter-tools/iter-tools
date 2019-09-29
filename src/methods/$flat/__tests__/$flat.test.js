@@ -30,7 +30,7 @@ describe($`flat`, () => {
   it(
     'flats iterable, curried (default one level)',
     $async(() => {
-      const iter = $flat()([[1, 2], [3, 4], [5]]);
+      const iter = $flat([[1, 2], [3, 4], [5]]);
       expect($await($toArray(iter))).toEqual([1, 2, 3, 4, 5]);
     }),
   );
