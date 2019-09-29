@@ -1,21 +1,15 @@
-const fs = require('fs');
+const readChunk = require('read-chunk');
+
+const magicComment = '@generated-from';
 
 function isGeneratedFromTemplate(path) {
-  let generatedFromTag;
+  let preamble;
 
   try {
-    const buf = Buffer.alloc(15);
-    const fd = fs.openSync(path);
-    try {
-      // TODO find some way to get the @generated-from tag length and offset dynamically
-      fs.readSync(fd, buf, 0, 15, 7);
-    } finally {
-      fs.closeSync(fd);
-    }
-    generatedFromTag = buf.toString();
+    preamble = readChunk.sync(path, 7, magicComment.length).toString();
   } catch (e) {}
 
-  return generatedFromTag === '@generated-from';
+  return preamble === magicComment;
 }
 
 module.exports = { isGeneratedFromTemplate };

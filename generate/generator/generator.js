@@ -1,11 +1,8 @@
 const fs = require('fs');
-const loglevel = require('loglevel');
 
 const { handleError, debounce } = require('./utils');
 const { matcher } = require('./matcher');
 const { isGeneratedFromTemplate } = require('./comments');
-
-const log = loglevel.getLogger('generator');
 
 const ADD = 'ADD';
 const REMOVE = 'REMOVE';
@@ -115,18 +112,6 @@ class Generator {
     } else {
       this.generatePathPerConfiguration(path);
     }
-  }
-
-  /**
-   * Do an initial tree traversal, then watch for changes
-   */
-  generate() {
-    this.initial().then(() => {
-      if (this.shouldWatch) {
-        log.info('Initial generation completed; watching for changes...');
-        this.watch();
-      }
-    });
   }
 }
 

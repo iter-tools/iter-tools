@@ -1,9 +1,8 @@
 const loglevel = require('loglevel');
-const sane = require('sane');
 const { join } = require('path');
 const { path: rootDir } = require('package.root');
 
-const traverse = require('./traverse');
+const { traverse, watch } = require('./traverse');
 const FileCache = require('./file-cache');
 const { debounce, handleError } = require('./utils');
 
@@ -17,8 +16,6 @@ class MultiGenerator {
     this.debouncedMethods = [this.pathsChanged];
     this.generatedPaths = new FileCache();
 
-    this.alwaysIgnored = ['.git', 'node_modules', ...this.options.ignored];
-
     log.setLevel(options.quiet ? 'error' : 'info');
 
     this.generators = GeneratorClasses.map(GeneratorClass => new GeneratorClass(this.options));
@@ -31,9 +28,7 @@ class MultiGenerator {
   }
 
   generate() {
-    const { alwaysIgnored } = this;
-
-    return traverse(rootDir, { ignored: alwaysIgnored })
+    return traverse(rootDir)
       .then(initialPaths => {
         initialPaths.forEach(path => this.addPath(path));
 
@@ -44,10 +39,7 @@ class MultiGenerator {
         if (this.options.watch) {
           log.info('Initial generation completed; watching for changes...');
 
-          const watcher = sane(
-            rootDir,
-            Object.assign({ ignored: alwaysIgnored }, this.getSaneOptions()),
-          );
+          const watcher = watch(rootDir, this.getSaneOptions());
 
           this.inWatchMode = true;
 
