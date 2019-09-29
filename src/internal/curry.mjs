@@ -91,6 +91,10 @@ function variadicCurryWithValidationInner(config, args) {
 
 export function variadicCurryWithValidation(config, previousArgs = []) {
   return (...args) => {
+    if (args.length === 0) {
+      throw new Error('Cannot make a partial application with no arguments');
+    }
+
     args.unshift(...previousArgs);
 
     return variadicCurryWithValidationInner(config, args);
