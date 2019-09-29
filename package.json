@@ -96,6 +96,7 @@
     "eslint-plugin-standard": "^4.0.0",
     "git-state": "^4.1.0",
     "husky": "^0.14.3",
+    "ignore": "^5.1.4",
     "jest": "^24.7.1",
     "jest-coverage-badges": "^1.0.0",
     "json": "^9.0.6",
