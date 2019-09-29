@@ -1,6 +1,5 @@
 'use strict';
 
-const decamelize = require('decamelize');
 const { renameDollar, syncName } = require('../../names');
 
 function groupBy(accessor, arr) {
@@ -55,7 +54,7 @@ const sections = new Map(
   ].map(([section, title], idx) => [section, { title, idx }]),
 );
 
-const seeMethodTemplate = name => `See [${name}](#${decamelize(name, '-')})\n`;
+const seeMethodTemplate = name => `See [${name}](#${name.toLowerCase()})\n`;
 
 const methodAliasesTemplate = doc => {
   const {
@@ -75,7 +74,7 @@ const methodTemplate = (doc, aliasMap) => {
 
 const typeSectionTemplate = (type, body) => `## ${sections.get(type).title}\n${body}\n`;
 
-const linkTarget = (name, aliasMap) => decamelize(aliasMap.get(name) || name, '-');
+const linkTarget = (name, aliasMap) => (aliasMap.get(name) || name).toLowerCase();
 
 const tocMethodTemplate = (doc, aliasMap) => {
   const {
