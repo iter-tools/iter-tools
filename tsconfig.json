@@ -13,10 +13,8 @@
   },
   "include": [
     "src/**/__tests__/*.ts",
-    "src/**/__spec__/*.ts"
   ],
   "exclude": [
-    "src/**/__tests__/$*.ts}",
-    "src/**/__spec__/$*.ts"
+    "src/**/__tests__/$*.ts"
   ]
 }
