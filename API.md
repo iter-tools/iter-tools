@@ -3,8 +3,8 @@
 
 Create iterables
 
-[cycle](#cycle) ([async](#async-cycle))  
-[execute](#execute) ([async](#async-execute))  
+[cycle](#cycle) ([async](#asynccycle))  
+[execute](#execute) ([async](#asyncexecute))  
 [range](#range)  
 [repeat](#repeat)  
 
@@ -16,105 +16,105 @@ Create iterables from objects
 
 Transform a single iterable
 
-[batch](#batch) ([async](#async-batch))  
-[dropWhile](#drop-while) ([async](#async-drop-while))  
-[enumerate](#enumerate) ([async](#async-enumerate))  
-[filter](#filter) ([async](#async-filter)) ([parallel-async](#async-filter-parallel))  
-[flat](#flat) ([async](#async-flat))  
-[flatMap](#flat-map) ([async](#async-flat-map)) ([parallel-async](#async-flat-map-parallel))  
-[interpose](#interpose) ([async](#async-interpose))  
-[map](#map) ([async](#async-map)) ([parallel-async](#async-map-parallel))  
-[reverse](#reverse) ([async](#async-reverse))  
-[slice](#slice) ([async](#async-slice))  
-[takeSorted](#take-sorted) ([async](#async-take-sorted))  
-[takeWhile](#take-while) ([async](#async-take-while))  
-[tap](#tap) ([async](#async-tap))  
-[window](#window) ([async](#async-window))  
-[trailingWindow](#trailing-window) ([async](#async-trailing-window))  
-[wrap](#wrap) ([async](#async-wrap))  
+[batch](#batch) ([async](#asyncbatch))  
+[dropWhile](#dropwhile) ([async](#asyncdropwhile))  
+[enumerate](#enumerate) ([async](#asyncenumerate))  
+[filter](#filter) ([async](#asyncfilter)) ([parallel-async](#asyncfilterparallel))  
+[flat](#flat) ([async](#asyncflat))  
+[flatMap](#flatmap) ([async](#asyncflatmap)) ([parallel-async](#asyncflatmapparallel))  
+[interpose](#interpose) ([async](#asyncinterpose))  
+[map](#map) ([async](#asyncmap)) ([parallel-async](#asyncmapparallel))  
+[reverse](#reverse) ([async](#asyncreverse))  
+[slice](#slice) ([async](#asyncslice))  
+[takeSorted](#takesorted) ([async](#asynctakesorted))  
+[takeWhile](#takewhile) ([async](#asynctakewhile))  
+[tap](#tap) ([async](#asynctap))  
+[window](#window) ([async](#asyncwindow))  
+[trailingWindow](#trailingwindow) ([async](#asynctrailingwindow))  
+[wrap](#wrap) ([async](#asyncwrap))  
 
 Separate an iterable into multiple iterables
 
-[groupBy](#group-by) ([async](#async-group-by))  
-[split](#split) ([async](#async-split))  
-[splitAt](#split-at) ([async](#async-split-at))  
-[splitOn](#split-on) ([async](#async-split-on))  
-[splitOnAny](#split-on-any) ([async](#async-split-on-any))  
-[splitOnAnySubseq](#split-on-any-subseq) ([async](#async-split-on-any-subseq))  
-[splitOnSubseq](#split-on-subseq) ([async](#async-split-on-subseq))  
-[splitWith](#split-with) ([async](#async-split-with))  
+[groupBy](#groupby) ([async](#asyncgroupby))  
+[split](#split) ([async](#asyncsplit))  
+[splitAt](#splitat) ([async](#asyncsplitat))  
+[splitOn](#spliton) ([async](#asyncspliton))  
+[splitOnAny](#splitonany) ([async](#asyncsplitonany))  
+[splitOnAnySubseq](#splitonanysubseq) ([async](#asyncsplitonanysubseq))  
+[splitOnSubseq](#splitonsubseq) ([async](#asyncsplitonsubseq))  
+[splitWith](#splitwith) ([async](#asyncsplitwith))  
 
 Combine multiple iterables
 
-[collate](#collate) ([async](#async-collate))  
-[compress](#compress) ([async](#async-compress))  
-[concat](#concat) ([async](#async-concat))  
-[interleave](#interleave) ([async](#async-interleave))  
-[asyncInterleaveReady](#async-interleave-ready)  
-[join](#join) ([async](#async-join))  
-[joinAsStringWith](#join-as-string-with) ([async](#async-join-as-string-with))  
-[joinWith](#join-with) ([async](#async-join-with))  
-[joinWithSubseq](#join-with-subseq) ([async](#async-join-with-subseq))  
-[zip](#zip) ([async](#async-zip))  
-[zipAll](#zip-all) ([async](#async-zip-all))  
+[collate](#collate) ([async](#asynccollate))  
+[compress](#compress) ([async](#asynccompress))  
+[concat](#concat) ([async](#asyncconcat))  
+[interleave](#interleave) ([async](#asyncinterleave))  
+[asyncInterleaveReady](#asyncinterleaveready)  
+[join](#join) ([async](#asyncjoin))  
+[joinAsStringWith](#joinasstringwith) ([async](#asyncjoinasstringwith))  
+[joinWith](#joinwith) ([async](#asyncjoinwith))  
+[joinWithSubseq](#joinwithsubseq) ([async](#asyncjoinwithsubseq))  
+[zip](#zip) ([async](#asynczip))  
+[zipAll](#zipall) ([async](#asynczipall))  
 
 Reduce an iterable to a single value
 
-[equal](#equal) ([async](#async-equal))  
-[every](#every) ([async](#async-every))  
-[find](#find) ([async](#async-find))  
-[findOr](#find-or) ([async](#async-find-or))  
-[first](#first) ([async](#async-first))  
-[firstOr](#first-or) ([async](#async-first-or))  
-[includes](#includes) ([async](#async-includes))  
-[includesAny](#includes-any) ([async](#async-includes-any))  
-[includesAnySubseq](#includes-any-subseq) ([async](#async-includes-any-subseq))  
-[includesSubseq](#includes-subseq) ([async](#async-includes-subseq))  
-[isEmpty](#is-empty) ([async](#async-is-empty))  
-[isSorted](#is-sorted) ([async](#async-is-sorted))  
-[last](#last) ([async](#async-last))  
-[lastOr](#last-or) ([async](#async-last-or))  
-[reduce](#reduce) ([async](#async-reduce))  
-[size](#size) ([async](#async-size))  
-[some](#some) ([async](#async-some))  
-[startsWith](#starts-with) ([async](#async-starts-with))  
-[startsWithAny](#starts-with-any) ([async](#async-starts-with-any))  
-[startsWithAnySubseq](#starts-with-any-subseq) ([async](#async-starts-with-any-subseq))  
-[startsWithSubseq](#starts-with-subseq) ([async](#async-starts-with-subseq))  
+[equal](#equal) ([async](#asyncequal))  
+[every](#every) ([async](#asyncevery))  
+[find](#find) ([async](#asyncfind))  
+[findOr](#findor) ([async](#asyncfindor))  
+[first](#first) ([async](#asyncfirst))  
+[firstOr](#firstor) ([async](#asyncfirstor))  
+[includes](#includes) ([async](#asyncincludes))  
+[includesAny](#includesany) ([async](#asyncincludesany))  
+[includesAnySubseq](#includesanysubseq) ([async](#asyncincludesanysubseq))  
+[includesSubseq](#includessubseq) ([async](#asyncincludessubseq))  
+[isEmpty](#isempty) ([async](#asyncisempty))  
+[isSorted](#issorted) ([async](#asyncissorted))  
+[last](#last) ([async](#asynclast))  
+[lastOr](#lastor) ([async](#asynclastor))  
+[reduce](#reduce) ([async](#asyncreduce))  
+[size](#size) ([async](#asyncsize))  
+[some](#some) ([async](#asyncsome))  
+[startsWith](#startswith) ([async](#asyncstartswith))  
+[startsWithAny](#startswithany) ([async](#asyncstartswithany))  
+[startsWithAnySubseq](#startswithanysubseq) ([async](#asyncstartswithanysubseq))  
+[startsWithSubseq](#startswithsubseq) ([async](#asyncstartswithsubseq))  
 
 Work with Regular Expressions
 
-[regexpExec](#regexp-exec)  
+[regexpExec](#regexpexec)  
 
 Combinatory iterables
 
 [combinations](#combinations)  
-[combinationsWithReplacement](#combinations-with-replacement)  
+[combinationsWithReplacement](#combinationswithreplacement)  
 [permutations](#permutations)  
 [product](#product)  
 
 Control timing inside an async iterable
 
-[asyncBuffer](#async-buffer)  
-[asyncThrottle](#async-throttle)  
+[asyncBuffer](#asyncbuffer)  
+[asyncThrottle](#asyncthrottle)  
 
 Cache an iterable
 
-[fork](#fork) ([async](#async-fork))  
+[fork](#fork) ([async](#asyncfork))  
 
 Consume an iterable
 
-[arrayFrom](#array-from)  
-[arrayFromAsync](#array-from-async)  
-[consume](#consume) ([async](#async-consume))  
-[toArray](#array-from) ([async](#array-from-async))  
+[arrayFrom](#arrayfrom)  
+[arrayFromAsync](#arrayfromasync)  
+[consume](#consume) ([async](#asyncconsume))  
+[toArray](#arrayfrom) ([async](#arrayfromasync))  
 
 Utilities
 
 [apply](#apply)  
 [call](#call)  
 [compose](#compose)  
-[execPipe](#exec-pipe)  
+[execPipe](#execpipe)  
 [pipe](#pipe)  
 [when](#when)  
 
@@ -223,7 +223,7 @@ dropWhile(isEven, range(4)); // 1, 2, 3
 ```
 
 ### asyncDropWhile
-See [dropWhile](#drop-while)
+See [dropWhile](#dropwhile)
 
 ### enumerate
 It is a shorthand for zipping an index to an iterable:
@@ -293,7 +293,7 @@ flatMap(x => [x, x * x], range(4)); // 0, 0, 1, 1, 2, 4, 3, 9
 ```
 
 ### asyncFlatMap
-See [flatMap](#flat-map)
+See [flatMap](#flatmap)
 
 ### asyncFlatMapParallel
 A variant of flatMap with more complicated logic that can optimize when you have both an async mapper callback and an
@@ -377,7 +377,7 @@ takeSorted((a, b) => b - a, 3, [4, 5, 2, 3, 1]) // Iterable[5, 4, 3]
 ```
 
 ### asyncTakeSorted
-See [takeSorted](#take-sorted)
+See [takeSorted](#takesorted)
 
 ### takeWhile
 It returns values as soon as the function is true. Then it stops.
@@ -386,7 +386,7 @@ takeWhile(isEven, range(4)); // 0
 ```
 
 ### asyncTakeWhile
-See [takeWhile](#take-while)
+See [takeWhile](#takewhile)
 
 ### tap
 Tap is not unlike a forEach method, and like forEach is usually used to express side effects. Without breaking a chain of composition, it allows you access to the value yielded to it. Tap always yields the same value it received. Tap can be curried.
@@ -434,7 +434,7 @@ trailingWindow({ size: 3 });
 ```
 
 ### asyncTrailingWindow
-See [trailingWindow](#trailing-window)
+See [trailingWindow](#trailingwindow)
 
 ### wrap
 Yields the items in its source iterable. Its main purposes include allowing potentially null iterables to be treated as non-null iterables, and to give non-iter-tools iterables iter-tools iterable semantics.
@@ -474,7 +474,7 @@ groupBy((value) => {value * value}, [1, 1, 1, 1, -1, -1, -1, 4]);
 ```
 
 ### asyncGroupBy
-See [groupBy](#group-by)
+See [groupBy](#groupby)
 
 ### split
 It yields each item in its source iterable as an iterable of one item.
@@ -496,7 +496,7 @@ Array.from(others) // [3, 4, 5, 6, 7, 8, 9]
 Memory-wise, the two iterables try to be as conservative as possible. But you have to take into consideration that consuming the second iterable without having consumed the first will keep the content of the first iterable in memory.
 
 ### asyncSplitAt
-See [splitAt](#split-at)
+See [splitAt](#splitat)
 
 ### splitOn
 Splits an iterable into multiple subsequences, generating a new subsequence each time it encounters the specified item.
@@ -506,7 +506,7 @@ splitOn(null, [1, null, 2, null, 3]) // Iterable[[1], [2], [3]]
 ```
 
 ### asyncSplitOn
-See [splitOn](#split-on)
+See [splitOn](#spliton)
 
 ### splitOnAny
 Splits an iterable into multiple subsequences, generating a new subsequence each time it encounters any one of the the specified items.
@@ -516,7 +516,7 @@ splitOnAny([null, undefined], [1, null, 2, undefined, 3]) // Iterable[[1], [2], 
 ```
 
 ### asyncSplitOnAny
-See [splitOnAny](#split-on-any)
+See [splitOnAny](#splitonany)
 
 ### splitOnAnySubseq
 Splits an iterable into multiple subsequences, generating a new subsequence each time it encounters any of the specified sequences of items. When a separator subsequence is matched, it consumes all the matched items, which may not then be used as part of any other separator subsequence.
@@ -532,7 +532,7 @@ splitOnAnySubseq(
 ```
 
 ### asyncSplitOnAnySubseq
-See [splitOnAnySubseq](#split-on-any-subseq)
+See [splitOnAnySubseq](#splitonanysubseq)
 
 ### splitOnSubseq
 Splits an iterable into multiple subsequences, generating a new subsequence each time it encounters a sequence of specified items. When a separator subsequence is matched, it consumes all the matched items, which may not then be used as part of another separator subsequence.
@@ -542,7 +542,7 @@ splitOnSubseq([0, 0], [1, 0, 0, 2, 0, 0, 3]) // Iterable[[1], [2], [3]]
 ```
 
 ### asyncSplitOnSubseq
-See [splitOnSubseq](#split-on-subseq)
+See [splitOnSubseq](#splitonsubseq)
 
 ### splitWith
 Splits a sequence into multiple subsequences by running a predicate function against each item in the original. The splits occur where the predicate returns a truthy value, and the items which match the predicate will not be in any of the output subsequences.
@@ -557,7 +557,7 @@ splitWith(
 ```
 
 ### asyncSplitWith
-See [splitWith](#split-with)
+See [splitWith](#splitwith)
 
 
 ## Combine multiple iterables
@@ -700,7 +700,7 @@ joinAsStringWith(' ', [['a'], ['b'], ['c']]) // "a b c"
 ```
 
 ### asyncJoinAsStringWith
-See [joinAsStringWith](#join-as-string-with)
+See [joinAsStringWith](#joinasstringwith)
 
 ### joinWith
 It expects to receive an iterable of iterables to be joined, and a separator item. It yields all items of each joined iterable, with the separator in between. It is the inverse of `splitWith`.
@@ -710,7 +710,7 @@ joinWith(null, [[1], [2], [3]]) // Iterable[1, null, 2, null, 3]
 ```
 
 ### asyncJoinWith
-See [joinWith](#join-with)
+See [joinWith](#joinwith)
 
 ### joinWithSubseq
 It expects to receive an iterable of iterables to be joined, and a separator subsequence. It yields all items of each joined iterable, with the items of the separator in between. It is the inverse of `splitWithSubseq`.
@@ -720,7 +720,7 @@ joinWithSubseq([null, null], [[1], [2], [3]]) // Iterable[1, null, null, 2, null
 ```
 
 ### asyncJoinWithSubseq
-See [joinWithSubseq](#join-with-subseq)
+See [joinWithSubseq](#joinwithsubseq)
 
 ### zip
 Zip receives 2 or more iterables. It returns an iterable of entries, each of which contains one item from each of the input iterables. The iteration stops when the shortest input iterable is exausted.
@@ -741,7 +741,7 @@ zipAll({filler: null}, [1, 2], []); // [1, null], [2, null]
 ```
 
 ### asyncZipAll
-See [zipAll](#zip-all)
+See [zipAll](#zipall)
 
 
 ## Reduce an iterable to a single value
@@ -783,7 +783,7 @@ findOr(0, x => x > 10, [1, 2, 3]); // 0
 ```
 
 ### asyncFindOr
-See [findOr](#find-or)
+See [findOr](#findor)
 
 ### first
 It returns the first item from an iterable, or undefined if there are no items.
@@ -803,7 +803,7 @@ firstOr(0, []) // 0
 ```
 
 ### asyncFirstOr
-See [firstOr](#first-or)
+See [firstOr](#firstor)
 
 ### includes
 It returns whether an iterable's includes the specified item. Compares with `===`.
@@ -823,7 +823,7 @@ includesAny([0, 2], [1, 2, 3]) // true
 ```
 
 ### asyncIncludesAny
-See [includesAny](#includes-any)
+See [includesAny](#includesany)
 
 ### includesAnySubseq
 It returns whether an iterable's includes any of the specified subsequences. Compares with `===`.
@@ -833,7 +833,7 @@ includesAnySubseq([[2, 3], [3, 4]], [1, 2, 3]) // true
 ```
 
 ### asyncIncludesAnySubseq
-See [includesAnySubseq](#includes-any-subseq)
+See [includesAnySubseq](#includesanysubseq)
 
 ### includesSubseq
 It returns whether an iterable's includes the specified subsequence. Compares with `===`.
@@ -843,7 +843,7 @@ includesSubseq([2, 3], [1, 2, 3]) // true
 ```
 
 ### asyncIncludesSubseq
-See [includesSubseq](#includes-subseq)
+See [includesSubseq](#includessubseq)
 
 ### isEmpty
 Returns true if the input iterable contains no items.
@@ -855,7 +855,7 @@ isEmpty([undefined]) // false
 ```
 
 ### asyncIsEmpty
-See [isEmpty](#is-empty)
+See [isEmpty](#isempty)
 
 ### isSorted
 Returns true if the items in the iterable are sorted according to an optional comparator.
@@ -866,7 +866,7 @@ isSorted((a, b) => b - a, [3, 2, 1]) // true
 ```
 
 ### asyncIsSorted
-See [isSorted](#is-sorted)
+See [isSorted](#issorted)
 
 ### last
 Returns the last item in an iterable, or undefined if there are no items. If the iterable is not an array, this requires traversing the whole iterable.
@@ -933,7 +933,7 @@ startsWith(1, [1, 2, 3]) // true
 ```
 
 ### asyncStartsWith
-See [startsWith](#starts-with)
+See [startsWith](#startswith)
 
 ### startsWithAny
 It returns whether an iterable's first item is any of the specified items. Compares with `===`.
@@ -943,7 +943,7 @@ startsWithAny([0, 1], [1, 2, 3]) // true
 ```
 
 ### asyncStartsWithAny
-See [startsWithAny](#starts-with-any)
+See [startsWithAny](#startswithany)
 
 ### startsWithAnySubseq
 It returns whether an iterable starts with any of the specified subseqences. Compares with `===`.
@@ -953,7 +953,7 @@ startsWithAnySubseq([[0, 1], [1, 2]], [1, 2, 3]) // true
 ```
 
 ### asyncStartsWithAnySubseq
-See [startsWithAnySubseq](#starts-with-any-subseq)
+See [startsWithAnySubseq](#startswithanysubseq)
 
 ### startsWithSubseq
 It returns whether an iterable starts with any of the specified subseqences. Compares with `===`.
@@ -963,7 +963,7 @@ startsWithAny([1, 2], [1, 2, 3]) // true
 ```
 
 ### asyncStartsWithSubseq
-See [startsWithSubseq](#starts-with-subseq)
+See [startsWithSubseq](#startswithsubseq)
 
 
 ## Work with Regular Expressions
@@ -1172,10 +1172,10 @@ consume((item) => console.log(item), [1, 2, 3]) // prints 1, 2, 3
 See [consume](#consume)
 
 ### toArray
-See [arrayFrom](#array-from)
+See [arrayFrom](#arrayfrom)
 
 ### asyncToArray
-See [arrayFromAsync](#array-from-async)
+See [arrayFromAsync](#arrayfromasync)
 
 
 ## Utilities
