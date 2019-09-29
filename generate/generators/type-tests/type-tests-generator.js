@@ -33,7 +33,7 @@ class TypeTestsGenerator extends BaseGenerator {
 
   getDestPath(testName) {
     const dir = dirname(testName);
-    return join(dir, `${basename(testName, '.test.js')}.spec.ts`);
+    return join(dir, `${basename(testName, '.test.js')}.auto.spec.ts`);
   }
 
   getBabelConfigPath() {
