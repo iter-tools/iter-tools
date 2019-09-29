@@ -3,8 +3,8 @@
 
 Create iterables
 
-[cycle](#cycle) ([async](#async-cycle))   
-[execute](#execute) ([async](#async-execute))   
+[cycle](#cycle) ([async](#async-cycle))  
+[execute](#execute) ([async](#async-execute))  
 [range](#range)  
 [repeat](#repeat)  
 
@@ -16,71 +16,71 @@ Create iterables from objects
 
 Transform a single iterable
 
-[batch](#batch) ([async](#async-batch))   
-[dropWhile](#drop-while) ([async](#async-drop-while))   
-[enumerate](#enumerate) ([async](#async-enumerate))   
+[batch](#batch) ([async](#async-batch))  
+[dropWhile](#drop-while) ([async](#async-drop-while))  
+[enumerate](#enumerate) ([async](#async-enumerate))  
 [filter](#filter) ([async](#async-filter)) ([parallel-async](#async-filter-parallel))  
-[flat](#flat) ([async](#async-flat))   
+[flat](#flat) ([async](#async-flat))  
 [flatMap](#flat-map) ([async](#async-flat-map)) ([parallel-async](#async-flat-map-parallel))  
-[interpose](#interpose) ([async](#async-interpose))   
+[interpose](#interpose) ([async](#async-interpose))  
 [map](#map) ([async](#async-map)) ([parallel-async](#async-map-parallel))  
-[reverse](#reverse) ([async](#async-reverse))   
-[slice](#slice) ([async](#async-slice))   
-[takeSorted](#take-sorted) ([async](#async-take-sorted))   
-[takeWhile](#take-while) ([async](#async-take-while))   
-[tap](#tap) ([async](#async-tap))   
-[window](#window) ([async](#async-window))   
-[trailingWindow](#trailing-window) ([async](#async-trailing-window))   
-[wrap](#wrap) ([async](#async-wrap))   
+[reverse](#reverse) ([async](#async-reverse))  
+[slice](#slice) ([async](#async-slice))  
+[takeSorted](#take-sorted) ([async](#async-take-sorted))  
+[takeWhile](#take-while) ([async](#async-take-while))  
+[tap](#tap) ([async](#async-tap))  
+[window](#window) ([async](#async-window))  
+[trailingWindow](#trailing-window) ([async](#async-trailing-window))  
+[wrap](#wrap) ([async](#async-wrap))  
 
 Separate an iterable into multiple iterables
 
-[groupBy](#group-by) ([async](#async-group-by))   
-[split](#split) ([async](#async-split))   
-[splitAt](#split-at) ([async](#async-split-at))   
-[splitOn](#split-on) ([async](#async-split-on))   
-[splitOnAny](#split-on-any) ([async](#async-split-on-any))   
-[splitOnAnySubseq](#split-on-any-subseq) ([async](#async-split-on-any-subseq))   
-[splitOnSubseq](#split-on-subseq) ([async](#async-split-on-subseq))   
-[splitWith](#split-with) ([async](#async-split-with))   
+[groupBy](#group-by) ([async](#async-group-by))  
+[split](#split) ([async](#async-split))  
+[splitAt](#split-at) ([async](#async-split-at))  
+[splitOn](#split-on) ([async](#async-split-on))  
+[splitOnAny](#split-on-any) ([async](#async-split-on-any))  
+[splitOnAnySubseq](#split-on-any-subseq) ([async](#async-split-on-any-subseq))  
+[splitOnSubseq](#split-on-subseq) ([async](#async-split-on-subseq))  
+[splitWith](#split-with) ([async](#async-split-with))  
 
 Combine multiple iterables
 
-[collate](#collate) ([async](#async-collate))   
-[compress](#compress) ([async](#async-compress))   
-[concat](#concat) ([async](#async-concat))   
-[interleave](#interleave) ([async](#async-interleave))   
+[collate](#collate) ([async](#async-collate))  
+[compress](#compress) ([async](#async-compress))  
+[concat](#concat) ([async](#async-concat))  
+[interleave](#interleave) ([async](#async-interleave))  
 [asyncInterleaveReady](#async-interleave-ready)  
-[join](#join) ([async](#async-join))   
-[joinAsStringWith](#join-as-string-with) ([async](#async-join-as-string-with))   
-[joinWith](#join-with) ([async](#async-join-with))   
-[joinWithSubseq](#join-with-subseq) ([async](#async-join-with-subseq))   
-[zip](#zip) ([async](#async-zip))   
-[zipAll](#zip-all) ([async](#async-zip-all))   
+[join](#join) ([async](#async-join))  
+[joinAsStringWith](#join-as-string-with) ([async](#async-join-as-string-with))  
+[joinWith](#join-with) ([async](#async-join-with))  
+[joinWithSubseq](#join-with-subseq) ([async](#async-join-with-subseq))  
+[zip](#zip) ([async](#async-zip))  
+[zipAll](#zip-all) ([async](#async-zip-all))  
 
 Reduce an iterable to a single value
 
-[equal](#equal) ([async](#async-equal))   
-[every](#every) ([async](#async-every))   
-[find](#find) ([async](#async-find))   
-[findOr](#find-or) ([async](#async-find-or))   
-[first](#first) ([async](#async-first))   
-[firstOr](#first-or) ([async](#async-first-or))   
-[includes](#includes) ([async](#async-includes))   
-[includesAny](#includes-any) ([async](#async-includes-any))   
-[includesAnySubseq](#includes-any-subseq) ([async](#async-includes-any-subseq))   
-[includesSubseq](#includes-subseq) ([async](#async-includes-subseq))   
-[isEmpty](#is-empty) ([async](#async-is-empty))   
-[isSorted](#is-sorted) ([async](#async-is-sorted))   
-[last](#last) ([async](#async-last))   
-[lastOr](#last-or) ([async](#async-last-or))   
-[reduce](#reduce) ([async](#async-reduce))   
-[size](#size) ([async](#async-size))   
-[some](#some) ([async](#async-some))   
-[startsWith](#starts-with) ([async](#async-starts-with))   
-[startsWithAny](#starts-with-any) ([async](#async-starts-with-any))   
-[startsWithAnySubseq](#starts-with-any-subseq) ([async](#async-starts-with-any-subseq))   
-[startsWithSubseq](#starts-with-subseq) ([async](#async-starts-with-subseq))   
+[equal](#equal) ([async](#async-equal))  
+[every](#every) ([async](#async-every))  
+[find](#find) ([async](#async-find))  
+[findOr](#find-or) ([async](#async-find-or))  
+[first](#first) ([async](#async-first))  
+[firstOr](#first-or) ([async](#async-first-or))  
+[includes](#includes) ([async](#async-includes))  
+[includesAny](#includes-any) ([async](#async-includes-any))  
+[includesAnySubseq](#includes-any-subseq) ([async](#async-includes-any-subseq))  
+[includesSubseq](#includes-subseq) ([async](#async-includes-subseq))  
+[isEmpty](#is-empty) ([async](#async-is-empty))  
+[isSorted](#is-sorted) ([async](#async-is-sorted))  
+[last](#last) ([async](#async-last))  
+[lastOr](#last-or) ([async](#async-last-or))  
+[reduce](#reduce) ([async](#async-reduce))  
+[size](#size) ([async](#async-size))  
+[some](#some) ([async](#async-some))  
+[startsWith](#starts-with) ([async](#async-starts-with))  
+[startsWithAny](#starts-with-any) ([async](#async-starts-with-any))  
+[startsWithAnySubseq](#starts-with-any-subseq) ([async](#async-starts-with-any-subseq))  
+[startsWithSubseq](#starts-with-subseq) ([async](#async-starts-with-subseq))  
 
 Work with Regular Expressions
 
@@ -100,12 +100,12 @@ Control timing inside an async iterable
 
 Cache an iterable
 
-[fork](#fork) ([async](#async-fork))   
+[fork](#fork) ([async](#async-fork))  
 
 Consume an iterable
 
-[consume](#consume) ([async](#async-consume))   
-[toArray](#to-array) ([async](#async-to-array))   
+[consume](#consume) ([async](#async-consume))  
+[toArray](#to-array) ([async](#async-to-array))  
 
 Utilities
 

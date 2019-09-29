@@ -1,7 +1,7 @@
 'use strict';
 
 const decamelize = require('decamelize');
-const { renameDollar } = require('../../names');
+const { renameDollar, syncName } = require('../../names');
 
 function groupBy(accessor, arr) {
   const groups = new Map();
@@ -17,10 +17,6 @@ function groupBy(accessor, arr) {
 
 function compare(a, b) {
   return a < b ? -1 : b < a ? 1 : 0;
-}
-
-function syncName(name) {
-  return name.startsWith('$') ? name[1].toLowerCase() + name.slice(2) : name;
 }
 
 function alphabetizationName(method) {
@@ -59,87 +55,114 @@ const sections = new Map(
   ].map(([section, title], idx) => [section, { title, idx }]),
 );
 
-const methodTemplate = ({ name, readme, docme }) => `### ${name}\n${readme}\n`;
-
 const seeMethodTemplate = name => `See [${name}](#${decamelize(name, '-')})\n`;
+
+const methodAliasesTemplate = doc => {
+  const {
+    docme: { aliases },
+  } = doc;
+  if (!aliases || !aliases.length) return '';
+  return `Aliases: ${aliases.map(alias => `\`${alias}\``).join(',')}\n\n`;
+};
+
+const methodTemplate = (doc, aliasMap) => {
+  const { name, readme, isAsyncClone } = doc;
+  const seeName = aliasMap.get(name) || (isAsyncClone ? syncName(name) : null);
+  const see = seeName && seeMethodTemplate(seeName);
+  const aliases = methodAliasesTemplate(doc);
+  return `### ${name}\n${aliases}${readme || see || 'Undocumented.'}\n`;
+};
 
 const typeSectionTemplate = (type, body) => `## ${sections.get(type).title}\n${body}\n`;
 
-const contentsMethodTemplate = ({ name, docme: { hasParallel } }) => {
-  return name[0] === '$'
-    ? `[${renameDollar(name, false)}](#${decamelize(
-        renameDollar(name, false),
-        '-',
-      )}) ([async](#${decamelize(renameDollar(name, true), '-')})) ${
-        hasParallel
-          ? `([parallel-async](#${`${decamelize(renameDollar(name, true), '-')}-parallel`}))`
-          : ''
-      }  \n`
-    : `[${name}](#${decamelize(name, '-')})  \n`;
+const linkTarget = (name, aliasMap) => decamelize(aliasMap.get(name) || name, '-');
+
+const tocMethodTemplate = (doc, aliasMap) => {
+  const {
+    name,
+    docme: { hasParallel },
+  } = doc;
+
+  const normalName = renameDollar(name, false);
+  const asyncName = renameDollar(name, true);
+
+  const parts = [`[${normalName}](#${linkTarget(normalName, aliasMap)})`];
+
+  if (normalName !== asyncName) {
+    parts.push(`([async](#${linkTarget(asyncName, aliasMap)}))`);
+  }
+
+  if (hasParallel) {
+    const parallelName = `${asyncName}Parallel`;
+    parts.push(`([parallel-async](#${linkTarget(parallelName, aliasMap)}))`);
+  }
+
+  return `${parts.join(' ')}  \n`;
 };
 
-const contentsTypeSectionTemplate = (type, body) => `${sections.get(type).title}\n\n${body}\n`;
+const tocTypeSectionTemplate = (type, body) => `${sections.get(type).title}\n\n${body}\n`;
 
-module.exports = methodsWithDollars => {
-  const methodGroups = [...groupBy(m => m.docme.type, methodsWithDollars)]
-    .sort(([a], [b]) => compareGroups(a, b))
-    .map(([type, methods]) => [type, methods.sort(compareNames)]);
+function flattenDollars(methodsWithDollars) {
+  return [
+    ...flat(
+      methodsWithDollars.map(doc => {
+        const originalName = doc.name;
 
-  const docs = methodGroups
-    .map(([type, methods]) => {
-      const body = [
-        ...flat(
-          methods.map(originalDoc => {
-            const originalName = originalDoc.name;
+        if (originalName[0] === '$') {
+          return [false, true]
+            .map(ASYNC => {
+              const name = renameDollar(originalName, ASYNC);
 
-            if (originalName[0] === '$') {
-              const syncName = renameDollar(originalName, false);
-              const asyncName = renameDollar(originalName, true);
+              return {
+                name,
+                docme: doc.docme,
+                readme: ASYNC ? doc.asyncReadme : doc.readme,
+                isAsyncClone: ASYNC,
+              };
+            })
+            .concat(
+              doc.docme.hasParallel
+                ? [
+                    {
+                      name: `${renameDollar(originalName, true)}Parallel`,
+                      docme: doc.docme,
+                      readme: doc.parallelReadme,
+                      isAsyncClone: false,
+                    },
+                  ]
+                : [],
+            );
+        } else {
+          return [doc];
+        }
+      }),
+    ),
+  ];
+}
 
-              return [false, true]
-                .map(ASYNC => {
-                  const name = renameDollar(originalName, ASYNC);
+function groupMethods(methods) {
+  return [...groupBy(m => m.docme.type, methods)].sort(([a], [b]) => compareGroups(a, b));
+}
 
-                  return methodTemplate({
-                    name,
-                    docme: originalDoc.docme,
-                    readme: ASYNC
-                      ? originalDoc.asyncReadme || seeMethodTemplate(syncName)
-                      : originalDoc.readme,
-                  });
-                })
-                .concat(
-                  originalDoc.docme.hasParallel
-                    ? [
-                        methodTemplate({
-                          name: `${renameDollar(originalName, true)}Parallel`,
-                          docme: originalDoc.docme,
-                          readme: originalDoc.parallelReadme || seeMethodTemplate(asyncName),
-                        }),
-                      ]
-                    : [],
-                );
-            } else {
-              return [methodTemplate(originalDoc)];
-            }
-          }),
-        ),
-      ].join('');
+module.exports = (methodsWithDollars, aliasMap) => {
+  methodsWithDollars = methodsWithDollars.sort(compareNames);
 
-      return typeSectionTemplate(type, body);
-    })
+  // table of contents
+  const toc = groupMethods(methodsWithDollars)
+    .map(([type, methods]) =>
+      tocTypeSectionTemplate(type, methods.map(doc => tocMethodTemplate(doc, aliasMap)).join('')),
+    )
     .join('');
 
-  const tableOfContents = methodGroups
-    .map(([type, methods]) => {
-      const body = methods.map(doc => contentsMethodTemplate(doc)).join('');
-
-      return contentsTypeSectionTemplate(type, body);
-    })
+  const methods = flattenDollars(methodsWithDollars);
+  const docs = groupMethods(methods)
+    .map(([type, methods]) =>
+      typeSectionTemplate(type, methods.map(doc => methodTemplate(doc, aliasMap)).join('')),
+    )
     .join('');
 
   return `# The iter-tools API
 [![Documentation is automatically generated](https://img.shields.io/static/v1?label=docs&message=generated&color=informational)](https://github.com/iter-tools/iter-tools/blob/master/CONTRIBUTING.md#the-code-generator)
 
-${tableOfContents}\n${docs}`;
+${toc}\n${docs}`;
 };

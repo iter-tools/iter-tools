@@ -18,6 +18,11 @@ class MonoliticGenerator extends Generator {
     this.ignored = ['src/methods/*_/**'];
 
     this.files = new Map();
+    this.aliases = new Map();
+  }
+
+  getNameForPath(path) {
+    return camelcase(basename(dirname(path)));
   }
 
   recordOperation(path, operation) {
@@ -26,30 +31,35 @@ class MonoliticGenerator extends Generator {
       this.files.delete(path);
     } else {
       const content = fs.readFileSync(this.resolve(path));
-      this.files.set(path, isJSON ? JSON.parse(content) : content);
+      const parsedContent = isJSON ? JSON.parse(content) : content;
+      if (basename(path) === 'DOCME.json' && parsedContent.aliases) {
+        for (const alias of parsedContent.aliases) {
+          this.aliases.set(alias, this.getNameForPath(path));
+        }
+      }
+      this.files.set(path, parsedContent);
     }
     this.docsChanged();
   }
 
   buildMethods() {
-    const methods = [...this.files]
+    return [...this.files]
       .filter(([file]) => basename(file) === 'DOCME.json')
-      .map(([file, content]) => {
-        const name = camelcase(basename(dirname(file)));
-
+      .map(([path, content]) => {
+        const name = this.getNameForPath(path);
         return {
           name,
+          aliasFor: this.aliases.get(name),
           docme: content,
-          readme: this.files.get(join(dirname(file), 'README.md')),
-          asyncReadme: this.files.get(join(dirname(file), 'README.async.md')),
-          parallelReadme: this.files.get(join(dirname(file), 'README.parallel.md')),
+          readme: this.files.get(join(dirname(path), 'README.md')),
+          asyncReadme: this.files.get(join(dirname(path), 'README.async.md')),
+          parallelReadme: this.files.get(join(dirname(path), 'README.parallel.md')),
         };
       });
-    return methods.filter(m => m.docme);
   }
 
   docsChanged() {
-    this.writeMonolithic('API.md', apiMdFile(this.buildMethods()));
+    this.writeMonolithic('API.md', apiMdFile(this.buildMethods(), this.aliases));
   }
 }
 
