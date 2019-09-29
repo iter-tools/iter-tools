@@ -5,6 +5,8 @@
  */
 
 export { default as apply } from './apply';
+export { default as arrayFrom } from './array-from';
+export { default as arrayFromAsync } from './array-from-async';
 export { default as batch } from './batch';
 export { default as call } from './call';
 export { default as collate } from './collate';

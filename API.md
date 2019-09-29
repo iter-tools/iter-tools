@@ -104,8 +104,10 @@ Cache an iterable
 
 Consume an iterable
 
+[arrayFrom](#array-from)  
+[arrayFromAsync](#array-from-async)  
 [consume](#consume) ([async](#async-consume))  
-[toArray](#to-array) ([async](#async-to-array))  
+[toArray](#array-from) ([async](#array-from-async))  
 
 Utilities
 
@@ -1140,6 +1142,26 @@ Note: Returns an iterable (sync) of async iterables.
 
 
 ## Consume an iterable
+### arrayFrom
+Aliases: `toArray`
+
+Transform an iterable to an array. arrayFrom is implemented as `Array.from`. It is included for consistency since `Array.from` has no counterpart for use with async iterators.
+
+```js
+arrayFrom(slice(0, 3, range())); // [1, 2, 3]
+arrayFrom(null); // []
+```
+
+### arrayFromAsync
+Aliases: `asyncToArray`
+
+Transform an async iterable to an array.
+
+```js
+await arrayFromAsync(asyncWrap(slice(0, 3, range()))); // [1, 2, 3]
+await arrayFromAsync(null); // []
+```
+
 ### consume
 Consumes an iterable, running a function for every value yielded. Passing only the function you get a curried version.
 ```js
@@ -1150,13 +1172,10 @@ consume((item) => console.log(item), [1, 2, 3]) // prints 1, 2, 3
 See [consume](#consume)
 
 ### toArray
-Transform an iterable to an array. toArray is implemented as Array.from. It is included for consistency since Array.from has no counterpart for use with async iterators.
-```js
-const arr = toArray(iter);
-```
+See [arrayFrom](#array-from)
 
 ### asyncToArray
-See [toArray](#to-array)
+See [arrayFromAsync](#array-from-async)
 
 
 ## Utilities

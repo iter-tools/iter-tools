@@ -6,6 +6,10 @@
 API.md linguist-generated=true
 src/apply.d.ts linguist-generated=true
 src/apply.mjs linguist-generated=true
+src/array-from-async.d.ts linguist-generated=true
+src/array-from-async.mjs linguist-generated=true
+src/array-from.d.ts linguist-generated=true
+src/array-from.mjs linguist-generated=true
 src/async-batch.d.ts linguist-generated=true
 src/async-batch.mjs linguist-generated=true
 src/async-buffer.d.ts linguist-generated=true
