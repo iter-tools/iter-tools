@@ -1,7 +1,8 @@
-import { $isAsync, $async, $await } from '../../../../generate/async.macro';
+import { $, $isAsync, $async, $await } from '../../../../generate/async.macro';
+
 import { $dropWhile, asyncDropWhile, $toArray, asyncToArray, range } from '../../..';
 
-describe($async`dropWhile`, () => {
+describe($`dropWhile`, () => {
   it(
     'dropWhile on array',
     $async(() => {

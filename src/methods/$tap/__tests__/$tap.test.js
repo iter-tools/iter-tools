@@ -1,7 +1,8 @@
-import { $async, $await } from '../../../../generate/async.macro';
+import { $, $async, $await } from '../../../../generate/async.macro';
+
 import { $tap, $toArray, range } from '../../..';
 
-describe($async`tap`, () => {
+describe($`tap`, () => {
   it(
     'return tapped iterable',
     $async(() => {

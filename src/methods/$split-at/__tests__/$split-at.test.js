@@ -1,7 +1,8 @@
-import { $async, $await } from '../../../../generate/async.macro';
+import { $, $async, $await } from '../../../../generate/async.macro';
+
 import { $splitAt, $toArray, slice, range } from '../../..';
 
-describe($async`splitAt`, () => {
+describe($`splitAt`, () => {
   it(
     'works when the halves are consumed in order',
     $async(() => {

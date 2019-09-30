@@ -1,7 +1,8 @@
-import { $async, $await } from '../../../../generate/async.macro';
+import { $, $async, $await } from '../../../../generate/async.macro';
+
 import { $collate, $toArray } from '../../..';
 
-describe($async`collate`, () => {
+describe($`collate`, () => {
   describe('by position', () => {
     it(
       'starts at 0 with step 1 if given no config arguments',

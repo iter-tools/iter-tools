@@ -1,4 +1,6 @@
-import { $InputIterable, $MaybePromise } from '../../internal/$iterable';
+import { $MaybePromise } from '../../../generate/async.macro';
+
+import { $InputIterable } from '../../internal/$iterable';
 
 declare function $equal(...iterables: Array<$InputIterable<any>>): $MaybePromise<boolean>;
 

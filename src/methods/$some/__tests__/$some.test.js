@@ -1,7 +1,8 @@
-import { $isAsync, $async, $await } from '../../../../generate/async.macro';
+import { $, $isAsync, $async, $await } from '../../../../generate/async.macro';
+
 import { $some, asyncSome } from '../../..';
 
-describe($async`some`, () => {
+describe($`some`, () => {
   it(
     'returns true if at least one item is true',
     $async(() => {

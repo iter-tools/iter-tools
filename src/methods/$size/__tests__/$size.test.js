@@ -1,7 +1,8 @@
-import { $async, $await } from '../../../../generate/async.macro';
+import { $, $async, $await } from '../../../../generate/async.macro';
+
 import { $size, range } from '../../..';
 
-describe($async`size`, () => {
+describe($`size`, () => {
   it(
     'return length of array',
     $async(() => {

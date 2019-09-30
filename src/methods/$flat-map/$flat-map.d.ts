@@ -1,4 +1,6 @@
-import { $InputIterable, $GeneratorIterator, $MaybePromise } from '../../internal/$iterable';
+import { $MaybePromise } from '../../../generate/async.macro';
+
+import { $InputIterable, $GeneratorIterator } from '../../internal/$iterable';
 
 declare function $flatMap<O, T = any>(
   func: (item: T) => $MaybePromise<$InputIterable<O>>,

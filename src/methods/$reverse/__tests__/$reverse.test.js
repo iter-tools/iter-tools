@@ -1,7 +1,8 @@
-import { $isAsync, $async, $await } from '../../../../generate/async.macro';
+import { $, $isSync, $async, $await } from '../../../../generate/async.macro';
+
 import { $reverse, $toArray, $wrap } from '../../..';
 
-describe($async`reverse`, () => {
+describe($`reverse`, () => {
   it(
     'Reverses an iterable',
     $async(() => {
@@ -9,7 +10,7 @@ describe($async`reverse`, () => {
     }),
   );
 
-  if (!$isAsync) {
+  if ($isSync) {
     it(
       'Reverses an array',
       $async(() => {

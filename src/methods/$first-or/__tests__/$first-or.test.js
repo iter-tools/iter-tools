@@ -1,7 +1,8 @@
-import { $async, $await } from '../../../../generate/async.macro';
+import { $, $async, $await } from '../../../../generate/async.macro';
+
 import { $firstOr, range } from '../../..';
 
-describe($async`firstOr`, () => {
+describe($`firstOr`, () => {
   describe('when iterable contains items', () => {
     it(
       'returns first item',

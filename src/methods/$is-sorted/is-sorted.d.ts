@@ -6,10 +6,10 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { InputIterable, MaybePromise } from '../../internal/iterable';
-declare function isSorted(iterable: InputIterable<any>): MaybePromise<boolean>;
+import { InputIterable } from '../../internal/iterable';
+declare function isSorted(iterable: InputIterable<any>): boolean;
 declare function isSorted<T = any>(
   comparator: (a: T, b: T) => number,
   iterable: InputIterable<T>,
-): MaybePromise<boolean>;
+): boolean;
 export default isSorted;

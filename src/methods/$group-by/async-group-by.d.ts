@@ -6,25 +6,21 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import {
-  AsyncInputIterable,
-  AsyncGeneratorIterator,
-  AsyncMaybePromise,
-} from '../../internal/async-iterable';
+import { AsyncInputIterable, AsyncGeneratorIterator } from '../../internal/async-iterable';
 declare function asyncGroupBy(
   key: null | undefined,
 ): <T = any>(
   iterable: AsyncInputIterable<T>,
 ) => AsyncGeneratorIterator<[T, AsyncGeneratorIterator<T>]>;
 declare function asyncGroupBy<K, T = any>(
-  key: (item: T) => AsyncMaybePromise<K>,
+  key: (item: T) => K | Promise<K>,
 ): (iterable: AsyncInputIterable<T>) => AsyncGeneratorIterator<[K, AsyncGeneratorIterator<T>]>;
 declare function asyncGroupBy<T = any>(
   key: null | undefined,
   iterable: AsyncInputIterable<T>,
 ): AsyncGeneratorIterator<[T, AsyncGeneratorIterator<T>]>;
 declare function asyncGroupBy<K, T = any>(
-  key: (item: T) => AsyncMaybePromise<K>,
+  key: (item: T) => K | Promise<K>,
   iterable: AsyncInputIterable<T>,
 ): AsyncGeneratorIterator<[K, AsyncGeneratorIterator<T>]>;
 export default asyncGroupBy;

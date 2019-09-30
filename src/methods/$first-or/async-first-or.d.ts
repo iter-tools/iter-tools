@@ -6,13 +6,13 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { AsyncInputIterable, AsyncIterable, AsyncPromise } from '../../internal/async-iterable';
+import { AsyncInputIterable, AsyncIterable } from '../../internal/async-iterable';
 declare function asyncFirstOr<Iter extends AsyncInputIterable<any>, E>(
   whenEmpty: E,
   iterable: Iter,
 ): Iter extends [infer First, ...Array<any>]
-  ? AsyncPromise<First>
+  ? Promise<First>
   : Iter extends AsyncIterable<infer T>
-  ? AsyncPromise<T | E>
-  : AsyncPromise<E>;
+  ? Promise<T | E>
+  : Promise<E>;
 export default asyncFirstOr;

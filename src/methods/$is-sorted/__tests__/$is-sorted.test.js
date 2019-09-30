@@ -1,7 +1,8 @@
-import { $async, $await } from '../../../../generate/async.macro';
+import { $, $async, $await } from '../../../../generate/async.macro';
+
 import { $isSorted, $wrap } from '../../..';
 
-describe($async`isSorted`, () => {
+describe($`isSorted`, () => {
   it(
     'returns true for a numerically sorted input iterable',
     $async(() => {

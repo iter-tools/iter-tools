@@ -1,7 +1,8 @@
-import { $isAsync, $async, $await } from '../../../../generate/async.macro';
+import { $, $isAsync, $async, $await } from '../../../../generate/async.macro';
+
 import { $filter, asyncFilter, $toArray, asyncToArray, range } from '../../..';
 
-describe($async`filter`, () => {
+describe($`filter`, () => {
   it(
     'returns filtered iterable',
     $async(() => {

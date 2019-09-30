@@ -6,16 +6,12 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import {
-  AsyncInputIterable,
-  AsyncGeneratorIterator,
-  AsyncMaybePromise,
-} from '../../internal/async-iterable';
+import { AsyncInputIterable, AsyncGeneratorIterator } from '../../internal/async-iterable';
 declare function asyncFlatMap<O, T = any>(
-  func: (item: T) => AsyncMaybePromise<AsyncInputIterable<O>>,
+  func: (item: T) => AsyncInputIterable<O> | Promise<AsyncInputIterable<O>>,
 ): (iter: AsyncInputIterable<T>) => AsyncGeneratorIterator<O>;
 declare function asyncFlatMap<O, T = any>(
-  func: (item: T) => AsyncMaybePromise<AsyncInputIterable<O>>,
+  func: (item: T) => AsyncInputIterable<O> | Promise<AsyncInputIterable<O>>,
   iter: AsyncInputIterable<T>,
 ): AsyncGeneratorIterator<O>;
 export default asyncFlatMap;

@@ -6,9 +6,9 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { InputIterable, GeneratorIterator, MaybePromise } from '../../internal/iterable';
+import { InputIterable, GeneratorIterator } from '../../internal/iterable';
 declare function execute<T, Args extends any[] = any[]>(
-  func: (...args: Args) => MaybePromise<T>,
+  func: (...args: Args) => T,
   ...args: Args
 ): GeneratorIterator<T>;
 export default execute;

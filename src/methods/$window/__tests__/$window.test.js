@@ -1,7 +1,8 @@
-import { $async, $await } from '../../../../generate/async.macro';
+import { $, $async, $await } from '../../../../generate/async.macro';
+
 import { $window, $map, $toArray } from '../../..';
 
-describe($async`window`, () => {
+describe($`window`, () => {
   it(
     'frames iterable',
     $async(() => {

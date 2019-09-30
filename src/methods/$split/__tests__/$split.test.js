@@ -1,7 +1,8 @@
-import { $isAsync, $async, $await } from '../../../../generate/async.macro';
+import { $, $isSync, $async, $await } from '../../../../generate/async.macro';
+
 import { $split, $map, $toArray } from '../../..';
 
-describe($async`split`, () => {
+describe($`split`, () => {
   it(
     'should yield an iterable for every item in the iterable',
     $async(() => {
@@ -13,7 +14,7 @@ describe($async`split`, () => {
     }),
   );
 
-  if (!$isAsync) {
+  if ($isSync) {
     it('exploding a string should return the string', () => {
       expect($split('123')).toEqual('123');
     });

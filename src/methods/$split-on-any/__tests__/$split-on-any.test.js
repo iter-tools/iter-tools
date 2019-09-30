@@ -1,7 +1,8 @@
-import { $isAsync, $async, $await } from '../../../../generate/async.macro';
+import { $, $isSync, $async, $await } from '../../../../generate/async.macro';
+
 import { $splitOnAny, $map, $toArray } from '../../..';
 
-describe($async`splitOnAny`, () => {
+describe($`splitOnAny`, () => {
   it(
     'should split on an occurance of any value',
     $async(() => {
@@ -38,7 +39,7 @@ describe($async`splitOnAny`, () => {
     }),
   );
 
-  if (!$isAsync) {
+  if ($isSync) {
     describe('given a string', () => {
       it('should split on every item which is equal to the on argument', () => {
         expect($toArray($splitOnAny('Ø', '11Ø22Ø33'))).toEqual(['11', '22', '33']);

@@ -1,7 +1,8 @@
-import { $async, $await } from '../../../../generate/async.macro';
+import { $, $async, $await } from '../../../../generate/async.macro';
+
 import { $toArray, range } from '../../..';
 
-describe($async`toArray`, () => {
+describe($`toArray`, () => {
   it(
     'works',
     $async(() => {

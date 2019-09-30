@@ -1,7 +1,8 @@
-import { $isAsync, $async, $await } from '../../../../generate/async.macro';
+import { $, $isAsync, $async, $await } from '../../../../generate/async.macro';
+
 import { $every, asyncEvery } from '../../..';
 
-describe($async`every`, () => {
+describe($`every`, () => {
   it(
     'returns true if all items is true',
     $async(() => {

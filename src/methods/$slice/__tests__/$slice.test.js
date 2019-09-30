@@ -1,7 +1,8 @@
-import { $async, $await } from '../../../../generate/async.macro';
+import { $, $async, $await } from '../../../../generate/async.macro';
+
 import { $slice, $toArray } from '../../..';
 
-describe($async`slice`, () => {
+describe($`slice`, () => {
   const list = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
 
   describe('with positional args', () => {

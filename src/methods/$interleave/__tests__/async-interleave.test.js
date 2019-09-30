@@ -8,7 +8,7 @@
 
 /* eslint-disable no-unused-vars,import/no-duplicates */
 
-import { AsyncPromise, AsyncIterable } from '../../../internal/async-iterable';
+import { AsyncIterable } from '../../../internal/async-iterable';
 import { asyncInterleave, AsyncInterleaveBuffer, asyncToArray } from '../../..';
 describe('asyncInterleave', () => {
   const a = [1, 2, 3];
@@ -16,7 +16,7 @@ describe('asyncInterleave', () => {
   const c = [7, 8, 9];
   it('can be used to implement a round robin interleave', async () => {
     const roundRobin = asyncInterleave(async function*(
-      canTakeAny: () => AsyncPromise<AsyncInterleaveBuffer<number> | null>,
+      canTakeAny: () => Promise<AsyncInterleaveBuffer<number> | null>,
       a: AsyncInterleaveBuffer<number>,
       b: AsyncInterleaveBuffer<number>,
       c: AsyncInterleaveBuffer<number>,

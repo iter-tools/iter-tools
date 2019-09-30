@@ -6,12 +6,12 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { AsyncInputIterable, AsyncPromise, AsyncMaybePromise } from '../../internal/async-iterable';
+import { AsyncInputIterable } from '../../internal/async-iterable';
 declare function asyncIncludesSubseq(
   subseq: AsyncInputIterable<any>,
-): (iterable: AsyncInputIterable<any>) => AsyncPromise<boolean>;
+): (iterable: AsyncInputIterable<any>) => Promise<boolean>;
 declare function asyncIncludesSubseq(
   subseq: AsyncInputIterable<any>,
   iterable: AsyncInputIterable<any>,
-): AsyncPromise<boolean>;
+): Promise<boolean>;
 export default asyncIncludesSubseq;

@@ -6,21 +6,21 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { AsyncInputIterable, AsyncPromise, AsyncMaybePromise } from '../../internal/async-iterable';
+import { AsyncInputIterable } from '../../internal/async-iterable';
 declare function asyncReduce<O = any, T = any>(
   func: (acc: O, item: T, i: number) => O,
-): (iterable: AsyncInputIterable<T>) => AsyncPromise<O>;
+): (iterable: AsyncInputIterable<T>) => Promise<O>;
 declare function asyncReduce<O = any, T = any>(
   initial: O,
-  func: (acc: O, item: T, i: number) => AsyncMaybePromise<O>,
-): (iterable: AsyncInputIterable<T>) => AsyncPromise<O>;
+  func: (acc: O, item: T, i: number) => O | Promise<O>,
+): (iterable: AsyncInputIterable<T>) => Promise<O>;
 declare function asyncReduce<O = any, T = any>(
-  func: (acc: O, item: T, i: number) => AsyncMaybePromise<O>,
+  func: (acc: O, item: T, i: number) => O | Promise<O>,
   iterable: AsyncInputIterable<T>,
-): AsyncPromise<O>;
+): Promise<O>;
 declare function asyncReduce<O = any, T = any>(
   initial: O,
-  func: (acc: O, item: T, i: number) => AsyncMaybePromise<O>,
+  func: (acc: O, item: T, i: number) => O | Promise<O>,
   iterable: AsyncInputIterable<T>,
-): AsyncPromise<O>;
+): Promise<O>;
 export default asyncReduce;

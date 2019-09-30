@@ -1,7 +1,8 @@
-import { $async, $await, $iteratorSymbol } from '../../../../generate/async.macro';
+import { $, $async, $await, $iteratorSymbol } from '../../../../generate/async.macro';
+
 import { $cycle, range } from '../../..';
 
-describe($async`cycle`, () => {
+describe($`cycle`, () => {
   it(
     'return infinite cycle',
     $async(() => {

@@ -1,7 +1,8 @@
-import { $isAsync, $async, $await } from '../../../../generate/async.macro';
+import { $, $isSync, $async, $await } from '../../../../generate/async.macro';
+
 import { $splitWith, $map, $toArray } from '../../..';
 
-describe($async`splitWith`, () => {
+describe($`splitWith`, () => {
   it(
     'should split between every item which is equal to the on argument',
     $async(() => {
@@ -15,7 +16,7 @@ describe($async`splitWith`, () => {
     }),
   );
 
-  if (!$isAsync) {
+  if ($isSync) {
     describe('given a string', () => {
       it('should split on every character which matches the accessor', () => {
         expect($await($toArray($splitWith(i => i === 'Ø', '11Ø22Ø33')))).toEqual([

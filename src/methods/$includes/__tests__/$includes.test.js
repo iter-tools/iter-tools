@@ -1,7 +1,8 @@
-import { $async, $await } from '../../../../generate/async.macro';
+import { $, $async, $await } from '../../../../generate/async.macro';
+
 import { $includes, range } from '../../..';
 
-describe($async`includes`, () => {
+describe($`includes`, () => {
   it(
     'returns true if the iterable contains the given value',
     $async(() => {

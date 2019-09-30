@@ -1,7 +1,8 @@
-import { $isAsync, $async, $await } from '../../../../generate/async.macro';
+import { $, $isSync, $async, $await } from '../../../../generate/async.macro';
+
 import { $joinWithSubseq, $toArray } from '../../..';
 
-describe($async`joinWithSubseq`, () => {
+describe($`joinWithSubseq`, () => {
   describe('joining on the empty subseq', () => {
     it(
       'should include the items from every group',
@@ -32,7 +33,7 @@ describe($async`joinWithSubseq`, () => {
     }),
   );
 
-  if (!$isAsync) {
+  if ($isSync) {
     it('passes through the empty string', () => {
       expect($toArray($joinWithSubseq([], ''))).toEqual([]);
     });

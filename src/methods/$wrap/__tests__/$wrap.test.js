@@ -1,7 +1,8 @@
-import { $async, $await } from '../../../../generate/async.macro';
+import { $, $async, $await } from '../../../../generate/async.macro';
+
 import { $wrap, $toArray } from '../../..';
 
-describe($async`wrap`, () => {
+describe($`wrap`, () => {
   it(
     'returns an empty iterable when passed null or undefined',
     $async(() => {

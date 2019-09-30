@@ -8,7 +8,7 @@
 
 /* eslint-disable no-unused-vars,import/no-duplicates */
 
-import { Promise, Iterable } from '../../../internal/iterable';
+import { Iterable } from '../../../internal/iterable';
 import { interleave, InterleaveBuffer, toArray } from '../../..';
 describe('interleave', () => {
   const a = [1, 2, 3];
@@ -16,7 +16,7 @@ describe('interleave', () => {
   const c = [7, 8, 9];
   it('can be used to implement a round robin interleave', () => {
     const roundRobin = interleave(function*(
-      canTakeAny: () => Promise<InterleaveBuffer<number> | null>,
+      canTakeAny: () => InterleaveBuffer<number> | null,
       a: InterleaveBuffer<number>,
       b: InterleaveBuffer<number>,
       c: InterleaveBuffer<number>,
@@ -45,7 +45,7 @@ describe('interleave', () => {
   describe('the return value of canTakeAny', () => {
     it('can be used to do concatenation', () => {
       const concatenate = interleave(function*(
-        canTakeAny: () => Promise<InterleaveBuffer<number> | null>,
+        canTakeAny: () => InterleaveBuffer<number> | null,
         a: InterleaveBuffer<number>,
         b: InterleaveBuffer<number>,
         c: InterleaveBuffer<number>,

@@ -6,23 +6,23 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { AsyncInputIterable, AsyncPromise, AsyncMaybePromise } from '../../internal/async-iterable';
+import { AsyncInputIterable } from '../../internal/async-iterable';
 declare function asyncFindOr<NF, S extends T, T = any>(
   notFoundValue: NF,
   predicate: (item: T, i: number) => item is S,
-): (iterable: AsyncInputIterable<T>) => AsyncPromise<S | NF>;
+): (iterable: AsyncInputIterable<T>) => Promise<S | NF>;
 declare function asyncFindOr<NF, T = any>(
   notFoundValue: NF,
-  predicate: (item: T, i: number) => AsyncMaybePromise<boolean>,
-): (iterable: AsyncInputIterable<T>) => AsyncPromise<T | NF>;
+  predicate: (item: T, i: number) => boolean | Promise<boolean>,
+): (iterable: AsyncInputIterable<T>) => Promise<T | NF>;
 declare function asyncFindOr<NF, S extends T, T = any>(
   notFoundValue: NF,
   predicate: (item: T, i: number) => item is S,
   iterable: AsyncInputIterable<T>,
-): AsyncPromise<S | NF>;
+): Promise<S | NF>;
 declare function asyncFindOr<NF, T = any>(
   notFoundValue: NF,
-  predicate: (item: T, i: number) => AsyncMaybePromise<boolean>,
+  predicate: (item: T, i: number) => boolean | Promise<boolean>,
   iterable: AsyncInputIterable<T>,
-): AsyncPromise<T | NF>;
+): Promise<T | NF>;
 export default asyncFindOr;

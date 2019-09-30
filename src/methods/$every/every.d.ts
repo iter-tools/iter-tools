@@ -6,12 +6,9 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { InputIterable, Promise, MaybePromise } from '../../internal/iterable';
+import { InputIterable } from '../../internal/iterable';
 declare function every<T = any>(
-  func: (item: T) => MaybePromise<boolean>,
-): (iterable: InputIterable<T>) => Promise<boolean>;
-declare function every<T = any>(
-  func: (item: T) => MaybePromise<boolean>,
-  iterable: InputIterable<T>,
-): Promise<boolean>;
+  func: (item: T) => boolean,
+): (iterable: InputIterable<T>) => boolean;
+declare function every<T = any>(func: (item: T) => boolean, iterable: InputIterable<T>): boolean;
 export default every;

@@ -1,8 +1,9 @@
-import { $async, $await } from '../../../../generate/async.macro';
+import { $, $async, $await } from '../../../../generate/async.macro';
+
 import { $zip, $toArray, $slice, range } from '../../..';
 import { $OneTwoThreeIterable } from '../../../__tests__/__framework__/fixtures';
 
-describe($async`zip`, () => {
+describe($`zip`, () => {
   it(
     'zips',
     $async(() => {

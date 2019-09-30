@@ -6,12 +6,12 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { InputIterable, Promise, MaybePromise } from '../../internal/iterable';
+import { InputIterable } from '../../internal/iterable';
 declare function startsWithSubseq(
   subseq: InputIterable<any>,
-): (iterable: InputIterable<any>) => Promise<boolean>;
+): (iterable: InputIterable<any>) => boolean;
 declare function startsWithSubseq(
   subseq: InputIterable<any>,
   iterable: InputIterable<any>,
-): Promise<boolean>;
+): boolean;
 export default startsWithSubseq;

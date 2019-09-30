@@ -1,7 +1,8 @@
-import { $async, $await } from '../../../../generate/async.macro';
+import { $, $async, $await } from '../../../../generate/async.macro';
+
 import { $equal, $wrap } from '../../..';
 
-describe($async`equal`, () => {
+describe($`equal`, () => {
   it(
     'returns true if there is only one iterable',
     $async(() => {

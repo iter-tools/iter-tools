@@ -1,7 +1,8 @@
-import { $isAsync, $async, $await } from '../../../../generate/async.macro';
+import { $, $isSync, $async, $await } from '../../../../generate/async.macro';
+
 import { $join, $toArray } from '../../..';
 
-describe($async`join`, () => {
+describe($`join`, () => {
   it(
     'should join each group with the provided value',
     $async(() => {
@@ -30,7 +31,7 @@ describe($async`join`, () => {
     }),
   );
 
-  if (!$isAsync) {
+  if ($isSync) {
     it('passes through the empty string', () => {
       expect($toArray($join(''))).toEqual([]);
     });

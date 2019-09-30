@@ -1,9 +1,10 @@
-import { $isAsync, $async, $await } from '../../../generate/async.macro';
+import { $, $isAsync, $isSync, $async, $await } from '../../../generate/async.macro';
+
 import { asyncify } from '../async-iterable';
 import { $ensureIterable, $isIterable, $iterableCurry } from '../$iterable';
 import { range, $toArray } from '../..';
 
-describe($async`ensureIterable`, () => {
+describe($`ensureIterable`, () => {
   if ($isAsync) {
     it('transform sync iter to async', async () => {
       const iter = $ensureIterable(range({ start: 1, end: 4 }));
@@ -29,10 +30,10 @@ describe($async`ensureIterable`, () => {
   }
 });
 
-describe($async`isIterable`, () => {
+describe($`isIterable`, () => {
   it('works', () => {
-    expect($isIterable(range(3))).toBe(!$isAsync);
-    expect($isIterable([])).toBe(!$isAsync);
+    expect($isIterable(range(3))).toBe($isSync);
+    expect($isIterable([])).toBe($isSync);
     expect($isIterable(null)).toBe(false);
     if ($isAsync) {
       expect($isIterable(asyncify([]))).toBe(true);
@@ -75,7 +76,7 @@ function addAll(initial, iterables) {
   return result;
 }
 
-describe($async`iterableCurry`, () => {
+describe($`iterableCurry`, () => {
   const f2 = (iterable, a, b) => iter(a, b);
   const f1 = (iterable, a) => iter(a);
   const f0 = iterable => iter();
@@ -190,7 +191,7 @@ describe($async`iterableCurry`, () => {
     it('throws with too many args', () => {
       expect(() => c(hello)(goodbye)(world)([])).toThrowError(
         new Error(
-          `f takes up to 2 arguments, followed by ${$async`iterable`}. You already passed 3 arguments and the last argument was not ${$async`iterable`}`,
+          `f takes up to 2 arguments, followed by ${$`iterable`}. You already passed 3 arguments and the last argument was not ${$`iterable`}`,
         ),
       );
     });

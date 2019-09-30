@@ -6,9 +6,9 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { AsyncInputIterable, AsyncMaybePromise } from '../../internal/async-iterable';
+import { AsyncInputIterable } from '../../internal/async-iterable';
 declare function asyncLastOr<E, T = any>(
   whenEmpty: E,
   iterable: AsyncInputIterable<T>,
-): AsyncMaybePromise<T | E>;
+): (T | E) | Promise<T | E>;
 export default asyncLastOr;

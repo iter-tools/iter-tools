@@ -1,7 +1,8 @@
-import { $async, $await } from '../../../../generate/async.macro';
+import { $, $async, $await } from '../../../../generate/async.macro';
+
 import { $takeSorted, $toArray } from '../../..';
 
-describe($async`takeSorted`, () => {
+describe($`takeSorted`, () => {
   it(
     'yields a sorted iterable if no number is specified',
     $async(() => {

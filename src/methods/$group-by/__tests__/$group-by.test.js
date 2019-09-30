@@ -1,7 +1,8 @@
-import { $isAsync, $async, $await } from '../../../../generate/async.macro';
+import { $, $isAsync, $async, $await } from '../../../../generate/async.macro';
+
 import { $groupBy, groupBy, asyncGroupBy, $toArray } from '../../..';
 
-describe($async`groupBy`, () => {
+describe($`groupBy`, () => {
   it(
     'main cursor',
     $async(() => {

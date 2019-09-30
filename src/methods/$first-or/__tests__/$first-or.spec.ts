@@ -1,6 +1,7 @@
-import assert from 'static-type-assert';
+import { $Promise } from '../../../../generate/async.macro';
 
-import { $Iterable, $Promise } from  '../../../internal/$iterable';
+import assert from 'static-type-assert';
+import { $Iterable } from '../../../internal/$iterable';
 import { $firstOr } from '../../..';
 
 declare var Ø: never;

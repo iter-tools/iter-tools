@@ -27,8 +27,8 @@ describe('ensureIterable', () => {
 });
 describe('isIterable', () => {
   it('works', () => {
-    expect(isIterable(range(3))).toBe(!false);
-    expect(isIterable([])).toBe(!false);
+    expect(isIterable(range(3))).toBe(true);
+    expect(isIterable([])).toBe(true);
     expect(isIterable(null)).toBe(false);
   });
 });

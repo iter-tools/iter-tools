@@ -1,4 +1,6 @@
-import { $InputIterable, $Promise, $MaybePromise } from '../../internal/$iterable';
+import { $Promise, $MaybePromise } from '../../../generate/async.macro';
+
+import { $InputIterable } from '../../internal/$iterable';
 
 declare function $some<T = any>(
   func: (item: T, i: number) => $MaybePromise<boolean>,

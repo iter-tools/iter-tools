@@ -1,7 +1,8 @@
-import { $async, $await } from '../../../../generate/async.macro';
+import { $, $async, $await } from '../../../../generate/async.macro';
+
 import { $enumerate, $toArray, range } from '../../..';
 
-describe($async`enumerate`, () => {
+describe($`enumerate`, () => {
   it(
     'enumerates iterables',
     $async(() => {

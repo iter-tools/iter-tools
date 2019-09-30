@@ -1,7 +1,8 @@
-import { $async, $await } from '../../../../generate/async.macro';
+import { $, $async, $await } from '../../../../generate/async.macro';
+
 import { $includesAnySubseq, range } from '../../..';
 
-describe($async`includesAnySubseq`, () => {
+describe($`includesAnySubseq`, () => {
   it(
     'returns true if the iterable contains any of the given subsequences',
     $async(() => {

@@ -1,7 +1,8 @@
-import { $async, $await } from '../../../../generate/async.macro';
+import { $, $async, $await } from '../../../../generate/async.macro';
+
 import { $consume } from '../../..';
 
-describe($async`consume`, () => {
+describe($`consume`, () => {
   it(
     'consumes an iterable',
     $async(() => {

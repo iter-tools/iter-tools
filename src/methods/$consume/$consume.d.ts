@@ -1,4 +1,5 @@
-import { $Promise, $InputIterable } from '../../internal/$iterable';
+import { $Promise } from '../../../generate/async.macro';
+import { $InputIterable } from '../../internal/$iterable';
 
 declare function $consume<T = any>(
   func: (item: T, i: number) => void,

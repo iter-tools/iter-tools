@@ -1,7 +1,8 @@
-import { $async, $await } from '../../../../generate/async.macro';
+import { $, $async, $await } from '../../../../generate/async.macro';
+
 import { $isEmpty, range } from '../../..';
 
-describe($async`isEmpty`, () => {
+describe($`isEmpty`, () => {
   describe('when iterable contains items', () => {
     it(
       'returns true',

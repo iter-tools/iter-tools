@@ -1,7 +1,8 @@
-import { $async, $await } from '../../../../generate/async.macro';
+import { $, $async, $await } from '../../../../generate/async.macro';
+
 import { $joinAsStringWith } from '../../..';
 
-describe($async`joinAsStringWith`, () => {
+describe($`joinAsStringWith`, () => {
   it(
     'joins with the empty string',
     $async(() => {

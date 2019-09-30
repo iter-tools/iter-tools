@@ -10,16 +10,15 @@ import {
   AsyncInputIterable,
   AsyncGeneratorIterator,
   AsyncIterable,
-  AsyncPromise,
 } from '../../internal/async-iterable';
 import AsyncInterleaveBuffer from './internal/async-buffer'; // Without options:
 // #############
 // prettier-ignore
 
-declare function asyncInterleave<T1 = any, T2 = any, R = any>(gen: (canTakeAny: () => AsyncPromise<AsyncInterleaveBuffer<T1 | T2> | null>, b1: AsyncInterleaveBuffer<T1>, b2: AsyncInterleaveBuffer<T2>) => AsyncIterable<R>): (i1: AsyncInputIterable<T1>, i2: AsyncInputIterable<T2>) => AsyncGeneratorIterator<R>;
+declare function asyncInterleave<T1 = any, T2 = any, R = any>(gen: (canTakeAny: () => Promise<AsyncInterleaveBuffer<T1 | T2> | null>, b1: AsyncInterleaveBuffer<T1>, b2: AsyncInterleaveBuffer<T2>) => AsyncIterable<R>): (i1: AsyncInputIterable<T1>, i2: AsyncInputIterable<T2>) => AsyncGeneratorIterator<R>;
 declare function asyncInterleave<T1 = any, T2 = any, T3 = any, R = any>(
   gen: (
-    canTakeAny: () => AsyncPromise<AsyncInterleaveBuffer<T1 | T2 | T3> | null>,
+    canTakeAny: () => Promise<AsyncInterleaveBuffer<T1 | T2 | T3> | null>,
     b1: AsyncInterleaveBuffer<T1>,
     b2: AsyncInterleaveBuffer<T2>,
     b3: AsyncInterleaveBuffer<T3>,
@@ -31,7 +30,7 @@ declare function asyncInterleave<T1 = any, T2 = any, T3 = any, R = any>(
 ) => AsyncGeneratorIterator<R>;
 declare function asyncInterleave<T1 = any, T2 = any, T3 = any, T4 = any, R = any>(
   gen: (
-    canTakeAny: () => AsyncPromise<AsyncInterleaveBuffer<T1 | T2 | T3 | T4> | null>,
+    canTakeAny: () => Promise<AsyncInterleaveBuffer<T1 | T2 | T3 | T4> | null>,
     b1: AsyncInterleaveBuffer<T1>,
     b2: AsyncInterleaveBuffer<T2>,
     b3: AsyncInterleaveBuffer<T3>,
@@ -45,13 +44,13 @@ declare function asyncInterleave<T1 = any, T2 = any, T3 = any, T4 = any, R = any
 ) => AsyncGeneratorIterator<R>;
 declare function asyncInterleave<T, R>(
   gen: (
-    canTakeAny: () => AsyncPromise<AsyncInterleaveBuffer<T> | null>,
+    canTakeAny: () => Promise<AsyncInterleaveBuffer<T> | null>,
     ...buffers: Array<AsyncInterleaveBuffer<T>>
   ) => AsyncIterable<R>,
 ): (...iterables: Array<AsyncInputIterable<T>>) => AsyncGeneratorIterator<R>;
 declare function asyncInterleave<T1 = any, T2 = any, R = any>(
   gen: (
-    canTakeAny: () => AsyncPromise<AsyncInterleaveBuffer<T1 | T2> | null>,
+    canTakeAny: () => Promise<AsyncInterleaveBuffer<T1 | T2> | null>,
     b1: AsyncInterleaveBuffer<T1>,
     b2: AsyncInterleaveBuffer<T2>,
   ) => AsyncIterable<R>,
@@ -60,7 +59,7 @@ declare function asyncInterleave<T1 = any, T2 = any, R = any>(
 ): AsyncGeneratorIterator<R>;
 declare function asyncInterleave<T1 = any, T2 = any, T3 = any, R = any>(
   gen: (
-    canTakeAny: () => AsyncPromise<AsyncInterleaveBuffer<T1 | T2 | T3> | null>,
+    canTakeAny: () => Promise<AsyncInterleaveBuffer<T1 | T2 | T3> | null>,
     b1: AsyncInterleaveBuffer<T1>,
     b2: AsyncInterleaveBuffer<T2>,
     b3: AsyncInterleaveBuffer<T3>,
@@ -71,7 +70,7 @@ declare function asyncInterleave<T1 = any, T2 = any, T3 = any, R = any>(
 ): AsyncGeneratorIterator<R>;
 declare function asyncInterleave<T1 = any, T2 = any, T3 = any, T4 = any, R = any>(
   gen: (
-    canTakeAny: () => AsyncPromise<AsyncInterleaveBuffer<T1 | T2 | T3 | T4> | null>,
+    canTakeAny: () => Promise<AsyncInterleaveBuffer<T1 | T2 | T3 | T4> | null>,
     b1: AsyncInterleaveBuffer<T1>,
     b2: AsyncInterleaveBuffer<T2>,
     b3: AsyncInterleaveBuffer<T3>,
@@ -84,7 +83,7 @@ declare function asyncInterleave<T1 = any, T2 = any, T3 = any, T4 = any, R = any
 ): AsyncGeneratorIterator<R>;
 declare function asyncInterleave<T, R>(
   gen: (
-    canTakeAny: () => AsyncPromise<AsyncInterleaveBuffer<T> | null>,
+    canTakeAny: () => Promise<AsyncInterleaveBuffer<T> | null>,
     ...buffers: Array<AsyncInterleaveBuffer<T>>
   ) => AsyncIterable<R>,
   ...iterables: Array<AsyncInputIterable<T>>
@@ -92,11 +91,11 @@ declare function asyncInterleave<T, R>(
 // #############
 // prettier-ignore
 
-declare function asyncInterleave<O extends {}, T1 = any, T2 = any, R = any>(gen: (options: O, canTakeAny: () => AsyncPromise<AsyncInterleaveBuffer<T1 | T2> | null>, b1: AsyncInterleaveBuffer<T1>, b2: AsyncInterleaveBuffer<T2>) => AsyncIterable<R>, options: O): (i1: AsyncInputIterable<T1>, i2: AsyncInputIterable<T2>) => AsyncGeneratorIterator<R>;
+declare function asyncInterleave<O extends {}, T1 = any, T2 = any, R = any>(gen: (options: O, canTakeAny: () => Promise<AsyncInterleaveBuffer<T1 | T2> | null>, b1: AsyncInterleaveBuffer<T1>, b2: AsyncInterleaveBuffer<T2>) => AsyncIterable<R>, options: O): (i1: AsyncInputIterable<T1>, i2: AsyncInputIterable<T2>) => AsyncGeneratorIterator<R>;
 declare function asyncInterleave<O extends {}, T1 = any, T2 = any, T3 = any, R = any>(
   gen: (
     options: O,
-    canTakeAny: () => AsyncPromise<AsyncInterleaveBuffer<T1 | T2 | T3> | null>,
+    canTakeAny: () => Promise<AsyncInterleaveBuffer<T1 | T2 | T3> | null>,
     b1: AsyncInterleaveBuffer<T1>,
     b2: AsyncInterleaveBuffer<T2>,
     b3: AsyncInterleaveBuffer<T3>,
@@ -110,7 +109,7 @@ declare function asyncInterleave<O extends {}, T1 = any, T2 = any, T3 = any, R =
 declare function asyncInterleave<O extends {}, T1 = any, T2 = any, T3 = any, T4 = any, R = any>(
   gen: (
     options: O,
-    canTakeAny: () => AsyncPromise<AsyncInterleaveBuffer<T1 | T2 | T3 | T4> | null>,
+    canTakeAny: () => Promise<AsyncInterleaveBuffer<T1 | T2 | T3 | T4> | null>,
     b1: AsyncInterleaveBuffer<T1>,
     b2: AsyncInterleaveBuffer<T2>,
     b3: AsyncInterleaveBuffer<T3>,
@@ -126,7 +125,7 @@ declare function asyncInterleave<O extends {}, T1 = any, T2 = any, T3 = any, T4 
 declare function asyncInterleave<O extends {}, T, R>(
   gen: (
     options: O,
-    canTakeAny: () => AsyncPromise<AsyncInterleaveBuffer<T> | null>,
+    canTakeAny: () => Promise<AsyncInterleaveBuffer<T> | null>,
     ...buffers: Array<AsyncInterleaveBuffer<T>>
   ) => AsyncIterable<R>,
   options: O,
@@ -134,7 +133,7 @@ declare function asyncInterleave<O extends {}, T, R>(
 declare function asyncInterleave<O extends {}, T1 = any, T2 = any, R = any>(
   gen: (
     options: O,
-    canTakeAny: () => AsyncPromise<AsyncInterleaveBuffer<T1 | T2> | null>,
+    canTakeAny: () => Promise<AsyncInterleaveBuffer<T1 | T2> | null>,
     b1: AsyncInterleaveBuffer<T1>,
     b2: AsyncInterleaveBuffer<T2>,
   ) => AsyncIterable<R>,
@@ -145,7 +144,7 @@ declare function asyncInterleave<O extends {}, T1 = any, T2 = any, R = any>(
 declare function asyncInterleave<O extends {}, T1 = any, T2 = any, T3 = any, R = any>(
   gen: (
     options: O,
-    canTakeAny: () => AsyncPromise<AsyncInterleaveBuffer<T1 | T2 | T3> | null>,
+    canTakeAny: () => Promise<AsyncInterleaveBuffer<T1 | T2 | T3> | null>,
     b1: AsyncInterleaveBuffer<T1>,
     b2: AsyncInterleaveBuffer<T2>,
     b3: AsyncInterleaveBuffer<T3>,
@@ -158,7 +157,7 @@ declare function asyncInterleave<O extends {}, T1 = any, T2 = any, T3 = any, R =
 declare function asyncInterleave<O extends {}, T1 = any, T2 = any, T3 = any, T4 = any, R = any>(
   gen: (
     options: O,
-    canTakeAny: () => AsyncPromise<AsyncInterleaveBuffer<T1 | T2 | T3 | T4> | null>,
+    canTakeAny: () => Promise<AsyncInterleaveBuffer<T1 | T2 | T3 | T4> | null>,
     b1: AsyncInterleaveBuffer<T1>,
     b2: AsyncInterleaveBuffer<T2>,
     b3: AsyncInterleaveBuffer<T3>,
@@ -173,7 +172,7 @@ declare function asyncInterleave<O extends {}, T1 = any, T2 = any, T3 = any, T4 
 declare function asyncInterleave<O extends {}, T, R>(
   gen: (
     options: O,
-    canTakeAny: () => AsyncPromise<AsyncInterleaveBuffer<T> | null>,
+    canTakeAny: () => Promise<AsyncInterleaveBuffer<T> | null>,
     ...buffers: Array<AsyncInterleaveBuffer<T>>
   ) => AsyncIterable<R>,
   options: O,

@@ -1,7 +1,8 @@
-import { $isAsync, $async, $await } from '../../../../generate/async.macro';
+import { $, $isAsync, $async, $await } from '../../../../generate/async.macro';
+
 import { $find } from '../../..';
 
-describe($async`find`, () => {
+describe($`find`, () => {
   it(
     'returns found item',
     $async(() => {

@@ -7,7 +7,7 @@
  */
 
 import assert from 'static-type-assert';
-import { AsyncGeneratorIterator, AsyncPromise } from '../../../internal/async-iterable';
+import { AsyncGeneratorIterator } from '../../../internal/async-iterable';
 import AsyncInterleaveBuffer from '../internal/async-buffer';
 import { asyncInterleave } from '../../..'; // Without options
 // ############
@@ -18,19 +18,19 @@ assert<AsyncGeneratorIterator<string | number>>(
     b1: AsyncInterleaveBuffer<string>,
     b2: AsyncInterleaveBuffer<number>,
   ) {
-    assert<AsyncPromise<boolean>>(b1.canTake());
-    assert<AsyncPromise<string | undefined>>(b1.take());
+    assert<Promise<boolean>>(b1.canTake());
+    assert<Promise<string | undefined>>(b1.take());
 
     if (await b1.canTake()) {
-      assert<AsyncPromise<string>>(b1.take());
+      assert<Promise<string>>(b1.take());
       yield await b1.take();
     }
 
-    assert<AsyncPromise<boolean>>(b2.canTake());
-    assert<AsyncPromise<number | undefined>>(b2.take());
+    assert<Promise<boolean>>(b2.canTake());
+    assert<Promise<number | undefined>>(b2.take());
 
     if (await b2.canTake()) {
-      assert<AsyncPromise<number>>(b2.take());
+      assert<Promise<number>>(b2.take());
       yield await b2.take();
     }
   })(['foo'], [2]),
@@ -42,27 +42,27 @@ assert<AsyncGeneratorIterator<string | number | Function>>(
     b2: AsyncInterleaveBuffer<number>,
     b3: AsyncInterleaveBuffer<Function>,
   ) {
-    assert<AsyncPromise<boolean>>(b1.canTake());
-    assert<AsyncPromise<string | undefined>>(b1.take());
+    assert<Promise<boolean>>(b1.canTake());
+    assert<Promise<string | undefined>>(b1.take());
 
     if (await b1.canTake()) {
-      assert<AsyncPromise<string>>(b1.take());
+      assert<Promise<string>>(b1.take());
       yield await b1.take();
     }
 
-    assert<AsyncPromise<boolean>>(b2.canTake());
-    assert<AsyncPromise<number | undefined>>(b2.take());
+    assert<Promise<boolean>>(b2.canTake());
+    assert<Promise<number | undefined>>(b2.take());
 
     if (await b2.canTake()) {
-      assert<AsyncPromise<number>>(b2.take());
+      assert<Promise<number>>(b2.take());
       yield await b2.take();
     }
 
-    assert<AsyncPromise<boolean>>(b3.canTake());
-    assert<AsyncPromise<Function | undefined>>(b3.take());
+    assert<Promise<boolean>>(b3.canTake());
+    assert<Promise<Function | undefined>>(b3.take());
 
     if (await b3.canTake()) {
-      assert<AsyncPromise<Function>>(b3.take());
+      assert<Promise<Function>>(b3.take());
       yield await b3.take();
     }
   })(['foo'], [2], [(_: any) => _]),
@@ -75,35 +75,35 @@ assert<AsyncGeneratorIterator<string | number | Function | {}>>(
     b3: AsyncInterleaveBuffer<Function>,
     b4: AsyncInterleaveBuffer<{}>,
   ) {
-    assert<AsyncPromise<boolean>>(b1.canTake());
-    assert<AsyncPromise<string | undefined>>(b1.take());
+    assert<Promise<boolean>>(b1.canTake());
+    assert<Promise<string | undefined>>(b1.take());
 
     if (await b1.canTake()) {
-      assert<AsyncPromise<string>>(b1.take());
+      assert<Promise<string>>(b1.take());
       yield await b1.take();
     }
 
-    assert<AsyncPromise<boolean>>(b2.canTake());
-    assert<AsyncPromise<number | undefined>>(b2.take());
+    assert<Promise<boolean>>(b2.canTake());
+    assert<Promise<number | undefined>>(b2.take());
 
     if (await b2.canTake()) {
-      assert<AsyncPromise<number>>(b2.take());
+      assert<Promise<number>>(b2.take());
       yield await b2.take();
     }
 
-    assert<AsyncPromise<boolean>>(b3.canTake());
-    assert<AsyncPromise<Function | undefined>>(b3.take());
+    assert<Promise<boolean>>(b3.canTake());
+    assert<Promise<Function | undefined>>(b3.take());
 
     if (await b3.canTake()) {
-      assert<AsyncPromise<Function>>(b3.take());
+      assert<Promise<Function>>(b3.take());
       yield await b3.take();
     }
 
-    assert<AsyncPromise<boolean>>(b4.canTake());
-    assert<AsyncPromise<{} | undefined>>(b4.take());
+    assert<Promise<boolean>>(b4.canTake());
+    assert<Promise<{} | undefined>>(b4.take());
 
     if (await b4.canTake()) {
-      assert<AsyncPromise<{}>>(b4.take());
+      assert<Promise<{}>>(b4.take());
       yield await b4.take();
     }
   })(['foo'], [2], [(_: any) => _], [{}]),
@@ -117,19 +117,19 @@ assert<AsyncGeneratorIterator<string | number>>(
     b1: AsyncInterleaveBuffer<string>,
     b2: AsyncInterleaveBuffer<number>,
   ) {
-    assert<AsyncPromise<boolean>>(b1.canTake());
-    assert<AsyncPromise<string | undefined>>(b1.take());
+    assert<Promise<boolean>>(b1.canTake());
+    assert<Promise<string | undefined>>(b1.take());
 
     if (await b1.canTake()) {
-      assert<AsyncPromise<string>>(b1.take());
+      assert<Promise<string>>(b1.take());
       yield await b1.take();
     }
 
-    assert<AsyncPromise<boolean>>(b2.canTake());
-    assert<AsyncPromise<number | undefined>>(b2.take());
+    assert<Promise<boolean>>(b2.canTake());
+    assert<Promise<number | undefined>>(b2.take());
 
     if (await b2.canTake()) {
-      assert<AsyncPromise<number>>(b2.take());
+      assert<Promise<number>>(b2.take());
       yield await b2.take();
     }
   },
@@ -143,27 +143,27 @@ assert<AsyncGeneratorIterator<string | number | Function>>(
     b2: AsyncInterleaveBuffer<number>,
     b3: AsyncInterleaveBuffer<Function>,
   ) {
-    assert<AsyncPromise<boolean>>(b1.canTake());
-    assert<AsyncPromise<string | undefined>>(b1.take());
+    assert<Promise<boolean>>(b1.canTake());
+    assert<Promise<string | undefined>>(b1.take());
 
     if (await b1.canTake()) {
-      assert<AsyncPromise<string>>(b1.take());
+      assert<Promise<string>>(b1.take());
       yield await b1.take();
     }
 
-    assert<AsyncPromise<boolean>>(b2.canTake());
-    assert<AsyncPromise<number | undefined>>(b2.take());
+    assert<Promise<boolean>>(b2.canTake());
+    assert<Promise<number | undefined>>(b2.take());
 
     if (await b2.canTake()) {
-      assert<AsyncPromise<number>>(b2.take());
+      assert<Promise<number>>(b2.take());
       yield await b2.take();
     }
 
-    assert<AsyncPromise<boolean>>(b3.canTake());
-    assert<AsyncPromise<Function | undefined>>(b3.take());
+    assert<Promise<boolean>>(b3.canTake());
+    assert<Promise<Function | undefined>>(b3.take());
 
     if (await b3.canTake()) {
-      assert<AsyncPromise<Function>>(b3.take());
+      assert<Promise<Function>>(b3.take());
       yield await b3.take();
     }
   },
@@ -178,35 +178,35 @@ assert<AsyncGeneratorIterator<string | number | Function | {}>>(
     b3: AsyncInterleaveBuffer<Function>,
     b4: AsyncInterleaveBuffer<{}>,
   ) {
-    assert<AsyncPromise<boolean>>(b1.canTake());
-    assert<AsyncPromise<string | undefined>>(b1.take());
+    assert<Promise<boolean>>(b1.canTake());
+    assert<Promise<string | undefined>>(b1.take());
 
     if (await b1.canTake()) {
-      assert<AsyncPromise<string>>(b1.take());
+      assert<Promise<string>>(b1.take());
       yield await b1.take();
     }
 
-    assert<AsyncPromise<boolean>>(b2.canTake());
-    assert<AsyncPromise<number | undefined>>(b2.take());
+    assert<Promise<boolean>>(b2.canTake());
+    assert<Promise<number | undefined>>(b2.take());
 
     if (await b2.canTake()) {
-      assert<AsyncPromise<number>>(b2.take());
+      assert<Promise<number>>(b2.take());
       yield await b2.take();
     }
 
-    assert<AsyncPromise<boolean>>(b3.canTake());
-    assert<AsyncPromise<Function | undefined>>(b3.take());
+    assert<Promise<boolean>>(b3.canTake());
+    assert<Promise<Function | undefined>>(b3.take());
 
     if (await b3.canTake()) {
-      assert<AsyncPromise<Function>>(b3.take());
+      assert<Promise<Function>>(b3.take());
       yield await b3.take();
     }
 
-    assert<AsyncPromise<boolean>>(b4.canTake());
-    assert<AsyncPromise<{} | undefined>>(b4.take());
+    assert<Promise<boolean>>(b4.canTake());
+    assert<Promise<{} | undefined>>(b4.take());
 
     if (await b4.canTake()) {
-      assert<AsyncPromise<{}>>(b4.take());
+      assert<Promise<{}>>(b4.take());
       yield await b4.take();
     }
   },

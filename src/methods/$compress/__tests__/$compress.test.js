@@ -1,7 +1,8 @@
-import { $async, $await } from '../../../../generate/async.macro';
+import { $, $async, $await } from '../../../../generate/async.macro';
+
 import { $compress, $toArray, range } from '../../..';
 
-describe($async`compress`, () => {
+describe($`compress`, () => {
   it(
     'compress iterables',
     $async(() => {

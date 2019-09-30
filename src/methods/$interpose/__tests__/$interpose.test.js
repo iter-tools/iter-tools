@@ -1,7 +1,8 @@
-import { $async, $await } from '../../../../generate/async.macro';
+import { $, $async, $await } from '../../../../generate/async.macro';
+
 import { $interpose, $toArray, range } from '../../..';
 
-describe($async`interpose`, () => {
+describe($`interpose`, () => {
   it(
     'interposes items into array',
     $async(() => {

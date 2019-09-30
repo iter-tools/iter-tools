@@ -1,9 +1,9 @@
-import { $isAsync, $async, $await } from '../../../generate/async.macro';
+import { $isSync, $async, $await } from '../../../generate/async.macro';
 import { $iterableCurry } from '../../internal/$iterable';
 
 $async;
 export function $lastOr(iterable, whenEmpty) {
-  if (!$isAsync && Array.isArray(iterable)) {
+  if ($isSync && Array.isArray(iterable)) {
     return iterable[iterable.length - 1];
   }
 

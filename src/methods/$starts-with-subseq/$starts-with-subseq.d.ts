@@ -1,4 +1,6 @@
-import { $InputIterable, $Promise, $MaybePromise } from '../../internal/$iterable';
+import { $Promise } from '../../../generate/async.macro';
+
+import { $InputIterable } from '../../internal/$iterable';
 
 declare function $startsWithSubseq(
   subseq: $InputIterable<any>,

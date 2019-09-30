@@ -6,19 +6,19 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { InputIterable, Promise, MaybePromise } from '../../internal/iterable';
+import { InputIterable } from '../../internal/iterable';
 declare function find<S extends T, T = any>(
   predicate: (item: T, i: number) => item is S,
-): (iterable: InputIterable<T>) => Promise<S | undefined>;
+): (iterable: InputIterable<T>) => S | undefined;
 declare function find<T = any>(
-  predicate: (item: T, i: number) => MaybePromise<boolean>,
-): (iterable: InputIterable<T>) => Promise<T | undefined>;
+  predicate: (item: T, i: number) => boolean,
+): (iterable: InputIterable<T>) => T | undefined;
 declare function find<S extends T, T = any>(
   predicate: (item: T, i: number) => item is S,
   iterable: InputIterable<T>,
-): Promise<S | undefined>;
+): S | undefined;
 declare function find<T = any>(
-  predicate: (item: T, i: number) => MaybePromise<boolean>,
+  predicate: (item: T, i: number) => boolean,
   iterable: InputIterable<T>,
-): Promise<T | undefined>;
+): T | undefined;
 export default find;

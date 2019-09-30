@@ -1,7 +1,8 @@
-import { $isAsync, $async, $await } from '../../../../generate/async.macro';
+import { $, $isAsync, $async, $await } from '../../../../generate/async.macro';
+
 import { $takeWhile, $toArray, range } from '../../..';
 
-describe($async`takeWhile`, () => {
+describe($`takeWhile`, () => {
   it(
     'takeWhile on array',
     $async(() => {

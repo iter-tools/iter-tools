@@ -6,8 +6,8 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { AsyncInputIterable, AsyncMaybePromise } from '../../internal/async-iterable';
+import { AsyncInputIterable } from '../../internal/async-iterable';
 declare function asyncEqual(
   ...iterables: Array<AsyncInputIterable<any>>
-): AsyncMaybePromise<boolean>;
+): boolean | Promise<boolean>;
 export default asyncEqual;

@@ -7,11 +7,11 @@
  */
 
 import assert from 'static-type-assert';
-import { AsyncIterable, AsyncPromise } from '../../../internal/async-iterable';
+import { AsyncIterable } from '../../../internal/async-iterable';
 import { asyncFirstOr } from '../../..';
 declare var Ø: never;
-assert<AsyncPromise<null>>(asyncFirstOr(Ø as null, Ø as []));
-assert<AsyncPromise<0>>(asyncFirstOr(Ø as null, Ø as [0, 1, 2, 3]));
-assert<AsyncPromise<number>>(asyncFirstOr(Ø as null, Ø as [number, ...any[]]));
-assert<AsyncPromise<number | null>>(asyncFirstOr(Ø as null, Ø as AsyncIterable<number>));
-assert<AsyncPromise<string | null>>(asyncFirstOr(Ø as null, Ø as string));
+assert<Promise<null>>(asyncFirstOr(Ø as null, Ø as []));
+assert<Promise<0>>(asyncFirstOr(Ø as null, Ø as [0, 1, 2, 3]));
+assert<Promise<number>>(asyncFirstOr(Ø as null, Ø as [number, ...any[]]));
+assert<Promise<number | null>>(asyncFirstOr(Ø as null, Ø as AsyncIterable<number>));
+assert<Promise<string | null>>(asyncFirstOr(Ø as null, Ø as string));

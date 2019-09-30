@@ -1,7 +1,8 @@
-import { $async, $await } from '../../../../generate/async.macro';
+import { $, $async, $await } from '../../../../generate/async.macro';
+
 import { $flatMap, $toArray, range } from '../../..';
 
-describe($async`flatMap`, () => {
+describe($`flatMap`, () => {
   it(
     'returns flatMapped iterable',
     $async(() => {

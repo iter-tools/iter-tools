@@ -1,7 +1,8 @@
-import { $isAsync, $async, $await } from '../../../../generate/async.macro';
+import { $, $isAsync, $async, $await } from '../../../../generate/async.macro';
+
 import { $findOr, $wrap } from '../../..';
 
-describe($async`findOr`, () => {
+describe($`findOr`, () => {
   it(
     'returns found item',
     $async(() => {

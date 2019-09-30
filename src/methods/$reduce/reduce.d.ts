@@ -6,21 +6,21 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { InputIterable, Promise, MaybePromise } from '../../internal/iterable';
+import { InputIterable } from '../../internal/iterable';
 declare function reduce<O = any, T = any>(
   func: (acc: O, item: T, i: number) => O,
-): (iterable: InputIterable<T>) => Promise<O>;
+): (iterable: InputIterable<T>) => O;
 declare function reduce<O = any, T = any>(
   initial: O,
-  func: (acc: O, item: T, i: number) => MaybePromise<O>,
-): (iterable: InputIterable<T>) => Promise<O>;
+  func: (acc: O, item: T, i: number) => O,
+): (iterable: InputIterable<T>) => O;
 declare function reduce<O = any, T = any>(
-  func: (acc: O, item: T, i: number) => MaybePromise<O>,
+  func: (acc: O, item: T, i: number) => O,
   iterable: InputIterable<T>,
-): Promise<O>;
+): O;
 declare function reduce<O = any, T = any>(
   initial: O,
-  func: (acc: O, item: T, i: number) => MaybePromise<O>,
+  func: (acc: O, item: T, i: number) => O,
   iterable: InputIterable<T>,
-): Promise<O>;
+): O;
 export default reduce;

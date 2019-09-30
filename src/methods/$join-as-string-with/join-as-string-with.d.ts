@@ -6,19 +6,14 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { InputIterable, MaybePromise } from '../../internal/iterable';
-declare function joinAsStringWith(
-  value: string,
-  iterable: InputIterable<string>,
-): MaybePromise<string>;
+import { InputIterable } from '../../internal/iterable';
+declare function joinAsStringWith(value: string, iterable: InputIterable<string>): string;
 declare function joinAsStringWith(
   value: string,
   iterable: InputIterable<InputIterable<string>>,
-): MaybePromise<string>;
+): string;
+declare function joinAsStringWith(value: string): (iterable: InputIterable<string>) => string;
 declare function joinAsStringWith(
   value: string,
-): (iterable: InputIterable<string>) => MaybePromise<string>;
-declare function joinAsStringWith(
-  value: string,
-): (iterable: InputIterable<InputIterable<string>>) => MaybePromise<string>;
+): (iterable: InputIterable<InputIterable<string>>) => string;
 export default joinAsStringWith;

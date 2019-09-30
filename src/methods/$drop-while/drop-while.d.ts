@@ -6,12 +6,12 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { InputIterable, GeneratorIterator, MaybePromise } from '../../internal/iterable';
+import { InputIterable, GeneratorIterator } from '../../internal/iterable';
 declare function dropWhile<T = any>(
-  func: (item: T, i: number) => MaybePromise<boolean>,
+  func: (item: T, i: number) => boolean,
 ): (iterable: InputIterable<T>) => GeneratorIterator<T>;
 declare function dropWhile<T = any>(
-  func: (item: T, i: number) => MaybePromise<boolean>,
+  func: (item: T, i: number) => boolean,
   iterable: InputIterable<T>,
 ): GeneratorIterator<T>;
 export default dropWhile;

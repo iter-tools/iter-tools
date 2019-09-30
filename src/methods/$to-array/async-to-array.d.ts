@@ -6,6 +6,6 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { AsyncInputIterable, AsyncMaybePromise } from '../../internal/async-iterable';
-declare function asyncToArray<T>(iterable: AsyncInputIterable<T>): AsyncMaybePromise<T[]>;
+import { AsyncInputIterable } from '../../internal/async-iterable';
+declare function asyncToArray<T>(iterable: AsyncInputIterable<T>): T[] | Promise<T[]>;
 export default asyncToArray;

@@ -6,19 +6,19 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { AsyncInputIterable, AsyncPromise, AsyncMaybePromise } from '../../internal/async-iterable';
+import { AsyncInputIterable } from '../../internal/async-iterable';
 declare function asyncFind<S extends T, T = any>(
   predicate: (item: T, i: number) => item is S,
-): (iterable: AsyncInputIterable<T>) => AsyncPromise<S | undefined>;
+): (iterable: AsyncInputIterable<T>) => Promise<S | undefined>;
 declare function asyncFind<T = any>(
-  predicate: (item: T, i: number) => AsyncMaybePromise<boolean>,
-): (iterable: AsyncInputIterable<T>) => AsyncPromise<T | undefined>;
+  predicate: (item: T, i: number) => boolean | Promise<boolean>,
+): (iterable: AsyncInputIterable<T>) => Promise<T | undefined>;
 declare function asyncFind<S extends T, T = any>(
   predicate: (item: T, i: number) => item is S,
   iterable: AsyncInputIterable<T>,
-): AsyncPromise<S | undefined>;
+): Promise<S | undefined>;
 declare function asyncFind<T = any>(
-  predicate: (item: T, i: number) => AsyncMaybePromise<boolean>,
+  predicate: (item: T, i: number) => boolean | Promise<boolean>,
   iterable: AsyncInputIterable<T>,
-): AsyncPromise<T | undefined>;
+): Promise<T | undefined>;
 export default asyncFind;

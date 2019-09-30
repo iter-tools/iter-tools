@@ -1,4 +1,6 @@
-import { $InputIterable, $GeneratorIterator, $Iterable, $Promise } from '../../internal/$iterable';
+import { $Promise } from '../../../generate/async.macro';
+
+import { $InputIterable, $GeneratorIterator, $Iterable } from '../../internal/$iterable';
 import $InterleaveBuffer from './internal/$buffer';
 
 // Without options:
@@ -12,9 +14,9 @@ declare function $interleave<T1 = any, T2 = any, R = any>(
     b2: $InterleaveBuffer<T2>,
   ) => $Iterable<R>,
 ): (
-  i1: $InputIterable<T1>,
-  i2: $InputIterable<T2>
-) => $GeneratorIterator<R>;
+    i1: $InputIterable<T1>,
+    i2: $InputIterable<T2>
+  ) => $GeneratorIterator<R>;
 
 declare function $interleave<T1 = any, T2 = any, T3 = any, R = any>(
   gen: (
@@ -108,9 +110,9 @@ declare function $interleave<O extends {}, T1 = any, T2 = any, R = any>(
   ) => $Iterable<R>,
   options: O,
 ): (
-  i1: $InputIterable<T1>,
-  i2: $InputIterable<T2>
-) => $GeneratorIterator<R>;
+    i1: $InputIterable<T1>,
+    i2: $InputIterable<T2>
+  ) => $GeneratorIterator<R>;
 
 declare function $interleave<O extends {}, T1 = any, T2 = any, T3 = any, R = any>(
   gen: (

@@ -8,7 +8,7 @@
 
 import { iterableCurry } from '../../internal/iterable';
 export function lastOr(iterable, whenEmpty) {
-  if (!false && Array.isArray(iterable)) {
+  if (true && Array.isArray(iterable)) {
     return iterable[iterable.length - 1];
   }
 

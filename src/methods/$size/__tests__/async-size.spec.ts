@@ -7,10 +7,9 @@
  */
 
 import assert from 'static-type-assert';
-import { AsyncPromise } from '../../../internal/async-iterable';
 import { asyncSize } from '../../..';
 declare var Ø: never;
-assert<AsyncPromise<4>>(asyncSize(Ø as [0, 1, 2, 3]));
-assert<AsyncPromise<0 | 1 | 2>>(asyncSize(Ø as [] | [number] | [number, number]));
-assert<AsyncPromise<number>>(asyncSize(Ø as Array<number>));
-assert<AsyncPromise<number>>(asyncSize(Ø as string));
+assert<Promise<4>>(asyncSize(Ø as [0, 1, 2, 3]));
+assert<Promise<0 | 1 | 2>>(asyncSize(Ø as [] | [number] | [number, number]));
+assert<Promise<number>>(asyncSize(Ø as Array<number>));
+assert<Promise<number>>(asyncSize(Ø as string));

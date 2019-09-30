@@ -6,7 +6,7 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { InputIterable, GeneratorIterator, MaybePromise } from '../../internal/iterable';
+import { InputIterable, GeneratorIterator } from '../../internal/iterable';
 declare function takeSorted<T = any>(iterable: InputIterable<T>): GeneratorIterator<T>;
 declare function takeSorted<T = any>(
   n: number,

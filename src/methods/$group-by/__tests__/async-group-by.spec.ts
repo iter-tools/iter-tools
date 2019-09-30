@@ -7,11 +7,7 @@
  */
 
 import assert from 'static-type-assert';
-import {
-  AsyncIterable,
-  AsyncGeneratorIterator,
-  AsyncPromise,
-} from '../../../internal/async-iterable';
+import { AsyncIterable, AsyncGeneratorIterator } from '../../../internal/async-iterable';
 import { asyncGroupBy } from '../../..';
 declare var Ø: never;
 assert<AsyncGeneratorIterator<[string, AsyncGeneratorIterator<string>]>>(
@@ -27,8 +23,8 @@ assert<AsyncGeneratorIterator<[number, AsyncGeneratorIterator<number>]>>(
   asyncGroupBy(null, Ø as AsyncIterable<number>),
 );
 assert<AsyncGeneratorIterator<[string, AsyncGeneratorIterator<number>]>>(
-  asyncGroupBy(Ø as (x: number) => AsyncPromise<string>)(Ø as AsyncIterable<number>),
+  asyncGroupBy(Ø as (x: number) => Promise<string>)(Ø as AsyncIterable<number>),
 );
 assert<AsyncGeneratorIterator<[string, AsyncGeneratorIterator<number>]>>(
-  asyncGroupBy(Ø as (x: number) => AsyncPromise<string>, Ø as AsyncIterable<number>),
+  asyncGroupBy(Ø as (x: number) => Promise<string>, Ø as AsyncIterable<number>),
 );

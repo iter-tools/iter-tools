@@ -1,4 +1,6 @@
-import { $InputIterable, $Promise } from '../../internal/$iterable';
+import { $Promise } from '../../../generate/async.macro';
+
+import { $InputIterable } from '../../internal/$iterable';
 
 declare function $size<Iter extends $InputIterable<any>>(
   iterable: Iter,

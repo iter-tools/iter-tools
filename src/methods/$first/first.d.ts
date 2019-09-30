@@ -6,12 +6,12 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { InputIterable, Iterable, Promise } from '../../internal/iterable';
+import { InputIterable, Iterable } from '../../internal/iterable';
 declare function first<Iter extends InputIterable<any>>(
   iterable: Iter,
 ): Iter extends [infer First, ...Array<any>]
-  ? Promise<First>
+  ? First
   : Iter extends Iterable<infer T>
-  ? Promise<T | undefined>
-  : Promise<undefined>;
+  ? T | undefined
+  : undefined;
 export default first;

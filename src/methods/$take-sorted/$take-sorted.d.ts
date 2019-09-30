@@ -1,4 +1,4 @@
-import { $InputIterable, $GeneratorIterator, $MaybePromise } from '../../internal/$iterable';
+import { $InputIterable, $GeneratorIterator } from '../../internal/$iterable';
 
 declare function $takeSorted<T = any>(iterable: $InputIterable<T>): $GeneratorIterator<T>;
 

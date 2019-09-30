@@ -6,23 +6,23 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { InputIterable, Promise, MaybePromise } from '../../internal/iterable';
+import { InputIterable } from '../../internal/iterable';
 declare function findOr<NF, S extends T, T = any>(
   notFoundValue: NF,
   predicate: (item: T, i: number) => item is S,
-): (iterable: InputIterable<T>) => Promise<S | NF>;
+): (iterable: InputIterable<T>) => S | NF;
 declare function findOr<NF, T = any>(
   notFoundValue: NF,
-  predicate: (item: T, i: number) => MaybePromise<boolean>,
-): (iterable: InputIterable<T>) => Promise<T | NF>;
+  predicate: (item: T, i: number) => boolean,
+): (iterable: InputIterable<T>) => T | NF;
 declare function findOr<NF, S extends T, T = any>(
   notFoundValue: NF,
   predicate: (item: T, i: number) => item is S,
   iterable: InputIterable<T>,
-): Promise<S | NF>;
+): S | NF;
 declare function findOr<NF, T = any>(
   notFoundValue: NF,
-  predicate: (item: T, i: number) => MaybePromise<boolean>,
+  predicate: (item: T, i: number) => boolean,
   iterable: InputIterable<T>,
-): Promise<T | NF>;
+): T | NF;
 export default findOr;

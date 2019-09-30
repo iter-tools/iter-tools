@@ -6,13 +6,9 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import {
-  AsyncInputIterable,
-  AsyncGeneratorIterator,
-  AsyncMaybePromise,
-} from '../../internal/async-iterable';
+import { AsyncInputIterable, AsyncGeneratorIterator } from '../../internal/async-iterable';
 declare function asyncExecute<T, Args extends any[] = any[]>(
-  func: (...args: Args) => AsyncMaybePromise<T>,
+  func: (...args: Args) => T | Promise<T>,
   ...args: Args
 ): AsyncGeneratorIterator<T>;
 export default asyncExecute;

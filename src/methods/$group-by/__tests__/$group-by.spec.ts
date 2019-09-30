@@ -1,6 +1,7 @@
-import assert from 'static-type-assert';
+import { $Promise } from '../../../../generate/async.macro';
 
-import { $Iterable, $GeneratorIterator, $Promise } from  '../../../internal/$iterable';
+import assert from 'static-type-assert';
+import { $Iterable, $GeneratorIterator } from '../../../internal/$iterable';
 import { $groupBy } from '../../..';
 
 declare var Ø: never;

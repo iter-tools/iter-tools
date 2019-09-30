@@ -1,7 +1,8 @@
-import { $async, $await } from '../../../../generate/async.macro';
+import { $, $async, $await } from '../../../../generate/async.macro';
+
 import { $concat, $toArray, range } from '../../..';
 
-describe($async`concat`, () => {
+describe($`concat`, () => {
   it(
     'concats iterables',
     $async(() => {

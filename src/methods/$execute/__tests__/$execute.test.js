@@ -1,7 +1,8 @@
-import { $isAsync, $async, $await } from '../../../../generate/async.macro';
+import { $, $isAsync, $async, $await } from '../../../../generate/async.macro';
+
 import { $execute, asyncExecute } from '../../..';
 
-describe($async`execute`, () => {
+describe($`execute`, () => {
   it(
     'executes forever',
     $async(() => {

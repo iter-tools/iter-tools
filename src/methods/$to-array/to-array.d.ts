@@ -6,6 +6,6 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { InputIterable, MaybePromise } from '../../internal/iterable';
-declare function toArray<T>(iterable: InputIterable<T>): MaybePromise<T[]>;
+import { InputIterable } from '../../internal/iterable';
+declare function toArray<T>(iterable: InputIterable<T>): T[];
 export default toArray;

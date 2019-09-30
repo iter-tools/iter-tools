@@ -6,12 +6,12 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { InputIterable, GeneratorIterator, MaybePromise } from '../../internal/iterable';
+import { InputIterable, GeneratorIterator } from '../../internal/iterable';
 declare function tap<T = any>(
-  func: (item: T, i: number) => MaybePromise<any>,
+  func: (item: T, i: number) => any,
 ): (iterable: InputIterable<T>) => GeneratorIterator<T>;
 declare function tap<T = any>(
-  func: (item: T, i: number) => MaybePromise<any>,
+  func: (item: T, i: number) => any,
   iterable: InputIterable<T>,
 ): GeneratorIterator<T>;
 export default tap;

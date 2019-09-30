@@ -6,6 +6,6 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { InputIterable, MaybePromise } from '../../internal/iterable';
-declare function lastOr<E, T = any>(whenEmpty: E, iterable: InputIterable<T>): MaybePromise<T | E>;
+import { InputIterable } from '../../internal/iterable';
+declare function lastOr<E, T = any>(whenEmpty: E, iterable: InputIterable<T>): T | E;
 export default lastOr;

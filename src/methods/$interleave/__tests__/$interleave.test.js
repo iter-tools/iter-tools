@@ -1,8 +1,9 @@
-import { $isAsync, $async, $await } from '../../../../generate/async.macro';
-import { $Promise, $Iterable } from '../../../internal/$iterable';
+import { $, $isAsync, $async, $await, $Promise } from '../../../../generate/async.macro';
+
+import { $Iterable } from '../../../internal/$iterable';
 import { $interleave, $InterleaveBuffer, $toArray } from '../../..';
 
-describe($async`interleave`, () => {
+describe($`interleave`, () => {
   const a = [1, 2, 3];
   const b = [4, 5, 6];
   const c = [7, 8, 9];

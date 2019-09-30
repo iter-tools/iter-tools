@@ -1,4 +1,6 @@
-import { $InputIterable, $MaybePromise } from '../../internal/$iterable';
+import { $MaybePromise } from '../../../generate/async.macro';
+
+import { $InputIterable } from '../../internal/$iterable';
 
 declare function $toArray<T>(iterable: $InputIterable<T>): $MaybePromise<T[]>;
 

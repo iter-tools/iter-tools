@@ -6,7 +6,7 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { InputIterable, Promise, MaybePromise } from '../../internal/iterable';
-declare function includes(value: any): (iterable: InputIterable<any>) => Promise<boolean>;
-declare function includes(value: any, iterable: InputIterable<any>): Promise<boolean>;
+import { InputIterable } from '../../internal/iterable';
+declare function includes(value: any): (iterable: InputIterable<any>) => boolean;
+declare function includes(value: any, iterable: InputIterable<any>): boolean;
 export default includes;

@@ -7,12 +7,12 @@
  */
 
 import assert from 'static-type-assert';
-import { AsyncIterable, AsyncPromise } from '../../../internal/async-iterable';
+import { AsyncIterable } from '../../../internal/async-iterable';
 import { asyncFindOr } from '../../..';
 declare var Ø: never;
-assert<AsyncPromise<number | 0>>(
+assert<Promise<number | 0>>(
   asyncFindOr(Ø as 0, Ø as (item: number) => any, Ø as AsyncIterable<number>),
 );
-assert<AsyncPromise<2 | 0>>(
+assert<Promise<2 | 0>>(
   asyncFindOr(Ø as 0, Ø as (item: number) => item is 2, Ø as AsyncIterable<number>),
 );

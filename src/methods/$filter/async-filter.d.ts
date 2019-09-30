@@ -6,23 +6,19 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import {
-  AsyncInputIterable,
-  AsyncGeneratorIterator,
-  AsyncMaybePromise,
-} from '../../internal/async-iterable';
+import { AsyncInputIterable, AsyncGeneratorIterator } from '../../internal/async-iterable';
 declare function asyncFilter<S extends T, T = any>(
   func: (item: T, i: number) => item is S,
 ): (iterable: AsyncInputIterable<T>) => AsyncGeneratorIterator<S>;
 declare function asyncFilter<T = any>(
-  func: (item: T, i: number) => AsyncMaybePromise<boolean>,
+  func: (item: T, i: number) => boolean | Promise<boolean>,
 ): (iterable: AsyncInputIterable<T>) => AsyncGeneratorIterator<T>;
 declare function asyncFilter<S extends T, T = any>(
   func: (item: T, i: number) => item is S,
   iterable: AsyncInputIterable<T>,
 ): AsyncGeneratorIterator<S>;
 declare function asyncFilter<T = any>(
-  func: (item: T, i: number) => AsyncMaybePromise<boolean>,
+  func: (item: T, i: number) => boolean | Promise<boolean>,
   iterable: AsyncInputIterable<T>,
 ): AsyncGeneratorIterator<T>;
 export default asyncFilter;

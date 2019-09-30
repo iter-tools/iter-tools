@@ -1,7 +1,8 @@
-import { $isAsync, $async, $await } from '../../../../generate/async.macro';
+import { $, $isAsync, $async, $await } from '../../../../generate/async.macro';
+
 import { $flat, asyncFlat, $toArray, asyncToArray } from '../../..';
 
-describe($async`flat`, () => {
+describe($`flat`, () => {
   it(
     'flats iterable',
     $async(() => {

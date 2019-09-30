@@ -1,4 +1,5 @@
-import { $isAsync, $async, $await, $iteratorSymbol } from '../../../../generate/async.macro';
+import { $, $isAsync, $async, $await, $iteratorSymbol } from '../../../../generate/async.macro';
+
 import { $fork, $map, $toArray } from '../../..';
 import { $OneTwoThreeIterable } from '../../../__tests__/__framework__/fixtures';
 
@@ -16,7 +17,7 @@ async function* _asyncMakeIterable() {
 
 const $makeIterable = $isAsync ? _asyncMakeIterable : _makeIterable;
 
-describe($async`fork`, () => {
+describe($`fork`, () => {
   it(
     'creates an iterable of iterables with the same values as its source',
     $async(() => {

@@ -6,12 +6,12 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { InputIterable, GeneratorIterator, MaybePromise } from '../../internal/iterable';
+import { InputIterable, GeneratorIterator } from '../../internal/iterable';
 declare function map<O, T = any>(
-  func: (item: T) => MaybePromise<O>,
+  func: (item: T) => O,
 ): (iterable: InputIterable<T>) => GeneratorIterator<O>;
 declare function map<O, T = any>(
-  func: (item: T) => MaybePromise<O>,
+  func: (item: T) => O,
   iterable: InputIterable<T>,
 ): GeneratorIterator<O>;
 export default map;

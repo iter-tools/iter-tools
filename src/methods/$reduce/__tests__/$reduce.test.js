@@ -1,9 +1,10 @@
-import { $Promise, $InputIterable } from '../../../internal/$iterable';
-import { $async, $await } from '../../../../generate/async.macro';
+import { $, $async, $await, $Promise } from '../../../../generate/async.macro';
+
+import { $InputIterable } from '../../../internal/$iterable';
 import { $reduce, range } from '../../..';
 import { $OneTwoThreeIterable } from '../../../__tests__/__framework__/fixtures';
 
-describe($async`reduce`, () => {
+describe($`reduce`, () => {
   it(
     'sums an array',
     $async(() => {

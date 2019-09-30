@@ -7,7 +7,7 @@
  */
 
 import assert from 'static-type-assert';
-import { GeneratorIterator, Promise } from '../../../internal/iterable';
+import { GeneratorIterator } from '../../../internal/iterable';
 import InterleaveBuffer from '../internal/buffer';
 import { interleave } from '../../..'; // Without options
 // ############
@@ -18,19 +18,19 @@ assert<GeneratorIterator<string | number>>(
     b1: InterleaveBuffer<string>,
     b2: InterleaveBuffer<number>,
   ) {
-    assert<Promise<boolean>>(b1.canTake());
-    assert<Promise<string | undefined>>(b1.take());
+    assert<boolean>(b1.canTake());
+    assert<string | undefined>(b1.take());
 
     if (b1.canTake()) {
-      assert<Promise<string>>(b1.take());
+      assert<string>(b1.take());
       yield b1.take();
     }
 
-    assert<Promise<boolean>>(b2.canTake());
-    assert<Promise<number | undefined>>(b2.take());
+    assert<boolean>(b2.canTake());
+    assert<number | undefined>(b2.take());
 
     if (b2.canTake()) {
-      assert<Promise<number>>(b2.take());
+      assert<number>(b2.take());
       yield b2.take();
     }
   })(['foo'], [2]),
@@ -42,27 +42,27 @@ assert<GeneratorIterator<string | number | Function>>(
     b2: InterleaveBuffer<number>,
     b3: InterleaveBuffer<Function>,
   ) {
-    assert<Promise<boolean>>(b1.canTake());
-    assert<Promise<string | undefined>>(b1.take());
+    assert<boolean>(b1.canTake());
+    assert<string | undefined>(b1.take());
 
     if (b1.canTake()) {
-      assert<Promise<string>>(b1.take());
+      assert<string>(b1.take());
       yield b1.take();
     }
 
-    assert<Promise<boolean>>(b2.canTake());
-    assert<Promise<number | undefined>>(b2.take());
+    assert<boolean>(b2.canTake());
+    assert<number | undefined>(b2.take());
 
     if (b2.canTake()) {
-      assert<Promise<number>>(b2.take());
+      assert<number>(b2.take());
       yield b2.take();
     }
 
-    assert<Promise<boolean>>(b3.canTake());
-    assert<Promise<Function | undefined>>(b3.take());
+    assert<boolean>(b3.canTake());
+    assert<Function | undefined>(b3.take());
 
     if (b3.canTake()) {
-      assert<Promise<Function>>(b3.take());
+      assert<Function>(b3.take());
       yield b3.take();
     }
   })(['foo'], [2], [(_: any) => _]),
@@ -75,35 +75,35 @@ assert<GeneratorIterator<string | number | Function | {}>>(
     b3: InterleaveBuffer<Function>,
     b4: InterleaveBuffer<{}>,
   ) {
-    assert<Promise<boolean>>(b1.canTake());
-    assert<Promise<string | undefined>>(b1.take());
+    assert<boolean>(b1.canTake());
+    assert<string | undefined>(b1.take());
 
     if (b1.canTake()) {
-      assert<Promise<string>>(b1.take());
+      assert<string>(b1.take());
       yield b1.take();
     }
 
-    assert<Promise<boolean>>(b2.canTake());
-    assert<Promise<number | undefined>>(b2.take());
+    assert<boolean>(b2.canTake());
+    assert<number | undefined>(b2.take());
 
     if (b2.canTake()) {
-      assert<Promise<number>>(b2.take());
+      assert<number>(b2.take());
       yield b2.take();
     }
 
-    assert<Promise<boolean>>(b3.canTake());
-    assert<Promise<Function | undefined>>(b3.take());
+    assert<boolean>(b3.canTake());
+    assert<Function | undefined>(b3.take());
 
     if (b3.canTake()) {
-      assert<Promise<Function>>(b3.take());
+      assert<Function>(b3.take());
       yield b3.take();
     }
 
-    assert<Promise<boolean>>(b4.canTake());
-    assert<Promise<{} | undefined>>(b4.take());
+    assert<boolean>(b4.canTake());
+    assert<{} | undefined>(b4.take());
 
     if (b4.canTake()) {
-      assert<Promise<{}>>(b4.take());
+      assert<{}>(b4.take());
       yield b4.take();
     }
   })(['foo'], [2], [(_: any) => _], [{}]),
@@ -117,19 +117,19 @@ assert<GeneratorIterator<string | number>>(
     b1: InterleaveBuffer<string>,
     b2: InterleaveBuffer<number>,
   ) {
-    assert<Promise<boolean>>(b1.canTake());
-    assert<Promise<string | undefined>>(b1.take());
+    assert<boolean>(b1.canTake());
+    assert<string | undefined>(b1.take());
 
     if (b1.canTake()) {
-      assert<Promise<string>>(b1.take());
+      assert<string>(b1.take());
       yield b1.take();
     }
 
-    assert<Promise<boolean>>(b2.canTake());
-    assert<Promise<number | undefined>>(b2.take());
+    assert<boolean>(b2.canTake());
+    assert<number | undefined>(b2.take());
 
     if (b2.canTake()) {
-      assert<Promise<number>>(b2.take());
+      assert<number>(b2.take());
       yield b2.take();
     }
   },
@@ -143,27 +143,27 @@ assert<GeneratorIterator<string | number | Function>>(
     b2: InterleaveBuffer<number>,
     b3: InterleaveBuffer<Function>,
   ) {
-    assert<Promise<boolean>>(b1.canTake());
-    assert<Promise<string | undefined>>(b1.take());
+    assert<boolean>(b1.canTake());
+    assert<string | undefined>(b1.take());
 
     if (b1.canTake()) {
-      assert<Promise<string>>(b1.take());
+      assert<string>(b1.take());
       yield b1.take();
     }
 
-    assert<Promise<boolean>>(b2.canTake());
-    assert<Promise<number | undefined>>(b2.take());
+    assert<boolean>(b2.canTake());
+    assert<number | undefined>(b2.take());
 
     if (b2.canTake()) {
-      assert<Promise<number>>(b2.take());
+      assert<number>(b2.take());
       yield b2.take();
     }
 
-    assert<Promise<boolean>>(b3.canTake());
-    assert<Promise<Function | undefined>>(b3.take());
+    assert<boolean>(b3.canTake());
+    assert<Function | undefined>(b3.take());
 
     if (b3.canTake()) {
-      assert<Promise<Function>>(b3.take());
+      assert<Function>(b3.take());
       yield b3.take();
     }
   },
@@ -178,35 +178,35 @@ assert<GeneratorIterator<string | number | Function | {}>>(
     b3: InterleaveBuffer<Function>,
     b4: InterleaveBuffer<{}>,
   ) {
-    assert<Promise<boolean>>(b1.canTake());
-    assert<Promise<string | undefined>>(b1.take());
+    assert<boolean>(b1.canTake());
+    assert<string | undefined>(b1.take());
 
     if (b1.canTake()) {
-      assert<Promise<string>>(b1.take());
+      assert<string>(b1.take());
       yield b1.take();
     }
 
-    assert<Promise<boolean>>(b2.canTake());
-    assert<Promise<number | undefined>>(b2.take());
+    assert<boolean>(b2.canTake());
+    assert<number | undefined>(b2.take());
 
     if (b2.canTake()) {
-      assert<Promise<number>>(b2.take());
+      assert<number>(b2.take());
       yield b2.take();
     }
 
-    assert<Promise<boolean>>(b3.canTake());
-    assert<Promise<Function | undefined>>(b3.take());
+    assert<boolean>(b3.canTake());
+    assert<Function | undefined>(b3.take());
 
     if (b3.canTake()) {
-      assert<Promise<Function>>(b3.take());
+      assert<Function>(b3.take());
       yield b3.take();
     }
 
-    assert<Promise<boolean>>(b4.canTake());
-    assert<Promise<{} | undefined>>(b4.take());
+    assert<boolean>(b4.canTake());
+    assert<{} | undefined>(b4.take());
 
     if (b4.canTake()) {
-      assert<Promise<{}>>(b4.take());
+      assert<{}>(b4.take());
       yield b4.take();
     }
   },

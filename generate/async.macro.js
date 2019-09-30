@@ -36,12 +36,14 @@ const { rename } = require('./names');
  *                      $await; for(const foo of iterable) {}
  * for(const foo of iterable) {}       <--->       for await(const foo of iterable) {}
  *
- *                                if ($isAsync) {}
- *       if (false) {}                 <--->                  if (true) {}
+ *                                    $isAsync
+ *           false                     <--->                       true
  *
- *                                $isAsync ? x : y
- *       false ? x : y                 <--->                  true ? x : y
+ *                                    $isSync
+ *           true                      <--->                       false
  *
+ *                             $Promise<typeExpression>
+ *       typeExpression                                   Promise<typeExpression>
  *
  * Note that conditional expressions with fixed conditions (such as the last two examples)
  * will be further simplified by the dead code elimination babel plugin
@@ -50,16 +52,77 @@ const { rename } = require('./names');
  * https://github.com/kentcdodds/babel-plugin-macros
  */
 
-function asyncMacro({ references, babel, config: { ASYNC } }) {
+const { ast } = expression;
+
+function asyncMacro({ references, babel, state, config: { ASYNC } }) {
   const t = babel.types;
 
   for (const reference of references.$isAsync || []) {
     reference.replaceWith(t.booleanLiteral(!!ASYNC));
   }
 
+  for (const reference of references.$isSync || []) {
+    reference.replaceWith(t.booleanLiteral(!ASYNC));
+  }
+
   for (const reference of references.$iteratorSymbol || []) {
-    const { ast } = expression;
     reference.replaceWith(ASYNC ? ast`Symbol.asyncIterator` : ast`Symbol.iterator`);
+  }
+
+  for (const reference of [].concat(references.$Promise || [], references.$MaybePromise || [])) {
+    const { parentPath, parent, node } = reference;
+    const { name } = node;
+    if (t.isTSTypeReference(parent)) {
+      const promisedType = parent.typeParameters.params[0];
+      if (ASYNC) {
+        node.name = 'Promise';
+        if (name === '$MaybePromise') {
+          parentPath.replaceWith(t.TSUnionType([promisedType, parent]));
+        }
+      } else {
+        parentPath.replaceWith(promisedType);
+      }
+    }
+  }
+
+  if (/\.ts$/.test(state.filename)) {
+    // Unfortunately typescript types lack scope in babel, so we do this the brute force way
+    babel.traverse(state.file.ast.program, {
+      Identifier(path) {
+        const { parentPath, parent, node } = path;
+        const { name } = node;
+        if (t.isTSTypeReference(parent)) {
+          if (name === '$Promise' || name === '$MaybePromise') {
+            if (!references[name]) {
+              throw new Error(`Encountered ${name} but ${name} was not imported from async.macro`);
+            }
+            const promisedType = parent.typeParameters.params[0];
+            if (ASYNC) {
+              node.name = 'Promise';
+              if (name === '$MaybePromise') {
+                parentPath.replaceWith(t.TSUnionType([promisedType, parent]));
+              }
+            } else {
+              parentPath.replaceWith(promisedType);
+            }
+          }
+        }
+      },
+    });
+  }
+
+  for (const reference of references.$ || []) {
+    const { node } = reference.parentPath;
+
+    if (node.type === 'TaggedTemplateExpression') {
+      // $`fnName`
+      const { quasi } = reference.parentPath.node;
+      if (!quasi.quasis.length === 1) {
+        throw new Error('Interpolation not supported for $`fnName`');
+      }
+      const name = quasi.quasis[0].value.raw;
+      reference.parentPath.replaceWith(t.stringLiteral(rename(name, ASYNC)));
+    }
   }
 
   for (const reference of [].concat(references.$async || [], references.$await || [])) {
@@ -112,20 +175,6 @@ function asyncMacro({ references, babel, config: { ASYNC } }) {
         reference.parentPath.replaceWith(argument);
         break;
       }
-      case 'TaggedTemplateExpression':
-        // $async`fnName`
-
-        if (refName === '$async') {
-          const { quasi } = reference.parentPath.node;
-          if (!quasi.quasis.length === 1) {
-            throw new Error('Interpolation not supported for $async`fnName`');
-          }
-          const name = quasi.quasis[0].value.raw;
-          reference.parentPath.replaceWith(t.stringLiteral(rename(name, ASYNC)));
-        } else {
-          throw new Error(`${refName} cannot be used as a template tag`);
-        }
-        break;
       case 'Decorator':
         // class {
         //   @$async

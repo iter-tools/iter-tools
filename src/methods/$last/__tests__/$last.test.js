@@ -1,7 +1,8 @@
-import { $isAsync, $async, $await } from '../../../../generate/async.macro';
+import { $, $isSync, $async, $await } from '../../../../generate/async.macro';
+
 import { $last, $wrap } from '../../..';
 
-describe($async`last`, () => {
+describe($`last`, () => {
   it(
     'Returns the last item in the iterable',
     $async(() => {
@@ -9,7 +10,7 @@ describe($async`last`, () => {
     }),
   );
 
-  if (!$isAsync) {
+  if ($isSync) {
     it(
       'Returns the last item in an array',
       $async(() => {

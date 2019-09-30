@@ -6,11 +6,7 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import {
-  AsyncInputIterable,
-  AsyncGeneratorIterator,
-  AsyncMaybePromise,
-} from '../../internal/async-iterable';
+import { AsyncInputIterable, AsyncGeneratorIterator } from '../../internal/async-iterable';
 declare function asyncTakeSorted<T = any>(
   iterable: AsyncInputIterable<T>,
 ): AsyncGeneratorIterator<T>;

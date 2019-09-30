@@ -1,5 +1,5 @@
+import { $Promise } from '../../../../generate/async.macro';
 import assert from 'static-type-assert';
-import { $Promise } from '../../../internal/$iterable';
 import { $size } from '../../..';
 
 declare var Ø: never;

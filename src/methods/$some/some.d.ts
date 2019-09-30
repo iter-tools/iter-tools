@@ -6,12 +6,12 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { InputIterable, Promise, MaybePromise } from '../../internal/iterable';
+import { InputIterable } from '../../internal/iterable';
 declare function some<T = any>(
-  func: (item: T, i: number) => MaybePromise<boolean>,
-): (iterable: InputIterable<T>) => Promise<boolean>;
+  func: (item: T, i: number) => boolean,
+): (iterable: InputIterable<T>) => boolean;
 declare function some<T = any>(
-  func: (item: T, i: number) => MaybePromise<boolean>,
+  func: (item: T, i: number) => boolean,
   iterable: InputIterable<T>,
-): Promise<boolean>;
+): boolean;
 export default some;

@@ -6,12 +6,12 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { AsyncInputIterable, AsyncIterable, AsyncPromise } from '../../internal/async-iterable';
+import { AsyncInputIterable, AsyncIterable } from '../../internal/async-iterable';
 declare function asyncFirst<Iter extends AsyncInputIterable<any>>(
   iterable: Iter,
 ): Iter extends [infer First, ...Array<any>]
-  ? AsyncPromise<First>
+  ? Promise<First>
   : Iter extends AsyncIterable<infer T>
-  ? AsyncPromise<T | undefined>
-  : AsyncPromise<undefined>;
+  ? Promise<T | undefined>
+  : Promise<undefined>;
 export default asyncFirst;

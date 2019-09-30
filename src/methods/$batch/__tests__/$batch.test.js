@@ -1,7 +1,8 @@
-import { $async, $await } from '../../../../generate/async.macro';
+import { $, $async, $await } from '../../../../generate/async.macro';
+
 import { $batch, $toArray, range } from '../../..';
 
-describe($async`batch`, () => {
+describe($`batch`, () => {
   it(
     'returns an iterable with batches',
     $async(() => {

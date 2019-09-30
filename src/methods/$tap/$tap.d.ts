@@ -1,4 +1,6 @@
-import { $InputIterable, $GeneratorIterator, $MaybePromise } from '../../internal/$iterable';
+import { $MaybePromise } from '../../../generate/async.macro';
+
+import { $InputIterable, $GeneratorIterator } from '../../internal/$iterable';
 
 declare function $tap<T = any>(
   func: (item: T, i: number) => $MaybePromise<any>,

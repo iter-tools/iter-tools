@@ -1,7 +1,8 @@
-import { $isAsync, $async, $await } from '../../../../generate/async.macro';
+import { $, $isSync, $async, $await } from '../../../../generate/async.macro';
+
 import { $splitOnSubseq, $map, $toArray } from '../../..';
 
-describe($async`splitOnSubseq`, () => {
+describe($`splitOnSubseq`, () => {
   it(
     'can split on subseqences',
     $async(() => {
@@ -25,7 +26,7 @@ describe($async`splitOnSubseq`, () => {
     }),
   );
 
-  if (!$isAsync) {
+  if ($isSync) {
     describe('given a string', () => {
       it('should split on every item which is equal to the on argument', () => {
         expect($toArray($splitOnSubseq('Ø', '11Ø22Ø33'))).toEqual(['11', '22', '33']);

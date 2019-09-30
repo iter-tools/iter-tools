@@ -6,13 +6,10 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { InputIterable, Promise, MaybePromise } from '../../internal/iterable';
+import { InputIterable } from '../../internal/iterable';
 import { InputIterable as SyncInputIterable } from '../../internal/iterable';
 declare function includesAny(
   values: SyncInputIterable<any>,
-): (iterable: InputIterable<any>) => Promise<boolean>;
-declare function includesAny(
-  values: SyncInputIterable<any>,
-  iterable: InputIterable<any>,
-): Promise<boolean>;
+): (iterable: InputIterable<any>) => boolean;
+declare function includesAny(values: SyncInputIterable<any>, iterable: InputIterable<any>): boolean;
 export default includesAny;

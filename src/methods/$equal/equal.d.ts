@@ -6,6 +6,6 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { InputIterable, MaybePromise } from '../../internal/iterable';
-declare function equal(...iterables: Array<InputIterable<any>>): MaybePromise<boolean>;
+import { InputIterable } from '../../internal/iterable';
+declare function equal(...iterables: Array<InputIterable<any>>): boolean;
 export default equal;
