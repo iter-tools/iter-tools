@@ -1,18 +1,17 @@
-const range = require('../es2018/range')
-const map = require('../es2018/map')
+const range = require('../es2018/range');
+const map = require('../es2018/map');
 
-function power2 (x) {
-  return x * x
+function power2(x) {
+  return x * x;
 }
 
-const a = Array.from(range(100000))
+const a = Array.from(range(100000));
 
-module.exports['Array map 100000 items'] = function () {
-  return Array.from(a
-    .map(power2))
-}
+module.exports['Array map 100000 items'] = function() {
+  return Array.from(a.map(power2));
+};
 
-module.exports['iter-tools map 100000 items'] = function () {
-  const iter = map(power2)
-  return Array.from(iter(a))
-}
+module.exports['iter-tools map 100000 items'] = function() {
+  const iter = map(power2);
+  return Array.from(iter(a));
+};

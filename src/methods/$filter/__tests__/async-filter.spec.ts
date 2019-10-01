@@ -9,7 +9,7 @@
 import assert from 'static-type-assert';
 import { AsyncIterable, AsyncGeneratorIterator } from '../../../internal/async-iterable';
 import { asyncFilter } from '../../..';
-declare var Ø: never;
+declare const Ø: never;
 assert<AsyncGeneratorIterator<string>>(
   asyncFilter(Ø as (item: string | number) => item is string, Ø as AsyncIterable<string | number>),
 );

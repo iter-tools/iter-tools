@@ -4,7 +4,7 @@ import assert from 'static-type-assert';
 import { $Iterable } from '../../../internal/$iterable';
 import { $first } from '../../..';
 
-declare var Ø: never;
+declare const Ø: never;
 
 assert<$Promise<undefined>>($first(Ø as []));
 

@@ -9,7 +9,7 @@
 import assert from 'static-type-assert';
 import { Iterable } from '../../../internal/iterable';
 import { firstOr } from '../../..';
-declare var Ø: never;
+declare const Ø: never;
 assert<null>(firstOr(Ø as null, Ø as []));
 assert<0>(firstOr(Ø as null, Ø as [0, 1, 2, 3]));
 assert<number>(firstOr(Ø as null, Ø as [number, ...any[]]));

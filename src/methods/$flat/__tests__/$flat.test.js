@@ -1,6 +1,6 @@
 import { $, $isAsync, $async, $await } from '../../../../generate/async.macro';
 
-import { $flat, asyncFlat, $toArray, asyncToArray } from '../../..';
+import { $flat, $toArray } from '../../..';
 
 describe($`flat`, () => {
   it(
@@ -81,12 +81,12 @@ describe($`flat`, () => {
 
   if ($isAsync) {
     it('flats using custom function (using a promise)', async () => {
-      const iter = asyncFlat(
-        async iter => !(typeof iter === 'string' && iter.length === 1),
-        Infinity,
-        [['a', 'b'], ['c', ['d', 'e']], [['fghi']]],
-      );
-      expect(await asyncToArray(iter)).toEqual(['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i']);
+      const iter = $flat(async iter => !(typeof iter === 'string' && iter.length === 1), Infinity, [
+        ['a', 'b'],
+        ['c', ['d', 'e']],
+        [['fghi']],
+      ]);
+      expect(await $toArray(iter)).toEqual(['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i']);
     });
   }
 });

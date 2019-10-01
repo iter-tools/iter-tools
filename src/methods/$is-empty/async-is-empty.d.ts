@@ -6,6 +6,6 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { AsyncInputIterable, AsyncIterable } from '../../internal/async-iterable';
+import { AsyncInputIterable } from '../../internal/async-iterable';
 declare function asyncIsEmpty(iterable: AsyncInputIterable<any>): Promise<boolean>;
 export default asyncIsEmpty;

@@ -1,19 +1,19 @@
-var range = require('../es2018/range')
+var range = require('../es2018/range');
 
-const a = range(10000)
+const a = range(10000);
 
-module.exports['for loop'] = function () {
-  const arr = []
+module.exports['for loop'] = function() {
+  const arr = [];
   for (const i of a) {
-    arr.push(i)
+    arr.push(i);
   }
-}
+};
 
-module.exports['while'] = function () {
-  const arr = []
+module.exports['while loop'] = function() {
+  const arr = [];
   while (true) {
-    const next = a.next()
-    if (next.done) break
-    arr.push(next.value)
+    const next = a.next();
+    if (next.done) break;
+    arr.push(next.value);
   }
-}
+};

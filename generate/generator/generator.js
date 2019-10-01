@@ -11,6 +11,7 @@ class Generator {
   static get ADD() {
     return ADD;
   }
+
   static get REMOVE() {
     return REMOVE;
   }

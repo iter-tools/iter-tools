@@ -10,21 +10,13 @@
 
 import { asyncFork, asyncMap, asyncToArray } from '../../..';
 import { AsyncOneTwoThreeIterable } from '../../../__tests__/__framework__/fixtures';
-
-function* _makeIterable() {
-  yield 1;
-  yield 2;
-  yield 3;
-}
-
-async function* _asyncMakeIterable() {
-  yield 1;
-  yield 2;
-  yield 3;
-}
-
-const asyncMakeIterable = _asyncMakeIterable;
 describe('asyncFork', () => {
+  const asyncMakeIterable = async function* _asyncMakeIterable() {
+    yield 1;
+    yield 2;
+    yield 3;
+  };
+
   it('creates an iterable of iterables with the same values as its source', async () => {
     const [a, b, c] = asyncFork(asyncMakeIterable());
     const originalIter = await asyncToArray(asyncMakeIterable());

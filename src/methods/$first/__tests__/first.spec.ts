@@ -9,7 +9,7 @@
 import assert from 'static-type-assert';
 import { Iterable } from '../../../internal/iterable';
 import { first } from '../../..';
-declare var Ø: never;
+declare const Ø: never;
 assert<undefined>(first(Ø as []));
 assert<0>(first(Ø as [0, 1, 2, 3]));
 assert<number>(first(Ø as [number, ...any[]]));

@@ -8,7 +8,7 @@
 
 /* eslint-disable no-unused-vars,import/no-duplicates */
 
-import { filter, asyncFilter, toArray, asyncToArray, range } from '../../..';
+import { filter, toArray, range } from '../../..';
 describe('filter', () => {
   it('returns filtered iterable', () => {
     const iter = filter(item => item % 2 === 0, [1, 2, 3, 4, 5, 6]);

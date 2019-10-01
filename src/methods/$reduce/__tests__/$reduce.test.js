@@ -71,7 +71,7 @@ describe($`reduce`, () => {
       const oneTwoThree = new $OneTwoThreeIterable();
       try {
         $await(
-          $reduce((acc = 0, x) => {
+          $reduce(() => {
             throw new Error('ops');
           }, oneTwoThree),
         );

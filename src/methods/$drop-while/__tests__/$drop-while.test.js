@@ -1,6 +1,6 @@
 import { $, $isAsync, $async, $await } from '../../../../generate/async.macro';
 
-import { $dropWhile, asyncDropWhile, $toArray, asyncToArray, range } from '../../..';
+import { $dropWhile, $toArray, range } from '../../..';
 
 describe($`dropWhile`, () => {
   it(
@@ -36,8 +36,8 @@ describe($`dropWhile`, () => {
 
   if ($isAsync) {
     it('dropWhile on iterable (using a promise)', async () => {
-      const iter = asyncDropWhile(item => Promise.resolve(item !== 4), range({ start: 1, end: 7 }));
-      expect(await asyncToArray(iter)).toEqual([4, 5, 6]);
+      const iter = $dropWhile(item => Promise.resolve(item !== 4), range({ start: 1, end: 7 }));
+      expect(await $toArray(iter)).toEqual([4, 5, 6]);
     });
   }
 });

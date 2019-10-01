@@ -8,7 +8,7 @@
 
 /* eslint-disable no-unused-vars,import/no-duplicates */
 
-import { some, asyncSome } from '../../..';
+import { some } from '../../..';
 describe('some', () => {
   it('returns true if at least one item is true', () => {
     expect(some(n => n % 2 === 0, [1, 2, 3, 4, 5, 6])).toBe(true);

@@ -10,7 +10,7 @@ import assert from 'static-type-assert';
 import { GeneratorIterator as SyncGeneratorIterator } from '../../../internal/iterable';
 import { AsyncIterable, AsyncGeneratorIterator } from '../../../internal/async-iterable';
 import { asyncSplitAt } from '../../..';
-declare var Ø: never;
+declare const Ø: never;
 assert<SyncGeneratorIterator<AsyncGeneratorIterator<number>>>(
   asyncSplitAt(3, Ø as AsyncIterable<number>),
 );

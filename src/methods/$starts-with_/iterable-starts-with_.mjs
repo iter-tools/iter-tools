@@ -16,7 +16,7 @@ const zipAllConfig = {
 export function iterableStartsWith_(iterable, config, value) {
   const subseqs = toAnySubseq(config, value);
   const wrappedSubseqs = subseqs;
-  let states = subseqs.map(_ => ({
+  const states = subseqs.map(_ => ({
     matches: true,
     done: false,
   }));

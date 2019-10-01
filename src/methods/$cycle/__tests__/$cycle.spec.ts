@@ -2,7 +2,7 @@ import assert from 'static-type-assert';
 import { $GeneratorIterator } from '../../../internal/$iterable';
 import { $cycle } from '../../..';
 
-declare var Ø: never;
+declare const Ø: never;
 
 assert<$GeneratorIterator<0 | 1 | 2>>($cycle(Ø as [0, 1, 2]));
 

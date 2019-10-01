@@ -8,7 +8,7 @@
 
 /* eslint-disable no-unused-vars,import/no-duplicates */
 
-import { dropWhile, asyncDropWhile, toArray, asyncToArray, range } from '../../..';
+import { dropWhile, toArray, range } from '../../..';
 describe('dropWhile', () => {
   it('dropWhile on array', () => {
     const iter = dropWhile(item => item % 2 === 0, [2, 2, 3, 2, 2, 2]);

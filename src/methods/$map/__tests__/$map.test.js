@@ -1,6 +1,6 @@
 import { $, $isAsync, $async, $await } from '../../../../generate/async.macro';
 
-import { $map, asyncMap, $toArray, asyncToArray, range } from '../../..';
+import { $map, $toArray, range } from '../../..';
 
 describe($`map`, () => {
   it(
@@ -36,8 +36,8 @@ describe($`map`, () => {
 
   if ($isAsync) {
     it('returns mapped iterable (using a promise)', async () => {
-      const iter = asyncMap(item => Promise.resolve(item * 2), [1, 2, 3]);
-      expect(await asyncToArray(iter)).toEqual([2, 4, 6]);
+      const iter = $map(item => Promise.resolve(item * 2), [1, 2, 3]);
+      expect(await $toArray(iter)).toEqual([2, 4, 6]);
     });
   }
 });

@@ -1,7 +1,7 @@
 import assert from 'static-type-assert';
 import { compose, map, filter } from '../../..';
 
-declare var Ø: never;
+declare const Ø: never;
 
 const func = compose<Iterable<number>>(
   filter(x => {

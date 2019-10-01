@@ -21,7 +21,7 @@ export function combinationsWithReplacement(iterable, r) {
     *[Symbol.iterator]() {
       const toIndex = i => arr[i];
 
-      for (let indices of product(...map(range(0, r), () => range(0, len)))) {
+      for (const indices of product(...map(range(0, r), () => range(0, len)))) {
         if (isSorted(indices)) {
           yield [...map(indices, toIndex)];
         }

@@ -9,7 +9,7 @@
 import assert from 'static-type-assert';
 import { AsyncIterable } from '../../../internal/async-iterable';
 import { asyncFindOr } from '../../..';
-declare var Ø: never;
+declare const Ø: never;
 assert<Promise<number | 0>>(
   asyncFindOr(Ø as 0, Ø as (item: number) => any, Ø as AsyncIterable<number>),
 );

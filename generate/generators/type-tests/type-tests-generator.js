@@ -15,7 +15,7 @@ class TypeTestsGenerator extends BaseGenerator {
 
   generatePath(testPath, destPath) {
     let content;
-    let generatedFrom = relative(dirname(destPath), testPath);
+    const generatedFrom = relative(dirname(destPath), testPath);
     try {
       const { code: impl } = babel.transformFileSync(testPath, {
         configFile: this.getBabelConfigPath(),

@@ -1,6 +1,6 @@
 import { $, $isAsync, $async, $await } from '../../../../generate/async.macro';
 
-import { $every, asyncEvery } from '../../..';
+import { $every } from '../../..';
 
 describe($`every`, () => {
   it(
@@ -26,7 +26,7 @@ describe($`every`, () => {
 
   if ($isAsync) {
     it('returns true if all items are true (using a promise)', async () => {
-      expect(await asyncEvery(n => Promise.resolve(n % 2 === 0), [4, 2, 6, 4, 8, 6])).toBe(true);
+      expect(await $every(n => Promise.resolve(n % 2 === 0), [4, 2, 6, 4, 8, 6])).toBe(true);
     });
   }
 });

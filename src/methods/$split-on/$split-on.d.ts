@@ -2,8 +2,8 @@ import { $InputIterable, $GeneratorIterator } from '../../internal/$iterable';
 
 // prettier-ignore
 declare function $split(
-  value: String
-): (iterable: String) => $GeneratorIterator<String>;
+  value: string
+): (iterable: string) => $GeneratorIterator<string>;
 
 declare function $split(
   value: any,
@@ -11,9 +11,9 @@ declare function $split(
 
 // prettier-ignore
 declare function $split(
-  value: String,
-  iterable: String
-): $GeneratorIterator<String>;
+  value: string,
+  iterable: string
+): $GeneratorIterator<string>;
 
 declare function $split<T = any>(
   value: any,

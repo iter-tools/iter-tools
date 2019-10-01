@@ -1,7 +1,7 @@
 import assert from 'static-type-assert';
 import { permutations } from '../../..';
 
-declare var Ø: never;
+declare const Ø: never;
 
 assert<Iterable<[number, number, number]>>(permutations(3, Ø as Array<number>));
 

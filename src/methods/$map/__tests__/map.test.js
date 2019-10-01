@@ -8,7 +8,7 @@
 
 /* eslint-disable no-unused-vars,import/no-duplicates */
 
-import { map, asyncMap, toArray, asyncToArray, range } from '../../..';
+import { map, toArray, range } from '../../..';
 describe('map', () => {
   it('returns mapped iterable', () => {
     const iter = map(item => item * 2, [1, 2, 3]);

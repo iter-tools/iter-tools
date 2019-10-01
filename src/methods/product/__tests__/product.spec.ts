@@ -1,11 +1,9 @@
 import assert from 'static-type-assert';
 import { product } from '../../..';
 
-declare var Ø: never;
+declare const Ø: never;
 
-assert<Iterable<[0 | 1 | 2, 3 | 4 | 5]>>(
-  product(Ø as [0, 1, 2], Ø as [3, 4, 5]),
-);
+assert<Iterable<[0 | 1 | 2, 3 | 4 | 5]>>(product(Ø as [0, 1, 2], Ø as [3, 4, 5]));
 
 assert<Iterable<[number, number, number]>>(
   product(Ø as Array<number>, Ø as Array<number>, Ø as Array<number>),

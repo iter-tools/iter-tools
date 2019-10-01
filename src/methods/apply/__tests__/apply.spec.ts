@@ -1,7 +1,7 @@
 import assert from 'static-type-assert';
 import { apply } from '../../..';
 
-declare var Ø: never;
+declare const Ø: never;
 
 declare function add(a: number, b: number): number;
 

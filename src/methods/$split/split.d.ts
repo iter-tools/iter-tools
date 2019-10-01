@@ -11,5 +11,5 @@ import { InputIterable, GeneratorIterator } from '../../internal/iterable';
 declare function split<T = any>(
   iterable: InputIterable<T>,
 ): GeneratorIterator<SyncGeneratorIterator<T>>;
-declare function split(iterable: String): String;
+declare function split(iterable: string): string;
 export default split;

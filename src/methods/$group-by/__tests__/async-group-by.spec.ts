@@ -9,7 +9,7 @@
 import assert from 'static-type-assert';
 import { AsyncIterable, AsyncGeneratorIterator } from '../../../internal/async-iterable';
 import { asyncGroupBy } from '../../..';
-declare var Ø: never;
+declare const Ø: never;
 assert<AsyncGeneratorIterator<[string, AsyncGeneratorIterator<string>]>>(
   asyncGroupBy(null)(Ø as string),
 );

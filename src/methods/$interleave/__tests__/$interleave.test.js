@@ -57,9 +57,9 @@ describe($`interleave`, () => {
       it('can be used to do concatenation', () => {
         const concatenate = $interleave(function*(
           canTakeAny: () => $Promise<$InterleaveBuffer<number> | null>,
-          a: $InterleaveBuffer<number>,
-          b: $InterleaveBuffer<number>,
-          c: $InterleaveBuffer<number>,
+          _a: $InterleaveBuffer<number>,
+          _b: $InterleaveBuffer<number>,
+          _c: $InterleaveBuffer<number>,
         ) {
           let buffer = canTakeAny();
 
