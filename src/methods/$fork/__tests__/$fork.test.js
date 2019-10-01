@@ -3,21 +3,21 @@ import { $, $isAsync, $async, $await, $iteratorSymbol } from '../../../../genera
 import { $fork, $map, $toArray } from '../../..';
 import { $OneTwoThreeIterable } from '../../../__tests__/__framework__/fixtures';
 
-function* _makeIterable() {
-  yield 1;
-  yield 2;
-  yield 3;
-}
-
-async function* _asyncMakeIterable() {
-  yield 1;
-  yield 2;
-  yield 3;
-}
-
-const $makeIterable = $isAsync ? _asyncMakeIterable : _makeIterable;
-
 describe($`fork`, () => {
+  const $makeIterable = $isAsync ? _asyncMakeIterable : _makeIterable;
+
+  function* _makeIterable() {
+    yield 1;
+    yield 2;
+    yield 3;
+  }
+
+  async function* _asyncMakeIterable() {
+    yield 1;
+    yield 2;
+    yield 3;
+  }
+
   it(
     'creates an iterable of iterables with the same values as its source',
     $async(() => {

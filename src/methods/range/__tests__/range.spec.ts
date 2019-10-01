@@ -2,7 +2,7 @@ import assert from 'static-type-assert';
 import { GeneratorIterator } from '../../../internal/iterable';
 import { range } from '../../..';
 
-declare var Ø: never;
+declare const Ø: never;
 
 assert<GeneratorIterator<number>>(range(Ø as number));
 

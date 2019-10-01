@@ -8,7 +8,7 @@
 
 /* eslint-disable no-unused-vars,import/no-duplicates */
 
-import { groupBy, asyncGroupBy, toArray } from '../../..';
+import { groupBy, toArray } from '../../..';
 describe('groupBy', () => {
   it('main cursor', () => {
     const iter = groupBy(null, 'AAABBAACCCCD');
@@ -101,8 +101,8 @@ describe('groupBy', () => {
     expect(group1[0]).toBe('A');
     expect(group2[0]).toBe('B');
     expect(group3[0]).toBe('C');
-    expect(Array.from(group1[1])).toEqual(['A', 'A', 'A']);
-    expect(Array.from(group2[1])).toEqual(['B', 'B']);
-    expect(Array.from(group3[1])).toEqual(['C', 'C', 'C', 'C']);
+    expect(toArray(group1[1])).toEqual(['A', 'A', 'A']);
+    expect(toArray(group2[1])).toEqual(['B', 'B']);
+    expect(toArray(group3[1])).toEqual(['C', 'C', 'C', 'C']);
   });
 });

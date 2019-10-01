@@ -29,7 +29,7 @@ class BaseAsyncGenerator extends BaseGenerator {
 
   generatePath(templatePath, destPath, { ASYNC }) {
     let content;
-    let generatedFrom = relative(dirname(destPath), templatePath);
+    const generatedFrom = relative(dirname(destPath), templatePath);
 
     try {
       const { code: impl } = babel.transformFileSync(templatePath, {

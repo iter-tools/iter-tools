@@ -57,7 +57,7 @@ describe('asyncReduce', () => {
     const oneTwoThree = new AsyncOneTwoThreeIterable();
 
     try {
-      await asyncReduce((acc = 0, x) => {
+      await asyncReduce(() => {
         throw new Error('ops');
       }, oneTwoThree);
     } catch (e) {

@@ -1,6 +1,6 @@
 import { $, $isAsync, $async, $await } from '../../../../generate/async.macro';
 
-import { $filter, asyncFilter, $toArray, asyncToArray, range } from '../../..';
+import { $filter, $toArray, range } from '../../..';
 
 describe($`filter`, () => {
   it(
@@ -36,8 +36,8 @@ describe($`filter`, () => {
 
   if ($isAsync) {
     it('returns filtered iterable (using a promise)', async () => {
-      const iter = asyncFilter(item => Promise.resolve(item % 2 === 0), [1, 2, 3, 4, 5, 6]);
-      expect(await asyncToArray(iter)).toEqual([2, 4, 6]);
+      const iter = $filter(item => Promise.resolve(item % 2 === 0), [1, 2, 3, 4, 5, 6]);
+      expect(await $toArray(iter)).toEqual([2, 4, 6]);
     });
   }
 });

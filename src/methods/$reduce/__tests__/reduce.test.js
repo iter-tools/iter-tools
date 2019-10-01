@@ -55,7 +55,7 @@ describe('reduce', () => {
     const oneTwoThree = new OneTwoThreeIterable();
 
     try {
-      reduce((acc = 0, x) => {
+      reduce(() => {
         throw new Error('ops');
       }, oneTwoThree);
     } catch (e) {

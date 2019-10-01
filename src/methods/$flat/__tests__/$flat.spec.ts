@@ -1,9 +1,9 @@
 import assert from 'static-type-assert';
 
-import { $Iterable, $GeneratorIterator } from  '../../../internal/$iterable';
+import { $Iterable, $GeneratorIterator } from '../../../internal/$iterable';
 import { $flat } from '../../..';
 
-declare var Ø: never;
+declare const Ø: never;
 
 // asyncFlat(iterable)
 assert<{
@@ -81,7 +81,6 @@ assert<{
   'depth = 1': $flat(Ø as number)(Ø as [0, [1], [2, 3]]),
   'depth = 2': $flat(Ø as number)(Ø as [0, [1], [[2]]]),
 });
-
 
 // prettier-ignore
 assert<$GeneratorIterator<number>>($flat(0, Ø as $Iterable<number>));

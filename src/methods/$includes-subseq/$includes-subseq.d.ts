@@ -1,4 +1,4 @@
-import { $Promise, $MaybePromise } from '../../../generate/async.macro';
+import { $Promise } from '../../../generate/async.macro';
 
 import { $InputIterable } from '../../internal/$iterable';
 

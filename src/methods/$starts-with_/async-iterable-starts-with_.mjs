@@ -17,7 +17,7 @@ const zipAllConfig = {
 export async function asyncIterableStartsWith_(iterable, config, value) {
   const subseqs = await asyncToAnySubseq(config, value);
   const wrappedSubseqs = subseqs.map(asyncWrap);
-  let states = subseqs.map(_ => ({
+  const states = subseqs.map(_ => ({
     matches: true,
     done: false,
   }));

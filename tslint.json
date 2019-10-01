@@ -1,7 +1,0 @@
-{
-  "extends": ["tslint-config-standard", "tslint-config-prettier"],
-  "rules": {
-    "no-duplicate-imports": false,
-    "unified-signatures": false
-  }
-}

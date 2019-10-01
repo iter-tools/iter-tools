@@ -11,5 +11,5 @@ import { AsyncInputIterable, AsyncGeneratorIterator } from '../../internal/async
 declare function asyncSplit<T = any>(
   iterable: AsyncInputIterable<T>,
 ): AsyncGeneratorIterator<SyncGeneratorIterator<T>>;
-declare function asyncSplit(iterable: String): String;
+declare function asyncSplit(iterable: string): string;
 export default asyncSplit;

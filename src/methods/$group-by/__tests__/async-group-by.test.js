@@ -8,7 +8,7 @@
 
 /* eslint-disable no-unused-vars,import/no-duplicates */
 
-import { groupBy, asyncGroupBy, asyncToArray } from '../../..';
+import { asyncGroupBy, asyncToArray } from '../../..';
 describe('asyncGroupBy', () => {
   it('main cursor', async () => {
     const iter = asyncGroupBy(null, 'AAABBAACCCCD');

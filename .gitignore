@@ -6,4 +6,3 @@
 
 /coverage/*
 !/coverage/badge-*.svg
-/src/**/*.auto.spec.ts

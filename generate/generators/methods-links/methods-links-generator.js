@@ -23,8 +23,7 @@ class MethodsLinksGenerator extends BaseGenerator {
 
   generatePath(implPath, destPath) {
     let content;
-    let generatedFrom = relative(dirname(destPath), implPath);
-
+    const generatedFrom = relative(dirname(destPath), implPath);
     const extName = completeExtname(implPath);
     const moduleName = basename(implPath, extName);
     const methodName = camelcase(basename(implPath, extName));

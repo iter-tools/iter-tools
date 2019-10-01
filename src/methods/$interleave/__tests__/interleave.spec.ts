@@ -65,7 +65,7 @@ assert<GeneratorIterator<string | number | Function>>(
       assert<Function>(b3.take());
       yield b3.take();
     }
-  })(['foo'], [2], [(_: any) => _]),
+  })(['foo'], [2], [(_: any): any => _]),
 );
 assert<GeneratorIterator<string | number | Function | {}>>(
   interleave(function*(
@@ -106,7 +106,7 @@ assert<GeneratorIterator<string | number | Function | {}>>(
       assert<{}>(b4.take());
       yield b4.take();
     }
-  })(['foo'], [2], [(_: any) => _], [{}]),
+  })(['foo'], [2], [(_: any): any => _], [{}]),
 ); // With options
 // ############
 
@@ -167,7 +167,7 @@ assert<GeneratorIterator<string | number | Function>>(
       yield b3.take();
     }
   },
-  {})(['foo'], [2], [(_: any) => _]),
+  {})(['foo'], [2], [(_: any): any => _]),
 );
 assert<GeneratorIterator<string | number | Function | {}>>(
   interleave(function*(
@@ -210,5 +210,5 @@ assert<GeneratorIterator<string | number | Function | {}>>(
       yield b4.take();
     }
   },
-  {})(['foo'], [2], [(_: any) => _], [{}]),
+  {})(['foo'], [2], [(_: any): any => _], [{}]),
 );

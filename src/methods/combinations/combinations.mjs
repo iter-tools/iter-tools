@@ -21,7 +21,7 @@ export function combinations(iterable, r) {
     *[Symbol.iterator]() {
       const toIndex = i => arr[i];
 
-      for (let indices of permutations(range(0, len), r)) {
+      for (const indices of permutations(range(0, len), r)) {
         if (isSorted(indices)) {
           yield [...map(indices, toIndex)];
         }

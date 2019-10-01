@@ -8,7 +8,7 @@
 
 /* eslint-disable no-unused-vars,import/no-duplicates */
 
-import { execute, asyncExecute } from '../../..';
+import { execute } from '../../..';
 describe('execute', () => {
   it('executes forever', () => {
     const iter = execute(() => 1);

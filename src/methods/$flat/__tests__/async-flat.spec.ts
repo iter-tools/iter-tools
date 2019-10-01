@@ -9,7 +9,7 @@
 import assert from 'static-type-assert';
 import { AsyncIterable, AsyncGeneratorIterator } from '../../../internal/async-iterable';
 import { asyncFlat } from '../../..';
-declare var Ø: never; // asyncFlat(iterable)
+declare const Ø: never; // asyncFlat(iterable)
 
 assert<{
   'depth = 0': AsyncGeneratorIterator<0 | 1 | 2>;

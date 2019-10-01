@@ -9,7 +9,7 @@
 import assert from 'static-type-assert';
 import { AsyncGeneratorIterator } from '../../../internal/async-iterable';
 import { asyncExecute } from '../../..';
-declare var Ø: never;
+declare const Ø: never;
 assert<AsyncGeneratorIterator<123>>(asyncExecute(Ø as () => 123));
 assert<AsyncGeneratorIterator<123>>(
   asyncExecute(Ø as <T>(x: T, ...args: Array<unknown>) => T, Ø as 123, Ø as 456),

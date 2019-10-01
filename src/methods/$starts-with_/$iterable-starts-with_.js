@@ -12,7 +12,7 @@ $async;
 export function $iterableStartsWith_(iterable, config, value) {
   const subseqs = $await($toAnySubseq(config, value));
   const wrappedSubseqs = $isAsync ? subseqs.map(asyncWrap) : subseqs;
-  let states = subseqs.map(_ => ({
+  const states = subseqs.map(_ => ({
     matches: true,
     done: false,
   }));

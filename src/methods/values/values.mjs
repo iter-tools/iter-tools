@@ -9,7 +9,7 @@ export function* values(valuesable) {
     yield* valuesable.values();
   } else if (typeof valuesable === 'object') {
     // pojo
-    for (let key in valuesable) {
+    for (const key in valuesable) {
       if (hasOwnProperty.call(valuesable, key)) {
         yield valuesable[key];
       }

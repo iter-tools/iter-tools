@@ -9,15 +9,15 @@
 import { InputIterable as SyncInputIterable } from '../../internal/iterable';
 import { AsyncInputIterable, AsyncGeneratorIterator } from '../../internal/async-iterable';
 declare function asyncSplitOnAny(
-  values: SyncInputIterable<String>,
-): (iterable: String) => AsyncGeneratorIterator<String>;
+  values: SyncInputIterable<string>,
+): (iterable: string) => AsyncGeneratorIterator<string>;
 declare function asyncSplitOnAny(
   values: SyncInputIterable<any>,
 ): <T = any>(iterable: AsyncInputIterable<T>) => AsyncGeneratorIterator<AsyncGeneratorIterator<T>>;
 declare function asyncSplitOnAny(
-  values: SyncInputIterable<String>,
-  iterable: String,
-): AsyncGeneratorIterator<String>;
+  values: SyncInputIterable<string>,
+  iterable: string,
+): AsyncGeneratorIterator<string>;
 declare function asyncSplitOnAny<T = any>(
   values: SyncInputIterable<any>,
   iterable: AsyncInputIterable<T>,

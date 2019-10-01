@@ -9,7 +9,7 @@
 import assert from 'static-type-assert';
 import { AsyncIterable } from '../../../internal/async-iterable';
 import { asyncFirstOr } from '../../..';
-declare var Ø: never;
+declare const Ø: never;
 assert<Promise<null>>(asyncFirstOr(Ø as null, Ø as []));
 assert<Promise<0>>(asyncFirstOr(Ø as null, Ø as [0, 1, 2, 3]));
 assert<Promise<number>>(asyncFirstOr(Ø as null, Ø as [number, ...any[]]));

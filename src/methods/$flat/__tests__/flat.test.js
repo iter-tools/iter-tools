@@ -8,7 +8,7 @@
 
 /* eslint-disable no-unused-vars,import/no-duplicates */
 
-import { flat, asyncFlat, toArray, asyncToArray } from '../../..';
+import { flat, toArray } from '../../..';
 describe('flat', () => {
   it('flats iterable', () => {
     const iter = flat(1, [[1, 2], [3, 4], [5]]);

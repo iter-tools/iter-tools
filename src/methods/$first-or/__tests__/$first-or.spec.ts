@@ -4,7 +4,7 @@ import assert from 'static-type-assert';
 import { $Iterable } from '../../../internal/$iterable';
 import { $firstOr } from '../../..';
 
-declare var Ø: never;
+declare const Ø: never;
 
 assert<$Promise<null>>($firstOr(Ø as null, Ø as []));
 

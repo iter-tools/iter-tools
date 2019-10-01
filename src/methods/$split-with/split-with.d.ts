@@ -5,10 +5,10 @@ declare function splitWith<T = any>(
 ): (iterable: InputIterable<T>) => GeneratorIterator<GeneratorIterator<T>>;
 
 declare function splitWith(
-  predicate: (item: String, i: number) => MaybePromise<any>,
-): (iterable: String) => GeneratorIterator<String>;
+  predicate: (item: string, i: number) => MaybePromise<any>,
+): (iterable: string) => GeneratorIterator<string>;
 
-declare function splitWith(predicate: RegExp): (iterable: String) => GeneratorIterator<String>;
+declare function splitWith(predicate: RegExp): (iterable: string) => GeneratorIterator<string>;
 
 declare function splitWith<T = any>(
   predicate: (item: T, i: number) => MaybePromise<any>,
@@ -16,10 +16,10 @@ declare function splitWith<T = any>(
 ): GeneratorIterator<GeneratorIterator<T>>;
 
 declare function splitWith(
-  predicate: (item: String, i: number) => MaybePromise<any>,
-  iterable: String,
-): GeneratorIterator<String>;
+  predicate: (item: string, i: number) => MaybePromise<any>,
+  iterable: string,
+): GeneratorIterator<string>;
 
-declare function splitWith(predicate: RegExp, iterable: String): GeneratorIterator<String>;
+declare function splitWith(predicate: RegExp, iterable: string): GeneratorIterator<string>;
 
 export default splitWith;

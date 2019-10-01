@@ -38,7 +38,8 @@ describe('when', () => {
 
   it('throws when value is not object or iterable', () => {
     expect(() => {
-      when(true, 4);
+      const bad: any = 4;
+      when(true, bad);
     }).toThrowErrorMatchingInlineSnapshot(
       `"Second argument to when must be an object or iterable."`,
     );

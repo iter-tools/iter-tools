@@ -1,6 +1,6 @@
 import { $, $isAsync, $async, $await } from '../../../../generate/async.macro';
 
-import { $execute, asyncExecute } from '../../..';
+import { $execute } from '../../..';
 
 describe($`execute`, () => {
   it(
@@ -25,7 +25,7 @@ describe($`execute`, () => {
 
   if ($isAsync) {
     it('executes forever (with promise value)', async () => {
-      const iter = asyncExecute(() => Promise.resolve(1));
+      const iter = $execute(() => Promise.resolve(1));
       expect(await iter.next()).toEqual({ value: 1, done: false });
       expect(await iter.next()).toEqual({ value: 1, done: false });
       expect(await iter.next()).toEqual({ value: 1, done: false });

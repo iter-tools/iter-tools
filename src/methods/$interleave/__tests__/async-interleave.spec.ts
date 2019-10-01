@@ -65,7 +65,7 @@ assert<AsyncGeneratorIterator<string | number | Function>>(
       assert<Promise<Function>>(b3.take());
       yield await b3.take();
     }
-  })(['foo'], [2], [(_: any) => _]),
+  })(['foo'], [2], [(_: any): any => _]),
 );
 assert<AsyncGeneratorIterator<string | number | Function | {}>>(
   asyncInterleave(async function*(
@@ -106,7 +106,7 @@ assert<AsyncGeneratorIterator<string | number | Function | {}>>(
       assert<Promise<{}>>(b4.take());
       yield await b4.take();
     }
-  })(['foo'], [2], [(_: any) => _], [{}]),
+  })(['foo'], [2], [(_: any): any => _], [{}]),
 ); // With options
 // ############
 
@@ -167,7 +167,7 @@ assert<AsyncGeneratorIterator<string | number | Function>>(
       yield await b3.take();
     }
   },
-  {})(['foo'], [2], [(_: any) => _]),
+  {})(['foo'], [2], [(_: any): any => _]),
 );
 assert<AsyncGeneratorIterator<string | number | Function | {}>>(
   asyncInterleave(async function*(
@@ -210,5 +210,5 @@ assert<AsyncGeneratorIterator<string | number | Function | {}>>(
       yield await b4.take();
     }
   },
-  {})(['foo'], [2], [(_: any) => _], [{}]),
+  {})(['foo'], [2], [(_: any): any => _], [{}]),
 );

@@ -1,7 +1,7 @@
 import assert from 'static-type-assert';
 import { combinations } from '../../..';
 
-declare var Ø: never;
+declare const Ø: never;
 
 assert<Iterable<[number, number, number]>>(combinations(3, Ø as Array<number>));
 

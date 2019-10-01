@@ -1,6 +1,6 @@
 import { $, $isAsync, $async, $await } from '../../../../generate/async.macro';
 
-import { $groupBy, groupBy, asyncGroupBy, $toArray } from '../../..';
+import { $groupBy, $toArray } from '../../..';
 
 describe($`groupBy`, () => {
   it(
@@ -124,7 +124,7 @@ describe($`groupBy`, () => {
 
   if ($isAsync) {
     it('uses key function returning a promise', async () => {
-      const iter = asyncGroupBy(async item => item.toLowerCase(), 'AaaBbaACccCD');
+      const iter = $groupBy(async item => item.toLowerCase(), 'AaaBbaACccCD');
       let next;
       next = await iter.next();
       expect(next.value[0]).toBe('a');
@@ -141,13 +141,13 @@ describe($`groupBy`, () => {
     });
   } else {
     it('groupBy using destructuring', () => {
-      const [group1, group2, group3] = groupBy(null, 'AAABBCCCC');
+      const [group1, group2, group3] = $groupBy(null, 'AAABBCCCC');
       expect(group1[0]).toBe('A');
       expect(group2[0]).toBe('B');
       expect(group3[0]).toBe('C');
-      expect(Array.from(group1[1])).toEqual(['A', 'A', 'A']);
-      expect(Array.from(group2[1])).toEqual(['B', 'B']);
-      expect(Array.from(group3[1])).toEqual(['C', 'C', 'C', 'C']);
+      expect($toArray(group1[1])).toEqual(['A', 'A', 'A']);
+      expect($toArray(group2[1])).toEqual(['B', 'B']);
+      expect($toArray(group3[1])).toEqual(['C', 'C', 'C', 'C']);
     });
   }
 });
