@@ -1,3 +1,5 @@
+'use strict';
+
 module.exports = (impl, generatedFrom) =>
   `/**
  * @generated-from ./${generatedFrom}

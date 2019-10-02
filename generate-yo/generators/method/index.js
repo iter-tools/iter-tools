@@ -1,3 +1,5 @@
+'use strict';
+
 const Generator = require('yeoman-generator');
 const recursiveRead = require('recursive-readdir');
 const decamelize = require('decamelize');

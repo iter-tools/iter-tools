@@ -1,3 +1,5 @@
+'use strict';
+
 const upper = /[A-Z]/;
 
 function rename(name, ASYNC) {

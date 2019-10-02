@@ -1,3 +1,6 @@
+#! /usr/bin node
+'use strict';
+
 const parseArgs = require('minimist');
 const camelize = require('camelize');
 

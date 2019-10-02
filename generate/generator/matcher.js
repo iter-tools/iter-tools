@@ -1,3 +1,5 @@
+'use strict';
+
 const { matcher: mmMatcher } = require('micromatch');
 const { relative } = require('path');
 const { path: rootDir } = require('package.root');

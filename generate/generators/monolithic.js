@@ -1,3 +1,5 @@
+'use strict';
+
 const gitattributesFile = require('./_templates/gitattributes-file');
 const indexFile = require('./_templates/index-file');
 const typesIndexFile = require('./_templates/types-index-file');

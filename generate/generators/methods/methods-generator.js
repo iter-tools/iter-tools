@@ -1,3 +1,5 @@
+'use strict';
+
 const { resolve } = require('path');
 const loglevel = require('loglevel');
 

@@ -1,3 +1,5 @@
+'use strict';
+
 const { basename, dirname, join } = require('path');
 const fs = require('fs');
 const camelcase = require('camelcase');
