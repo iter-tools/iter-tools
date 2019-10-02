@@ -1,3 +1,5 @@
+'use strict';
+
 const { relative, join, dirname } = require('path');
 const { path: rootDir } = require('package.root');
 

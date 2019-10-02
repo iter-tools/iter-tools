@@ -1,3 +1,5 @@
+'use strict';
+
 const { dirname, relative, join, basename } = require('path');
 const babel = require('@babel/core');
 const prettier = require('prettier');

@@ -1,3 +1,5 @@
+'use strict';
+
 const decamelize = require('decamelize');
 const { renameDollar } = require('../../names');
 

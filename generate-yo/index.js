@@ -1,3 +1,5 @@
+'use strict';
+
 const yeoman = require('yeoman-environment');
 const { resolve } = require('path');
 const MethodGenerator = require('./generators/method');

@@ -1,3 +1,5 @@
+'use strict';
+
 const loglevel = require('loglevel');
 const { join } = require('path');
 const { path: rootDir } = require('package.root');

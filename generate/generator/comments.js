@@ -1,3 +1,5 @@
+'use strict';
+
 const readChunk = require('read-chunk');
 
 const magicComment = '@generated-from';

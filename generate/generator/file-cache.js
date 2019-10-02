@@ -1,3 +1,5 @@
+'use strict';
+
 const fs = require('fs');
 const { join } = require('path');
 const md5 = require('md5');

@@ -1,3 +1,5 @@
+'use strict';
+
 const { basename } = require('path');
 
 const { renameDollar } = require('../../names');

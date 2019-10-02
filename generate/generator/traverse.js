@@ -1,3 +1,5 @@
+'use strict';
+
 const { relative } = require('path');
 const recursiveRead = require('recursive-readdir');
 const sane = require('sane');

@@ -1,3 +1,5 @@
+'use strict';
+
 const camelcase = require('camelcase');
 const { makeRe } = require('picomatch');
 const { compareNames } = require('../../names');

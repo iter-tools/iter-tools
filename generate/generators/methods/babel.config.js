@@ -1,3 +1,5 @@
+'use strict';
+
 const { join } = require('path');
 
 const isAsync = caller => caller && caller.ASYNC;

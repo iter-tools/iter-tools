@@ -1,3 +1,5 @@
+'use strict';
+
 const { dirname, basename, relative, join, normalize } = require('path');
 const camelcase = require('camelcase');
 const completeExtname = require('path-complete-extname');
