@@ -7,13 +7,13 @@
  */
 
 import { SourceIterable } from '../../types/iterable';
-declare function joinAsStringWith(value: string, iterable: SourceIterable<string>): string;
+declare function joinAsStringWith(value: string, strings: SourceIterable<string>): string;
 declare function joinAsStringWith(
   value: string,
-  iterable: SourceIterable<SourceIterable<string>>,
+  strings: SourceIterable<SourceIterable<string>>,
 ): string;
-declare function joinAsStringWith(value: string): (iterable: SourceIterable<string>) => string;
+declare function joinAsStringWith(value: string): (strings: SourceIterable<string>) => string;
 declare function joinAsStringWith(
   value: string,
-): (iterable: SourceIterable<SourceIterable<string>>) => string;
+): (strings: SourceIterable<SourceIterable<string>>) => string;
 export default joinAsStringWith;

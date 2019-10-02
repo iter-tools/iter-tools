@@ -9,9 +9,9 @@
 import { AsyncSourceIterable, AsyncResultIterable } from '../../types/async-iterable';
 declare function asyncJoinWith<W, T = any>(
   value: W,
-  iterable: AsyncSourceIterable<AsyncSourceIterable<T>>,
+  source: AsyncSourceIterable<AsyncSourceIterable<T>>,
 ): AsyncResultIterable<T | W>;
 declare function asyncJoinWith<W>(
   value: W,
-): <T = any>(iterable: AsyncSourceIterable<AsyncSourceIterable<T>>) => AsyncResultIterable<T | W>;
+): <T = any>(source: AsyncSourceIterable<AsyncSourceIterable<T>>) => AsyncResultIterable<T | W>;
 export default asyncJoinWith;

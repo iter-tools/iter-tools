@@ -7,10 +7,10 @@
  */
 
 import { asyncIterableCurry } from '../../internal/async-iterable';
-export async function* asyncFilter(iterable, func) {
+export async function* asyncFilter(source, func) {
   let c = 0;
 
-  for await (const item of iterable) {
+  for await (const item of source) {
     if (await func(item, c++)) {
       yield item;
     }

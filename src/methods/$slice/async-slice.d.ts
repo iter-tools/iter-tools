@@ -11,33 +11,33 @@ declare function asyncSlice<T = any>(opts: {
   readonly start?: number;
   readonly end?: number;
   readonly step?: number;
-}): (iterable: AsyncSourceIterable<T>) => AsyncResultIterable<T>;
+}): (source: AsyncSourceIterable<T>) => AsyncResultIterable<T>;
 declare function asyncSlice<T = any>(
   start?: number,
   end?: number,
   step?: number,
-): (iterable: AsyncSourceIterable<T>) => AsyncResultIterable<T>;
+): (source: AsyncSourceIterable<T>) => AsyncResultIterable<T>;
 declare function asyncSlice<T = any>(
   opts: {
     readonly start?: number;
     readonly end?: number;
     readonly step?: number;
   },
-  iterable: AsyncSourceIterable<T>,
+  source: AsyncSourceIterable<T>,
 ): AsyncResultIterable<T>;
 declare function asyncSlice<T = any>(
   start: number,
-  iterable: AsyncSourceIterable<T>,
+  source: AsyncSourceIterable<T>,
 ): AsyncResultIterable<T>;
 declare function asyncSlice<T = any>(
   start: number,
   end: number,
-  iterable: AsyncSourceIterable<T>,
+  source: AsyncSourceIterable<T>,
 ): AsyncResultIterable<T>;
 declare function asyncSlice<T = any>(
   start: number,
   end: number,
   step: number,
-  iterable: AsyncSourceIterable<T>,
+  source: AsyncSourceIterable<T>,
 ): AsyncResultIterable<T>;
 export default asyncSlice;

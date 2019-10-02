@@ -8,8 +8,8 @@
 
 import { iterableCurry } from '../../internal/iterable';
 import { map } from '../$map/map';
-export function* zip(iterables) {
-  const iters = iterables.map(arg => arg[Symbol.iterator]());
+export function* zip(sources) {
+  const iters = sources.map(arg => arg[Symbol.iterator]());
   const itersDone = iters.map(iter => ({
     done: false,
     iter,

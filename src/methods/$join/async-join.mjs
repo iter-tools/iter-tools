@@ -12,7 +12,7 @@ const config = {
   subseq: true,
 };
 const emptySubseq = [];
-export function asyncJoin(iterable) {
-  return asyncJoinWith_(iterable, config, emptySubseq);
+export function asyncJoin(source) {
+  return asyncJoinWith_(source, config, emptySubseq);
 }
 export default asyncIterableCurry(asyncJoin);

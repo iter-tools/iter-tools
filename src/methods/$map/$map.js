@@ -2,10 +2,10 @@ import { $async, $await } from '../../../generate/async.macro';
 import { $iterableCurry } from '../../internal/$iterable';
 
 $async;
-export function* $map(iterable, func) {
+export function* $map(source, func) {
   let c = 0;
   $await;
-  for (const item of iterable) {
+  for (const item of source) {
     yield $await(func(item, c++));
   }
 }

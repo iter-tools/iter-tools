@@ -10,8 +10,8 @@ import { asyncIterableCurry } from '../../internal/async-iterable';
 import { range } from '../range/range';
 import { asyncZip } from '../$zip/async-zip';
 import { asyncWrap } from '../$wrap/async-wrap';
-export function asyncEnumerate(iterable, start = 0) {
-  return asyncZip([asyncWrap(range(start, Infinity)), iterable]);
+export function asyncEnumerate(source, start = 0) {
+  return asyncZip([asyncWrap(range(start, Infinity)), source]);
 }
 export default asyncIterableCurry(asyncEnumerate, {
   minArgs: 0,

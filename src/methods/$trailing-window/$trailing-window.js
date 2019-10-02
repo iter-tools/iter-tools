@@ -3,13 +3,13 @@ import { $iterableCurry } from '../../internal/$iterable';
 import CircularBuffer from '../../internal/circular-buffer';
 
 $async;
-export function* $trailingWindow(iterable, size, { filler } = {}) {
+export function* $trailingWindow(source, size, { filler } = {}) {
   const circular = new CircularBuffer(size);
 
   circular.fill(filler);
 
   $await;
-  for (const item of iterable) {
+  for (const item of source) {
     circular.push(item);
     yield circular.readOnlyCopy;
   }

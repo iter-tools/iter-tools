@@ -9,16 +9,16 @@
 import { AsyncSourceIterable, AsyncResultIterable } from '../../types/async-iterable';
 declare function asyncFilter<S extends T, T = any>(
   func: (item: T, i: number) => item is S,
-): (iterable: AsyncSourceIterable<T>) => AsyncResultIterable<S>;
+): (source: AsyncSourceIterable<T>) => AsyncResultIterable<S>;
 declare function asyncFilter<T = any>(
   func: (item: T, i: number) => boolean | Promise<boolean>,
-): (iterable: AsyncSourceIterable<T>) => AsyncResultIterable<T>;
+): (source: AsyncSourceIterable<T>) => AsyncResultIterable<T>;
 declare function asyncFilter<S extends T, T = any>(
   func: (item: T, i: number) => item is S,
-  iterable: AsyncSourceIterable<T>,
+  source: AsyncSourceIterable<T>,
 ): AsyncResultIterable<S>;
 declare function asyncFilter<T = any>(
   func: (item: T, i: number) => boolean | Promise<boolean>,
-  iterable: AsyncSourceIterable<T>,
+  source: AsyncSourceIterable<T>,
 ): AsyncResultIterable<T>;
 export default asyncFilter;

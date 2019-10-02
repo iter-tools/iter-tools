@@ -7,5 +7,5 @@
  */
 
 import { AsyncSourceIterable } from '../../types/async-iterable';
-declare function asyncToArray<T>(iterable: AsyncSourceIterable<T>): T[] | Promise<T[]>;
+declare function asyncToArray<T>(source: AsyncSourceIterable<T>): T[] | Promise<T[]>;
 export default asyncToArray;

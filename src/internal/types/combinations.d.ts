@@ -16,6 +16,6 @@ type CombinationsPermutationsByLength<T, R extends number> = Iterable<
  * Function signature of `permutations` and `combinations`
  */
 export interface CombinationsPermutations {
-  <Iter extends Iterable<any>>(iterable: Iter): CombinationsPermutationsByIterable<Iter>;
-  <T, R extends number>(r: R, iterable: Iterable<T>): CombinationsPermutationsByLength<T, R>;
+  <Iter extends Iterable<any>>(source: Iter): CombinationsPermutationsByIterable<Iter>;
+  <T, R extends number>(r: R, source: Iterable<T>): CombinationsPermutationsByLength<T, R>;
 }

@@ -1,7 +1,7 @@
 import { $SourceIterable, $ResultIterable } from '../../types/$iterable';
 
 declare function $compress<T = any>(
-  iterable: $SourceIterable<T>,
+  source: $SourceIterable<T>,
   compress: $SourceIterable<boolean>,
 ): $ResultIterable<T>;
 

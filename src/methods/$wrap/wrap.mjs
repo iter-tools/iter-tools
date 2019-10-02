@@ -7,7 +7,7 @@
  */
 
 import { wrapWithMethodIterable, ensureIterable } from '../../internal/iterable';
-export function* wrap(iterable) {
-  yield* ensureIterable(iterable)[Symbol.iterator]();
+export function* wrap(source) {
+  yield* ensureIterable(source)[Symbol.iterator]();
 }
 export default wrapWithMethodIterable(wrap);

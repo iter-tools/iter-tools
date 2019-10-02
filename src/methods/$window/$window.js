@@ -5,14 +5,14 @@ import { $concat } from '../$concat/$concat';
 import { repeat } from '../repeat/repeat';
 
 $async;
-export function* $window(iterable, size, { filler } = {}) {
+export function* $window(source, size, { filler } = {}) {
   const circular = new CircularBuffer(size);
 
   circular.fill(filler);
 
   let index = 0;
   $await;
-  for (const item of $concat(iterable, repeat(filler, size - 1))) {
+  for (const item of $concat(source, repeat(filler, size - 1))) {
     circular.push(item);
     if (index + 1 >= size) {
       yield circular.readOnlyCopy;

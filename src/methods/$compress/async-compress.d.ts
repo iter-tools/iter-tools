@@ -8,7 +8,7 @@
 
 import { AsyncSourceIterable, AsyncResultIterable } from '../../types/async-iterable';
 declare function asyncCompress<T = any>(
-  iterable: AsyncSourceIterable<T>,
+  source: AsyncSourceIterable<T>,
   compress: AsyncSourceIterable<boolean>,
 ): AsyncResultIterable<T>;
 export default asyncCompress;

@@ -9,10 +9,10 @@
 import Heap from 'little-ds-toolkit/lib/heap';
 import { iterableCurry } from '../../internal/iterable';
 import defaultCompare from '../../internal/compare';
-export function* takeSorted(iterable, comparator = defaultCompare, number = Infinity) {
+export function* takeSorted(source, comparator = defaultCompare, number = Infinity) {
   const heap = new Heap(comparator);
 
-  for (const item of iterable) {
+  for (const item of source) {
     heap.push(item);
 
     if (heap.size() > number) {

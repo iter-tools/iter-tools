@@ -4,9 +4,9 @@ import { $iterableCurry } from '../../internal/$iterable';
 import { $map } from '../$map/$map';
 
 $async;
-export function* $flatMap(iterable, func) {
+export function* $flatMap(source, func) {
   $await;
-  for (const item of $map(iterable, func)) {
+  for (const item of $map(source, func)) {
     yield* item;
   }
 }

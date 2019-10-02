@@ -13,6 +13,6 @@ declare function trailingWindow<Size extends number, Filler = undefined, T = any
     readonly size: Size;
     readonly filler?: Filler;
   },
-  iterable: SourceIterable<T>,
+  source: SourceIterable<T>,
 ): ResultIterable<Repeat8<T | Filler, Size>>;
 export default trailingWindow;

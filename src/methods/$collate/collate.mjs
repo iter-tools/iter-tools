@@ -40,7 +40,7 @@ const defaultOptions = {
   start: 0,
   step: 1,
 };
-export function collate(iterables, start = 0, stepOrComparatorOrOptions = 1) {
+export function collate(sources, start = 0, stepOrComparatorOrOptions = 1) {
   let by;
   let options;
 
@@ -64,7 +64,7 @@ export function collate(iterables, start = 0, stepOrComparatorOrOptions = 1) {
     );
   }
 
-  return interleave(iterables, by, options);
+  return interleave(sources, by, options);
 }
 export default iterableCurry(collate, {
   variadic: true,

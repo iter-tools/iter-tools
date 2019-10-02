@@ -7,8 +7,8 @@
  */
 
 import { asyncWrapWithMethodIterable, asyncEnsureIterable } from '../../internal/async-iterable';
-export async function* asyncConcat(...iterables) {
-  for (const iterable of iterables) {
+export async function* asyncConcat(...sources) {
+  for (const iterable of sources) {
     yield* asyncEnsureIterable(iterable);
   }
 }

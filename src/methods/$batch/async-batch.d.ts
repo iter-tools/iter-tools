@@ -9,9 +9,9 @@
 import { AsyncSourceIterable, AsyncResultIterable } from '../../types/async-iterable';
 declare function asyncBatch(
   size: number,
-): <T>(iterable: AsyncSourceIterable<T>) => AsyncResultIterable<T[]>;
+): <T>(source: AsyncSourceIterable<T>) => AsyncResultIterable<T[]>;
 declare function asyncBatch<T = any>(
   size: number,
-  iterable: AsyncSourceIterable<T>,
+  source: AsyncSourceIterable<T>,
 ): AsyncResultIterable<T[]>;
 export default asyncBatch;

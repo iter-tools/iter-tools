@@ -10,18 +10,18 @@ import { AsyncSourceIterable, AsyncResultIterable } from '../../types/async-iter
 declare function asyncTakeSorted<T = any>(iterable: AsyncSourceIterable<T>): AsyncResultIterable<T>;
 declare function asyncTakeSorted<T = any>(
   n: number,
-): (iterable: AsyncSourceIterable<T>) => AsyncResultIterable<T>;
+): (source: AsyncSourceIterable<T>) => AsyncResultIterable<T>;
 declare function asyncTakeSorted<T = any>(
   func: (a: T, b: T) => number,
   n: number,
-): (iterable: AsyncSourceIterable<T>) => AsyncResultIterable<T>;
+): (source: AsyncSourceIterable<T>) => AsyncResultIterable<T>;
 declare function asyncTakeSorted<T = any>(
   n: number,
-  iterable: AsyncSourceIterable<T>,
+  source: AsyncSourceIterable<T>,
 ): AsyncResultIterable<T>;
 declare function asyncTakeSorted<T = any>(
   func: (a: T, b: T) => number,
   n: number,
-  iterable: AsyncSourceIterable<T>,
+  source: AsyncSourceIterable<T>,
 ): AsyncResultIterable<T>;
 export default asyncTakeSorted;

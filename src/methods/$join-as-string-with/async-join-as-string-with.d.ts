@@ -9,16 +9,16 @@
 import { AsyncSourceIterable } from '../../types/async-iterable';
 declare function asyncJoinAsStringWith(
   value: string,
-  iterable: AsyncSourceIterable<string>,
+  strings: AsyncSourceIterable<string>,
 ): string | Promise<string>;
 declare function asyncJoinAsStringWith(
   value: string,
-  iterable: AsyncSourceIterable<AsyncSourceIterable<string>>,
+  strings: AsyncSourceIterable<AsyncSourceIterable<string>>,
 ): string | Promise<string>;
 declare function asyncJoinAsStringWith(
   value: string,
-): (iterable: AsyncSourceIterable<string>) => string | Promise<string>;
+): (strings: AsyncSourceIterable<string>) => string | Promise<string>;
 declare function asyncJoinAsStringWith(
   value: string,
-): (iterable: AsyncSourceIterable<AsyncSourceIterable<string>>) => string | Promise<string>;
+): (strings: AsyncSourceIterable<AsyncSourceIterable<string>>) => string | Promise<string>;
 export default asyncJoinAsStringWith;

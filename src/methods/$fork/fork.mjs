@@ -72,9 +72,9 @@ function* generateForks(state, n) {
   }
 }
 
-export function fork(iterable, n = Infinity) {
+export function fork(source, n = Infinity) {
   const state = {
-    iterator: ensureIterable(iterable)[Symbol.iterator](),
+    iterator: ensureIterable(source)[Symbol.iterator](),
     iterableCounter: 0,
     exchange: new Exchange(),
     done: false,

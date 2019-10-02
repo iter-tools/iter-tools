@@ -10,12 +10,12 @@ import { asyncIterableCurry } from '../../internal/async-iterable';
 import CircularBuffer from '../../internal/circular-buffer';
 import { asyncConcat } from '../$concat/async-concat';
 import { repeat } from '../repeat/repeat';
-export async function* asyncWindow(iterable, size, { filler } = {}) {
+export async function* asyncWindow(source, size, { filler } = {}) {
   const circular = new CircularBuffer(size);
   circular.fill(filler);
   let index = 0;
 
-  for await (const item of asyncConcat(iterable, repeat(filler, size - 1))) {
+  for await (const item of asyncConcat(source, repeat(filler, size - 1))) {
     circular.push(item);
 
     if (index + 1 >= size) {

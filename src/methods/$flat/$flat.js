@@ -9,9 +9,9 @@ const defaultShouldFlat = item =>
     : typeof item[Symbol.iterator] === 'function') && typeof item !== 'string';
 
 $async;
-function* $flatInternal(shouldFlat, depth, currentDepth, iterable) {
+function* $flatInternal(shouldFlat, depth, currentDepth, source) {
   $await;
-  for (const item of iterable) {
+  for (const item of source) {
     if (currentDepth < depth && $await(shouldFlat(item))) {
       yield* $flatInternal(shouldFlat, depth, currentDepth + 1, item);
     } else {
@@ -20,13 +20,13 @@ function* $flatInternal(shouldFlat, depth, currentDepth, iterable) {
   }
 }
 
-export function $flat(iterable, shouldFlat = defaultShouldFlat, depthOrOptions = 1) {
+export function $flat(source, shouldFlat = defaultShouldFlat, depthOrOptions = 1) {
   let depth = depthOrOptions;
   if (depthOrOptions && typeof depthOrOptions === 'object') {
     ({ shouldFlat = defaultShouldFlat, depth = 1 } = depthOrOptions);
   }
 
-  return $flatInternal(shouldFlat, depth, 0, iterable);
+  return $flatInternal(shouldFlat, depth, 0, source);
 }
 
 export default $iterableCurry($flat, { minArgs: 0, maxArgs: 2 });

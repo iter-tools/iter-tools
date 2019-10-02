@@ -10,9 +10,9 @@ import { SourceIterable as SyncSourceIterable } from '../../types/iterable';
 import { AsyncSourceIterable, AsyncResultIterable } from '../../types/async-iterable';
 declare function asyncJoinWithSubseq<W, T = any>(
   subseq: SyncSourceIterable<W>,
-  iterable: AsyncSourceIterable<AsyncSourceIterable<T>>,
+  source: AsyncSourceIterable<AsyncSourceIterable<T>>,
 ): AsyncResultIterable<T | W>;
 declare function asyncJoinWithSubseq<W>(
   subseq: SyncSourceIterable<W>,
-): <T = any>(iterable: AsyncSourceIterable<AsyncSourceIterable<T>>) => AsyncResultIterable<T | W>;
+): <T = any>(source: AsyncSourceIterable<AsyncSourceIterable<T>>) => AsyncResultIterable<T | W>;
 export default asyncJoinWithSubseq;

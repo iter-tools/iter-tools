@@ -56,7 +56,7 @@ async function* generateGroup(state, getKey, key, consumer) {
   }
 }
 
-export async function* asyncGroupBy(iterable, getKey) {
+export async function* asyncGroupBy(source, getKey) {
   const state = {
     iterator: null,
     idx: 0,
@@ -71,7 +71,7 @@ export async function* asyncGroupBy(iterable, getKey) {
   const _getKey = getKey == null ? k => k : getKey;
 
   try {
-    state.iterator = iterable[Symbol.asyncIterator]();
+    state.iterator = source[Symbol.asyncIterator]();
     state.consumer = state.weakExchange.spawnConsumer();
     await fetch(state, _getKey);
 

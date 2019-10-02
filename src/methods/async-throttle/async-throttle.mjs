@@ -1,9 +1,9 @@
 import { asyncIterableCurry } from '../../internal/async-iterable';
 import delay from '../../internal/delay';
 
-export async function* asyncThrottle(iterable, ms) {
+export async function* asyncThrottle(source, ms) {
   let waitSince = 0;
-  for await (const item of iterable) {
+  for await (const item of source) {
     const duration = ms - (Date.now() - waitSince);
     await (duration > 0 && delay(duration));
     waitSince = Date.now();

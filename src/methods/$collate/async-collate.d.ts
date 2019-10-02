@@ -10,26 +10,26 @@
 import { AsyncSourceIterable, AsyncResultIterable } from "../../types/async-iterable"; // prettier-ignore
 
 declare function asyncCollate<T = any>(
-  ...iterables: Array<AsyncSourceIterable<T>>
+  ...sources: Array<AsyncSourceIterable<T>>
 ): AsyncResultIterable<T>;
 declare function asyncCollate<T = any>(
   step: number,
-  ...iterables: Array<AsyncSourceIterable<T>>
+  ...sources: Array<AsyncSourceIterable<T>>
 ): AsyncResultIterable<T>;
 declare function asyncCollate<T = any>(
   start: number,
   step: number,
-  ...iterables: Array<AsyncSourceIterable<T>>
+  ...sources: Array<AsyncSourceIterable<T>>
 ): AsyncResultIterable<T>;
 declare function asyncCollate<T = any>(
   comparator: (a: T, b: T) => number,
-  ...iterables: Array<AsyncSourceIterable<T>>
+  ...sources: Array<AsyncSourceIterable<T>>
 ): AsyncResultIterable<T>;
 declare function asyncCollate<T = any>(
   options: {
     start?: number;
     step?: number;
   },
-  ...iterables: Array<AsyncSourceIterable<T>>
+  ...sources: Array<AsyncSourceIterable<T>>
 ): AsyncResultIterable<T>;
 export default asyncCollate;
