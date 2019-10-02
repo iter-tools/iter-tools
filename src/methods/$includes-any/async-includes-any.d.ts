@@ -6,13 +6,13 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { AsyncInputIterable } from '../../internal/async-iterable';
-import { InputIterable as SyncInputIterable } from '../../internal/iterable';
+import { AsyncSourceIterable } from '../../internal/async-iterable';
+import { SourceIterable as SyncSourceIterable } from '../../internal/iterable';
 declare function asyncIncludesAny(
-  values: SyncInputIterable<any>,
-): (iterable: AsyncInputIterable<any>) => Promise<boolean>;
+  values: SyncSourceIterable<any>,
+): (iterable: AsyncSourceIterable<any>) => Promise<boolean>;
 declare function asyncIncludesAny(
-  values: SyncInputIterable<any>,
-  iterable: AsyncInputIterable<any>,
+  values: SyncSourceIterable<any>,
+  iterable: AsyncSourceIterable<any>,
 ): Promise<boolean>;
 export default asyncIncludesAny;

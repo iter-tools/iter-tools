@@ -1,12 +1,12 @@
-import { $InputIterable, $GeneratorIterator } from '../../internal/$iterable';
+import { $SourceIterable, $ResultIterable } from '../../internal/$iterable';
 
 declare function $joinWith<W, T = any>(
   value: W,
-  iterable: $InputIterable<$InputIterable<T>>,
-): $GeneratorIterator<T | W>;
+  iterable: $SourceIterable<$SourceIterable<T>>,
+): $ResultIterable<T | W>;
 
 declare function $joinWith<W>(
   value: W,
-): <T = any>(iterable: $InputIterable<$InputIterable<T>>) => $GeneratorIterator<T | W>;
+): <T = any>(iterable: $SourceIterable<$SourceIterable<T>>) => $ResultIterable<T | W>;
 
 export default $joinWith;

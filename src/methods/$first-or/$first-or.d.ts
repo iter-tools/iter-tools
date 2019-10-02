@@ -1,7 +1,7 @@
 import { $Promise } from '../../../generate/async.macro';
-import { $InputIterable, $Iterable } from '../../internal/$iterable';
+import { $SourceIterable, $Iterable } from '../../internal/$iterable';
 
-declare function $firstOr<Iter extends $InputIterable<any>, E>(
+declare function $firstOr<Iter extends $SourceIterable<any>, E>(
   whenEmpty: E,
   iterable: Iter,
 ): Iter extends [infer First, ...Array<any>]

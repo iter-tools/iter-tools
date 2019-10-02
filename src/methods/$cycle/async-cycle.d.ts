@@ -1,5 +1,5 @@
-import { AsyncInputIterable, AsyncGeneratorIterator } from '../../internal/async-iterable';
+import { AsyncSourceIterable, AsyncResultIterable } from '../../internal/async-iterable';
 
-declare function asyncCycle<T = any>(iterable: AsyncInputIterable<T>): AsyncGeneratorIterator<T>;
+declare function asyncCycle<T = any>(iterable: AsyncSourceIterable<T>): AsyncResultIterable<T>;
 
 export default asyncCycle;

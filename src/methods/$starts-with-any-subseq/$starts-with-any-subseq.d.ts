@@ -1,15 +1,15 @@
 import { $Promise } from '../../../generate/async.macro';
 
-import { $InputIterable } from '../../internal/$iterable';
-import { InputIterable as SyncInputIterable } from '../../internal/iterable';
+import { $SourceIterable } from '../../internal/$iterable';
+import { SourceIterable as SyncSourceIterable } from '../../internal/iterable';
 
 declare function $startsWithAnySubseq(
-  subseqs: SyncInputIterable<$InputIterable<any>>,
-): (iterable: $InputIterable<any>) => $Promise<boolean>;
+  subseqs: SyncSourceIterable<$SourceIterable<any>>,
+): (iterable: $SourceIterable<any>) => $Promise<boolean>;
 
 declare function $startsWithAnySubseq(
-  subseqs: SyncInputIterable<$InputIterable<any>>,
-  iterable: $InputIterable<any>,
+  subseqs: SyncSourceIterable<$SourceIterable<any>>,
+  iterable: $SourceIterable<any>,
 ): $Promise<boolean>;
 
 export default $startsWithAnySubseq;

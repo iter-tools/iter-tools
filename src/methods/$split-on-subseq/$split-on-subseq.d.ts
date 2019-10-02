@@ -1,12 +1,12 @@
-import { $InputIterable, $GeneratorIterator } from '../../internal/$iterable';
+import { $SourceIterable, $ResultIterable } from '../../internal/$iterable';
 
 declare function $splitOnSubseq(
-  subseq: $InputIterable<any>,
-): <T = any>(iterable: $InputIterable<T>) => $GeneratorIterator<$GeneratorIterator<T>>;
+  subseq: $SourceIterable<any>,
+): <T = any>(iterable: $SourceIterable<T>) => $ResultIterable<$ResultIterable<T>>;
 
 declare function $splitOnSubseq<T = any>(
-  subseq: $InputIterable<any>,
-  iterable: $InputIterable<T>,
-): $GeneratorIterator<$GeneratorIterator<T>>;
+  subseq: $SourceIterable<any>,
+  iterable: $SourceIterable<T>,
+): $ResultIterable<$ResultIterable<T>>;
 
 export default $splitOnSubseq;

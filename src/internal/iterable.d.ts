@@ -1,10 +1,10 @@
-export type DefinedInputIterable<T> = Iterable<T>;
-export type InputIterable<T> = DefinedInputIterable<T> | null | undefined;
+export type DefinedSourceIterable<T> = Iterable<T>;
+export type SourceIterable<T> = DefinedSourceIterable<T> | null | undefined;
 
 type _Iterable<T> = Iterable<T>;
 export { _Iterable as Iterable };
 
-export interface GeneratorIterator<T> {
+export interface ResultIterable<T> {
   next(value?: any): IteratorResult<T>;
   return(value?: any): IteratorResult<T>;
   throw(e?: any): IteratorResult<T>;

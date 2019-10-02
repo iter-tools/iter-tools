@@ -6,8 +6,8 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { AsyncInputIterable, AsyncIterable } from '../../internal/async-iterable';
-declare function asyncFirst<Iter extends AsyncInputIterable<any>>(
+import { AsyncSourceIterable, AsyncIterable } from '../../internal/async-iterable';
+declare function asyncFirst<Iter extends AsyncSourceIterable<any>>(
   iterable: Iter,
 ): Iter extends [infer First, ...Array<any>]
   ? Promise<First>

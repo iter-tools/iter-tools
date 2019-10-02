@@ -6,10 +6,10 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { AsyncInputIterable } from '../../internal/async-iterable';
-declare function asyncIsSorted(iterable: AsyncInputIterable<any>): boolean | Promise<boolean>;
+import { AsyncSourceIterable } from '../../internal/async-iterable';
+declare function asyncIsSorted(iterable: AsyncSourceIterable<any>): boolean | Promise<boolean>;
 declare function asyncIsSorted<T = any>(
   comparator: (a: T, b: T) => number,
-  iterable: AsyncInputIterable<T>,
+  iterable: AsyncSourceIterable<T>,
 ): boolean | Promise<boolean>;
 export default asyncIsSorted;

@@ -6,12 +6,12 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { AsyncInputIterable } from '../../internal/async-iterable';
+import { AsyncSourceIterable } from '../../internal/async-iterable';
 declare function asyncStartsWithSubseq(
-  subseq: AsyncInputIterable<any>,
-): (iterable: AsyncInputIterable<any>) => Promise<boolean>;
+  subseq: AsyncSourceIterable<any>,
+): (iterable: AsyncSourceIterable<any>) => Promise<boolean>;
 declare function asyncStartsWithSubseq(
-  subseq: AsyncInputIterable<any>,
-  iterable: AsyncInputIterable<any>,
+  subseq: AsyncSourceIterable<any>,
+  iterable: AsyncSourceIterable<any>,
 ): Promise<boolean>;
 export default asyncStartsWithSubseq;

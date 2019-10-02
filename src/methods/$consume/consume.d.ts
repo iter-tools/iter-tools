@@ -6,12 +6,12 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { InputIterable } from '../../internal/iterable';
+import { SourceIterable } from '../../internal/iterable';
 declare function consume<T = any>(
   func: (item: T, i: number) => void,
-): (iterable: InputIterable<T>) => void;
+): (iterable: SourceIterable<T>) => void;
 declare function consume<T = any>(
   func: (item: T, i: number) => void,
-  iterable: InputIterable<T>,
+  iterable: SourceIterable<T>,
 ): void;
 export default consume;

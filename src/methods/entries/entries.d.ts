@@ -1,7 +1,7 @@
-import { GeneratorIterator } from '../../internal/iterable';
+import { ResultIterable } from '../../internal/iterable';
 
 declare function entries<T = any>(
   obj: { [id: string]: T } | null | undefined,
-): GeneratorIterator<[string, T]>;
+): ResultIterable<[string, T]>;
 
 export default entries;

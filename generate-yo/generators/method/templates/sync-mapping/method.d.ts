@@ -1,7 +1,7 @@
-import { InputIterable, GeneratorIterator } from '../../internal/iterable';
+import { SourceIterable, ResultIterable } from '../../internal/iterable';
 
 declare function __method__<T = any>(
-  iterable: InputIterable<T>,
-): GeneratorIterator<T>;
+  iterable: SourceIterable<T>,
+): ResultIterable<T>;
 
 export default __method__;

@@ -1,13 +1,13 @@
-import { InputIterable as SyncInputIterable } from '../../internal/iterable';
-import { $InputIterable, $GeneratorIterator } from '../../internal/$iterable';
+import { SourceIterable as SyncSourceIterable } from '../../internal/iterable';
+import { $SourceIterable, $ResultIterable } from '../../internal/$iterable';
 
 declare function $joinWithSubseq<W, T = any>(
-  subseq: SyncInputIterable<W>,
-  iterable: $InputIterable<$InputIterable<T>>,
-): $GeneratorIterator<T | W>;
+  subseq: SyncSourceIterable<W>,
+  iterable: $SourceIterable<$SourceIterable<T>>,
+): $ResultIterable<T | W>;
 
 declare function $joinWithSubseq<W>(
-  subseq: SyncInputIterable<W>,
-): <T = any>(iterable: $InputIterable<$InputIterable<T>>) => $GeneratorIterator<T | W>;
+  subseq: SyncSourceIterable<W>,
+): <T = any>(iterable: $SourceIterable<$SourceIterable<T>>) => $ResultIterable<T | W>;
 
 export default $joinWithSubseq;

@@ -6,7 +6,7 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { InputIterable } from '../../internal/iterable';
-declare function startsWith(value: any): (iterable: InputIterable<any>) => boolean;
-declare function startsWith(value: any, iterable: InputIterable<any>): boolean;
+import { SourceIterable } from '../../internal/iterable';
+declare function startsWith(value: any): (iterable: SourceIterable<any>) => boolean;
+declare function startsWith(value: any, iterable: SourceIterable<any>): boolean;
 export default startsWith;

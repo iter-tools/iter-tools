@@ -6,6 +6,6 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { InputIterable, GeneratorIterator } from '../../internal/iterable';
-declare function concat<T = any>(...iterables: Array<InputIterable<T>>): GeneratorIterator<T>;
+import { SourceIterable, ResultIterable } from '../../internal/iterable';
+declare function concat<T = any>(...iterables: Array<SourceIterable<T>>): ResultIterable<T>;
 export default concat;

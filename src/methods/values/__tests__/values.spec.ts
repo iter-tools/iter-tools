@@ -1,11 +1,11 @@
 import assert from 'static-type-assert';
-import { GeneratorIterator } from '../../../internal/iterable';
+import { ResultIterable } from '../../../internal/iterable';
 import { values } from '../../..';
 
 declare const Ø: never;
 
-assert<GeneratorIterator<number>>(values(Ø as { foo: number }));
+assert<ResultIterable<number>>(values(Ø as { foo: number }));
 
-assert<GeneratorIterator<string | null>>(values(Ø as { foo: string; bar: null }));
+assert<ResultIterable<string | null>>(values(Ø as { foo: string; bar: null }));
 
-assert<GeneratorIterator<never>>(values(Ø as {}));
+assert<ResultIterable<never>>(values(Ø as {}));

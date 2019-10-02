@@ -1,7 +1,7 @@
 import { $Promise } from '../../../generate/async.macro';
 
-import { $InputIterable } from '../../internal/$iterable';
+import { $SourceIterable } from '../../internal/$iterable';
 
-declare function $last<T = any>(iterable: $InputIterable<T>): $Promise<T | undefined>;
+declare function $last<T = any>(iterable: $SourceIterable<T>): $Promise<T | undefined>;
 
 export default $last;

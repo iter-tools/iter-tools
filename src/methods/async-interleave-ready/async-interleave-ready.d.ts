@@ -1,7 +1,7 @@
-import { AsyncInputIterable, AsyncGeneratorIterator } from '../../internal/async-iterable';
+import { AsyncSourceIterable, AsyncResultIterable } from '../../internal/async-iterable';
 
 declare function asyncInterleaveReady<T = any>(
-  ...iterables: Array<AsyncInputIterable<T>>
-): AsyncGeneratorIterator<T>;
+  ...iterables: Array<AsyncSourceIterable<T>>
+): AsyncResultIterable<T>;
 
 export default asyncInterleaveReady;

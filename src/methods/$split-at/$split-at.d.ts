@@ -1,13 +1,13 @@
-import { GeneratorIterator as SyncGeneratorIterator } from '../../internal/iterable';
-import { $InputIterable, $GeneratorIterator } from '../../internal/$iterable';
+import { ResultIterable as SyncResultIterable } from '../../internal/iterable';
+import { $SourceIterable, $ResultIterable } from '../../internal/$iterable';
 
 declare function $splitAt(
   position: number,
-): <T = any>(iterable: $InputIterable<T>) => SyncGeneratorIterator<$GeneratorIterator<T>>;
+): <T = any>(iterable: $SourceIterable<T>) => SyncResultIterable<$ResultIterable<T>>;
 
 declare function $splitAt<T = any>(
   position: number,
-  iterable: $InputIterable<T>,
-): SyncGeneratorIterator<$GeneratorIterator<T>>;
+  iterable: $SourceIterable<T>,
+): SyncResultIterable<$ResultIterable<T>>;
 
 export default $splitAt;

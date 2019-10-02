@@ -6,6 +6,6 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { InputIterable, GeneratorIterator } from '../../internal/iterable';
-declare function reverse<T = any>(iterable: InputIterable<T>): GeneratorIterator<T>;
+import { SourceIterable, ResultIterable } from '../../internal/iterable';
+declare function reverse<T = any>(iterable: SourceIterable<T>): ResultIterable<T>;
 export default reverse;

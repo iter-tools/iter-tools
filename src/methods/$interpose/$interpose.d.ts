@@ -1,12 +1,12 @@
-import { $InputIterable, $GeneratorIterator } from '../../internal/$iterable';
+import { $SourceIterable, $ResultIterable } from '../../internal/$iterable';
 
 declare function $interpose<I>(
   interposeItem: I,
-): <T = any>(iterable: $InputIterable<T>) => $GeneratorIterator<T | I>;
+): <T = any>(iterable: $SourceIterable<T>) => $ResultIterable<T | I>;
 
 declare function $interpose<I, T = any>(
   interposeItem: I,
-  iterable: $InputIterable<T>,
-): $GeneratorIterator<T | I>;
+  iterable: $SourceIterable<T>,
+): $ResultIterable<T | I>;
 
 export default $interpose;

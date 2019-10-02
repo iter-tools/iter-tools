@@ -6,19 +6,19 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { AsyncInputIterable } from '../../internal/async-iterable';
+import { AsyncSourceIterable } from '../../internal/async-iterable';
 declare function asyncJoinAsStringWith(
   value: string,
-  iterable: AsyncInputIterable<string>,
+  iterable: AsyncSourceIterable<string>,
 ): string | Promise<string>;
 declare function asyncJoinAsStringWith(
   value: string,
-  iterable: AsyncInputIterable<AsyncInputIterable<string>>,
+  iterable: AsyncSourceIterable<AsyncSourceIterable<string>>,
 ): string | Promise<string>;
 declare function asyncJoinAsStringWith(
   value: string,
-): (iterable: AsyncInputIterable<string>) => string | Promise<string>;
+): (iterable: AsyncSourceIterable<string>) => string | Promise<string>;
 declare function asyncJoinAsStringWith(
   value: string,
-): (iterable: AsyncInputIterable<AsyncInputIterable<string>>) => string | Promise<string>;
+): (iterable: AsyncSourceIterable<AsyncSourceIterable<string>>) => string | Promise<string>;
 export default asyncJoinAsStringWith;

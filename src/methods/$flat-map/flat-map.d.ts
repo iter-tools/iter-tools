@@ -6,12 +6,12 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { InputIterable, GeneratorIterator } from '../../internal/iterable';
+import { SourceIterable, ResultIterable } from '../../internal/iterable';
 declare function flatMap<O, T = any>(
-  func: (item: T) => InputIterable<O>,
-): (iter: InputIterable<T>) => GeneratorIterator<O>;
+  func: (item: T) => SourceIterable<O>,
+): (iter: SourceIterable<T>) => ResultIterable<O>;
 declare function flatMap<O, T = any>(
-  func: (item: T) => InputIterable<O>,
-  iter: InputIterable<T>,
-): GeneratorIterator<O>;
+  func: (item: T) => SourceIterable<O>,
+  iter: SourceIterable<T>,
+): ResultIterable<O>;
 export default flatMap;

@@ -1,27 +1,23 @@
 import { $Promise } from '../../../../generate/async.macro';
 
 import assert from 'static-type-assert';
-import { $Iterable, $GeneratorIterator } from '../../../internal/$iterable';
+import { $Iterable, $ResultIterable } from '../../../internal/$iterable';
 import { $groupBy } from '../../..';
 
 declare const Ø: never;
 
-assert<$GeneratorIterator<[string, $GeneratorIterator<string>]>>($groupBy(null)(Ø as string));
+assert<$ResultIterable<[string, $ResultIterable<string>]>>($groupBy(null)(Ø as string));
 
-assert<$GeneratorIterator<[number, $GeneratorIterator<number>]>>(
-  $groupBy(null)(Ø as $Iterable<number>),
-);
+assert<$ResultIterable<[number, $ResultIterable<number>]>>($groupBy(null)(Ø as $Iterable<number>));
 
-assert<$GeneratorIterator<[string, $GeneratorIterator<string>]>>($groupBy(null, Ø as string));
+assert<$ResultIterable<[string, $ResultIterable<string>]>>($groupBy(null, Ø as string));
 
-assert<$GeneratorIterator<[number, $GeneratorIterator<number>]>>(
-  $groupBy(null, Ø as $Iterable<number>),
-);
+assert<$ResultIterable<[number, $ResultIterable<number>]>>($groupBy(null, Ø as $Iterable<number>));
 
-assert<$GeneratorIterator<[string, $GeneratorIterator<number>]>>(
+assert<$ResultIterable<[string, $ResultIterable<number>]>>(
   $groupBy(Ø as (x: number) => $Promise<string>)(Ø as $Iterable<number>),
 );
 
-assert<$GeneratorIterator<[string, $GeneratorIterator<number>]>>(
+assert<$ResultIterable<[string, $ResultIterable<number>]>>(
   $groupBy(Ø as (x: number) => $Promise<string>, Ø as $Iterable<number>),
 );

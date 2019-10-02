@@ -6,14 +6,14 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { InputIterable, GeneratorIterator } from "../../internal/iterable"; // prettier-ignore
+import { SourceIterable, ResultIterable } from "../../internal/iterable"; // prettier-ignore
 
-declare function split(value: string): (iterable: string) => GeneratorIterator<string>;
-declare function split(value: any): <T = any>(iterable: InputIterable<T>) => GeneratorIterator<GeneratorIterator<T>>; // prettier-ignore
+declare function split(value: string): (iterable: string) => ResultIterable<string>;
+declare function split(value: any): <T = any>(iterable: SourceIterable<T>) => ResultIterable<ResultIterable<T>>; // prettier-ignore
 
-declare function split(value: string, iterable: string): GeneratorIterator<string>;
+declare function split(value: string, iterable: string): ResultIterable<string>;
 declare function split<T = any>(
   value: any,
-  iterable: InputIterable<T>,
-): GeneratorIterator<GeneratorIterator<T>>;
+  iterable: SourceIterable<T>,
+): ResultIterable<ResultIterable<T>>;
 export default split;

@@ -1,17 +1,17 @@
-import { GeneratorIterator as SyncGeneratorIterator } from '../../internal/iterable';
-import { $InputIterable, $GeneratorIterator } from '../../internal/$iterable';
+import { ResultIterable as SyncResultIterable } from '../../internal/iterable';
+import { $SourceIterable, $ResultIterable } from '../../internal/$iterable';
 
 declare function $fork<T = any>(
-  iterable: $InputIterable<T>,
-): SyncGeneratorIterator<$GeneratorIterator<T>>;
-
-declare function $fork<T = any>(
-  n: number,
-): (iterable: $InputIterable<T>) => SyncGeneratorIterator<$GeneratorIterator<T>>;
+  iterable: $SourceIterable<T>,
+): SyncResultIterable<$ResultIterable<T>>;
 
 declare function $fork<T = any>(
   n: number,
-  iterable: $InputIterable<T>,
-): SyncGeneratorIterator<$GeneratorIterator<T>>;
+): (iterable: $SourceIterable<T>) => SyncResultIterable<$ResultIterable<T>>;
+
+declare function $fork<T = any>(
+  n: number,
+  iterable: $SourceIterable<T>,
+): SyncResultIterable<$ResultIterable<T>>;
 
 export default $fork;

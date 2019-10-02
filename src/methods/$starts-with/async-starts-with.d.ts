@@ -6,9 +6,9 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { AsyncInputIterable } from '../../internal/async-iterable';
+import { AsyncSourceIterable } from '../../internal/async-iterable';
 declare function asyncStartsWith(
   value: any,
-): (iterable: AsyncInputIterable<any>) => Promise<boolean>;
-declare function asyncStartsWith(value: any, iterable: AsyncInputIterable<any>): Promise<boolean>;
+): (iterable: AsyncSourceIterable<any>) => Promise<boolean>;
+declare function asyncStartsWith(value: any, iterable: AsyncSourceIterable<any>): Promise<boolean>;
 export default asyncStartsWith;

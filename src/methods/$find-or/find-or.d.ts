@@ -6,23 +6,23 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { InputIterable } from '../../internal/iterable';
+import { SourceIterable } from '../../internal/iterable';
 declare function findOr<NF, S extends T, T = any>(
   notFoundValue: NF,
   predicate: (item: T, i: number) => item is S,
-): (iterable: InputIterable<T>) => S | NF;
+): (iterable: SourceIterable<T>) => S | NF;
 declare function findOr<NF, T = any>(
   notFoundValue: NF,
   predicate: (item: T, i: number) => boolean,
-): (iterable: InputIterable<T>) => T | NF;
+): (iterable: SourceIterable<T>) => T | NF;
 declare function findOr<NF, S extends T, T = any>(
   notFoundValue: NF,
   predicate: (item: T, i: number) => item is S,
-  iterable: InputIterable<T>,
+  iterable: SourceIterable<T>,
 ): S | NF;
 declare function findOr<NF, T = any>(
   notFoundValue: NF,
   predicate: (item: T, i: number) => boolean,
-  iterable: InputIterable<T>,
+  iterable: SourceIterable<T>,
 ): T | NF;
 export default findOr;

@@ -6,13 +6,13 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { InputIterable } from '../../internal/iterable';
-import { InputIterable as SyncInputIterable } from '../../internal/iterable';
+import { SourceIterable } from '../../internal/iterable';
+import { SourceIterable as SyncSourceIterable } from '../../internal/iterable';
 declare function startsWithAnySubseq(
-  subseqs: SyncInputIterable<InputIterable<any>>,
-): (iterable: InputIterable<any>) => boolean;
+  subseqs: SyncSourceIterable<SourceIterable<any>>,
+): (iterable: SourceIterable<any>) => boolean;
 declare function startsWithAnySubseq(
-  subseqs: SyncInputIterable<InputIterable<any>>,
-  iterable: InputIterable<any>,
+  subseqs: SyncSourceIterable<SourceIterable<any>>,
+  iterable: SourceIterable<any>,
 ): boolean;
 export default startsWithAnySubseq;

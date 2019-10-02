@@ -6,6 +6,6 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { AsyncInputIterable } from '../../internal/async-iterable';
-declare function asyncLast<T = any>(iterable: AsyncInputIterable<T>): Promise<T | undefined>;
+import { AsyncSourceIterable } from '../../internal/async-iterable';
+declare function asyncLast<T = any>(iterable: AsyncSourceIterable<T>): Promise<T | undefined>;
 export default asyncLast;

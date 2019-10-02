@@ -7,17 +7,17 @@
  */
 
 import assert from 'static-type-assert';
-import { AsyncGeneratorIterator } from '../../../internal/async-iterable';
+import { AsyncResultIterable } from '../../../internal/async-iterable';
 import { asyncCycle } from '../../..';
 declare const Ø: never;
-assert<AsyncGeneratorIterator<0 | 1 | 2>>(asyncCycle(Ø as [0, 1, 2]));
+assert<AsyncResultIterable<0 | 1 | 2>>(asyncCycle(Ø as [0, 1, 2]));
 assert<
-  | AsyncGeneratorIterator<never>
-  | AsyncGeneratorIterator<0 | 1>
-  | AsyncGeneratorIterator<string | number | boolean>
+  | AsyncResultIterable<never>
+  | AsyncResultIterable<0 | 1>
+  | AsyncResultIterable<string | number | boolean>
 >(asyncCycle(Ø as [] | [0, 1] | [string, number, boolean]));
-assert<AsyncGeneratorIterator<string | number | boolean>>(
+assert<AsyncResultIterable<string | number | boolean>>(
   asyncCycle(Ø as [] | [0, 1] | [string, number, boolean]),
 );
-assert<AsyncGeneratorIterator<string>>(asyncCycle(Ø as string));
-assert<AsyncGeneratorIterator<0 | 1 | 2>>(asyncCycle(Ø as Set<0 | 1 | 2>));
+assert<AsyncResultIterable<string>>(asyncCycle(Ø as string));
+assert<AsyncResultIterable<0 | 1 | 2>>(asyncCycle(Ø as Set<0 | 1 | 2>));

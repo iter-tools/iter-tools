@@ -6,9 +6,9 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { GeneratorIterator } from '../../internal/iterable';
+import { ResultIterable } from '../../internal/iterable';
 declare function execute<T, Args extends any[] = any[]>(
   func: (...args: Args) => T,
   ...args: Args
-): GeneratorIterator<T>;
+): ResultIterable<T>;
 export default execute;

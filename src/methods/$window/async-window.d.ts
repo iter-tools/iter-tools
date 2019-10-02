@@ -7,12 +7,12 @@
  */
 
 import { Repeat8 } from '../../internal/types/utility';
-import { AsyncInputIterable, AsyncGeneratorIterator } from '../../internal/async-iterable';
+import { AsyncSourceIterable, AsyncResultIterable } from '../../internal/async-iterable';
 declare function asyncWindow<Size extends number, Filler = undefined, T = any>(
   opts: {
     readonly size: Size;
     readonly filler?: Filler;
   },
-  iterable: AsyncInputIterable<T>,
-): AsyncGeneratorIterator<Repeat8<T | Filler, Size>>;
+  iterable: AsyncSourceIterable<T>,
+): AsyncResultIterable<Repeat8<T | Filler, Size>>;
 export default asyncWindow;

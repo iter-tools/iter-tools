@@ -1,5 +1,5 @@
-import { $InputIterable, $GeneratorIterator } from '../../internal/$iterable';
+import { $SourceIterable, $ResultIterable } from '../../internal/$iterable';
 
-declare function $zip<T = any>(...iterables: Array<$InputIterable<T>>): $GeneratorIterator<T[]>;
+declare function $zip<T = any>(...iterables: Array<$SourceIterable<T>>): $ResultIterable<T[]>;
 
 export default $zip;

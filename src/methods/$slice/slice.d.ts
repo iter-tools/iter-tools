@@ -6,35 +6,35 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { InputIterable, GeneratorIterator } from '../../internal/iterable';
+import { SourceIterable, ResultIterable } from '../../internal/iterable';
 declare function slice<T = any>(opts: {
   readonly start?: number;
   readonly end?: number;
   readonly step?: number;
-}): (iterable: InputIterable<T>) => GeneratorIterator<T>;
+}): (iterable: SourceIterable<T>) => ResultIterable<T>;
 declare function slice<T = any>(
   start?: number,
   end?: number,
   step?: number,
-): (iterable: InputIterable<T>) => GeneratorIterator<T>;
+): (iterable: SourceIterable<T>) => ResultIterable<T>;
 declare function slice<T = any>(
   opts: {
     readonly start?: number;
     readonly end?: number;
     readonly step?: number;
   },
-  iterable: InputIterable<T>,
-): GeneratorIterator<T>;
-declare function slice<T = any>(start: number, iterable: InputIterable<T>): GeneratorIterator<T>;
+  iterable: SourceIterable<T>,
+): ResultIterable<T>;
+declare function slice<T = any>(start: number, iterable: SourceIterable<T>): ResultIterable<T>;
 declare function slice<T = any>(
   start: number,
   end: number,
-  iterable: InputIterable<T>,
-): GeneratorIterator<T>;
+  iterable: SourceIterable<T>,
+): ResultIterable<T>;
 declare function slice<T = any>(
   start: number,
   end: number,
   step: number,
-  iterable: InputIterable<T>,
-): GeneratorIterator<T>;
+  iterable: SourceIterable<T>,
+): ResultIterable<T>;
 export default slice;

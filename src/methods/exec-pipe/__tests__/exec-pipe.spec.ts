@@ -1,10 +1,10 @@
 import assert from 'static-type-assert';
-import { GeneratorIterator } from '../../../internal/iterable';
+import { ResultIterable } from '../../../internal/iterable';
 import { execPipe, map, filter } from '../../..';
 
 declare const Ø: never;
 
-assert<GeneratorIterator<number>>(
+assert<ResultIterable<number>>(
   execPipe(
     Ø as Iterable<number>,
     filter(Ø as (x: number) => boolean),
@@ -12,7 +12,7 @@ assert<GeneratorIterator<number>>(
   ),
 );
 
-assert<GeneratorIterator<0 | 1 | 2 | 3>>(
+assert<ResultIterable<0 | 1 | 2 | 3>>(
   execPipe(
     Ø as Iterable<number>,
     filter(Ø as (x: number) => boolean),

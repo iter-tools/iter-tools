@@ -6,8 +6,8 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { AsyncInputIterable, AsyncGeneratorIterator } from '../../internal/async-iterable';
+import { AsyncSourceIterable, AsyncResultIterable } from '../../internal/async-iterable';
 declare function asyncConcat<T = any>(
-  ...iterables: Array<AsyncInputIterable<T>>
-): AsyncGeneratorIterator<T>;
+  ...iterables: Array<AsyncSourceIterable<T>>
+): AsyncResultIterable<T>;
 export default asyncConcat;

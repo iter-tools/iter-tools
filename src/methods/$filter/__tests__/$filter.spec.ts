@@ -1,18 +1,18 @@
 import assert from 'static-type-assert';
 
-import { $Iterable, $GeneratorIterator } from '../../../internal/$iterable';
+import { $Iterable, $ResultIterable } from '../../../internal/$iterable';
 import { $filter } from '../../..';
 
 declare const Ø: never;
 
-assert<$GeneratorIterator<string>>(
+assert<$ResultIterable<string>>(
   $filter(Ø as (item: string | number) => item is string, Ø as $Iterable<string | number>),
 );
 
-assert<$GeneratorIterator<number>>(
+assert<$ResultIterable<number>>(
   $filter(Ø as (item: string | number) => item is number, Ø as $Iterable<string | number>),
 );
 
-assert<$GeneratorIterator<0>>(
+assert<$ResultIterable<0>>(
   $filter(Ø as (item: string | number) => item is 0, Ø as $Iterable<string | number>),
 );

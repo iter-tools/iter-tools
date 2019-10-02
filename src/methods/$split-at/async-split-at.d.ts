@@ -6,13 +6,13 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { GeneratorIterator as SyncGeneratorIterator } from '../../internal/iterable';
-import { AsyncInputIterable, AsyncGeneratorIterator } from '../../internal/async-iterable';
+import { ResultIterable as SyncResultIterable } from '../../internal/iterable';
+import { AsyncSourceIterable, AsyncResultIterable } from '../../internal/async-iterable';
 declare function asyncSplitAt(
   position: number,
-): <T = any>(iterable: AsyncInputIterable<T>) => SyncGeneratorIterator<AsyncGeneratorIterator<T>>;
+): <T = any>(iterable: AsyncSourceIterable<T>) => SyncResultIterable<AsyncResultIterable<T>>;
 declare function asyncSplitAt<T = any>(
   position: number,
-  iterable: AsyncInputIterable<T>,
-): SyncGeneratorIterator<AsyncGeneratorIterator<T>>;
+  iterable: AsyncSourceIterable<T>,
+): SyncResultIterable<AsyncResultIterable<T>>;
 export default asyncSplitAt;

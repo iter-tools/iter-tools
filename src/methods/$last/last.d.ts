@@ -6,6 +6,6 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { InputIterable } from '../../internal/iterable';
-declare function last<T = any>(iterable: InputIterable<T>): T | undefined;
+import { SourceIterable } from '../../internal/iterable';
+declare function last<T = any>(iterable: SourceIterable<T>): T | undefined;
 export default last;
