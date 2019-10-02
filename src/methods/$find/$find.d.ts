@@ -1,6 +1,6 @@
 import { $Promise, $MaybePromise } from '../../../generate/async.macro';
 
-import { $SourceIterable } from '../../internal/$iterable';
+import { $SourceIterable } from '../../types/$iterable';
 
 declare function $find<S extends T, T = any>(
   predicate: (item: T, i: number) => item is S,

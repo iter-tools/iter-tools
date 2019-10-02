@@ -6,7 +6,7 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { SourceIterable } from '../../internal/iterable';
+import { SourceIterable } from '../../types/iterable';
 declare function reduce<O = any, T = any>(
   func: (acc: O, item: T, i: number) => O,
 ): (iterable: SourceIterable<T>) => O;

@@ -1,5 +1,5 @@
-import { ResultIterable } from '../../internal/iterable';
-import { AsyncResultIterable } from '../../internal/async-iterable';
+import { ResultIterable } from '../../types/iterable';
+import { AsyncResultIterable } from '../../types/async-iterable';
 
 export declare class OneTwoThreeIterable {
   next(): IteratorResult<number>;

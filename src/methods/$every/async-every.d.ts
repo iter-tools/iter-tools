@@ -6,7 +6,7 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { AsyncSourceIterable } from '../../internal/async-iterable';
+import { AsyncSourceIterable } from '../../types/async-iterable';
 declare function asyncEvery<T = any>(
   func: (item: T) => boolean | Promise<boolean>,
 ): (iterable: AsyncSourceIterable<T>) => Promise<boolean>;

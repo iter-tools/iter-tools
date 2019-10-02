@@ -1,6 +1,6 @@
 import { $, $isAsync, $async, $await, $Promise } from '../../../../generate/async.macro';
 
-import { $Iterable } from '../../../internal/$iterable';
+import { $Iterable } from '../../../types/$iterable';
 import { $interleave, $InterleaveBuffer, $toArray } from '../../..';
 
 describe($`interleave`, () => {

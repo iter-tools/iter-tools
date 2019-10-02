@@ -7,7 +7,7 @@
  */
 
 import assert from 'static-type-assert';
-import { Iterable } from '../../../internal/iterable';
+import { Iterable } from '../../../types/iterable';
 import { firstOr } from '../../..';
 declare const Ø: never;
 assert<null>(firstOr(Ø as null, Ø as []));

@@ -6,6 +6,6 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { AsyncSourceIterable } from '../../internal/async-iterable';
+import { AsyncSourceIterable } from '../../types/async-iterable';
 declare function asyncIsEmpty(iterable: AsyncSourceIterable<any>): Promise<boolean>;
 export default asyncIsEmpty;

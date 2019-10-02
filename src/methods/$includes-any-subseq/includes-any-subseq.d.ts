@@ -6,8 +6,8 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { SourceIterable } from '../../internal/iterable';
-import { SourceIterable as SyncSourceIterable } from '../../internal/iterable';
+import { SourceIterable } from '../../types/iterable';
+import { SourceIterable as SyncSourceIterable } from '../../types/iterable';
 declare function includesAnySubseq(
   subseqs: SyncSourceIterable<SourceIterable<any>>,
 ): (iterable: SourceIterable<any>) => boolean;

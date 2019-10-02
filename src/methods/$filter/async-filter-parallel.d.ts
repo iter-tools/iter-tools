@@ -1,8 +1,4 @@
-import {
-  AsyncSourceIterable,
-  AsyncResultIterable,
-  AsyncMaybePromise,
-} from '../../internal/async-iterable';
+import { AsyncSourceIterable, AsyncResultIterable, MaybePromise } from '../../types/async-iterable';
 
 declare function asyncFilterParallel<S extends T, T = any>(
   func: (item: T, i: number) => item is S,
@@ -14,12 +10,12 @@ declare function asyncFilterParallel<S extends T, T = any>(
 ): (iterable: AsyncSourceIterable<T>) => AsyncResultIterable<S>;
 
 declare function asyncFilterParallel<T = any>(
-  func: (item: T, i: number) => AsyncMaybePromise<boolean>,
+  func: (item: T, i: number) => MaybePromise<boolean>,
 ): (iterable: AsyncSourceIterable<T>) => AsyncResultIterable<T>;
 
 declare function asyncFilterParallel<T = any>(
   concurrency: number,
-  func: (item: T, i: number) => AsyncMaybePromise<boolean>,
+  func: (item: T, i: number) => MaybePromise<boolean>,
 ): (iterable: AsyncSourceIterable<T>) => AsyncResultIterable<T>;
 
 declare function asyncFilterParallel<S extends T, T = any>(
@@ -34,13 +30,13 @@ declare function asyncFilterParallel<S extends T, T = any>(
 ): AsyncResultIterable<S>;
 
 declare function asyncFilterParallel<T = any>(
-  func: (item: T, i: number) => AsyncMaybePromise<boolean>,
+  func: (item: T, i: number) => MaybePromise<boolean>,
   iterable: AsyncSourceIterable<T>,
 ): AsyncResultIterable<T>;
 
 declare function asyncFilterParallel<T = any>(
   concurrency: number,
-  func: (item: T, i: number) => AsyncMaybePromise<boolean>,
+  func: (item: T, i: number) => MaybePromise<boolean>,
   iterable: AsyncSourceIterable<T>,
 ): AsyncResultIterable<T>;
 

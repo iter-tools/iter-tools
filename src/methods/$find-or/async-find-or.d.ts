@@ -6,7 +6,7 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { AsyncSourceIterable } from '../../internal/async-iterable';
+import { AsyncSourceIterable } from '../../types/async-iterable';
 declare function asyncFindOr<NF, S extends T, T = any>(
   notFoundValue: NF,
   predicate: (item: T, i: number) => item is S,

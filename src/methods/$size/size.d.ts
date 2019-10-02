@@ -6,7 +6,7 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { SourceIterable } from '../../internal/iterable';
+import { SourceIterable } from '../../types/iterable';
 declare function size<Iter extends SourceIterable<any>>(
   iterable: Iter,
 ): Iter extends any[] ? Iter['length'] : number;

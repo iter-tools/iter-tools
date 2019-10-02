@@ -6,7 +6,7 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { AsyncSourceIterable } from '../../internal/async-iterable';
+import { AsyncSourceIterable } from '../../types/async-iterable';
 declare function asyncConsume<T = any>(
   func: (item: T, i: number) => void,
 ): (iterable: AsyncSourceIterable<T>) => Promise<void>;

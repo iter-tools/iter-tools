@@ -6,7 +6,7 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { SourceIterable } from '../../internal/iterable';
+import { SourceIterable } from '../../types/iterable';
 declare function find<S extends T, T = any>(
   predicate: (item: T, i: number) => item is S,
 ): (iterable: SourceIterable<T>) => S | undefined;

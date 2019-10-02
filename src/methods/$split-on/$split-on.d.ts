@@ -1,4 +1,4 @@
-import { $SourceIterable, $ResultIterable } from '../../internal/$iterable';
+import { $SourceIterable, $ResultIterable } from '../../types/$iterable';
 
 // prettier-ignore
 declare function $split(

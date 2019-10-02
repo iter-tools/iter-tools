@@ -6,7 +6,7 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { SourceIterable, ResultIterable } from '../../internal/iterable';
+import { SourceIterable, ResultIterable } from '../../types/iterable';
 declare function tap<T = any>(
   func: (item: T, i: number) => any,
 ): (iterable: SourceIterable<T>) => ResultIterable<T>;

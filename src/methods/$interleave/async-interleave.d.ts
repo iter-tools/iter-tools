@@ -10,7 +10,7 @@ import {
   AsyncSourceIterable,
   AsyncResultIterable,
   AsyncIterable,
-} from '../../internal/async-iterable';
+} from '../../types/async-iterable';
 import AsyncInterleaveBuffer from './internal/async-buffer'; // Without options:
 // #############
 // prettier-ignore

@@ -1,4 +1,4 @@
-import { ResultIterable } from '../../internal/iterable';
+import { ResultIterable } from '../../types/iterable';
 
 declare function range(end: number): ResultIterable<number>;
 declare function range(start: number, end: number, step?: number): ResultIterable<number>;

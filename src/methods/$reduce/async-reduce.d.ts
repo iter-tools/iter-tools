@@ -6,7 +6,7 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { AsyncSourceIterable } from '../../internal/async-iterable';
+import { AsyncSourceIterable } from '../../types/async-iterable';
 declare function asyncReduce<O = any, T = any>(
   func: (acc: O, item: T, i: number) => O,
 ): (iterable: AsyncSourceIterable<T>) => Promise<O>;

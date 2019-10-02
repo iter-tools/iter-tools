@@ -6,8 +6,8 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { ResultIterable as SyncResultIterable } from '../../internal/iterable';
-import { AsyncSourceIterable, AsyncResultIterable } from '../../internal/async-iterable';
+import { ResultIterable as SyncResultIterable } from '../../types/iterable';
+import { AsyncSourceIterable, AsyncResultIterable } from '../../types/async-iterable';
 declare function asyncSplit<T = any>(
   iterable: AsyncSourceIterable<T>,
 ): AsyncResultIterable<SyncResultIterable<T>>;

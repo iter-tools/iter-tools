@@ -8,7 +8,7 @@
 
 /* eslint-disable no-unused-vars,import/no-duplicates */
 
-import { Iterable } from '../../../internal/iterable';
+import { Iterable } from '../../../types/iterable';
 import { interleave, InterleaveBuffer, toArray } from '../../..';
 describe('interleave', () => {
   const a = [1, 2, 3];

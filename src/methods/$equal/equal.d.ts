@@ -6,6 +6,6 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { SourceIterable } from '../../internal/iterable';
+import { SourceIterable } from '../../types/iterable';
 declare function equal(...iterables: Array<SourceIterable<any>>): boolean;
 export default equal;

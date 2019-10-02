@@ -6,7 +6,7 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { SourceIterable, ResultIterable } from "../../internal/iterable"; // prettier-ignore
+import { SourceIterable, ResultIterable } from "../../types/iterable"; // prettier-ignore
 
 declare function split(value: string): (iterable: string) => ResultIterable<string>;
 declare function split(value: any): <T = any>(iterable: SourceIterable<T>) => ResultIterable<ResultIterable<T>>; // prettier-ignore

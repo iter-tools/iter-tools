@@ -6,12 +6,7 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import {
-  SourceIterable,
-  DefinedSourceIterable,
-  ResultIterable,
-  MaybePromise,
-} from '../../internal/iterable';
+import { SourceIterable, DefinedSourceIterable, ResultIterable } from '../../types/iterable';
 type Flattened<T> = T extends Array<infer U> ? U : T extends ReadonlyArray<infer U> ? U : T extends DefinedSourceIterable<infer U> ? U : T; // prettier-ignore
 
 declare function flat<U>(depth: 0, iterable: U): ResultIterable<Flattened<U>>; // prettier-ignore
@@ -52,7 +47,7 @@ declare function flat(
   Flattened<Flattened<Flattened<Flattened<Flattened<Flattened<Flattened<Flattened<U>>>>>>>>
 >;
 declare function flat(
-  shouldFlat: (item: any) => MaybePromise<boolean>,
+  shouldFlat: (item: any) => boolean,
   depth: number,
   iter: SourceIterable<any>,
 ): ResultIterable<any>;

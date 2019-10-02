@@ -6,7 +6,7 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { SourceIterable, ResultIterable } from '../../internal/iterable';
+import { SourceIterable, ResultIterable } from '../../types/iterable';
 declare function filter<S extends T, T = any>(
   func: (item: T, i: number) => item is S,
 ): (iterable: SourceIterable<T>) => ResultIterable<S>;

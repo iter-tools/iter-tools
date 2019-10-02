@@ -6,7 +6,7 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { SourceIterable, ResultIterable } from '../../internal/iterable';
+import { SourceIterable, ResultIterable } from '../../types/iterable';
 declare function takeSorted<T = any>(iterable: SourceIterable<T>): ResultIterable<T>;
 declare function takeSorted<T = any>(n: number): (iterable: SourceIterable<T>) => ResultIterable<T>;
 declare function takeSorted<T = any>(

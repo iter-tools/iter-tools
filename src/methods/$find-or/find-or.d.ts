@@ -6,7 +6,7 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { SourceIterable } from '../../internal/iterable';
+import { SourceIterable } from '../../types/iterable';
 declare function findOr<NF, S extends T, T = any>(
   notFoundValue: NF,
   predicate: (item: T, i: number) => item is S,

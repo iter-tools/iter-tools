@@ -6,8 +6,8 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { SourceIterable as SyncSourceIterable } from '../../internal/iterable';
-import { AsyncSourceIterable, AsyncResultIterable } from '../../internal/async-iterable';
+import { SourceIterable as SyncSourceIterable } from '../../types/iterable';
+import { AsyncSourceIterable, AsyncResultIterable } from '../../types/async-iterable';
 declare function asyncJoinWithSubseq<W, T = any>(
   subseq: SyncSourceIterable<W>,
   iterable: AsyncSourceIterable<AsyncSourceIterable<T>>,

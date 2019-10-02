@@ -7,7 +7,7 @@
  */
 
 /* tslint:disable unified-signatures */
-import { AsyncSourceIterable, AsyncResultIterable } from "../../internal/async-iterable"; // prettier-ignore
+import { AsyncSourceIterable, AsyncResultIterable } from "../../types/async-iterable"; // prettier-ignore
 
 declare function asyncCollate<T = any>(
   ...iterables: Array<AsyncSourceIterable<T>>

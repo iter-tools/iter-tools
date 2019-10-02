@@ -6,7 +6,7 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { SourceIterable, ResultIterable, Iterable } from '../../internal/iterable';
+import { SourceIterable, ResultIterable, Iterable } from '../../types/iterable';
 import InterleaveBuffer from './internal/buffer'; // Without options:
 // #############
 // prettier-ignore

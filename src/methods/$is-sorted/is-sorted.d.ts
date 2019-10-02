@@ -6,7 +6,7 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { SourceIterable } from '../../internal/iterable';
+import { SourceIterable } from '../../types/iterable';
 declare function isSorted(iterable: SourceIterable<any>): boolean;
 declare function isSorted<T = any>(
   comparator: (a: T, b: T) => number,

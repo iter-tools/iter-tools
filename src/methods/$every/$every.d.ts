@@ -1,6 +1,6 @@
 import { $Promise, $MaybePromise } from '../../../generate/async.macro';
 
-import { $SourceIterable } from '../../internal/$iterable';
+import { $SourceIterable } from '../../types/$iterable';
 
 declare function $every<T = any>(
   func: (item: T) => $MaybePromise<boolean>,

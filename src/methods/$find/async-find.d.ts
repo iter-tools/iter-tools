@@ -6,7 +6,7 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { AsyncSourceIterable } from '../../internal/async-iterable';
+import { AsyncSourceIterable } from '../../types/async-iterable';
 declare function asyncFind<S extends T, T = any>(
   predicate: (item: T, i: number) => item is S,
 ): (iterable: AsyncSourceIterable<T>) => Promise<S | undefined>;

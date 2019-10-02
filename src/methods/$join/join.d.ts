@@ -6,6 +6,6 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { SourceIterable, ResultIterable } from '../../internal/iterable';
+import { SourceIterable, ResultIterable } from '../../types/iterable';
 declare function join<T = any>(iterable: SourceIterable<SourceIterable<T>>): ResultIterable<T>;
 export default join;

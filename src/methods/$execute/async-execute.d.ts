@@ -6,7 +6,7 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { AsyncResultIterable } from '../../internal/async-iterable';
+import { AsyncResultIterable } from '../../types/async-iterable';
 declare function asyncExecute<T, Args extends any[] = any[]>(
   func: (...args: Args) => T | Promise<T>,
   ...args: Args

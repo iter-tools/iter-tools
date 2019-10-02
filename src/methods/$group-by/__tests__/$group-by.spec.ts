@@ -1,7 +1,7 @@
 import { $Promise } from '../../../../generate/async.macro';
 
 import assert from 'static-type-assert';
-import { $Iterable, $ResultIterable } from '../../../internal/$iterable';
+import { $Iterable, $ResultIterable } from '../../../types/$iterable';
 import { $groupBy } from '../../..';
 
 declare const Ø: never;

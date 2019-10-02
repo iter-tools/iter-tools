@@ -1,5 +1,5 @@
 import { Repeat8 } from '../../internal/types/utility';
-import { $SourceIterable, $ResultIterable } from '../../internal/$iterable';
+import { $SourceIterable, $ResultIterable } from '../../types/$iterable';
 
 declare function $trailingWindow<Size extends number, Filler = undefined, T = any>(
   opts: {

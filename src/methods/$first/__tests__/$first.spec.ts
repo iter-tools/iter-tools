@@ -1,7 +1,7 @@
 import { $Promise } from '../../../../generate/async.macro';
 
 import assert from 'static-type-assert';
-import { $Iterable } from '../../../internal/$iterable';
+import { $Iterable } from '../../../types/$iterable';
 import { $first } from '../../..';
 
 declare const Ø: never;

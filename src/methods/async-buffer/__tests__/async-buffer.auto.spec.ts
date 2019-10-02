@@ -7,7 +7,7 @@
  */
 
 import { asyncBuffer, asyncToArray } from '../../..';
-import { AsyncIterable } from '../../../internal/async-iterable';
+import { AsyncIterable } from '../../../types/async-iterable';
 import delay from '../../../internal/delay';
 
 function intermittent(): AsyncIterable<number> {

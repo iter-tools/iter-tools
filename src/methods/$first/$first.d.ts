@@ -1,6 +1,6 @@
 import { $Promise } from '../../../generate/async.macro';
 
-import { $SourceIterable, $Iterable } from '../../internal/$iterable';
+import { $SourceIterable, $Iterable } from '../../types/$iterable';
 
 declare function $first<Iter extends $SourceIterable<any>>(
   iterable: Iter,

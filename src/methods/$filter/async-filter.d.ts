@@ -6,7 +6,7 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { AsyncSourceIterable, AsyncResultIterable } from '../../internal/async-iterable';
+import { AsyncSourceIterable, AsyncResultIterable } from '../../types/async-iterable';
 declare function asyncFilter<S extends T, T = any>(
   func: (item: T, i: number) => item is S,
 ): (iterable: AsyncSourceIterable<T>) => AsyncResultIterable<S>;

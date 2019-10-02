@@ -1,7 +1,7 @@
 import { $Promise } from '../../../generate/async.macro';
 
-import { $SourceIterable } from '../../internal/$iterable';
-import { SourceIterable as SyncSourceIterable } from '../../internal/iterable';
+import { $SourceIterable } from '../../types/$iterable';
+import { SourceIterable as SyncSourceIterable } from '../../types/iterable';
 
 declare function $includesAny(
   values: SyncSourceIterable<any>,

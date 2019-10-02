@@ -6,7 +6,7 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { AsyncSourceIterable, AsyncResultIterable } from '../../internal/async-iterable';
+import { AsyncSourceIterable, AsyncResultIterable } from '../../types/async-iterable';
 declare function asyncInterpose<I>(
   interposeItem: I,
 ): <T = any>(iterable: AsyncSourceIterable<T>) => AsyncResultIterable<T | I>;

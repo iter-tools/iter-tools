@@ -1,4 +1,4 @@
-import { $SourceIterable, $ResultIterable } from '../../internal/$iterable';
+import { $SourceIterable, $ResultIterable } from '../../types/$iterable';
 
 declare function $slice<T = any>(opts: {
   readonly start?: number;

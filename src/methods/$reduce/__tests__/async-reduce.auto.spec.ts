@@ -6,7 +6,7 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { AsyncSourceIterable } from '../../../internal/async-iterable';
+import { AsyncSourceIterable } from '../../../types/async-iterable';
 import { asyncReduce, range } from '../../..';
 import { AsyncOneTwoThreeIterable } from '../../../__tests__/__framework__/fixtures';
 describe('asyncReduce', () => {

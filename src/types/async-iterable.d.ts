@@ -13,6 +13,4 @@ export interface AsyncResultIterable<T> {
 
 export type AsyncIterableElement<Iter> = Iter extends AsyncSourceIterable<infer X> ? X : never;
 
-export type AsyncPromise<T> = Promise<T>;
-
-export type AsyncMaybePromise<T> = T | Promise<T>;
+export type MaybePromise<T> = Promise<T> | T;

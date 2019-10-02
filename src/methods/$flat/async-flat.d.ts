@@ -10,8 +10,7 @@ import {
   AsyncSourceIterable,
   AsyncDefinedSourceIterable,
   AsyncResultIterable,
-  AsyncMaybePromise,
-} from '../../internal/async-iterable';
+} from '../../types/async-iterable';
 type AsyncFlattened<T> = T extends Array<infer U> ? U : T extends ReadonlyArray<infer U> ? U : T extends AsyncDefinedSourceIterable<infer U> ? U : T; // prettier-ignore
 
 declare function asyncFlat<U>(depth: 0, iterable: U): AsyncResultIterable<AsyncFlattened<U>>; // prettier-ignore
@@ -58,7 +57,7 @@ declare function asyncFlat(
   >
 >;
 declare function asyncFlat(
-  shouldFlat: (item: any) => AsyncMaybePromise<boolean>,
+  shouldFlat: (item: any) => boolean | Promise<boolean>,
   depth: number,
   iter: AsyncSourceIterable<any>,
 ): AsyncResultIterable<any>;

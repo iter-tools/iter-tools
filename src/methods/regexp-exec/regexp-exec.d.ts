@@ -1,4 +1,4 @@
-import { ResultIterable } from '../../internal/iterable';
+import { ResultIterable } from '../../types/iterable';
 
 declare function regexpExec(re: RegExp): (str: string) => ResultIterable<string>;
 

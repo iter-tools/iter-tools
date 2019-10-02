@@ -7,7 +7,7 @@
  */
 
 import { Repeat8 } from '../../internal/types/utility';
-import { AsyncSourceIterable, AsyncResultIterable } from '../../internal/async-iterable';
+import { AsyncSourceIterable, AsyncResultIterable } from '../../types/async-iterable';
 declare function asyncWindow<Size extends number, Filler = undefined, T = any>(
   opts: {
     readonly size: Size;

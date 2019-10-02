@@ -7,7 +7,7 @@
  */
 
 /* tslint:disable unified-signatures */
-import { SourceIterable, ResultIterable } from "../../internal/iterable"; // prettier-ignore
+import { SourceIterable, ResultIterable } from "../../types/iterable"; // prettier-ignore
 
 declare function collate<T = any>(...iterables: Array<SourceIterable<T>>): ResultIterable<T>;
 declare function collate<T = any>(

@@ -7,7 +7,7 @@
  */
 
 import assert from 'static-type-assert';
-import { ResultIterable } from '../../../internal/iterable';
+import { ResultIterable } from '../../../types/iterable';
 import { cycle } from '../../..';
 declare const Ø: never;
 assert<ResultIterable<0 | 1 | 2>>(cycle(Ø as [0, 1, 2]));

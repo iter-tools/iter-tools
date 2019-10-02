@@ -1,5 +1,5 @@
-import { ResultIterable as SyncResultIterable } from '../../internal/iterable';
-import { $SourceIterable, $ResultIterable } from '../../internal/$iterable';
+import { ResultIterable as SyncResultIterable } from '../../types/iterable';
+import { $SourceIterable, $ResultIterable } from '../../types/$iterable';
 
 declare function $fork<T = any>(
   iterable: $SourceIterable<T>,

@@ -1,6 +1,6 @@
 import { $Promise } from '../../../generate/async.macro';
 
-import { $SourceIterable, $ResultIterable, $Iterable } from '../../internal/$iterable';
+import { $SourceIterable, $ResultIterable, $Iterable } from '../../types/$iterable';
 import $InterleaveBuffer from './internal/$buffer';
 
 // Without options:
