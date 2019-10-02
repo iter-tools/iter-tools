@@ -29,8 +29,8 @@
     "create:method": "node ./generate-yo method",
     "verify": "run-s generate verify:* build test",
     "verify:git-clean": "node ./verify-git-clean.js",
-    "format": "prettier --write 'src/**/*.{js,mjs,ts}' 'generate/**/*.js' 'benchmarks/**/*.js' .eslintrc.js",
-    "lint": "eslint --ext .mjs,.js,.ts ./src ./generate ./benchmarks",
+    "format": "prettier --write '**/*.{mjs,js,ts}'",
+    "lint": "eslint --ext .mjs,.js,.ts .",
     "prepublishOnly": "npm run build"
   },
   "husky": {
