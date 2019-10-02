@@ -141,7 +141,7 @@ class MethodGenerator extends BaseGenerator {
     }
 
     const prompts = makeOtherPrompts(isAsync);
-    const necessaryPrompts = prompts.filter(prompt =>  this._arguments[prompt.name] === undefined);
+    const necessaryPrompts = prompts.filter(prompt => this._arguments[prompt.name] === undefined);
 
     if (necessaryPrompts.length) {
       Object.assign(this._arguments, await this.prompt(necessaryPrompts));
