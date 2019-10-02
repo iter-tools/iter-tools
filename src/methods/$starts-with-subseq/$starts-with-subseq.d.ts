@@ -1,14 +1,14 @@
 import { $Promise } from '../../../generate/async.macro';
 
-import { $InputIterable } from '../../internal/$iterable';
+import { $SourceIterable } from '../../internal/$iterable';
 
 declare function $startsWithSubseq(
-  subseq: $InputIterable<any>,
-): (iterable: $InputIterable<any>) => $Promise<boolean>;
+  subseq: $SourceIterable<any>,
+): (iterable: $SourceIterable<any>) => $Promise<boolean>;
 
 declare function $startsWithSubseq(
-  subseq: $InputIterable<any>,
-  iterable: $InputIterable<any>,
+  subseq: $SourceIterable<any>,
+  iterable: $SourceIterable<any>,
 ): $Promise<boolean>;
 
 export default $startsWithSubseq;

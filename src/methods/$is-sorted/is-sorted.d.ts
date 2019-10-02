@@ -6,10 +6,10 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { InputIterable } from '../../internal/iterable';
-declare function isSorted(iterable: InputIterable<any>): boolean;
+import { SourceIterable } from '../../internal/iterable';
+declare function isSorted(iterable: SourceIterable<any>): boolean;
 declare function isSorted<T = any>(
   comparator: (a: T, b: T) => number,
-  iterable: InputIterable<T>,
+  iterable: SourceIterable<T>,
 ): boolean;
 export default isSorted;

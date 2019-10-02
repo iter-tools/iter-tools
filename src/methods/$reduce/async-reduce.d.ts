@@ -6,21 +6,21 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { AsyncInputIterable } from '../../internal/async-iterable';
+import { AsyncSourceIterable } from '../../internal/async-iterable';
 declare function asyncReduce<O = any, T = any>(
   func: (acc: O, item: T, i: number) => O,
-): (iterable: AsyncInputIterable<T>) => Promise<O>;
+): (iterable: AsyncSourceIterable<T>) => Promise<O>;
 declare function asyncReduce<O = any, T = any>(
   initial: O,
   func: (acc: O, item: T, i: number) => O | Promise<O>,
-): (iterable: AsyncInputIterable<T>) => Promise<O>;
+): (iterable: AsyncSourceIterable<T>) => Promise<O>;
 declare function asyncReduce<O = any, T = any>(
   func: (acc: O, item: T, i: number) => O | Promise<O>,
-  iterable: AsyncInputIterable<T>,
+  iterable: AsyncSourceIterable<T>,
 ): Promise<O>;
 declare function asyncReduce<O = any, T = any>(
   initial: O,
   func: (acc: O, item: T, i: number) => O | Promise<O>,
-  iterable: AsyncInputIterable<T>,
+  iterable: AsyncSourceIterable<T>,
 ): Promise<O>;
 export default asyncReduce;

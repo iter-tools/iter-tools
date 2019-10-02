@@ -6,6 +6,6 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { InputIterable } from '../../internal/iterable';
-declare function isEmpty(iterable: InputIterable<any>): boolean;
+import { SourceIterable } from '../../internal/iterable';
+declare function isEmpty(iterable: SourceIterable<any>): boolean;
 export default isEmpty;

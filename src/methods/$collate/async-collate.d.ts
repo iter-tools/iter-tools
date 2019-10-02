@@ -7,29 +7,29 @@
  */
 
 /* tslint:disable unified-signatures */
-import { AsyncInputIterable, AsyncGeneratorIterator } from "../../internal/async-iterable"; // prettier-ignore
+import { AsyncSourceIterable, AsyncResultIterable } from "../../internal/async-iterable"; // prettier-ignore
 
 declare function asyncCollate<T = any>(
-  ...iterables: Array<AsyncInputIterable<T>>
-): AsyncGeneratorIterator<T>;
+  ...iterables: Array<AsyncSourceIterable<T>>
+): AsyncResultIterable<T>;
 declare function asyncCollate<T = any>(
   step: number,
-  ...iterables: Array<AsyncInputIterable<T>>
-): AsyncGeneratorIterator<T>;
+  ...iterables: Array<AsyncSourceIterable<T>>
+): AsyncResultIterable<T>;
 declare function asyncCollate<T = any>(
   start: number,
   step: number,
-  ...iterables: Array<AsyncInputIterable<T>>
-): AsyncGeneratorIterator<T>;
+  ...iterables: Array<AsyncSourceIterable<T>>
+): AsyncResultIterable<T>;
 declare function asyncCollate<T = any>(
   comparator: (a: T, b: T) => number,
-  ...iterables: Array<AsyncInputIterable<T>>
-): AsyncGeneratorIterator<T>;
+  ...iterables: Array<AsyncSourceIterable<T>>
+): AsyncResultIterable<T>;
 declare function asyncCollate<T = any>(
   options: {
     start?: number;
     step?: number;
   },
-  ...iterables: Array<AsyncInputIterable<T>>
-): AsyncGeneratorIterator<T>;
+  ...iterables: Array<AsyncSourceIterable<T>>
+): AsyncResultIterable<T>;
 export default asyncCollate;

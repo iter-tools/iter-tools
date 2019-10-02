@@ -1,7 +1,7 @@
 import { $MaybePromise } from '../../../generate/async.macro';
 
-import { $InputIterable } from '../../internal/$iterable';
+import { $SourceIterable } from '../../internal/$iterable';
 
-declare function $toArray<T>(iterable: $InputIterable<T>): $MaybePromise<T[]>;
+declare function $toArray<T>(iterable: $SourceIterable<T>): $MaybePromise<T[]>;
 
 export default $toArray;

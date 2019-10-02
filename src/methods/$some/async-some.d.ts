@@ -6,12 +6,12 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { AsyncInputIterable } from '../../internal/async-iterable';
+import { AsyncSourceIterable } from '../../internal/async-iterable';
 declare function asyncSome<T = any>(
   func: (item: T, i: number) => boolean | Promise<boolean>,
-): (iterable: AsyncInputIterable<T>) => Promise<boolean>;
+): (iterable: AsyncSourceIterable<T>) => Promise<boolean>;
 declare function asyncSome<T = any>(
   func: (item: T, i: number) => boolean | Promise<boolean>,
-  iterable: AsyncInputIterable<T>,
+  iterable: AsyncSourceIterable<T>,
 ): Promise<boolean>;
 export default asyncSome;

@@ -1,13 +1,13 @@
 import { $Promise } from '../../../generate/async.macro';
-import { $InputIterable } from '../../internal/$iterable';
+import { $SourceIterable } from '../../internal/$iterable';
 
 declare function $consume<T = any>(
   func: (item: T, i: number) => void,
-): (iterable: $InputIterable<T>) => $Promise<void>;
+): (iterable: $SourceIterable<T>) => $Promise<void>;
 
 declare function $consume<T = any>(
   func: (item: T, i: number) => void,
-  iterable: $InputIterable<T>,
+  iterable: $SourceIterable<T>,
 ): $Promise<void>;
 
 export default $consume;

@@ -6,8 +6,8 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { AsyncInputIterable } from '../../internal/async-iterable';
+import { AsyncSourceIterable } from '../../internal/async-iterable';
 declare function asyncEqual(
-  ...iterables: Array<AsyncInputIterable<any>>
+  ...iterables: Array<AsyncSourceIterable<any>>
 ): boolean | Promise<boolean>;
 export default asyncEqual;

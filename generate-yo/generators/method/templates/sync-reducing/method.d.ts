@@ -1,7 +1,7 @@
-import { InputIterable } from '../../internal/iterable';
+import { SourceIterable } from '../../internal/iterable';
 
 declare function __method__<T = any>(
-  iterable: InputIterable<T>,
+  iterable: SourceIterable<T>,
 ): T;
 
 export default __method__;

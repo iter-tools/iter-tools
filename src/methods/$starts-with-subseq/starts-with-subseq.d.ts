@@ -6,12 +6,12 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { InputIterable } from '../../internal/iterable';
+import { SourceIterable } from '../../internal/iterable';
 declare function startsWithSubseq(
-  subseq: InputIterable<any>,
-): (iterable: InputIterable<any>) => boolean;
+  subseq: SourceIterable<any>,
+): (iterable: SourceIterable<any>) => boolean;
 declare function startsWithSubseq(
-  subseq: InputIterable<any>,
-  iterable: InputIterable<any>,
+  subseq: SourceIterable<any>,
+  iterable: SourceIterable<any>,
 ): boolean;
 export default startsWithSubseq;

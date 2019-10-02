@@ -1,15 +1,15 @@
 import { $Promise } from '../../../generate/async.macro';
 
-import { $InputIterable } from '../../internal/$iterable';
-import { InputIterable as SyncInputIterable } from '../../internal/iterable';
+import { $SourceIterable } from '../../internal/$iterable';
+import { SourceIterable as SyncSourceIterable } from '../../internal/iterable';
 
 declare function $includesAny(
-  values: SyncInputIterable<any>,
-): (iterable: $InputIterable<any>) => $Promise<boolean>;
+  values: SyncSourceIterable<any>,
+): (iterable: $SourceIterable<any>) => $Promise<boolean>;
 
 declare function $includesAny(
-  values: SyncInputIterable<any>,
-  iterable: $InputIterable<any>,
+  values: SyncSourceIterable<any>,
+  iterable: $SourceIterable<any>,
 ): $Promise<boolean>;
 
 export default $includesAny;

@@ -6,14 +6,14 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { InputIterable, GeneratorIterator } from '../../internal/iterable';
+import { SourceIterable, ResultIterable } from '../../internal/iterable';
 declare function zipAll<F, T = any>(
   options: {
     filler?: F;
   },
-  ...iterables: Array<InputIterable<T>>
-): GeneratorIterator<Array<T | F>>;
+  ...iterables: Array<SourceIterable<T>>
+): ResultIterable<Array<T | F>>;
 declare function zipAll<T = any>(
-  ...iterables: Array<InputIterable<T>>
-): GeneratorIterator<Array<T | undefined>>;
+  ...iterables: Array<SourceIterable<T>>
+): ResultIterable<Array<T | undefined>>;
 export default zipAll;

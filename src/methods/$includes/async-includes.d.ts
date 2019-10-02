@@ -6,7 +6,9 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { AsyncInputIterable } from '../../internal/async-iterable';
-declare function asyncIncludes(value: any): (iterable: AsyncInputIterable<any>) => Promise<boolean>;
-declare function asyncIncludes(value: any, iterable: AsyncInputIterable<any>): Promise<boolean>;
+import { AsyncSourceIterable } from '../../internal/async-iterable';
+declare function asyncIncludes(
+  value: any,
+): (iterable: AsyncSourceIterable<any>) => Promise<boolean>;
+declare function asyncIncludes(value: any, iterable: AsyncSourceIterable<any>): Promise<boolean>;
 export default asyncIncludes;

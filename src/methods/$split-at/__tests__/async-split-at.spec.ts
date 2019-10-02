@@ -7,13 +7,13 @@
  */
 
 import assert from 'static-type-assert';
-import { GeneratorIterator as SyncGeneratorIterator } from '../../../internal/iterable';
-import { AsyncIterable, AsyncGeneratorIterator } from '../../../internal/async-iterable';
+import { ResultIterable as SyncResultIterable } from '../../../internal/iterable';
+import { AsyncIterable, AsyncResultIterable } from '../../../internal/async-iterable';
 import { asyncSplitAt } from '../../..';
 declare const Ø: never;
-assert<SyncGeneratorIterator<AsyncGeneratorIterator<number>>>(
+assert<SyncResultIterable<AsyncResultIterable<number>>>(
   asyncSplitAt(3, Ø as AsyncIterable<number>),
 );
-assert<SyncGeneratorIterator<AsyncGeneratorIterator<number>>>(
+assert<SyncResultIterable<AsyncResultIterable<number>>>(
   asyncSplitAt(3)(Ø as AsyncIterable<number>),
 );

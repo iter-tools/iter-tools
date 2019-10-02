@@ -1,7 +1,7 @@
-import { GeneratorIterator } from '../../internal/iterable';
+import { ResultIterable } from '../../internal/iterable';
 
-declare function regexpExec(re: RegExp): (str: string) => GeneratorIterator<string>;
+declare function regexpExec(re: RegExp): (str: string) => ResultIterable<string>;
 
-declare function regexpExec(re: RegExp, str: string): GeneratorIterator<string>;
+declare function regexpExec(re: RegExp, str: string): ResultIterable<string>;
 
 export default regexpExec;

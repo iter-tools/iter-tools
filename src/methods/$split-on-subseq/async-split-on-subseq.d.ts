@@ -6,12 +6,12 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { AsyncInputIterable, AsyncGeneratorIterator } from '../../internal/async-iterable';
+import { AsyncSourceIterable, AsyncResultIterable } from '../../internal/async-iterable';
 declare function asyncSplitOnSubseq(
-  subseq: AsyncInputIterable<any>,
-): <T = any>(iterable: AsyncInputIterable<T>) => AsyncGeneratorIterator<AsyncGeneratorIterator<T>>;
+  subseq: AsyncSourceIterable<any>,
+): <T = any>(iterable: AsyncSourceIterable<T>) => AsyncResultIterable<AsyncResultIterable<T>>;
 declare function asyncSplitOnSubseq<T = any>(
-  subseq: AsyncInputIterable<any>,
-  iterable: AsyncInputIterable<T>,
-): AsyncGeneratorIterator<AsyncGeneratorIterator<T>>;
+  subseq: AsyncSourceIterable<any>,
+  iterable: AsyncSourceIterable<T>,
+): AsyncResultIterable<AsyncResultIterable<T>>;
 export default asyncSplitOnSubseq;

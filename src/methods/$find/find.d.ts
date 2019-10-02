@@ -6,19 +6,19 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { InputIterable } from '../../internal/iterable';
+import { SourceIterable } from '../../internal/iterable';
 declare function find<S extends T, T = any>(
   predicate: (item: T, i: number) => item is S,
-): (iterable: InputIterable<T>) => S | undefined;
+): (iterable: SourceIterable<T>) => S | undefined;
 declare function find<T = any>(
   predicate: (item: T, i: number) => boolean,
-): (iterable: InputIterable<T>) => T | undefined;
+): (iterable: SourceIterable<T>) => T | undefined;
 declare function find<S extends T, T = any>(
   predicate: (item: T, i: number) => item is S,
-  iterable: InputIterable<T>,
+  iterable: SourceIterable<T>,
 ): S | undefined;
 declare function find<T = any>(
   predicate: (item: T, i: number) => boolean,
-  iterable: InputIterable<T>,
+  iterable: SourceIterable<T>,
 ): T | undefined;
 export default find;

@@ -6,19 +6,19 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { AsyncInputIterable } from '../../internal/async-iterable';
+import { AsyncSourceIterable } from '../../internal/async-iterable';
 declare function asyncFind<S extends T, T = any>(
   predicate: (item: T, i: number) => item is S,
-): (iterable: AsyncInputIterable<T>) => Promise<S | undefined>;
+): (iterable: AsyncSourceIterable<T>) => Promise<S | undefined>;
 declare function asyncFind<T = any>(
   predicate: (item: T, i: number) => boolean | Promise<boolean>,
-): (iterable: AsyncInputIterable<T>) => Promise<T | undefined>;
+): (iterable: AsyncSourceIterable<T>) => Promise<T | undefined>;
 declare function asyncFind<S extends T, T = any>(
   predicate: (item: T, i: number) => item is S,
-  iterable: AsyncInputIterable<T>,
+  iterable: AsyncSourceIterable<T>,
 ): Promise<S | undefined>;
 declare function asyncFind<T = any>(
   predicate: (item: T, i: number) => boolean | Promise<boolean>,
-  iterable: AsyncInputIterable<T>,
+  iterable: AsyncSourceIterable<T>,
 ): Promise<T | undefined>;
 export default asyncFind;

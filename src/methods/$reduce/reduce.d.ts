@@ -6,21 +6,21 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { InputIterable } from '../../internal/iterable';
+import { SourceIterable } from '../../internal/iterable';
 declare function reduce<O = any, T = any>(
   func: (acc: O, item: T, i: number) => O,
-): (iterable: InputIterable<T>) => O;
+): (iterable: SourceIterable<T>) => O;
 declare function reduce<O = any, T = any>(
   initial: O,
   func: (acc: O, item: T, i: number) => O,
-): (iterable: InputIterable<T>) => O;
+): (iterable: SourceIterable<T>) => O;
 declare function reduce<O = any, T = any>(
   func: (acc: O, item: T, i: number) => O,
-  iterable: InputIterable<T>,
+  iterable: SourceIterable<T>,
 ): O;
 declare function reduce<O = any, T = any>(
   initial: O,
   func: (acc: O, item: T, i: number) => O,
-  iterable: InputIterable<T>,
+  iterable: SourceIterable<T>,
 ): O;
 export default reduce;

@@ -1,5 +1,5 @@
-import { $InputIterable, $GeneratorIterator } from '../../internal/$iterable';
+import { $SourceIterable, $ResultIterable } from '../../internal/$iterable';
 
-declare function $wrap<T = any>(iterable: $InputIterable<T>): $GeneratorIterator<T>;
+declare function $wrap<T = any>(iterable: $SourceIterable<T>): $ResultIterable<T>;
 
 export default $wrap;

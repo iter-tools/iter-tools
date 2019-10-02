@@ -6,23 +6,23 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { AsyncInputIterable } from '../../internal/async-iterable';
+import { AsyncSourceIterable } from '../../internal/async-iterable';
 declare function asyncFindOr<NF, S extends T, T = any>(
   notFoundValue: NF,
   predicate: (item: T, i: number) => item is S,
-): (iterable: AsyncInputIterable<T>) => Promise<S | NF>;
+): (iterable: AsyncSourceIterable<T>) => Promise<S | NF>;
 declare function asyncFindOr<NF, T = any>(
   notFoundValue: NF,
   predicate: (item: T, i: number) => boolean | Promise<boolean>,
-): (iterable: AsyncInputIterable<T>) => Promise<T | NF>;
+): (iterable: AsyncSourceIterable<T>) => Promise<T | NF>;
 declare function asyncFindOr<NF, S extends T, T = any>(
   notFoundValue: NF,
   predicate: (item: T, i: number) => item is S,
-  iterable: AsyncInputIterable<T>,
+  iterable: AsyncSourceIterable<T>,
 ): Promise<S | NF>;
 declare function asyncFindOr<NF, T = any>(
   notFoundValue: NF,
   predicate: (item: T, i: number) => boolean | Promise<boolean>,
-  iterable: AsyncInputIterable<T>,
+  iterable: AsyncSourceIterable<T>,
 ): Promise<T | NF>;
 export default asyncFindOr;

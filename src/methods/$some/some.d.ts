@@ -6,12 +6,12 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { InputIterable } from '../../internal/iterable';
+import { SourceIterable } from '../../internal/iterable';
 declare function some<T = any>(
   func: (item: T, i: number) => boolean,
-): (iterable: InputIterable<T>) => boolean;
+): (iterable: SourceIterable<T>) => boolean;
 declare function some<T = any>(
   func: (item: T, i: number) => boolean,
-  iterable: InputIterable<T>,
+  iterable: SourceIterable<T>,
 ): boolean;
 export default some;

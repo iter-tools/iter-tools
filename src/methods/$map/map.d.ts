@@ -6,12 +6,12 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { InputIterable, GeneratorIterator } from '../../internal/iterable';
+import { SourceIterable, ResultIterable } from '../../internal/iterable';
 declare function map<O, T = any>(
   func: (item: T) => O,
-): (iterable: InputIterable<T>) => GeneratorIterator<O>;
+): (iterable: SourceIterable<T>) => ResultIterable<O>;
 declare function map<O, T = any>(
   func: (item: T) => O,
-  iterable: InputIterable<T>,
-): GeneratorIterator<O>;
+  iterable: SourceIterable<T>,
+): ResultIterable<O>;
 export default map;

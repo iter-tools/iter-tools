@@ -7,12 +7,12 @@
  */
 
 import assert from 'static-type-assert';
-import { GeneratorIterator } from '../../../internal/iterable';
+import { ResultIterable } from '../../../internal/iterable';
 import InterleaveBuffer from '../internal/buffer';
 import { interleave } from '../../..'; // Without options
 // ############
 
-assert<GeneratorIterator<string | number>>(
+assert<ResultIterable<string | number>>(
   interleave(function*(
     canTakeAny: Function,
     b1: InterleaveBuffer<string>,
@@ -35,7 +35,7 @@ assert<GeneratorIterator<string | number>>(
     }
   })(['foo'], [2]),
 );
-assert<GeneratorIterator<string | number | Function>>(
+assert<ResultIterable<string | number | Function>>(
   interleave(function*(
     canTakeAny: Function,
     b1: InterleaveBuffer<string>,
@@ -67,7 +67,7 @@ assert<GeneratorIterator<string | number | Function>>(
     }
   })(['foo'], [2], [(_: any): any => _]),
 );
-assert<GeneratorIterator<string | number | Function | {}>>(
+assert<ResultIterable<string | number | Function | {}>>(
   interleave(function*(
     canTakeAny: Function,
     b1: InterleaveBuffer<string>,
@@ -110,7 +110,7 @@ assert<GeneratorIterator<string | number | Function | {}>>(
 ); // With options
 // ############
 
-assert<GeneratorIterator<string | number>>(
+assert<ResultIterable<string | number>>(
   interleave(function*(
     options: {},
     canTakeAny: Function,
@@ -135,7 +135,7 @@ assert<GeneratorIterator<string | number>>(
   },
   {})(['foo'], [2]),
 );
-assert<GeneratorIterator<string | number | Function>>(
+assert<ResultIterable<string | number | Function>>(
   interleave(function*(
     options: {},
     canTakeAny: Function,
@@ -169,7 +169,7 @@ assert<GeneratorIterator<string | number | Function>>(
   },
   {})(['foo'], [2], [(_: any): any => _]),
 );
-assert<GeneratorIterator<string | number | Function | {}>>(
+assert<ResultIterable<string | number | Function | {}>>(
   interleave(function*(
     options: {},
     canTakeAny: Function,

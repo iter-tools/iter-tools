@@ -1,7 +1,7 @@
-import { GeneratorIterator } from '../../internal/iterable';
+import { ResultIterable } from '../../internal/iterable';
 
-import { InputIterable } from '../../internal/iterable';
+import { SourceIterable } from '../../internal/iterable';
 
-declare function cycle<T = any>(iterable: InputIterable<T>): GeneratorIterator<T>;
+declare function cycle<T = any>(iterable: SourceIterable<T>): ResultIterable<T>;
 
 export default cycle;

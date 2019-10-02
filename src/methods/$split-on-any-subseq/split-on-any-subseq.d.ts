@@ -6,13 +6,13 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { InputIterable as SyncInputIterable } from '../../internal/iterable';
-import { InputIterable, GeneratorIterator } from '../../internal/iterable';
+import { SourceIterable as SyncSourceIterable } from '../../internal/iterable';
+import { SourceIterable, ResultIterable } from '../../internal/iterable';
 declare function split(
-  subseqs: SyncInputIterable<InputIterable<any>>,
-): <T = any>(iterable: InputIterable<T>) => GeneratorIterator<GeneratorIterator<T>>;
+  subseqs: SyncSourceIterable<SourceIterable<any>>,
+): <T = any>(iterable: SourceIterable<T>) => ResultIterable<ResultIterable<T>>;
 declare function split<T = any>(
-  subseqs: SyncInputIterable<InputIterable<any>>,
-  iterable: InputIterable<T>,
-): GeneratorIterator<GeneratorIterator<T>>;
+  subseqs: SyncSourceIterable<SourceIterable<any>>,
+  iterable: SourceIterable<T>,
+): ResultIterable<ResultIterable<T>>;
 export default split;

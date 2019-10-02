@@ -6,14 +6,14 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { AsyncInputIterable, AsyncGeneratorIterator } from "../../internal/async-iterable"; // prettier-ignore
+import { AsyncSourceIterable, AsyncResultIterable } from "../../internal/async-iterable"; // prettier-ignore
 
-declare function asyncSplit(value: string): (iterable: string) => AsyncGeneratorIterator<string>;
-declare function asyncSplit(value: any): <T = any>(iterable: AsyncInputIterable<T>) => AsyncGeneratorIterator<AsyncGeneratorIterator<T>>; // prettier-ignore
+declare function asyncSplit(value: string): (iterable: string) => AsyncResultIterable<string>;
+declare function asyncSplit(value: any): <T = any>(iterable: AsyncSourceIterable<T>) => AsyncResultIterable<AsyncResultIterable<T>>; // prettier-ignore
 
-declare function asyncSplit(value: string, iterable: string): AsyncGeneratorIterator<string>;
+declare function asyncSplit(value: string, iterable: string): AsyncResultIterable<string>;
 declare function asyncSplit<T = any>(
   value: any,
-  iterable: AsyncInputIterable<T>,
-): AsyncGeneratorIterator<AsyncGeneratorIterator<T>>;
+  iterable: AsyncSourceIterable<T>,
+): AsyncResultIterable<AsyncResultIterable<T>>;
 export default asyncSplit;

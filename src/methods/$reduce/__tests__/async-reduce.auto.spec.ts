@@ -6,7 +6,7 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { AsyncInputIterable } from '../../../internal/async-iterable';
+import { AsyncSourceIterable } from '../../../internal/async-iterable';
 import { asyncReduce, range } from '../../..';
 import { AsyncOneTwoThreeIterable } from '../../../__tests__/__framework__/fixtures';
 describe('asyncReduce', () => {
@@ -46,7 +46,7 @@ describe('asyncReduce', () => {
     expect(error.message).toMatchSnapshot();
   });
   it('sums a range (using curry)', async () => {
-    const sum: (iterable: AsyncInputIterable<number>) => Promise<number> = asyncReduce(
+    const sum: (iterable: AsyncSourceIterable<number>) => Promise<number> = asyncReduce(
       (acc = 0, x) => acc + x,
     );
     expect(await sum(range(4))).toBe(6);
