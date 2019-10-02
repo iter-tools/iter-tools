@@ -9,12 +9,12 @@
 import CircularBuffer from '../../internal/circular-buffer';
 import { asyncIterableCurry } from '../../internal/async-iterable';
 
-async function bufferedSlice(iterable, start, end, step) {
+async function bufferedSlice(source, start, end, step) {
   const bufferSize = Math.abs(start);
   const buffer = new CircularBuffer(bufferSize);
   let counter = 0;
 
-  for await (const item of iterable) {
+  for await (const item of source) {
     buffer.push(item);
     counter++;
   }
@@ -31,7 +31,7 @@ async function bufferedSlice(iterable, start, end, step) {
   return asyncSimpleSlice(buffer, 0, newEnd, step);
 }
 
-export async function* asyncSimpleSlice(iterable, start, end, step = 1) {
+export async function* asyncSimpleSlice(source, start, end, step = 1) {
   let currentPos = 0;
   let nextValidPos = start;
   const bufferSize = Math.abs(end);
@@ -42,7 +42,7 @@ export async function* asyncSimpleSlice(iterable, start, end, step = 1) {
     buffer = new CircularBuffer(bufferSize);
   }
 
-  for await (let item of iterable) {
+  for await (let item of source) {
     if (buffer) {
       item = buffer.push(item);
       counter++;
@@ -64,11 +64,11 @@ export async function* asyncSimpleSlice(iterable, start, end, step = 1) {
     currentPos++;
   }
 }
-export async function* asyncSlice(iterable, start, end, step = 1) {
+export async function* asyncSlice(source, start, end, step = 1) {
   if (start >= 0) {
-    yield* asyncSimpleSlice(iterable, start, end, step);
+    yield* asyncSimpleSlice(source, start, end, step);
   } else {
-    yield* await bufferedSlice(iterable, start, end, step);
+    yield* await bufferedSlice(source, start, end, step);
   }
 }
 export default asyncIterableCurry(asyncSlice, {

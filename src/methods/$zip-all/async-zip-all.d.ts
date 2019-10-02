@@ -11,9 +11,9 @@ declare function asyncZipAll<F, T = any>(
   options: {
     filler?: F;
   },
-  ...iterables: Array<AsyncSourceIterable<T>>
+  ...sources: Array<AsyncSourceIterable<T>>
 ): AsyncResultIterable<Array<T | F>>;
 declare function asyncZipAll<T = any>(
-  ...iterables: Array<AsyncSourceIterable<T>>
+  ...sources: Array<AsyncSourceIterable<T>>
 ): AsyncResultIterable<Array<T | undefined>>;
 export default asyncZipAll;

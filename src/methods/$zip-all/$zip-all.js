@@ -4,8 +4,8 @@ import { $iterableCurry } from '../../internal/$iterable';
 import { map } from '../$map/map';
 
 $async;
-export function* $zipAll(iterables, { filler } = {}) {
-  const iters = iterables.map(arg => arg[$iteratorSymbol]());
+export function* $zipAll(sources, { filler } = {}) {
+  const iters = sources.map(arg => arg[$iteratorSymbol]());
   const itersDone = iters.map(iter => ({ done: false, iter }));
 
   try {

@@ -8,6 +8,6 @@
 
 import { AsyncSourceIterable, AsyncResultIterable } from '../../types/async-iterable';
 declare function asyncZip<T = any>(
-  ...iterables: Array<AsyncSourceIterable<T>>
+  ...sources: Array<AsyncSourceIterable<T>>
 ): AsyncResultIterable<T[]>;
 export default asyncZip;

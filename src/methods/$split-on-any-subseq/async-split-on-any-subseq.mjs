@@ -13,8 +13,8 @@ const config = {
   subseq: true,
 };
 
-function asyncSplitOnAnySubseq(iterable, subseqs) {
-  return asyncSplitOn_(iterable, config, subseqs);
+function asyncSplitOnAnySubseq(source, subseqs) {
+  return asyncSplitOn_(source, config, subseqs);
 }
 
 export default asyncIterableCurry(asyncSplitOnAnySubseq);

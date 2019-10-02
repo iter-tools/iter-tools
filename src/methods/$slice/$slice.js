@@ -4,13 +4,13 @@ import CircularBuffer from '../../internal/circular-buffer';
 import { $iterableCurry } from '../../internal/$iterable';
 
 $async;
-function bufferedSlice(iterable, start, end, step) {
+function bufferedSlice(source, start, end, step) {
   const bufferSize = Math.abs(start);
   const buffer = new CircularBuffer(bufferSize);
   let counter = 0;
 
   $await;
-  for (const item of iterable) {
+  for (const item of source) {
     buffer.push(item);
     counter++;
   }
@@ -26,7 +26,7 @@ function bufferedSlice(iterable, start, end, step) {
 }
 
 $async;
-export function* $simpleSlice(iterable, start, end, step = 1) {
+export function* $simpleSlice(source, start, end, step = 1) {
   let currentPos = 0;
   let nextValidPos = start;
   const bufferSize = Math.abs(end);
@@ -38,7 +38,7 @@ export function* $simpleSlice(iterable, start, end, step = 1) {
   }
 
   $await;
-  for (let item of iterable) {
+  for (let item of source) {
     if (buffer) {
       item = buffer.push(item);
       counter++;
@@ -60,11 +60,11 @@ export function* $simpleSlice(iterable, start, end, step = 1) {
 }
 
 $async;
-export function* $slice(iterable, start, end, step = 1) {
+export function* $slice(source, start, end, step = 1) {
   if (start >= 0) {
-    yield* $simpleSlice(iterable, start, end, step);
+    yield* $simpleSlice(source, start, end, step);
   } else {
-    yield* $await(bufferedSlice(iterable, start, end, step));
+    yield* $await(bufferedSlice(source, start, end, step));
   }
 }
 

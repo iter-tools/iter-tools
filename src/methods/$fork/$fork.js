@@ -82,9 +82,9 @@ function* generateForks(state, n) {
   }
 }
 
-export function $fork(iterable, n = Infinity) {
+export function $fork(source, n = Infinity) {
   const state = {
-    iterator: $ensureIterable(iterable)[$iteratorSymbol](),
+    iterator: $ensureIterable(source)[$iteratorSymbol](),
     iterableCounter: 0,
     exchange: new Exchange(),
     done: false,

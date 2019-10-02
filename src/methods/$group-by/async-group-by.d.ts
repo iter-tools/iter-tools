@@ -9,16 +9,16 @@
 import { AsyncSourceIterable, AsyncResultIterable } from '../../types/async-iterable';
 declare function asyncGroupBy(
   key: null | undefined,
-): <T = any>(iterable: AsyncSourceIterable<T>) => AsyncResultIterable<[T, AsyncResultIterable<T>]>;
+): <T = any>(source: AsyncSourceIterable<T>) => AsyncResultIterable<[T, AsyncResultIterable<T>]>;
 declare function asyncGroupBy<K, T = any>(
   key: (item: T) => K | Promise<K>,
-): (iterable: AsyncSourceIterable<T>) => AsyncResultIterable<[K, AsyncResultIterable<T>]>;
+): (source: AsyncSourceIterable<T>) => AsyncResultIterable<[K, AsyncResultIterable<T>]>;
 declare function asyncGroupBy<T = any>(
   key: null | undefined,
-  iterable: AsyncSourceIterable<T>,
+  source: AsyncSourceIterable<T>,
 ): AsyncResultIterable<[T, AsyncResultIterable<T>]>;
 declare function asyncGroupBy<K, T = any>(
   key: (item: T) => K | Promise<K>,
-  iterable: AsyncSourceIterable<T>,
+  source: AsyncSourceIterable<T>,
 ): AsyncResultIterable<[K, AsyncResultIterable<T>]>;
 export default asyncGroupBy;

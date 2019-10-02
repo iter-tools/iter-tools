@@ -9,9 +9,9 @@
 import { AsyncSourceIterable, AsyncResultIterable } from '../../types/async-iterable';
 declare function asyncTap<T = any>(
   func: (item: T, i: number) => any | Promise<any>,
-): (iterable: AsyncSourceIterable<T>) => AsyncResultIterable<T>;
+): (source: AsyncSourceIterable<T>) => AsyncResultIterable<T>;
 declare function asyncTap<T = any>(
   func: (item: T, i: number) => any | Promise<any>,
-  iterable: AsyncSourceIterable<T>,
+  source: AsyncSourceIterable<T>,
 ): AsyncResultIterable<T>;
 export default asyncTap;

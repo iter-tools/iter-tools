@@ -12,12 +12,12 @@ function* iterableOf(...items) {
   yield* items;
 }
 
-function split(iterable) {
+function split(source) {
   // String iterators already return an exploded version of the string.
-  if (typeof iterable === 'string') {
-    return iterable;
+  if (typeof source === 'string') {
+    return source;
   } else {
-    return map(iterable, item => iterableOf(item));
+    return map(source, item => iterableOf(item));
   }
 }
 

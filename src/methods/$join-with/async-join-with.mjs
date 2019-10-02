@@ -11,7 +11,7 @@ import { asyncJoinWith_ } from '../$join-with_/async-join-with_';
 const config = {
   subseq: false,
 };
-export function asyncJoinWith(iterable, with_) {
-  return asyncJoinWith_(iterable, config, with_);
+export function asyncJoinWith(source, with_) {
+  return asyncJoinWith_(source, config, with_);
 }
 export default asyncIterableCurry(asyncJoinWith);

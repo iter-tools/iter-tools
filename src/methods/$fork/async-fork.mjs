@@ -77,9 +77,9 @@ function* generateForks(state, n) {
   }
 }
 
-export function asyncFork(iterable, n = Infinity) {
+export function asyncFork(source, n = Infinity) {
   const state = {
-    iterator: asyncEnsureIterable(iterable)[Symbol.asyncIterator](),
+    iterator: asyncEnsureIterable(source)[Symbol.asyncIterator](),
     iterableCounter: 0,
     exchange: new Exchange(),
     done: false,

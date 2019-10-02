@@ -9,9 +9,9 @@
 import { SourceIterable, ResultIterable } from '../../types/iterable';
 declare function tap<T = any>(
   func: (item: T, i: number) => any,
-): (iterable: SourceIterable<T>) => ResultIterable<T>;
+): (source: SourceIterable<T>) => ResultIterable<T>;
 declare function tap<T = any>(
   func: (item: T, i: number) => any,
-  iterable: SourceIterable<T>,
+  source: SourceIterable<T>,
 ): ResultIterable<T>;
 export default tap;

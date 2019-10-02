@@ -7,10 +7,10 @@
  */
 
 import { iterableCurry } from '../../internal/iterable';
-export function* batch(iterable, size) {
+export function* batch(source, size) {
   let batch = [];
 
-  for (const item of iterable) {
+  for (const item of source) {
     batch.push(item);
 
     if (batch.length === size) {

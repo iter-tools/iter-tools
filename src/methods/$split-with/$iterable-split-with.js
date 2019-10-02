@@ -56,7 +56,7 @@ function* generateSubsequence(state, predicate, consumer) {
 }
 
 $async;
-function* $iterableSplitWith(iterable, predicate) {
+function* $iterableSplitWith(source, predicate) {
   const state = {
     iterator: null,
     idx: 0,
@@ -68,7 +68,7 @@ function* $iterableSplitWith(iterable, predicate) {
   };
 
   try {
-    state.iterator = iterable[$iteratorSymbol]();
+    state.iterator = source[$iteratorSymbol]();
     state.consumer = state.weakExchange.spawnConsumer();
 
     while (!state.done) {

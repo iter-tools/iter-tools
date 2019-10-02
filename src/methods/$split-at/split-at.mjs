@@ -11,8 +11,8 @@ import { groupBy } from '../$group-by/group-by';
 
 function* empty() {}
 
-export function* splitAt(iterable, index) {
-  const groupedIter = groupBy(iterable, (_item, i) => i >= index)[Symbol.iterator]();
+export function* splitAt(source, index) {
+  const groupedIter = groupBy(source, (_item, i) => i >= index)[Symbol.iterator]();
 
   for (let i = 0; i <= 1; i++) {
     const item = groupedIter.next(); // prettier-ignore

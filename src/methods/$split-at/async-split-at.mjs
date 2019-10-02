@@ -11,8 +11,8 @@ import { asyncGroupBy } from '../$group-by/async-group-by';
 
 async function* empty() {}
 
-export function* asyncSplitAt(iterable, index) {
-  const groupedIter = asyncGroupBy(iterable, (_item, i) => i >= index)[Symbol.asyncIterator]();
+export function* asyncSplitAt(source, index) {
+  const groupedIter = asyncGroupBy(source, (_item, i) => i >= index)[Symbol.asyncIterator]();
 
   for (let i = 0; i <= 1; i++) {
     const item = groupedIter.next(); // prettier-ignore

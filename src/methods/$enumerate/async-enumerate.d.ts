@@ -12,9 +12,9 @@ declare function asyncEnumerate<T = any>(
 ): AsyncResultIterable<[number, T]>;
 declare function asyncEnumerate<T = any>(
   firstIdx: number,
-  iterable: AsyncSourceIterable<T>,
+  source: AsyncSourceIterable<T>,
 ): AsyncResultIterable<[number, T]>;
 declare function asyncEnumerate(
   firstIdx: number,
-): <T = any>(iterable: AsyncSourceIterable<T>) => AsyncResultIterable<[number, T]>;
+): <T = any>(source: AsyncSourceIterable<T>) => AsyncResultIterable<[number, T]>;
 export default asyncEnumerate;

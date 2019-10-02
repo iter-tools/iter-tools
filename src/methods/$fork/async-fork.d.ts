@@ -9,13 +9,13 @@
 import { ResultIterable as SyncResultIterable } from '../../types/iterable';
 import { AsyncSourceIterable, AsyncResultIterable } from '../../types/async-iterable';
 declare function asyncFork<T = any>(
-  iterable: AsyncSourceIterable<T>,
+  source: AsyncSourceIterable<T>,
 ): SyncResultIterable<AsyncResultIterable<T>>;
 declare function asyncFork<T = any>(
   n: number,
-): (iterable: AsyncSourceIterable<T>) => SyncResultIterable<AsyncResultIterable<T>>;
+): (source: AsyncSourceIterable<T>) => SyncResultIterable<AsyncResultIterable<T>>;
 declare function asyncFork<T = any>(
   n: number,
-  iterable: AsyncSourceIterable<T>,
+  source: AsyncSourceIterable<T>,
 ): SyncResultIterable<AsyncResultIterable<T>>;
 export default asyncFork;

@@ -8,8 +8,8 @@
 
 import { iterableCurry } from '../../internal/iterable';
 import { toArray } from '../$to-array/to-array';
-export function* reverse(iterable) {
-  let array = iterable;
+export function* reverse(source) {
+  let array = source;
 
   if (false || !Array.isArray(array)) {
     array = toArray(array);

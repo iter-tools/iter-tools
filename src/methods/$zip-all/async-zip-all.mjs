@@ -8,8 +8,8 @@
 
 import { asyncIterableCurry } from '../../internal/async-iterable';
 import { map } from '../$map/map';
-export async function* asyncZipAll(iterables, { filler } = {}) {
-  const iters = iterables.map(arg => arg[Symbol.asyncIterator]());
+export async function* asyncZipAll(sources, { filler } = {}) {
+  const iters = sources.map(arg => arg[Symbol.asyncIterator]());
   const itersDone = iters.map(iter => ({
     done: false,
     iter,

@@ -13,6 +13,6 @@ declare function asyncWindow<Size extends number, Filler = undefined, T = any>(
     readonly size: Size;
     readonly filler?: Filler;
   },
-  iterable: AsyncSourceIterable<T>,
+  source: AsyncSourceIterable<T>,
 ): AsyncResultIterable<Repeat8<T | Filler, Size>>;
 export default asyncWindow;

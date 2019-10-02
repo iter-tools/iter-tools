@@ -8,11 +8,11 @@
 
 import { asyncIterableCurry } from '../../internal/async-iterable';
 import CircularBuffer from '../../internal/circular-buffer';
-export async function* asyncTrailingWindow(iterable, size, { filler } = {}) {
+export async function* asyncTrailingWindow(source, size, { filler } = {}) {
   const circular = new CircularBuffer(size);
   circular.fill(filler);
 
-  for await (const item of iterable) {
+  for await (const item of source) {
     circular.push(item);
     yield circular.readOnlyCopy;
   }

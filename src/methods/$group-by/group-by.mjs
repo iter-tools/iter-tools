@@ -56,7 +56,7 @@ function* generateGroup(state, getKey, key, consumer) {
   }
 }
 
-export function* groupBy(iterable, getKey) {
+export function* groupBy(source, getKey) {
   const state = {
     iterator: null,
     idx: 0,
@@ -71,7 +71,7 @@ export function* groupBy(iterable, getKey) {
   const _getKey = getKey == null ? k => k : getKey;
 
   try {
-    state.iterator = iterable[Symbol.iterator]();
+    state.iterator = source[Symbol.iterator]();
     state.consumer = state.weakExchange.spawnConsumer();
     fetch(state, _getKey);
 

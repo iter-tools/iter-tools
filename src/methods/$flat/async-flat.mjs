@@ -13,8 +13,8 @@ const defaultShouldFlat = item =>
     typeof item[Symbol.asyncIterator] === 'function') &&
   typeof item !== 'string';
 
-async function* asyncFlatInternal(shouldFlat, depth, currentDepth, iterable) {
-  for await (const item of iterable) {
+async function* asyncFlatInternal(shouldFlat, depth, currentDepth, source) {
+  for await (const item of source) {
     if (currentDepth < depth && (await shouldFlat(item))) {
       yield* asyncFlatInternal(shouldFlat, depth, currentDepth + 1, item);
     } else {
@@ -23,14 +23,14 @@ async function* asyncFlatInternal(shouldFlat, depth, currentDepth, iterable) {
   }
 }
 
-export function asyncFlat(iterable, shouldFlat = defaultShouldFlat, depthOrOptions = 1) {
+export function asyncFlat(source, shouldFlat = defaultShouldFlat, depthOrOptions = 1) {
   let depth = depthOrOptions;
 
   if (depthOrOptions && typeof depthOrOptions === 'object') {
     ({ shouldFlat = defaultShouldFlat, depth = 1 } = depthOrOptions);
   }
 
-  return asyncFlatInternal(shouldFlat, depth, 0, iterable);
+  return asyncFlatInternal(shouldFlat, depth, 0, source);
 }
 export default asyncIterableCurry(asyncFlat, {
   minArgs: 0,

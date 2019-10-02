@@ -8,11 +8,11 @@
 
 import { iterableCurry } from '../../internal/iterable';
 
-function* dropWhile(iterable, func) {
+function* dropWhile(source, func) {
   let drop = true;
   let c = 0;
 
-  for (const item of iterable) {
+  for (const item of source) {
     if (!drop) {
       yield item;
     } else {

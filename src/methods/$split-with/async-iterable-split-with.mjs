@@ -58,7 +58,7 @@ async function* generateSubsequence(state, predicate, consumer) {
   }
 }
 
-async function* asyncIterableSplitWith(iterable, predicate) {
+async function* asyncIterableSplitWith(source, predicate) {
   const state = {
     iterator: null,
     idx: 0,
@@ -70,7 +70,7 @@ async function* asyncIterableSplitWith(iterable, predicate) {
   };
 
   try {
-    state.iterator = iterable[Symbol.asyncIterator]();
+    state.iterator = source[Symbol.asyncIterator]();
     state.consumer = state.weakExchange.spawnConsumer();
 
     while (!state.done) {

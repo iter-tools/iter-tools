@@ -7,10 +7,10 @@
  */
 
 import { iterableCurry } from '../../internal/iterable';
-export function* tap(iterable, func) {
+export function* tap(source, func) {
   let c = 0;
 
-  for (const item of iterable) {
+  for (const item of source) {
     func(item, c++);
     yield item;
   }
