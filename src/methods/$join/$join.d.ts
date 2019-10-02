@@ -1,4 +1,4 @@
-import { $SourceIterable, $ResultIterable } from '../../internal/$iterable';
+import { $SourceIterable, $ResultIterable } from '../../types/$iterable';
 
 declare function $join<T = any>(iterable: $SourceIterable<$SourceIterable<T>>): $ResultIterable<T>;
 

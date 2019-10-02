@@ -1,9 +1,6 @@
-import {
-  $SourceIterable,
-  $DefinedSourceIterable,
-  $ResultIterable,
-  $MaybePromise,
-} from '../../internal/$iterable';
+import { $MaybePromise } from '../../../generate/async.macro';
+
+import { $SourceIterable, $DefinedSourceIterable, $ResultIterable } from '../../types/$iterable';
 
 type $Flattened<T> = T extends Array<infer U>
   ? U

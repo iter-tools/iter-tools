@@ -1,5 +1,5 @@
 import { $Promise } from '../../../generate/async.macro';
-import { $SourceIterable, $Iterable } from '../../internal/$iterable';
+import { $SourceIterable, $Iterable } from '../../types/$iterable';
 
 declare function $firstOr<Iter extends $SourceIterable<any>, E>(
   whenEmpty: E,

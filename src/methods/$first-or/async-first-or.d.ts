@@ -6,7 +6,7 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { AsyncSourceIterable, AsyncIterable } from '../../internal/async-iterable';
+import { AsyncSourceIterable, AsyncIterable } from '../../types/async-iterable';
 declare function asyncFirstOr<Iter extends AsyncSourceIterable<any>, E>(
   whenEmpty: E,
   iterable: Iter,

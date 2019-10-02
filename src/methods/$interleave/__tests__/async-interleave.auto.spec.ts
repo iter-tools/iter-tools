@@ -6,7 +6,7 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { AsyncIterable } from '../../../internal/async-iterable';
+import { AsyncIterable } from '../../../types/async-iterable';
 import { asyncInterleave, AsyncInterleaveBuffer, asyncToArray } from '../../..';
 describe('asyncInterleave', () => {
   const a = [1, 2, 3];

@@ -7,7 +7,7 @@
  */
 
 import { Repeat8 } from '../../internal/types/utility';
-import { SourceIterable, ResultIterable } from '../../internal/iterable';
+import { SourceIterable, ResultIterable } from '../../types/iterable';
 declare function window<Size extends number, Filler = undefined, T = any>(
   opts: {
     readonly size: Size;

@@ -1,6 +1,6 @@
 import { $MaybePromise } from '../../../generate/async.macro';
 
-import { $SourceIterable, $ResultIterable } from '../../internal/$iterable';
+import { $SourceIterable, $ResultIterable } from '../../types/$iterable';
 
 declare function $dropWhile<T = any>(
   func: (item: T, i: number) => $MaybePromise<boolean>,

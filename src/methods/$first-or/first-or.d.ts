@@ -6,7 +6,7 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { SourceIterable, Iterable } from '../../internal/iterable';
+import { SourceIterable, Iterable } from '../../types/iterable';
 declare function firstOr<Iter extends SourceIterable<any>, E>(
   whenEmpty: E,
   iterable: Iter,

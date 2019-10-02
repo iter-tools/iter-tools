@@ -6,8 +6,8 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { SourceIterable as SyncSourceIterable } from '../../internal/iterable';
-import { SourceIterable, ResultIterable } from '../../internal/iterable';
+import { SourceIterable as SyncSourceIterable } from '../../types/iterable';
+import { SourceIterable, ResultIterable } from '../../types/iterable';
 declare function joinWithSubseq<W, T = any>(
   subseq: SyncSourceIterable<W>,
   iterable: SourceIterable<SourceIterable<T>>,

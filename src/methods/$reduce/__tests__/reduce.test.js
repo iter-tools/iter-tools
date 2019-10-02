@@ -8,7 +8,7 @@
 
 /* eslint-disable no-unused-vars,import/no-duplicates */
 
-import { SourceIterable } from '../../../internal/iterable';
+import { SourceIterable } from '../../../types/iterable';
 import { reduce, range } from '../../..';
 import { OneTwoThreeIterable } from '../../../__tests__/__framework__/fixtures';
 describe('reduce', () => {

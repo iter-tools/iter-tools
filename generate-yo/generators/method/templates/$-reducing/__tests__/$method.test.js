@@ -1,4 +1,5 @@
 import { $async, $await } from '../../../../generate/async.macro';
+
 import { $__method__, $wrap } from '../../..';
 
 describe($async`__method__`, () => {

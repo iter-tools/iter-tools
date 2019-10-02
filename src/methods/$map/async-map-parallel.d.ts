@@ -1,26 +1,22 @@
-import {
-  AsyncSourceIterable,
-  AsyncResultIterable,
-  AsyncMaybePromise,
-} from '../../internal/async-iterable';
+import { AsyncSourceIterable, AsyncResultIterable, MaybePromise } from '../../types/async-iterable';
 
 declare function asyncMapParallel<O, T = any>(
-  func: (item: T, i: number) => AsyncMaybePromise<O>,
+  func: (item: T, i: number) => MaybePromise<O>,
 ): (iterable: AsyncSourceIterable<T>) => AsyncResultIterable<O>;
 
 declare function asyncMapParallel<O, T = any>(
   concurrency: number,
-  func: (item: T, i: number) => AsyncMaybePromise<O>,
+  func: (item: T, i: number) => MaybePromise<O>,
 ): (iterable: AsyncSourceIterable<T>) => AsyncResultIterable<O>;
 
 declare function asyncMapParallel<O, T = any>(
-  func: (item: T, i: number) => AsyncMaybePromise<O>,
+  func: (item: T, i: number) => MaybePromise<O>,
   iterable: AsyncSourceIterable<T>,
 ): AsyncResultIterable<O>;
 
 declare function asyncMapParallel<O, T = any>(
   concurrency: number,
-  func: (item: T, i: number) => AsyncMaybePromise<O>,
+  func: (item: T, i: number) => MaybePromise<O>,
   iterable: AsyncSourceIterable<T>,
 ): AsyncResultIterable<O>;
 

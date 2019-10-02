@@ -1,4 +1,4 @@
-import { $SourceIterable, $ResultIterable } from '../../internal/$iterable';
+import { $SourceIterable, $ResultIterable } from '../../types/$iterable';
 
 declare function $joinWith<W, T = any>(
   value: W,

@@ -6,7 +6,7 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { ResultIterable } from '../../internal/iterable';
+import { ResultIterable } from '../../types/iterable';
 declare function execute<T, Args extends any[] = any[]>(
   func: (...args: Args) => T,
   ...args: Args

@@ -6,8 +6,8 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { AsyncSourceIterable } from '../../internal/async-iterable';
-import { SourceIterable as SyncSourceIterable } from '../../internal/iterable';
+import { AsyncSourceIterable } from '../../types/async-iterable';
+import { SourceIterable as SyncSourceIterable } from '../../types/iterable';
 declare function asyncStartsWithAny(
   values: SyncSourceIterable<any>,
 ): (iterable: AsyncSourceIterable<any>) => Promise<boolean>;

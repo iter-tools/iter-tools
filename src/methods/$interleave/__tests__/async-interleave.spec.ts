@@ -7,7 +7,7 @@
  */
 
 import assert from 'static-type-assert';
-import { AsyncResultIterable } from '../../../internal/async-iterable';
+import { AsyncResultIterable } from '../../../types/async-iterable';
 import AsyncInterleaveBuffer from '../internal/async-buffer';
 import { asyncInterleave } from '../../..'; // Without options
 // ############

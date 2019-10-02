@@ -7,7 +7,7 @@
  */
 
 import assert from 'static-type-assert';
-import { Iterable } from '../../../internal/iterable';
+import { Iterable } from '../../../types/iterable';
 import { first } from '../../..';
 declare const Ø: never;
 assert<undefined>(first(Ø as []));

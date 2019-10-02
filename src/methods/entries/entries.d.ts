@@ -1,4 +1,4 @@
-import { ResultIterable } from '../../internal/iterable';
+import { ResultIterable } from '../../types/iterable';
 
 declare function entries<T = any>(
   obj: { [id: string]: T } | null | undefined,

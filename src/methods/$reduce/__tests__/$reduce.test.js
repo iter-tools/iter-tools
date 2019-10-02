@@ -1,6 +1,6 @@
 import { $, $async, $await, $Promise } from '../../../../generate/async.macro';
 
-import { $SourceIterable } from '../../../internal/$iterable';
+import { $SourceIterable } from '../../../types/$iterable';
 import { $reduce, range } from '../../..';
 import { $OneTwoThreeIterable } from '../../../__tests__/__framework__/fixtures';
 

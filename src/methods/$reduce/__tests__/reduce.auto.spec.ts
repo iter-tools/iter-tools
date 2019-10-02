@@ -6,7 +6,7 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { SourceIterable } from '../../../internal/iterable';
+import { SourceIterable } from '../../../types/iterable';
 import { reduce, range } from '../../..';
 import { OneTwoThreeIterable } from '../../../__tests__/__framework__/fixtures';
 describe('reduce', () => {

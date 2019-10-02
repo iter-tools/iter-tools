@@ -12,7 +12,3 @@ export interface ResultIterable<T> {
 }
 
 export type IterableElement<Iter> = Iter extends Iterable<infer X> ? X : never;
-
-export type Promise<T> = T;
-
-export type MaybePromise<T> = T;

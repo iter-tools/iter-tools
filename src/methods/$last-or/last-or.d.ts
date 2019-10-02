@@ -6,6 +6,6 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { SourceIterable } from '../../internal/iterable';
+import { SourceIterable } from '../../types/iterable';
 declare function lastOr<E, T = any>(whenEmpty: E, iterable: SourceIterable<T>): T | E;
 export default lastOr;

@@ -1,6 +1,6 @@
 import assert from 'static-type-assert';
 
-import { $Iterable, $ResultIterable } from '../../../internal/$iterable';
+import { $Iterable, $ResultIterable } from '../../../types/$iterable';
 import { $filter } from '../../..';
 
 declare const Ø: never;

@@ -1,4 +1,4 @@
-import { $SourceIterable, $ResultIterable } from '../../internal/$iterable';
+import { $SourceIterable, $ResultIterable } from '../../types/$iterable';
 
 declare function $takeSorted<T = any>(iterable: $SourceIterable<T>): $ResultIterable<T>;
 

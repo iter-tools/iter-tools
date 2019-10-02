@@ -1,5 +1,5 @@
-import { SourceIterable as SyncSourceIterable } from '../../internal/iterable';
-import { $SourceIterable, $ResultIterable } from '../../internal/$iterable';
+import { SourceIterable as SyncSourceIterable } from '../../types/iterable';
+import { $SourceIterable, $ResultIterable } from '../../types/$iterable';
 
 declare function $split(
   subseqs: SyncSourceIterable<$SourceIterable<any>>,

@@ -7,7 +7,7 @@
  */
 
 import assert from 'static-type-assert';
-import { AsyncResultIterable } from '../../../internal/async-iterable';
+import { AsyncResultIterable } from '../../../types/async-iterable';
 import { asyncCycle } from '../../..';
 declare const Ø: never;
 assert<AsyncResultIterable<0 | 1 | 2>>(asyncCycle(Ø as [0, 1, 2]));

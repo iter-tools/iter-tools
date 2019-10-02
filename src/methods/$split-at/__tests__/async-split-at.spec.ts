@@ -7,8 +7,8 @@
  */
 
 import assert from 'static-type-assert';
-import { ResultIterable as SyncResultIterable } from '../../../internal/iterable';
-import { AsyncIterable, AsyncResultIterable } from '../../../internal/async-iterable';
+import { ResultIterable as SyncResultIterable } from '../../../types/iterable';
+import { AsyncIterable, AsyncResultIterable } from '../../../types/async-iterable';
 import { asyncSplitAt } from '../../..';
 declare const Ø: never;
 assert<SyncResultIterable<AsyncResultIterable<number>>>(

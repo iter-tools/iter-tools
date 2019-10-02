@@ -7,7 +7,7 @@
  */
 
 import assert from 'static-type-assert';
-import { ResultIterable } from '../../../internal/iterable';
+import { ResultIterable } from '../../../types/iterable';
 import InterleaveBuffer from '../internal/buffer';
 import { interleave } from '../../..'; // Without options
 // ############

@@ -1,4 +1,4 @@
-import { SourceIterable } from '../../internal/iterable';
+import { SourceIterable } from '../../types/iterable';
 
 declare function __method__<T = any>(
   iterable: SourceIterable<T>,

@@ -7,7 +7,7 @@
  */
 
 import assert from 'static-type-assert';
-import { ResultIterable } from '../../../internal/iterable';
+import { ResultIterable } from '../../../types/iterable';
 import { execute } from '../../..';
 declare const Ø: never;
 assert<ResultIterable<123>>(execute(Ø as () => 123));

@@ -7,7 +7,7 @@
  */
 
 import assert from 'static-type-assert';
-import { AsyncIterable } from '../../../internal/async-iterable';
+import { AsyncIterable } from '../../../types/async-iterable';
 import { asyncFirst } from '../../..';
 declare const Ø: never;
 assert<Promise<undefined>>(asyncFirst(Ø as []));

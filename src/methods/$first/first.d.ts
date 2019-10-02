@@ -6,7 +6,7 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { SourceIterable, Iterable } from '../../internal/iterable';
+import { SourceIterable, Iterable } from '../../types/iterable';
 declare function first<Iter extends SourceIterable<any>>(
   iterable: Iter,
 ): Iter extends [infer First, ...Array<any>]

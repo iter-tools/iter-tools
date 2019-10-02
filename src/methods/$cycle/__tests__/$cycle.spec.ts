@@ -1,5 +1,5 @@
 import assert from 'static-type-assert';
-import { $ResultIterable } from '../../../internal/$iterable';
+import { $ResultIterable } from '../../../types/$iterable';
 import { $cycle } from '../../..';
 
 declare const Ø: never;

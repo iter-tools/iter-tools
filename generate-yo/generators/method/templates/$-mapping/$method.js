@@ -1,4 +1,5 @@
 import { $async, $await } from '../../../generate/async.macro';
+
 import { $iterableCurry } from '../../internal/$iterable';
 
 $async;

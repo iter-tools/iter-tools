@@ -1,4 +1,4 @@
-import { $SourceIterable, $ResultIterable } from '../../internal/$iterable';
+import { $SourceIterable, $ResultIterable } from '../../types/$iterable';
 
 declare function $zip<T = any>(...iterables: Array<$SourceIterable<T>>): $ResultIterable<T[]>;
 

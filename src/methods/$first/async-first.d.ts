@@ -6,7 +6,7 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { AsyncSourceIterable, AsyncIterable } from '../../internal/async-iterable';
+import { AsyncSourceIterable, AsyncIterable } from '../../types/async-iterable';
 declare function asyncFirst<Iter extends AsyncSourceIterable<any>>(
   iterable: Iter,
 ): Iter extends [infer First, ...Array<any>]

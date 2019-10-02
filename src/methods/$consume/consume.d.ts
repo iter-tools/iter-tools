@@ -6,7 +6,7 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { SourceIterable } from '../../internal/iterable';
+import { SourceIterable } from '../../types/iterable';
 declare function consume<T = any>(
   func: (item: T, i: number) => void,
 ): (iterable: SourceIterable<T>) => void;

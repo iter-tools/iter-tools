@@ -7,7 +7,7 @@
  */
 
 import assert from 'static-type-assert';
-import { AsyncIterable, AsyncResultIterable } from '../../../internal/async-iterable';
+import { AsyncIterable, AsyncResultIterable } from '../../../types/async-iterable';
 import { asyncFlat } from '../../..';
 declare const Ø: never; // asyncFlat(iterable)
 

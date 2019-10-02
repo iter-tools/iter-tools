@@ -6,7 +6,7 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { AsyncSourceIterable } from '../../internal/async-iterable';
+import { AsyncSourceIterable } from '../../types/async-iterable';
 declare function asyncIsSorted(iterable: AsyncSourceIterable<any>): boolean | Promise<boolean>;
 declare function asyncIsSorted<T = any>(
   comparator: (a: T, b: T) => number,
