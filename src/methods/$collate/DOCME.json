@@ -1,3 +1,8 @@
 {
-  "type": "combine"
+  "type": "combine",
+  "signatures": [
+    [{ "name": "start" }, { "name": "step" }],
+    [{ "name": "comparator" }],
+    [{ "name": null, "properties": ["start", "step"] }]
+  ]
 }

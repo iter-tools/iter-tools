@@ -12,9 +12,7 @@ const config = {
   any: true,
   subseq: false,
 };
-
-function splitOnAny(source, values) {
+export function splitOnAny(source, values) {
   return splitOn_(source, config, values);
 }
-
 export default iterableCurry(splitOnAny);

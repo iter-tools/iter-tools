@@ -3,7 +3,7 @@ import { $splitOn_ } from '../$split-on_/$split-on_';
 
 const config = { any: false, subseq: true };
 
-function $splitOnSubseq(source, subseq) {
+export function $splitOnSubseq(source, subseq) {
   return $splitOn_(source, config, subseq);
 }
 

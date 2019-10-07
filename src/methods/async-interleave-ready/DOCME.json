@@ -1,4 +1,5 @@
 {
   "type": "combine",
-  "alphabetizationName": "interleave-ready"
+  "alphabetizationName": "interleave-ready",
+  "signatures": [[{ "name": "sources", "variadic": true, "isIterable": true }]]
 }

@@ -1,7 +1,6 @@
 import { wrapWithMethodIterable } from '../../internal/iterable';
 
-export function* repeat(item, nTimes = Infinity) {
-  let times = nTimes;
+export function* repeat(item, times = Infinity) {
   while (times--) {
     yield item;
   }

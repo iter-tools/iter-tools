@@ -1,6 +1,7 @@
 'use strict';
 
 const { renameDollar, syncName } = require('../../names');
+const methodSignaturesTemplate = require('./method-signatures');
 
 function groupBy(accessor, arr) {
   const groups = new Map();
@@ -69,7 +70,8 @@ const methodTemplate = (doc, aliasMap) => {
   const seeName = aliasMap.get(name) || (isAsyncClone ? syncName(name) : null);
   const see = seeName && seeMethodTemplate(seeName);
   const aliases = methodAliasesTemplate(doc);
-  return `### ${name}\n${aliases}${readme || see || 'Undocumented.'}\n`;
+  const signatures = doc.signatures ? `${methodSignaturesTemplate(name, doc.signatures)}\n\n` : '';
+  return `### ${name}\n${signatures}${aliases}${readme || see || 'Undocumented.'}\n`;
 };
 
 const typeSectionTemplate = (type, body) => `## ${sections.get(type).title}\n${body}\n`;
@@ -116,6 +118,7 @@ function flattenDollars(methodsWithDollars) {
                 name,
                 docme: doc.docme,
                 readme: ASYNC ? doc.asyncReadme : doc.readme,
+                signatures: ASYNC ? doc.asyncSignatures : doc.signatures,
                 isAsyncClone: ASYNC,
               };
             })
@@ -126,6 +129,7 @@ function flattenDollars(methodsWithDollars) {
                       name: `${renameDollar(originalName, true)}Parallel`,
                       docme: doc.docme,
                       readme: doc.parallelReadme,
+                      signatures: doc.parallelSignatures,
                       isAsyncClone: false,
                     },
                   ]
@@ -143,7 +147,7 @@ function groupMethods(methods) {
   return [...groupBy(m => m.docme.type, methods)].sort(([a], [b]) => compareGroups(a, b));
 }
 
-module.exports = (methodsWithDollars, aliasMap) => {
+module.exports = (typesDoc, methodsWithDollars, aliasMap) => {
   methodsWithDollars = methodsWithDollars.sort(compareNames);
 
   // table of contents
@@ -163,5 +167,12 @@ module.exports = (methodsWithDollars, aliasMap) => {
   return `# The iter-tools API
 [![Documentation is automatically generated](https://img.shields.io/static/v1?label=docs&message=generated&color=informational)](https://github.com/iter-tools/iter-tools/blob/master/CONTRIBUTING.md#the-code-generator)
 
+[Types](#types)  
+[Methods](#methods)
+
+## Types
+${typesDoc}
+
+## Methods
 ${toc}\n${docs}`;
 };

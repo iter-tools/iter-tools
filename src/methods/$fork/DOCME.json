@@ -1,3 +1,7 @@
 {
-  "type": "cache"
+  "type": "cache",
+  "signatures": [
+    [{ "name": "n" }, { "name": "source", "isIterable": true }],
+    [{ "name": "source", "isIterable": true }]
+  ]
 }

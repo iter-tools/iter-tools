@@ -1,3 +1,9 @@
 {
-  "type": "transform"
+  "type": "transform",
+  "signatures": [
+    [{ "name": "start" }, { "name": "end" }, { "name": "step" }],
+    [{ "name": "start" }, { "name": "end" }],
+    [{ "name": "start" }],
+    [{ "name": null, "properties": ["start", "end", "step"] }]
+  ]
 }
