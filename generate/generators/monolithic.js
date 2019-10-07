@@ -16,6 +16,8 @@ class MonoliticGenerator extends Generator {
     this.generatedPaths.add('.gitattributes');
     this.generatedPaths.add('src/index.mjs');
     this.generatedPaths.add('src/index.d.ts');
+    // It is still highly useful to see that API doc changes show up as they should
+    this.generatedPaths.delete('API.md');
 
     this.writeMonolithic('.gitattributes', gitattributesFile(this.generatedPaths));
     this.writeMonolithic('src/index.mjs', indexFile(this.generatedPaths));
