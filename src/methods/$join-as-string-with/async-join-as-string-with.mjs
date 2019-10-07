@@ -7,8 +7,7 @@
  */
 
 import { asyncIterableCurry } from '../../internal/async-iterable';
-
-async function asyncJoinAsStringWith(strings, separator) {
+export async function asyncJoinAsStringWith(strings, separator) {
   let result = '';
   let first = true;
 
@@ -20,7 +19,6 @@ async function asyncJoinAsStringWith(strings, separator) {
 
   return result;
 }
-
 export default asyncIterableCurry(asyncJoinAsStringWith, {
   reduces: true,
 });

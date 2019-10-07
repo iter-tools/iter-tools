@@ -7,8 +7,7 @@
  */
 
 import { iterableCurry } from '../../internal/iterable';
-
-function* dropWhile(source, func) {
+export function* dropWhile(source, func) {
   let drop = true;
   let c = 0;
 
@@ -24,5 +23,4 @@ function* dropWhile(source, func) {
     }
   }
 }
-
 export default iterableCurry(dropWhile);

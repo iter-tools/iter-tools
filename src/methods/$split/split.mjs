@@ -12,7 +12,7 @@ function* iterableOf(...items) {
   yield* items;
 }
 
-function split(source) {
+export function split(source) {
   // String iterators already return an exploded version of the string.
   if (typeof source === 'string') {
     return source;
@@ -20,5 +20,4 @@ function split(source) {
     return map(source, item => iterableOf(item));
   }
 }
-
 export default split;

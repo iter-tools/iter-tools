@@ -1,3 +1,9 @@
 {
-  "type": "transform"
+  "type": "transform",
+  "signatures": [
+    [{ "name": "shouldFlat" }, { "name": "depth" }],
+    [{ "name": null, "properties": ["shouldFlat", "depth"] }],
+    [{ "name": "depth" }],
+    []
+  ]
 }

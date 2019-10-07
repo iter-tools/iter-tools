@@ -7,8 +7,7 @@
  */
 
 import { iterableCurry } from '../../internal/iterable';
-
-function joinAsStringWith(strings, separator) {
+export function joinAsStringWith(strings, separator) {
   let result = '';
   let first = true;
 
@@ -20,7 +19,6 @@ function joinAsStringWith(strings, separator) {
 
   return result;
 }
-
 export default iterableCurry(joinAsStringWith, {
   reduces: true,
 });

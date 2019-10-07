@@ -1,3 +1,8 @@
 {
-  "type": "create"
+  "type": "create",
+  "signatures": [
+    [{ "name": "start" }, { "name": "end" }, { "name": "step", "isOptional": true }],
+    [{ "name": "end", "isOptional": true }],
+    [{ "name": null, "properties": ["start", "end", "step"] }]
+  ]
 }

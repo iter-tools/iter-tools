@@ -2,7 +2,7 @@ import { $async, $await } from '../../../generate/async.macro';
 import { $iterableCurry } from '../../internal/$iterable';
 
 $async;
-function $joinAsStringWith(strings, separator) {
+export function $joinAsStringWith(strings, separator) {
   let result = '';
   let first = true;
 
