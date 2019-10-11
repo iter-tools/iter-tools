@@ -6,7 +6,7 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-/* eslint-disable no-unused-vars,import/no-duplicates */
+/* eslint-disable no-unused-vars,import/no-duplicates,no-constant-condition */
 
 import { asyncify } from '../async-iterable';
 import { asyncEnsureIterable, asyncIsIterable, asyncIterableCurry } from '../async-iterable';
