@@ -26,7 +26,7 @@ class BaseAsyncGenerator extends BaseGenerator {
   }
 
   getDestName(starMatch, ext) {
-    throw new Error('getDestName must be implemented');
+    return `${starMatch.slice(1)}${ext}`;
   }
 
   generatePath(templatePath, destPath, { ASYNC }) {

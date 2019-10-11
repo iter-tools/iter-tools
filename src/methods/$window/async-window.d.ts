@@ -6,13 +6,28 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { Repeat8 } from '../../internal/types/utility';
 import { AsyncSourceIterable, AsyncResultIterable } from '../../types/async-iterable';
-declare function asyncWindow<Size extends number, Filler = undefined, T = any>(
+import { ResultIterable as SyncResultIterable } from '../../types/iterable';
+declare function asyncWindow<Filler = undefined, T = any>(
+  size: number,
   opts: {
-    readonly size: Size;
     readonly filler?: Filler;
   },
   source: AsyncSourceIterable<T>,
-): AsyncResultIterable<Repeat8<T | Filler, Size>>;
+): AsyncResultIterable<SyncResultIterable<T | Filler>>;
+declare function asyncWindow<T = any>(
+  size: number,
+  source: AsyncSourceIterable<T>,
+): AsyncResultIterable<SyncResultIterable<T | undefined>>;
+declare function asyncWindow(
+  size: number,
+  opts: {
+    readonly filler: any;
+  },
+): <T>(source: AsyncSourceIterable<T>) => AsyncResultIterable<SyncResultIterable<T>>;
+declare function asyncWindow(
+  size: number,
+): <T = any>(
+  source: AsyncSourceIterable<T>,
+) => AsyncResultIterable<SyncResultIterable<T | undefined>>;
 export default asyncWindow;

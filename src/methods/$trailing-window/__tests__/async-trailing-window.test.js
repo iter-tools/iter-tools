@@ -8,47 +8,40 @@
 
 /* eslint-disable no-unused-vars,import/no-duplicates,no-constant-condition */
 
-import { asyncTrailingWindow, asyncMap, asyncToArray } from '../../..';
+import { asyncUnwrapDeep as asyncUw } from '../../../__tests__/async-helpers';
+import { asyncTrailingWindow } from '../../..';
 describe('asyncTrailingWindow', () => {
+  const _12345 = Object.freeze([1, 2, 3, 4, 5]);
+
   it('frames iterable', async () => {
-    const iter = asyncTrailingWindow(
-      {
-        size: 3,
-      },
-      [1, 2, 3, 4, 5],
-    );
-    expect(await asyncToArray(asyncMap(wndw => [...wndw], iter))).toEqual([
-      [undefined, undefined, 1],
-      [undefined, 1, 2],
-      [1, 2, 3],
-      [2, 3, 4],
-      [3, 4, 5],
-    ]);
+    const result = [[undefined, undefined, 1], [undefined, 1, 2], [1, 2, 3], [2, 3, 4], [3, 4, 5]];
+    expect(await asyncUw(asyncTrailingWindow(3, _12345))).toEqual(result);
+    const opts: any = {
+      size: 3,
+    };
+    expect(await asyncUw(asyncTrailingWindow(opts, _12345))).toEqual(result);
   });
   it('frames iterable (use filler)', async () => {
-    const iter = asyncTrailingWindow(
-      {
-        size: 3,
-        filler: 'x',
-      },
-      [1, 2, 3, 4, 5],
-    );
-    expect(await asyncToArray(asyncMap(wndw => [...wndw], iter))).toEqual([
-      ['x', 'x', 1],
-      ['x', 1, 2],
-      [1, 2, 3],
-      [2, 3, 4],
-      [3, 4, 5],
-    ]);
+    const result = [['x', 'x', 1], ['x', 1, 2], [1, 2, 3], [2, 3, 4], [3, 4, 5]];
+    expect(
+      await asyncUw(
+        asyncTrailingWindow(
+          3,
+          {
+            filler: 'x',
+          },
+          _12345,
+        ),
+      ),
+    ).toEqual(result);
+    const opts: any = {
+      size: 3,
+      filler: 'x',
+    };
+    expect(await asyncUw(asyncTrailingWindow(opts, _12345))).toEqual(result);
   });
   it('frames iterable (window equal to the sequence)', async () => {
-    const iter = asyncTrailingWindow(
-      {
-        size: 5,
-      },
-      [1, 2, 3, 4, 5],
-    );
-    expect(await asyncToArray(asyncMap(wndw => [...wndw], iter))).toEqual([
+    expect(await asyncUw(asyncTrailingWindow(5, _12345))).toEqual([
       [undefined, undefined, undefined, undefined, 1],
       [undefined, undefined, undefined, 1, 2],
       [undefined, undefined, 1, 2, 3],
@@ -57,13 +50,7 @@ describe('asyncTrailingWindow', () => {
     ]);
   });
   it('frames iterable (window bigger than the sequence)', async () => {
-    const iter = asyncTrailingWindow(
-      {
-        size: 6,
-      },
-      [1, 2, 3, 4, 5],
-    );
-    expect(await asyncToArray(asyncMap(wndw => [...wndw], iter))).toEqual([
+    expect(await asyncUw(asyncTrailingWindow(6, _12345))).toEqual([
       [undefined, undefined, undefined, undefined, undefined, 1],
       [undefined, undefined, undefined, undefined, 1, 2],
       [undefined, undefined, undefined, 1, 2, 3],
@@ -72,14 +59,17 @@ describe('asyncTrailingWindow', () => {
     ]);
   });
   it('frames iterable (window bigger than the sequence) with filler', async () => {
-    const iter = asyncTrailingWindow(
-      {
-        size: 6,
-        filler: 'x',
-      },
-      [1, 2, 3, 4, 5],
-    );
-    expect(await asyncToArray(asyncMap(wndw => [...wndw], iter))).toEqual([
+    expect(
+      await asyncUw(
+        asyncTrailingWindow(
+          6,
+          {
+            filler: 'x',
+          },
+          _12345,
+        ),
+      ),
+    ).toEqual([
       ['x', 'x', 'x', 'x', 'x', 1],
       ['x', 'x', 'x', 'x', 1, 2],
       ['x', 'x', 'x', 1, 2, 3],
@@ -88,13 +78,7 @@ describe('asyncTrailingWindow', () => {
     ]);
   });
   it('frames iterable (window bigger than the sequence)', async () => {
-    const iter = asyncTrailingWindow(
-      {
-        size: 7,
-      },
-      [1, 2, 3, 4, 5],
-    );
-    expect(await asyncToArray(asyncMap(wndw => [...wndw], iter))).toEqual([
+    expect(await asyncUw(asyncTrailingWindow(7, [1, 2, 3, 4, 5]))).toEqual([
       [undefined, undefined, undefined, undefined, undefined, undefined, 1],
       [undefined, undefined, undefined, undefined, undefined, 1, 2],
       [undefined, undefined, undefined, undefined, 1, 2, 3],

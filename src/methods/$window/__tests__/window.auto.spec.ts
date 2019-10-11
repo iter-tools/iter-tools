@@ -6,47 +6,51 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { window, map, toArray } from '../../..';
+import { unwrapDeep as uw } from '../../../__tests__/helpers';
+import { window } from '../../..';
 describe('window', () => {
   it('frames iterable', () => {
-    const iter = window(
-      {
-        size: 3,
-      },
-      [1, 2, 3, 4, 5],
-    );
-    expect(toArray(map(wndw => [...wndw], iter))).toEqual([
-      [1, 2, 3],
-      [2, 3, 4],
-      [3, 4, 5],
-      [4, 5, undefined],
-      [5, undefined, undefined],
-    ]);
+    const result = [[1, 2, 3], [2, 3, 4], [3, 4, 5], [4, 5, undefined], [5, undefined, undefined]];
+    expect(uw(window(3, [1, 2, 3, 4, 5]))).toEqual(result);
+    const opts: any = {
+      size: 3,
+    };
+    expect(uw(window(opts, [1, 2, 3, 4, 5]))).toEqual(result);
   });
   it('frames iterable', () => {
-    const iter = window(
-      {
-        size: 3,
-        filler: 'x',
-      },
-      [1, 2, 3, 4, 5],
-    );
-    expect(toArray(map(wndw => [...wndw], iter))).toEqual([
-      [1, 2, 3],
-      [2, 3, 4],
-      [3, 4, 5],
-      [4, 5, 'x'],
-      [5, 'x', 'x'],
-    ]);
+    const result = [[1, 2, 3], [2, 3, 4], [3, 4, 5], [4, 5, 'x'], [5, 'x', 'x']];
+    expect(
+      uw(
+        window(
+          3,
+          {
+            filler: 'x',
+          },
+          [1, 2, 3, 4, 5],
+        ),
+      ),
+    ).toEqual(result);
+    const opts: any = {
+      size: 3,
+      filler: 'x',
+    };
+    expect(uw(window(opts, [1, 2, 3, 4, 5]))).toEqual(result);
+  });
+  it('can have separate size and options arguments', () => {
+    expect(
+      uw(
+        window(
+          3,
+          {
+            filler: 'x',
+          },
+          [1, 2, 3, 4, 5],
+        ),
+      ),
+    ).toEqual([[1, 2, 3], [2, 3, 4], [3, 4, 5], [4, 5, 'x'], [5, 'x', 'x']]);
   });
   it('frames iterable (window equal to the sequence)', () => {
-    const iter = window(
-      {
-        size: 5,
-      },
-      [1, 2, 3, 4, 5],
-    );
-    expect(toArray(map(wndw => [...wndw], iter))).toEqual([
+    expect(uw(window(5, [1, 2, 3, 4, 5]))).toEqual([
       [1, 2, 3, 4, 5],
       [2, 3, 4, 5, undefined],
       [3, 4, 5, undefined, undefined],
@@ -55,13 +59,7 @@ describe('window', () => {
     ]);
   });
   it('frames iterable (window bigger than the sequence)', () => {
-    const iter = window(
-      {
-        size: 6,
-      },
-      [1, 2, 3, 4, 5],
-    );
-    expect(toArray(map(wndw => [...wndw], iter))).toEqual([
+    expect(uw(window(6, [1, 2, 3, 4, 5]))).toEqual([
       [1, 2, 3, 4, 5, undefined],
       [2, 3, 4, 5, undefined, undefined],
       [3, 4, 5, undefined, undefined, undefined],
@@ -70,14 +68,17 @@ describe('window', () => {
     ]);
   });
   it('frames iterable (window bigger than the sequence) with filler', () => {
-    const iter = window(
-      {
-        size: 6,
-        filler: 'x',
-      },
-      [1, 2, 3, 4, 5],
-    );
-    expect(toArray(map(wndw => [...wndw], iter))).toEqual([
+    expect(
+      uw(
+        window(
+          6,
+          {
+            filler: 'x',
+          },
+          [1, 2, 3, 4, 5],
+        ),
+      ),
+    ).toEqual([
       [1, 2, 3, 4, 5, 'x'],
       [2, 3, 4, 5, 'x', 'x'],
       [3, 4, 5, 'x', 'x', 'x'],
@@ -86,13 +87,7 @@ describe('window', () => {
     ]);
   });
   it('frames iterable (window bigger than the sequence) 2', () => {
-    const iter = window(
-      {
-        size: 7,
-      },
-      [1, 2, 3, 4, 5],
-    );
-    expect(toArray(map(wndw => [...wndw], iter))).toEqual([
+    expect(uw(window(7, [1, 2, 3, 4, 5]))).toEqual([
       [1, 2, 3, 4, 5, undefined, undefined],
       [2, 3, 4, 5, undefined, undefined, undefined],
       [3, 4, 5, undefined, undefined, undefined, undefined],
