@@ -6,47 +6,51 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { asyncWindow, asyncMap, asyncToArray } from '../../..';
+import { asyncUnwrapDeep as asyncUw } from '../../../__tests__/async-helpers';
+import { asyncWindow } from '../../..';
 describe('asyncWindow', () => {
   it('frames iterable', async () => {
-    const iter = asyncWindow(
-      {
-        size: 3,
-      },
-      [1, 2, 3, 4, 5],
-    );
-    expect(await asyncToArray(asyncMap(wndw => [...wndw], iter))).toEqual([
-      [1, 2, 3],
-      [2, 3, 4],
-      [3, 4, 5],
-      [4, 5, undefined],
-      [5, undefined, undefined],
-    ]);
+    const result = [[1, 2, 3], [2, 3, 4], [3, 4, 5], [4, 5, undefined], [5, undefined, undefined]];
+    expect(await asyncUw(asyncWindow(3, [1, 2, 3, 4, 5]))).toEqual(result);
+    const opts: any = {
+      size: 3,
+    };
+    expect(await asyncUw(asyncWindow(opts, [1, 2, 3, 4, 5]))).toEqual(result);
   });
   it('frames iterable', async () => {
-    const iter = asyncWindow(
-      {
-        size: 3,
-        filler: 'x',
-      },
-      [1, 2, 3, 4, 5],
-    );
-    expect(await asyncToArray(asyncMap(wndw => [...wndw], iter))).toEqual([
-      [1, 2, 3],
-      [2, 3, 4],
-      [3, 4, 5],
-      [4, 5, 'x'],
-      [5, 'x', 'x'],
-    ]);
+    const result = [[1, 2, 3], [2, 3, 4], [3, 4, 5], [4, 5, 'x'], [5, 'x', 'x']];
+    expect(
+      await asyncUw(
+        asyncWindow(
+          3,
+          {
+            filler: 'x',
+          },
+          [1, 2, 3, 4, 5],
+        ),
+      ),
+    ).toEqual(result);
+    const opts: any = {
+      size: 3,
+      filler: 'x',
+    };
+    expect(await asyncUw(asyncWindow(opts, [1, 2, 3, 4, 5]))).toEqual(result);
+  });
+  it('can have separate size and options arguments', async () => {
+    expect(
+      await asyncUw(
+        asyncWindow(
+          3,
+          {
+            filler: 'x',
+          },
+          [1, 2, 3, 4, 5],
+        ),
+      ),
+    ).toEqual([[1, 2, 3], [2, 3, 4], [3, 4, 5], [4, 5, 'x'], [5, 'x', 'x']]);
   });
   it('frames iterable (window equal to the sequence)', async () => {
-    const iter = asyncWindow(
-      {
-        size: 5,
-      },
-      [1, 2, 3, 4, 5],
-    );
-    expect(await asyncToArray(asyncMap(wndw => [...wndw], iter))).toEqual([
+    expect(await asyncUw(asyncWindow(5, [1, 2, 3, 4, 5]))).toEqual([
       [1, 2, 3, 4, 5],
       [2, 3, 4, 5, undefined],
       [3, 4, 5, undefined, undefined],
@@ -55,13 +59,7 @@ describe('asyncWindow', () => {
     ]);
   });
   it('frames iterable (window bigger than the sequence)', async () => {
-    const iter = asyncWindow(
-      {
-        size: 6,
-      },
-      [1, 2, 3, 4, 5],
-    );
-    expect(await asyncToArray(asyncMap(wndw => [...wndw], iter))).toEqual([
+    expect(await asyncUw(asyncWindow(6, [1, 2, 3, 4, 5]))).toEqual([
       [1, 2, 3, 4, 5, undefined],
       [2, 3, 4, 5, undefined, undefined],
       [3, 4, 5, undefined, undefined, undefined],
@@ -70,14 +68,17 @@ describe('asyncWindow', () => {
     ]);
   });
   it('frames iterable (window bigger than the sequence) with filler', async () => {
-    const iter = asyncWindow(
-      {
-        size: 6,
-        filler: 'x',
-      },
-      [1, 2, 3, 4, 5],
-    );
-    expect(await asyncToArray(asyncMap(wndw => [...wndw], iter))).toEqual([
+    expect(
+      await asyncUw(
+        asyncWindow(
+          6,
+          {
+            filler: 'x',
+          },
+          [1, 2, 3, 4, 5],
+        ),
+      ),
+    ).toEqual([
       [1, 2, 3, 4, 5, 'x'],
       [2, 3, 4, 5, 'x', 'x'],
       [3, 4, 5, 'x', 'x', 'x'],
@@ -86,13 +87,7 @@ describe('asyncWindow', () => {
     ]);
   });
   it('frames iterable (window bigger than the sequence) 2', async () => {
-    const iter = asyncWindow(
-      {
-        size: 7,
-      },
-      [1, 2, 3, 4, 5],
-    );
-    expect(await asyncToArray(asyncMap(wndw => [...wndw], iter))).toEqual([
+    expect(await asyncUw(asyncWindow(7, [1, 2, 3, 4, 5]))).toEqual([
       [1, 2, 3, 4, 5, undefined, undefined],
       [2, 3, 4, 5, undefined, undefined, undefined],
       [3, 4, 5, undefined, undefined, undefined, undefined],

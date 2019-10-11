@@ -10,11 +10,7 @@ class TypeTestGenerator extends BaseAsyncGenerator {
   constructor(options) {
     super(options);
 
-    this.glob = 'src/**/__tests__/$*.test.js';
-  }
-
-  getDestName(basename) {
-    return `${basename.slice(1)}.test.js`;
+    this.glob = 'src/**/__tests__/$*.js';
   }
 
   applyTemplate(source, generatedFrom) {
