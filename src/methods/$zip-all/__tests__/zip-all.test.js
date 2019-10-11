@@ -6,7 +6,7 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-/* eslint-disable no-unused-vars,import/no-duplicates */
+/* eslint-disable no-unused-vars,import/no-duplicates,no-constant-condition */
 
 import { zipAll, toArray, slice, range } from '../../..';
 import { OneTwoThreeIterable } from '../../../__tests__/__framework__/fixtures';
