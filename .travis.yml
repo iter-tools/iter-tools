@@ -2,7 +2,8 @@ language: node_js
 node_js:
   - '10'
 
-script:
+
+  script:
   - npm run verify
   - npm run test:js -- --coverage --coverageDirectory=coverage && npm run coverage:badges
   - jest-coverage-badges
