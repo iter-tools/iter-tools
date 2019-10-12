@@ -3,6 +3,5 @@ node_js:
   - '10'
 
 
-  script:
-  - npm run verify
-  - npm run coverage
+  script: npm run verify
+
