@@ -5,5 +5,4 @@ node_js:
 
   script:
   - npm run verify
-  - npm run test:js -- --coverage --coverageDirectory=coverage && npm run coverage:badges
-  - jest-coverage-badges
+  - npm run coverage
