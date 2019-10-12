@@ -179,7 +179,7 @@ describe($`iterableCurry`, () => {
     });
 
     it('throws with too many args', () => {
-      expect(() => c(hello)(goodbye)(world)([])).toThrowError(
+      expect(() => c(hello)(goodbye)(world)([])).toThrow(
         new Error(
           `f takes up to 2 arguments, followed by ${$`iterable`}. You already passed 3 arguments and the last argument was not ${$`iterable`}`,
         ),
