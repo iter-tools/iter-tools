@@ -1,5 +1,6 @@
 module.exports = {
-  extends: ['standard', 'plugin:prettier/recommended', 'typescript'],
+  extends: ['standard', 'plugin:prettier/recommended', 'typescript', 'plugin:jest/recommended'],
+  plugins: ['jest'],
   parser: 'babel-eslint',
   parserOptions: {
     ecmaVersion: 2017,
@@ -25,6 +26,7 @@ module.exports = {
       files: ['*.auto.spec.ts'],
       rules: {
         '@typescript-eslint/explicit-function-return-type': 'off',
+        'jest/no-identical-title': 'off', // TODO stop suppressing these
       },
     },
     {
@@ -37,6 +39,7 @@ module.exports = {
       files: ['$*.js'],
       rules: {
         'no-unused-expressions': 'off',
+        'jest/valid-describe': 'off',
       },
     },
     {
@@ -44,6 +47,10 @@ module.exports = {
       env: {
         node: true,
         jest: true,
+      },
+      rules: {
+        'jest/no-focused-tests': 'error',
+        'jest/no-identical-title': 'off', // TODO stop suppressing these
       },
     },
   ],
