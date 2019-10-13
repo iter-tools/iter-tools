@@ -1,7 +1,7 @@
 Iter-tools
 ==========
 [![Build Status](https://travis-ci.org/iter-tools/iter-tools.svg?branch=master)](https://travis-ci.org/iter-tools/iter-tools)
-![coverage functions](coverage/badge-functions.svg?sanitize=true)
+![Codecov](https://img.shields.io/codecov/c/github/iter-tools/iter-tools)
 [![npm version](https://img.shields.io/npm/v/iter-tools.svg)](https://www.npmjs.com/package/iter-tools)
 [![Gitter chat](https://badges.gitter.im/gitterHQ/gitter.png)](https://gitter.im/iter-tools/community)
 
@@ -36,7 +36,7 @@ Iter-tools is at present the only fully-featured library of its kind. Here is wh
 - **Pay what you need on web**: Iter-tools is designed to be modular, meaning that only the methods you actually use end up being bundled and shipped if you are using a supported bundler. Webpack/uglify are capable of tree-shaking iter-tools, as is Rollup after v1.3.0. If you are not using a bundler that supports tree-shaking, you can still transpile an expression like `import { map, filter } from "iter-tools"` into imports of individual files: `iter-tools/es5/map` and `iter-tools/es5/filter`. To do this use the `iter-tools-explode-imports` package.
 
 ## Definitions
-This should help clarify the documentation. You can also get more informations here: https://developer.mozilla.org/en/docs/Web/JavaScript/Guide/Iterators_and_Generators and here: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols
+This should help clarify the documentation. You can also get more informations here: 
 * **Iterator**: an object implementing the iterator protocol (the method next etc.)
 * **Async Iterator**: an object implementing the async iterator protocol (the method next that returns a promise etc.)
 * An object is **iterable** if it implements the @@iterator method, meaning that the object (or one of the objects up its prototype chain) must have a property with a @@iterator key which is available via constant Symbol.iterator. You can call this function without arguments to get an object implementing the **iterator** protocol.
