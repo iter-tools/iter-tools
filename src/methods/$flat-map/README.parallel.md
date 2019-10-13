@@ -4,13 +4,17 @@ to resolve. The optional concurrency paramater dictates how many items can be re
 still waiting for the results of previous mapper callbacks.
 
 The default concurrency is 4.
+
 ```js
 await asyncFlatMapParallel(asyncMapper, asyncIterable);
 await asyncFlatMapParallel(10, asyncMapper, asyncIterable);
 ```
 
 Here is an example of using asyncWrap to turn a sync iterable into an async one:
+
 ```js
-const item = await asyncWrap([1, 2, 3])[Symbol.asyncIterator]().next()
+const item = await asyncWrap([1, 2, 3])
+  [Symbol.asyncIterator]()
+  .next();
 item.value; // 1
 ```

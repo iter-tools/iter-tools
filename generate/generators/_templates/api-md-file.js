@@ -71,10 +71,10 @@ const methodTemplate = (doc, aliasMap) => {
   const see = seeName && seeMethodTemplate(seeName);
   const aliases = methodAliasesTemplate(doc);
   const signatures = doc.signatures ? `${methodSignaturesTemplate(name, doc.signatures)}\n\n` : '';
-  return `### ${name}\n${signatures}${aliases}${readme || see || 'Undocumented.'}\n`;
+  return `### ${name}\n\n${signatures}${aliases}${readme || see || 'Undocumented.'}\n`;
 };
 
-const typeSectionTemplate = (type, body) => `## ${sections.get(type).title}\n${body}\n`;
+const typeSectionTemplate = (type, body) => `## ${sections.get(type).title}\n\n${body}\n`;
 
 const linkTarget = (name, aliasMap) => (aliasMap.get(name) || name).toLowerCase();
 
@@ -165,14 +165,17 @@ module.exports = (typesDoc, methodsWithDollars, aliasMap) => {
     .join('');
 
   return `# The iter-tools API
+
 [![Documentation is automatically generated](https://img.shields.io/static/v1?label=docs&message=generated&color=informational)](https://github.com/iter-tools/iter-tools/blob/master/CONTRIBUTING.md#the-code-generator)
 
 [Types](#types)  
 [Methods](#methods)
 
 ## Types
+
 ${typesDoc}
 
 ## Methods
+
 ${toc}\n${docs}`;
 };

@@ -2,5 +2,5 @@ ZipAll receives 2 or more iterables. It returns an iterable of entries, each of 
 
 ```js
 zipAll([1, 2], [3, 4], [5, 6, 7]); // [1, 3, 5], [2, 4, 6], [undefined, undefined, 7]
-zipAll({filler: null}, [1, 2], []); // [1, null], [2, null]
+zipAll({ filler: null }, [1, 2], []); // [1, null], [2, null]
 ```

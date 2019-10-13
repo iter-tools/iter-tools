@@ -1,25 +1,20 @@
 when is a helper you can use with es6 spread syntax (the `...` operator). In particular it helps avoid an unnecessarily difficult to read pattern that frequently causes code formatters (prettier, specifically) to emit an undesireable number of lines:
+
 ```js
 const always = true;
-const sometimes = Math.random() > .5;
+const sometimes = Math.random() > 0.5;
 
-const arr = [
-  always,
-  ...(
-    sometimes ? [ sometimes ] : []
-  )
-]; // [true, true] OR [true]
+const arr = [always, ...(sometimes ? [sometimes] : [])]; // [true, true] OR [true]
 ```
 
 Instead, you can use the when method like so:
+
 ```js
-const whenArr = [
-  always,
-  ...when(sometimes, [ sometimes ]),
-]; // [true, true] OR [true]
+const whenArr = [always, ...when(sometimes, [sometimes])]; // [true, true] OR [true]
 ```
 
 The pattern works equally well with objects.
+
 ```js
 const whenObj = {
   always,
