@@ -3,8 +3,5 @@ Splits a sequence into multiple subsequences by running a predicate function aga
 You may also specify a regex predicate, in which case the behavior will match `str.split(RegExp)`.
 
 ```js
-splitWith(
-  x => x == null,
-  [1, null, 2, undefined, 3]
-) // Iterable[Iterable[1], Iterable[2], Iterable[3]]
+splitWith(x => x == null, [1, null, 2, undefined, 3]); // Iterable[Iterable[1], Iterable[2], Iterable[3]]
 ```

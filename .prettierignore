@@ -5,4 +5,7 @@
 /.git
 /coverage
 
+CHANGELOG.md
+API.md
+
 generate-yo/generators/*/templates/

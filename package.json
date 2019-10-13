@@ -29,7 +29,7 @@
     "create:method": "node ./generate-yo method",
     "verify": "run-s generate verify:* build test",
     "verify:git-clean": "node ./verify-git-clean.js",
-    "format": "prettier --write '**/*.{mjs,js,ts,json}'",
+    "format": "prettier --write '**/*.{mjs,js,ts,json,md}'",
     "lint": "eslint --ext .mjs,.js,.ts .",
     "prepublishOnly": "npm run build"
   },
@@ -42,7 +42,7 @@
     "*.{mjs,js,ts}": [
       "eslint"
     ],
-    "*.json": [
+    "*.{md,json}": [
       "prettier -c"
     ]
   },

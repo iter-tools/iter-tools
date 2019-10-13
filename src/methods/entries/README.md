@@ -5,9 +5,9 @@ When passed a nullish value, returns an empty iterable.
 `entries` is a great way to construct Maps from objects
 
 ```js
-const obj = {foo: 'bar', fox: 'far'}
-const map = new Map(entries(obj))
+const obj = { foo: 'bar', fox: 'far' };
+const map = new Map(entries(obj));
 
-Array.from(entries(obj)) // [['foo': 'bar'], 'fox': 'far']]
-deepEqual(Array.from(entries(map)), entries(obj)) // true
+Array.from(entries(obj)); // [['foo': 'bar'], 'fox': 'far']]
+deepEqual(Array.from(entries(map)), entries(obj)); // true
 ```

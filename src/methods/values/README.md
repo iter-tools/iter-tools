@@ -3,9 +3,9 @@ When given an Object, it is equivalent to Object.values, otherwise it calls `val
 When passed a nullish value, returns an empty iterable.
 
 ```js
-const obj = {foo: 'bar', fox: 'far'}
-const map = new Map(entries(obj))
+const obj = { foo: 'bar', fox: 'far' };
+const map = new Map(entries(obj));
 
-Array.from(values(obj)) // ['bar', 'far']
-deepEqual(Array.from(values(map)), values(obj)) // true
+Array.from(values(obj)); // ['bar', 'far']
+deepEqual(Array.from(values(map)), values(obj)); // true
 ```

@@ -4,6 +4,7 @@ to resolve. The optional concurrency paramater dictates how many items can be re
 still waiting for the results of previous async predicates.
 
 The default concurrency is 4.
+
 ```js
 await asyncFilterParallel(asyncPredicate, asyncIterable);
 await asyncFilterParallel(10, asyncPredicate, asyncIterable);
