@@ -1,3 +1,9 @@
 {
-  "type": "transform"
+  "type": "transform",
+  "signatures": [
+    [{ "name": "n" }, { "name": "comparator" }],
+    [{ "name": "n" }],
+    [{ "name": "comparator" }],
+    []
+  ]
 }

@@ -9,13 +9,13 @@
 import Heap from 'little-ds-toolkit/lib/heap';
 import { asyncIterableCurry } from '../../internal/async-iterable';
 import defaultCompare from '../../internal/compare';
-export async function* asyncTakeSorted(source, comparator = defaultCompare, number = Infinity) {
+export async function* asyncTakeSorted(source, n = Infinity, comparator = defaultCompare) {
   const heap = new Heap(comparator);
 
   for await (const item of source) {
     heap.push(item);
 
-    if (heap.size() > number) {
+    if (heap.size() > n) {
       heap.pop();
     }
   }
@@ -29,4 +29,11 @@ export async function* asyncTakeSorted(source, comparator = defaultCompare, numb
 export default asyncIterableCurry(asyncTakeSorted, {
   minArgs: 0,
   maxArgs: 2,
+
+  validateArgs(args) {
+    if (typeof args[1] === 'number') {
+      args[0] = args[1];
+      args[1] = undefined;
+    }
+  },
 });

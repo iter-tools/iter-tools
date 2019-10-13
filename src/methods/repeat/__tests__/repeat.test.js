@@ -1,22 +1,17 @@
-import { repeat } from '../../..';
+import { repeat, slice } from '../../..';
 
 describe('repeat', () => {
   it('return simple repeat', () => {
-    expect(Array.from(repeat(10, 3))).toEqual([10, 10, 10]);
+    expect(Array.from(repeat(3, 'x'))).toEqual(['x', 'x', 'x']);
   });
 
   it('can be reused', () => {
-    const myRepeat = repeat(10, 3);
-    expect(Array.from(myRepeat)).toEqual([10, 10, 10]);
-    expect(Array.from(myRepeat)).toEqual([10, 10, 10]);
+    const myRepeat = repeat(3, 'x');
+    expect(Array.from(myRepeat)).toEqual(['x', 'x', 'x']);
+    expect(Array.from(myRepeat)).toEqual(['x', 'x', 'x']);
   });
 
   it('return infinite repeat', () => {
-    const iterable = repeat(10);
-    const iter = iterable[Symbol.iterator]();
-    expect(iter.next().value).toBe(10);
-    expect(iter.next().value).toBe(10);
-    expect(iter.next().value).toBe(10);
-    expect(iter.next().value).toBe(10);
+    expect(Array.from(slice(0, 4, repeat('x')))).toEqual(['x', 'x', 'x', 'x']);
   });
 });

@@ -24,7 +24,7 @@ describe($`takeSorted`, () => {
   it(
     'yields items from the iterable sorted with a comparator',
     $async(() => {
-      const smallest2 = $takeSorted((a, b) => a.length - b.length, 2, [
+      const smallest2 = $takeSorted(2, (a, b) => a.length - b.length, [
         'abc',
         'a',
         'abcd',

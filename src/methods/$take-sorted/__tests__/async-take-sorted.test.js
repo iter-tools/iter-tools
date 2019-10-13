@@ -21,7 +21,7 @@ describe('asyncTakeSorted', () => {
     expect(await asyncToArray(smallest1)).toEqual([99]);
   });
   it('yields items from the iterable sorted with a comparator', async () => {
-    const smallest2 = asyncTakeSorted((a, b) => a.length - b.length, 2, [
+    const smallest2 = asyncTakeSorted(2, (a, b) => a.length - b.length, [
       'abc',
       'a',
       'abcd',

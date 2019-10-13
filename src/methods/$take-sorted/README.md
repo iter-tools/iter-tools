@@ -8,5 +8,5 @@ takeSorted([4, 5, 2, 3, 1]); // Iterable[1, 2, 3, 4, 5]
 It can take as a optional comparator argument which has the same semantics as the one taken by `Array.prototype.sort`.
 
 ```js
-takeSorted((a, b) => b - a, 3, [4, 5, 2, 3, 1]); // Iterable[5, 4, 3]
+takeSorted(3, (a, b) => b - a, [4, 5, 2, 3, 1]); // Iterable[5, 4, 3]
 ```
