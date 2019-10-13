@@ -12,16 +12,23 @@ declare function asyncTakeSorted<T = any>(
   n: number,
 ): (source: AsyncSourceIterable<T>) => AsyncResultIterable<T>;
 declare function asyncTakeSorted<T = any>(
-  func: (a: T, b: T) => number,
   n: number,
+  func: (a: T, b: T) => number,
+): (source: AsyncSourceIterable<T>) => AsyncResultIterable<T>;
+declare function asyncTakeSorted<T = any>(
+  func: (a: T, b: T) => number,
 ): (source: AsyncSourceIterable<T>) => AsyncResultIterable<T>;
 declare function asyncTakeSorted<T = any>(
   n: number,
   source: AsyncSourceIterable<T>,
 ): AsyncResultIterable<T>;
 declare function asyncTakeSorted<T = any>(
-  func: (a: T, b: T) => number,
   n: number,
+  func: (a: T, b: T) => number,
+  source: AsyncSourceIterable<T>,
+): AsyncResultIterable<T>;
+declare function asyncTakeSorted<T = any>(
+  func: (a: T, b: T) => number,
   source: AsyncSourceIterable<T>,
 ): AsyncResultIterable<T>;
 export default asyncTakeSorted;

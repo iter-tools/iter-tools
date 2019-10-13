@@ -60,7 +60,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
  -  `trailingWindow`, `asyncTrailingWindow`
 
 **Arguments**
- -  [optional] `forks` (count) for `fork` and `asyncFork`
+ -  [optional] `n` (count) for `fork` and `asyncFork`
+ -  [optional] `n` (count) for `cycle` and `asyncCycle`
  -  [optional] `filler` (specified as `{ filler }`) for `zip` and `zipAll`
  -  [optional] `notFoundValue` for `find` and `asyncFind`
 
@@ -72,9 +73,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Changed
  -  **IMPORTANT**; **BREAKING**: `slice(n)` is now equivalent to `[].slice(n)`, not `[].slice(0, n)`. You should now write `slice(0, n, iterable)`.
+ -  **IMPORTANT**; **BREAKING**: `repeat` order of arguments changed. You must now write `repeat(3, 'x')` instead of `repeat(x, 3)`.
  -  All functions return iterables that can consumed multiple times.
  -  It is now an error to make an empty partial application, e.g. `map()`.
- -  `takeSorted` and `asyncTakeSorted`: optional comparator is now the first argument.
+ -  `takeSorted` and `asyncTakeSorted`: Both `n` and `comparator` arguments are now optional.
  -  `enumerate` and `asyncEnumerate`: optional starting idx is now specified before iterable. 
  -  Optional configuration arguments can no longer be undefined. This was at odds with considering undefined as a valid iterable.
  -  `range` can now called as either `range(end)` or `range(start, end, step)`. This matches Python.

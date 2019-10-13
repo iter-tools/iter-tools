@@ -1,13 +1,17 @@
-import { ensureIterable, wrapWithMethodIterable } from '../../internal/iterable';
+import { iterableCurry } from '../../internal/iterable';
 
-export function* cycle(iterable) {
-  if (Array.isArray(iterable)) {
-    while (true) {
-      yield* iterable;
-    }
-  } else {
-    yield* cycle([...ensureIterable(iterable)]);
+export function* cycle(iterable, n = Infinity) {
+  while (n--) {
+    yield* iterable;
   }
 }
 
-export default wrapWithMethodIterable(cycle);
+export default iterableCurry(cycle, {
+  minArgs: 0,
+  maxArgs: 1,
+  validateArgs(args) {
+    if (!Array.isArray(args[1])) {
+      args[1] = [...args[1]];
+    }
+  },
+});

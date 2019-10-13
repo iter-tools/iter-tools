@@ -6,81 +6,34 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { asyncCycle, range } from '../../..';
+import { asyncCycle, asyncSlice, asyncToArray, asyncWrap, range } from '../../..';
 describe('asyncCycle', () => {
   it('return infinite cycle', async () => {
-    const iter = asyncCycle([1, 2, 3])[Symbol.asyncIterator]();
-    expect(await iter.next()).toEqual({
-      value: 1,
-      done: false,
-    });
-    expect(await iter.next()).toEqual({
-      value: 2,
-      done: false,
-    });
-    expect(await iter.next()).toEqual({
-      value: 3,
-      done: false,
-    });
-    expect(await iter.next()).toEqual({
-      value: 1,
-      done: false,
-    });
-    expect(await iter.next()).toEqual({
-      value: 2,
-      done: false,
-    });
-    expect(await iter.next()).toEqual({
-      value: 3,
-      done: false,
-    });
-  });
-  it('return infinite cycle (from iterator)', async () => {
-    const iter = asyncCycle(range(3))[Symbol.asyncIterator]();
-    expect(await iter.next()).toEqual({
-      value: 0,
-      done: false,
-    });
-    expect(await iter.next()).toEqual({
-      value: 1,
-      done: false,
-    });
-    expect(await iter.next()).toEqual({
-      value: 2,
-      done: false,
-    });
-    expect(await iter.next()).toEqual({
-      value: 0,
-      done: false,
-    });
-    expect(await iter.next()).toEqual({
-      value: 1,
-      done: false,
-    });
-    expect(await iter.next()).toEqual({
-      value: 2,
-      done: false,
-    });
+    expect(await asyncToArray(asyncSlice(0, 6, asyncCycle(asyncWrap([1, 2, 3]))))).toEqual([
+      1,
+      2,
+      3,
+      1,
+      2,
+      3,
+    ]);
   });
   it('can be reused', async () => {
-    const myCycle = asyncCycle(range(3));
-    const iter1 = myCycle[Symbol.asyncIterator]();
-    expect(await iter1.next()).toEqual({
-      value: 0,
-      done: false,
-    });
-    expect(await iter1.next()).toEqual({
-      value: 1,
-      done: false,
-    });
-    const iter2 = myCycle[Symbol.asyncIterator]();
-    expect(await iter2.next()).toEqual({
-      value: 0,
-      done: false,
-    });
-    expect(await iter2.next()).toEqual({
-      value: 1,
-      done: false,
-    });
+    const myCycle = asyncCycle(range(1, 4));
+    expect(await asyncToArray(asyncSlice(0, 7, myCycle))).toEqual([1, 2, 3, 1, 2, 3, 1]);
+    expect(await asyncToArray(asyncSlice(0, 7, myCycle))).toEqual([1, 2, 3, 1, 2, 3, 1]);
+  });
+  it('can cycle a limited number of times', async () => {
+    expect(await asyncToArray(asyncCycle(3, asyncWrap([1, 2, 3])))).toEqual([
+      1,
+      2,
+      3,
+      1,
+      2,
+      3,
+      1,
+      2,
+      3,
+    ]);
   });
 });

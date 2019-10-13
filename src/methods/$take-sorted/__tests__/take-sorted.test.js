@@ -21,7 +21,7 @@ describe('takeSorted', () => {
     expect(toArray(smallest1)).toEqual([99]);
   });
   it('yields items from the iterable sorted with a comparator', () => {
-    const smallest2 = takeSorted((a, b) => a.length - b.length, 2, [
+    const smallest2 = takeSorted(2, (a, b) => a.length - b.length, [
       'abc',
       'a',
       'abcd',

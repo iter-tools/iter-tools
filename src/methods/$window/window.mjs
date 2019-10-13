@@ -15,7 +15,7 @@ export function* window(source, size, { filler } = {}) {
   circular.fill(filler);
   let index = 0;
 
-  for (const item of concat(source, repeat(filler, size - 1))) {
+  for (const item of concat(source, repeat(size - 1, filler))) {
     circular.push(item);
 
     if (index + 1 >= size) {

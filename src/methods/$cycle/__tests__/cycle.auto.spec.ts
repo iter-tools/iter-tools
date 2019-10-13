@@ -6,81 +6,17 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { cycle, range } from '../../..';
+import { cycle, slice, toArray, wrap, range } from '../../..';
 describe('cycle', () => {
   it('return infinite cycle', () => {
-    const iter = cycle([1, 2, 3])[Symbol.iterator]();
-    expect(iter.next()).toEqual({
-      value: 1,
-      done: false,
-    });
-    expect(iter.next()).toEqual({
-      value: 2,
-      done: false,
-    });
-    expect(iter.next()).toEqual({
-      value: 3,
-      done: false,
-    });
-    expect(iter.next()).toEqual({
-      value: 1,
-      done: false,
-    });
-    expect(iter.next()).toEqual({
-      value: 2,
-      done: false,
-    });
-    expect(iter.next()).toEqual({
-      value: 3,
-      done: false,
-    });
-  });
-  it('return infinite cycle (from iterator)', () => {
-    const iter = cycle(range(3))[Symbol.iterator]();
-    expect(iter.next()).toEqual({
-      value: 0,
-      done: false,
-    });
-    expect(iter.next()).toEqual({
-      value: 1,
-      done: false,
-    });
-    expect(iter.next()).toEqual({
-      value: 2,
-      done: false,
-    });
-    expect(iter.next()).toEqual({
-      value: 0,
-      done: false,
-    });
-    expect(iter.next()).toEqual({
-      value: 1,
-      done: false,
-    });
-    expect(iter.next()).toEqual({
-      value: 2,
-      done: false,
-    });
+    expect(toArray(slice(0, 6, cycle(wrap([1, 2, 3]))))).toEqual([1, 2, 3, 1, 2, 3]);
   });
   it('can be reused', () => {
-    const myCycle = cycle(range(3));
-    const iter1 = myCycle[Symbol.iterator]();
-    expect(iter1.next()).toEqual({
-      value: 0,
-      done: false,
-    });
-    expect(iter1.next()).toEqual({
-      value: 1,
-      done: false,
-    });
-    const iter2 = myCycle[Symbol.iterator]();
-    expect(iter2.next()).toEqual({
-      value: 0,
-      done: false,
-    });
-    expect(iter2.next()).toEqual({
-      value: 1,
-      done: false,
-    });
+    const myCycle = cycle(range(1, 4));
+    expect(toArray(slice(0, 7, myCycle))).toEqual([1, 2, 3, 1, 2, 3, 1]);
+    expect(toArray(slice(0, 7, myCycle))).toEqual([1, 2, 3, 1, 2, 3, 1]);
+  });
+  it('can cycle a limited number of times', () => {
+    expect(toArray(cycle(3, wrap([1, 2, 3])))).toEqual([1, 2, 3, 1, 2, 3, 1, 2, 3]);
   });
 });
