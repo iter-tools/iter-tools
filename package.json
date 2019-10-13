@@ -27,7 +27,7 @@
     "build:es2018-cjs": "cross-env BABEL_ENV=cjs babel --config-file ./babel-es2018.config.js -x .mjs src -d es2018",
     "build:copyts": "copyfiles -f src/*.ts es5 && copyfiles -f src/*.ts es2015 && copyfiles -f src/*.ts es2018",
     "create:method": "node ./generate-yo method",
-    "verify": "run-s generate verify:* build test && npm run coverage",
+    "verify": "run-s generate verify:* build coverage test:js",
     "verify:git-clean": "node ./verify-git-clean.js",
     "format": "prettier --write '**/*.{mjs,js,ts}'",
     "lint": "eslint --ext .mjs,.js,.ts .",
