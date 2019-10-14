@@ -6,7 +6,7 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { WeakExchange } from '../../internal/queues';
+import { WeakExchange } from '../../../internal/queues';
 
 function startNextSubsequence(state) {
   state.subsequenceEnded = false;
