@@ -12,8 +12,8 @@
     "test:types": "tsc",
     "test": "run-s test:*",
     "benchmarks": "npm run clean && npm run build:es2018-cjs && node benchmarks",
-    "coverage:badges": "jest-coverage-badges",
-    "coverage": "npm run test:js -- --coverage --coverageDirectory=coverage && npm run coverage:badges",
+    "coverage": "npm run test:js -- --coverage",
+    "coverage:upload": "codecov",
     "clean": "rimraf es5 es2015 es2018",
     "generate": "node ./generate",
     "generate:watch": "node ./generate -w",
@@ -27,7 +27,7 @@
     "build:es2018-cjs": "cross-env BABEL_ENV=cjs babel --config-file ./babel-es2018.config.js -x .mjs src -d es2018",
     "build:copyts": "copyfiles -f src/*.ts es5 && copyfiles -f src/*.ts es2015 && copyfiles -f src/*.ts es2018",
     "create:method": "node ./generate-yo method",
-    "verify": "run-s generate verify:* build test",
+    "verify": "run-s generate verify:* build coverage coverage:upload test:types",
     "verify:git-clean": "node ./verify-git-clean.js",
     "format": "prettier --write '**/*.{mjs,js,ts}'",
     "lint": "eslint --ext .mjs,.js,.ts .",
@@ -65,6 +65,7 @@
   "dependencies": {
     "@babel/runtime": "^7.4.3",
     "@babel/runtime-corejs2": "^7.4.3",
+    "codecov": "^3.6.1",
     "little-ds-toolkit": "^1.1.0",
     "typescript-tuple": "^2.1.0"
   },
@@ -132,5 +133,8 @@
   },
   "resolutions": {
     "babel-core": "7.0.0-bridge.0"
+  },
+  "jest": {
+    "coverageDirectory": "./coverage/"
   }
 }
