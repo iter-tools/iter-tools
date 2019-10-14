@@ -1,7 +1,5 @@
 /node_modules
-/es5
-/es2015
-/es2018
+/dist
 /.git
 /coverage
 
