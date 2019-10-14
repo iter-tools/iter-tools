@@ -1,11 +1,17 @@
 module.exports = {
-  plugins: ['@babel/plugin-syntax-async-generators'],
-  env: {
-    es: {
-      plugins: ['./babel-plugin-pure-curry'],
+  extends: './babel-shared.config.js',
+  overrides: [
+    {
+      test: '**/*.mjs',
+      plugins: ['@babel/plugin-syntax-async-generators'],
+      env: {
+        es: {
+          plugins: ['./babel-plugin-pure-curry'],
+        },
+        cjs: {
+          plugins: ['add-module-exports', '@babel/plugin-transform-modules-commonjs'],
+        },
+      },
     },
-    cjs: {
-      plugins: ['add-module-exports', '@babel/plugin-transform-modules-commonjs'],
-    },
-  },
+  ],
 };

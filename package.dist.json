@@ -1,0 +1,10 @@
+{
+  "main": "index",
+  "module": "index.mjs",
+  "jsnext:main": "index.mjs",
+  "typings": "index.d.ts",
+  "scripts": {},
+  "husky": {},
+  "lint-staged": {},
+  "devDependencies": {}
+}

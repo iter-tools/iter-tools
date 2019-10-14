@@ -4,6 +4,7 @@ const babelJest = require('babel-jest');
 module.exports = function(configFile) {
   return babelJest.createTransformer({
     configFile: join(__dirname, '..', configFile),
+    comments: true,
     // prettier-ignore
     plugins: [
       /**
@@ -17,7 +18,8 @@ module.exports = function(configFile) {
        * sources for some reason. It interprets imports to be type imports, and
        * destroys them. We use the flow-strip-types plugin because it doesn't
        * do this.
-       */ 
+       */
+      ['@babel/plugin-syntax-typescript', false],
       '@babel/plugin-transform-flow-strip-types',
       'add-module-exports',
       '@babel/plugin-transform-modules-commonjs'
