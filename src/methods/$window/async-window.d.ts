@@ -8,14 +8,14 @@
 
 import { AsyncSourceIterable, AsyncResultIterable } from '../../types/async-iterable';
 import { ResultIterable as SyncResultIterable } from '../../types/iterable';
-declare function asyncWindow<Filler = undefined, T = any>(
+declare function asyncWindow<T, Filler = undefined>(
   size: number,
   opts: {
     readonly filler?: Filler;
   },
   source: AsyncSourceIterable<T>,
 ): AsyncResultIterable<SyncResultIterable<T | Filler>>;
-declare function asyncWindow<T = any>(
+declare function asyncWindow<T>(
   size: number,
   source: AsyncSourceIterable<T>,
 ): AsyncResultIterable<SyncResultIterable<T | undefined>>;
@@ -27,7 +27,5 @@ declare function asyncWindow(
 ): <T>(source: AsyncSourceIterable<T>) => AsyncResultIterable<SyncResultIterable<T>>;
 declare function asyncWindow(
   size: number,
-): <T = any>(
-  source: AsyncSourceIterable<T>,
-) => AsyncResultIterable<SyncResultIterable<T | undefined>>;
+): <T>(source: AsyncSourceIterable<T>) => AsyncResultIterable<SyncResultIterable<T | undefined>>;
 export default asyncWindow;

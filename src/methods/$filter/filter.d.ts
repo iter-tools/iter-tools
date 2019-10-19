@@ -7,17 +7,17 @@
  */
 
 import { SourceIterable, ResultIterable } from '../../types/iterable';
-declare function filter<S extends T, T = any>(
+declare function filter<S extends T, T>(
   func: (item: T, i: number) => item is S,
 ): (source: SourceIterable<T>) => ResultIterable<S>;
-declare function filter<T = any>(
+declare function filter<T>(
   func: (item: T, i: number) => boolean,
 ): (source: SourceIterable<T>) => ResultIterable<T>;
-declare function filter<S extends T, T = any>(
+declare function filter<S extends T, T>(
   func: (item: T, i: number) => item is S,
   source: SourceIterable<T>,
 ): ResultIterable<S>;
-declare function filter<T = any>(
+declare function filter<T>(
   func: (item: T, i: number) => boolean,
   source: SourceIterable<T>,
 ): ResultIterable<T>;

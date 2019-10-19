@@ -15,6 +15,6 @@ describe('findOr', () => {
     expect(findOr(0, _ => false, wrap([1, 2, 3, 4, 5, 6]))).toBe(0);
   });
   it('returns notFoundValue when iterable is empty', () => {
-    expect(findOr(null, item => item, null)).toBe(null);
+    expect(findOr(null, (item: never) => item, null)).toBe(null);
   });
 });

@@ -18,41 +18,19 @@ describe('asyncMapParallel', () => {
     expect(await asyncToArray(iter)).toEqual([2, 4, 6]);
   });
   it('returns mapped iterable from iterable', async () => {
-    const iter = asyncMapParallel(
-      item => item * 2,
-      range({
-        start: 1,
-        end: 4,
-      }),
-    );
+    const iter = asyncMapParallel(item => item * 2, range(1, 4));
     expect(await asyncToArray(iter)).toEqual([2, 4, 6]);
   });
   it('maps concurrently', async () => {
-    const iter = asyncMapParallel(
-      2,
-      item => item * 2,
-      range({
-        start: 1,
-        end: 4,
-      }),
-    );
+    const iter = asyncMapParallel(2, item => item * 2, range(1, 4));
     expect(await asyncToArray(iter)).toEqual([2, 4, 6]);
   });
   it('returns mapped iterable (curried version)', async () => {
-    const iter = asyncMapParallel(item => item * 2);
-    expect(
-      await asyncToArray(
-        iter(
-          range({
-            start: 1,
-            end: 4,
-          }),
-        ),
-      ),
-    ).toEqual([2, 4, 6]);
+    const iter = asyncMapParallel((item: number) => item * 2);
+    expect(await asyncToArray(iter(range(1, 4)))).toEqual([2, 4, 6]);
   });
   it('returns empty iterable from null', async () => {
-    expect(await asyncToArray(asyncMapParallel(item => item * 2, null))).toEqual([]);
+    expect(await asyncToArray(asyncMapParallel((item: never) => item * 2, null))).toEqual([]);
   });
   it('maps concurrently (check how many)', async () => {
     const desiredConcurrency = 3;

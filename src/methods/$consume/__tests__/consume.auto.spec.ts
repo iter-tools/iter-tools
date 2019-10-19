@@ -26,7 +26,7 @@ describe('consume', () => {
   });
   it('consumes an iterable (curried)', () => {
     const arr: Array<number> = [];
-    const consumePush = consume(item => arr.push(item));
+    const consumePush = consume((item: number) => arr.push(item));
     consumePush([1, 2, 3]);
     expect(arr).toEqual([1, 2, 3]);
   });

@@ -7,10 +7,10 @@
  */
 
 import { AsyncSourceIterable, AsyncResultIterable } from '../../types/async-iterable';
-declare function asyncMap<O, T = any>(
+declare function asyncMap<O, T>(
   func: (item: T) => O | Promise<O>,
 ): (source: AsyncSourceIterable<T>) => AsyncResultIterable<O>;
-declare function asyncMap<O, T = any>(
+declare function asyncMap<O, T>(
   func: (item: T) => O | Promise<O>,
   source: AsyncSourceIterable<T>,
 ): AsyncResultIterable<O>;

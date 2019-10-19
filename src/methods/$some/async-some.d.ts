@@ -7,10 +7,10 @@
  */
 
 import { AsyncSourceIterable } from '../../types/async-iterable';
-declare function asyncSome<T = any>(
+declare function asyncSome<T>(
   func: (item: T, i: number) => boolean | Promise<boolean>,
 ): (iterable: AsyncSourceIterable<T>) => Promise<boolean>;
-declare function asyncSome<T = any>(
+declare function asyncSome<T>(
   func: (item: T, i: number) => boolean | Promise<boolean>,
   iterable: AsyncSourceIterable<T>,
 ): Promise<boolean>;

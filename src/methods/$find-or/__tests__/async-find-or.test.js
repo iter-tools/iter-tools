@@ -17,7 +17,7 @@ describe('asyncFindOr', () => {
     expect(await asyncFindOr(0, _ => false, asyncWrap([1, 2, 3, 4, 5, 6]))).toBe(0);
   });
   it('returns notFoundValue when iterable is empty', async () => {
-    expect(await asyncFindOr(null, item => item, null)).toBe(null);
+    expect(await asyncFindOr(null, (item: never) => item, null)).toBe(null);
   });
   it('returns found item (using a promise)', async () => {
     expect(await asyncFindOr(0, async item => item === 5, asyncWrap([1, 2, 3, 4, 5, 6]))).toBe(5);

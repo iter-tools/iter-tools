@@ -1,18 +1,18 @@
 import { $SourceIterable, $ResultIterable } from '../../types/$iterable';
 
-declare function $slice<T = any>(opts: {
+declare function $slice<T>(opts: {
   readonly start?: number;
   readonly end?: number;
   readonly step?: number;
 }): (source: $SourceIterable<T>) => $ResultIterable<T>;
 
-declare function $slice<T = any>(
+declare function $slice<T>(
   start?: number,
   end?: number,
   step?: number,
 ): (source: $SourceIterable<T>) => $ResultIterable<T>;
 
-declare function $slice<T = any>(
+declare function $slice<T>(
   opts: {
     readonly start?: number;
     readonly end?: number;
@@ -21,15 +21,15 @@ declare function $slice<T = any>(
   source: $SourceIterable<T>,
 ): $ResultIterable<T>;
 
-declare function $slice<T = any>(start: number, source: $SourceIterable<T>): $ResultIterable<T>;
+declare function $slice<T>(start: number, source: $SourceIterable<T>): $ResultIterable<T>;
 
-declare function $slice<T = any>(
+declare function $slice<T>(
   start: number,
   end: number,
   source: $SourceIterable<T>,
 ): $ResultIterable<T>;
 
-declare function $slice<T = any>(
+declare function $slice<T>(
   start: number,
   end: number,
   step: number,

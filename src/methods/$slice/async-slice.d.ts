@@ -7,17 +7,17 @@
  */
 
 import { AsyncSourceIterable, AsyncResultIterable } from '../../types/async-iterable';
-declare function asyncSlice<T = any>(opts: {
+declare function asyncSlice<T>(opts: {
   readonly start?: number;
   readonly end?: number;
   readonly step?: number;
 }): (source: AsyncSourceIterable<T>) => AsyncResultIterable<T>;
-declare function asyncSlice<T = any>(
+declare function asyncSlice<T>(
   start?: number,
   end?: number,
   step?: number,
 ): (source: AsyncSourceIterable<T>) => AsyncResultIterable<T>;
-declare function asyncSlice<T = any>(
+declare function asyncSlice<T>(
   opts: {
     readonly start?: number;
     readonly end?: number;
@@ -25,16 +25,16 @@ declare function asyncSlice<T = any>(
   },
   source: AsyncSourceIterable<T>,
 ): AsyncResultIterable<T>;
-declare function asyncSlice<T = any>(
+declare function asyncSlice<T>(
   start: number,
   source: AsyncSourceIterable<T>,
 ): AsyncResultIterable<T>;
-declare function asyncSlice<T = any>(
+declare function asyncSlice<T>(
   start: number,
   end: number,
   source: AsyncSourceIterable<T>,
 ): AsyncResultIterable<T>;
-declare function asyncSlice<T = any>(
+declare function asyncSlice<T>(
   start: number,
   end: number,
   step: number,

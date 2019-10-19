@@ -1,7 +1,7 @@
 import { $SourceIterable, $ResultIterable } from '../../types/$iterable';
 import { ResultIterable as SyncResultIterable } from '../../types/iterable';
 
-declare function $window<Filler = undefined, T = any>(
+declare function $window<T, Filler = undefined>(
   size: number,
   opts: {
     readonly filler?: Filler;
@@ -9,7 +9,7 @@ declare function $window<Filler = undefined, T = any>(
   source: $SourceIterable<T>,
 ): $ResultIterable<SyncResultIterable<T | Filler>>;
 
-declare function $window<T = any>(
+declare function $window<T>(
   size: number,
   source: $SourceIterable<T>,
 ): $ResultIterable<SyncResultIterable<T | undefined>>;
@@ -23,6 +23,6 @@ declare function $window(
 
 declare function $window(
   size: number,
-): <T = any>(source: $SourceIterable<T>) => $ResultIterable<SyncResultIterable<T | undefined>>;
+): <T>(source: $SourceIterable<T>) => $ResultIterable<SyncResultIterable<T | undefined>>;
 
 export default $window;

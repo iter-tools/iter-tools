@@ -7,7 +7,5 @@
  */
 
 import { AsyncSourceIterable, AsyncResultIterable } from '../../types/async-iterable';
-declare function asyncConcat<T = any>(
-  ...sources: Array<AsyncSourceIterable<T>>
-): AsyncResultIterable<T>;
+declare function asyncConcat<T>(...sources: Array<AsyncSourceIterable<T>>): AsyncResultIterable<T>;
 export default asyncConcat;

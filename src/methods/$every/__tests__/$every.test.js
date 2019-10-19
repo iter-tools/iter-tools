@@ -20,7 +20,7 @@ describe($`every`, () => {
   it(
     'returns true if there are no items',
     $async(() => {
-      expect($await($every(n => n % 2 === 0, null))).toBe(true);
+      expect($await($every((n: never) => n % 2 === 0, null))).toBe(true);
     }),
   );
 

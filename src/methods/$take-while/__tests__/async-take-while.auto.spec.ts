@@ -13,30 +13,15 @@ describe('asyncTakeWhile', () => {
     expect(await asyncToArray(iter)).toEqual([2, 2]);
   });
   it('takeWhile on iterable', async () => {
-    const iter = asyncTakeWhile(
-      item => item !== 4,
-      range({
-        start: 1,
-        end: 7,
-      }),
-    );
+    const iter = asyncTakeWhile(item => item !== 4, range(1, 7));
     expect(await asyncToArray(iter)).toEqual([1, 2, 3]);
   });
   it('takeWhile on iterable (curried version)', async () => {
-    const iter = asyncTakeWhile(item => item !== 4);
-    expect(
-      await asyncToArray(
-        iter(
-          range({
-            start: 1,
-            end: 7,
-          }),
-        ),
-      ),
-    ).toEqual([1, 2, 3]);
+    const iter = asyncTakeWhile((item: number) => item !== 4);
+    expect(await asyncToArray(iter(range(1, 7)))).toEqual([1, 2, 3]);
   });
   it('takeWhile on empty iterable', async () => {
-    expect(await asyncToArray(asyncTakeWhile(item => item, null))).toEqual([]);
+    expect(await asyncToArray(asyncTakeWhile((item: never) => item, null))).toEqual([]);
   });
   it('takeWhile on array (using a promise)', async () => {
     const iter = asyncTakeWhile(item => Promise.resolve(item % 2 === 0), [2, 2, 3, 2, 2, 2]);

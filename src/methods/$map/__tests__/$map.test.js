@@ -14,7 +14,7 @@ describe($`map`, () => {
   it(
     'returns mapped iterable from iterable',
     $async(() => {
-      const iter = $map(item => item * 2, range({ start: 1, end: 4 }));
+      const iter = $map(item => item * 2, range(1, 4));
       expect($await($toArray(iter))).toEqual([2, 4, 6]);
     }),
   );
@@ -22,15 +22,15 @@ describe($`map`, () => {
   it(
     'returns mapped iterable (curried version)',
     $async(() => {
-      const iter = $map(item => item * 2);
-      expect($await($toArray(iter(range({ start: 1, end: 4 }))))).toEqual([2, 4, 6]);
+      const iter = $map((item: number) => item * 2);
+      expect($await($toArray(iter(range(1, 4))))).toEqual([2, 4, 6]);
     }),
   );
 
   it(
     'returns empty iterable from null',
     $async(() => {
-      expect($await($toArray($map(item => item * 2, null)))).toEqual([]);
+      expect($await($toArray($map((item: never) => item * 2, null)))).toEqual([]);
     }),
   );
 

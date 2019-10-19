@@ -1,18 +1,17 @@
 import { $, $isSync, $async, $await } from '../../../../generate/async.macro';
 
-import { $splitWith, $map, $toArray } from '../../..';
+import { $unwrapDeep as $uw } from '../../../__tests__/$helpers';
+import { $splitWith, $toArray } from '../../..';
 
 describe($`splitWith`, () => {
   it(
     'should split between every item which is equal to the on argument',
     $async(() => {
-      expect(
-        $await(
-          $toArray(
-            $map(group => $toArray(group), $splitWith(i => i === null, [1, null, 2, null, 3])),
-          ),
-        ),
-      ).toEqual([[1], [2], [3]]);
+      expect($await($uw($splitWith(i => i === null, [1, null, 2, null, 3])))).toEqual([
+        [1],
+        [2],
+        [3],
+      ]);
     }),
   );
 

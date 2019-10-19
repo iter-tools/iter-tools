@@ -7,18 +7,25 @@
  */
 
 import { AsyncSourceIterable } from '../../types/async-iterable';
-declare function asyncReduce<O = any, T = any>(
+declare function asyncReduce<T>(
+  func: (acc: T, item: T, i: number) => T,
+): (iterable: AsyncSourceIterable<T>) => Promise<T>;
+declare function asyncReduce<O, T>(
   func: (acc: O, item: T, i: number) => O,
 ): (iterable: AsyncSourceIterable<T>) => Promise<O>;
-declare function asyncReduce<O = any, T = any>(
+declare function asyncReduce<O, T>(
   initial: O,
   func: (acc: O, item: T, i: number) => O | Promise<O>,
 ): (iterable: AsyncSourceIterable<T>) => Promise<O>;
-declare function asyncReduce<O = any, T = any>(
+declare function asyncReduce<T>(
+  func: (acc: T, item: T, i: number) => T | Promise<T>,
+  iterable: AsyncSourceIterable<T>,
+): Promise<T>;
+declare function asyncReduce<O, T>(
   func: (acc: O, item: T, i: number) => O | Promise<O>,
   iterable: AsyncSourceIterable<T>,
 ): Promise<O>;
-declare function asyncReduce<O = any, T = any>(
+declare function asyncReduce<O, T>(
   initial: O,
   func: (acc: O, item: T, i: number) => O | Promise<O>,
   iterable: AsyncSourceIterable<T>,

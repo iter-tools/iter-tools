@@ -7,27 +7,27 @@
  */
 
 import { AsyncSourceIterable, AsyncResultIterable } from '../../types/async-iterable';
-declare function asyncTakeSorted<T = any>(iterable: AsyncSourceIterable<T>): AsyncResultIterable<T>;
-declare function asyncTakeSorted<T = any>(
+declare function asyncTakeSorted<T>(iterable: AsyncSourceIterable<T>): AsyncResultIterable<T>;
+declare function asyncTakeSorted<T>(
   n: number,
 ): (source: AsyncSourceIterable<T>) => AsyncResultIterable<T>;
-declare function asyncTakeSorted<T = any>(
+declare function asyncTakeSorted<T>(
   n: number,
   func: (a: T, b: T) => number,
 ): (source: AsyncSourceIterable<T>) => AsyncResultIterable<T>;
-declare function asyncTakeSorted<T = any>(
+declare function asyncTakeSorted<T>(
   func: (a: T, b: T) => number,
 ): (source: AsyncSourceIterable<T>) => AsyncResultIterable<T>;
-declare function asyncTakeSorted<T = any>(
+declare function asyncTakeSorted<T>(
   n: number,
   source: AsyncSourceIterable<T>,
 ): AsyncResultIterable<T>;
-declare function asyncTakeSorted<T = any>(
+declare function asyncTakeSorted<T>(
   n: number,
   func: (a: T, b: T) => number,
   source: AsyncSourceIterable<T>,
 ): AsyncResultIterable<T>;
-declare function asyncTakeSorted<T = any>(
+declare function asyncTakeSorted<T>(
   func: (a: T, b: T) => number,
   source: AsyncSourceIterable<T>,
 ): AsyncResultIterable<T>;

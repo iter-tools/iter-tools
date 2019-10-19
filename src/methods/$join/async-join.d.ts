@@ -7,7 +7,7 @@
  */
 
 import { AsyncSourceIterable, AsyncResultIterable } from '../../types/async-iterable';
-declare function asyncJoin<T = any>(
+declare function asyncJoin<T>(
   source: AsyncSourceIterable<AsyncSourceIterable<T>>,
 ): AsyncResultIterable<T>;
 export default asyncJoin;

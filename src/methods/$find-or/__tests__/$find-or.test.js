@@ -20,7 +20,7 @@ describe($`findOr`, () => {
   it(
     'returns notFoundValue when iterable is empty',
     $async(() => {
-      expect($await($findOr(null, item => item, null))).toBe(null);
+      expect($await($findOr(null, (item: never) => item, null))).toBe(null);
     }),
   );
 

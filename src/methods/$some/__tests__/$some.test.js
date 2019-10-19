@@ -20,7 +20,7 @@ describe($`some`, () => {
   it(
     'returns false if there are no items',
     $async(() => {
-      expect($await($some(n => n % 2 === 0, null))).toBe(false);
+      expect($await($some((n: never) => n % 2 === 0, null))).toBe(false);
     }),
   );
 

@@ -45,7 +45,7 @@ describe($`reduce`, () => {
     $async(() => {
       let error;
       try {
-        $await($reduce((acc, x) => acc + x, []));
+        $await($reduce((acc: any, x) => acc + x, []));
       } catch (e) {
         error = e;
       }

@@ -1,4 +1,4 @@
-declare function apply<Return, A = any>(
+declare function apply<Return, A>(
   fn: (...args: Array<A>) => Return,
   args: Iterable<A> | null | undefined,
 ): Return;

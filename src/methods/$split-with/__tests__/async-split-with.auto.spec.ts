@@ -6,16 +6,14 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { asyncSplitWith, asyncMap, asyncToArray } from '../../..';
+import { asyncUnwrapDeep as asyncUw } from '../../../__tests__/async-helpers';
+import { asyncSplitWith, asyncToArray } from '../../..';
 describe('asyncSplitWith', () => {
   it('should split between every item which is equal to the on argument', async () => {
-    expect(
-      await asyncToArray(
-        asyncMap(
-          group => asyncToArray(group),
-          asyncSplitWith(i => i === null, [1, null, 2, null, 3]),
-        ),
-      ),
-    ).toEqual([[1], [2], [3]]);
+    expect(await asyncUw(asyncSplitWith(i => i === null, [1, null, 2, null, 3]))).toEqual([
+      [1],
+      [2],
+      [3],
+    ]);
   });
 });

@@ -13,29 +13,14 @@ describe('asyncFlatMap', () => {
     expect(await asyncToArray(iter)).toEqual([1, 2, 2, 4, 3, 6]);
   });
   it('returns flatMapped iterable from iterable', async () => {
-    const iter = asyncFlatMap(
-      item => [item, item * 2],
-      range({
-        start: 1,
-        end: 4,
-      }),
-    );
+    const iter = asyncFlatMap(item => [item, item * 2], range(1, 4));
     expect(await asyncToArray(iter)).toEqual([1, 2, 2, 4, 3, 6]);
   });
   it('returns flatMapped iterable (curried version)', async () => {
-    const iter = asyncFlatMap(item => [item, item * 2]);
-    expect(
-      await asyncToArray(
-        iter(
-          range({
-            start: 1,
-            end: 4,
-          }),
-        ),
-      ),
-    ).toEqual([1, 2, 2, 4, 3, 6]);
+    const iter = asyncFlatMap((item: number) => [item, item * 2]);
+    expect(await asyncToArray(iter(range(1, 4)))).toEqual([1, 2, 2, 4, 3, 6]);
   });
   it('returns empty iterable from null', async () => {
-    expect(await asyncToArray(asyncFlatMap(item => item, null))).toEqual([]);
+    expect(await asyncToArray(asyncFlatMap((item: never) => item, null))).toEqual([]);
   });
 });

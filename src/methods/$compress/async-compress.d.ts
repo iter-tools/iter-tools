@@ -7,7 +7,7 @@
  */
 
 import { AsyncSourceIterable, AsyncResultIterable } from '../../types/async-iterable';
-declare function asyncCompress<T = any>(
+declare function asyncCompress<T>(
   source: AsyncSourceIterable<T>,
   compress: AsyncSourceIterable<boolean>,
 ): AsyncResultIterable<T>;

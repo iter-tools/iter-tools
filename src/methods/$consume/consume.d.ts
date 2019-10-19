@@ -7,11 +7,8 @@
  */
 
 import { SourceIterable } from '../../types/iterable';
-declare function consume<T = any>(
+declare function consume<T>(
   func: (item: T, i: number) => void,
 ): (iterable: SourceIterable<T>) => void;
-declare function consume<T = any>(
-  func: (item: T, i: number) => void,
-  iterable: SourceIterable<T>,
-): void;
+declare function consume<T>(func: (item: T, i: number) => void, iterable: SourceIterable<T>): void;
 export default consume;

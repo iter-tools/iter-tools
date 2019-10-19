@@ -13,29 +13,14 @@ describe('takeWhile', () => {
     expect(toArray(iter)).toEqual([2, 2]);
   });
   it('takeWhile on iterable', () => {
-    const iter = takeWhile(
-      item => item !== 4,
-      range({
-        start: 1,
-        end: 7,
-      }),
-    );
+    const iter = takeWhile(item => item !== 4, range(1, 7));
     expect(toArray(iter)).toEqual([1, 2, 3]);
   });
   it('takeWhile on iterable (curried version)', () => {
-    const iter = takeWhile(item => item !== 4);
-    expect(
-      toArray(
-        iter(
-          range({
-            start: 1,
-            end: 7,
-          }),
-        ),
-      ),
-    ).toEqual([1, 2, 3]);
+    const iter = takeWhile((item: number) => item !== 4);
+    expect(toArray(iter(range(1, 7)))).toEqual([1, 2, 3]);
   });
   it('takeWhile on empty iterable', () => {
-    expect(toArray(takeWhile(item => item, null))).toEqual([]);
+    expect(toArray(takeWhile((item: never) => item, null))).toEqual([]);
   });
 });
