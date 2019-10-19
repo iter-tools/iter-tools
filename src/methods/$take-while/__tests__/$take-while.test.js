@@ -14,7 +14,7 @@ describe($`takeWhile`, () => {
   it(
     'takeWhile on iterable',
     $async(() => {
-      const iter = $takeWhile(item => item !== 4, range({ start: 1, end: 7 }));
+      const iter = $takeWhile(item => item !== 4, range(1, 7));
       expect($await($toArray(iter))).toEqual([1, 2, 3]);
     }),
   );
@@ -22,15 +22,15 @@ describe($`takeWhile`, () => {
   it(
     'takeWhile on iterable (curried version)',
     $async(() => {
-      const iter = $takeWhile(item => item !== 4);
-      expect($await($toArray(iter(range({ start: 1, end: 7 }))))).toEqual([1, 2, 3]);
+      const iter = $takeWhile((item: number) => item !== 4);
+      expect($await($toArray(iter(range(1, 7))))).toEqual([1, 2, 3]);
     }),
   );
 
   it(
     'takeWhile on empty iterable',
     $async(() => {
-      expect($await($toArray($takeWhile(item => item, null)))).toEqual([]);
+      expect($await($toArray($takeWhile((item: never) => item, null)))).toEqual([]);
     }),
   );
 

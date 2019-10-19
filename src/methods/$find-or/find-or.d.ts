@@ -7,20 +7,20 @@
  */
 
 import { SourceIterable } from '../../types/iterable';
-declare function findOr<NF, S extends T, T = any>(
+declare function findOr<NF, S extends T, T>(
   notFoundValue: NF,
   predicate: (item: T, i: number) => item is S,
 ): (iterable: SourceIterable<T>) => S | NF;
-declare function findOr<NF, T = any>(
+declare function findOr<NF, T>(
   notFoundValue: NF,
   predicate: (item: T, i: number) => boolean,
 ): (iterable: SourceIterable<T>) => T | NF;
-declare function findOr<NF, S extends T, T = any>(
+declare function findOr<NF, S extends T, T>(
   notFoundValue: NF,
   predicate: (item: T, i: number) => item is S,
   iterable: SourceIterable<T>,
 ): S | NF;
-declare function findOr<NF, T = any>(
+declare function findOr<NF, T>(
   notFoundValue: NF,
   predicate: (item: T, i: number) => boolean,
   iterable: SourceIterable<T>,

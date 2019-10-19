@@ -7,7 +7,7 @@ declare function $split(
 
 declare function $split(
   value: any,
-): <T = any>(source: $SourceIterable<T>) => $ResultIterable<$ResultIterable<T>>;
+): <T>(source: $SourceIterable<T>) => $ResultIterable<$ResultIterable<T>>;
 
 // prettier-ignore
 declare function $split(
@@ -15,7 +15,7 @@ declare function $split(
   source: string
 ): $ResultIterable<string>;
 
-declare function $split<T = any>(
+declare function $split<T>(
   value: any,
   source: $SourceIterable<T>,
 ): $ResultIterable<$ResultIterable<T>>;

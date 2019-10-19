@@ -7,10 +7,10 @@
  */
 
 import { SourceIterable, ResultIterable } from '../../types/iterable';
-declare function tap<T = any>(
+declare function tap<T>(
   func: (item: T, i: number) => any,
 ): (source: SourceIterable<T>) => ResultIterable<T>;
-declare function tap<T = any>(
+declare function tap<T>(
   func: (item: T, i: number) => any,
   source: SourceIterable<T>,
 ): ResultIterable<T>;

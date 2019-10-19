@@ -17,6 +17,6 @@ describe('every', () => {
     expect(every(n => n % 2 === 0, [4, 1, 6, 4, 8, 6])).toBe(false);
   });
   it('returns true if there are no items', () => {
-    expect(every(n => n % 2 === 0, null)).toBe(true);
+    expect(every((n: never) => n % 2 === 0, null)).toBe(true);
   });
 });

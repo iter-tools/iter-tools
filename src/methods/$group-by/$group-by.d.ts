@@ -4,18 +4,18 @@ import { $SourceIterable, $ResultIterable } from '../../types/$iterable';
 
 declare function $groupBy(
   key: null | undefined,
-): <T = any>(source: $SourceIterable<T>) => $ResultIterable<[T, $ResultIterable<T>]>;
+): <T>(source: $SourceIterable<T>) => $ResultIterable<[T, $ResultIterable<T>]>;
 
-declare function $groupBy<K, T = any>(
+declare function $groupBy<K, T>(
   key: (item: T) => $MaybePromise<K>,
 ): (source: $SourceIterable<T>) => $ResultIterable<[K, $ResultIterable<T>]>;
 
-declare function $groupBy<T = any>(
+declare function $groupBy<T>(
   key: null | undefined,
   source: $SourceIterable<T>,
 ): $ResultIterable<[T, $ResultIterable<T>]>;
 
-declare function $groupBy<K, T = any>(
+declare function $groupBy<K, T>(
   key: (item: T) => $MaybePromise<K>,
   source: $SourceIterable<T>,
 ): $ResultIterable<[K, $ResultIterable<T>]>;

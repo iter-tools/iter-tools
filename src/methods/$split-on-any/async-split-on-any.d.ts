@@ -13,12 +13,12 @@ declare function asyncSplitOnAny(
 ): (source: string) => AsyncResultIterable<string>;
 declare function asyncSplitOnAny(
   values: SyncSourceIterable<any>,
-): <T = any>(source: AsyncSourceIterable<T>) => AsyncResultIterable<AsyncResultIterable<T>>;
+): <T>(source: AsyncSourceIterable<T>) => AsyncResultIterable<AsyncResultIterable<T>>;
 declare function asyncSplitOnAny(
   values: SyncSourceIterable<string>,
   source: string,
 ): AsyncResultIterable<string>;
-declare function asyncSplitOnAny<T = any>(
+declare function asyncSplitOnAny<T>(
   values: SyncSourceIterable<any>,
   source: AsyncSourceIterable<T>,
 ): AsyncResultIterable<AsyncResultIterable<T>>;

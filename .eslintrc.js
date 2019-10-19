@@ -9,6 +9,9 @@ module.exports = {
   rules: {
     'import/no-duplicates': 'off',
   },
+  globals: {
+    never: 'readonly',
+  },
   overrides: [
     {
       files: ['*.ts'],

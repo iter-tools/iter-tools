@@ -7,10 +7,10 @@
  */
 
 import { AsyncSourceIterable } from '../../types/async-iterable';
-declare function asyncConsume<T = any>(
+declare function asyncConsume<T>(
   func: (item: T, i: number) => void,
 ): (iterable: AsyncSourceIterable<T>) => Promise<void>;
-declare function asyncConsume<T = any>(
+declare function asyncConsume<T>(
   func: (item: T, i: number) => void,
   iterable: AsyncSourceIterable<T>,
 ): Promise<void>;

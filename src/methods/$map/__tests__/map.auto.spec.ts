@@ -13,29 +13,14 @@ describe('map', () => {
     expect(toArray(iter)).toEqual([2, 4, 6]);
   });
   it('returns mapped iterable from iterable', () => {
-    const iter = map(
-      item => item * 2,
-      range({
-        start: 1,
-        end: 4,
-      }),
-    );
+    const iter = map(item => item * 2, range(1, 4));
     expect(toArray(iter)).toEqual([2, 4, 6]);
   });
   it('returns mapped iterable (curried version)', () => {
-    const iter = map(item => item * 2);
-    expect(
-      toArray(
-        iter(
-          range({
-            start: 1,
-            end: 4,
-          }),
-        ),
-      ),
-    ).toEqual([2, 4, 6]);
+    const iter = map((item: number) => item * 2);
+    expect(toArray(iter(range(1, 4)))).toEqual([2, 4, 6]);
   });
   it('returns empty iterable from null', () => {
-    expect(toArray(map(item => item * 2, null))).toEqual([]);
+    expect(toArray(map((item: never) => item * 2, null))).toEqual([]);
   });
 });

@@ -1,5 +1,7 @@
-import { ResultIterable } from '../../types/iterable';
+import { Iterable, ResultIterable } from '../../types/iterable';
 
-declare function keys(obj: { [id: string]: any } | null | undefined): ResultIterable<string>;
+declare function keys(keysable: { [id: string]: any } | null | undefined): ResultIterable<string>;
+
+declare function keys<K>(keysable: { keys(): Iterable<K> }): ResultIterable<K>;
 
 export default keys;

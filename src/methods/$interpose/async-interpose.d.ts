@@ -9,8 +9,8 @@
 import { AsyncSourceIterable, AsyncResultIterable } from '../../types/async-iterable';
 declare function asyncInterpose<I>(
   interposeItem: I,
-): <T = any>(source: AsyncSourceIterable<T>) => AsyncResultIterable<T | I>;
-declare function asyncInterpose<I, T = any>(
+): <T>(source: AsyncSourceIterable<T>) => AsyncResultIterable<T | I>;
+declare function asyncInterpose<I, T>(
   interposeItem: I,
   source: AsyncSourceIterable<T>,
 ): AsyncResultIterable<T | I>;

@@ -1,6 +1,6 @@
 import { SourceIterable, ResultIterable } from '../../types/iterable';
 
-declare function splitWith<T = any>(
+declare function splitWith<T>(
   predicate: (item: T, i: number) => any,
 ): (source: SourceIterable<T>) => ResultIterable<ResultIterable<T>>;
 
@@ -10,7 +10,7 @@ declare function splitWith(
 
 declare function splitWith(predicate: RegExp): (source: string) => ResultIterable<string>;
 
-declare function splitWith<T = any>(
+declare function splitWith<T>(
   predicate: (item: T, i: number) => any,
   source: SourceIterable<T>,
 ): ResultIterable<ResultIterable<T>>;

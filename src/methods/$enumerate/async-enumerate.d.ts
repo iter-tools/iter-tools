@@ -7,14 +7,14 @@
  */
 
 import { AsyncSourceIterable, AsyncResultIterable } from '../../types/async-iterable';
-declare function asyncEnumerate<T = any>(
+declare function asyncEnumerate<T>(
   iterable: AsyncSourceIterable<T>,
 ): AsyncResultIterable<[number, T]>;
-declare function asyncEnumerate<T = any>(
+declare function asyncEnumerate<T>(
   firstIdx: number,
   source: AsyncSourceIterable<T>,
 ): AsyncResultIterable<[number, T]>;
 declare function asyncEnumerate(
   firstIdx: number,
-): <T = any>(source: AsyncSourceIterable<T>) => AsyncResultIterable<[number, T]>;
+): <T>(source: AsyncSourceIterable<T>) => AsyncResultIterable<[number, T]>;
 export default asyncEnumerate;

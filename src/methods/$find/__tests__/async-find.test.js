@@ -17,7 +17,7 @@ describe('asyncFind', () => {
     expect(await asyncFind(_ => false, [1, 2, 3, 4, 5, 6])).toBe(undefined);
   });
   it('returns undefined when iterable is empty', async () => {
-    expect(await asyncFind(item => item, null)).toBe(undefined);
+    expect(await asyncFind((item: never) => item, null)).toBe(undefined);
   });
   it('returns found item (using a promise)', async () => {
     expect(await asyncFind(async item => item === 5, [1, 2, 3, 4, 5, 6])).toBe(5);

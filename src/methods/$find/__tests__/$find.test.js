@@ -20,7 +20,7 @@ describe($`find`, () => {
   it(
     'returns undefined when iterable is empty',
     $async(() => {
-      expect($await($find(item => item, null))).toBe(undefined);
+      expect($await($find((item: never) => item, null))).toBe(undefined);
     }),
   );
 

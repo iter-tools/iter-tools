@@ -3,9 +3,9 @@ import { $SourceIterable, $ResultIterable } from '../../types/$iterable';
 
 declare function $splitAt(
   position: number,
-): <T = any>(source: $SourceIterable<T>) => SyncResultIterable<$ResultIterable<T>>;
+): <T>(source: $SourceIterable<T>) => SyncResultIterable<$ResultIterable<T>>;
 
-declare function $splitAt<T = any>(
+declare function $splitAt<T>(
   position: number,
   source: $SourceIterable<T>,
 ): SyncResultIterable<$ResultIterable<T>>;

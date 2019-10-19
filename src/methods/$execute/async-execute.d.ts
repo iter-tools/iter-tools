@@ -7,7 +7,7 @@
  */
 
 import { AsyncResultIterable } from '../../types/async-iterable';
-declare function asyncExecute<T, Args extends any[] = any[]>(
+declare function asyncExecute<T, O, Args extends Array<O>>(
   func: (...args: Args) => T | Promise<T>,
   ...args: Args
 ): AsyncResultIterable<T>;

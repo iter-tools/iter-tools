@@ -37,7 +37,7 @@ describe('reduce', () => {
     let error;
 
     try {
-      reduce((acc, x) => acc + x, []);
+      reduce((acc: any, x) => acc + x, []);
     } catch (e) {
       error = e;
     }

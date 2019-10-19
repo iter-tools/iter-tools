@@ -8,12 +8,11 @@
 
 /* eslint-disable no-unused-vars,import/no-duplicates,no-constant-condition */
 
-import { splitWith, map, toArray } from '../../..';
+import { unwrapDeep as uw } from '../../../__tests__/helpers';
+import { splitWith, toArray } from '../../..';
 describe('splitWith', () => {
   it('should split between every item which is equal to the on argument', () => {
-    expect(
-      toArray(map(group => toArray(group), splitWith(i => i === null, [1, null, 2, null, 3]))),
-    ).toEqual([[1], [2], [3]]);
+    expect(uw(splitWith(i => i === null, [1, null, 2, null, 3]))).toEqual([[1], [2], [3]]);
   });
   describe('given a string', () => {
     it('should split on every character which matches the accessor', () => {

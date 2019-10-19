@@ -8,7 +8,7 @@
 
 import { SourceIterable } from '../../types/iterable';
 declare function isSorted(iterable: SourceIterable<any>): boolean;
-declare function isSorted<T = any>(
+declare function isSorted<T>(
   comparator: (a: T, b: T) => number,
   iterable: SourceIterable<T>,
 ): boolean;

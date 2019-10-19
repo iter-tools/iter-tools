@@ -37,7 +37,7 @@ describe('asyncReduce', () => {
     let error;
 
     try {
-      await asyncReduce((acc, x) => acc + x, []);
+      await asyncReduce((acc: any, x) => acc + x, []);
     } catch (e) {
       error = e;
     }

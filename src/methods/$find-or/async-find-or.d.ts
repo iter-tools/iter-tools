@@ -7,20 +7,20 @@
  */
 
 import { AsyncSourceIterable } from '../../types/async-iterable';
-declare function asyncFindOr<NF, S extends T, T = any>(
+declare function asyncFindOr<NF, S extends T, T>(
   notFoundValue: NF,
   predicate: (item: T, i: number) => item is S,
 ): (iterable: AsyncSourceIterable<T>) => Promise<S | NF>;
-declare function asyncFindOr<NF, T = any>(
+declare function asyncFindOr<NF, T>(
   notFoundValue: NF,
   predicate: (item: T, i: number) => boolean | Promise<boolean>,
 ): (iterable: AsyncSourceIterable<T>) => Promise<T | NF>;
-declare function asyncFindOr<NF, S extends T, T = any>(
+declare function asyncFindOr<NF, S extends T, T>(
   notFoundValue: NF,
   predicate: (item: T, i: number) => item is S,
   iterable: AsyncSourceIterable<T>,
 ): Promise<S | NF>;
-declare function asyncFindOr<NF, T = any>(
+declare function asyncFindOr<NF, T>(
   notFoundValue: NF,
   predicate: (item: T, i: number) => boolean | Promise<boolean>,
   iterable: AsyncSourceIterable<T>,

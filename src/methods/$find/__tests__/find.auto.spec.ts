@@ -15,6 +15,6 @@ describe('find', () => {
     expect(find(_ => false, [1, 2, 3, 4, 5, 6])).toBe(undefined);
   });
   it('returns undefined when iterable is empty', () => {
-    expect(find(item => item, null)).toBe(undefined);
+    expect(find((item: never) => item, null)).toBe(undefined);
   });
 });

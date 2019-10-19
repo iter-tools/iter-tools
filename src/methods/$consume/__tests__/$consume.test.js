@@ -33,7 +33,7 @@ describe($`consume`, () => {
     'consumes an iterable (curried)',
     $async(() => {
       const arr: Array<number> = [];
-      const consumePush = $consume(item => arr.push(item));
+      const consumePush = $consume((item: number) => arr.push(item));
       $await(consumePush([1, 2, 3]));
       expect(arr).toEqual([1, 2, 3]);
     }),

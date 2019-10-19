@@ -7,7 +7,7 @@ import $InterleaveBuffer from './internal/$buffer';
 // #############
 
 // prettier-ignore
-declare function $interleave<T1 = any, T2 = any, R = any>(
+declare function $interleave<T1, T2, R>(
   gen: (
     canTakeAny: () => $Promise<$InterleaveBuffer<T1 | T2> | null>,
     b1: $InterleaveBuffer<T1>,
@@ -18,7 +18,7 @@ declare function $interleave<T1 = any, T2 = any, R = any>(
     s2: $SourceIterable<T2>
   ) => $ResultIterable<R>;
 
-declare function $interleave<T1 = any, T2 = any, T3 = any, R = any>(
+declare function $interleave<T1, T2, T3, R>(
   gen: (
     canTakeAny: () => $Promise<$InterleaveBuffer<T1 | T2 | T3> | null>,
     b1: $InterleaveBuffer<T1>,
@@ -31,7 +31,7 @@ declare function $interleave<T1 = any, T2 = any, T3 = any, R = any>(
   s3: $SourceIterable<T3>,
 ) => $ResultIterable<R>;
 
-declare function $interleave<T1 = any, T2 = any, T3 = any, T4 = any, R = any>(
+declare function $interleave<T1, T2, T3, T4, R>(
   gen: (
     canTakeAny: () => $Promise<$InterleaveBuffer<T1 | T2 | T3 | T4> | null>,
     b1: $InterleaveBuffer<T1>,
@@ -53,7 +53,7 @@ declare function $interleave<T, R>(
   ) => $Iterable<R>,
 ): (...sources: Array<$SourceIterable<T>>) => $ResultIterable<R>;
 
-declare function $interleave<T1 = any, T2 = any, R = any>(
+declare function $interleave<T1, T2, R>(
   gen: (
     canTakeAny: () => $Promise<$InterleaveBuffer<T1 | T2> | null>,
     b1: $InterleaveBuffer<T1>,
@@ -63,7 +63,7 @@ declare function $interleave<T1 = any, T2 = any, R = any>(
   s2: $SourceIterable<T2>,
 ): $ResultIterable<R>;
 
-declare function $interleave<T1 = any, T2 = any, T3 = any, R = any>(
+declare function $interleave<T1, T2, T3, R>(
   gen: (
     canTakeAny: () => $Promise<$InterleaveBuffer<T1 | T2 | T3> | null>,
     b1: $InterleaveBuffer<T1>,
@@ -75,7 +75,7 @@ declare function $interleave<T1 = any, T2 = any, T3 = any, R = any>(
   s3: $SourceIterable<T3>,
 ): $ResultIterable<R>;
 
-declare function $interleave<T1 = any, T2 = any, T3 = any, T4 = any, R = any>(
+declare function $interleave<T1, T2, T3, T4, R>(
   gen: (
     canTakeAny: () => $Promise<$InterleaveBuffer<T1 | T2 | T3 | T4> | null>,
     b1: $InterleaveBuffer<T1>,
@@ -101,7 +101,7 @@ declare function $interleave<T, R>(
 // #############
 
 // prettier-ignore
-declare function $interleave<O extends {}, T1 = any, T2 = any, R = any>(
+declare function $interleave<O extends {}, T1, T2, R>(
   gen: (
     options: O,
     canTakeAny: () => $Promise<$InterleaveBuffer<T1 | T2> | null>,
@@ -114,7 +114,7 @@ declare function $interleave<O extends {}, T1 = any, T2 = any, R = any>(
     s2: $SourceIterable<T2>
   ) => $ResultIterable<R>;
 
-declare function $interleave<O extends {}, T1 = any, T2 = any, T3 = any, R = any>(
+declare function $interleave<O extends {}, T1, T2, T3, R>(
   gen: (
     options: O,
     canTakeAny: () => $Promise<$InterleaveBuffer<T1 | T2 | T3> | null>,
@@ -129,7 +129,7 @@ declare function $interleave<O extends {}, T1 = any, T2 = any, T3 = any, R = any
   s3: $SourceIterable<T3>,
 ) => $ResultIterable<R>;
 
-declare function $interleave<O extends {}, T1 = any, T2 = any, T3 = any, T4 = any, R = any>(
+declare function $interleave<O extends {}, T1, T2, T3, T4, R>(
   gen: (
     options: O,
     canTakeAny: () => $Promise<$InterleaveBuffer<T1 | T2 | T3 | T4> | null>,
@@ -155,7 +155,7 @@ declare function $interleave<O extends {}, T, R>(
   options: O,
 ): (...sources: Array<$SourceIterable<T>>) => $ResultIterable<R>;
 
-declare function $interleave<O extends {}, T1 = any, T2 = any, R = any>(
+declare function $interleave<O extends {}, T1, T2, R>(
   gen: (
     options: O,
     canTakeAny: () => $Promise<$InterleaveBuffer<T1 | T2> | null>,
@@ -167,7 +167,7 @@ declare function $interleave<O extends {}, T1 = any, T2 = any, R = any>(
   s2: $SourceIterable<T2>,
 ): $ResultIterable<R>;
 
-declare function $interleave<O extends {}, T1 = any, T2 = any, T3 = any, R = any>(
+declare function $interleave<O extends {}, T1, T2, T3, R>(
   gen: (
     options: O,
     canTakeAny: () => $Promise<$InterleaveBuffer<T1 | T2 | T3> | null>,
@@ -181,7 +181,7 @@ declare function $interleave<O extends {}, T1 = any, T2 = any, T3 = any, R = any
   s3: $SourceIterable<T3>,
 ): $ResultIterable<R>;
 
-declare function $interleave<O extends {}, T1 = any, T2 = any, T3 = any, T4 = any, R = any>(
+declare function $interleave<O extends {}, T1, T2, T3, T4, R>(
   gen: (
     options: O,
     canTakeAny: () => $Promise<$InterleaveBuffer<T1 | T2 | T3 | T4> | null>,
