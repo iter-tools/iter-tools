@@ -26,6 +26,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
  -  `concurrency` from `asyncMap`, `asyncFilter`.
  -  Extra arguments from `compose`, `pipe`, `pipeExec`. Previously all initial arguments were given to the outermost composed function.
 
+**Overloads**
+ -  `entries({ entries(); })` (Instead use `wrapEntries({ entries(); }))`)
+ -  `keys({ keys(); })` (Instead use `wrapKeys({ keys(); }))`)
+ -  `values({ values(); })` (Instead use `wrapValues({ values(); }))`)
+
 **Helper methods**
  -  `mergeByComparison`, `mergeByChance`, `mergeByPosition`, `asyncMergeByComparison`, `asyncMergeByChance`, `asyncMergeByPosition`
 
@@ -39,6 +44,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
  -  `collate`, `asyncCollate`
  -  `call`, `apply`
  -  `wrap`, `asyncWrap`
+ -  `wrapEntries`
+ -  `wrapKeys`
+ -  `wrapValues`
  -  `findOr`, `asyncFindOr`
  -  `firstOr`, `asyncFirstOr`
  -  `last`, `asyncLast`

@@ -50,6 +50,12 @@ Create iterables from objects
 [keys](#keys)  
 [values](#values)  
 
+Use iterables from data structures
+
+[wrapEntries](#wrapentries)  
+[wrapKeys](#wrapkeys)  
+[wrapValues](#wrapvalues)  
+
 Transform a single iterable
 
 [batch](#batch) ([async](#asyncbatch))  
@@ -217,52 +223,80 @@ repeat('x'); // 'x', 'x', 'x' .... forever
 
 ### entries
 
-**entries(entriesable)**
+**entries(obj)**
 
-Takes in a plain object, null, a Map, or any other object which defines an `entries` method.
-When given an Object, it is equivalent to Object.entries, otherwise it calls `entries()`
-When passed a nullish value, returns an empty iterable.
+Returns the `[key, value]` entries of own properties of `obj`. When `obj` is `null` or `undefined` it yields nothing, but it is otherwise equivalent to `Object.keys`.
 
-`entries` is a great way to construct Maps from objects
+`entries` is a great way to construct `Map` instances from objects!
 
 ```js
-const obj = { foo: 'bar', fox: 'far' };
-const map = new Map(entries(obj));
-
-Array.from(entries(obj)); // [['foo': 'bar'], 'fox': 'far']]
-deepEqual(Array.from(entries(map)), entries(obj)); // true
+entries({ foo: 'bar', fox: 'far' }); // Iterable[['foo': 'bar'], ['fox': 'far']]
+new Map(entries(obj)); // Map{foo => 'bar', fox => 'far'}
 ```
 
 ### keys
 
-**keys(keysable)**
+**keys(obj)**
 
-Takes in a plain object, null, a Map, or any other object which defines an `keys` method.
-When given an Object, it is equivalent to Object.keys, otherwise it calls `keys()`
-When passed a nullish value, returns an empty iterable.
+Returns the string names of the own properties of `obj`. When `obj` is `null` or `undefined` it yields nothing, but it is otherwise equivalent to `Object.keys`.
 
 ```js
-const obj = { foo: 'bar', fox: 'far' };
-const map = new Map(entries(obj));
-
-Array.from(keys(obj)); // ['foo', 'fox'];
-deepEqual(Array.from(keys(map)), keys(obj)); // true
+keys({ foo: 'bar', fox: 'far' }); // Iterable['foo', 'fox'];
 ```
 
 ### values
 
-**values(valuesable)**
+**values(obj)**
 
-Takes in a plain object, null, a Map, or any other object which defines an `values` method.
-When given an Object, it is equivalent to Object.values, otherwise it calls `values()`
-When passed a nullish value, returns an empty iterable.
+Returns the values of own properies of `obj`. When `obj` is `null` or `undefined` it yields nothing, but it is otherwise equivalent to `Object.values`.
 
 ```js
-const obj = { foo: 'bar', fox: 'far' };
-const map = new Map(entries(obj));
+values({ foo: 'bar', fox: 'far' }); // Iterable['bar', 'far']
+```
 
-Array.from(values(obj)); // ['bar', 'far']
-deepEqual(Array.from(values(map)), values(obj)); // true
+
+## Use iterables from data structures
+
+### wrapEntries
+
+**wrapEntries(entriesable)**
+
+Yields the items yielded by `entriesable.entries()`. When passed `null` or `undefined`, yields nothing.
+
+```js
+// prettier-ignore
+wrapEntries(new Map([
+  ['foo', 'bar'],
+  ['fox', 'far']
+])); // Iterable[['foo', 'bar'], ['fox', 'far']]
+```
+
+### wrapKeys
+
+**wrapKeys(keysable)**
+
+Yields the items yielded by `keysable.keys()`. When passed `null` or `undefined`, yields nothing.
+
+```js
+// prettier-ignore
+wrapKeys(new Map([
+  ['foo', 'bar'],
+  ['fox', 'far']
+])); // Iterable['foo', 'fox']
+```
+
+### wrapValues
+
+**wrapValues(valuesable)**
+
+Yields the items yielded by `valuesable.values()`. When passed `null` or `undefined`, yields nothing.
+
+```js
+// prettier-ignore
+wrapValues(new Map([
+  ['foo', 'bar'],
+  ['fox', 'far']
+])); // Iterable['bar', 'far']
 ```
 
 
