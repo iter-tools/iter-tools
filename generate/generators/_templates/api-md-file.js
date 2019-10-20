@@ -41,6 +41,7 @@ const sections = new Map(
   [
     ['create', 'Create iterables'],
     ['object', 'Create iterables from objects'],
+    ['structure', 'Use iterables from data structures'],
     ['transform', 'Transform a single iterable'],
     ['separate', 'Separate an iterable into multiple iterables'],
     ['combine', 'Combine multiple iterables'],

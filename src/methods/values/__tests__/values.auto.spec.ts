@@ -8,10 +8,6 @@
 
 import { values } from '../../..';
 describe('values', () => {
-  it('works with Map', () => {
-    const map = new Map([['foo', 'bar'], ['fox', 'far']]);
-    expect(Array.from(values(map))).toEqual(Array.from(map.values()));
-  });
   it('works with Objects', () => {
     const i = values({
       '1': 1,

@@ -1,13 +1,8 @@
-Takes in a plain object, null, a Map, or any other object which defines an `entries` method.
-When given an Object, it is equivalent to Object.entries, otherwise it calls `entries()`
-When passed a nullish value, returns an empty iterable.
+Returns the `[key, value]` entries of own properties of `obj`. When `obj` is `null` or `undefined` it yields nothing, but it is otherwise equivalent to `Object.keys`.
 
-`entries` is a great way to construct Maps from objects
+`entries` is a great way to construct `Map` instances from objects!
 
 ```js
-const obj = { foo: 'bar', fox: 'far' };
-const map = new Map(entries(obj));
-
-Array.from(entries(obj)); // [['foo': 'bar'], 'fox': 'far']]
-deepEqual(Array.from(entries(map)), entries(obj)); // true
+entries({ foo: 'bar', fox: 'far' }); // Iterable[['foo': 'bar'], ['fox': 'far']]
+new Map(entries(obj)); // Map{foo => 'bar', fox => 'far'}
 ```

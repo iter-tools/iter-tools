@@ -2,18 +2,17 @@ import { empty, wrapWithMethodIterable } from '../../internal/iterable';
 
 const { hasOwnProperty } = Object.prototype;
 
-export function* values(valuesable) {
-  if (valuesable == null) {
+export function* values(obj) {
+  if (obj == null) {
     return empty();
-  } else if (typeof valuesable.values === 'function') {
-    yield* valuesable.values();
-  } else if (typeof valuesable === 'object') {
-    // pojo
-    for (const key in valuesable) {
-      if (hasOwnProperty.call(valuesable, key)) {
-        yield valuesable[key];
+  } else if (typeof obj === 'object') {
+    for (const key in obj) {
+      if (hasOwnProperty.call(obj, key)) {
+        yield obj[key];
       }
     }
+  } else {
+    throw new Error('the argument to values() was not an object, null, or undefined');
   }
 }
 
