@@ -8,6 +8,17 @@
 
 import { asyncIterableCurry } from '../../internal/async-iterable';
 import { WeakExchange } from '../../internal/queues';
+let warnedNullGetKeyDeprecation = false;
+
+const warnNullGetKeyDeprecation = () => {
+  if (!warnedNullGetKeyDeprecation) {
+    console.warn(
+      `\`${'asyncGroupBy'}(null, iterable)\` is deprecated and will be removed in iter-tools@8. ` +
+        `Instead use ${'asyncGroup'}(iterable)`,
+    );
+    warnedNullGetKeyDeprecation = true;
+  }
+};
 
 async function fetch(state, getKey, expectedKey = {}) {
   const { iterator, weakExchange } = state;
@@ -67,6 +78,10 @@ export async function* asyncGroupBy(source, getKey) {
     nGroups: 0,
     groupsConsumed: false,
   };
+
+  if (getKey == null) {
+    warnNullGetKeyDeprecation();
+  }
 
   const _getKey = getKey == null ? k => k : getKey;
 

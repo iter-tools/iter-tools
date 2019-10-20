@@ -6,14 +6,6 @@ import { $groupBy } from '../../..';
 
 declare const Ø: never;
 
-assert<$ResultIterable<[string, $ResultIterable<string>]>>($groupBy(null)(Ø as string));
-
-assert<$ResultIterable<[number, $ResultIterable<number>]>>($groupBy(null)(Ø as $Iterable<number>));
-
-assert<$ResultIterable<[string, $ResultIterable<string>]>>($groupBy(null, Ø as string));
-
-assert<$ResultIterable<[number, $ResultIterable<number>]>>($groupBy(null, Ø as $Iterable<number>));
-
 assert<$ResultIterable<[string, $ResultIterable<number>]>>(
   $groupBy(Ø as (x: number) => $Promise<string>)(Ø as $Iterable<number>),
 );

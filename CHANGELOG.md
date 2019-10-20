@@ -55,6 +55,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
  -  `splitAt`, `asyncSplitAt`
  -  `joinWith`, `joinWithSubseq`, `asyncJoinWith`, `asyncJoinWithSubseq`
  -  `joinAsStringWith`, `asyncJoinAsStringWith`
+ -  `group`, `asyncGroup`
  -  `explode`, `asyncExplode`
  -  `reverse`, `asyncReverse`
  -  `window`, `asyncWindow`
@@ -69,12 +70,14 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 **Overloads**
  -  `range(start, end, [step])` (Matches Python.)
 
- ### Fixed
- -  A wide variety of Typescript type bugs were identified and squashed. You can see the full list [on Github](https://github.com/iter-tools/iter-tools/issues?utf8=%E2%9C%93&q=is%3Aissue+label%3Agenerate-types)
+### Deprecated
+**Overloads**
+ -  `groupBy(null, source)` and `asyncGroupBy(null, source)`. Instead use `group(source)` and `asyncGroup(source)`.
 
 ### Changed
  -  **IMPORTANT**; **BREAKING**: `slice(n)` is now equivalent to `[].slice(n)`, not `[].slice(0, n)`. You should now write `slice(0, n, iterable)`.
  -  **IMPORTANT**; **BREAKING**: `repeat` order of arguments changed. You must now write `repeat(3, 'x')` instead of `repeat(x, 3)`.
+ -  
  -  All functions return iterables that can consumed multiple times.
  -  It is now an error to make an empty partial application, e.g. `map()`.
  -  `takeSorted` and `asyncTakeSorted`: Both `n` and `comparator` arguments are now optional.
@@ -87,6 +90,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
  -  `permutations`, `combinations`, `combinationsWithReplacement`, and `product`: `getSize()` is now just `size`.
  -  `groupBy()` and `asyncGroupBy(null)` now return a partial application instead of an iterable.
  -  For most Typescript generic method types, the order of the generics has changed. (Note: this only matters if you are explicitly providing values for the generics.)
+
+ ### Fixed
+ -  A wide variety of Typescript type bugs were identified and squashed. You can see the full list [on Github](https://github.com/iter-tools/iter-tools/issues?utf8=%E2%9C%93&q=is%3Aissue+label%3Agenerate-types)
+
 
 
 ## [6.2.3] - 2019-1-23

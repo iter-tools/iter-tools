@@ -1,6 +1,18 @@
-import { $async, $await, $iteratorSymbol } from '../../../generate/async.macro';
+import { $, $async, $await, $iteratorSymbol } from '../../../generate/async.macro';
 import { $iterableCurry } from '../../internal/$iterable';
 import { WeakExchange } from '../../internal/queues';
+
+let warnedNullGetKeyDeprecation = false;
+
+const warnNullGetKeyDeprecation = () => {
+  if (!warnedNullGetKeyDeprecation) {
+    console.warn(
+      `\`${$`groupBy`}(null, iterable)\` is deprecated and will be removed in iter-tools@8. ` +
+        `Instead use ${$`group`}(iterable)`,
+    );
+    warnedNullGetKeyDeprecation = true;
+  }
+};
 
 $async;
 function fetch(state, getKey, expectedKey = {}) {
@@ -65,6 +77,10 @@ export function* $groupBy(source, getKey) {
     nGroups: 0,
     groupsConsumed: false,
   };
+
+  if (getKey == null) {
+    warnNullGetKeyDeprecation();
+  }
 
   const _getKey = getKey == null ? k => k : getKey;
 

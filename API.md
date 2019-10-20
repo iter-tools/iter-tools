@@ -71,6 +71,7 @@ Transform a single iterable
 
 Separate an iterable into multiple iterables
 
+[group](#group) ([async](#asyncgroup))  
 [groupBy](#groupby) ([async](#asyncgroupby))  
 [split](#split) ([async](#asyncsplit))  
 [splitAt](#splitat) ([async](#asyncsplitat))  
@@ -684,6 +685,24 @@ Turns sync iterables into async iterables. Ensures async next queueing semantics
 
 ## Separate an iterable into multiple iterables
 
+### group
+
+**group(iterable)**
+
+Eqivalent to `groupBy(_ => _)`.
+
+```js
+group([1, 1, 1, 1, -1, -1, -1, 4]);
+// It will return:
+// 1, subiterator (1, 1, 1, 1)
+// -1, subiterator (-1, -1, -1)
+// 4, subiterator (4)
+```
+
+### asyncGroup
+
+See [group](#group)
+
 ### groupBy
 
 **groupBy(getKey, [source](#sourceiterable))**
@@ -694,12 +713,6 @@ When you iterate over the next group, the previous sub-iterable items will not b
 Note: it groups **adjecents** items returning the same key.
 
 ```js
-groupBy(null, [1, 1, 1, 1, -1, -1, -1, 4]);
-// It will return:
-// 1, subiterator (1, 1, 1, 1)
-// -1, subiterator (-1, -1, -1)
-// 4, subiterator (4)
-
 groupBy(
   value => {
     value * value;

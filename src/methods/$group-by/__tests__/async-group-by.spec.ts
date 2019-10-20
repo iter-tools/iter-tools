@@ -10,14 +10,6 @@ import assert from 'static-type-assert';
 import { AsyncIterable, AsyncResultIterable } from '../../../types/async-iterable';
 import { asyncGroupBy } from '../../..';
 declare const Ø: never;
-assert<AsyncResultIterable<[string, AsyncResultIterable<string>]>>(asyncGroupBy(null)(Ø as string));
-assert<AsyncResultIterable<[number, AsyncResultIterable<number>]>>(
-  asyncGroupBy(null)(Ø as AsyncIterable<number>),
-);
-assert<AsyncResultIterable<[string, AsyncResultIterable<string>]>>(asyncGroupBy(null, Ø as string));
-assert<AsyncResultIterable<[number, AsyncResultIterable<number>]>>(
-  asyncGroupBy(null, Ø as AsyncIterable<number>),
-);
 assert<AsyncResultIterable<[string, AsyncResultIterable<number>]>>(
   asyncGroupBy(Ø as (x: number) => Promise<string>)(Ø as AsyncIterable<number>),
 );
