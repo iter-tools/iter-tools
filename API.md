@@ -41,7 +41,6 @@ The async version of a [result iterable](#resultiterable). Instead of working as
 Create iterables
 
 [cycle](#cycle) ([async](#asynccycle))  
-[execute](#execute) ([async](#asyncexecute))  
 [range](#range)  
 [repeat](#repeat)  
 
@@ -176,22 +175,6 @@ cycle(range(3)); // 0, 1, 2, 0, 1, 2, 0, 1, 2 ....
 **asyncCycle([iterable](#asyncsourceiterable))**
 
 See [cycle](#cycle)
-
-### execute
-
-**execute(func, ...args)**
-
-It returns an iterable that returns the output of a function at every iteration.
-
-```js
-execute(() => Math.round(Math.random() * 10)); // 3, 5, 9 ...
-```
-
-### asyncExecute
-
-**asyncExecute(func, ...args)**
-
-See [execute](#execute)
 
 ### range
 

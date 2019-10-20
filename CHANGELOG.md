@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
  -  `iter`, `asyncIter`
  -  `iterable`, `asyncIterable`
  -  `tee`, `asyncTee`
+ -  `execute`, `asyncExecute` (Instead use `map(_ => callback(), range())`)
  -  `merge`, `asyncMerge` (Instead use either `collate` or `interleave`.)
  -  `splitLines`, `asyncSplitLines`
  -  `regexpSplit` (Instead use `splitWith(regexp, str)`.)
