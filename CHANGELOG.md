@@ -83,9 +83,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
  -  `groupBy(null, source)` and `asyncGroupBy(null, source)`. Instead use `group(source)` and `asyncGroup(source)`.
 
 ### Changed
+ -  `import 'iter-tools/es5/method'` should now be `import 'iter-tools/method'`.
  -  **IMPORTANT**; **BREAKING**: `slice(n)` is now equivalent to `[].slice(n)`, not `[].slice(0, n)`. You should now write `slice(0, n, iterable)`.
  -  **IMPORTANT**; **BREAKING**: `repeat` order of arguments changed. You must now write `repeat(3, 'x')` instead of `repeat(x, 3)`.
- -  
  -  All functions return iterables that can consumed multiple times.
  -  It is now an error to make an empty partial application, e.g. `map()`.
  -  `takeSorted` and `asyncTakeSorted`: Both `n` and `comparator` arguments are now optional.
