@@ -7,15 +7,33 @@
  */
 
 import { iterableCurry } from '../../internal/iterable';
-export function consume(iterable, func = () => {}) {
+let warnedCallbackDeprecation = false;
+
+const warnCallbackDeprecation = () => {
+  if (!warnedCallbackDeprecation) {
+    console.warn(
+      `\`${'consume'}(callback, iterable)\` is deprecated and will be removed in iter-tools@8. ` +
+        `Instead use ${'forEach'}(callback, iterable)`,
+    );
+    warnedCallbackDeprecation = true;
+  }
+};
+
+export function consume(iterable, callback = () => {}) {
   let c = 0;
 
   for (const item of iterable) {
-    func(item, c++);
+    callback(item, c++);
   }
 }
 export default iterableCurry(consume, {
   reduces: true,
   minArgs: 0,
   maxArgs: 1,
+
+  validateArgs(args) {
+    if (typeof args[0] === 'function') {
+      warnCallbackDeprecation();
+    }
+  },
 });

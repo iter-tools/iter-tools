@@ -13,6 +13,7 @@ class TypeTestsGenerator extends BaseGenerator {
     super(options);
 
     this.glob = 'src/methods/*/__tests__/[^$]*.test.js';
+    this.ignored = 'src/methods/*/__tests__/*.deprecated.test.js';
   }
 
   generatePath(testPath, destPath) {
