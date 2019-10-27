@@ -12,7 +12,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
  -  `iterable`, `asyncIterable`
  -  `tee`, `asyncTee`
  -  `execute`, `asyncExecute` (Instead use `map(_ => callback(), range())`)
- -  `merge`, `asyncMerge` (Instead use either `collate` or `interleave`.)
+ -  `merge`, `asyncMerge` (Instead use either `collate`, `roundRobin`, or `interleave`.)
  -  `splitLines`, `asyncSplitLines`
  -  `regexpSplit` (Instead use `splitWith(regexp, str)`.)
  -  `cursor`, `asyncCursor` (Split and renamed: choose either `window` or `trailingWindow`.)
@@ -42,6 +42,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 **Methods**
  -  `pipe`
  -  `collate`, `asyncCollate`
+ -  `roundRobin`, `asyncRoundRobin`
  -  `call`, `apply`
  -  `wrap`, `asyncWrap`
  -  `wrapEntries`

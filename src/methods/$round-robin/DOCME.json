@@ -1,0 +1,13 @@
+{
+  "type": "combine",
+  "prependSignatures": [
+    [
+      { "name": null, "properties": ["start", "step"] },
+      {
+        "name": "sources",
+        "isIterable": true,
+        "variadic": true
+      }
+    ]
+  ]
+}
