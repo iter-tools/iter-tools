@@ -98,6 +98,7 @@ Combine multiple iterables
 [joinAsStringWith](#joinasstringwith) ([async](#asyncjoinasstringwith))  
 [joinWith](#joinwith) ([async](#asyncjoinwith))  
 [joinWithSubseq](#joinwithsubseq) ([async](#asyncjoinwithsubseq))  
+[roundRobin](#roundrobin) ([async](#asyncroundrobin))  
 [zip](#zip) ([async](#asynczip))  
 [zipAll](#zipall) ([async](#asynczipall))  
 
@@ -888,36 +889,18 @@ See [splitWith](#splitwith)
 
 ### collate
 
-**collate(start, step, ...[sources](#sourceiterable))**  
-**collate(comparator, ...[sources](#sourceiterable))**  
-**collate({ start, step }, ...[sources](#sourceiterable))**
+**collate(comparator, ...[sources](#sourceiterable))**
 
-Collate takes multiple iterables and collates them in a single one. The manner or collation can be chosen by specifying either a number or a comparator function.
-
-If a comparator function is specified, collate will compare the items available at the head of each iterable and pick the one which would be sorted to the lowest index. The comparator `(a, b) => { return -1 }` would indicate that a is always preferable to b. This is the same behavior comparators have when used in `Array.prototype.sort`.
-
-If a number `n` is specified, collate will do a round-robin collation. This type of collation is parameterized on `start` and `step`. `collate` will first take from the `start` iterable, and will, next take from the `start + step` iterable, wrapping around back to the beginning if there are not that many iterables.
-
-If no parameter is given the default is a round robin collation with a `start` of 0 and a `step` of one.
+Combines values from each `source` in `sources` into a single iterable, peserving the ordering of values within each `source`. Collate uses `comparator` to establish a partial ordering of items at the head of each `source`. At each step it yields the lowest value in the ordering then recomputes the ordering.
 
 ```js
-collate([1, 3, 5], [2, 4, 6]); // 1, 2, 3, 4, 5, 6
-collate(2, [1, 4], [3, 6], [2, 5]); // 1, 2, 3, 4, 5, 6
-collate({ start: 1, step: 1 }, [2, 4, 6], [1, 3, 5]); // 1, 2, 3, 4, 5, 6
-collate((a, b) => a - b, [1, 2, 5, 6], [3, 4]); // 1, 2, 3, 4, 5, 6
-```
-
-You can also curry it:
-
-```js
-collate((a, b) => a - b)([[1, 2, 5, 6], [3, 4]]); // 1, 2, 3, 4, 5, 6
+collate([1, 2, 5, 6], [3, 4]); // Iterable[1, 2, 3, 4, 5, 6]
+collate((a, b) => b - a, [6, 5, 2, 1], [4, 3]); // Iterable[6, 5, 4, 3, 2, 1]
 ```
 
 ### asyncCollate
 
-**asyncCollate(start, step, ...[sources](#asyncsourceiterable))**  
-**asyncCollate(comparator, ...[sources](#asyncsourceiterable))**  
-**asyncCollate({ start, step }, ...[sources](#asyncsourceiterable))**
+**asyncCollate(comparator, ...[sources](#asyncsourceiterable))**
 
 See [collate](#collate)
 
@@ -1117,6 +1100,33 @@ joinWithSubseq([null, null], [[1], [2], [3]]); // Iterable[1, null, null, 2, nul
 **asyncJoinWithSubseq(with_, [source](#asyncsourceiterable))**
 
 See [joinWithSubseq](#joinwithsubseq)
+
+### roundRobin
+
+**roundRobin(start, step, ...[sources](#sourceiterable))**  
+**roundRobin(step, ...[sources](#sourceiterable))**  
+**roundRobin(...[sources](#sourceiterable))**
+
+Defaults:
+
+- `start`: `0`
+- `step`: `1`
+
+Combines values from each `source` in `sources` into a single iterable, peserving the ordering of values within each `source`. First yields a value from the `source` with index `start`, then one from the `source` with index `start + step`, and so on, wrapping the indexes of sources using `% sources.length`.
+
+```js
+roundRobin([1, 3, 5], [2, 4, 6]); // Iterable[1, 2, 3, 4, 5, 6]
+roundRobin(2, [1, 4], [3, 6], [2, 5]); // Iterable[1, 2, 3, 4, 5, 6]
+roundRobin({ start: 1, step: 1 }, [2, 4, 6], [1, 3, 5]); // Iterable[1, 2, 3, 4, 5, 6]
+```
+
+### asyncRoundRobin
+
+**asyncRoundRobin(start, step, ...[sources](#asyncsourceiterable))**  
+**asyncRoundRobin(step, ...[sources](#asyncsourceiterable))**  
+**asyncRoundRobin(...[sources](#asyncsourceiterable))**
+
+See [roundRobin](#roundrobin)
 
 ### zip
 

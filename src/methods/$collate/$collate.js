@@ -5,15 +5,6 @@ import { $iterableCurry } from '../../internal/$iterable';
 import { $interleave } from '../$interleave/$interleave';
 
 $async;
-function* $byPosition({ start, step }, canTakeAny, ...buffers) {
-  start = start % buffers.length;
-  $await;
-  for (let i = start; $await(canTakeAny()); i = (i + step) % buffers.length) {
-    if ($await(buffers[i].canTake())) yield $await(buffers[i].take());
-  }
-}
-
-$async;
 function* $byComparison({ comparator }, canTakeAny, ...buffers) {
   let candidateBuffer;
   while ((candidateBuffer = $await(canTakeAny()))) {
@@ -31,37 +22,10 @@ function* $byComparison({ comparator }, canTakeAny, ...buffers) {
   }
 }
 
-const defaultOptions = {
-  start: 0,
-  step: 1,
-};
-
-export function $collate(sources, start = 0, stepOrComparatorOrOptions = 1) {
-  let by;
-  let options;
-  if (typeof stepOrComparatorOrOptions === 'function') {
-    by = $byComparison;
-    options = { comparator: stepOrComparatorOrOptions };
-  } else if (typeof stepOrComparatorOrOptions === 'number' && typeof start === 'number') {
-    by = $byPosition;
-    options = { start, step: stepOrComparatorOrOptions };
-  } else if (stepOrComparatorOrOptions && typeof stepOrComparatorOrOptions === 'object') {
-    by = $byPosition;
-    options = {
-      ...defaultOptions,
-      ...stepOrComparatorOrOptions,
-    };
-  } else {
-    throw new TypeError(
-      'collate was passed an invalid value which could not be interpreted as a step, a comparator, or an options object',
-    );
-  }
-
-  return $interleave(sources, by, options);
+export function $collate(sources, comparator) {
+  return $interleave(sources, $byComparison, { comparator });
 }
 
 export default $iterableCurry($collate, {
   variadic: true,
-  minArgs: 0,
-  maxArgs: 2,
 });

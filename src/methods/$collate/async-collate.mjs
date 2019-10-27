@@ -9,14 +9,6 @@
 import { asyncIterableCurry } from '../../internal/async-iterable';
 import { asyncInterleave } from '../$interleave/async-interleave';
 
-async function* asyncByPosition({ start, step }, canTakeAny, ...buffers) {
-  start = start % buffers.length;
-
-  for (let i = start; await canTakeAny(); i = (i + step) % buffers.length) {
-    if (await buffers[i].canTake()) yield await buffers[i].take();
-  }
-}
-
 async function* asyncByComparison({ comparator }, canTakeAny, ...buffers) {
   let candidateBuffer;
 
@@ -36,38 +28,11 @@ async function* asyncByComparison({ comparator }, canTakeAny, ...buffers) {
   }
 }
 
-const defaultOptions = {
-  start: 0,
-  step: 1,
-};
-export function asyncCollate(sources, start = 0, stepOrComparatorOrOptions = 1) {
-  let by;
-  let options;
-
-  if (typeof stepOrComparatorOrOptions === 'function') {
-    by = asyncByComparison;
-    options = {
-      comparator: stepOrComparatorOrOptions,
-    };
-  } else if (typeof stepOrComparatorOrOptions === 'number' && typeof start === 'number') {
-    by = asyncByPosition;
-    options = {
-      start,
-      step: stepOrComparatorOrOptions,
-    };
-  } else if (stepOrComparatorOrOptions && typeof stepOrComparatorOrOptions === 'object') {
-    by = asyncByPosition;
-    options = { ...defaultOptions, ...stepOrComparatorOrOptions };
-  } else {
-    throw new TypeError(
-      'collate was passed an invalid value which could not be interpreted as a step, a comparator, or an options object',
-    );
-  }
-
-  return asyncInterleave(sources, by, options);
+export function asyncCollate(sources, comparator) {
+  return asyncInterleave(sources, asyncByComparison, {
+    comparator,
+  });
 }
 export default asyncIterableCurry(asyncCollate, {
   variadic: true,
-  minArgs: 0,
-  maxArgs: 2,
 });
