@@ -7,15 +7,33 @@
  */
 
 import { asyncIterableCurry } from '../../internal/async-iterable';
-export async function asyncConsume(iterable, func = () => {}) {
+let warnedCallbackDeprecation = false;
+
+const warnCallbackDeprecation = () => {
+  if (!warnedCallbackDeprecation) {
+    console.warn(
+      `\`${'asyncConsume'}(callback, iterable)\` is deprecated and will be removed in iter-tools@8. ` +
+        `Instead use ${'asyncForEach'}(callback, iterable)`,
+    );
+    warnedCallbackDeprecation = true;
+  }
+};
+
+export async function asyncConsume(iterable, callback = () => {}) {
   let c = 0;
 
   for await (const item of iterable) {
-    await func(item, c++);
+    await callback(item, c++);
   }
 }
 export default asyncIterableCurry(asyncConsume, {
   reduces: true,
   minArgs: 0,
   maxArgs: 1,
+
+  validateArgs(args) {
+    if (typeof args[0] === 'function') {
+      warnCallbackDeprecation();
+    }
+  },
 });

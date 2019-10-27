@@ -150,6 +150,7 @@ Consume an iterable
 [arrayFrom](#arrayfrom)  
 [arrayFromAsync](#arrayfromasync)  
 [consume](#consume) ([async](#asyncconsume))  
+[forEach](#foreach) ([async](#asyncforeach))  
 [toArray](#arrayfrom) ([async](#arrayfromasync))  
 
 Utilities
@@ -1757,21 +1758,48 @@ await arrayFromAsync(null); // []
 
 ### consume
 
-**consume(func, [iterable](#sourceiterable))**  
+**consume(callback, [iterable](#sourceiterable))**  
 **consume([iterable](#sourceiterable))**
 
-Consumes an iterable, running a function for every value yielded. Passing only the function you get a curried version.
+Consumes `iterable`.
+
+`consume(callback, iterable)` is a deprecated alias for `forEach(callback, iterable)`.
 
 ```js
-consume(item => console.log(item), [1, 2, 3]); // prints 1, 2, 3
+function* log123() {
+  console.log('1');
+  yield;
+  console.log('2');
+  yield;
+  console.log('3');
+}
+
+consume(log123); // prints 1 2 3
 ```
 
 ### asyncConsume
 
-**asyncConsume(func, [iterable](#asyncsourceiterable))**  
+**asyncConsume(callback, [iterable](#asyncsourceiterable))**  
 **asyncConsume([iterable](#asyncsourceiterable))**
 
 See [consume](#consume)
+
+### forEach
+
+**forEach(callback, [iterable](#sourceiterable))**
+
+Calls `callback(value, idx)` for each value in `iterable`. Note that as a consuming method, `forEach` is not lazy. It will trigger evaluation of `iterable`.
+
+```js
+forEach(value => console.log(value), [1, 2, 3]); // prints 1, 2, 3
+forEach(value => console.log(value), null); //
+```
+
+### asyncForEach
+
+**asyncForEach(callback, [iterable](#asyncsourceiterable))**
+
+See [forEach](#foreach)
 
 ### toArray
 

@@ -81,6 +81,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Deprecated
 **Overloads**
  -  `groupBy(null, source)` and `asyncGroupBy(null, source)`. Instead use `group(source)` and `asyncGroup(source)`.
+ -  `consume(callback, source)` and `asyncConsume(callback, source)`. Instead use `forEach(callback, source)` and `asyncForEach(callback, source)`.
 
 ### Changed
  -  `import 'iter-tools/es5/method'` should now be `import 'iter-tools/method'`.
