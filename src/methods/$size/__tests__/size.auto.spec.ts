@@ -11,12 +11,29 @@ describe('size', () => {
   it('return length of array', () => {
     expect(size([1, 2, 3, 4, 5, 6])).toBe(6);
   });
+  it('returns the size of a typed array', () => {
+    expect(size(new Int8Array([1, 2, 3]))).toBe(3);
+    expect(size(new Int16Array([1, 2, 3]))).toBe(3);
+  });
   it('returns 0 for null or undefined', () => {
     expect(size(null)).toBe(0);
     expect(size(undefined)).toBe(0);
   });
   it('returns the size of a map', () => {
     expect(size(new Map([[1, 1], [2, 2]]))).toBe(2);
+  });
+  it('returns the size of a class with a size property', () => {
+    class SizeOne {
+      get size() {
+        return 1;
+      }
+
+      *[Symbol.iterator]() {
+        yield* [];
+      }
+    }
+
+    expect(size(new SizeOne())).toBe(1);
   });
   it('return number of items in iterable', () => {
     expect(

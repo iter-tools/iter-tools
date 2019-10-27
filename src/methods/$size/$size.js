@@ -1,22 +1,25 @@
 import { $async, $await } from '../../../generate/async.macro';
 
 import { $ensureIterable } from '../../internal/$iterable';
-
-const TypedArrayProto = Object.getPrototypeOf(Int8Array);
+import { getStaticSize } from './internal/get-static-size';
 
 $async;
 export function $size(iterable) {
-  const iter = $ensureIterable(iterable);
-  if (Array.isArray(iter)) return iter.length;
-  if (iter instanceof Map || iter instanceof Set) return iter.size;
-  if (Object.getPrototypeOf(iter) === TypedArrayProto) return iter.length;
+  const _iterable = $ensureIterable(iterable);
+
+  const staticSize = getStaticSize(iterable);
+  if (staticSize !== null) {
+    return staticSize;
+  }
+
   let size = 0;
   /* eslint-disable no-unused-vars */
   $await;
-  for (const _ of iter) {
-    /* eslint-enable no-unused-vars */
+  for (const _ of _iterable) {
     size++;
   }
+  /* eslint-enable no-unused-vars */
+
   return size;
 }
 

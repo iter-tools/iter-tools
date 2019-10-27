@@ -7,19 +7,23 @@
  */
 
 import { asyncEnsureIterable } from '../../internal/async-iterable';
-const TypedArrayProto = Object.getPrototypeOf(Int8Array);
+import { getStaticSize } from './internal/get-static-size';
 export async function asyncSize(iterable) {
-  const iter = asyncEnsureIterable(iterable);
-  if (Array.isArray(iter)) return iter.length;
-  if (iter instanceof Map || iter instanceof Set) return iter.size;
-  if (Object.getPrototypeOf(iter) === TypedArrayProto) return iter.length;
+  const _iterable = asyncEnsureIterable(iterable);
+
+  const staticSize = getStaticSize(iterable);
+
+  if (staticSize !== null) {
+    return staticSize;
+  }
+
   let size = 0;
   /* eslint-disable no-unused-vars */
 
-  for await (const _ of iter) {
-    /* eslint-enable no-unused-vars */
+  for await (const _ of _iterable) {
     size++;
   }
+  /* eslint-enable no-unused-vars */
 
   return size;
 }

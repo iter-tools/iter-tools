@@ -11,6 +11,14 @@ describe($`size`, () => {
   );
 
   it(
+    'returns the size of a typed array',
+    $async(() => {
+      expect($await($size(new Int8Array([1, 2, 3])))).toBe(3);
+      expect($await($size(new Int16Array([1, 2, 3])))).toBe(3);
+    }),
+  );
+
+  it(
     'returns 0 for null or undefined',
     $async(() => {
       expect($await($size(null))).toBe(0);
@@ -22,6 +30,23 @@ describe($`size`, () => {
     'returns the size of a map',
     $async(() => {
       expect($await($size(new Map([[1, 1], [2, 2]])))).toBe(2);
+    }),
+  );
+
+  it(
+    'returns the size of a class with a size property',
+    $async(() => {
+      class SizeOne {
+        get size() {
+          return 1;
+        }
+
+        *[Symbol.iterator]() {
+          yield* [];
+        }
+      }
+
+      expect($await($size(new SizeOne()))).toBe(1);
     }),
   );
 
