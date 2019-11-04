@@ -58,6 +58,7 @@ Use iterables from data structures
 
 Transform a single iterable
 
+[append](#append) ([async](#asyncappend))  
 [batch](#batch) ([async](#asyncbatch))  
 [dropWhile](#dropwhile) ([async](#asyncdropwhile))  
 [enumerate](#enumerate) ([async](#asyncenumerate))  
@@ -66,6 +67,7 @@ Transform a single iterable
 [flatMap](#flatmap) ([async](#asyncflatmap)) ([parallel-async](#asyncflatmapparallel))  
 [interpose](#interpose) ([async](#asyncinterpose))  
 [map](#map) ([async](#asyncmap)) ([parallel-async](#asyncmapparallel))  
+[prepend](#prepend) ([async](#asyncprepend))  
 [reverse](#reverse) ([async](#asyncreverse))  
 [slice](#slice) ([async](#asyncslice))  
 [takeSorted](#takesorted) ([async](#asynctakesorted))  
@@ -304,6 +306,22 @@ wrapValues(new Map([
 
 ## Transform a single iterable
 
+### append
+
+**append(value, [source](#sourceiterable))**
+
+Yields values from `source` with `value` appended.
+
+```js
+append(4, [1, 2, 3]); // Iterable[1, 2, 3, 4]
+```
+
+### asyncAppend
+
+**asyncAppend(value, [source](#asyncsourceiterable))**
+
+See [append](#append)
+
 ### batch
 
 **batch(size, [source](#sourceiterable))**
@@ -525,6 +543,22 @@ The default concurrency is 4.
 await asyncMapParallel(asyncMapper, asyncIterable);
 await asyncMapParallel(10, asyncMapper, asyncIterable);
 ```
+
+### prepend
+
+**prepend(value, [source](#sourceiterable))**
+
+Yields `value` followed by values from `source`.
+
+```js
+prepend(0, [1, 2, 3]); // Iterable[0, 1, 2, 3]
+```
+
+### asyncPrepend
+
+**asyncPrepend(value, [source](#asyncsourceiterable))**
+
+See [prepend](#prepend)
 
 ### reverse
 
