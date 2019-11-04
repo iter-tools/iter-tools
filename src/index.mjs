@@ -51,6 +51,8 @@ export { default as keys } from './keys';
 export { default as last } from './last';
 export { default as lastOr } from './last-or';
 export { default as map } from './map';
+export { default as nullOr } from './null-or';
+export { default as nullOrAsync } from './null-or-async';
 export { default as permutations } from './permutations';
 export { default as pipe } from './pipe';
 export { default as prepend } from './prepend';
