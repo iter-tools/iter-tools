@@ -4,6 +4,7 @@
  * The template for this file is: generate/templates/index-file.js
  */
 
+export { default as append } from './append';
 export { default as apply } from './apply';
 export { default as arrayFrom } from './array-from';
 export { default as arrayFromAsync } from './array-from-async';
@@ -52,6 +53,7 @@ export { default as lastOr } from './last-or';
 export { default as map } from './map';
 export { default as permutations } from './permutations';
 export { default as pipe } from './pipe';
+export { default as prepend } from './prepend';
 export { default as product } from './product';
 export { default as range } from './range';
 export { default as reduce } from './reduce';
@@ -87,6 +89,7 @@ export { default as wrapKeys } from './wrap-keys';
 export { default as wrapValues } from './wrap-values';
 export { default as zip } from './zip';
 export { default as zipAll } from './zip-all';
+export { default as asyncAppend } from './async-append';
 export { default as asyncBatch } from './async-batch';
 export { default as asyncBuffer } from './async-buffer';
 export { default as asyncCollate } from './async-collate';
@@ -128,6 +131,7 @@ export { default as asyncLast } from './async-last';
 export { default as asyncLastOr } from './async-last-or';
 export { default as asyncMap } from './async-map';
 export { default as asyncMapParallel } from './async-map-parallel';
+export { default as asyncPrepend } from './async-prepend';
 export { default as asyncReduce } from './async-reduce';
 export { default as asyncReverse } from './async-reverse';
 export { default as asyncRoundRobin } from './async-round-robin';
