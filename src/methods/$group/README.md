@@ -1,9 +1,11 @@
-Eqivalent to `groupBy(_ => _)`.
+Eqivalent to `groupBy(_ => _, source)`. For more information see [groupBy](#groupby).
 
 ```js
-group([1, 1, 1, 1, -1, -1, -1, 4]);
-// It will return:
-// 1, subiterator (1, 1, 1, 1)
-// -1, subiterator (-1, -1, -1)
-// 4, subiterator (4)
+group([1, 1, -1, -1, -1, 4, -1]);
+// Iterable[
+//   [1, Iterable[1, 1]]
+//   [-1, Iterable[-1, -1, -1]]
+//   [4, Iterable[4]]
+//   [-1, Iterable[-1]]
+// ]
 ```

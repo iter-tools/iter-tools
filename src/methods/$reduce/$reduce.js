@@ -3,9 +3,9 @@ import { $iteratorSymbol, $async, $await } from '../../../generate/async.macro';
 import { $iterableCurry } from '../../internal/$iterable';
 
 $async;
-export function $reduce(iterable, initial, func) {
+export function $reduce(iterable, initial, reducer) {
   let c = 0;
-  let acc = initial;
+  let result = initial;
   const iterator = iterable[$iteratorSymbol]();
   try {
     if (initial === undefined) {
@@ -13,14 +13,14 @@ export function $reduce(iterable, initial, func) {
       if (firstResult.done) {
         throw new Error('Cannot reduce: no initial value specified and iterable was empty');
       }
-      acc = firstResult.value;
+      result = firstResult.value;
       c = 1;
     }
-    let result;
-    while (!(result = $await(iterator.next())).done) {
-      acc = $await(func(acc, result.value, c++));
+    let nextItem;
+    while (!(nextItem = $await(iterator.next())).done) {
+      result = $await(reducer(result, nextItem.value, c++));
     }
-    return acc;
+    return result;
   } finally {
     // close the iterator in case of exceptions
     if (typeof iterator.return === 'function') $await(iterator.return());

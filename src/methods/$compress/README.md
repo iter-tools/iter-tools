@@ -1,5 +1,6 @@
-This returns an iterable omitting items when the second iterable, at the same index, contains a falsy value.
+Consumes values from `source` and `included` iterables in parallel, at each step yielding the `source` value if the `included` value is truthy.
 
 ```js
-compress(range(5), [0, 0, 1, 1]); // 2, 3
+compress([0, 1, 2, 3, 4], [0, 0, 1, 1]); // 2, 3
+compress([0, 1, 2, 3, 4], cycle([true, false])); // 0, 2, 4
 ```

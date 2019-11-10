@@ -1,5 +1,5 @@
 {
   "type": "consume",
   "aliases": ["toArray"],
-  "signatures": [[{ "name": "iterable", "isIterable": true }]]
+  "signatures": [[{ "name": "source", "isIterable": true }]]
 }

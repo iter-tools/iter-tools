@@ -7,15 +7,15 @@
  */
 
 import { iterableCurry } from '../../internal/iterable';
-export function* interpose(source, interposeItem) {
+export function* interpose(source, interposed) {
   let first = true;
 
-  for (const item of source) {
+  for (const sourceValue of source) {
     if (!first) {
-      yield interposeItem;
+      yield interposed;
     }
 
-    yield item;
+    yield sourceValue;
     first = false;
   }
 }

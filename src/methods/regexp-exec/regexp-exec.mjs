@@ -1,23 +1,23 @@
 import { cloneRegexp, isRegExp } from '../../internal/regexp';
 import { stringCurry } from '../../internal/string';
 
-export function* regexpExec(str, re) {
-  if (typeof re === 'string') {
-    re = new RegExp(re, 'g');
+export function* regexpExec(str, regexp) {
+  if (typeof regexp === 'string') {
+    regexp = new RegExp(regexp, 'g');
   }
 
-  if (!re.sticky && !re.global) {
-    re = cloneRegexp(re, { global: true });
+  if (!regexp.sticky && !regexp.global) {
+    regexp = cloneRegexp(regexp, { global: true });
   }
   let match;
-  while ((match = re.exec(str)) !== null) {
+  while ((match = regexp.exec(str)) !== null) {
     yield match;
   }
 }
 
 export default stringCurry(regexpExec, {
-  validateArgs([re]) {
-    if (!isRegExp(re)) {
+  validateArgs([regexp]) {
+    if (!isRegExp(regexp)) {
       throw new TypeError('regexpExec: the first argument can be a string or a regular expression');
     }
   },

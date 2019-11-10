@@ -1,5 +1,14 @@
-Rate-limits its source iterable, ensuring that every item is yielded at an interval of at least n ms (it can be curried).
+Rate-limits `source`, ensuring that requests for the next value in `source` are made at intervals of no less than `intervalMs` milliseconds. Yields the same values in the same order as `source`.
 
 ```js
-asyncThrottle(10, iterable);
+async function* pollHealth() {
+  while (true) {
+    yield fetch('/health').json();
+  }
+}
+
+for (const response of asyncThrottle(100, pollHealth)) {
+  // This happens only once every 100 milliseconds
+  renderHealth(response);
+}
 ```

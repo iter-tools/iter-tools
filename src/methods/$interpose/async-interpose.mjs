@@ -7,15 +7,15 @@
  */
 
 import { asyncIterableCurry } from '../../internal/async-iterable';
-export async function* asyncInterpose(source, interposeItem) {
+export async function* asyncInterpose(source, interposed) {
   let first = true;
 
-  for await (const item of source) {
+  for await (const sourceValue of source) {
     if (!first) {
-      yield interposeItem;
+      yield interposed;
     }
 
-    yield item;
+    yield sourceValue;
     first = false;
   }
 }

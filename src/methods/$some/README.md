@@ -1,6 +1,6 @@
-It returns true if running the function, at least one item returns true (can be curried).
+Returns `true` if the result of `predicate(item, idx)` is truthy for at least one value in `iterable`, and `false` otherwise.
 
 ```js
-some(n => n % 2 === 0, [1, 2, 3]); // returns true
-some(n => n % 2 === 0, [1, 3, 7]); // returns false
+some(isEven, [1, 2, 3]); // true
+some(isEven, [1, 3, 7]); // false
 ```

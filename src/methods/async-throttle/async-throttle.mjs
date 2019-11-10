@@ -1,10 +1,10 @@
 import { asyncIterableCurry } from '../../internal/async-iterable';
 import delay from '../../internal/delay';
 
-export async function* asyncThrottle(source, ms) {
+export async function* asyncThrottle(source, intervalMs) {
   let waitSince = 0;
   for await (const item of source) {
-    const duration = ms - (Date.now() - waitSince);
+    const duration = intervalMs - (Date.now() - waitSince);
     await (duration > 0 && delay(duration));
     waitSince = Date.now();
     yield item;
@@ -12,9 +12,9 @@ export async function* asyncThrottle(source, ms) {
 }
 
 export default asyncIterableCurry(asyncThrottle, {
-  validateArgs([ms]) {
-    if (typeof ms !== 'number' || ms <= 0) {
-      throw new Error('The first argument (ms) should be a number greater than 0');
+  validateArgs([intervalMs]) {
+    if (typeof intervalMs !== 'number' || intervalMs <= 0) {
+      throw new Error('The first argument (intervalMs) should be a number greater than 0');
     }
   },
 });

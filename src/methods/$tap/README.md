@@ -1,8 +1,10 @@
-Tap is not unlike a forEach method, and like forEach is usually used to express side effects. Without breaking a chain of composition, it allows you access to the value yielded to it. Tap always yields the same value it received. Tap can be curried.
+For each value in `source`, executes `callback(value, idx)` and yields the value (unmodified). Note that while this looks similar to what a `for..of` loop or `forEach` method might do, the key difference is that `tap` does not force evaluation of the iterable.
 
 ```js
-compose(
-  tap(item => console.log(item)),
+pipeExec(
+  [0, 1, 2],
   filter(item => !!item),
-)([0, 1, 2]); // logs "1", "2". returns Iterable[1, 2]
+  tap(item => console.log(item)),
+  map(item => item + 1),
+); // Logs 1, 2 and returns Iterable[2, 3]
 ```

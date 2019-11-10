@@ -1,11 +1,11 @@
-It expects to receive an iterable of strings to be joined, and a separator string. It concatenates each string with the separator in between.
+Returns the concatenation of each string in `strings` with `separator` in between.
 
 ```js
-joinAsStringWith(' ', ['a', 'b', 'c']); // "a b c"
+joinAsStringWith(' ', ['aa', 'bb', 'cc']); // "aa bb cc"
 ```
 
-Note that the method technically is working with iterables of characters, which usually means strings but could also be another kind of iterable. E.g.
+Note that the method technically is working with iterables of characters (i.e. length 1 strings). A string is such an iterable but there are other forms too, e.g.:
 
 ```js
-joinAsStringWith(' ', [['a'], ['b'], ['c']]); // "a b c"
+joinAsStringWith(' ', [['a', 'a'], ['b'], ['c', 'c']]); // "aa b cc"
 ```

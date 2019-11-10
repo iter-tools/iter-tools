@@ -7,9 +7,9 @@
  */
 
 import { asyncIterableCurry } from '../../internal/async-iterable';
-export async function asyncReduce(iterable, initial, func) {
+export async function asyncReduce(iterable, initial, reducer) {
   let c = 0;
-  let acc = initial;
+  let result = initial;
   const iterator = iterable[Symbol.asyncIterator]();
 
   try {
@@ -20,17 +20,17 @@ export async function asyncReduce(iterable, initial, func) {
         throw new Error('Cannot reduce: no initial value specified and iterable was empty');
       }
 
-      acc = firstResult.value;
+      result = firstResult.value;
       c = 1;
     }
 
-    let result;
+    let nextItem;
 
-    while (!(result = await iterator.next()).done) {
-      acc = await func(acc, result.value, c++);
+    while (!(nextItem = await iterator.next()).done) {
+      result = await reducer(result, nextItem.value, c++);
     }
 
-    return acc;
+    return result;
   } finally {
     // close the iterator in case of exceptions
     if (typeof iterator.return === 'function') await iterator.return();

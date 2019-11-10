@@ -1,21 +1,25 @@
-It flattens an iterable. You can specify the maximum depth as first argument (default 1). `0` means "no flatten", `Infinity` means "deep flatten".
+Defaults:
 
+- `depth`: `1`
+- `shouldFlat`: `value => isIterable(value) && !isString(value)`
+
+Yields each nested value from `source` by recursing into values which are iterable -- up to the maximum recursion `depth`. In additon to checking `depth`, `flat` will only recurse if the result of `shouldFlat(item)` is truthy.
+
+<!-- prettier-ignore -->
 ```js
-flat([1, [2, 3], [4, [5, 6]]]); // 1, 2, 3, 4, [5, 6]
-flat(2, [1, [2, 3], [4, [5, 6]]]); // 1, 2, 3, 4, 5, 6
-```
+const nested = [
+  1,
+  [2, 3],
+  [
+    4,
+    [5, 6]
+  ]
+];
+flat(nested); // Iterable[1, 2, 3, 4, Iterable[5, 6]]
+flat(2, nested); // Iterable[1, 2, 3, 4, 5, 6]
 
-The algorithm takes into consideration every item that is iterable, except strings.
-Alternatively, you can pass a function that takes the current item and returns true if the item is a sequence which can be flattened.
+const isString = item =>
+  typeof item === 'string' && item.length > 1;
 
-```js
-const isString = item => typeof item === 'string' && item.length > 1;
-
-flat(isString, Infinity, ['hel', ['lo', ''], ['world']]); // h e l l o w o r l d
-```
-
-Finally for maximum readability you can specify flat's options as an object, like so:
-
-```js
-flat({ shouldFlat: isString, depth: Infinity }, ['hel', ['lo', ''], ['world']]); // h e l l o w o r l d
+flat(isString, Infinity, ['Hel', ['lo', '!']]); // Iterable['H', 'e', 'l', 'l', 'o', '!]
 ```

@@ -29,11 +29,23 @@ An object implementing the async iterable protocol, which is to say possessing a
 
 ### ResultIterable
 
-An [Iterable](#iterable) which is also an iterator, which is to say that it has `next()`, `throw(error)`, and `return(value)` methods. It can be evaluated multiple times calling its `[Symbol.iterator]()` method repeatedly. Note that there is no guarantee that evaluating a result iterable more than once will produce the same items, unless the source iterable makes that guarantee.
+An [Iterable](#iterable) which is also an iterator, which is to say that it has `next()`, `throw(error)`, and `return(value)` methods. It can be evaluated multiple times calling its `[Symbol.iterator]()` method repeatedly. Note that there is no guarantee that evaluating a result iterable more than once will produce the same values. The result will be repeatable only if any transformations are repeatable and the source iterable guarantees that multiple iterations will have the same result (e.g. `Object.freeze(array)`).
 
 ### AsyncResultIterable
 
 The async version of a [result iterable](#resultiterable). Instead of working as an [Iterable](#iterable) and an iterator, it behaves like an [AsyncIterable](#asynciterable) and an async iterator. The same caveats apply regarding evaluating this kind of result iterable more than once.
+
+### Comparator
+
+A comparator is used to determine sort order. Comparators in iter-tools exactly match the comparator API expected by `Array.prototype.sort`. Comparators are always sync functions, even when sorting async iterables.
+
+#### The Default Comparator
+
+The default comparator is the same as that used by `Array.prototype.sort`:
+```js
+(a, b) => a > b ? 1 : b > a ? -1 : 0;
+```
+It will sort numbers by their value, and strings lexicographically.
 
 
 ## Methods
@@ -175,11 +187,15 @@ Utilities
 **cycle(n, [iterable](#sourceiterable))**  
 **cycle([iterable](#sourceiterable))**
 
-It cycles the same iterable `n` times, or forever if `n` is not specified.
+Defaults:
+
+- `n`: `Infinity`
+
+Yields the contents of `iterable` repeated `n` times.
 
 ```js
-cycle(2, range(3)); // 0, 1, 2, 0, 1, 2
-cycle(range(3)); // 0, 1, 2, 0, 1, 2, 0, 1, 2 ....
+cycle(2, range(3)); // Iterable[0, 1, 2, 0, 1, 2]
+cycle(range(3)); // Iterable[0, 1, 2, 0, 1, 2, 0, 1, 2, ...]
 ```
 
 ### asyncCycle
@@ -195,21 +211,25 @@ See [cycle](#cycle)
 **range(?end)**  
 **range({ start, end, step })**
 
+Defaults:
+
+- `start`: 0
+- `end`: Infinity
+- `step`: 1
+
 Create an iterable returning a sequence of numbers (the sequence can be infinite).
-Overloads are: `range({start, step, end})`, `range(end)`, or `range(start, step, end)`.
 
 ```js
 range(); // 0, 1, 2 ... Infinity
+range(3); // 0, 1, 2
+range(3, 6); // 3, 4, 5
+range(3, 10, 3); // 3, 6, 9
+range(9, 3, -3 }); // 9, 6
 
 range({ end: 3 }); // 0, 1, 2
 range({ start: 3 }); // 3, 4, 5 ... Infinity
 range({ start: 3, end: 6 }); // 3, 4, 5
 range({ start: 3, end: 10, step: 3 }); // 3, 6, 9
-range({ start: 9, end: 3, step: -3 }); // 9, 6
-
-range(3); // 0, 1, 2
-range(3, 6); // 3, 4, 5
-range(3, 10, 3); // 3, 6, 9
 ```
 
 ### repeat
@@ -217,7 +237,11 @@ range(3, 10, 3); // 3, 6, 9
 **repeat(times, item)**  
 **repeat(item)**
 
-Create an iterable that returns the same value `n` times
+Defaults:
+
+- `n`: `Infinity`
+
+Create an iterable that returns the same value repeated `n` times.
 
 ```js
 repeat(3, 'x'); // 'x', 'x', 'x'
@@ -269,8 +293,8 @@ values({ foo: 'bar', fox: 'far' }); // Iterable['bar', 'far']
 
 Yields the items yielded by `entriesable.entries()`. When passed `null` or `undefined`, yields nothing.
 
+<!-- prettier-ignore -->
 ```js
-// prettier-ignore
 wrapEntries(new Map([
   ['foo', 'bar'],
   ['fox', 'far']
@@ -283,8 +307,8 @@ wrapEntries(new Map([
 
 Yields the items yielded by `keysable.keys()`. When passed `null` or `undefined`, yields nothing.
 
+<!-- prettier-ignore -->
 ```js
-// prettier-ignore
 wrapKeys(new Map([
   ['foo', 'bar'],
   ['fox', 'far']
@@ -297,8 +321,8 @@ wrapKeys(new Map([
 
 Yields the items yielded by `valuesable.values()`. When passed `null` or `undefined`, yields nothing.
 
+<!-- prettier-ignore -->
 ```js
-// prettier-ignore
 wrapValues(new Map([
   ['foo', 'bar'],
   ['fox', 'far']
@@ -328,7 +352,7 @@ See [append](#append)
 
 **batch(size, [source](#sourceiterable))**
 
-Takes a number and an iterable and returns an iterable divided into batches
+Yields non-overlapping subsequences each containing `size` values from `source`.
 
 ```js
 batch(2, range(5)); // [0, 1], [2, 3], [4]
@@ -342,17 +366,17 @@ See [batch](#batch)
 
 ### dropWhile
 
-**dropWhile(func, [source](#sourceiterable))**
+**dropWhile(predicate, [source](#sourceiterable))**
 
-It starts returning values when the function is false. Then it keeps going until the iterable is exausted.
+Returns values from `source`, omitting consecutive values at the beginning of `source` for which the result of `predicate(item, idx)` is truthy.
 
 ```js
-dropWhile(isEven, range(4)); // 1, 2, 3
+dropWhile(isEven, range(5)); // 0, 2, 4
 ```
 
 ### asyncDropWhile
 
-**asyncDropWhile(func, [source](#asyncsourceiterable))**
+**asyncDropWhile(predicate, [source](#asyncsourceiterable))**
 
 See [dropWhile](#dropwhile)
 
@@ -382,22 +406,22 @@ See [enumerate](#enumerate)
 
 ### filter
 
-**filter(func, [source](#sourceiterable))**
+**filter(predicate, [source](#sourceiterable))**
 
-The equivalent of the array "filter" function.
+Yields only values from `source` for which the result of `predicate(value, idx)` is truthy. Equivalent to `Array.prototype.filter`.
 
 ```js
-filter(isEven, range(4)); // 0, 2
-await asyncFilter(animal => animal.kind.slice(1) === 'at', [
+filter(isEven, range(4)); // Iterable[0, 2]
+filter(animal => animal.kind.slice(1) === 'at', [
   { type: 'cat' },
   { type: 'rat' },
   { type: 'dog' },
-]); // [{type: 'cat'}, {type: 'rat'}]
+]); // Iterable[{type: 'cat'}, {type: 'rat'}]
 ```
 
 ### asyncFilter
 
-**asyncFilter(func, [source](#asyncsourceiterable))**
+**asyncFilter(predicate, [source](#asyncsourceiterable))**
 
 See [filter](#filter)
 
@@ -406,16 +430,19 @@ See [filter](#filter)
 **asyncFilterParallel(concurrency, func, [iterable](#asyncsourceiterable))**  
 **asyncFilterParallel(func, [iterable](#asyncsourceiterable))**
 
-A variant of filter with more complicated logic that can optimize when you have both an async filter predicate and an
-async souce iterable. It starts fetching the next item in the source iterable while waiting for the async predicate
-to resolve. The optional concurrency paramater dictates how many items can be read ahead from the source iterable while
-still waiting for the results of previous async predicates.
+Defaults:
 
-The default concurrency is 4.
+- `concurrency`: `4`
+
+A variant of filter with more complicated logic that can optimize when you have both an async filter predicate and an async souce iterable. It starts fetching the next item in the source iterable while waiting for the async predicate to resolve. The optional concurrency paramater dictates how many items can be read ahead from the source iterable while still waiting for the results of previous async predicates.
 
 ```js
 await asyncFilterParallel(asyncPredicate, asyncIterable);
-await asyncFilterParallel(10, asyncPredicate, asyncIterable);
+await asyncFilterParallel(
+  10,
+  asyncPredicate,
+  asyncIterable,
+);
 ```
 
 ### flat
@@ -425,26 +452,30 @@ await asyncFilterParallel(10, asyncPredicate, asyncIterable);
 **flat(depth, [source](#sourceiterable))**  
 **flat([source](#sourceiterable))**
 
-It flattens an iterable. You can specify the maximum depth as first argument (default 1). `0` means "no flatten", `Infinity` means "deep flatten".
+Defaults:
 
+- `depth`: `1`
+- `shouldFlat`: `value => isIterable(value) && !isString(value)`
+
+Yields each nested value from `source` by recursing into values which are iterable -- up to the maximum recursion `depth`. In additon to checking `depth`, `flat` will only recurse if the result of `shouldFlat(item)` is truthy.
+
+<!-- prettier-ignore -->
 ```js
-flat([1, [2, 3], [4, [5, 6]]]); // 1, 2, 3, 4, [5, 6]
-flat(2, [1, [2, 3], [4, [5, 6]]]); // 1, 2, 3, 4, 5, 6
-```
+const nested = [
+  1,
+  [2, 3],
+  [
+    4,
+    [5, 6]
+  ]
+];
+flat(nested); // Iterable[1, 2, 3, 4, Iterable[5, 6]]
+flat(2, nested); // Iterable[1, 2, 3, 4, 5, 6]
 
-The algorithm takes into consideration every item that is iterable, except strings.
-Alternatively, you can pass a function that takes the current item and returns true if the item is a sequence which can be flattened.
+const isString = item =>
+  typeof item === 'string' && item.length > 1;
 
-```js
-const isString = item => typeof item === 'string' && item.length > 1;
-
-flat(isString, Infinity, ['hel', ['lo', ''], ['world']]); // h e l l o w o r l d
-```
-
-Finally for maximum readability you can specify flat's options as an object, like so:
-
-```js
-flat({ shouldFlat: isString, depth: Infinity }, ['hel', ['lo', ''], ['world']]); // h e l l o w o r l d
+flat(isString, Infinity, ['Hel', ['lo', '!']]); // Iterable['H', 'e', 'l', 'l', 'o', '!]
 ```
 
 ### asyncFlat
@@ -460,10 +491,10 @@ See [flat](#flat)
 
 **flatMap(func, [source](#sourceiterable))**
 
-It maps value of an iterable and flatten them.
+For each value in `source`, yields each value in `predicate(value, idx)`. Equivalent to `Array.prototype.flatMap`.
 
 ```js
-flatMap(x => [x, x * x], range(4)); // 0, 0, 1, 1, 2, 4, 3, 9
+flatMap(x => [x - 1, x], [1, 3, 5]); // Iterable[0, 1, 2, 3, 4, 5]
 ```
 
 ### asyncFlatMap
@@ -476,12 +507,11 @@ See [flatMap](#flatmap)
 
 **asyncFlatMapParallel(concurrency, func, [iterable](#asyncsourceiterable))**
 
-A variant of flatMap with more complicated logic that can optimize when you have both an async mapper callback and an
-async souce iterable. It starts fetching the next item in the source iterable while waiting for the async callback
-to resolve. The optional concurrency paramater dictates how many items can be read ahead from the source iterable while
-still waiting for the results of previous mapper callbacks.
+Defaults:
 
-The default concurrency is 4.
+- `concurrency`: `4`
+
+A variant of flatMap with more complicated logic that can optimize when you have both an async mapper callback and an async souce iterable. It starts fetching the next item in the source iterable while waiting for the async callback to resolve. The optional concurrency paramater dictates how many items can be read ahead from the source iterable while still waiting for the results of previous mapper callbacks.
 
 ```js
 await asyncFlatMapParallel(asyncMapper, asyncIterable);
@@ -499,17 +529,17 @@ item.value; // 1
 
 ### interpose
 
-**interpose(interposeItem, [source](#sourceiterable))**
+**interpose(interposed, [source](#sourceiterable))**
 
-Inserts a specififed item between each of the items in an iterable.
+Yields `interposed` between each of the values in `source`.
 
 ```js
-interpose(null, [1, 2, 3]); // 1, null, 2, null, 3
+interpose(null, [1, 2, 3]); // Iterable[1, null, 2, null, 3]
 ```
 
 ### asyncInterpose
 
-**asyncInterpose(interposeItem, [source](#asyncsourceiterable))**
+**asyncInterpose(interposed, [source](#asyncsourceiterable))**
 
 See [interpose](#interpose)
 
@@ -517,10 +547,10 @@ See [interpose](#interpose)
 
 **map(func, [source](#sourceiterable))**
 
-The equivalent of the array "map" function.
+For each value in `source`, yields the result of `predicate(value, idx)`. Equivalent to `Array.prototype.map`.
 
 ```js
-map(x => x * x, range(4)); // 0, 1, 4, 9
+map(x => x * x, [0, 1, 2, 3]); // Iterable[0, 1, 4, 9]
 ```
 
 ### asyncMap
@@ -534,12 +564,12 @@ See [map](#map)
 **asyncMapParallel(concurrency, func, [iterable](#asyncsourceiterable))**  
 **asyncMapParallel(func, [iterable](#asyncsourceiterable))**
 
-A variant of map with more complicated logic that can optimize when you have both an async mapper callback and an
-async souce iterable. It starts fetching the next item in the source iterable while waiting for the async callback
-to resolve. The optional concurrency paramater dictates how many items can be read ahead from the source iterable while
-still waiting for the results of previous mapper callbacks.
+Defaults:
 
-The default concurrency is 4.
+- `concurrency`: `4`
+
+A variant of map with more complicated logic that can optimize when you have both an async mapper callback and an async souce iterable. It starts fetching the next item in the source iterable while waiting for the async callback to resolve. The optional concurrency paramater dictates how many items can be read ahead from the source iterable while
+still waiting for the results of previous mapper callbacks.
 
 ```js
 await asyncMapParallel(asyncMapper, asyncIterable);
@@ -614,7 +644,11 @@ See [prepend](#prepend)
 
 **reverse([source](#sourceiterable))**
 
-Reverses an iterable. If the iterable is not an array, this requires caching the whole iterable in memory.
+Yields the items from `iterable` in reverse order. If `iterable` is not an array, this requires caching all its items in memory.
+
+```js
+reverse([1, 2, 3]); // Iterable[3, 2, 1]
+```
 
 ### asyncReverse
 
@@ -631,16 +665,30 @@ Note: Unlike `reverse`, `asyncReverse` will always make a cache of the entire in
 **slice(start, [source](#sourceiterable))**  
 **slice({ start, end, step }, [source](#sourceiterable))**
 
-It returns an iterable that returns a slice of an iterable.
+Defaults:
+
+- `end`: `Infinity`
+- `step`: `1`
+
+Yields a subsequence of items from `source`, starting at index `start` then advancing `step` items, until it reaches index `end`. The item at index `end` will not be part of the result.
 
 ```js
-slice(3, range(10)); // 0, 1, 2
-slice({ start: 2 }, range(10)); // 2, 3, 4, 5, 6, 7, 8, 9
-slice({ start: 2, end: 6 }, range(10)); // 2, 3, 4, 5
-slice({ start: 2, end: 6, step: 2 }, range(10)); // 2, 4
+slice(0, 3, range(10)); // Iterable[0, 1, 2]
+slice(2, range(10)); // Iterable[2, 3, 4, 5, 6, 7, 8, 9]
+slice(2, 6, range(10)); // Iterable[2, 3, 4, 5]
+slice(2, 6, 2, range(10)); // Iterable[2, 4]
 ```
 
-`start` and `end` can also be negative. When they are, they refer to offsets from the end of the iterable, as they do in `Array.prototype.slice`. Note: working with negative indicies does force slice to buffer items while it looks for the end of the iterable. It will do this as efficiently as it can, but for this reason it is not a good idea to use really large negative indexes.
+`start` and `end` can also be negative. When they are, they refer to offsets from the end of `iterable`, as they do in `Array.prototype.slice`. `step` must not be negative.
+
+```js
+slice(0, -3, range(10)); // Iterable[0, 1, 2, 3, 4, 5, 6]
+slice(-3, range(10)); // Iterable[7, 8, 9]
+slice(-6, -2, range(10)); // Iterable[4, 5, 6, 7]
+slice(-6, -2, 2, range(10)); // Iterable[4, 6]
+```
+
+Note: working with negative indicies does force `slice` to buffer items while it looks for the end of `iterable`. It will do this as efficiently as it can, but for this reason it is not a good idea to use really large negative indexes.
 
 When no arguments are passed to `slice` it is functionally equivalent to `wrap`.
 
@@ -655,29 +703,28 @@ See [slice](#slice)
 
 ### takeSorted
 
-**takeSorted(n, comparator, [source](#sourceiterable))**  
+**takeSorted(n, [comparator](#comparator), [source](#sourceiterable))**  
 **takeSorted(n, [source](#sourceiterable))**  
-**takeSorted(comparator, [source](#sourceiterable))**  
+**takeSorted([comparator](#comparator), [source](#sourceiterable))**  
 **takeSorted([source](#sourceiterable))**
 
-Takes an iterable and returns n biggest items sorted from the smallest (the nth order statistic) to the biggest. The function is both space efficient (only stores n items) and fast O(m log n), given m as the total items yielded by the iterable. It uses a heap internally.
+Defaults:
+
+- `comparator`: [default comparator](#the-default-comparator)
+
+Returns `n` items from `source`, sorted in ascending order according to `comparator`. The function is both space efficient (only stores `n` items) and fast (`O(m log n)`), given `m` as the total number of items in `iterable`. It uses a heap internally.
 
 ```js
 takeSorted(3, [4, 5, 2, 3, 1]); // Iterable[1, 2, 3]
 takeSorted([4, 5, 2, 3, 1]); // Iterable[1, 2, 3, 4, 5]
-```
-
-It can take as a optional comparator argument which has the same semantics as the one taken by `Array.prototype.sort`.
-
-```js
 takeSorted(3, (a, b) => b - a, [4, 5, 2, 3, 1]); // Iterable[5, 4, 3]
 ```
 
 ### asyncTakeSorted
 
-**asyncTakeSorted(n, comparator, [source](#asyncsourceiterable))**  
+**asyncTakeSorted(n, [comparator](#comparator), [source](#asyncsourceiterable))**  
 **asyncTakeSorted(n, [source](#asyncsourceiterable))**  
-**asyncTakeSorted(comparator, [source](#asyncsourceiterable))**  
+**asyncTakeSorted([comparator](#comparator), [source](#asyncsourceiterable))**  
 **asyncTakeSorted([source](#asyncsourceiterable))**
 
 See [takeSorted](#takesorted)
@@ -686,10 +733,11 @@ See [takeSorted](#takesorted)
 
 **takeWhile(func, [source](#sourceiterable))**
 
-It returns values as soon as the function is true. Then it stops.
+Returns values from `source`, starting at the beginning up until the first value for which the result of `predicate(value, idx)` is falsy.
 
 ```js
-takeWhile(isEven, range(4)); // 0
+takeWhile(isEven, [2, 4, 1, 3]); // Iterable[2, 4]
+takeWhile(isEven, [1, 2, 3, 4]); // Iterable[]
 ```
 
 ### asyncTakeWhile
@@ -700,20 +748,22 @@ See [takeWhile](#takewhile)
 
 ### tap
 
-**tap(func, [source](#sourceiterable))**
+**tap(callback, [source](#sourceiterable))**
 
-Tap is not unlike a forEach method, and like forEach is usually used to express side effects. Without breaking a chain of composition, it allows you access to the value yielded to it. Tap always yields the same value it received. Tap can be curried.
+For each value in `source`, executes `callback(value, idx)` and yields the value (unmodified). Note that while this looks similar to what a `for..of` loop or `forEach` method might do, the key difference is that `tap` does not force evaluation of the iterable.
 
 ```js
-compose(
-  tap(item => console.log(item)),
+pipeExec(
+  [0, 1, 2],
   filter(item => !!item),
-)([0, 1, 2]); // logs "1", "2". returns Iterable[1, 2]
+  tap(item => console.log(item)),
+  map(item => item + 1),
+); // Logs 1, 2 and returns Iterable[2, 3]
 ```
 
 ### asyncTap
 
-**asyncTap(func, [source](#asyncsourceiterable))**
+**asyncTap(callback, [source](#asyncsourceiterable))**
 
 See [tap](#tap)
 
@@ -722,22 +772,30 @@ See [tap](#tap)
 **window(size, { filler }, [source](#sourceiterable))**  
 **window(size, [source](#sourceiterable))**
 
-For every item in source, yields a window iterable of size **size** which starts with that item and also contains the next items from source. When there are not enough additional items in source to fill the window, the filler value (default: `undefined`) will be used in place of the missing values.
+Defaults:
+
+- `filler`: `undefined`
+
+For every value in `source`, yields a window iterable of size `size` which starts with that value and also contains the next values from `source`. When there are not enough additional values in `source` to fill the window, `filler` will be used in place of the missing values.
 
 ```js
-window(3, [1, 2, 3, 4, 5]); // [undefined, undefined, 1] [undefined, 1, 2] [1, 2, 3] [2, 3, 4] [3, 4, 5]
-```
+window(3, [1, 2, 3, 4, 5]);
+// Iterable[
+//   Iterable[1, 2, 3],
+//   Iterable[2, 3, 4]
+//   Iterable[3, 4, 5]
+//   Iterable[4, 5, undefined]
+//   Iterable[5, undefined, undefined]
+// ]
 
-The option **filler** allows to specify a different value instead of undefined.
-
-```js
-window(3, { filler: 0 }, [1, 2, 3, 4, 5]); // [0, 0, 1] [0, 1, 2] [1, 2, 3] [2, 3, 4] [3, 4, 5]
-```
-
-**size** can also be specified as a named option.
-
-```js
-window({ size: 3 });
+window(3, { filler: Infinity }, [1, 2, 3, 4, 5]);
+// Iterable[
+//   Iterable[1, 2, 3],
+//   Iterable[2, 3, 4]
+//   Iterable[3, 4, 5]
+//   Iterable[4, 5, Infinity]
+//   Iterable[5, Infinity, Infinity]
+// ]
 ```
 
 ### asyncWindow
@@ -752,22 +810,30 @@ See [window](#window)
 **trailingWindow(size, { filler }, [source](#sourceiterable))**  
 **trailingWindow(size, [source](#sourceiterable))**
 
-For every item in source, yields a window iterable of size **size** which contains the items leading up to and including that item. When there are not enough prior items to fill the window, the filler value ( default: `undefined`) will be used in place of the missing values.
+Defaults:
+
+- `filler`: `undefined`
+
+For every value in `source`, yields a window iterable of size `size` which contains the values leading up to and including that value. When there are not enough prior values to fill the window, `filler` will be used in place of the missing values.
 
 ```js
-trailingWindow(3, [1, 2, 3, 4, 5]); // [undefined, undefined, 1] [undefined, 1, 2] [1, 2, 3] [2, 3, 4] [3, 4, 5]
-```
+trailingWindow(3, [1, 2, 3, 4, 5]);
+// Iterable[
+//   Iterable[undefined, undefined, 1],
+//   Iterable[undefined, 1, 2]
+//   Iterable[1, 2, 3]
+//   Iterable[2, 3, 4]
+//   Iterable[3, 4, 5]
+// ]
 
-The option **filler** allows to specify a different value instead of undefined.
-
-```js
-trailingWindow(3, { filler: 0 }, [1, 2, 3, 4, 5]); // [0, 0, 1] [0, 1, 2] [1, 2, 3] [2, 3, 4] [3, 4, 5]
-```
-
-Size can also be specified as a named option.
-
-```js
-trailingWindow({ size: 3 });
+trailingWindow(3, { filler: 0 }, [1, 2, 3, 4, 5]);
+// Iterable[
+//   Iterable[0, 0, 1]
+//   Iterable[0, 1, 2]
+//   Iterable[1, 2, 3]
+//   Iterable[2, 3, 4]
+//   Iterable[3, 4, 5]
+// ]
 ```
 
 ### asyncTrailingWindow
@@ -781,18 +847,14 @@ See [trailingWindow](#trailingwindow)
 
 **wrap(source)**
 
-Yields the items in its source iterable. Its main purposes include allowing potentially null iterables to be treated as non-null iterables, and to give non-iter-tools iterables iter-tools iterable semantics.
+Yields the items from `source`. Its main purposes include allowing nullable iterables to be treated as non-null iterables, and to give arbitrary iterables the semantics of iter-tools iterables.
 
 ```js
-const maybeIterable = Math.random() > 0.5 ? [1, 2, 3] : null;
+const maybeIterable =
+  Math.random() > 0.5 ? [1, 2, 3] : null;
 
 [...wrap(maybeIterable)]; // [1, 2, 3] OR []
 ```
-
-Async notes:
-
-- Turns sync iterables into async iterables.
-- Ensures async next queueing semantics
 
 ### asyncWrap
 
@@ -800,7 +862,7 @@ Async notes:
 
 See [wrap](#wrap)
 
-Turns sync iterables into async iterables. Ensures async next queueing semantics.
+Also turns sync iterables into async iterables and ensures async `next()` queueing semantics.
 
 
 ## Separate an iterable into multiple iterables
@@ -809,14 +871,16 @@ Turns sync iterables into async iterables. Ensures async next queueing semantics
 
 **group(iterable)**
 
-Eqivalent to `groupBy(_ => _)`.
+Eqivalent to `groupBy(_ => _, source)`. For more information see [groupBy](#groupby).
 
 ```js
-group([1, 1, 1, 1, -1, -1, -1, 4]);
-// It will return:
-// 1, subiterator (1, 1, 1, 1)
-// -1, subiterator (-1, -1, -1)
-// 4, subiterator (4)
+group([1, 1, -1, -1, -1, 4, -1]);
+// Iterable[
+//   [1, Iterable[1, 1]]
+//   [-1, Iterable[-1, -1, -1]]
+//   [4, Iterable[4]]
+//   [-1, Iterable[-1]]
+// ]
 ```
 
 ### asyncGroup
@@ -827,21 +891,15 @@ See [group](#group)
 
 **groupBy(getKey, [source](#sourceiterable))**
 
-On each iteration it returns a key and a sub-iterable of items with that key.
-You can pass a function that returns a key, if you pass null or undefined an identity function will be used.
-When you iterate over the next group, the previous sub-iterable items will not be available anymore.
-Note: it groups **adjecents** items returning the same key.
+Yields `[key, group]` pairs, where `key` is a result of `getKey(value, idx)` and `group` is a subsequence of adjacent values from `source` which share the same `key` (as compared with `===`).
 
 ```js
-groupBy(
-  value => {
-    value * value;
-  },
-  [1, 1, 1, 1, -1, -1, -1, 4],
-);
-// It will return:
-// 1, subiterator (1, 1, 1, 1, -1, -1, -1)
-// 16, subiterator (4)
+groupBy(Math.abs, [1, 1, -1, -1, 4, -1]);
+// Iterable [
+//   [1, Iterable[1, 1, -1, -1]]
+//   [4, Iterable[4]]
+//   [1, Iterable[-1]]
+// ]
 ```
 
 ### asyncGroupBy
@@ -854,7 +912,7 @@ See [groupBy](#groupby)
 
 **split(source)**
 
-It yields each item in its source iterable as an iterable of one item.
+Yields each item in `source` as an iterable of one item.
 
 ```js
 split([1, 2, 3]); // Iterable[Iterable[1], Iterable[2], Iterable[3]]
@@ -868,29 +926,30 @@ See [split](#split)
 
 ### splitAt
 
-**splitAt(index, [source](#sourceiterable))**
+**splitAt(idx, [source](#sourceiterable))**
 
-It returns an iterable containing 2 slices of the input iterable. The first spans from the beginning to the chosen position. The second from the chosen position to the end.
+Yields two `part` subsequences of `source`. The first `part` yields the values occurring before index `idx` in `source`, the second `part` yields all the values at or after index `idx`.
 
 ```js
-const [firstThree, others] = splitAt(3, range(100));
-Array.from(firstThree); // [0, 1, 2]
-Array.from(others); // [3, 4, 5, 6, 7, 8, 9]
+const [
+  firstThree, // Iterable[0, 1, 2]
+  others, // Iterable[3, 4, 5, 6, 7, 8, 9]
+] = splitAt(3, range(100));
 ```
 
-Memory-wise, the two iterables try to be as conservative as possible. But you have to take into consideration that consuming the second iterable without having consumed the first will keep the content of the first iterable in memory.
+If you consume the sequences in order the method works in place, however if you consume the second subsequence before the first then the values from the first subsequence must be buffered.
 
 ### asyncSplitAt
 
-**asyncSplitAt(index, [source](#asyncsourceiterable))**
+**asyncSplitAt(idx, [source](#asyncsourceiterable))**
 
 See [splitAt](#splitat)
 
 ### splitOn
 
-**splitOn(value, [source](#sourceiterable))**
+**splitOn(separatorValue, [source](#sourceiterable))**
 
-Splits an iterable into multiple subsequences, generating a new subsequence each time it encounters the specified item.
+Yields `part` subsequences of `source`, generating a new `part` each time it encounters `separatorValue` (as compared with `===`).
 
 ```js
 splitOn(null, [1, null, 2, null, 3]); // Iterable[[1], [2], [3]]
@@ -898,15 +957,15 @@ splitOn(null, [1, null, 2, null, 3]); // Iterable[[1], [2], [3]]
 
 ### asyncSplitOn
 
-**asyncSplitOn(value, [source](#asyncsourceiterable))**
+**asyncSplitOn(separatorValue, [source](#asyncsourceiterable))**
 
 See [splitOn](#spliton)
 
 ### splitOnAny
 
-**splitOnAny(values, [source](#sourceiterable))**
+**splitOnAny(separatorValues, [source](#sourceiterable))**
 
-Splits an iterable into multiple subsequences, generating a new subsequence each time it encounters any one of the the specified items.
+Yields `part` subsequences of `source`, generating a new `part` each time it encounters any `separatorValue` in the `separatorValues` iterable (as compared with `===`).
 
 ```js
 splitOnAny([null, undefined], [1, null, 2, undefined, 3]); // Iterable[[1], [2], [3]]
@@ -914,39 +973,43 @@ splitOnAny([null, undefined], [1, null, 2, undefined, 3]); // Iterable[[1], [2],
 
 ### asyncSplitOnAny
 
-**asyncSplitOnAny(values, [source](#asyncsourceiterable))**
+**asyncSplitOnAny(separatorValues, [source](#asyncsourceiterable))**
 
 See [splitOnAny](#splitonany)
 
 ### splitOnAnySubseq
 
-**splitOnAnySubseq(subseqs, [source](#sourceiterable))**
+**splitOnAnySubseq(separatorSubseqs, [source](#sourceiterable))**
 
-Splits an iterable into multiple subsequences, generating a new subsequence each time it encounters any of the specified sequences of items. When a separator subsequence is matched, it consumes all the matched items, which may not then be used as part of any other separator subsequence.
+Yields `part` subsequences of `source`, generating a new `part` each time it encounters a subsequence of values matching any `separatorSubseq` in the `separatorSubseqs` iterable. Each value in a `separatorSubseq` must match using `===`. When a `separatorSubseq` is matched, all matched values are consumed from `source`. They will not appear in any `part`, nor may they be part of any other `separatorSubseq` match.
 
 ```js
-splitOnAnySubseq([['\r\n'], ['\n']], 'mixed\r\nline\nterminators'); // Iterable['mixed', 'line', 'terminators']
+splitOnAnySubseq(
+  [['\r\n'], ['\n']],
+  'mixed\r\nline\nterminators',
+); // Iterable['mixed', 'line', 'terminators']
 ```
 
 ### asyncSplitOnAnySubseq
 
-**asyncSplitOnAnySubseq(subseqs, [source](#asyncsourceiterable))**
+**asyncSplitOnAnySubseq(separatorSubseqs, [source](#asyncsourceiterable))**
 
 See [splitOnAnySubseq](#splitonanysubseq)
 
 ### splitOnSubseq
 
-**splitOnSubseq(subseq, [source](#sourceiterable))**
+**splitOnSubseq(separatorSubseq, [source](#sourceiterable))**
 
-Splits an iterable into multiple subsequences, generating a new subsequence each time it encounters a sequence of specified items. When a separator subsequence is matched, it consumes all the matched items, which may not then be used as part of another separator subsequence.
+Yields `part` subsequences of `source`, generating a new `part` each time it encounters a subsequence of values matching `separatorSubseq`. Each value in `separatorSubseq` must match using `===`. When `separatorSubseq` is matched, all matched values are consumed from `source`. They will not appear in any `part`, nor may they be part of any other `separatorSubseq` match.
 
 ```js
 splitOnSubseq([0, 0], [1, 0, 0, 2, 0, 0, 3]); // Iterable[[1], [2], [3]]
+splitOnSubseq([0, 0], [0, 0, 0, 1, 2]); // Iterable[[], [0, 1, 2]]
 ```
 
 ### asyncSplitOnSubseq
 
-**asyncSplitOnSubseq(subseq, [source](#asyncsourceiterable))**
+**asyncSplitOnSubseq(separatorSubseq, [source](#asyncsourceiterable))**
 
 See [splitOnSubseq](#splitonsubseq)
 
@@ -954,12 +1017,18 @@ See [splitOnSubseq](#splitonsubseq)
 
 **splitWith(predicate, [source](#sourceiterable))**
 
-Splits a sequence into multiple subsequences by running a predicate function against each item in the original. The splits occur where the predicate returns a truthy value, and the items which match the predicate will not be in any of the output subsequences.
+Yields `part` subsequences of values from `source`, generating a new `part` each time the result of `predicate(value, idx)` is truthy. Values which match the `predicate` are consumed, and will not be in any `part`.
 
-You may also specify a regex predicate, in which case the behavior will match `str.split(RegExp)`.
+You may also specify a regex predicate, in which case the behavior will match `str.split(RegExp)`. This is the only situation in which you will be able to match more than one value from `source` at a time.
 
+<!-- prettier-ignore -->
 ```js
-splitWith(x => x == null, [1, null, 2, undefined, 3]); // Iterable[Iterable[1], Iterable[2], Iterable[3]]
+splitWith(
+  x => x == null,
+  [1, null, 2, undefined, 3]
+); // Iterable[Iterable[1], Iterable[2], Iterable[3]]
+splitWith(',', 'foo,bar,baz'); // Iterable['foo', 'bar', 'baz']
+splitWith(/, /, 'foo, bar, baz'); // Iterable['foo', 'bar', 'baz']
 ```
 
 ### asyncSplitWith
@@ -973,7 +1042,7 @@ See [splitWith](#splitwith)
 
 ### collate
 
-**collate(comparator, ...[sources](#sourceiterable))**
+**collate([comparator](#comparator), ...[sources](#sourceiterable))**
 
 Combines values from each `source` in `sources` into a single iterable, peserving the ordering of values within each `source`. Collate uses `comparator` to establish a partial ordering of items at the head of each `source`. At each step it yields the lowest value in the ordering then recomputes the ordering.
 
@@ -984,25 +1053,24 @@ collate((a, b) => b - a, [6, 5, 2, 1], [4, 3]); // Iterable[6, 5, 4, 3, 2, 1]
 
 ### asyncCollate
 
-**asyncCollate(comparator, ...[sources](#asyncsourceiterable))**
+**asyncCollate([comparator](#comparator), ...[sources](#asyncsourceiterable))**
 
 See [collate](#collate)
 
-Note: The `asyncCollate` comparator function must be synchronous, i.e. it must not return a Promise.
-
 ### compress
 
-**compress(source, compress)**
+**compress([source](#sourceiterable), [included](#sourceiterable))**
 
-This returns an iterable omitting items when the second iterable, at the same index, contains a falsy value.
+Consumes values from `source` and `included` iterables in parallel, at each step yielding the `source` value if the `included` value is truthy.
 
 ```js
-compress(range(5), [0, 0, 1, 1]); // 2, 3
+compress([0, 1, 2, 3, 4], [0, 0, 1, 1]); // 2, 3
+compress([0, 1, 2, 3, 4], cycle([true, false])); // 0, 2, 4
 ```
 
 ### asyncCompress
 
-**asyncCompress(source, compress)**
+**asyncCompress([source](#asyncsourceiterable), [included](#asyncsourceiterable))**
 
 See [compress](#compress)
 
@@ -1010,10 +1078,10 @@ See [compress](#compress)
 
 **concat(...sources)**
 
-It chains multiple iterables in a single one.
+Yields each value from each `source` in `sources`. First all values from the first `source` are yielded, then then from the second, etc.
 
 ```js
-chain([3, 5, 6], [1, 1], [10]); // 3, 5, 6, 1, 1, 10
+concat([3, 5, 6], [1, 1], [10]); // 3, 5, 6, 1, 1, 10
 ```
 
 ### asyncConcat
@@ -1024,16 +1092,37 @@ See [concat](#concat)
 
 ### interleave
 
-**interleave(generatorFn, options, ...[sources](#sourceiterable))**  
-**interleave(generatorFn, ...[sources](#sourceiterable))**
+**interleave(generateInterleaved, options, ...[sources](#sourceiterable))**  
+**interleave(generateInterleaved, ...[sources](#sourceiterable))**
 
-Allows you to interleave items from multiple source iterables in a manner of your choosing. The inputs to interleave are a function we'll call `generateInterleaved` and some source iterables to be interleaved. `interleave` will transform each source iterable into an instance of a buffer, which you can use to inspect the current state of the sources and decide which value to emit.
+Facilitates the creation of new strategies for interleaving items from multiple iterables. It does this by decorating the `generateInterleaved` generator, which is to say providing it with arguments and yielding its values. While `generateInterleaved` may yield many values, being a [generator function](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function*) it is called only once. The call will look like: `generateInterleaved(canTakeAny, ...buffers)`. Fuller documentation of what each of these arguments is and does follows the example, which shows the curried form of the function.
 
-The buffers are instances of an internal class called `InterleaveBuffer`, which has the following interface:
+```js
+const aabbInterleave = interleave(function*(
+  canTakeAny,
+  ...buffers
+) {
+  const [a, b] = buffers;
+  // canTakeAny returns a truthy value if any buffer canTake()
+  while (canTakeAny()) {
+    if (a.canTake()) yield a.take();
+    if (a.canTake()) yield a.take();
+    if (b.canTake()) yield b.take();
+    if (b.canTake()) yield b.take();
+  }
+});
+
+const a = [1, 2, 5, 6];
+const b = [3, 4, 7];
+
+aabbInterleave(a, b); // [1, 2, 3, 4, 5, 6, 7]
+```
+
+Hopefully now that you can see how `buffers` is used, the definition of a `buffer` will make more sense: each `buffer` is an instance of `InterleaveBuffer` which stores a single value from a single `source` iterable.
 
 ```ts
 class InterleaveBuffer<T> {
-  // The index of the current buffered item in the source
+  // The index of the current buffered value in the source
   index: number;
 
   // The index of the source which this buffer represents
@@ -1052,31 +1141,16 @@ class InterleaveBuffer<T> {
 }
 ```
 
-`generateInterleaved` also receives an additional first argument, `canTakeAny()` which returns true if there is any buffer which `canTake()`.
-
-Finally, when generateInterleaved has finished it will clean up any source iterables which were not fully consumed.
-
-Here is what an expected usage might look like:
-
-```js
-interleave(
-  function*(canTakeAny, a, b) {
-    while (canTakeAny()) {
-      if (a.canTake()) yield a.take();
-      if (a.canTake()) yield a.take();
-      if (b.canTake()) yield b.take();
-      if (b.canTake()) yield b.take();
-    }
-  },
-  [1, 2, 5, 6],
-  [3, 4, 7],
-); // [1, 2, 3, 4, 5, 6, 7]
-```
+When `generateInterleaved` has finished `interleave` will clean up any `source` which was not fully consumed.
 
 There is also an overload of `interleave` which allows you to pass an `options` argument to `generateInterleaved`. This allows you to create interleaves which are parameterized, like so:
 
 ```js
-const roundRobin = interleave(function*(options, canTakeAny, ...buffers) {
+const roundRobin = interleave(function*(
+  options,
+  canTakeAny,
+  ...buffers
+) {
   let i = options.start || 0;
   while (canTakeAny()) {
     yield buffers[i];
@@ -1087,21 +1161,10 @@ const roundRobin = interleave(function*(options, canTakeAny, ...buffers) {
 roundRobin({ start: 1 }, [2, 4, 6], [1, 3, 5]); // [1, 2, 3, 4, 5, 6]
 ```
 
-```js
-const aabbInterleave = asyncInterleave(async function*(canTakeAny, a, b) {
-  while (await canTakeAny()) {
-    if (await a.canTake()) yield await a.take();
-    if (await a.canTake()) yield await a.take();
-    if (await b.canTake()) yield await b.take();
-    if (await b.canTake()) yield await b.take();
-  }
-});
-```
-
 ### asyncInterleave
 
-**asyncInterleave(generatorFn, options, ...[sources](#asyncsourceiterable))**  
-**asyncInterleave(generatorFn, ...[sources](#asyncsourceiterable))**
+**asyncInterleave(generateInterleaved, options, ...[sources](#asyncsourceiterable))**  
+**asyncInterleave(generateInterleaved, ...[sources](#asyncsourceiterable))**
 
 See [interleave](#interleave)
 
@@ -1109,7 +1172,7 @@ See [interleave](#interleave)
 
 **asyncInterleaveReady([sources](#asyncsourceiterable))**
 
-This method takes multiple async iterables, and yields items from each of them in the order that that their item promises resolve.
+Interleaves values from each `source` in `sources`, yielding values in whatever order they resolve (become ready). Note that this means that the results of this interleave will usually not be repeatable.
 
 ```js
 asyncInterleaveReady(aItems, bItems);
@@ -1119,7 +1182,7 @@ asyncInterleaveReady(aItems, bItems);
 
 **join([source](#sourceiterable))**
 
-It expects to receive an iterable of iterables to be joined, then yields all items of each joined iterable. It is the inverse of `split`.
+Given `source`, an iterable of iterables, yields all values from each iterable. It is the inverse of `split`.
 
 ```js
 join([[1], [2], [3]]); // Iterable[1, 2, 3]
@@ -1135,16 +1198,16 @@ See [join](#join)
 
 **joinAsStringWith(separator, [strings](#sourceiterable))**
 
-It expects to receive an iterable of strings to be joined, and a separator string. It concatenates each string with the separator in between.
+Returns the concatenation of each string in `strings` with `separator` in between.
 
 ```js
-joinAsStringWith(' ', ['a', 'b', 'c']); // "a b c"
+joinAsStringWith(' ', ['aa', 'bb', 'cc']); // "aa bb cc"
 ```
 
-Note that the method technically is working with iterables of characters, which usually means strings but could also be another kind of iterable. E.g.
+Note that the method technically is working with iterables of characters (i.e. length 1 strings). A string is such an iterable but there are other forms too, e.g.:
 
 ```js
-joinAsStringWith(' ', [['a'], ['b'], ['c']]); // "a b c"
+joinAsStringWith(' ', [['a', 'a'], ['b'], ['c', 'c']]); // "aa b cc"
 ```
 
 ### asyncJoinAsStringWith
@@ -1155,9 +1218,9 @@ See [joinAsStringWith](#joinasstringwith)
 
 ### joinWith
 
-**joinWith(with_, [source](#sourceiterable))**
+**joinWith(separator, [source](#sourceiterable))**
 
-It expects to receive an iterable of iterables to be joined, and a separator item. It yields all items of each joined iterable, with the separator in between. It is the inverse of `splitWith`.
+Given `source`, an iterable of iterables, yields all values from each iterable with `separator` in between. It is the inverse of `splitOn`.
 
 ```js
 joinWith(null, [[1], [2], [3]]); // Iterable[1, null, 2, null, 3]
@@ -1165,15 +1228,15 @@ joinWith(null, [[1], [2], [3]]); // Iterable[1, null, 2, null, 3]
 
 ### asyncJoinWith
 
-**asyncJoinWith(with_, [source](#asyncsourceiterable))**
+**asyncJoinWith(separator, [source](#asyncsourceiterable))**
 
 See [joinWith](#joinwith)
 
 ### joinWithSubseq
 
-**joinWithSubseq(with_, [source](#sourceiterable))**
+**joinWithSubseq(separatorSubseq, [source](#sourceiterable))**
 
-It expects to receive an iterable of iterables to be joined, and a separator subsequence. It yields all items of each joined iterable, with the items of the separator in between. It is the inverse of `splitWithSubseq`.
+Given `source`, an iterable of iterables, yields all values from each iterable with the `separatorSubseq` values in between. It is the inverse of `splitOnSubseq`.
 
 ```js
 joinWithSubseq([null, null], [[1], [2], [3]]); // Iterable[1, null, null, 2, null, null, 3]
@@ -1181,7 +1244,7 @@ joinWithSubseq([null, null], [[1], [2], [3]]); // Iterable[1, null, null, 2, nul
 
 ### asyncJoinWithSubseq
 
-**asyncJoinWithSubseq(with_, [source](#asyncsourceiterable))**
+**asyncJoinWithSubseq(separatorSubseq, [source](#asyncsourceiterable))**
 
 See [joinWithSubseq](#joinwithsubseq)
 
@@ -1216,7 +1279,7 @@ See [roundRobin](#roundrobin)
 
 **zip(...[sources](#sourceiterable))**
 
-Zip receives 2 or more iterables. It returns an iterable of entries, each of which contains one item from each of the input iterables. The iteration stops when the shortest input iterable is exausted.
+Consumes each `source` in `sources` in parallel, at each step yielding an array with one value from every `source`. Stops when the shortest source iterable is exausted.
 
 ```js
 zip([1, 2], [3, 4], [5, 6, 7]); // [1, 3, 5], [2, 4, 6]
@@ -1233,7 +1296,11 @@ See [zip](#zip)
 **zipAll({ filler }, ...[sources](#sourceiterable))**  
 **zipAll(...[sources](#sourceiterable))**
 
-ZipAll receives 2 or more iterables. It returns an iterable of entries, each of which contains one item from each of the input iterables. The iteration stops when the longest iterable is exausted. If an iterable is exhausted, it is returning undefined, or the value specified in the `filler` option. Note that filler cannot be specified as a positional argument.
+Defaults:
+
+- `filler`: `undefined`
+
+Consumes each `source` in `sources` in parallel, at each step yielding an array with one value from every `source`. Stops when the shortest source iterable is exausted. Where some `sources` are exhausted before all `sources` are exchausted, `filler` will be used in place of the missing values.
 
 ```js
 zipAll([1, 2], [3, 4], [5, 6, 7]); // [1, 3, 5], [2, 4, 6], [undefined, undefined, 7]
@@ -1254,10 +1321,11 @@ See [zipAll](#zipall)
 
 **equal(...[iterables](#sourceiterable))**
 
-It returns true if all provided iterables are equal to each other. Only compares items. Compares items with `===`.
+Returns `true` if all `iterables` are equal to each other, and `false` otherwise. Only considers the values yielded by the iterables, which it compares with `===`.
 
 ```js
 equals([1, 2, 3], [1, 2, 3], [1, 2, 3]); // true
+equals([1, 2, 3], [3, 2, 1]); // false
 ```
 
 ### asyncEqual
@@ -1268,34 +1336,37 @@ See [equal](#equal)
 
 ### every
 
-**every(func, [iterable](#sourceiterable))**
+**every(predicate, [iterable](#sourceiterable))**
 
-It returns true if the predicate returns true for every item in the iterable.
+Returns `true` if, for every value in `source`, the result of `predicate(item, idx)` is truthy. Otherwise returns `false`.
 
 ```js
-every(n => n % 2 === 0, [1, 2, 3]); // returns false
-every(n => n % 2 === 0, [2, 4, 6]); // returns true
+every(isEven, [1, 2, 3]); // returns false
+every(isEven, [2, 4, 6]); // returns true
 ```
 
 ### asyncEvery
 
-**asyncEvery(func, [iterable](#asyncsourceiterable))**
+**asyncEvery(predicate, [iterable](#asyncsourceiterable))**
 
 See [every](#every)
 
 ### find
 
-**find(func, [iterable](#sourceiterable))**
+**find(predicate, [iterable](#sourceiterable))**
 
-The equivalent of the array "find" function. Takes a **predicate** and returns the first item from the iterable for which the predicate returns true.
+Returns the first item in `iterable` for which `predicate(item, idx)` returns a truthy value. It is the equivalent of `Array.prototype.find`.
 
 ```js
-find(animal => animal.kind === 'dog', [{ type: 'cat' }, { type: 'dog' }]); // {type: 'dog'}
+find(animal => animal.kind === 'dog', [
+  { type: 'cat' },
+  { type: 'dog' },
+]); // {type: 'dog'}
 ```
 
 ### asyncFind
 
-**asyncFind(func, [iterable](#asyncsourceiterable))**
+**asyncFind(predicate, [iterable](#asyncsourceiterable))**
 
 See [find](#find)
 
@@ -1303,7 +1374,7 @@ See [find](#find)
 
 **findOr(notFoundValue, func, [iterable](#sourceiterable))**
 
-Like [find](#find), but also takes a **notFoundValue** which it will return if the source is empty or if **predicate** does not match any items from the source.
+Returns the first item in `iterable` for which `predicate(item, idx)` returns a truthy value, or `notFoundValue` if no item satisfied the predicate.
 
 ```js
 findOr(0, x => x > 10, [1, 2, 3]); // 0
@@ -1319,7 +1390,7 @@ See [findOr](#findor)
 
 **first(iterable)**
 
-It returns the first item from an iterable, or undefined if there are no items.
+Returns the first value from `iterable`, or `undefined` when `iterable` is empty.
 
 ```js
 first([1, 2, 3]); // 1
@@ -1336,7 +1407,7 @@ See [first](#first)
 
 **firstOr(whenEmpty, [iterable](#sourceiterable))**
 
-It returns the first item from an iterable, or a default value if the iterable is empty.
+Returns the first value from `iterable`, or `whenEmpty` when `iterable` is empty.
 
 ```js
 firstOr(0, [1, 2, 3]); // 1
@@ -1353,10 +1424,11 @@ See [firstOr](#firstor)
 
 **includes(value, [iterable](#sourceiterable))**
 
-It returns whether an iterable's includes the specified item. Compares with `===`.
+Retuns `true` if `iterable` includes the specified `value`, or `false` otherwise. Compares values with `===`.
 
 ```js
 includes(2, [1, 2, 3]); // true
+includes(0, [1, 2, 3]); // false
 ```
 
 ### asyncIncludes
@@ -1367,49 +1439,54 @@ See [includes](#includes)
 
 ### includesAny
 
-**includesAny(value, [iterable](#sourceiterable))**
+**includesAny(values, [iterable](#sourceiterable))**
 
-It returns whether an iterable's includes any of the specified items. Compares with `===`.
+Retuns `true` if `iterable` includes any of the specified `values`, or `false` otherwise. Compares values with `===`.
 
 ```js
-includesAny([0, 2], [1, 2, 3]); // true
+includesAny([0, 1], [1, 2, 3]); // true
+includesAny([0, 1], [2, 3, 4]); // false
 ```
 
 ### asyncIncludesAny
 
-**asyncIncludesAny(value, [iterable](#asyncsourceiterable))**
+**asyncIncludesAny(values, [iterable](#asyncsourceiterable))**
 
 See [includesAny](#includesany)
 
 ### includesAnySubseq
 
-**includesAnySubseq(value, [iterable](#sourceiterable))**
+**includesAnySubseq(subseqs, [iterable](#sourceiterable))**
 
-It returns whether an iterable's includes any of the specified subsequences. Compares with `===`.
+Retuns `true` if any of the the `subseqs` (subsequences) of values can be found somewhere in `iterable`, or `false` otherwise. Compares values with `===`.
 
 ```js
+includesAnySubseq([[1, 2], [2, 3]], [1, 2, 3]); // true
 includesAnySubseq([[2, 3], [3, 4]], [1, 2, 3]); // true
+includesAnySubseq([[0, 1], [3, 4]], [1, 2, 3]); // false
 ```
 
 ### asyncIncludesAnySubseq
 
-**asyncIncludesAnySubseq(value, [iterable](#asyncsourceiterable))**
+**asyncIncludesAnySubseq(subseqs, [iterable](#asyncsourceiterable))**
 
 See [includesAnySubseq](#includesanysubseq)
 
 ### includesSubseq
 
-**includesSubseq(value, [iterable](#sourceiterable))**
+**includesSubseq(subseq, [iterable](#sourceiterable))**
 
-It returns whether an iterable's includes the specified subsequence. Compares with `===`.
+Retuns `true` if the `subseq` (subsequence) of values can be found somewhere in `iterable`, or `false` otherwise. Compares values with `===`.
 
 ```js
-includesSubseq([2, 3], [1, 2, 3]); // true
+includesSubseq([1, 2], [1, 2, 3]); // true
+includesSubseq([1, 2, 3], [1, 2, 3]); // true
+includesSubseq([2, 3, 4], [1, 2, 3]); // false
 ```
 
 ### asyncIncludesSubseq
 
-**asyncIncludesSubseq(value, [iterable](#asyncsourceiterable))**
+**asyncIncludesSubseq(subseq, [iterable](#asyncsourceiterable))**
 
 See [includesSubseq](#includessubseq)
 
@@ -1417,7 +1494,7 @@ See [includesSubseq](#includessubseq)
 
 **isEmpty(iterable)**
 
-Returns true if the input iterable contains no items.
+Returns `true` if `iterable` contains no values, and `false` otherwise.
 
 ```js
 isEmpty([]); // true
@@ -1434,10 +1511,10 @@ See [isEmpty](#isempty)
 
 ### isSorted
 
-**isSorted(comparator, [iterable](#sourceiterable))**  
+**isSorted([comparator](#comparator), [iterable](#sourceiterable))**  
 **isSorted([iterable](#sourceiterable))**
 
-Returns true if the items in the iterable are sorted according to an optional comparator.
+Returns `true` if the values in `iterable` are sorted in ascending order according to `comparator`, and `false` otherwise.
 
 ```js
 isSorted([1, 2, 3]); // true
@@ -1446,7 +1523,7 @@ isSorted((a, b) => b - a, [3, 2, 1]); // true
 
 ### asyncIsSorted
 
-**asyncIsSorted(comparator, [iterable](#asyncsourceiterable))**  
+**asyncIsSorted([comparator](#comparator), [iterable](#asyncsourceiterable))**  
 **asyncIsSorted([iterable](#asyncsourceiterable))**
 
 See [isSorted](#issorted)
@@ -1455,7 +1532,7 @@ See [isSorted](#issorted)
 
 **last(iterable)**
 
-Returns the last item in an iterable, or undefined if there are no items. If the iterable is not an array, this requires traversing the whole iterable.
+Returns the last value from `iterable`, or `undefined` when `iterable` is empty. If `iterable` is not an array, this requires traversing the whole iterable.
 
 ```js
 last([1, 2, 3]); // 3
@@ -1474,7 +1551,7 @@ Note: Unlike `last`, `asyncLast` will always traverse the entire input iterable,
 
 **lastOr(whenEmpty, [iterable](#sourceiterable))**
 
-Returns the last item in an iterable, or a default value if the iterable is empty. If the iterable is not an array, this requires traversing the whole iterable.
+Returns the last value from `iterable`, or `whenEmpty` when `iterable` is empty. If `iterable` is not an array, this requires traversing the whole iterable.
 
 ```js
 lastOr(0, [1, 2, 3]); // 3
@@ -1491,22 +1568,25 @@ Note: Unlike `lastOr`, `asyncLastOr` will always traverse the entire input itera
 
 ### reduce
 
-**reduce(initial, func, [iterable](#sourceiterable))**  
-**reduce(func, [iterable](#sourceiterable))**
+**reduce(initial, reducer, [iterable](#sourceiterable))**  
+**reduce(reducer, [iterable](#sourceiterable))**
 
-This is an implementation of the reduce that consumes an iterable instead of an array (have a look at Array.prototype.reduce).
-It takes as arguments an initial value (optional), a function, and an iterable.
-If an initial value is not specified, the first item is used as the initial value
+Defaults:
+
+- `initial`: `first(iterable)`
+
+Turns `iterable` into a single `result` value using a reducer function. For each `value` in `iterable`, calls `reducer(result, value, idx)`, where result `result` is either the `initial` for the first value in `iterable`, otherwise the value returned from the last call to `reducer`. It is equivalent to `Array.prototype.reduce`.
 
 ```js
-reduce(0, (acc, v) => (acc += v), range(4)); // 6
-reduce((acc, v) => (acc += v), range(4)); // 6
+reduce(0, (result, v) => result + v, [1, 2, 3]); // 6
+reduce(10, (result, v) => result + v, [1, 2, 3]); // 16
+reduce((result, v) => result + v, [1, 2, 3]); // 6
 ```
 
 ### asyncReduce
 
-**asyncReduce(initial, func, [iterable](#asyncsourceiterable))**  
-**asyncReduce(func, [iterable](#asyncsourceiterable))**
+**asyncReduce(initial, reducer, [iterable](#asyncsourceiterable))**  
+**asyncReduce(reducer, [iterable](#asyncsourceiterable))**
 
 See [reduce](#reduce)
 
@@ -1514,7 +1594,9 @@ See [reduce](#reduce)
 
 **size(iterable)**
 
-Returns the number of values yielded by an iterable.
+Returns the number of values in `iterable` by iterating over it. Will optimize by reading the `length` property if `iterable` is an array, or `size` if it is a `Map` or `Set`.
+
+Note: the optimizations on `Map` and `Set` are not guaranteed to trigger, in particular because the `instanceof` check can be fragile [in certain circumstances](https://stackoverflow.com/questions/49832187/how-to-understand-js-realms).
 
 ```js
 size([1, 2, 3]); // 3
@@ -1530,11 +1612,11 @@ See [size](#size)
 
 **some(func, [iterable](#sourceiterable))**
 
-It returns true if running the function, at least one item returns true (can be curried).
+Returns `true` if the result of `predicate(item, idx)` is truthy for at least one value in `iterable`, and `false` otherwise.
 
 ```js
-some(n => n % 2 === 0, [1, 2, 3]); // returns true
-some(n => n % 2 === 0, [1, 3, 7]); // returns false
+some(isEven, [1, 2, 3]); // true
+some(isEven, [1, 3, 7]); // false
 ```
 
 ### asyncSome
@@ -1547,7 +1629,7 @@ See [some](#some)
 
 **startsWith(value, [iterable](#sourceiterable))**
 
-It returns whether an iterable's first item is the specified item. Compares with `===`.
+Returns `true` if the first value in `source` is `value`, as compared with `===`. Otherwise returns `false`.
 
 ```js
 startsWith(1, [1, 2, 3]); // true
@@ -1563,7 +1645,7 @@ See [startsWith](#startswith)
 
 **startsWithAny(value, [iterable](#sourceiterable))**
 
-It returns whether an iterable's first item is any of the specified items. Compares with `===`.
+Returns `true` if the first value in `source` is any `value` in `values`, as compared with `===`. Otherwise returns `false`.
 
 ```js
 startsWithAny([0, 1], [1, 2, 3]); // true
@@ -1577,9 +1659,9 @@ See [startsWithAny](#startswithany)
 
 ### startsWithAnySubseq
 
-**startsWithAnySubseq(value, [iterable](#sourceiterable))**
+**startsWithAnySubseq(valueSubseqs, [iterable](#sourceiterable))**
 
-It returns whether an iterable starts with any of the specified subseqences. Compares with `===`.
+Returns `true` if the first subsequence of values in `source` match any `valueSubseq` in `valueSubseqs`, where each value is compared with `===`. Otherwise returns `false`.
 
 ```js
 startsWithAnySubseq([[0, 1], [1, 2]], [1, 2, 3]); // true
@@ -1587,23 +1669,23 @@ startsWithAnySubseq([[0, 1], [1, 2]], [1, 2, 3]); // true
 
 ### asyncStartsWithAnySubseq
 
-**asyncStartsWithAnySubseq(value, [iterable](#asyncsourceiterable))**
+**asyncStartsWithAnySubseq(valueSubseqs, [iterable](#asyncsourceiterable))**
 
 See [startsWithAnySubseq](#startswithanysubseq)
 
 ### startsWithSubseq
 
-**startsWithSubseq(value, [iterable](#sourceiterable))**
+**startsWithSubseq(valueSubseq, [iterable](#sourceiterable))**
 
-It returns whether an iterable starts with any of the specified subseqences. Compares with `===`.
+Returns `true` if the first subsequence of values in `source` matches `valueSubseq`, where each value is compared with `===`. Otherwise returns `false`.
 
 ```js
-startsWithAny([1, 2], [1, 2, 3]); // true
+startsWithSubseq([1, 2], [1, 2, 3]); // true
 ```
 
 ### asyncStartsWithSubseq
 
-**asyncStartsWithSubseq(value, [iterable](#asyncsourceiterable))**
+**asyncStartsWithSubseq(valueSubseq, [iterable](#asyncsourceiterable))**
 
 See [startsWithSubseq](#startswithsubseq)
 
@@ -1612,84 +1694,87 @@ See [startsWithSubseq](#startswithsubseq)
 
 ### regexpExec
 
-**regexpExec(str, re)**
+**regexpExec(str, regexp)**
 
-It runs a regular expression on a string. Every iteration returns a new match. You should use a "global" regular expression to return multiple matches. The returned object type is the same one returned by the "RegExp.prototype.exec" method (https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp/exec).
-
-- [0] the full string matching the reg exp
-- [1] ... [n] the matching groups
-- index: the 0 based index of the match
-- input: the original string
+Yields matches from executing `regexp.exec(str)`. A match is an array of `[fullMatch, ...submatches]`. It is beyong the scope of these docs to provide a full accounting of `RegExp.prototype.exec`, which you can find [here](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp/exec).
 
 ```js
-const iter = regexpExec(/[0-9]{4}/g, '10/2/2013, 03/03/2015 12/4/1997');
+const iter = regexpExec(
+  /[0-9]{4}/g,
+  '10/2/2013, 03/03/2015 12/4/1997',
+);
 for (let [match] of iter) {
   console.log(match); // '2013', '2015', '1997'
 }
 ```
-
-Notes:
-
-- Global regular expressions are mutable; you can't reuse the same object more than once
-- The destructuring expression [match] extracts only the first match
 
 
 ## Combinatory iterables
 
 ### combinations
 
-**combinations(r, [iterable](#sourceiterable))**  
+**combinations(n, [iterable](#sourceiterable))**  
 **combinations([iterable](#sourceiterable))**
 
-It returns combinations of length n of an iterable. n defaults to the length of the iterable.
+Defaults:
+
+`n`: `size(iterable)`
+
+Yields combinations of length `n` of values from `iterable`.
 
 ```js
-combinations(range(2)); // [0, 1]
+combinations([0, 1]); // Iterable[[0, 1]]
 combinations(2, [1, 2, 3, 4]);
-// returns:
-// [ 1, 2 ],
-// [ 1, 3 ],
-// [ 1, 4 ],
-// [ 2, 3 ],
-// [ 2, 4 ],
-// [ 3, 4 ]
+// Iterable [
+//   [ 1, 2 ],
+//   [ 1, 3 ],
+//   [ 1, 4 ],
+//   [ 2, 3 ],
+//   [ 2, 4 ],
+//   [ 3, 4 ]
+// ]
 ```
 
-The number of items that will be yielded is accessable through a `size` property.
+The number of items that will be yielded is accessible through a `size` property.
 Note that the actual combinations are not computed in the example below
 
 ```js
-combinations([1, 2, 3, 4], 2).size === 6;
+combinations(2, [1, 2, 3, 4]).size === 6;
 ```
 
 ### combinationsWithReplacement
 
-**combinationsWithReplacement(r, [iterable](#sourceiterable))**  
+**combinationsWithReplacement(n, [iterable](#sourceiterable))**  
 **combinationsWithReplacement([iterable](#sourceiterable))**
 
-It returns combinations with replacement of length n of an iterable. n defaults to the length of the iterable.
+Defaults:
+
+`n`: `size(iterable)`
+
+Yields combinations of length `n` of values from `iterable`, allowing replacement.
 
 ```js
-combinationsWithReplacement(range(2)); // [0, 0] [0, 1] [1, 1]
+combinationsWithReplacement([0, 1]); // Iterable[[0, 0] [0, 1] [1, 1]]
 combinationsWithReplacement(2, [1, 2, 3, 4]);
-// returns:
-// [ 1, 1 ],
-// [ 1, 2 ],
-// [ 1, 3 ],
-// [ 1, 4 ],
-// [ 2, 2 ],
-// [ 2, 3 ],
-// [ 2, 4 ],
-// [ 3, 3 ],
-// [ 3, 4 ],
-// [ 4, 4 ]
+// Iterable[
+//   [ 1, 1 ],
+//   [ 1, 2 ],
+//   [ 1, 3 ],
+//   [ 1, 4 ],
+//   [ 2, 2 ],
+//   [ 2, 3 ],
+//   [ 2, 4 ],
+//   [ 3, 3 ],
+//   [ 3, 4 ],
+//   [ 4, 4 ]
+// ]
 ```
 
-The number of items that will be yielded is accessable through a `size` property.
+The number of items that will be yielded is accessible through a `size` property.
 Note that the actual combinations are not computed in the example below
 
 ```js
-combinationsWithReplacement([1, 2, 3, 4], 2).size === 10;
+combinationsWithReplacement(2, [1, 2, 3, 4]).size === 10;
 ```
 
 ### permutations
@@ -1697,56 +1782,62 @@ combinationsWithReplacement([1, 2, 3, 4], 2).size === 10;
 **permutations(k, [iterable](#sourceiterable))**  
 **permutations([iterable](#sourceiterable))**
 
-It returns permutations of length n of an iterable. n defaults to the length of the iterable.
+Defaults:
+
+`n`: `size(iterable)`
+
+Yields permutations of length `n` of items from `iterable`.
 
 ```js
-permutations(range(2)); // [0, 1] [1, 0]
+permutations([0, 1]); // Iterable[[0, 1] [1, 0]]
 permutations(2, [1, 2, 3, 4]);
-// returns:
-// [ 1, 2 ],
-// [ 1, 3 ],
-// [ 1, 4 ],
-// [ 2, 1 ],
-// [ 2, 3 ],
-// [ 2, 4 ],
-// [ 3, 1 ],
-// [ 3, 2 ],
-// [ 3, 4 ],
-// [ 4, 1 ],
-// [ 4, 2 ],
-// [ 4, 3 ]
+// Iterable[
+//   [ 1, 2 ],
+//   [ 1, 3 ],
+//   [ 1, 4 ],
+//   [ 2, 1 ],
+//   [ 2, 3 ],
+//   [ 2, 4 ],
+//   [ 3, 1 ],
+//   [ 3, 2 ],
+//   [ 3, 4 ],
+//   [ 4, 1 ],
+//   [ 4, 2 ],
+//   [ 4, 3 ]
+// ]
 ```
 
-The number of items that will be yielded is accessable through a `size` property.
+The number of items that will be yielded is accessible through a `size` property.
 Note that the actual combinations are not computed in the example below
 
 ```js
-permutations(range(2)).size === 2;
+permutations([0, 1]).size === 2;
 ```
 
 ### product
 
-**product(...args)**
+**product(...iterables)**
 
-This returns the cartesian product of 2 or more iterables. It is equivalent to a nested loop for every iterable.
+This returns the [cartesian product](https://en.wikipedia.org/wiki/Cartesian_product) of two or more `iterables`.
 
 ```js
 product([1, 2], [3, 4], [5, 6]);
-// returns:
-// [1, 3, 5],
-// [1, 3, 6],
-// [1, 4, 5],
-// [1, 4, 6],
-// [2, 3, 5],
-// [2, 3, 6],
-// [2, 4, 5],
-// [2, 4, 6]
+// Iterable [
+//   [1, 3, 5],
+//   [1, 3, 6],
+//   [1, 4, 5],
+//   [1, 4, 6],
+//   [2, 3, 5],
+//   [2, 3, 6],
+//   [2, 4, 5],
+//   [2, 4, 6]
+// ]
 
-// You can use fork for multiplying the same iterable for itself.
-product(...fork(2, range(2))); // [0, 0]  [0, 1]  [1, 0]  [1, 1]
+// You can use fork to get the prodcut of an iterable with itself.
+product(...fork(2, [0, 1])); // Iterable[[0, 0], [0, 1], [1, 0], [1, 1]]
 ```
 
-The number of items that will be yielded is accessable through a `size` property.
+The number of items that will be yielded is accessible through a `size` property.
 Note that the actual combinations are not computed in the example below
 
 ```js
@@ -1768,12 +1859,21 @@ asyncBuffer(10, iterable);
 
 ### asyncThrottle
 
-**asyncThrottle(ms, [source](#asyncsourceiterable))**
+**asyncThrottle(intervalMs, [source](#asyncsourceiterable))**
 
-Rate-limits its source iterable, ensuring that every item is yielded at an interval of at least n ms (it can be curried).
+Rate-limits `source`, ensuring that requests for the next value in `source` are made at intervals of no less than `intervalMs` milliseconds. Yields the same values in the same order as `source`.
 
 ```js
-asyncThrottle(10, iterable);
+async function* pollHealth() {
+  while (true) {
+    yield fetch('/health').json();
+  }
+}
+
+for (const response of asyncThrottle(100, pollHealth)) {
+  // This happens only once every 100 milliseconds
+  renderHealth(response);
+}
 ```
 
 
@@ -1784,7 +1884,11 @@ asyncThrottle(10, iterable);
 **fork(n, [source](#sourceiterable))**  
 **fork([source](#sourceiterable))**
 
-Returns an iterable of `n` forks of `souce`, or an infinite iterable of forks if `n` is not specified. Each fork contains the same items as `source`, and can be consumed independently. This works even if `source` cannot itself be consumed more than once, for example because it is the return value of a generator function. Items are buffered until they have been consumed by all forks. Each fork can only be consumed once.
+Defaults:
+
+`n`: `Infinity`
+
+Returns an iterable of `n` forks of `source`. Each fork contains the same values as `source`, and can be consumed independently. This works even if `source` cannot itself be consumed more than once, for example because it is a generator. Values are buffered until they have been consumed by all forks. Each fork can only be consumed once.
 
 ```js
 const [forkA, forkB, forkC] = fork(function*() {
@@ -1826,11 +1930,11 @@ Note: Returns an iterable (sync) of async iterables.
 
 ### arrayFrom
 
-**arrayFrom([iterable](#sourceiterable))**
+**arrayFrom([source](#sourceiterable))**
 
 Aliases: `toArray`
 
-Transform an iterable to an array. arrayFrom is implemented as `Array.from`. It is included for consistency since `Array.from` has no counterpart for use with async iterators.
+Transform `source` into an array. Roughly equivalent to `Array.from`, except that it turns `null` and `undefined` into `[]`. Since arrays are iterable, this method can also be thought of as a way to cache all values in an iterable.
 
 ```js
 arrayFrom(slice(0, 3, range())); // [1, 2, 3]
@@ -1839,11 +1943,11 @@ arrayFrom(null); // []
 
 ### arrayFromAsync
 
-**arrayFromAsync([iterable](#asyncsourceiterable))**
+**arrayFromAsync([source](#asyncsourceiterable))**
 
 Aliases: `asyncToArray`
 
-Transform an async iterable to an array.
+Transform an async `source` into an array. Since arrays are valid inputs to async methods, can also be thought of as a way to cache all values in an async iterable.
 
 ```js
 await arrayFromAsync(asyncWrap(slice(0, 3, range()))); // [1, 2, 3]
@@ -1914,7 +2018,7 @@ See [arrayFromAsync](#arrayfromasync)
 
 **apply(fn, args)**
 
-apply is a convenience method. Its implementation is:
+`apply` is a convenience method. Its implementation is:
 
 ```js
 (fn, args = []) => fn(...args);
@@ -1926,7 +2030,7 @@ apply is a convenience method. Its implementation is:
 
 **call(fn, ...args)**
 
-call is a convenience method. Its implementation is:
+`call` is a convenience method. Its implementation is:
 
 ```js
 (fn, ...args) => fn(...args);
@@ -1938,59 +2042,55 @@ call is a convenience method. Its implementation is:
 
 **compose(...fns)**
 
-This is a classic composition function that can be used to assemble multiple functions that take an iterable and return an iterable.
+Allows nested calls to be flattened out for improved readability. `compose(a, b, c)` is equivalent to `a(b(c))`, where `a`, `b`, and `c`, are functions. `compose` is usually combined with curryied forms of other methods so that the `source` (or `iterable`) argument is passed between the composed methods.
 
 ```js
-const iter = compose(
-  map(x => x + 3),
-  filter(x % 2 === 0),
+const filterMap = compose(
+  map(x => x + 1),
+  filter(x => x % 2 === 0),
 );
 
-iter([1, 2, 3, 4]); // 5, 7
+filterMap([0, 1, 2, 3, 4]); // Iterable[1, 3, 5]
 ```
 
-Note: it works right to left, so the first transformation used is filter and the second is map.
+Note: If seems backwards to you that `filter` appears below `map` yet runs first, you're probably looking for [pipe](#pipe).
 
 ### execPipe
 
-**execPipe(value, ...fns)**
+**execPipe(initial, ...fns)**
 
-Allows you to run an iterable through several functions. The first argument is an iterable, the following are functions that takes an iterable and return an iterable.
+`execPipe(inital, ...fns)` is sugar for `pipe(...fns)(initial)`. See [pipe](#pipe)
 
 ```js
-const iter = execPipe(
-  [1, 2, 3, 4],
-  filter((x % 2) === 0)
-  map((x) =>  x + 3),
-)
-
-iter // 5, 7
+execPipe(
+  [0, 1, 2, 3, 4],
+  filter(x => x % 2 === 0)
+  map(x => x + 1),
+); // Iterable[1, 3, 5]
 ```
-
-The previous example is equivalent to the `compose` and `pipe` ones (note that execPipe\* works left to right like `pipe`).
 
 ### pipe
 
 **pipe(...fns)**
 
-This is a classic composition function that can be used to assemble multiple functions that take an iterable and return an iterable.
+Allows nested calls to be flattened out for improved readability. `pipe(a, b, c)` is equivalent to `c(b(a))`, where `a`, `b`, and `c`, are functions. `pipe` is usually combined with curryied forms of other methods so that the `source` (or `iterable`) argument is passed between the composed methods.
 
 ```js
-const iter = pipe(
-  filter(x % 2 === 0),
-  map(x => x + 3),
+const filterMap = pipe(
+  filter(x => x % 2 === 0),
+  map(x => x + 1),
 );
 
-iter([1, 2, 3, 4]); // 5, 7
+filterMap([0, 1, 2, 3, 4]); // Iterable[1, 3, 5]
 ```
 
-Note: it is equivalent to _compose_ but it works left to right!
+Note: `pipe` is equivalent to [compose](#compose) but with inverted order of operations.
 
 ### when
 
 **when(condition, value)**
 
-when is a helper you can use with es6 spread syntax (the `...` operator). In particular it helps avoid an unnecessarily difficult to read pattern that frequently causes code formatters (prettier, specifically) to emit an undesireable number of lines:
+`when` is a helper for use with the es6 spread syntax (the `...` operator). When `condition` is truthy its result is `value`. When condition is falsy its result is an empty iterable object. This is useful to avoid an unnecessarily difficult to read pattern that often causes code formatters (prettier, specifically) to emit an undesireable number of lines:
 
 ```js
 const always = true;
@@ -2002,7 +2102,11 @@ const arr = [always, ...(sometimes ? [sometimes] : [])]; // [true, true] OR [tru
 Instead, you can use the when method like so:
 
 ```js
-const whenArr = [always, ...when(sometimes, [sometimes])]; // [true, true] OR [true]
+const whenArr = [
+  always,
+  ...when(sometimes, [sometimes]),
+  ...when(sometimes, null), // nothing to spread? no problem
+]; // [true, true] OR [true]
 ```
 
 The pattern works equally well with objects.
@@ -2011,9 +2115,8 @@ The pattern works equally well with objects.
 const whenObj = {
   always,
   ...when(sometimes, { sometimes }),
+  ...when(sometimes, null),
 }; // { always: true } OR { always: true, somtimes: true }
 ```
-
-Note that the empty result of spread is both an empty object and an empty iterable at the same time. This means that `[...when(false, null)]` and `{...when(false, null)}` are both valid (same for `undefined`).
 
 

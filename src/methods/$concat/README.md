@@ -1,5 +1,5 @@
-It chains multiple iterables in a single one.
+Yields each value from each `source` in `sources`. First all values from the first `source` are yielded, then then from the second, etc.
 
 ```js
-chain([3, 5, 6], [1, 1], [10]); // 3, 5, 6, 1, 1, 10
+concat([3, 5, 6], [1, 1], [10]); // 3, 5, 6, 1, 1, 10
 ```

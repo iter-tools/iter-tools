@@ -1,5 +1,5 @@
 {
   "type": "consume",
   "aliases": ["asyncToArray"],
-  "signatures": [[{ "name": "iterable", "isIterable": true, "isAsync": true }]]
+  "signatures": [[{ "name": "source", "isIterable": true, "isAsync": true }]]
 }

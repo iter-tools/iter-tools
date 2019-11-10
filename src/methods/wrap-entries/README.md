@@ -1,7 +1,7 @@
 Yields the items yielded by `entriesable.entries()`. When passed `null` or `undefined`, yields nothing.
 
+<!-- prettier-ignore -->
 ```js
-// prettier-ignore
 wrapEntries(new Map([
   ['foo', 'bar'],
   ['fox', 'far']

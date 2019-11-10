@@ -3,6 +3,8 @@
 const param = ({ name, isRest, isOptional, isIterable, isAsync, properties }) => {
   if (isIterable) {
     name = `[${name}](#${isAsync ? 'async' : ''}sourceiterable)`;
+  } else if (name === 'comparator') {
+    name = `[${name}](#comparator)`;
   }
   let result = name === null ? `{ ${properties.join(', ')} }` : name;
   if (isRest) result = `...${result}`;

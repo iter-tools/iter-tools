@@ -1,4 +1,4 @@
-Transform an iterable to an array. arrayFrom is implemented as `Array.from`. It is included for consistency since `Array.from` has no counterpart for use with async iterators.
+Transform `source` into an array. Roughly equivalent to `Array.from`, except that it turns `null` and `undefined` into `[]`. Since arrays are iterable, this method can also be thought of as a way to cache all values in an iterable.
 
 ```js
 arrayFrom(slice(0, 3, range())); // [1, 2, 3]

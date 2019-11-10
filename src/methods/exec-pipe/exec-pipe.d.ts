@@ -1,13 +1,13 @@
 // prettier-ignore
-declare function execPipe<A> (value: A): A
+declare function execPipe<A> (initial: A): A
 // prettier-ignore
 declare function execPipe<A, R1> (
-  value: A,
+  initial: A,
   fn0: (value: A) => R1,
 ): R1;
 // prettier-ignore
 declare function execPipe<A, R1, R2> (
-  value: A,
+  initial: A,
   fn0: (value: A) => R1,
   fn1: (value: R1) => R2,
 ): R2;
@@ -20,7 +20,7 @@ declare function execPipe<A, R1, R2, R3> (
 ): R3;
 // prettier-ignore
 declare function execPipe<A, R1, R2, R3, R4> (
-  value: A,
+  initial: A,
   fn0: (value: A) => R1,
   fn1: (value: R1) => R2,
   fn2: (value: R2) => R3,
@@ -28,7 +28,7 @@ declare function execPipe<A, R1, R2, R3, R4> (
 ): R4;
 // prettier-ignore
 declare function execPipe<A, R1, R2, R3, R4, R5> (
-  value: A,
+  initial: A,
   fn0: (value: A) => R1,
   fn1: (value: R1) => R2,
   fn2: (value: R2) => R3,
@@ -37,7 +37,7 @@ declare function execPipe<A, R1, R2, R3, R4, R5> (
 ): R5;
 // prettier-ignore
 declare function execPipe<A, R1, R2, R3, R4, R5, R6> (
-  value: A,
+  initial: A,
   fn0: (value: A) => R1,
   fn1: (value: R1) => R2,
   fn2: (value: R2) => R3,
@@ -47,7 +47,7 @@ declare function execPipe<A, R1, R2, R3, R4, R5, R6> (
 ): R6;
 // prettier-ignore
 declare function execPipe<T> (
-  value: T,
+  initial: T,
   ...fns: Array<(value: T) => T>
 ): T;
 

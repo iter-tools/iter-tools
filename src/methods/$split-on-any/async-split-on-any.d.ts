@@ -9,17 +9,17 @@
 import { SourceIterable as SyncSourceIterable } from '../../types/iterable';
 import { AsyncSourceIterable, AsyncResultIterable } from '../../types/async-iterable';
 declare function asyncSplitOnAny(
-  values: SyncSourceIterable<string>,
+  separatorValues: SyncSourceIterable<string>,
 ): (source: string) => AsyncResultIterable<string>;
 declare function asyncSplitOnAny(
-  values: SyncSourceIterable<any>,
+  separatorValues: SyncSourceIterable<any>,
 ): <T>(source: AsyncSourceIterable<T>) => AsyncResultIterable<AsyncResultIterable<T>>;
 declare function asyncSplitOnAny(
-  values: SyncSourceIterable<string>,
+  separatorValues: SyncSourceIterable<string>,
   source: string,
 ): AsyncResultIterable<string>;
 declare function asyncSplitOnAny<T>(
-  values: SyncSourceIterable<any>,
+  separatorValues: SyncSourceIterable<any>,
   source: AsyncSourceIterable<T>,
 ): AsyncResultIterable<AsyncResultIterable<T>>;
 export default asyncSplitOnAny;

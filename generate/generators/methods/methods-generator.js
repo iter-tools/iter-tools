@@ -26,7 +26,7 @@ class MethodsGenerator extends BaseAsyncGenerator {
   addPath(path) {
     super.addPath(path);
 
-    if (this.inWatchMode) {
+    if (this.multiGenerator.inWatchMode) {
       log.info(`Picked up new method template: ${path}`);
     }
   }

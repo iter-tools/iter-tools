@@ -4,7 +4,7 @@ import $InterleaveBuffer from './internal/$buffer';
 import $makeCanTakeAny from './internal/$can-take-any';
 
 $async;
-export function* $interleave(sources, generatorFn, options) {
+export function* $interleave(sources, generateInterleaved, options) {
   const buffers = sources.map(
     (iterable, i) => new $InterleaveBuffer($ensureIterable(iterable)[$iteratorSymbol](), i),
   );
@@ -13,8 +13,8 @@ export function* $interleave(sources, generatorFn, options) {
     const canTakeAny = $makeCanTakeAny(buffers);
 
     yield* options !== undefined
-      ? generatorFn(options, canTakeAny, ...buffers)
-      : generatorFn(canTakeAny, ...buffers);
+      ? generateInterleaved(options, canTakeAny, ...buffers)
+      : generateInterleaved(canTakeAny, ...buffers);
   } finally {
     for (const buffer of buffers) {
       if ($await(buffer.canTake()) && typeof buffer._iterator.return === 'function') {

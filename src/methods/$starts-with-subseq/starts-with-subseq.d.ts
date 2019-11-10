@@ -8,10 +8,10 @@
 
 import { SourceIterable } from '../../types/iterable';
 declare function startsWithSubseq(
-  subseq: SourceIterable<any>,
+  valueSubseq: SourceIterable<any>,
 ): (iterable: SourceIterable<any>) => boolean;
 declare function startsWithSubseq(
-  subseq: SourceIterable<any>,
+  valueSubseq: SourceIterable<any>,
   iterable: SourceIterable<any>,
 ): boolean;
 export default startsWithSubseq;

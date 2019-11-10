@@ -7,11 +7,16 @@
  */
 
 import { asyncIterableCurry } from '../../internal/async-iterable';
-import { asyncJoinWith_ } from '../$join-with_/async-join-with_';
-const config = {
-  subseq: true,
-};
-export function asyncJoinWithSubseq(source, with_) {
-  return asyncJoinWith_(source, config, with_);
+import { asyncToArray } from '../$to-array/async-to-array';
+export async function* asyncJoinWithSubseq(source, separatorSubseq) {
+  const _separatorSubseq = await asyncToArray(separatorSubseq);
+
+  let isFirst = true;
+
+  for await (const item of source) {
+    if (!isFirst) yield* _separatorSubseq;
+    yield* item;
+    isFirst = false;
+  }
 }
 export default asyncIterableCurry(asyncJoinWithSubseq);

@@ -8,10 +8,10 @@
 
 import { AsyncSourceIterable, AsyncResultIterable } from '../../types/async-iterable';
 declare function asyncDropWhile<T>(
-  func: (item: T, i: number) => boolean | Promise<boolean>,
+  predicate: (item: T, i: number) => boolean | Promise<boolean>,
 ): (source: AsyncSourceIterable<T>) => AsyncResultIterable<T>;
 declare function asyncDropWhile<T>(
-  func: (item: T, i: number) => boolean | Promise<boolean>,
+  predicate: (item: T, i: number) => boolean | Promise<boolean>,
   source: AsyncSourceIterable<T>,
 ): AsyncResultIterable<T>;
 export default asyncDropWhile;

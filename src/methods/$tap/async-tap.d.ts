@@ -8,10 +8,10 @@
 
 import { AsyncSourceIterable, AsyncResultIterable } from '../../types/async-iterable';
 declare function asyncTap<T>(
-  func: (item: T, i: number) => any | Promise<any>,
+  callback: (item: T, i: number) => any | Promise<any>,
 ): (source: AsyncSourceIterable<T>) => AsyncResultIterable<T>;
 declare function asyncTap<T>(
-  func: (item: T, i: number) => any | Promise<any>,
+  callback: (item: T, i: number) => any | Promise<any>,
   source: AsyncSourceIterable<T>,
 ): AsyncResultIterable<T>;
 export default asyncTap;

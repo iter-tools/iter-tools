@@ -7,11 +7,8 @@
  */
 
 import { iterableCurry } from '../../internal/iterable';
-import { joinWith_ } from '../$join-with_/join-with_';
-const config = {
-  subseq: false,
-};
-export function joinWith(source, with_) {
-  return joinWith_(source, config, with_);
+import { joinWithSubseq } from '../$join-with-subseq/join-with-subseq';
+export function joinWith(source, separator) {
+  return joinWithSubseq(source, [separator]);
 }
 export default iterableCurry(joinWith);

@@ -24,7 +24,6 @@ class Generator {
     this.configurations = [null];
     this.ignored = [];
     this.glob = '**';
-    this.inWatchMode = false;
     this.shouldWatch = watch;
     this.multiGenerator = multiGenerator;
     this.options = options;

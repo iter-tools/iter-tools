@@ -76,7 +76,7 @@ const users = new Map([
 
 const posts = new Map([
   [1, { user: 1, text: 'Hello world!' }],
-  [2, { user: 1, text: 'The only certain things in life are death and taxes.' }],
+  [2, { user: 1, text: 'The only certainties in life are death and taxes.' }],
   [3, { user: 3, text: 'HUGE SALES AT CARPET EMPORIUM! SAVE SAVE SAVE!' }],
 ]);
 
@@ -197,7 +197,10 @@ The following function checks if two iterables are equals. It uses a shallow com
 
 ```js
 function areEqual(iter1, iter2) {
-  return every(([item1, item2]) => Object.is(item1, item2), zipAll(iter1, iter2));
+  return every(
+    ([item1, item2]) => Object.is(item1, item2),
+    zipAll(iter1, iter2),
+  );
 }
 ```
 
@@ -229,7 +232,8 @@ There are cases where you need to process data in parallel and applying differen
 ```js
 const dataPipeline = pipe(
   fork,
-  ([iter1, iter2]) => zip(filter(n => n % 2 === 0, iter1), map(n => n * n, iter2)),
+  ([iter1, iter2]) =>
+    zip(filter(n => n % 2 === 0, iter1), map(n => n * n, iter2)),
 );
 
 for (const [n1, n2] of dataPipeline(iterable)) {

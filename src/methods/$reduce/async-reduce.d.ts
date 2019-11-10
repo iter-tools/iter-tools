@@ -8,26 +8,26 @@
 
 import { AsyncSourceIterable } from '../../types/async-iterable';
 declare function asyncReduce<T>(
-  func: (acc: T, item: T, i: number) => T,
+  reducer: (result: T, item: T, i: number) => T,
 ): (iterable: AsyncSourceIterable<T>) => Promise<T>;
 declare function asyncReduce<O, T>(
-  func: (acc: O, item: T, i: number) => O,
+  reducer: (result: O, item: T, i: number) => O,
 ): (iterable: AsyncSourceIterable<T>) => Promise<O>;
 declare function asyncReduce<O, T>(
   initial: O,
-  func: (acc: O, item: T, i: number) => O | Promise<O>,
+  reducer: (result: O, item: T, i: number) => O | Promise<O>,
 ): (iterable: AsyncSourceIterable<T>) => Promise<O>;
 declare function asyncReduce<T>(
-  func: (acc: T, item: T, i: number) => T | Promise<T>,
+  reducer: (result: T, item: T, i: number) => T | Promise<T>,
   iterable: AsyncSourceIterable<T>,
 ): Promise<T>;
 declare function asyncReduce<O, T>(
-  func: (acc: O, item: T, i: number) => O | Promise<O>,
+  reducer: (result: O, item: T, i: number) => O | Promise<O>,
   iterable: AsyncSourceIterable<T>,
 ): Promise<O>;
 declare function asyncReduce<O, T>(
   initial: O,
-  func: (acc: O, item: T, i: number) => O | Promise<O>,
+  reducer: (result: O, item: T, i: number) => O | Promise<O>,
   iterable: AsyncSourceIterable<T>,
 ): Promise<O>;
 export default asyncReduce;

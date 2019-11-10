@@ -3,8 +3,8 @@ import { $splitOn_ } from '../$split-on_/$split-on_';
 
 const config = { any: true, subseq: true };
 
-export function $splitOnAnySubseq(source, subseqs) {
-  return $splitOn_(source, config, subseqs);
+export function $splitOnAnySubseq(source, separatorSubseqs) {
+  return $splitOn_(source, config, separatorSubseqs);
 }
 
 export default $iterableCurry($splitOnAnySubseq);

@@ -8,10 +8,10 @@
 
 import { AsyncSourceIterable } from '../../types/async-iterable';
 declare function asyncStartsWithSubseq(
-  subseq: AsyncSourceIterable<any>,
+  valueSubseq: AsyncSourceIterable<any>,
 ): (iterable: AsyncSourceIterable<any>) => Promise<boolean>;
 declare function asyncStartsWithSubseq(
-  subseq: AsyncSourceIterable<any>,
+  valueSubseq: AsyncSourceIterable<any>,
   iterable: AsyncSourceIterable<any>,
 ): Promise<boolean>;
 export default asyncStartsWithSubseq;

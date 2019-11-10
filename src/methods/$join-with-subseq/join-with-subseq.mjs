@@ -7,11 +7,16 @@
  */
 
 import { iterableCurry } from '../../internal/iterable';
-import { joinWith_ } from '../$join-with_/join-with_';
-const config = {
-  subseq: true,
-};
-export function joinWithSubseq(source, with_) {
-  return joinWith_(source, config, with_);
+import { toArray } from '../$to-array/to-array';
+export function* joinWithSubseq(source, separatorSubseq) {
+  const _separatorSubseq = toArray(separatorSubseq);
+
+  let isFirst = true;
+
+  for (const item of source) {
+    if (!isFirst) yield* _separatorSubseq;
+    yield* item;
+    isFirst = false;
+  }
 }
 export default iterableCurry(joinWithSubseq);
