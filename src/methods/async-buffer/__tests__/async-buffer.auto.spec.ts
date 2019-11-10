@@ -36,7 +36,7 @@ function intermittent(): AsyncIterable<number> {
 }
 
 describe('asyncBuffer', () => {
-  it('does not buffers', async () => {
+  it('sanity checks', async () => {
     const iter = intermittent()[Symbol.asyncIterator]();
     const d0 = Date.now();
     await iter.next();
@@ -79,5 +79,12 @@ describe('asyncBuffer', () => {
   it('buffer (bigger then iterable)', async () => {
     const iter = asyncBuffer(10, intermittent());
     expect(await asyncToArray(iter)).toEqual([0, 1, 2]);
+  });
+  it('throws when buffer size is < 0', () => {
+    expect(() => asyncBuffer(-1, intermittent())).toThrowErrorMatchingSnapshot();
+  });
+  it('throws when buffer size is not a number', () => {
+    const n: any = '';
+    expect(() => asyncBuffer(n, intermittent())).toThrowErrorMatchingSnapshot();
   });
 });
