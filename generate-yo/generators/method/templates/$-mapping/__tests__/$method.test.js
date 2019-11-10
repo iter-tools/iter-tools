@@ -1,8 +1,8 @@
-import { $async, $await } from '../../../../generate/async.macro';
+import { $, $async, $await } from '../../../../generate/async.macro';
 
 import { $__method__, $toArray, $wrap } from '../../..';
 
-describe($async`__method__`, () => {
+describe($`__method__`, () => {
   it(
     'TODO: replace this test',
     $async(() => {
