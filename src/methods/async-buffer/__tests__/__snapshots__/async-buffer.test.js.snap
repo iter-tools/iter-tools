@@ -1,0 +1,5 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`asyncBuffer throws when buffer size is < 0 1`] = `"The first argument (bufferSize) should be a number greater than 0"`;
+
+exports[`asyncBuffer throws when buffer size is not a number 1`] = `"The first argument (bufferSize) should be a number greater than 0"`;
