@@ -1,5 +1,5 @@
-It starts returning values when the function is false. Then it keeps going until the iterable is exausted.
+Returns values from `source`, omitting consecutive values at the beginning of `source` for which the result of `predicate(item, idx)` is truthy.
 
 ```js
-dropWhile(isEven, range(4)); // 1, 2, 3
+dropWhile(isEven, range(5)); // 0, 2, 4
 ```

@@ -1,12 +1,12 @@
-This is a classic composition function that can be used to assemble multiple functions that take an iterable and return an iterable.
+Allows nested calls to be flattened out for improved readability. `pipe(a, b, c)` is equivalent to `c(b(a))`, where `a`, `b`, and `c`, are functions. `pipe` is usually combined with curryied forms of other methods so that the `source` (or `iterable`) argument is passed between the composed methods.
 
 ```js
-const iter = pipe(
-  filter(x % 2 === 0),
-  map(x => x + 3),
+const filterMap = pipe(
+  filter(x => x % 2 === 0),
+  map(x => x + 1),
 );
 
-iter([1, 2, 3, 4]); // 5, 7
+filterMap([0, 1, 2, 3, 4]); // Iterable[1, 3, 5]
 ```
 
-Note: it is equivalent to _compose_ but it works left to right!
+Note: `pipe` is equivalent to [compose](#compose) but with inverted order of operations.

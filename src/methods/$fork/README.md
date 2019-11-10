@@ -1,4 +1,8 @@
-Returns an iterable of `n` forks of `souce`, or an infinite iterable of forks if `n` is not specified. Each fork contains the same items as `source`, and can be consumed independently. This works even if `source` cannot itself be consumed more than once, for example because it is the return value of a generator function. Items are buffered until they have been consumed by all forks. Each fork can only be consumed once.
+Defaults:
+
+`n`: `Infinity`
+
+Returns an iterable of `n` forks of `source`. Each fork contains the same values as `source`, and can be consumed independently. This works even if `source` cannot itself be consumed more than once, for example because it is a generator. Values are buffered until they have been consumed by all forks. Each fork can only be consumed once.
 
 ```js
 const [forkA, forkB, forkC] = fork(function*() {

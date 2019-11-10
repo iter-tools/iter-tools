@@ -7,11 +7,11 @@
  */
 
 import { iterableCurry } from '../../internal/iterable';
-export function* tap(source, func) {
+export function* tap(source, callback) {
   let c = 0;
 
   for (const item of source) {
-    func(item, c++);
+    callback(item, c++);
     yield item;
   }
 }

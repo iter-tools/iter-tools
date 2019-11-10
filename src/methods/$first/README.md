@@ -1,4 +1,4 @@
-It returns the first item from an iterable, or undefined if there are no items.
+Returns the first value from `iterable`, or `undefined` when `iterable` is empty.
 
 ```js
 first([1, 2, 3]); // 1

@@ -2,21 +2,21 @@ import { wrap } from '../$wrap/wrap';
 
 const orInifity = value => (value === -1 ? Infinity : value);
 
-function findNext(str, onStrings, start = 0) {
+function findNext(str, separatorStrings, start = 0) {
   let index = Infinity;
   let size = null;
 
-  for (const onString of onStrings) {
-    if (str.indexOf(onString, start) < index) {
-      size = onString.length;
+  for (const separatorString of separatorStrings) {
+    if (str.indexOf(separatorString, start) < index) {
+      size = separatorString.length;
     }
-    index = Math.min(orInifity(str.indexOf(onString, start)), index);
+    index = Math.min(orInifity(str.indexOf(separatorString, start)), index);
   }
   return index === Infinity ? null : { index, size };
 }
 
-export function* stringSplitOn_(str, { any }, on) {
-  const onStrings = any ? [...wrap(on)] : [on];
+export function* stringSplitOn_(str, { any }, separator) {
+  const separatorStrings = any ? [...wrap(separator)] : [separator];
 
   if (str === '') return;
 
@@ -25,7 +25,7 @@ export function* stringSplitOn_(str, { any }, on) {
     size: 0,
   };
   let nextMatch;
-  while ((nextMatch = findNext(str, onStrings, match.index + match.size))) {
+  while ((nextMatch = findNext(str, separatorStrings, match.index + match.size))) {
     yield str.slice(match.index + match.size, nextMatch.index);
     match = nextMatch;
   }

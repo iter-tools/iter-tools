@@ -12,8 +12,8 @@ const config = {
   any: true,
   subseq: true,
 };
-export function asyncIncludesAnySubseq(iterable, value) {
-  return asyncIncludes_(iterable, config, value);
+export function asyncIncludesAnySubseq(iterable, subseqs) {
+  return asyncIncludes_(iterable, config, subseqs);
 }
 export default asyncIterableCurry(asyncIncludesAnySubseq, {
   reduces: true,

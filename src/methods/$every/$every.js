@@ -3,11 +3,11 @@ import { $async, $await } from '../../../generate/async.macro';
 import { $iterableCurry } from '../../internal/$iterable';
 
 $async;
-export function $every(iterable, func) {
+export function $every(iterable, predicate) {
   let c = 0;
   $await;
   for (const item of iterable) {
-    if (!$await(func(item, c++))) {
+    if (!$await(predicate(item, c++))) {
       return false;
     }
   }

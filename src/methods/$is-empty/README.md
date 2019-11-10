@@ -1,4 +1,4 @@
-Returns true if the input iterable contains no items.
+Returns `true` if `iterable` contains no values, and `false` otherwise.
 
 ```js
 isEmpty([]); // true

@@ -7,12 +7,9 @@
  */
 
 import { iterableCurry } from '../../internal/iterable';
-import { joinWith_ } from '../$join-with_/join-with_';
-const config = {
-  subseq: true,
-};
+import { joinWithSubseq } from '../$join-with-subseq/join-with-subseq';
 const emptySubseq = [];
 export function join(source) {
-  return joinWith_(source, config, emptySubseq);
+  return joinWithSubseq(source, emptySubseq);
 }
 export default iterableCurry(join);

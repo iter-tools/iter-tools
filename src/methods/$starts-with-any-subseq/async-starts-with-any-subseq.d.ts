@@ -9,10 +9,10 @@
 import { AsyncSourceIterable } from '../../types/async-iterable';
 import { SourceIterable as SyncSourceIterable } from '../../types/iterable';
 declare function asyncStartsWithAnySubseq(
-  subseqs: SyncSourceIterable<AsyncSourceIterable<any>>,
+  valueSubseqs: SyncSourceIterable<AsyncSourceIterable<any>>,
 ): (iterable: AsyncSourceIterable<any>) => Promise<boolean>;
 declare function asyncStartsWithAnySubseq(
-  subseqs: SyncSourceIterable<AsyncSourceIterable<any>>,
+  valueSubseqs: SyncSourceIterable<AsyncSourceIterable<any>>,
   iterable: AsyncSourceIterable<any>,
 ): Promise<boolean>;
 export default asyncStartsWithAnySubseq;

@@ -8,12 +8,14 @@
 
 import { AsyncSourceIterable, AsyncResultIterable } from "../../types/async-iterable"; // prettier-ignore
 
-declare function asyncSplit(value: string): (source: string) => AsyncResultIterable<string>;
-declare function asyncSplit(value: any): <T>(source: AsyncSourceIterable<T>) => AsyncResultIterable<AsyncResultIterable<T>>; // prettier-ignore
+declare function asyncSplit(
+  separatorValue: string,
+): (source: string) => AsyncResultIterable<string>;
+declare function asyncSplit(separatorValue: any): <T>(source: AsyncSourceIterable<T>) => AsyncResultIterable<AsyncResultIterable<T>>; // prettier-ignore
 
-declare function asyncSplit(value: string, source: string): AsyncResultIterable<string>;
+declare function asyncSplit(separatorValue: string, source: string): AsyncResultIterable<string>;
 declare function asyncSplit<T>(
-  value: any,
+  separatorValue: any,
   source: AsyncSourceIterable<T>,
 ): AsyncResultIterable<AsyncResultIterable<T>>;
 export default asyncSplit;

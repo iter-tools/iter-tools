@@ -11,9 +11,9 @@ import InterleaveBuffer from './internal/buffer'; // Without options:
 // #############
 // prettier-ignore
 
-declare function interleave<T1, T2, R>(gen: (canTakeAny: () => InterleaveBuffer<T1 | T2> | null, b1: InterleaveBuffer<T1>, b2: InterleaveBuffer<T2>) => Iterable<R>): (s1: SourceIterable<T1>, s2: SourceIterable<T2>) => ResultIterable<R>;
+declare function interleave<T1, T2, R>(generateInterleaved: (canTakeAny: () => InterleaveBuffer<T1 | T2> | null, b1: InterleaveBuffer<T1>, b2: InterleaveBuffer<T2>) => Iterable<R>): (s1: SourceIterable<T1>, s2: SourceIterable<T2>) => ResultIterable<R>;
 declare function interleave<T1, T2, T3, R>(
-  gen: (
+  generateInterleaved: (
     canTakeAny: () => InterleaveBuffer<T1 | T2 | T3> | null,
     b1: InterleaveBuffer<T1>,
     b2: InterleaveBuffer<T2>,
@@ -21,7 +21,7 @@ declare function interleave<T1, T2, T3, R>(
   ) => Iterable<R>,
 ): (s1: SourceIterable<T1>, s2: SourceIterable<T2>, s3: SourceIterable<T3>) => ResultIterable<R>;
 declare function interleave<T1, T2, T3, T4, R>(
-  gen: (
+  generateInterleaved: (
     canTakeAny: () => InterleaveBuffer<T1 | T2 | T3 | T4> | null,
     b1: InterleaveBuffer<T1>,
     b2: InterleaveBuffer<T2>,
@@ -35,13 +35,13 @@ declare function interleave<T1, T2, T3, T4, R>(
   s4: SourceIterable<T4>,
 ) => ResultIterable<R>;
 declare function interleave<T, R>(
-  gen: (
+  generateInterleaved: (
     canTakeAny: () => InterleaveBuffer<T> | null,
     ...buffers: Array<InterleaveBuffer<T>>
   ) => Iterable<R>,
 ): (...sources: Array<SourceIterable<T>>) => ResultIterable<R>;
 declare function interleave<T1, T2, R>(
-  gen: (
+  generateInterleaved: (
     canTakeAny: () => InterleaveBuffer<T1 | T2> | null,
     b1: InterleaveBuffer<T1>,
     b2: InterleaveBuffer<T2>,
@@ -50,7 +50,7 @@ declare function interleave<T1, T2, R>(
   s2: SourceIterable<T2>,
 ): ResultIterable<R>;
 declare function interleave<T1, T2, T3, R>(
-  gen: (
+  generateInterleaved: (
     canTakeAny: () => InterleaveBuffer<T1 | T2 | T3> | null,
     b1: InterleaveBuffer<T1>,
     b2: InterleaveBuffer<T2>,
@@ -61,7 +61,7 @@ declare function interleave<T1, T2, T3, R>(
   s3: SourceIterable<T3>,
 ): ResultIterable<R>;
 declare function interleave<T1, T2, T3, T4, R>(
-  gen: (
+  generateInterleaved: (
     canTakeAny: () => InterleaveBuffer<T1 | T2 | T3 | T4> | null,
     b1: InterleaveBuffer<T1>,
     b2: InterleaveBuffer<T2>,
@@ -74,7 +74,7 @@ declare function interleave<T1, T2, T3, T4, R>(
   s4: SourceIterable<T4>,
 ): ResultIterable<R>;
 declare function interleave<T, R>(
-  gen: (
+  generateInterleaved: (
     canTakeAny: () => InterleaveBuffer<T> | null,
     ...buffers: Array<InterleaveBuffer<T>>
   ) => Iterable<R>,
@@ -83,9 +83,9 @@ declare function interleave<T, R>(
 // #############
 // prettier-ignore
 
-declare function interleave<O extends {}, T1, T2, R>(gen: (options: O, canTakeAny: () => InterleaveBuffer<T1 | T2> | null, b1: InterleaveBuffer<T1>, b2: InterleaveBuffer<T2>) => Iterable<R>, options: O): (s1: SourceIterable<T1>, s2: SourceIterable<T2>) => ResultIterable<R>;
+declare function interleave<O extends {}, T1, T2, R>(generateInterleaved: (options: O, canTakeAny: () => InterleaveBuffer<T1 | T2> | null, b1: InterleaveBuffer<T1>, b2: InterleaveBuffer<T2>) => Iterable<R>, options: O): (s1: SourceIterable<T1>, s2: SourceIterable<T2>) => ResultIterable<R>;
 declare function interleave<O extends {}, T1, T2, T3, R>(
-  gen: (
+  generateInterleaved: (
     options: O,
     canTakeAny: () => InterleaveBuffer<T1 | T2 | T3> | null,
     b1: InterleaveBuffer<T1>,
@@ -95,7 +95,7 @@ declare function interleave<O extends {}, T1, T2, T3, R>(
   options: O,
 ): (s1: SourceIterable<T1>, s2: SourceIterable<T2>, s3: SourceIterable<T3>) => ResultIterable<R>;
 declare function interleave<O extends {}, T1, T2, T3, T4, R>(
-  gen: (
+  generateInterleaved: (
     options: O,
     canTakeAny: () => InterleaveBuffer<T1 | T2 | T3 | T4> | null,
     b1: InterleaveBuffer<T1>,
@@ -111,7 +111,7 @@ declare function interleave<O extends {}, T1, T2, T3, T4, R>(
   s4: SourceIterable<T4>,
 ) => ResultIterable<R>;
 declare function interleave<O extends {}, T, R>(
-  gen: (
+  generateInterleaved: (
     options: O,
     canTakeAny: () => InterleaveBuffer<T> | null,
     ...buffers: Array<InterleaveBuffer<T>>
@@ -119,7 +119,7 @@ declare function interleave<O extends {}, T, R>(
   options: O,
 ): (...sources: Array<SourceIterable<T>>) => ResultIterable<R>;
 declare function interleave<O extends {}, T1, T2, R>(
-  gen: (
+  generateInterleaved: (
     options: O,
     canTakeAny: () => InterleaveBuffer<T1 | T2> | null,
     b1: InterleaveBuffer<T1>,
@@ -130,7 +130,7 @@ declare function interleave<O extends {}, T1, T2, R>(
   s2: SourceIterable<T2>,
 ): ResultIterable<R>;
 declare function interleave<O extends {}, T1, T2, T3, R>(
-  gen: (
+  generateInterleaved: (
     options: O,
     canTakeAny: () => InterleaveBuffer<T1 | T2 | T3> | null,
     b1: InterleaveBuffer<T1>,
@@ -143,7 +143,7 @@ declare function interleave<O extends {}, T1, T2, T3, R>(
   s3: SourceIterable<T3>,
 ): ResultIterable<R>;
 declare function interleave<O extends {}, T1, T2, T3, T4, R>(
-  gen: (
+  generateInterleaved: (
     options: O,
     canTakeAny: () => InterleaveBuffer<T1 | T2 | T3 | T4> | null,
     b1: InterleaveBuffer<T1>,
@@ -158,7 +158,7 @@ declare function interleave<O extends {}, T1, T2, T3, T4, R>(
   s4: SourceIterable<T4>,
 ): ResultIterable<R>;
 declare function interleave<O extends {}, T, R>(
-  gen: (
+  generateInterleaved: (
     options: O,
     canTakeAny: () => InterleaveBuffer<T> | null,
     ...buffers: Array<InterleaveBuffer<T>>

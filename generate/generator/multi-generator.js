@@ -17,6 +17,7 @@ class MultiGenerator {
     this.pathsChanged = debounce(this.pathsChanged.bind(this), 50);
     this.debouncedMethods = [this.pathsChanged];
     this.generatedPaths = new FileCache();
+    this.inWatchMode = false;
 
     log.setLevel(options.quiet ? 'error' : 'info');
 

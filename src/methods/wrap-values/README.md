@@ -1,7 +1,7 @@
 Yields the items yielded by `valuesable.values()`. When passed `null` or `undefined`, yields nothing.
 
+<!-- prettier-ignore -->
 ```js
-// prettier-ignore
 wrapValues(new Map([
   ['foo', 'bar'],
   ['fox', 'far']

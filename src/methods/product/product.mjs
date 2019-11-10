@@ -34,8 +34,8 @@ function* permuteIndicies(arrs, size) {
   }
 }
 
-export function product(...args) {
-  const arrs = [...map(args, i => [...ensureIterable(i)])];
+export function product(...iterables) {
+  const arrs = [...map(iterables, i => [...ensureIterable(i)])];
   const size = arrs.reduce((size, arr) => size * arr.length, Math.min(arrs.length, 1));
 
   return {

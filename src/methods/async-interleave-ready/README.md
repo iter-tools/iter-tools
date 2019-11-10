@@ -1,4 +1,4 @@
-This method takes multiple async iterables, and yields items from each of them in the order that that their item promises resolve.
+Interleaves values from each `source` in `sources`, yielding values in whatever order they resolve (become ready). Note that this means that the results of this interleave will usually not be repeatable.
 
 ```js
 asyncInterleaveReady(aItems, bItems);

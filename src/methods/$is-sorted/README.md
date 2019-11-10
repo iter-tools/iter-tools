@@ -1,4 +1,4 @@
-Returns true if the items in the iterable are sorted according to an optional comparator.
+Returns `true` if the values in `iterable` are sorted in ascending order according to `comparator`, and `false` otherwise.
 
 ```js
 isSorted([1, 2, 3]); // true

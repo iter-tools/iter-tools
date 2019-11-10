@@ -5,23 +5,23 @@ import { range } from '../range/range';
 import { permutations } from '../permutations/permutations';
 import { isSorted } from '../$is-sorted/is-sorted';
 
-function combinationsSize(len, r) {
-  if (len === 0 || r === 0 || r > len) return 0;
-  return Number(factorial(len) / (factorial(r) * factorial(len - r)));
+function combinationsSize(len, n) {
+  if (len === 0 || n === 0 || n > len) return 0;
+  return Number(factorial(len) / (factorial(n) * factorial(len - n)));
 }
 
-export function combinations(iterable, r) {
+export function combinations(iterable, n) {
   const arr = [...iterable];
   const len = arr.length;
   let _size = null;
 
-  r = r === undefined ? len : r;
+  n = n === undefined ? len : n;
 
   return {
     *[Symbol.iterator]() {
       const toIndex = i => arr[i];
 
-      for (const indices of permutations(range(0, len), r)) {
+      for (const indices of permutations(range(0, len), n)) {
         if (isSorted(indices)) {
           yield [...map(indices, toIndex)];
         }
@@ -29,7 +29,7 @@ export function combinations(iterable, r) {
     },
 
     get size() {
-      return _size === null ? (_size = combinationsSize(len, r)) : _size;
+      return _size === null ? (_size = combinationsSize(len, n)) : _size;
     },
   };
 }

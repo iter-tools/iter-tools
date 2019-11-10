@@ -7,11 +7,11 @@
  */
 
 import { asyncIterableCurry } from '../../internal/async-iterable';
-export async function* asyncTap(source, func) {
+export async function* asyncTap(source, callback) {
   let c = 0;
 
   for await (const item of source) {
-    func(item, c++);
+    callback(item, c++);
     yield item;
   }
 }

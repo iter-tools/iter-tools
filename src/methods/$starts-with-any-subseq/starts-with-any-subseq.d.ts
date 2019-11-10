@@ -9,10 +9,10 @@
 import { SourceIterable } from '../../types/iterable';
 import { SourceIterable as SyncSourceIterable } from '../../types/iterable';
 declare function startsWithAnySubseq(
-  subseqs: SyncSourceIterable<SourceIterable<any>>,
+  valueSubseqs: SyncSourceIterable<SourceIterable<any>>,
 ): (iterable: SourceIterable<any>) => boolean;
 declare function startsWithAnySubseq(
-  subseqs: SyncSourceIterable<SourceIterable<any>>,
+  valueSubseqs: SyncSourceIterable<SourceIterable<any>>,
   iterable: SourceIterable<any>,
 ): boolean;
 export default startsWithAnySubseq;

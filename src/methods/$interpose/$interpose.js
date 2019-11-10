@@ -3,14 +3,14 @@ import { $async, $await } from '../../../generate/async.macro';
 import { $iterableCurry } from '../../internal/$iterable';
 
 $async;
-export function* $interpose(source, interposeItem) {
+export function* $interpose(source, interposed) {
   let first = true;
   $await;
-  for (const item of source) {
+  for (const sourceValue of source) {
     if (!first) {
-      yield interposeItem;
+      yield interposed;
     }
-    yield item;
+    yield sourceValue;
     first = false;
   }
 }

@@ -1,4 +1,4 @@
-when is a helper you can use with es6 spread syntax (the `...` operator). In particular it helps avoid an unnecessarily difficult to read pattern that frequently causes code formatters (prettier, specifically) to emit an undesireable number of lines:
+`when` is a helper for use with the es6 spread syntax (the `...` operator). When `condition` is truthy its result is `value`. When condition is falsy its result is an empty iterable object. This is useful to avoid an unnecessarily difficult to read pattern that often causes code formatters (prettier, specifically) to emit an undesireable number of lines:
 
 ```js
 const always = true;
@@ -10,7 +10,11 @@ const arr = [always, ...(sometimes ? [sometimes] : [])]; // [true, true] OR [tru
 Instead, you can use the when method like so:
 
 ```js
-const whenArr = [always, ...when(sometimes, [sometimes])]; // [true, true] OR [true]
+const whenArr = [
+  always,
+  ...when(sometimes, [sometimes]),
+  ...when(sometimes, null), // nothing to spread? no problem
+]; // [true, true] OR [true]
 ```
 
 The pattern works equally well with objects.
@@ -19,7 +23,6 @@ The pattern works equally well with objects.
 const whenObj = {
   always,
   ...when(sometimes, { sometimes }),
+  ...when(sometimes, null),
 }; // { always: true } OR { always: true, somtimes: true }
 ```
-
-Note that the empty result of spread is both an empty object and an empty iterable at the same time. This means that `[...when(false, null)]` and `{...when(false, null)}` are both valid (same for `undefined`).

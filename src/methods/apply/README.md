@@ -1,4 +1,4 @@
-apply is a convenience method. Its implementation is:
+`apply` is a convenience method. Its implementation is:
 
 ```js
 (fn, args = []) => fn(...args);

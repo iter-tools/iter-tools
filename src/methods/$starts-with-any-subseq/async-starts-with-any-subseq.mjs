@@ -12,8 +12,8 @@ const config = {
   any: true,
   subseq: true,
 };
-export function asyncStartsWithAnySubseq(iterable, value) {
-  return asyncStartsWith_(iterable, config, value);
+export function asyncStartsWithAnySubseq(iterable, valueSubseqs) {
+  return asyncStartsWith_(iterable, config, valueSubseqs);
 }
 export default asyncIterableCurry(asyncStartsWithAnySubseq, {
   reduces: true,

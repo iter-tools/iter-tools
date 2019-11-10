@@ -12,7 +12,7 @@ const config = {
   any: false,
   subseq: true,
 };
-export function asyncSplitOnSubseq(source, subseq) {
-  return asyncSplitOn_(source, config, subseq);
+export function asyncSplitOnSubseq(source, separatorSubseq) {
+  return asyncSplitOn_(source, config, separatorSubseq);
 }
 export default asyncIterableCurry(asyncSplitOnSubseq);

@@ -7,9 +7,9 @@
  */
 
 import { iterableCurry } from '../../internal/iterable';
-export function reduce(iterable, initial, func) {
+export function reduce(iterable, initial, reducer) {
   let c = 0;
-  let acc = initial;
+  let result = initial;
   const iterator = iterable[Symbol.iterator]();
 
   try {
@@ -20,17 +20,17 @@ export function reduce(iterable, initial, func) {
         throw new Error('Cannot reduce: no initial value specified and iterable was empty');
       }
 
-      acc = firstResult.value;
+      result = firstResult.value;
       c = 1;
     }
 
-    let result;
+    let nextItem;
 
-    while (!(result = iterator.next()).done) {
-      acc = func(acc, result.value, c++);
+    while (!(nextItem = iterator.next()).done) {
+      result = reducer(result, nextItem.value, c++);
     }
 
-    return acc;
+    return result;
   } finally {
     // close the iterator in case of exceptions
     if (typeof iterator.return === 'function') iterator.return();

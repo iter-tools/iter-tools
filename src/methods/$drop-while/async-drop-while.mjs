@@ -7,7 +7,7 @@
  */
 
 import { asyncIterableCurry } from '../../internal/async-iterable';
-export async function* asyncDropWhile(source, func) {
+export async function* asyncDropWhile(source, predicate) {
   let drop = true;
   let c = 0;
 
@@ -15,7 +15,7 @@ export async function* asyncDropWhile(source, func) {
     if (!drop) {
       yield item;
     } else {
-      drop = await func(item, c++);
+      drop = await predicate(item, c++);
 
       if (!drop) {
         yield item;

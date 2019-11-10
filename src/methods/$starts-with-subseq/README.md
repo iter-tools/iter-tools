@@ -1,5 +1,5 @@
-It returns whether an iterable starts with any of the specified subseqences. Compares with `===`.
+Returns `true` if the first subsequence of values in `source` matches `valueSubseq`, where each value is compared with `===`. Otherwise returns `false`.
 
 ```js
-startsWithAny([1, 2], [1, 2, 3]); // true
+startsWithSubseq([1, 2], [1, 2, 3]); // true
 ```

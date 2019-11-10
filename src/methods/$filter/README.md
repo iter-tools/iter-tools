@@ -1,10 +1,10 @@
-The equivalent of the array "filter" function.
+Yields only values from `source` for which the result of `predicate(value, idx)` is truthy. Equivalent to `Array.prototype.filter`.
 
 ```js
-filter(isEven, range(4)); // 0, 2
-await asyncFilter(animal => animal.kind.slice(1) === 'at', [
+filter(isEven, range(4)); // Iterable[0, 2]
+filter(animal => animal.kind.slice(1) === 'at', [
   { type: 'cat' },
   { type: 'rat' },
   { type: 'dog' },
-]); // [{type: 'cat'}, {type: 'rat'}]
+]); // Iterable[{type: 'cat'}, {type: 'rat'}]
 ```

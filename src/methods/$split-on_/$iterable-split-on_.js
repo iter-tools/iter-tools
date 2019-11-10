@@ -7,7 +7,7 @@ import { iterableStartsWith_ } from '../$starts-with_/iterable-starts-with_';
 
 const startsWithConfig = { any: false, subseq: true };
 
-function lengthOfFullMatch(buffer, state, onSubseqs) {
+function lengthOfFullMatch(buffer, onSubseqs) {
   for (const subsequence of onSubseqs) {
     if (iterableStartsWith_(buffer, startsWithConfig, subsequence)) {
       return subsequence.length;
@@ -17,35 +17,35 @@ function lengthOfFullMatch(buffer, state, onSubseqs) {
 }
 
 $async;
-function fetch(state, onSubseqs) {
+function fetch(state, separatorSubseqs) {
   const { iterator, weakExchange } = state;
 
-  if (state.subsequenceEnded) {
+  if (state.partSubseqEnded) {
     return false;
   }
 
   const { done, value: buffer } = $await(iterator.next());
 
-  state.subsequenceEnded = state.done = done;
+  state.partSubseqEnded = state.done = done;
 
   if (!done) {
     state.idx++;
 
-    const matchedLength = lengthOfFullMatch(buffer, state, onSubseqs);
-    state.subsequenceEnded = matchedLength > 0;
+    const matchedLength = lengthOfFullMatch(buffer, separatorSubseqs);
+    state.partSubseqEnded = matchedLength > 0;
 
     for (let i = 0; i < matchedLength - 1; i++) {
       $await(iterator.next());
     }
 
-    if (state.subsequenceEnded) {
+    if (state.partSubseqEnded) {
       state.consumer = weakExchange.spawnConsumer();
     } else {
       weakExchange.push(buffer.get(0));
     }
   }
 
-  return !state.subsequenceEnded;
+  return !state.partSubseqEnded;
 }
 
 $async;
@@ -58,31 +58,31 @@ function returnIterator(state) {
 }
 
 $async;
-function fetchSubsequence(state, onSubseqs, isFirst) {
+function fetchPartSubseq(state, separatorSubseqs, isFirst) {
   if (isFirst && !state.done) return;
-  while ($await(fetch(state, onSubseqs)));
+  while ($await(fetch(state, separatorSubseqs)));
 }
 
 $async;
-function* generateSubsequence(state, onSubseqs, consumer, isFirst) {
+function* generatePartSubseq(state, separatorSubseqs, consumer, isFirst) {
   try {
     yield 'ensure finally';
 
     if (isFirst && !consumer.isEmpty()) yield consumer.shift();
 
-    while ($await(fetch(state, onSubseqs))) yield consumer.shift();
+    while ($await(fetch(state, separatorSubseqs))) yield consumer.shift();
   } finally {
     returnIterator(state);
   }
 }
 
 $async;
-export function* $iterableSplitOn_(iterable, config, on) {
-  const onSubseqs = $await($toAnySubseq(config, on))
+export function* $iterableSplitOn_(iterable, config, separator) {
+  const separatorSubseqs = $await($toAnySubseq(config, separator))
     .filter(subseq => subseq.length)
     .sort((a, b) => b.length - a.length);
 
-  const maxMatchLength = onSubseqs.reduce((max, { length }) => Math.max(max, length), 1);
+  const maxMatchLength = separatorSubseqs.reduce((max, { length }) => Math.max(max, length), 1);
 
   const state = {
     iterator: null,
@@ -91,7 +91,7 @@ export function* $iterableSplitOn_(iterable, config, on) {
     consumer: null,
     nGroups: 0,
     groupsConsumed: false,
-    subsequenceEnded: false,
+    partSubseqEnded: false,
   };
 
   try {
@@ -100,18 +100,20 @@ export function* $iterableSplitOn_(iterable, config, on) {
 
     let isFirst = true;
     // We must peek the first item to know if we are done before without yielding any subseq
-    $await(fetch(state, onSubseqs));
+    $await(fetch(state, separatorSubseqs));
 
     while (!state.done) {
       state.nGroups++;
-      const subsequence = $await(generateSubsequence(state, onSubseqs, state.consumer, isFirst));
-      $await(subsequence.next()); // ensure finally
+      const partSubseq = $await(
+        generatePartSubseq(state, separatorSubseqs, state.consumer, isFirst),
+      );
+      $await(partSubseq.next()); // ensure finally
 
-      yield subsequence;
-      $await(fetchSubsequence(state, onSubseqs, isFirst));
+      yield partSubseq;
+      $await(fetchPartSubseq(state, separatorSubseqs, isFirst));
 
       isFirst = false;
-      state.subsequenceEnded = false;
+      state.partSubseqEnded = false;
     }
   } finally {
     state.groupsConsumed = true;
