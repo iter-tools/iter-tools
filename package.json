@@ -14,7 +14,7 @@
     "benchmarks": "npm run clean && npm run build:es2018-cjs && node benchmarks",
     "coverage": "npm run test:js -- --coverage",
     "coverage:upload": "codecov",
-    "clean": "rimraf es5 es2015 es2018",
+    "clean": "rimraf dist",
     "generate": "node ./generate",
     "generate:watch": "node ./generate -w",
     "generate:clean": "node ./generate -c",
