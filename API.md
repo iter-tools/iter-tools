@@ -72,6 +72,7 @@ Transform a single iterable
 
 [append](#append) ([async](#asyncappend))  
 [batch](#batch) ([async](#asyncbatch))  
+[drop](#drop) ([async](#asyncdrop))  
 [dropWhile](#dropwhile) ([async](#asyncdropwhile))  
 [enumerate](#enumerate) ([async](#asyncenumerate))  
 [filter](#filter) ([async](#asyncfilter)) ([parallel-async](#asyncfilterparallel))  
@@ -84,6 +85,7 @@ Transform a single iterable
 [prepend](#prepend) ([async](#asyncprepend))  
 [reverse](#reverse) ([async](#asyncreverse))  
 [slice](#slice) ([async](#asyncslice))  
+[take](#take) ([async](#asynctake))  
 [takeSorted](#takesorted) ([async](#asynctakesorted))  
 [takeWhile](#takewhile) ([async](#asynctakewhile))  
 [tap](#tap) ([async](#asynctap))  
@@ -363,6 +365,22 @@ batch(2, range(5)); // [0, 1], [2, 3], [4]
 **asyncBatch(size, [source](#asyncsourceiterable))**
 
 See [batch](#batch)
+
+### drop
+
+**drop(n, [iterable](#sourceiterable))**
+
+Yields values from `source`, omitting the first `n` values.
+
+```js
+drop(1, ['a', 'b', 'c']); // Iterable['b', 'c']
+```
+
+### asyncDrop
+
+**asyncDrop(n, [iterable](#asyncsourceiterable))**
+
+See [drop](#drop)
 
 ### dropWhile
 
@@ -700,6 +718,22 @@ When no arguments are passed to `slice` it is functionally equivalent to `wrap`.
 **asyncSlice({ start, end, step }, [source](#asyncsourceiterable))**
 
 See [slice](#slice)
+
+### take
+
+**take(n, [iterable](#sourceiterable))**
+
+Yields the first `n` values from `source`.
+
+```js
+take(2, ['a', 'b', 'c']); // Iterable['a', 'b']
+```
+
+### asyncTake
+
+**asyncTake(n, [iterable](#asyncsourceiterable))**
+
+See [take](#take)
 
 ### takeSorted
 
