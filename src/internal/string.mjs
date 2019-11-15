@@ -1,5 +1,5 @@
 import { variadicCurryWithValidation } from './curry';
-import { MethodIterable } from './iterable';
+import { ResultIterable } from './iterable';
 
 export function isString(s) {
   return typeof s === 'string';
@@ -19,11 +19,19 @@ export function isValidStringArgument(i) {
 }
 
 function makeFunctionConfig(fn, fnConfig = {}) {
-  const { validateArgs, variadic, reduces, optionalArgsAtEnd, minArgs, maxArgs } = fnConfig;
+  const {
+    validateArgs,
+    variadic,
+    reduces,
+    optionalArgsAtEnd,
+    minArgs,
+    maxArgs,
+    IterableClass = ResultIterable,
+  } = fnConfig;
 
   return {
     fn,
-    validateArgs: validateArgs || (_ => {}),
+    validateArgs: validateArgs || (() => {}),
     variadic: !!variadic,
     reduces: !!reduces,
     optionalArgsAtEnd: !!optionalArgsAtEnd,
@@ -32,7 +40,7 @@ function makeFunctionConfig(fn, fnConfig = {}) {
     isIterable: isValidStringArgument,
     iterableType: 'string',
     applyOnIterableArgs: ensureString,
-    IterableClass: MethodIterable,
+    IterableClass,
   };
 }
 

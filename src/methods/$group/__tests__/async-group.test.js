@@ -9,41 +9,17 @@
 /* eslint-disable no-unused-vars,import/no-duplicates,no-constant-condition */
 
 import { asyncGroup, asyncToArray } from '../../..';
+import { asyncUnwrapDeep as asyncUw } from '../../../__tests__/async-helpers';
 describe('asyncGroup', () => {
   it('main cursor', async () => {
     const iter = asyncGroup('AAABBAACCCCD');
-    let next = await iter.next();
-    expect(next.value[0]).toBe('A');
-    next = await iter.next();
-    expect(next.value[0]).toBe('B');
-    next = await iter.next();
-    expect(next.value[0]).toBe('A');
-    next = await iter.next();
-    expect(next.value[0]).toBe('C');
-    next = await iter.next();
-    expect(next.value[0]).toBe('D');
-    next = await iter.next();
-    expect(next.done).toBe(true);
-  });
-  it('secondary', async () => {
-    const iter = asyncGroup('AAABBAACCCCD');
-    let next = await iter.next();
-    expect(next.value[0]).toBe('A');
-    expect(await asyncToArray(next.value[1])).toEqual(['A', 'A', 'A']);
-    next = await iter.next();
-    expect(next.value[0]).toBe('B');
-    expect(await asyncToArray(next.value[1])).toEqual(['B', 'B']);
-    next = await iter.next();
-    expect(next.value[0]).toBe('A');
-    expect(await asyncToArray(next.value[1])).toEqual(['A', 'A']);
-    next = await iter.next();
-    expect(next.value[0]).toBe('C');
-    expect(await asyncToArray(next.value[1])).toEqual(['C', 'C', 'C', 'C']);
-    next = await iter.next();
-    expect(next.value[0]).toBe('D');
-    expect(await asyncToArray(next.value[1])).toEqual(['D']);
-    next = await iter.next();
-    expect(next.done).toBe(true);
+    expect(await asyncUw(iter)).toEqual([
+      ['A', ['A', 'A', 'A']],
+      ['B', ['B', 'B']],
+      ['A', ['A', 'A']],
+      ['C', ['C', 'C', 'C', 'C']],
+      ['D', ['D']],
+    ]);
   });
   it('secondary (consume partially)', async () => {
     const iter = asyncGroup('AAABBAACCCCD');
@@ -57,6 +33,30 @@ describe('asyncGroup', () => {
     expect(next.value[0]).toBe('B');
     next = await iter.next();
     expect(next.value[0]).toBe('A');
+  });
+  it('returns grouped keys', async () => {
+    const iter = asyncGroup('AAABBAACCCCD');
+    expect(await asyncUw(iter)).toEqual(['A', 'B', 'A', 'C', 'D']);
+  });
+  it('returns grouped values', async () => {
+    const iter = asyncGroup('AAABBAACCCCD');
+    expect(await asyncUw(iter)).toEqual([
+      ['A', 'A', 'A'],
+      ['B', 'B'],
+      ['A', 'A'],
+      ['C', 'C', 'C', 'C'],
+      ['D'],
+    ]);
+  });
+  it('returns grouped entries', async () => {
+    const iter = asyncGroup('AAABBAACCCCD');
+    expect(await asyncUw(iter)).toEqual([
+      ['A', ['A', 'A', 'A']],
+      ['B', ['B', 'B']],
+      ['A', ['A', 'A']],
+      ['C', ['C', 'C', 'C', 'C']],
+      ['D', ['D']],
+    ]);
   });
   it('grouping an empty iterable returns empty iterable', async () => {
     expect(await asyncToArray(asyncGroup(null))).toEqual([]);

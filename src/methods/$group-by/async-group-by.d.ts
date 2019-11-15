@@ -6,12 +6,13 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { AsyncSourceIterable, AsyncResultIterable } from '../../types/async-iterable';
+import { AsyncSourceIterable, AsyncResultSubseqIterable } from '../../types/async-iterable';
+import { AsyncEntryIterable } from '../../types/async-entry-iterable';
 declare function asyncGroupBy<K, T>(
   key: (item: T) => K | Promise<K>,
-): (source: AsyncSourceIterable<T>) => AsyncResultIterable<[K, AsyncResultIterable<T>]>;
+): (source: AsyncSourceIterable<T>) => AsyncEntryIterable<K, AsyncResultSubseqIterable<T>>;
 declare function asyncGroupBy<K, T>(
   key: (item: T) => K | Promise<K>,
   source: AsyncSourceIterable<T>,
-): AsyncResultIterable<[K, AsyncResultIterable<T>]>;
+): AsyncEntryIterable<K, AsyncResultSubseqIterable<T>>;
 export default asyncGroupBy;

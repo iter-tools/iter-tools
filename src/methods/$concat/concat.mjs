@@ -6,10 +6,10 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { wrapWithMethodIterable, ensureIterable } from '../../internal/iterable';
+import { wrapWithResultIterable, ensureIterable } from '../../internal/iterable';
 export function* concat(...sources) {
   for (const iterable of sources) {
     yield* ensureIterable(iterable);
   }
 }
-export default wrapWithMethodIterable(concat);
+export default wrapWithResultIterable(concat);

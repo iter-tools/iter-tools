@@ -1,7 +1,6 @@
-import { $MaybePromise } from '../../../generate/async.macro';
+import { $SourceIterable, $ResultSubseqIterable } from '../../types/$iterable';
+import { $EntryIterable } from '../../types/$entry-iterable';
 
-import { $SourceIterable, $ResultIterable } from '../../types/$iterable';
-
-declare function $group<T>(source: $SourceIterable<T>): $ResultIterable<[T, $ResultIterable<T>]>;
+declare function $group<T>(source: $SourceIterable<T>): $EntryIterable<T, $ResultSubseqIterable<T>>;
 
 export default $group;

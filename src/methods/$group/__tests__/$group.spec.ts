@@ -1,9 +1,10 @@
 import assert from 'static-type-assert';
-import { $Iterable, $ResultIterable } from '../../../types/$iterable';
+import { $Iterable, $ResultSubseqIterable } from '../../../types/$iterable';
+import { $EntryIterable } from '../../../types/$entry-iterable';
 import { $group } from '../../..';
 
 declare const Ø: never;
 
-assert<$ResultIterable<[string, $ResultIterable<string>]>>($group(Ø as string));
+assert<$EntryIterable<string, $ResultSubseqIterable<string>>>($group(Ø as string));
 
-assert<$ResultIterable<[number, $ResultIterable<number>]>>($group(Ø as $Iterable<number>));
+assert<$EntryIterable<number, $ResultSubseqIterable<number>>>($group(Ø as $Iterable<number>));

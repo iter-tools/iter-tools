@@ -1,6 +1,6 @@
 import {
-  BaseMethodIterable,
-  MethodIterable,
+  BaseResultIterable,
+  ResultIterable,
   ensureIterable,
   isValidIterableArgument,
 } from './iterable';
@@ -13,14 +13,7 @@ export function isAsyncIterable(i) {
 export const asyncIsIterable = isAsyncIterable;
 
 export async function* asyncify(iterable) {
-  if (isAsyncIterable(iterable)) {
-    yield* iterable;
-  } else {
-    // it should be enough "yield * iterable", but it is broken with es5 version
-    for (const item of iterable) {
-      yield Promise.resolve(item);
-    }
-  }
+  yield* iterable;
 }
 
 export function asyncEnsureIterable(i) {
@@ -35,57 +28,70 @@ export function isValidAsyncIterableArgument(i) {
   return isAsyncIterable(i) || isValidIterableArgument(i);
 }
 
-export function AsyncMethodIterable(...args) {
-  BaseMethodIterable.apply(this, args);
+export function AsyncResultIterable(...args) {
+  BaseResultIterable.apply(this, args);
 }
 
-AsyncMethodIterable.prototype = Object.assign(Object.create(BaseMethodIterable.prototype), {
-  constructor: AsyncMethodIterable,
+async function* keys(iterable) {
+  let i = 0;
+  for await (const _ of iterable) yield i++;
+}
+
+async function* entries(iterable) {
+  let i = 0;
+  for await (const value of iterable) yield [i++, value];
+}
+
+AsyncResultIterable.prototype = Object.assign(Object.create(BaseResultIterable.prototype), {
+  constructor: AsyncResultIterable,
   [Symbol.asyncIterator]() {
     return this.__iterate();
   },
-});
-
-function AsyncSimpleMethodIterable(...args) {
-  AsyncMethodIterable.apply(this, args);
-}
-
-AsyncSimpleMethodIterable.prototype = Object.assign(Object.create(AsyncMethodIterable.prototype), {
-  __iterate() {
-    return this._fn(...this._args);
+  keys() {
+    return new AsyncResultIterable(keys, [this]);
+  },
+  values() {
+    return this;
+  },
+  entries() {
+    return new AsyncResultIterable(entries, [this]);
   },
 });
 
 function makeFunctionConfig(fn, fnConfig = {}) {
   const {
-    validateArgs,
+    validateArgs = _ => {},
     variadic,
     reduces,
     optionalArgsAtEnd,
-    minArgs,
-    maxArgs,
+    minArgs = fn.length - 1,
+    maxArgs = fn.length - 1,
     forceSync,
+    IterableClass = forceSync ? ResultIterable : AsyncResultIterable,
   } = fnConfig;
 
   return {
     fn,
-    validateArgs: validateArgs || (_ => {}),
+    validateArgs,
     variadic: !!variadic,
     reduces: !!reduces,
     optionalArgsAtEnd: !!optionalArgsAtEnd,
-    minArgs: minArgs === undefined ? fn.length - 1 : minArgs,
-    maxArgs: maxArgs === undefined ? fn.length - 1 : maxArgs,
+    minArgs,
+    maxArgs,
     isIterable: isValidAsyncIterableArgument,
     iterableType: 'asyncIterable',
     applyOnIterableArgs: asyncEnsureIterable,
-    IterableClass: forceSync ? MethodIterable : AsyncMethodIterable,
+    IterableClass,
   };
 }
 
-export function asyncWrapWithMethodIterable(fn, { validateArgs = _ => _ } = {}) {
+export function asyncWrapWithResultIterable(
+  fn,
+  { validateArgs = _ => _, IterableClass = AsyncResultIterable } = {},
+) {
   return (...args) => {
     validateArgs(args);
-    return new AsyncSimpleMethodIterable(fn, args);
+    return new IterableClass(fn, args);
   };
 }
 

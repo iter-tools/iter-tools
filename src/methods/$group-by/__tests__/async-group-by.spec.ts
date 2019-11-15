@@ -7,12 +7,13 @@
  */
 
 import assert from 'static-type-assert';
-import { AsyncIterable, AsyncResultIterable } from '../../../types/async-iterable';
+import { AsyncIterable, AsyncResultSubseqIterable } from '../../../types/async-iterable';
+import { AsyncEntryIterable } from '../../../types/async-entry-iterable';
 import { asyncGroupBy } from '../../..';
 declare const Ø: never;
-assert<AsyncResultIterable<[string, AsyncResultIterable<number>]>>(
+assert<AsyncEntryIterable<string, AsyncResultSubseqIterable<number>>>(
   asyncGroupBy(Ø as (x: number) => Promise<string>)(Ø as AsyncIterable<number>),
 );
-assert<AsyncResultIterable<[string, AsyncResultIterable<number>]>>(
+assert<AsyncEntryIterable<string, AsyncResultSubseqIterable<number>>>(
   asyncGroupBy(Ø as (x: number) => Promise<string>, Ø as AsyncIterable<number>),
 );

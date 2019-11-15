@@ -1,4 +1,4 @@
-import { empty, wrapWithMethodIterable } from '../../internal/iterable';
+import { empty, wrapWithResultIterable } from '../../internal/iterable';
 
 export function* wrapKeys(keysable) {
   if (keysable == null) {
@@ -8,4 +8,4 @@ export function* wrapKeys(keysable) {
   }
 }
 
-export default wrapWithMethodIterable(wrapKeys);
+export default wrapWithResultIterable(wrapKeys);

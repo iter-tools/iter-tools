@@ -6,12 +6,13 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { SourceIterable, ResultIterable } from '../../types/iterable';
+import { SourceIterable, ResultSubseqIterable } from '../../types/iterable';
+import { EntryIterable } from '../../types/entry-iterable';
 declare function groupBy<K, T>(
   key: (item: T) => K,
-): (source: SourceIterable<T>) => ResultIterable<[K, ResultIterable<T>]>;
+): (source: SourceIterable<T>) => EntryIterable<K, ResultSubseqIterable<T>>;
 declare function groupBy<K, T>(
   key: (item: T) => K,
   source: SourceIterable<T>,
-): ResultIterable<[K, ResultIterable<T>]>;
+): EntryIterable<K, ResultSubseqIterable<T>>;
 export default groupBy;

@@ -35,6 +35,11 @@ An [Iterable](#iterable) which is also an iterator, which is to say that it has 
 
 The async version of a [result iterable](#resultiterable). Instead of working as an [Iterable](#iterable) and an iterator, it behaves like an [AsyncIterable](#asynciterable) and an async iterator. The same caveats apply regarding evaluating this kind of result iterable more than once.
 
+### SequenceIterable
+A [ResultIterable](#resultiterable) that also has `keys()` `values()` and `entries()` iterators.
+
+### AsyncSequenceIterable
+
 ### Comparator
 
 A comparator is used to determine sort order. Comparators in iter-tools exactly match the comparator API expected by `Array.prototype.sort`. Comparators are always sync functions, even when sorting async iterables.
@@ -927,12 +932,22 @@ See [group](#group)
 
 Yields `[key, group]` pairs, where `key` is a result of `getKey(value, idx)` and `group` is a subsequence of adjacent values from `source` which share the same `key` (as compared with `===`).
 
+Note that you can iterate over just the keys or just the values using the `keys()` and `values()` iterators (or [getKeys](#getkeys) and [getValues](#getvalues) methods).
+
 ```js
-groupBy(Math.abs, [1, 1, -1, -1, 4, -1]);
+const groups = groupBy(Math.abs, [1, 1, -1, -1, 4, -1]);
 // Iterable [
 //   [1, Iterable[1, 1, -1, -1]]
 //   [4, Iterable[4]]
 //   [1, Iterable[-1]]
+// ]
+groups.keys();
+// Iterable[1, 4, 1]
+groups.values();
+// Iterable[
+//   Iterable[1, 1, -1, -1]
+//   Iterable[4]
+//   Iterable[-1]
 // ]
 ```
 

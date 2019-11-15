@@ -7,19 +7,23 @@
  */
 
 import { SourceIterable as SyncSourceIterable } from '../../types/iterable';
-import { AsyncSourceIterable, AsyncResultIterable } from '../../types/async-iterable';
-declare function asyncSplitOnAny(
+import {
+  AsyncSourceIterable,
+  AsyncResultIterable,
+  AsyncResultSubseqIterable,
+} from '../../types/async-iterable';
+declare function splitOnAny(
   separatorValues: SyncSourceIterable<string>,
 ): (source: string) => AsyncResultIterable<string>;
-declare function asyncSplitOnAny(
-  separatorValues: SyncSourceIterable<any>,
-): <T>(source: AsyncSourceIterable<T>) => AsyncResultIterable<AsyncResultIterable<T>>;
-declare function asyncSplitOnAny(
+declare function splitOnAny(
   separatorValues: SyncSourceIterable<string>,
   source: string,
 ): AsyncResultIterable<string>;
+declare function asyncSplitOnAny(
+  separatorValues: SyncSourceIterable<any>,
+): <T>(source: AsyncSourceIterable<T>) => AsyncResultIterable<AsyncResultSubseqIterable<T>>;
 declare function asyncSplitOnAny<T>(
   separatorValues: SyncSourceIterable<any>,
   source: AsyncSourceIterable<T>,
-): AsyncResultIterable<AsyncResultIterable<T>>;
+): AsyncResultIterable<AsyncResultSubseqIterable<T>>;
 export default asyncSplitOnAny;

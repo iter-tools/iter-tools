@@ -1,5 +1,6 @@
 import { $, $async, $await, $iteratorSymbol } from '../../../generate/async.macro';
 import { $iterableCurry } from '../../internal/$iterable';
+import { $EntryIterable } from '../../internal/$entry-iterable';
 import { WeakExchange } from '../../internal/queues';
 
 let warnedNullGetKeyDeprecation = false;
@@ -109,4 +110,6 @@ export function* $groupBy(source, getKey) {
   }
 }
 
-export default $iterableCurry($groupBy);
+export default $iterableCurry($groupBy, {
+  IterableClass: $EntryIterable,
+});

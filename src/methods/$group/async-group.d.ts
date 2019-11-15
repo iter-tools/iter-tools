@@ -6,8 +6,9 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { AsyncSourceIterable, AsyncResultIterable } from '../../types/async-iterable';
+import { AsyncSourceIterable, AsyncResultSubseqIterable } from '../../types/async-iterable';
+import { AsyncEntryIterable } from '../../types/async-entry-iterable';
 declare function asyncGroup<T>(
   source: AsyncSourceIterable<T>,
-): AsyncResultIterable<[T, AsyncResultIterable<T>]>;
+): AsyncEntryIterable<T, AsyncResultSubseqIterable<T>>;
 export default asyncGroup;

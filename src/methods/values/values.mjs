@@ -1,4 +1,4 @@
-import { empty, wrapWithMethodIterable } from '../../internal/iterable';
+import { empty, wrapWithResultIterable } from '../../internal/iterable';
 
 const { hasOwnProperty } = Object.prototype;
 
@@ -16,4 +16,4 @@ export function* values(obj) {
   }
 }
 
-export default wrapWithMethodIterable(values);
+export default wrapWithResultIterable(values);

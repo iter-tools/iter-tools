@@ -7,41 +7,17 @@
  */
 
 import { group, toArray } from '../../..';
+import { unwrapDeep as uw } from '../../../__tests__/helpers';
 describe('group', () => {
   it('main cursor', () => {
     const iter = group('AAABBAACCCCD');
-    let next = iter.next();
-    expect(next.value[0]).toBe('A');
-    next = iter.next();
-    expect(next.value[0]).toBe('B');
-    next = iter.next();
-    expect(next.value[0]).toBe('A');
-    next = iter.next();
-    expect(next.value[0]).toBe('C');
-    next = iter.next();
-    expect(next.value[0]).toBe('D');
-    next = iter.next();
-    expect(next.done).toBe(true);
-  });
-  it('secondary', () => {
-    const iter = group('AAABBAACCCCD');
-    let next = iter.next();
-    expect(next.value[0]).toBe('A');
-    expect(toArray(next.value[1])).toEqual(['A', 'A', 'A']);
-    next = iter.next();
-    expect(next.value[0]).toBe('B');
-    expect(toArray(next.value[1])).toEqual(['B', 'B']);
-    next = iter.next();
-    expect(next.value[0]).toBe('A');
-    expect(toArray(next.value[1])).toEqual(['A', 'A']);
-    next = iter.next();
-    expect(next.value[0]).toBe('C');
-    expect(toArray(next.value[1])).toEqual(['C', 'C', 'C', 'C']);
-    next = iter.next();
-    expect(next.value[0]).toBe('D');
-    expect(toArray(next.value[1])).toEqual(['D']);
-    next = iter.next();
-    expect(next.done).toBe(true);
+    expect(uw(iter)).toEqual([
+      ['A', ['A', 'A', 'A']],
+      ['B', ['B', 'B']],
+      ['A', ['A', 'A']],
+      ['C', ['C', 'C', 'C', 'C']],
+      ['D', ['D']],
+    ]);
   });
   it('secondary (consume partially)', () => {
     const iter = group('AAABBAACCCCD');
@@ -55,6 +31,30 @@ describe('group', () => {
     expect(next.value[0]).toBe('B');
     next = iter.next();
     expect(next.value[0]).toBe('A');
+  });
+  it('returns grouped keys', () => {
+    const iter = group('AAABBAACCCCD');
+    expect(uw(iter)).toEqual(['A', 'B', 'A', 'C', 'D']);
+  });
+  it('returns grouped values', () => {
+    const iter = group('AAABBAACCCCD');
+    expect(uw(iter)).toEqual([
+      ['A', 'A', 'A'],
+      ['B', 'B'],
+      ['A', 'A'],
+      ['C', 'C', 'C', 'C'],
+      ['D'],
+    ]);
+  });
+  it('returns grouped entries', () => {
+    const iter = group('AAABBAACCCCD');
+    expect(uw(iter)).toEqual([
+      ['A', ['A', 'A', 'A']],
+      ['B', ['B', 'B']],
+      ['A', ['A', 'A']],
+      ['C', ['C', 'C', 'C', 'C']],
+      ['D', ['D']],
+    ]);
   });
   it('grouping an empty iterable returns empty iterable', () => {
     expect(toArray(group(null))).toEqual([]);

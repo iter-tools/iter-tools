@@ -7,6 +7,7 @@
  */
 
 import { asyncIterableCurry } from '../../internal/async-iterable';
+import { AsyncEntryIterable } from '../../internal/async-entry-iterable';
 import { WeakExchange } from '../../internal/queues';
 let warnedNullGetKeyDeprecation = false;
 
@@ -104,4 +105,6 @@ export async function* asyncGroupBy(source, getKey) {
     await returnIterator(state);
   }
 }
-export default asyncIterableCurry(asyncGroupBy);
+export default asyncIterableCurry(asyncGroupBy, {
+  IterableClass: AsyncEntryIterable,
+});

@@ -1,3 +1,5 @@
+const noUnusedConfig = { varsIgnorePattern: '^_', argsIgnorePattern: '^_' };
+
 module.exports = {
   extends: ['standard', 'plugin:prettier/recommended', 'typescript', 'plugin:jest/recommended'],
   plugins: ['jest'],
@@ -9,6 +11,7 @@ module.exports = {
   env: { es6: true },
   rules: {
     'import/no-duplicates': 'off',
+    'no-unused-vars': ['error', noUnusedConfig],
   },
   globals: {
     never: 'readonly',
@@ -19,7 +22,7 @@ module.exports = {
       parser: '@typescript-eslint/parser',
       rules: {
         '@typescript-eslint/no-explicit-any': 'off',
-        '@typescript-eslint/no-unused-vars': ['warn', { argsIgnorePattern: '^_' }],
+        '@typescript-eslint/no-unused-vars': ['error', noUnusedConfig],
       },
     },
     {

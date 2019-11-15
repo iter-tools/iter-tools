@@ -8,6 +8,16 @@ export interface ResultIterable<T> {
   next(value?: any): IteratorResult<T>;
   return(value?: any): IteratorResult<T>;
   throw(e?: any): IteratorResult<T>;
+  keys(): ResultIterable<number>;
+  values(): ResultIterable<T>;
+  entries(): ResultIterable<[number, T]>;
+  [Symbol.iterator](): this;
+}
+
+export interface ResultSubseqIterable<T> {
+  next(value?: any): IteratorResult<T>;
+  return(value?: any): IteratorResult<T>;
+  throw(e?: any): IteratorResult<T>;
   [Symbol.iterator](): this;
 }
 

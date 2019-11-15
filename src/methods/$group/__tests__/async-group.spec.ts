@@ -7,10 +7,11 @@
  */
 
 import assert from 'static-type-assert';
-import { AsyncIterable, AsyncResultIterable } from '../../../types/async-iterable';
+import { AsyncIterable, AsyncResultSubseqIterable } from '../../../types/async-iterable';
+import { AsyncEntryIterable } from '../../../types/async-entry-iterable';
 import { asyncGroup } from '../../..';
 declare const Ø: never;
-assert<AsyncResultIterable<[string, AsyncResultIterable<string>]>>(asyncGroup(Ø as string));
-assert<AsyncResultIterable<[number, AsyncResultIterable<number>]>>(
+assert<AsyncEntryIterable<string, AsyncResultSubseqIterable<string>>>(asyncGroup(Ø as string));
+assert<AsyncEntryIterable<number, AsyncResultSubseqIterable<number>>>(
   asyncGroup(Ø as AsyncIterable<number>),
 );

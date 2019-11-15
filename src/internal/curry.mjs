@@ -79,8 +79,9 @@ function variadicCurryWithValidationInner(config, args) {
       const iterablesArg = variadic ? args.slice(maxArgs) : args[maxArgs];
 
       args.splice(maxArgs);
+      args.unshift(iterablesArg);
 
-      return reduces ? fn(iterablesArg, ...args) : new IterableClass(fn, args, iterablesArg);
+      return reduces ? fn(...args) : new IterableClass(fn, args);
     } else {
       // We have not received any iterables, but we must be fully configured
     }

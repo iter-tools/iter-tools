@@ -6,6 +6,7 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { SourceIterable, ResultIterable } from '../../types/iterable';
-declare function group<T>(source: SourceIterable<T>): ResultIterable<[T, ResultIterable<T>]>;
+import { SourceIterable, ResultSubseqIterable } from '../../types/iterable';
+import { EntryIterable } from '../../types/entry-iterable';
+declare function group<T>(source: SourceIterable<T>): EntryIterable<T, ResultSubseqIterable<T>>;
 export default group;

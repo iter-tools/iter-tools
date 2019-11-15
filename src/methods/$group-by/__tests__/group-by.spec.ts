@@ -7,12 +7,13 @@
  */
 
 import assert from 'static-type-assert';
-import { Iterable, ResultIterable } from '../../../types/iterable';
+import { Iterable, ResultSubseqIterable } from '../../../types/iterable';
+import { EntryIterable } from '../../../types/entry-iterable';
 import { groupBy } from '../../..';
 declare const Ø: never;
-assert<ResultIterable<[string, ResultIterable<number>]>>(
+assert<EntryIterable<string, ResultSubseqIterable<number>>>(
   groupBy(Ø as (x: number) => string)(Ø as Iterable<number>),
 );
-assert<ResultIterable<[string, ResultIterable<number>]>>(
+assert<EntryIterable<string, ResultSubseqIterable<number>>>(
   groupBy(Ø as (x: number) => string, Ø as Iterable<number>),
 );

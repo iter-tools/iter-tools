@@ -1,4 +1,4 @@
-import { wrapWithMethodIterable } from '../../internal/iterable';
+import { wrapWithResultIterable } from '../../internal/iterable';
 
 export function* range(start, end, step = 1) {
   for (let i = start; step > 0 ? i < end : i > end; i += step) {
@@ -6,7 +6,7 @@ export function* range(start, end, step = 1) {
   }
 }
 
-export default wrapWithMethodIterable(range, {
+export default wrapWithResultIterable(range, {
   validateArgs(args) {
     let [optsOrEndOrStart, end = Infinity, step = 1] = args;
     let start = 0;

@@ -1,4 +1,4 @@
-import { wrapWithMethodIterable } from '../../internal/iterable';
+import { wrapWithResultIterable } from '../../internal/iterable';
 
 export function* repeat(n, item) {
   while (n--) {
@@ -6,7 +6,7 @@ export function* repeat(n, item) {
   }
 }
 
-export default wrapWithMethodIterable(repeat, {
+export default wrapWithResultIterable(repeat, {
   validateArgs(args) {
     if (args.length === 0) {
       throw new Error('Required `item` argument to `repeat` not specified');
