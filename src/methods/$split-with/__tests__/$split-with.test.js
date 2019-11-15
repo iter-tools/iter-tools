@@ -1,7 +1,7 @@
 import { $, $isSync, $async, $await } from '../../../../generate/async.macro';
 
 import { $unwrapDeep as $uw } from '../../../__tests__/$helpers';
-import { $splitWith, $toArray } from '../../..';
+import { $splitWith } from '../../..';
 
 describe($`splitWith`, () => {
   it(
@@ -18,15 +18,11 @@ describe($`splitWith`, () => {
   if ($isSync) {
     describe('given a string', () => {
       it('should split on every character which matches the accessor', () => {
-        expect($await($toArray($splitWith(i => i === 'Ø', '11Ø22Ø33')))).toEqual([
-          '11',
-          '22',
-          '33',
-        ]);
+        expect($await($uw($splitWith(i => i === 'Ø', '11Ø22Ø33')))).toEqual(['11', '22', '33']);
       });
 
       it('should split on a regex', () => {
-        expect($await($toArray($splitWith(/Ø/, '11Ø22Ø33')))).toEqual(['11', '22', '33']);
+        expect($await($uw($splitWith(/Ø/, '11Ø22Ø33')))).toEqual(['11', '22', '33']);
       });
     });
   }

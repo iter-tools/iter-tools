@@ -1,7 +1,7 @@
 import raceTo from '../race-to';
 import delay from '../../../../internal/delay';
 
-const isOdd = num => num % 2 === 1;
+const isOdd = x => x % 2 === 0;
 
 describe('raceTo', () => {
   it('yields the result from the first promise to resolve', async () => {
@@ -19,6 +19,6 @@ describe('raceTo', () => {
   it('fails if the first promise to resolve fails', async () => {
     const error = new Error('Success');
     expect.assertions(1);
-    await expect(raceTo(isOdd => true, null, [delay(40, 1), delay(20, error)])).rejects.toBe(error);
+    await expect(raceTo(() => true, null, [delay(40, 1), delay(20, error)])).rejects.toBe(error);
   });
 });

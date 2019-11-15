@@ -35,11 +35,6 @@ An [Iterable](#iterable) which is also an iterator, which is to say that it has 
 
 The async version of a [result iterable](#resultiterable). Instead of working as an [Iterable](#iterable) and an iterator, it behaves like an [AsyncIterable](#asynciterable) and an async iterator. The same caveats apply regarding evaluating this kind of result iterable more than once.
 
-### SequenceIterable
-A [ResultIterable](#resultiterable) that also has `keys()` `values()` and `entries()` iterators.
-
-### AsyncSequenceIterable
-
 ### Comparator
 
 A comparator is used to determine sort order. Comparators in iter-tools exactly match the comparator API expected by `Array.prototype.sort`. Comparators are always sync functions, even when sorting async iterables.

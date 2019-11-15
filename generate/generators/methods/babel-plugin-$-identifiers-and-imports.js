@@ -56,7 +56,7 @@ function forceRename(path, name, newName) {
 
 module.exports = function resolveDollarIdentifiersAndImports({ types: t }, { ASYNC }) {
   const visitor = {
-    'VariableDeclarator|ClassDeclaration|FunctionDeclaration'(path, state) {
+    'VariableDeclarator|ClassDeclaration|FunctionDeclaration'(path, _state) {
       const { name } = path.node.id;
 
       if (name && name.startsWith('$')) {
@@ -77,7 +77,7 @@ module.exports = function resolveDollarIdentifiersAndImports({ types: t }, { ASY
       }
     },
 
-    ImportDeclaration(path, state) {
+    ImportDeclaration(path, _state) {
       const { source, specifiers } = path.node;
       source.value = renameImport(source.value, ASYNC);
 
@@ -123,7 +123,7 @@ module.exports = function resolveDollarIdentifiersAndImports({ types: t }, { ASY
       path.node.specifiers = specifiers.filter(s => !removeSpecifiers.has(s));
     },
 
-    ExportNamedDeclaration(path, state) {
+    ExportNamedDeclaration(path, _state) {
       const { source, specifiers } = path.node;
       if (source) {
         source.value = renameImport(source.value, ASYNC);

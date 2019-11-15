@@ -28,7 +28,7 @@
     "build:es2018-cjs": "cross-env BABEL_ENV=cjs babel --config-file ./babel-es2018.config.js -x .mjs src -d dist/es2018",
     "build:copypackage": "cp LICENSE README.md dist && json -f package.json -f package.dist.json --merge > dist/package.json",
     "create:method": "node ./generate-yo method",
-    "verify": "run-s generate verify:* build coverage coverage:upload test:types",
+    "verify": "run-s generate lint verify:* build coverage coverage:upload test:types",
     "verify:git-clean": "node ./verify-git-clean.js",
     "format": "prettier --write '**/*.{mjs,js,ts,json,md}'",
     "lint": "eslint --ext .mjs,.js,.ts .",

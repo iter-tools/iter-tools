@@ -3,7 +3,7 @@
 const { relative, join, dirname } = require('path');
 const { path: rootDir } = require('package.root');
 
-module.exports = function importPackageRoot({ types: t }, { ASYNC }) {
+module.exports = function importPackageRoot() {
   const visitor = {
     ImportDeclaration(path, state) {
       if (relative(rootDir, join(dirname(state.filename), path.node.source.value)) === 'src') {

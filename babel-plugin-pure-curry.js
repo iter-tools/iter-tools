@@ -6,18 +6,18 @@ function relativePathTo(state, projectRelativePath) {
   return './' + relative(dirname(state.filename), join(state.cwd, projectRelativePath));
 }
 
-module.exports = function markFunctionCurryingPure({ types: t }) {
+module.exports = function markFunctionCurryingPure() {
   let pathToInternalIterable;
   let pathToInternalAsyncIterable;
   let pathToInternalCurry;
 
   const visitor = {
-    Program(path, state) {
+    Program(_path, state) {
       pathToInternalIterable = relativePathTo(state, 'src/internal/iterable');
       pathToInternalAsyncIterable = relativePathTo(state, 'src/internal/async-iterable');
       pathToInternalCurry = relativePathTo(state, 'src/internal/curry');
     },
-    ReferencedIdentifier(path, state) {
+    ReferencedIdentifier(path, _state) {
       if (
         path.referencesImport(pathToInternalIterable, 'iterableCurry') ||
         path.referencesImport(pathToInternalAsyncIterable, 'asyncIterableCurry') ||

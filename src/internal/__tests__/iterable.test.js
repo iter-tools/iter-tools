@@ -70,11 +70,11 @@ function addAll(initial, iterables) {
 }
 
 describe('iterableCurry', () => {
-  const f2 = (iterable, a, b) => iter(a, b);
+  const f2 = (_iterable, a, b) => iter(a, b);
 
-  const f1 = (iterable, a) => iter(a);
+  const f1 = (_iterable, a) => iter(a);
 
-  const f0 = iterable => iter();
+  const f0 = _iterable => iter();
 
   const c2 = iterableCurry(f2);
   const c1 = iterableCurry(f1);

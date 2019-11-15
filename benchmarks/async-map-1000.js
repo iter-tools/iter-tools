@@ -71,7 +71,7 @@ module.exports['stream map 1000 items'] = {
       .pipe(streamMap(power2))
       .pipe(streamReduce(concat, []));
 
-    stream.on('data', array => {
+    stream.on('data', _ => {
       deferred.resolve();
     });
   },
