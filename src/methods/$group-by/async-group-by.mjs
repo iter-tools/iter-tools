@@ -7,7 +7,7 @@
  */
 
 import { asyncIterableCurry } from '../../internal/async-iterable';
-import { WeakExchange } from '../../internal/queues';
+import { AsyncPartsIterator, AsyncSpliterator, split } from '../../internal/async-spliterator';
 let warnedNullGetKeyDeprecation = false;
 
 const warnNullGetKeyDeprecation = () => {
@@ -20,88 +20,89 @@ const warnNullGetKeyDeprecation = () => {
   }
 };
 
-async function fetch(state, getKey, expectedKey = {}) {
-  const { iterator, weakExchange } = state;
-  const { done, value } = await iterator.next();
-  state.done = done;
+class AsyncGroupingSpliterator extends AsyncSpliterator {
+  constructor(sourceIterator, getKey) {
+    super(sourceIterator);
+    this.getKey = getKey;
+    this.key = undefined;
+    this.item = null;
+    this.idx = 0;
+  }
 
-  if (!done) {
-    const key = await getKey(value, state.idx++);
-    state.item = {
-      value,
-      key,
-    };
+  static async nullOrInstance(sourceIterator, getKey) {
+    const inst = new AsyncGroupingSpliterator(sourceIterator, getKey);
+    return (await inst._isEmpty()) ? null : inst;
+  }
 
-    if (expectedKey !== key) {
-      state.consumer = weakExchange.spawnConsumer();
+  async _isEmpty() {
+    await this.buffer();
+    return this.item.done;
+  }
+
+  async buffer() {
+    const { key } = this;
+
+    if (this.item === null) {
+      this.item = await super.next();
+      const { done, value } = this.item;
+
+      if (!done) {
+        this.key = await this.getKey(value, this.idx++);
+      }
     }
 
-    weakExchange.push(state.item);
+    return this.key !== key;
+  }
+
+  async next() {
+    const newGroup = await this.buffer();
+
+    if (this.item.done) {
+      return {
+        value: undefined,
+        done: true,
+      };
+    } else {
+      const { value } = this.item;
+
+      if (!newGroup) {
+        this.item = null;
+      }
+
+      return {
+        value: newGroup ? split : value,
+        done: false,
+      };
+    }
   }
 }
 
-async function returnIterator(state) {
-  const { groupsConsumed, done, idx, nGroups, iterator } = state;
+class AsyncGroupPartsIterator extends AsyncPartsIterator {
+  async next() {
+    const item = await super.next();
 
-  if (groupsConsumed && !done && idx === nGroups) {
-    if (typeof iterator.return === 'function') await iterator.return();
-  }
-}
-
-async function fetchGroup(state, getKey, key) {
-  while (!state.done && state.item.key === key) await fetch(state, getKey, key);
-}
-
-async function* generateGroup(state, getKey, key, consumer) {
-  try {
-    yield 'ensure finally';
-
-    do {
-      if (consumer.peek().key !== key) break;
-      const cachedItem = consumer.shift();
-      if (consumer.isEmpty()) await fetch(state, getKey, key);
-      yield cachedItem.value;
-    } while (!(state.done && consumer.isEmpty()));
-  } finally {
-    await returnIterator(state);
+    if (!item.done) {
+      await this.spliterator.buffer();
+      return {
+        value: [this.spliterator.key, item.value],
+        done: false,
+      };
+    } else {
+      return item;
+    }
   }
 }
 
 export async function* asyncGroupBy(source, getKey) {
-  const state = {
-    iterator: null,
-    idx: 0,
-    weakExchange: new WeakExchange(),
-    consumer: null,
-    done: false,
-    item: null,
-    nGroups: 0,
-    groupsConsumed: false,
-  };
-
-  if (getKey == null) {
+  if (getKey === null) {
     warnNullGetKeyDeprecation();
   }
 
-  const _getKey = getKey == null ? k => k : getKey;
-
-  try {
-    state.iterator = source[Symbol.asyncIterator]();
-    state.consumer = state.weakExchange.spawnConsumer();
-    await fetch(state, _getKey);
-
-    while (!state.done) {
-      const { key } = state.item;
-      state.nGroups++;
-      const group = await generateGroup(state, _getKey, key, state.consumer);
-      await group.next(); // ensure finally
-
-      yield [key, group];
-      await fetchGroup(state, _getKey, key);
-    }
-  } finally {
-    state.groupsConsumed = true;
-    await returnIterator(state);
-  }
+  yield* new AsyncGroupPartsIterator(
+    await AsyncGroupingSpliterator.nullOrInstance(
+      source[Symbol.asyncIterator](),
+      getKey === null ? _ => _ : getKey,
+    ),
+  );
 }
 export default asyncIterableCurry(asyncGroupBy);

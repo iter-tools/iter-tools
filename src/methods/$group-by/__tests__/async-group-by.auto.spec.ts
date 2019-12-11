@@ -6,9 +6,10 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { asyncGroupBy, asyncToArray } from '../../..';
+import { asyncGroupBy } from '../../..';
+import { asyncUnwrapDeep as asyncUw } from '../../../__tests__/async-helpers';
 describe('asyncGroupBy', () => {
-  it('with key function', async () => {
+  it('returns source values grouped by key function', async () => {
     const iter = asyncGroupBy(item => item.toLowerCase(), 'AaaBbaACccCD');
     let next = await iter.next();
     expect(next.value[0]).toBe('a');
@@ -38,11 +39,31 @@ describe('asyncGroupBy', () => {
     next = await iter.next();
     expect(next.done).toBe(true);
   });
+  it('returns source values grouped by key function', async () => {
+    const iter = asyncGroupBy(item => item.toLowerCase(), 'AaaBbaACccCD');
+    expect(await asyncUw(iter)).toEqual([
+      ['a', ['A', 'a', 'a']],
+      ['b', ['B', 'b']],
+      ['a', ['a', 'A']],
+      ['c', ['C', 'c', 'c', 'C']],
+      ['d', ['D']],
+    ]);
+  });
+  it('returns source values grouped by identity', async () => {
+    const iter = asyncGroupBy(_ => _)('AAABBAACCCCD');
+    expect(await asyncUw(iter)).toEqual([
+      ['A', ['A', 'A', 'A']],
+      ['B', ['B', 'B']],
+      ['A', ['A', 'A']],
+      ['C', ['C', 'C', 'C', 'C']],
+      ['D', ['D']],
+    ]);
+  });
   it('empty source returns empty iterable', async () => {
-    expect(await asyncToArray(asyncGroupBy(_ => _, null))).toEqual([]);
-    expect(await asyncToArray(asyncGroupBy(_ => _)(null))).toEqual([]);
-    expect(await asyncToArray(asyncGroupBy(_ => _, undefined))).toEqual([]);
-    expect(await asyncToArray(asyncGroupBy(_ => _)(undefined))).toEqual([]);
+    expect(await asyncUw(asyncGroupBy(_ => _, null))).toEqual([]);
+    expect(await asyncUw(asyncGroupBy(_ => _)(null))).toEqual([]);
+    expect(await asyncUw(asyncGroupBy(_ => _, undefined))).toEqual([]);
+    expect(await asyncUw(asyncGroupBy(_ => _)(undefined))).toEqual([]);
   });
   it('uses key function returning a promise', async () => {
     const iter = asyncGroupBy(async item => item.toLowerCase(), 'AaaBbaACccCD');
@@ -58,5 +79,15 @@ describe('asyncGroupBy', () => {
     expect(next.value[0]).toBe('d');
     next = await iter.next();
     expect(next.done).toBe(true);
+  });
+  it('with key function', async () => {
+    const iter = asyncGroupBy(async item => item.toLowerCase(), 'AaaBbaACccCD');
+    expect(await asyncUw(iter)).toEqual([
+      ['a', ['A', 'a', 'a']],
+      ['b', ['B', 'b']],
+      ['a', ['a', 'A']],
+      ['c', ['C', 'c', 'c', 'C']],
+      ['d', ['D']],
+    ]);
   });
 });

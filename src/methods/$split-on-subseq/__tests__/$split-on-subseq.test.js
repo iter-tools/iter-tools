@@ -1,14 +1,23 @@
 import { $, $isSync, $async, $await } from '../../../../generate/async.macro';
 
-import { $splitOnSubseq, $map, $toArray } from '../../..';
+import { $splitOnSubseq, $toArray } from '../../..';
+import { $unwrapDeep as $uw } from '../../../__tests__/$helpers';
+import { $wrap } from '../../../__tests__/__framework__/$wrap';
 
 describe($`splitOnSubseq`, () => {
   it(
     'can split on subseqences',
     $async(() => {
-      expect(
-        $await($toArray($map(group => $toArray(group), $splitOnSubseq([2, 3], [1, 2, 3, 4])))),
-      ).toEqual([[1], [4]]);
+      expect($await($uw($splitOnSubseq([2, 3], $wrap([1, 2, 3, 4]))))).toEqual([[1], [4]]);
+    }),
+  );
+
+  it(
+    'can split on subseqences',
+    $async(() => {
+      expect($await($uw($splitOnSubseq([3, 4, undefined], $wrap([1, 2, 3, 4]))))).toEqual([
+        [1, 2, 3, 4],
+      ]);
     }),
   );
 

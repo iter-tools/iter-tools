@@ -1,5 +1,3 @@
-import { wrap } from '../$wrap/wrap';
-
 const orInifity = value => (value === -1 ? Infinity : value);
 
 function findNext(str, separatorStrings, start = 0) {
@@ -15,9 +13,7 @@ function findNext(str, separatorStrings, start = 0) {
   return index === Infinity ? null : { index, size };
 }
 
-export function* stringSplitOn_(str, { any }, separator) {
-  const separatorStrings = any ? [...wrap(separator)] : [separator];
-
+export function* stringSplitOnAny(str, separatorStrings) {
   if (str === '') return;
 
   let match = {

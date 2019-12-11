@@ -9,6 +9,7 @@
 /* eslint-disable no-unused-vars,import/no-duplicates,no-constant-condition */
 
 import { group, toArray } from '../../..';
+import { unwrapDeep as uw } from '../../../__tests__/helpers';
 describe('group', () => {
   it('main cursor', () => {
     const iter = group('AAABBAACCCCD');
@@ -62,13 +63,20 @@ describe('group', () => {
     expect(toArray(group(null))).toEqual([]);
     expect(toArray(group(undefined))).toEqual([]);
   });
-  it('groups using destructuring', () => {
-    const [group1, group2, group3] = group('AAABBCCCC');
+  it('errors if groups are consumed out of order', () => {
+    const iter = group('AB');
+    const group1 = iter.next().value;
+    const group2 = iter.next().value;
     expect(group1[0]).toBe('A');
-    expect(group2[0]).toBe('B');
-    expect(group3[0]).toBe('C');
-    expect(toArray(group1[1])).toEqual(['A', 'A', 'A']);
-    expect(toArray(group2[1])).toEqual(['B', 'B']);
-    expect(toArray(group3[1])).toEqual(['C', 'C', 'C', 'C']);
+    expect(uw(group2)).toEqual(['B', ['B']]);
+    let error;
+
+    try {
+      uw(group1[1]);
+    } catch (e) {
+      error = e;
+    }
+
+    expect(error).toMatchSnapshot();
   });
 });

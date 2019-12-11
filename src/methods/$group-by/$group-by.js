@@ -1,6 +1,7 @@
 import { $, $async, $await, $iteratorSymbol } from '../../../generate/async.macro';
+
 import { $iterableCurry } from '../../internal/$iterable';
-import { WeakExchange } from '../../internal/queues';
+import { $PartsIterator, $Spliterator, split } from '../../internal/$spliterator';
 
 let warnedNullGetKeyDeprecation = false;
 
@@ -14,99 +15,85 @@ const warnNullGetKeyDeprecation = () => {
   }
 };
 
-$async;
-function fetch(state, getKey, expectedKey = {}) {
-  const { iterator, weakExchange } = state;
-  const { done, value } = $await(iterator.next());
+class $GroupingSpliterator extends $Spliterator {
+  constructor(sourceIterator, getKey) {
+    super(sourceIterator);
+    this.getKey = getKey;
+    this.key = undefined;
+    this.item = null;
+    this.idx = 0;
+  }
 
-  state.done = done;
+  @$async
+  static nullOrInstance(sourceIterator, getKey) {
+    const inst = new $GroupingSpliterator(sourceIterator, getKey);
+    return $await(inst._isEmpty()) ? null : inst;
+  }
 
-  if (!done) {
-    const key = $await(getKey(value, state.idx++));
-    state.item = { value, key };
+  @$async
+  _isEmpty() {
+    $await(this.buffer());
+    return this.item.done;
+  }
 
-    if (expectedKey !== key) {
-      state.consumer = weakExchange.spawnConsumer();
+  @$async
+  buffer() {
+    const { key } = this;
+    if (this.item === null) {
+      this.item = $await(super.next());
+      const { done, value } = this.item;
+      if (!done) {
+        this.key = $await(this.getKey(value, this.idx++));
+      }
     }
-    weakExchange.push(state.item);
+    return this.key !== key;
+  }
+
+  @$async
+  next() {
+    const newGroup = $await(this.buffer());
+
+    if (this.item.done) {
+      return { value: undefined, done: true };
+    } else {
+      const { value } = this.item;
+
+      if (!newGroup) {
+        this.item = null;
+      }
+
+      return { value: newGroup ? split : value, done: false };
+    }
   }
 }
 
-$async;
-function returnIterator(state) {
-  const { groupsConsumed, done, idx, nGroups, iterator } = state;
-
-  if (groupsConsumed && !done && idx === nGroups) {
-    if (typeof iterator.return === 'function') $await(iterator.return());
-  }
-}
-
-$async;
-function fetchGroup(state, getKey, key) {
-  while (!state.done && state.item.key === key) $await(fetch(state, getKey, key));
-}
-
-$async;
-function* generateGroup(state, getKey, key, consumer) {
-  try {
-    yield 'ensure finally';
-
-    do {
-      if (consumer.peek().key !== key) break;
-
-      const cachedItem = consumer.shift();
-
-      if (consumer.isEmpty()) $await(fetch(state, getKey, key));
-
-      yield cachedItem.value;
-    } while (!(state.done && consumer.isEmpty()));
-  } finally {
-    $await(returnIterator(state));
+class $GroupPartsIterator extends $PartsIterator {
+  @$async
+  next() {
+    const item = $await(super.next());
+    if (!item.done) {
+      $await(this.spliterator.buffer());
+      return { value: [this.spliterator.key, item.value], done: false };
+    } else {
+      return item;
+    }
   }
 }
 
 $async;
 export function* $groupBy(source, getKey) {
-  const state = {
-    iterator: null,
-    idx: 0,
-    weakExchange: new WeakExchange(),
-    consumer: null,
-    done: false,
-    item: null,
-    nGroups: 0,
-    groupsConsumed: false,
-  };
-
-  if (getKey == null) {
+  if (getKey === null) {
     warnNullGetKeyDeprecation();
   }
 
-  const _getKey = getKey == null ? k => k : getKey;
-
-  try {
-    state.iterator = source[$iteratorSymbol]();
-    state.consumer = state.weakExchange.spawnConsumer();
-
-    $await(fetch(state, _getKey));
-
-    while (!state.done) {
-      const { key } = state.item;
-
-      state.nGroups++;
-
-      const group = $await(generateGroup(state, _getKey, key, state.consumer));
-
-      $await(group.next()); // ensure finally
-
-      yield [key, group];
-
-      $await(fetchGroup(state, _getKey, key));
-    }
-  } finally {
-    state.groupsConsumed = true;
-    $await(returnIterator(state));
-  }
+  yield* new $GroupPartsIterator(
+    $await(
+      $GroupingSpliterator.nullOrInstance(
+        source[$iteratorSymbol](),
+        getKey === null ? _ => _ : getKey,
+      ),
+    ),
+  );
 }
 
 export default $iterableCurry($groupBy);

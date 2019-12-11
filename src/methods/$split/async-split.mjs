@@ -8,8 +8,8 @@
 
 import { asyncMap } from '../$map/async-map';
 
-function* iterableOf(...items) {
-  yield* items;
+function* iterableOf(item) {
+  yield item;
 }
 
 export function asyncSplit(source) {

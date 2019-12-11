@@ -6,14 +6,17 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { asyncSplitOnSubseq, asyncMap, asyncToArray } from '../../..';
+import { asyncSplitOnSubseq, asyncToArray } from '../../..';
+import { asyncUnwrapDeep as asyncUw } from '../../../__tests__/async-helpers';
+import { asyncWrap } from '../../../__tests__/__framework__/async-wrap';
 describe('asyncSplitOnSubseq', () => {
   it('can split on subseqences', async () => {
-    expect(
-      await asyncToArray(
-        asyncMap(group => asyncToArray(group), asyncSplitOnSubseq([2, 3], [1, 2, 3, 4])),
-      ),
-    ).toEqual([[1], [4]]);
+    expect(await asyncUw(asyncSplitOnSubseq([2, 3], asyncWrap([1, 2, 3, 4])))).toEqual([[1], [4]]);
+  });
+  it('can split on subseqences', async () => {
+    expect(await asyncUw(asyncSplitOnSubseq([3, 4, undefined], asyncWrap([1, 2, 3, 4])))).toEqual([
+      [1, 2, 3, 4],
+    ]);
   });
   it('passes through the empty iterable', async () => {
     expect(await asyncToArray(asyncSplitOnSubseq([], null))).toEqual([]);

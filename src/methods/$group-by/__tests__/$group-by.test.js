@@ -1,10 +1,11 @@
 import { $, $isAsync, $async, $await } from '../../../../generate/async.macro';
 
-import { $groupBy, $toArray } from '../../..';
+import { $groupBy } from '../../..';
+import { $unwrapDeep as $uw } from '../../../__tests__/$helpers';
 
 describe($`groupBy`, () => {
   it(
-    'with key function',
+    'returns source values grouped by key function',
     $async(() => {
       const iter = $groupBy(item => item.toLowerCase(), 'AaaBbaACccCD');
       let next;
@@ -44,12 +45,40 @@ describe($`groupBy`, () => {
   );
 
   it(
+    'returns source values grouped by key function',
+    $async(() => {
+      const iter = $groupBy(item => item.toLowerCase(), 'AaaBbaACccCD');
+      expect($await($uw(iter))).toEqual([
+        ['a', ['A', 'a', 'a']],
+        ['b', ['B', 'b']],
+        ['a', ['a', 'A']],
+        ['c', ['C', 'c', 'c', 'C']],
+        ['d', ['D']],
+      ]);
+    }),
+  );
+
+  it(
+    'returns source values grouped by identity',
+    $async(() => {
+      const iter = $groupBy(_ => _)('AAABBAACCCCD');
+      expect($await($uw(iter))).toEqual([
+        ['A', ['A', 'A', 'A']],
+        ['B', ['B', 'B']],
+        ['A', ['A', 'A']],
+        ['C', ['C', 'C', 'C', 'C']],
+        ['D', ['D']],
+      ]);
+    }),
+  );
+
+  it(
     'empty source returns empty iterable',
     $async(() => {
-      expect($await($toArray($groupBy(_ => _, null)))).toEqual([]);
-      expect($await($toArray($groupBy(_ => _)(null)))).toEqual([]);
-      expect($await($toArray($groupBy(_ => _, undefined)))).toEqual([]);
-      expect($await($toArray($groupBy(_ => _)(undefined)))).toEqual([]);
+      expect($await($uw($groupBy(_ => _, null)))).toEqual([]);
+      expect($await($uw($groupBy(_ => _)(null)))).toEqual([]);
+      expect($await($uw($groupBy(_ => _, undefined)))).toEqual([]);
+      expect($await($uw($groupBy(_ => _)(undefined)))).toEqual([]);
     }),
   );
 
@@ -70,5 +99,19 @@ describe($`groupBy`, () => {
       next = await iter.next();
       expect(next.done).toBe(true);
     });
+
+    it(
+      'with key function',
+      $async(() => {
+        const iter = $groupBy(async item => item.toLowerCase(), 'AaaBbaACccCD');
+        expect($await($uw(iter))).toEqual([
+          ['a', ['A', 'a', 'a']],
+          ['b', ['B', 'b']],
+          ['a', ['a', 'A']],
+          ['c', ['C', 'c', 'c', 'C']],
+          ['d', ['D']],
+        ]);
+      }),
+    );
   }
 });

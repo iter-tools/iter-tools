@@ -7,7 +7,7 @@ function findNextIndex(str, predicate, start = 0) {
   return -1;
 }
 
-function* stringSplitWith(str, predicate) {
+export function* stringSplitWith(str, predicate) {
   if (predicate instanceof RegExp) {
     yield* str.split(predicate);
     return;
@@ -21,5 +21,3 @@ function* stringSplitWith(str, predicate) {
   }
   yield str.slice(matchIndex + 1);
 }
-
-export default stringSplitWith;
