@@ -10,10 +10,6 @@ export class Queue {
     this.head = this.tail = new QueueItem(null);
   }
 
-  peek() {
-    return this.head.next.data;
-  }
-
   shift() {
     if (this.isEmpty()) throw new Error('Cannot shift empty queue');
     const { data } = this.head.next;
@@ -37,10 +33,6 @@ class Consumer {
     this.head = head;
   }
 
-  peek() {
-    return this.head.next.data;
-  }
-
   shift() {
     if (this.isEmpty()) throw new Error('Cannot shift empty queue');
     const { data } = this.head.next;
@@ -56,7 +48,7 @@ class Consumer {
 /**
  * Exchanges are a specialized kind of singly linked queues. Conceptually they represent a single queue, but
  * they employ many consumers (heads) each of which consume the queue data at their own pace. A reference
- * to the original head is kept up until `noMoreConsumers` is called, at which point the earlier items can
+ * to the original head is kept up until `discardRoot` is called, at which point the earlier items can
  * be garbage collected.
  *
  * 0  ->  1  ->  2  ->  3  ->  4  ->  5  ->  6  ->  7  ->  8  ->  9
@@ -81,24 +73,5 @@ export class Exchange extends Queue {
   discardRoot() {
     // Allow the GC to collect items
     this.head = null;
-  }
-}
-
-/**
- * A WeakExchange is like an exchange but it never has a root, and spawned consumers will not have access
- * to items pushed to the exchange prior to the consumers' spawning.
- */
-export class WeakExchange extends Queue {
-  constructor() {
-    super();
-    this.head = null;
-  }
-
-  shift() {
-    throw new Error('Unsupported');
-  }
-
-  spawnConsumer() {
-    return new Consumer(this.tail);
   }
 }

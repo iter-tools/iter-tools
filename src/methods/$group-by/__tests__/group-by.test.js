@@ -8,9 +8,10 @@
 
 /* eslint-disable no-unused-vars,import/no-duplicates,no-constant-condition */
 
-import { groupBy, toArray } from '../../..';
+import { groupBy } from '../../..';
+import { unwrapDeep as uw } from '../../../__tests__/helpers';
 describe('groupBy', () => {
-  it('with key function', () => {
+  it('returns source values grouped by key function', () => {
     const iter = groupBy(item => item.toLowerCase(), 'AaaBbaACccCD');
     let next = iter.next();
     expect(next.value[0]).toBe('a');
@@ -40,10 +41,30 @@ describe('groupBy', () => {
     next = iter.next();
     expect(next.done).toBe(true);
   });
+  it('returns source values grouped by key function', () => {
+    const iter = groupBy(item => item.toLowerCase(), 'AaaBbaACccCD');
+    expect(uw(iter)).toEqual([
+      ['a', ['A', 'a', 'a']],
+      ['b', ['B', 'b']],
+      ['a', ['a', 'A']],
+      ['c', ['C', 'c', 'c', 'C']],
+      ['d', ['D']],
+    ]);
+  });
+  it('returns source values grouped by identity', () => {
+    const iter = groupBy(_ => _)('AAABBAACCCCD');
+    expect(uw(iter)).toEqual([
+      ['A', ['A', 'A', 'A']],
+      ['B', ['B', 'B']],
+      ['A', ['A', 'A']],
+      ['C', ['C', 'C', 'C', 'C']],
+      ['D', ['D']],
+    ]);
+  });
   it('empty source returns empty iterable', () => {
-    expect(toArray(groupBy(_ => _, null))).toEqual([]);
-    expect(toArray(groupBy(_ => _)(null))).toEqual([]);
-    expect(toArray(groupBy(_ => _, undefined))).toEqual([]);
-    expect(toArray(groupBy(_ => _)(undefined))).toEqual([]);
+    expect(uw(groupBy(_ => _, null))).toEqual([]);
+    expect(uw(groupBy(_ => _)(null))).toEqual([]);
+    expect(uw(groupBy(_ => _, undefined))).toEqual([]);
+    expect(uw(groupBy(_ => _)(undefined))).toEqual([]);
   });
 });

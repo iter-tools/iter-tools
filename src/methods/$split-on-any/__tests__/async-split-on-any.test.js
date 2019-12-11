@@ -8,27 +8,22 @@
 
 /* eslint-disable no-unused-vars,import/no-duplicates,no-constant-condition */
 
-import { asyncSplitOnAny, asyncMap, asyncToArray } from '../../..';
+import { asyncSplitOnAny } from '../../..';
+import { asyncUnwrapDeep as asyncUw } from '../../../__tests__/async-helpers';
+import { asyncWrap } from '../../../__tests__/__framework__/async-wrap';
 describe('asyncSplitOnAny', () => {
   it('should split on an occurance of any value', async () => {
     expect(
-      await asyncToArray(
-        asyncMap(
-          group => asyncToArray(group),
-          asyncSplitOnAny([null, undefined], [1, null, undefined, 3]),
-        ),
-      ),
+      await asyncUw(asyncSplitOnAny([null, undefined], asyncWrap([1, null, undefined, 3]))),
     ).toEqual([[1], [], [3]]);
   });
   it('does not split when passed no values', async () => {
-    expect(
-      await asyncToArray(asyncMap(group => asyncToArray(group), asyncSplitOnAny(null, [1, 2, 3]))),
-    ).toEqual([[1, 2, 3]]);
+    expect(await asyncUw(asyncSplitOnAny(null, asyncWrap([1, 2, 3])))).toEqual([[1, 2, 3]]);
   });
   it('passes through the empty iterable', async () => {
-    expect(await asyncToArray(asyncSplitOnAny([], null))).toEqual([]);
+    expect(await asyncUw(asyncSplitOnAny([], null))).toEqual([]);
   });
   it('the empty string is an empty iterable', async () => {
-    expect(await asyncToArray(asyncSplitOnAny([], ''))).toEqual([]);
+    expect(await asyncUw(asyncSplitOnAny([], ''))).toEqual([]);
   });
 });

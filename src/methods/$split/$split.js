@@ -1,7 +1,7 @@
 import { $map } from '../$map/$map';
 
-function* iterableOf(...items) {
-  yield* items;
+function* iterableOf(item) {
+  yield item;
 }
 
 export function $split(source) {

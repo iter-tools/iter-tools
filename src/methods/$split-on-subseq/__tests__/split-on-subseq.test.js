@@ -8,13 +8,15 @@
 
 /* eslint-disable no-unused-vars,import/no-duplicates,no-constant-condition */
 
-import { splitOnSubseq, map, toArray } from '../../..';
+import { splitOnSubseq, toArray } from '../../..';
+import { unwrapDeep as uw } from '../../../__tests__/helpers';
+import { wrap } from '../../../__tests__/__framework__/wrap';
 describe('splitOnSubseq', () => {
   it('can split on subseqences', () => {
-    expect(toArray(map(group => toArray(group), splitOnSubseq([2, 3], [1, 2, 3, 4])))).toEqual([
-      [1],
-      [4],
-    ]);
+    expect(uw(splitOnSubseq([2, 3], wrap([1, 2, 3, 4])))).toEqual([[1], [4]]);
+  });
+  it('can split on subseqences', () => {
+    expect(uw(splitOnSubseq([3, 4, undefined], wrap([1, 2, 3, 4])))).toEqual([[1, 2, 3, 4]]);
   });
   it('passes through the empty iterable', () => {
     expect(toArray(splitOnSubseq([], null))).toEqual([]);

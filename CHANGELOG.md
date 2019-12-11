@@ -101,6 +101,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
  -  `permutations`, `combinations`, `combinationsWithReplacement`: order of arguments is changed. Can now be curried.
  -  `permutations`, `combinations`, `combinationsWithReplacement`, and `product`: `getSize()` is now just `size`.
  -  `groupBy()` and `asyncGroupBy(null)` now return a partial application instead of an iterable.
+ -  `groupBy` now throws an error if the groups are accessed out of order.
  -  For most Typescript generic method types, the order of the generics has changed. (Note: this only matters if you are explicitly providing values for the generics.)
 
  ### Fixed

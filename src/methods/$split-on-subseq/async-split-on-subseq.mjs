@@ -7,12 +7,8 @@
  */
 
 import { asyncIterableCurry } from '../../internal/async-iterable';
-import { asyncSplitOn_ } from '../$split-on_/async-split-on_';
-const config = {
-  any: false,
-  subseq: true,
-};
+import { asyncSplitOnAnySubseq } from '../$split-on-any-subseq/async-split-on-any-subseq';
 export function asyncSplitOnSubseq(source, separatorSubseq) {
-  return asyncSplitOn_(source, config, separatorSubseq);
+  return asyncSplitOnAnySubseq(source, [separatorSubseq]);
 }
 export default asyncIterableCurry(asyncSplitOnSubseq);

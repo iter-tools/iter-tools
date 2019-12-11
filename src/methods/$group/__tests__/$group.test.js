@@ -1,6 +1,7 @@
-import { $, $isSync, $async, $await } from '../../../../generate/async.macro';
+import { $, $async, $await } from '../../../../generate/async.macro';
 
 import { $group, $toArray } from '../../..';
+import { $unwrapDeep as $uw } from '../../../__tests__/$helpers';
 
 describe($`group`, () => {
   it(
@@ -74,15 +75,23 @@ describe($`group`, () => {
     }),
   );
 
-  if ($isSync) {
-    it('groups using destructuring', () => {
-      const [group1, group2, group3] = $group('AAABBCCCC');
+  it(
+    'errors if groups are consumed out of order',
+    $async(() => {
+      const iter = $group('AB');
+      const group1 = $await(iter.next()).value;
+      const group2 = $await(iter.next()).value;
+
       expect(group1[0]).toBe('A');
-      expect(group2[0]).toBe('B');
-      expect(group3[0]).toBe('C');
-      expect($toArray(group1[1])).toEqual(['A', 'A', 'A']);
-      expect($toArray(group2[1])).toEqual(['B', 'B']);
-      expect($toArray(group3[1])).toEqual(['C', 'C', 'C', 'C']);
-    });
-  }
+      expect($await($uw(group2))).toEqual(['B', ['B']]);
+
+      let error;
+      try {
+        $uw(group1[1]);
+      } catch (e) {
+        error = e;
+      }
+      expect(error).toMatchSnapshot();
+    }),
+  );
 });

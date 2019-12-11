@@ -24,7 +24,23 @@ An [Iterable](#iterable) which is also an iterator, which is to say that it has 
 
 ### AsyncResultIterable
 
-The async version of a [result iterable](#resultiterable). Instead of working as an [Iterable](#iterable) and an iterator, it behaves like an [AsyncIterable](#asynciterable) and an async iterator. The same caveats apply regarding evaluating this kind of result iterable more than once.
+The async version of a [ResultIterable](#resultiterable). Instead of working as an [Iterable](#iterable) and an iterator, it behaves like an [AsyncIterable](#asynciterable) and an async iterator. The same caveats apply regarding evaluating this kind of result iterable more than once.
+
+### PartsIterable
+
+A [ResultIterable](#resultiterable) of [PartIterables](#partiterable) which represents the result of some method-specic algorithm for choosing split points in a `source`. Parts are non-overlapping, and the ordering of values is maintained from `source`. While a parts iterable yields multiple part iterables, only one part -- the most recently taken -- can be active at a time. Trying to take values from a part which is not active will trigger an error. Working around this limitation is simple when needed, you just need to store the parts as they are generated. This can be done with `map(toArray, partsIterable)`.
+
+### PartIterable
+
+An [Iterable](#iterable) iterator yielded from a [PartsIterable](#partsiterable). A `PartIterable` is stateful, meaning that you can only consume it once (and only before the next part becomes active).
+
+### AsyncPartsIterable
+
+The async version of a [PartsIterable](#partsiterable), which is to say an [AsyncResultIterable](#asyncresultiterable) of [AsyncPartIterables](#asyncpartiterable). As with `PartsIterabe`, only one part is active at a time.
+
+### AsyncPartIterable
+
+An [AsyncIterable](#asynciterable) iterator yielded from an [AsyncPartsIterable](#asyncpartsiterable). An `AsyncPartIterable` is stateful, meaning that you can only consume it once (and only before the next part becomes active).
 
 ### Comparator
 

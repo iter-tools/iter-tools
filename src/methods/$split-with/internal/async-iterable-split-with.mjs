@@ -6,86 +6,50 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { WeakExchange } from '../../../internal/queues';
+import { AsyncPartsIterator, AsyncSpliterator, split } from '../../../internal/async-spliterator';
 
-function startNextSubsequence(state) {
-  state.subsequenceEnded = false;
-}
-
-async function fetch(state, predicate) {
-  const { iterator, weakExchange } = state;
-
-  if (state.subsequenceEnded) {
-    return false;
+class AsyncPredicateSpliterator extends AsyncSpliterator {
+  constructor(sourceIterator, predicate) {
+    super(sourceIterator);
+    this.predicate = predicate;
+    this.item = null;
+    this.idx = 0;
   }
 
-  const { done, value } = await iterator.next();
-  state.done = done;
-  state.subsequenceEnded = done;
+  static async nullOrInstance(sourceIterator, predicate) {
+    const inst = new AsyncPredicateSpliterator(sourceIterator, predicate);
+    return (await inst._isEmpty()) ? null : inst;
+  }
 
-  if (!done) {
-    state.subsequenceEnded = await predicate(value, state.idx++);
+  async _isEmpty() {
+    this.item = await super.next();
+    return this.item.done;
+  }
 
-    if (state.subsequenceEnded) {
-      state.consumer = weakExchange.spawnConsumer();
+  async next() {
+    if (this.item === null) {
+      this.item = await super.next();
+    }
+
+    if (this.item.done) {
+      return {
+        value: undefined,
+        done: true,
+      };
     } else {
-      weakExchange.push(value);
+      const { value } = this.item;
+      const shouldSplit = this.predicate(value, this.idx++);
+      this.item = null;
+      return {
+        value: shouldSplit ? split : value,
+        done: false,
+      };
     }
   }
-
-  return !state.subsequenceEnded;
 }
 
-async function returnIterator(state) {
-  const { groupsConsumed, done, idx, nGroups, iterator } = state;
-
-  if (groupsConsumed && !done && idx === nGroups) {
-    if (typeof iterator.return === 'function') await iterator.return();
-  }
+export async function* asyncIterableSplitWith(source, predicate) {
+  yield* new AsyncPartsIterator(
+    await AsyncPredicateSpliterator.nullOrInstance(source[Symbol.asyncIterator](), predicate),
+  );
 }
-
-async function fetchSubsequence(state, predicate) {
-  while (await fetch(state, predicate));
-}
-
-async function* generateSubsequence(state, predicate, consumer) {
-  try {
-    yield 'ensure finally';
-
-    while (await fetch(state, predicate)) yield consumer.shift();
-  } finally {
-    returnIterator(state);
-  }
-}
-
-async function* asyncIterableSplitWith(source, predicate) {
-  const state = {
-    iterator: null,
-    idx: 0,
-    weakExchange: new WeakExchange(),
-    consumer: null,
-    nGroups: 0,
-    groupsConsumed: false,
-    subsequenceEnded: false,
-  };
-
-  try {
-    state.iterator = source[Symbol.asyncIterator]();
-    state.consumer = state.weakExchange.spawnConsumer();
-
-    while (!state.done) {
-      state.nGroups++;
-      const subsequence = generateSubsequence(state, predicate, state.consumer);
-      await subsequence.next(); // ensure finally
-
-      yield subsequence;
-      await fetchSubsequence(state, predicate);
-      startNextSubsequence(state);
-    }
-  } finally {
-    state.groupsConsumed = true;
-    await returnIterator(state);
-  }
-}
-
-export default asyncIterableSplitWith;

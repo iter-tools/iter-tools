@@ -7,7 +7,7 @@
  */
 
 import { iterableCurry } from '../../internal/iterable';
-import { WeakExchange } from '../../internal/queues';
+import { PartsIterator, Spliterator, split } from '../../internal/spliterator';
 let warnedNullGetKeyDeprecation = false;
 
 const warnNullGetKeyDeprecation = () => {
@@ -20,88 +20,89 @@ const warnNullGetKeyDeprecation = () => {
   }
 };
 
-function fetch(state, getKey, expectedKey = {}) {
-  const { iterator, weakExchange } = state;
-  const { done, value } = iterator.next();
-  state.done = done;
+class GroupingSpliterator extends Spliterator {
+  constructor(sourceIterator, getKey) {
+    super(sourceIterator);
+    this.getKey = getKey;
+    this.key = undefined;
+    this.item = null;
+    this.idx = 0;
+  }
 
-  if (!done) {
-    const key = getKey(value, state.idx++);
-    state.item = {
-      value,
-      key,
-    };
+  static nullOrInstance(sourceIterator, getKey) {
+    const inst = new GroupingSpliterator(sourceIterator, getKey);
+    return inst._isEmpty() ? null : inst;
+  }
 
-    if (expectedKey !== key) {
-      state.consumer = weakExchange.spawnConsumer();
+  _isEmpty() {
+    this.buffer();
+    return this.item.done;
+  }
+
+  buffer() {
+    const { key } = this;
+
+    if (this.item === null) {
+      this.item = super.next();
+      const { done, value } = this.item;
+
+      if (!done) {
+        this.key = this.getKey(value, this.idx++);
+      }
     }
 
-    weakExchange.push(state.item);
+    return this.key !== key;
+  }
+
+  next() {
+    const newGroup = this.buffer();
+
+    if (this.item.done) {
+      return {
+        value: undefined,
+        done: true,
+      };
+    } else {
+      const { value } = this.item;
+
+      if (!newGroup) {
+        this.item = null;
+      }
+
+      return {
+        value: newGroup ? split : value,
+        done: false,
+      };
+    }
   }
 }
 
-function returnIterator(state) {
-  const { groupsConsumed, done, idx, nGroups, iterator } = state;
+class GroupPartsIterator extends PartsIterator {
+  next() {
+    const item = super.next();
 
-  if (groupsConsumed && !done && idx === nGroups) {
-    if (typeof iterator.return === 'function') iterator.return();
-  }
-}
-
-function fetchGroup(state, getKey, key) {
-  while (!state.done && state.item.key === key) fetch(state, getKey, key);
-}
-
-function* generateGroup(state, getKey, key, consumer) {
-  try {
-    yield 'ensure finally';
-
-    do {
-      if (consumer.peek().key !== key) break;
-      const cachedItem = consumer.shift();
-      if (consumer.isEmpty()) fetch(state, getKey, key);
-      yield cachedItem.value;
-    } while (!(state.done && consumer.isEmpty()));
-  } finally {
-    returnIterator(state);
+    if (!item.done) {
+      this.spliterator.buffer();
+      return {
+        value: [this.spliterator.key, item.value],
+        done: false,
+      };
+    } else {
+      return item;
+    }
   }
 }
 
 export function* groupBy(source, getKey) {
-  const state = {
-    iterator: null,
-    idx: 0,
-    weakExchange: new WeakExchange(),
-    consumer: null,
-    done: false,
-    item: null,
-    nGroups: 0,
-    groupsConsumed: false,
-  };
-
-  if (getKey == null) {
+  if (getKey === null) {
     warnNullGetKeyDeprecation();
   }
 
-  const _getKey = getKey == null ? k => k : getKey;
-
-  try {
-    state.iterator = source[Symbol.iterator]();
-    state.consumer = state.weakExchange.spawnConsumer();
-    fetch(state, _getKey);
-
-    while (!state.done) {
-      const { key } = state.item;
-      state.nGroups++;
-      const group = generateGroup(state, _getKey, key, state.consumer);
-      group.next(); // ensure finally
-
-      yield [key, group];
-      fetchGroup(state, _getKey, key);
-    }
-  } finally {
-    state.groupsConsumed = true;
-    returnIterator(state);
-  }
+  yield* new GroupPartsIterator(
+    GroupingSpliterator.nullOrInstance(
+      source[Symbol.iterator](),
+      getKey === null ? _ => _ : getKey,
+    ),
+  );
 }
 export default iterableCurry(groupBy);

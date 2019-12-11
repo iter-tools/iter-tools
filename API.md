@@ -33,7 +33,23 @@ An [Iterable](#iterable) which is also an iterator, which is to say that it has 
 
 ### AsyncResultIterable
 
-The async version of a [result iterable](#resultiterable). Instead of working as an [Iterable](#iterable) and an iterator, it behaves like an [AsyncIterable](#asynciterable) and an async iterator. The same caveats apply regarding evaluating this kind of result iterable more than once.
+The async version of a [ResultIterable](#resultiterable). Instead of working as an [Iterable](#iterable) and an iterator, it behaves like an [AsyncIterable](#asynciterable) and an async iterator. The same caveats apply regarding evaluating this kind of result iterable more than once.
+
+### PartsIterable
+
+A [ResultIterable](#resultiterable) of [PartIterables](#partiterable) which represents the result of some method-specic algorithm for choosing split points in a `source`. Parts are non-overlapping, and the ordering of values is maintained from `source`. While a parts iterable yields multiple part iterables, only one part -- the most recently taken -- can be active at a time. Trying to take values from a part which is not active will trigger an error. Working around this limitation is simple when needed, you just need to store the parts as they are generated. This can be done with `map(toArray, partsIterable)`.
+
+### PartIterable
+
+An [Iterable](#iterable) iterator yielded from a [PartsIterable](#partsiterable). A `PartIterable` is stateful, meaning that you can only consume it once (and only before the next part becomes active).
+
+### AsyncPartsIterable
+
+The async version of a [PartsIterable](#partsiterable), which is to say an [AsyncResultIterable](#asyncresultiterable) of [AsyncPartIterables](#asyncpartiterable). As with `PartsIterabe`, only one part is active at a time.
+
+### AsyncPartIterable
+
+An [AsyncIterable](#asynciterable) iterator yielded from an [AsyncPartsIterable](#asyncpartsiterable). An `AsyncPartIterable` is stateful, meaning that you can only consume it once (and only before the next part becomes active).
 
 ### Comparator
 
@@ -925,7 +941,7 @@ See [group](#group)
 
 **groupBy(getKey, [source](#sourceiterable))**
 
-Yields `[key, group]` pairs, where `key` is a result of `getKey(value, idx)` and `group` is a subsequence of adjacent values from `source` which share the same `key` (as compared with `===`).
+Yields a [PartsIterable](#partsiterable) of [`key`, `group`] pairs from `source`, where `group` is a subsequence of `values` from `source` for which every `value` has the same `key` as returned by `getKey(value, idx)` (as compared with `===`).
 
 ```js
 groupBy(Math.abs, [1, 1, -1, -1, 4, -1]);
@@ -962,28 +978,51 @@ See [split](#split)
 
 **splitAt(idx, [source](#sourceiterable))**
 
-Yields two `part` subsequences of `source`. The first `part` yields the values occurring before index `idx` in `source`, the second `part` yields all the values at or after index `idx`.
+Yields two `part` subsequences of `source`. The first `part` yields the values occurring before index `idx` in `source`, the second `part` yields all the values at or after index `idx`. `idx` can also be negative, in which case it refers to an offset from the end of `source`.
+
+`splitAt` is specially designed to work with destructuring, which makes it unique among the split family (its result is **not** a [PartsIterable](#partsiterable)). However this comes with a condition: you must not destructure only the first part of the split, as in `const [firstThree] = splitAt(3, iterable)`. Instead you would write `const firstThree = take(3, iterable)`.
 
 ```js
 const [
   firstThree, // Iterable[0, 1, 2]
   others, // Iterable[3, 4, 5, 6, 7, 8, 9]
-] = splitAt(3, range(100));
-```
+] = splitAt(3, range(10));
 
-If you consume the sequences in order the method works in place, however if you consume the second subsequence before the first then the values from the first subsequence must be buffered.
+if (!othersNeeded) {
+  // If there is a condition in which you do not need the second half of the split
+  // you must call return manually or any underlying resouces would not be released
+  others.return();
+}
+
+const [, lastThree] = splitAt(-3, range(10));
+lastThree; // Iterable[7, 8, 9]
+```
 
 ### asyncSplitAt
 
 **asyncSplitAt(idx, [source](#asyncsourceiterable))**
 
-See [splitAt](#splitat)
+Synchronously yields two async `part` subsequences of `source`. The first `part` yields the values occurring before index `idx` in `source`, the second `part` yields all the values at or after index `idx`. `idx` can also be negative, in which case it refers to an offset from the end of `source`.
+
+Like its sync counterpart, `asyncSplitAt` is also intended for use with destructuring assignment, and does not allow you to destructure only the first part.
+
+```js
+const [
+  firstThree, // AsyncIterable[0, 1, 2]
+  others, // AsyncIterable[3, 4, 5, 6, 7, 8, 9]
+] = asyncSplitAt(3, asyncWrap(range(100)));
+
+if (!othersNeeded) await others.return();
+
+const [, lastThree] = asyncSplitAt(-3, range(10));
+lastThree; // AsyncIterable[7, 8, 9]
+```
 
 ### splitOn
 
-**splitOn(separatorValue, [source](#sourceiterable))**
+**splitOn(separator, [source](#sourceiterable))**
 
-Yields `part` subsequences of `source`, generating a new `part` each time it encounters `separatorValue` (as compared with `===`).
+Yields a [PartsIterable](#partsiterable) of parts from `source`, where `separatorValue` is used to mark the boundary between parts in `source`. `separatorValue` will not occur in the output. `separatorValue` is compared using `===`.
 
 ```js
 splitOn(null, [1, null, 2, null, 3]); // Iterable[[1], [2], [3]]
@@ -991,15 +1030,15 @@ splitOn(null, [1, null, 2, null, 3]); // Iterable[[1], [2], [3]]
 
 ### asyncSplitOn
 
-**asyncSplitOn(separatorValue, [source](#asyncsourceiterable))**
+**asyncSplitOn(separator, [source](#asyncsourceiterable))**
 
 See [splitOn](#spliton)
 
 ### splitOnAny
 
-**splitOnAny(separatorValues, [source](#sourceiterable))**
+**splitOnAny(separators, [source](#sourceiterable))**
 
-Yields `part` subsequences of `source`, generating a new `part` each time it encounters any `separatorValue` in the `separatorValues` iterable (as compared with `===`).
+Yields a [PartsIterable](#partsiterable) of parts from `source`, where `separatorValues` are used to mark the boundary between parts in `source`. None of the `separatorValues` will not occur in the output. `separatorValues` are compared using `===`.
 
 ```js
 splitOnAny([null, undefined], [1, null, 2, undefined, 3]); // Iterable[[1], [2], [3]]
@@ -1007,7 +1046,7 @@ splitOnAny([null, undefined], [1, null, 2, undefined, 3]); // Iterable[[1], [2],
 
 ### asyncSplitOnAny
 
-**asyncSplitOnAny(separatorValues, [source](#asyncsourceiterable))**
+**asyncSplitOnAny(predicate, [source](#asyncsourceiterable))**
 
 See [splitOnAny](#splitonany)
 
@@ -1015,11 +1054,11 @@ See [splitOnAny](#splitonany)
 
 **splitOnAnySubseq(separatorSubseqs, [source](#sourceiterable))**
 
-Yields `part` subsequences of `source`, generating a new `part` each time it encounters a subsequence of values matching any `separatorSubseq` in the `separatorSubseqs` iterable. Each value in a `separatorSubseq` must match using `===`. When a `separatorSubseq` is matched, all matched values are consumed from `source`. They will not appear in any `part`, nor may they be part of any other `separatorSubseq` match.
+Yields a [PartsIterable](#partsiterable) of parts from `source`, where `separatorSubseqs` are used to mark the boundary between parts in `source`. When any `separatorSubseq` in `separatorSubseqs` is matched, all matched values are consumed from `source` and will not appear in any `part`, nor may they be part of any other `separatorSubseq` match. Matches greedily, which is to say the longest possible separator match will be prioritized. Each value in a `separatorSubseq` is compared using `===`.
 
 ```js
 splitOnAnySubseq(
-  [['\r\n'], ['\n']],
+  [['\n'], ['\r\n']],
   'mixed\r\nline\nterminators',
 ); // Iterable['mixed', 'line', 'terminators']
 ```
@@ -1034,10 +1073,12 @@ See [splitOnAnySubseq](#splitonanysubseq)
 
 **splitOnSubseq(separatorSubseq, [source](#sourceiterable))**
 
-Yields `part` subsequences of `source`, generating a new `part` each time it encounters a subsequence of values matching `separatorSubseq`. Each value in `separatorSubseq` must match using `===`. When `separatorSubseq` is matched, all matched values are consumed from `source`. They will not appear in any `part`, nor may they be part of any other `separatorSubseq` match.
+Yields a [PartsIterable](#partsiterable) of parts from `source`, where `separatorSubseq` is used to mark the boundary between parts in `source`. When `separatorSubseq` is matched, all matched values are consumed from `source`. They will not appear in any `part`, nor may they be part of any other `separatorSubseq` match. Each value in `separatorSubseq` is compared using `===`.
 
 ```js
 splitOnSubseq([0, 0], [1, 0, 0, 2, 0, 0, 3]); // Iterable[[1], [2], [3]]
+
+//`separatorSubseq` is in the result because separators overlap in `source`.
 splitOnSubseq([0, 0], [0, 0, 0, 1, 2]); // Iterable[[], [0, 1, 2]]
 ```
 
@@ -1051,9 +1092,7 @@ See [splitOnSubseq](#splitonsubseq)
 
 **splitWith(predicate, [source](#sourceiterable))**
 
-Yields `part` subsequences of values from `source`, generating a new `part` each time the result of `predicate(value, idx)` is truthy. Values which match the `predicate` are consumed, and will not be in any `part`.
-
-You may also specify a regex predicate, in which case the behavior will match `str.split(RegExp)`. This is the only situation in which you will be able to match more than one value from `source` at a time.
+Yields a [PartsIterable](#partsiterable) of parts from `source`, a `value` from `source` for which the result of `predicate(value, idx)` is truthy is considered a separator, and will not occur in the output. If `source` is a string you may also specify a regex predicate, in which case the behavior will match `str.split(RegExp)`. This is the only situation in which you will be able to match more than one value from `source` at a time.
 
 <!-- prettier-ignore -->
 ```js

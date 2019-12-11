@@ -8,84 +8,55 @@
 
 /* eslint-disable no-unused-vars,import/no-duplicates,no-constant-condition */
 
-import { asyncSplitOnAnySubseq, asyncMap, asyncToArray } from '../../..';
+import { asyncSplitOnAnySubseq } from '../../..';
+import { asyncUnwrapDeep as asyncUw } from '../../../__tests__/async-helpers';
+import { asyncWrap } from '../../../__tests__/__framework__/async-wrap';
 describe('asyncSplitOnAnySubseq', () => {
   it('can split on any of many possible subsequences', async () => {
     expect(
-      await asyncToArray(
-        asyncMap(
-          group => asyncToArray(group),
-          asyncSplitOnAnySubseq([[2, 2], [3, 3]], [1, 2, 2, 3, 3, 4]),
-        ),
-      ),
+      await asyncUw(asyncSplitOnAnySubseq([[2, 2], [3, 3]], asyncWrap([1, 2, 2, 3, 3, 4]))),
     ).toEqual([[1], [], [4]]);
+  });
+  it('works when the separator is the only thing in the sequence', async () => {
+    expect(await asyncUw(asyncSplitOnAnySubseq([[2, 2], [3, 3]], asyncWrap([2, 2])))).toEqual([
+      [],
+      [],
+    ]);
   });
   it('splits on the longest subsequence that matches', async () => {
     expect(
-      await asyncToArray(
-        asyncMap(
-          group => asyncToArray(group),
-          asyncSplitOnAnySubseq([[2, 2, 3], [2, 3]], [1, 2, 2, 3, 3, 4]),
-        ),
-      ),
+      await asyncUw(asyncSplitOnAnySubseq([[2, 2, 3], [2, 3]], asyncWrap([1, 2, 2, 3, 3, 4]))),
     ).toEqual([[1], [3, 4]]);
     expect(
-      await asyncToArray(
-        asyncMap(
-          group => asyncToArray(group),
-          asyncSplitOnAnySubseq([[2, 3], [2, 2, 3]], [1, 2, 2, 3, 3, 4]),
-        ),
-      ),
+      await asyncUw(asyncSplitOnAnySubseq([[2, 3], [2, 2, 3]], asyncWrap([1, 2, 2, 3, 3, 4]))),
     ).toEqual([[1], [3, 4]]);
     expect(
-      await asyncToArray(
-        asyncMap(
-          group => asyncToArray(group),
-          asyncSplitOnAnySubseq([[2, 2, 3], [2, 2]], [1, 2, 2, 3, 3, 4]),
-        ),
-      ),
+      await asyncUw(asyncSplitOnAnySubseq([[2, 2, 3], [2, 2]], asyncWrap([1, 2, 2, 3, 3, 4]))),
     ).toEqual([[1], [3, 4]]);
     expect(
-      await asyncToArray(
-        asyncMap(
-          group => asyncToArray(group),
-          asyncSplitOnAnySubseq([[2, 2], [2, 2, 3]], [1, 2, 2, 3, 3, 4]),
-        ),
-      ),
+      await asyncUw(asyncSplitOnAnySubseq([[2, 2], [2, 2, 3]], asyncWrap([1, 2, 2, 3, 3, 4]))),
     ).toEqual([[1], [3, 4]]);
   });
   it('should only start matching again after a consumed split ends', async () => {
     expect(
-      await asyncToArray(
-        asyncMap(
-          group => asyncToArray(group),
-          asyncSplitOnAnySubseq([[2, 3], [3, 2]], [1, 2, 3, 2, 2, 3, 2, 3, 4]),
-        ),
+      await asyncUw(
+        asyncSplitOnAnySubseq([[2, 3], [3, 2]], asyncWrap([1, 2, 3, 2, 2, 3, 2, 3, 4])),
       ),
     ).toEqual([[1], [2], [], [4]]);
     expect(
-      await asyncToArray(
-        asyncMap(
-          group => asyncToArray(group),
-          asyncSplitOnAnySubseq([[2, 3], [2, 2, 3]], [1, 2, 2, 3, 3, 4]),
-        ),
-      ),
+      await asyncUw(asyncSplitOnAnySubseq([[2, 3], [2, 2, 3]], asyncWrap([1, 2, 2, 3, 3, 4]))),
     ).toEqual([[1], [3, 4]]);
   });
   it('does not split on the empty subsequence', async () => {
-    expect(
-      await asyncToArray(
-        asyncMap(
-          group => asyncToArray(group),
-          asyncSplitOnAnySubseq([[], [null]], [1, 2, null, 4]),
-        ),
-      ),
-    ).toEqual([[1, 2], [4]]);
+    expect(await asyncUw(asyncSplitOnAnySubseq([[], [null]], asyncWrap([1, 2, null, 4])))).toEqual([
+      [1, 2],
+      [4],
+    ]);
   });
   it('passes through the empty iterable', async () => {
-    expect(await asyncToArray(asyncSplitOnAnySubseq([], null))).toEqual([]);
+    expect(await asyncUw(asyncSplitOnAnySubseq([], null))).toEqual([]);
   });
   it('the empty string is an empty iterable', async () => {
-    expect(await asyncToArray(asyncSplitOnAnySubseq([], ''))).toEqual([]);
+    expect(await asyncUw(asyncSplitOnAnySubseq([], ''))).toEqual([]);
   });
 });
