@@ -7,19 +7,20 @@
  */
 
 import { asyncIterableCurry } from '../../internal/async-iterable';
-import CircularBuffer from '../../internal/circular-buffer';
+import { CircularBuffer, ReadOnlyCircularBuffer } from '../../internal/circular-buffer';
 import { asyncConcat } from '../$concat/async-concat';
 import { repeat } from '../repeat/repeat';
 export async function* asyncWindow(source, size, { filler } = {}) {
-  const circular = new CircularBuffer(size);
-  circular.fill(filler);
+  const buffer = new CircularBuffer(size);
+  const bufferReadProxy = new ReadOnlyCircularBuffer(buffer);
+  buffer.fill(filler);
   let index = 0;
 
   for await (const item of asyncConcat(source, repeat(size - 1, filler))) {
-    circular.push(item);
+    buffer.push(item);
 
     if (index + 1 >= size) {
-      yield circular.readOnlyCopy;
+      yield bufferReadProxy;
     }
 
     index++;
