@@ -3,10 +3,18 @@
 # The template for this file is: generate/templates/gitattributes-file.js
 
 .gitattributes linguist-generated=true
+src/__tests__/__framework__/async-wrap.d.ts linguist-generated=true
+src/__tests__/__framework__/async-wrap.js linguist-generated=true
+src/__tests__/__framework__/wrap.d.ts linguist-generated=true
+src/__tests__/__framework__/wrap.js linguist-generated=true
 src/__tests__/async-helpers.d.ts linguist-generated=true
 src/__tests__/async-helpers.js linguist-generated=true
+src/__tests__/async-range.d.ts linguist-generated=true
+src/__tests__/async-range.js linguist-generated=true
 src/__tests__/helpers.d.ts linguist-generated=true
 src/__tests__/helpers.js linguist-generated=true
+src/__tests__/range.d.ts linguist-generated=true
+src/__tests__/range.js linguist-generated=true
 src/append.d.ts linguist-generated=true
 src/append.mjs linguist-generated=true
 src/apply.d.ts linguist-generated=true

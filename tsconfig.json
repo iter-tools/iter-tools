@@ -8,6 +8,7 @@
     "strict": true,
     "moduleResolution": "node",
     "esModuleInterop": true,
+    "experimentalDecorators": true,
     "pretty": true,
     "types": ["jest"]
   },

@@ -3,14 +3,14 @@ import { AsyncResultIterable } from '../../types/async-iterable';
 
 export declare class OneTwoThreeIterable {
   next(): IteratorResult<number>;
-  return(): void;
+  return(): IteratorResult<void>;
 
   [Symbol.iterator](): ResultIterable<number>;
 }
 
 export declare class AsyncOneTwoThreeIterable {
   next(): Promise<IteratorResult<number>>;
-  return(): Promise<void>;
+  return<R = void>(value?: R): Promise<IteratorResult<R>>;
 
   [Symbol.asyncIterator](): AsyncResultIterable<number>;
 }

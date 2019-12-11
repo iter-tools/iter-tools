@@ -2,7 +2,7 @@ module.exports = {
   extends: './babel-shared.config.js',
   overrides: [
     {
-      test: '**/*.mjs',
+      test: ['**/*.mjs', '**/__tests__/*.js'],
       plugins: [['@babel/plugin-transform-runtime', { useESModules: true, corejs: 2 }]],
       presets: [
         [

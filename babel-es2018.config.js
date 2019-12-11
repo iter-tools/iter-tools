@@ -2,7 +2,7 @@ module.exports = {
   extends: './babel-shared.config.js',
   overrides: [
     {
-      test: '**/*.mjs',
+      test: ['**/*.mjs', '**/__tests__/*.js'],
       plugins: ['@babel/plugin-syntax-async-generators'],
       env: {
         es: {
