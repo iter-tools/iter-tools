@@ -1,21 +1,22 @@
 import { $async, $await } from '../../../generate/async.macro';
 import { $iterableCurry } from '../../internal/$iterable';
-import CircularBuffer from '../../internal/circular-buffer';
+import { CircularBuffer, ReadOnlyCircularBuffer } from '../../internal/circular-buffer';
 import { $concat } from '../$concat/$concat';
 import { repeat } from '../repeat/repeat';
 
 $async;
 export function* $window(source, size, { filler } = {}) {
-  const circular = new CircularBuffer(size);
+  const buffer = new CircularBuffer(size);
+  const bufferReadProxy = new ReadOnlyCircularBuffer(buffer);
 
-  circular.fill(filler);
+  buffer.fill(filler);
 
   let index = 0;
   $await;
   for (const item of $concat(source, repeat(size - 1, filler))) {
-    circular.push(item);
+    buffer.push(item);
     if (index + 1 >= size) {
-      yield circular.readOnlyCopy;
+      yield bufferReadProxy;
     }
     index++;
   }

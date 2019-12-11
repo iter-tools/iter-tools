@@ -1,7 +1,7 @@
 import { asyncify } from './async-iterable';
-import CircularBuffer from './circular-buffer';
+import { CircularBuffer } from './circular-buffer';
 
-export default class ParallelRunner {
+export class ParallelRunner {
   constructor(iterable, mapFn, concurrency) {
     this.iter = asyncify(iterable)[Symbol.asyncIterator]();
     this.buffer = new CircularBuffer(concurrency - 1);

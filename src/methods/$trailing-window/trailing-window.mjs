@@ -7,14 +7,15 @@
  */
 
 import { iterableCurry } from '../../internal/iterable';
-import CircularBuffer from '../../internal/circular-buffer';
+import { CircularBuffer, ReadOnlyCircularBuffer } from '../../internal/circular-buffer';
 export function* trailingWindow(source, size, { filler } = {}) {
-  const circular = new CircularBuffer(size);
-  circular.fill(filler);
+  const buffer = new CircularBuffer(size);
+  const bufferReadProxy = new ReadOnlyCircularBuffer(buffer);
+  buffer.fill(filler);
 
   for (const item of source) {
-    circular.push(item);
-    yield circular.readOnlyCopy;
+    buffer.push(item);
+    yield bufferReadProxy;
   }
 }
 export default iterableCurry(trailingWindow, {

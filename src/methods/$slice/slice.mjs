@@ -6,7 +6,7 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import CircularBuffer from '../../internal/circular-buffer';
+import { CircularBuffer } from '../../internal/circular-buffer';
 import { iterableCurry } from '../../internal/iterable';
 
 function bufferedSlice(source, start, end, step) {

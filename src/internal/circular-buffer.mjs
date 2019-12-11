@@ -1,6 +1,6 @@
 const _sourceBuffer = '@@_sourceBuffer';
 
-class ReadOnlyCircularBuffer {
+export class ReadOnlyCircularBuffer {
   constructor(sourceBuffer) {
     this[_sourceBuffer] = sourceBuffer;
   }
@@ -9,12 +9,20 @@ class ReadOnlyCircularBuffer {
     return this[_sourceBuffer].get(idx);
   }
 
+  peek() {
+    return this[_sourceBuffer].peek();
+  }
+
   get size() {
     return this[_sourceBuffer].size;
   }
 
+  get capacity() {
+    return this[_sourceBuffer].capacity;
+  }
+
   isFull() {
-    return this[_sourceBuffer].isFull;
+    return this[_sourceBuffer].isFull();
   }
 
   [Symbol.iterator]() {
@@ -22,61 +30,53 @@ class ReadOnlyCircularBuffer {
   }
 }
 
-export default class CircularBuffer {
+export class CircularBuffer {
   constructor(size) {
     this._array = new Array(size);
-    this._size = 0;
-    this._head = 0;
-    this.readOnlyCopy = new ReadOnlyCircularBuffer(this);
+    this._head = size - 1;
+    this.size = 0;
   }
 
   push(newItem) {
     const array = this._array;
-    const head = (this._head = (array.length + this._head - 1) % array.length);
+    const head = (this._head = (this._head + 1) % array.length);
 
-    const displacedItem = array.length ? array[head] : newItem;
+    const displacedItem = array[head];
     array[head] = newItem;
 
-    if (!this.isFull()) {
-      this._size++;
-    } else {
+    if (this.isFull()) {
       return displacedItem;
+    } else {
+      this.size++;
+      return undefined;
     }
-    return undefined;
   }
 
   shift() {
-    if (this._size > 0) {
-      const array = this._array;
-      --this._size;
+    if (!this.size) return undefined;
 
-      return array[(this._head + this._size) % array.length];
-    }
+    const value = this.get(0);
+    this.size--;
+    return value;
   }
 
   peek() {
-    if (this._size > 0) {
-      const array = this._array;
-
-      return array[(this._head + this._size - 1) % array.length];
-    }
+    return this.get(0);
   }
 
   fill(filler) {
     this._array.fill(filler);
-    this._size = this._array.length;
+    this.size = this._array.length;
   }
 
   get(idx) {
+    if (idx >= this.size) return undefined;
+
     const array = this._array;
     const head = this._head;
 
-    const index = (array.length * 2 + head - idx - 1) % array.length;
+    const index = (array.length + head - this.size + 1 + idx) % array.length;
     return array[index];
-  }
-
-  get size() {
-    return this._size;
   }
 
   get capacity() {
