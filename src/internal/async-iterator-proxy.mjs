@@ -6,16 +6,16 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { IterableIterator } from './iterable-iterator';
-export class IteratorProxy extends IterableIterator {
+import { AsyncIterableIterator } from './async-iterable-iterator';
+export class AsyncIteratorProxy extends AsyncIterableIterator {
   constructor(iterator) {
     super();
     this.__iterator = iterator;
     this.__done = false;
   }
 
-  next() {
-    const item = this.__iterator.next();
+  async next() {
+    const item = await this.__iterator.next();
 
     if (item.done || this.__done) {
       const doneItem = {
@@ -29,22 +29,22 @@ export class IteratorProxy extends IterableIterator {
     return item;
   }
 
-  return(value) {
+  async return(value) {
     const iterator = this.__iterator;
     const done = this.__done;
     this.__done = true;
-    if (typeof iterator.return === 'function' && !done) iterator.return();
+    if (typeof iterator.return === 'function' && !done) await iterator.return();
     return {
       value,
       done: true,
     };
   }
 
-  throw() {
+  async throw() {
     const iterator = this.__iterator;
 
     if (typeof iterator.throw === 'function') {
-      const item = iterator.throw();
+      const item = await iterator.throw();
       this.__done = item.done;
       return item;
     } else {

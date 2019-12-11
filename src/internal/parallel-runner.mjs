@@ -1,25 +1,20 @@
-import { asyncify } from './async-iterable';
 import { CircularBuffer } from './circular-buffer';
+import { AsyncIteratorProxy } from './async-iterator-proxy';
 
-export class ParallelRunner {
-  constructor(iterable, mapFn, concurrency) {
-    this.iter = asyncify(iterable)[Symbol.asyncIterator]();
+export class ParallelRunner extends AsyncIteratorProxy {
+  constructor(iterator, mapFn, concurrency) {
+    super(iterator);
     this.buffer = new CircularBuffer(concurrency - 1);
     this.mapFn = mapFn;
-    this.done = false;
   }
 
   next() {
-    const { iter, buffer, done, mapFn } = this;
+    const { buffer, mapFn } = this;
+    const done = this.__done;
 
-    const promise = iter.next().then(async item => {
-      if (item.done) {
-        this.done = true;
-        return item;
-      } else {
-        return { value: await mapFn(item.value), done: false };
-      }
-    });
+    const promise = super
+      .next()
+      .then(async item => (item.done ? item : { value: await mapFn(item.value), done: false }));
 
     const displacedPromise = buffer.push(promise);
 
@@ -38,19 +33,5 @@ export class ParallelRunner {
         return this.next();
       }
     }
-  }
-
-  [Symbol.asyncIterator]() {
-    return this;
-  }
-
-  return() {
-    if (typeof this.iter.return === 'function') {
-      return this.iter.return();
-    }
-  }
-
-  throw(e) {
-    console.error(e);
   }
 }
