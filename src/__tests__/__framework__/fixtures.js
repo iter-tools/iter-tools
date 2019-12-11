@@ -21,6 +21,10 @@ export class OneTwoThreeIterable {
 
   return() {
     this.isCleanedUp = true;
+    return {
+      value: undefined,
+      done: true,
+    };
   }
 
   [Symbol.iterator]() {
@@ -51,6 +55,10 @@ export class AsyncOneTwoThreeIterable {
 
   return() {
     this.isCleanedUp = true;
+    return Promise.resolve({
+      value: undefined,
+      done: true,
+    });
   }
 
   [Symbol.asyncIterator]() {

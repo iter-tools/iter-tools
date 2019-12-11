@@ -12,7 +12,7 @@ class MethodsGenerator extends BaseAsyncGenerator {
     super(options);
 
     this.glob = ['src/**/$*.js'];
-    this.ignored = [...this.ignored, '**/__*__/**'];
+    this.ignored = [...this.ignored, '**/__tests__/**'];
   }
 
   getDestName(basename) {

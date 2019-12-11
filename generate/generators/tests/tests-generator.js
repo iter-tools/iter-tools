@@ -10,7 +10,7 @@ class TypeTestGenerator extends BaseAsyncGenerator {
   constructor(options) {
     super(options);
 
-    this.glob = 'src/**/__tests__/$*.js';
+    this.glob = 'src/**/__tests__/**/$*.js';
   }
 
   applyTemplate(source, generatedFrom) {
