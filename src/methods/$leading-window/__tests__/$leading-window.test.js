@@ -1,9 +1,9 @@
 import { $, $async, $await } from '../../../../generate/async.macro';
 
 import { $unwrapDeep as $uw } from '../../../__tests__/$helpers';
-import { $window } from '../../..';
+import { $leadingWindow } from '../../..';
 
-describe($`window`, () => {
+describe($`leadingWindow`, () => {
   it(
     'frames iterable',
     $async(() => {
@@ -15,10 +15,10 @@ describe($`window`, () => {
         [5, undefined, undefined],
       ];
 
-      expect($await($uw($window(3, [1, 2, 3, 4, 5])))).toEqual(result);
+      expect($await($uw($leadingWindow(3, [1, 2, 3, 4, 5])))).toEqual(result);
       const opts: any = { size: 3 };
       opts;
-      expect($await($uw($window(opts, [1, 2, 3, 4, 5])))).toEqual(result);
+      expect($await($uw($leadingWindow(opts, [1, 2, 3, 4, 5])))).toEqual(result);
     }),
   );
 
@@ -27,17 +27,17 @@ describe($`window`, () => {
     $async(() => {
       const result = [[1, 2, 3], [2, 3, 4], [3, 4, 5], [4, 5, 'x'], [5, 'x', 'x']];
 
-      expect($await($uw($window(3, { filler: 'x' }, [1, 2, 3, 4, 5])))).toEqual(result);
+      expect($await($uw($leadingWindow(3, { filler: 'x' }, [1, 2, 3, 4, 5])))).toEqual(result);
       const opts: any = { size: 3, filler: 'x' };
       opts;
-      expect($await($uw($window(opts, [1, 2, 3, 4, 5])))).toEqual(result);
+      expect($await($uw($leadingWindow(opts, [1, 2, 3, 4, 5])))).toEqual(result);
     }),
   );
 
   it(
     'can have separate size and options arguments',
     $async(() => {
-      expect($await($uw($window(3, { filler: 'x' }, [1, 2, 3, 4, 5])))).toEqual([
+      expect($await($uw($leadingWindow(3, { filler: 'x' }, [1, 2, 3, 4, 5])))).toEqual([
         [1, 2, 3],
         [2, 3, 4],
         [3, 4, 5],
@@ -48,9 +48,9 @@ describe($`window`, () => {
   );
 
   it(
-    'frames iterable (window equal to the sequence)',
+    'frames iterable (leadingWindow equal to the sequence)',
     $async(() => {
-      expect($await($uw($window(5, [1, 2, 3, 4, 5])))).toEqual([
+      expect($await($uw($leadingWindow(5, [1, 2, 3, 4, 5])))).toEqual([
         [1, 2, 3, 4, 5],
         [2, 3, 4, 5, undefined],
         [3, 4, 5, undefined, undefined],
@@ -61,9 +61,9 @@ describe($`window`, () => {
   );
 
   it(
-    'frames iterable (window bigger than the sequence)',
+    'frames iterable (leadingWindow bigger than the sequence)',
     $async(() => {
-      expect($await($uw($window(6, [1, 2, 3, 4, 5])))).toEqual([
+      expect($await($uw($leadingWindow(6, [1, 2, 3, 4, 5])))).toEqual([
         [1, 2, 3, 4, 5, undefined],
         [2, 3, 4, 5, undefined, undefined],
         [3, 4, 5, undefined, undefined, undefined],
@@ -74,9 +74,9 @@ describe($`window`, () => {
   );
 
   it(
-    'frames iterable (window bigger than the sequence) with filler',
+    'frames iterable (leadingWindow bigger than the sequence) with filler',
     $async(() => {
-      expect($await($uw($window(6, { filler: 'x' }, [1, 2, 3, 4, 5])))).toEqual([
+      expect($await($uw($leadingWindow(6, { filler: 'x' }, [1, 2, 3, 4, 5])))).toEqual([
         [1, 2, 3, 4, 5, 'x'],
         [2, 3, 4, 5, 'x', 'x'],
         [3, 4, 5, 'x', 'x', 'x'],
@@ -87,9 +87,9 @@ describe($`window`, () => {
   );
 
   it(
-    'frames iterable (window bigger than the sequence) 2',
+    'frames iterable (leadingWindow bigger than the sequence) 2',
     $async(() => {
-      expect($await($uw($window(7, [1, 2, 3, 4, 5])))).toEqual([
+      expect($await($uw($leadingWindow(7, [1, 2, 3, 4, 5])))).toEqual([
         [1, 2, 3, 4, 5, undefined, undefined],
         [2, 3, 4, 5, undefined, undefined, undefined],
         [3, 4, 5, undefined, undefined, undefined, undefined],
