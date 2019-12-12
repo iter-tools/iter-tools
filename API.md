@@ -69,8 +69,10 @@ It will sort numbers by their value, and strings lexicographically.
 Create iterables
 
 [cycle](#cycle) ([async](#asynccycle))  
+[cycleTimes](#cycletimes) ([async](#asynccycletimes))  
 [range](#range)  
 [repeat](#repeat)  
+[repeatTimes](#repeattimes)  
 
 Create iterables from objects
 
@@ -203,26 +205,35 @@ Utilities
 
 ### cycle
 
-**cycle(n, [iterable](#sourceiterable))**  
-**cycle([iterable](#sourceiterable))**
+**cycle(iterable)**
 
-Defaults:
-
-- `n`: `Infinity`
-
-Yields the contents of `iterable` repeated `n` times.
+Yields the contents of `iterable` repeated for the longest time (forever).
 
 ```js
-cycle(2, range(3)); // Iterable[0, 1, 2, 0, 1, 2]
-cycle(range(3)); // Iterable[0, 1, 2, 0, 1, 2, 0, 1, 2, ...]
+cycle(range(1, 4)); // Iterable[1, 2, 3, 1, 2, 3, 1, 2, 3, ...]
 ```
 
 ### asyncCycle
 
-**asyncCycle(times, [iterable](#asyncsourceiterable))**  
-**asyncCycle([iterable](#asyncsourceiterable))**
+**asyncCycle(iterable)**
 
 See [cycle](#cycle)
+
+### cycleTimes
+
+**cycleTimes(n, [iterable](#sourceiterable))**
+
+Yields the contents of `iterable` repeated `n` times.
+
+```js
+cycleTimes(2, range(1, 4)); // Iterable[1, 2, 3, 1, 2, 3]
+```
+
+### asyncCycleTimes
+
+**asyncCycleTimes(n, [iterable](#asyncsourceiterable))**
+
+See [cycleTimes](#cycletimes)
 
 ### range
 
@@ -253,18 +264,22 @@ range({ start: 3, end: 10, step: 3 }); // 3, 6, 9
 
 ### repeat
 
-**repeat(times, item)**  
-**repeat(item)**
+**repeat(value)**
 
-Defaults:
-
-- `n`: `Infinity`
-
-Create an iterable that returns the same value repeated `n` times.
+Create an iterable that yields the same `value` ad infintum.
 
 ```js
-repeat(3, 'x'); // 'x', 'x', 'x'
-repeat('x'); // 'x', 'x', 'x' .... forever
+repeat('x'); // Iterable['x', 'x', 'x', ... 'x', .........]
+```
+
+### repeatTimes
+
+**repeatTimes(n, item)**
+
+Create an iterable that yields the same `value` `n` times.
+
+```js
+repeatTimes(4, 'x'); // Iterable['x', 'x', 'x', 'x']
 ```
 
 

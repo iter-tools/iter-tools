@@ -1,10 +1,5 @@
-Defaults:
-
-- `n`: `Infinity`
-
-Yields the contents of `iterable` repeated `n` times.
+Yields the contents of `iterable` repeated for the longest time (forever).
 
 ```js
-cycle(2, range(3)); // Iterable[0, 1, 2, 0, 1, 2]
-cycle(range(3)); // Iterable[0, 1, 2, 0, 1, 2, 0, 1, 2, ...]
+cycle(range(1, 4)); // Iterable[1, 2, 3, 1, 2, 3, 1, 2, 3, ...]
 ```
