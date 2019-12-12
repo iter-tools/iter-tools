@@ -46,9 +46,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
  -  `roundRobin`, `asyncRoundRobin`
  -  `call`, `apply`
  -  `wrap`, `asyncWrap`
- -  `wrapEntries`
  -  `wrapKeys`
  -  `wrapValues`
+ -  `wrapEntries`
+ -  `objectKeys`
+ -  `objectValues`
+ -  `objectEntries`
  -  `findOr`, `asyncFindOr`
  -  `firstOr`, `asyncFirstOr`
  -  `last`, `asyncLast`
@@ -72,6 +75,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
  -  `reverse`, `asyncReverse`
  -  `window`, `asyncWindow`
  -  `trailingWindow`, `asyncTrailingWindow`
+ -  `getSize`
 
 **Arguments**
  -  [optional] `n` (count) for `fork` and `asyncFork`
@@ -93,6 +97,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
  -  **IMPORTANT**; **BREAKING**: `repeat` order of arguments changed. You must now write `repeat(3, 'x')` instead of `repeat(x, 3)`.
  -  All functions return iterables that can consumed multiple times.
  -  It is now an error to make an empty partial application, e.g. `map()`.
+ -  `size(iterable)` now always consumes `iterable`. Use `getSize` if you know this is unnecessary.
  -  `takeSorted` and `asyncTakeSorted`: Both `n` and `comparator` arguments are now optional.
  -  `enumerate` and `asyncEnumerate`: optional starting idx is now specified before iterable. 
  -  Optional configuration arguments can no longer be undefined. This was at odds with considering undefined as a valid iterable.
