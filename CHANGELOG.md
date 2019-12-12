@@ -15,7 +15,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
  -  `merge`, `asyncMerge` (Instead use `collate`, `roundRobin`, `interleave` (or async equivalents))
  -  `splitLines`, `asyncSplitLines` (Instead use `asyncMap(asyncJoinAsString, asyncSplitOnAnySubseq(['\r\n', '\n'], asyncFlat(fileChunks)))` or `splitOnAnySubseq(['\r\n', 'n'], fileString)`). Sorry, a better way is coming soon!)
  -  `regexpSplit` (Instead use `splitWith(regexp, str)`)
- -  `cursor`, `asyncCursor` (Instead use `window` or `trailingWindow` (or async equivalents))
+ -  `cursor`, `asyncCursor` (Instead use `leadingWindow` or `trailingWindow` (or async equivalents))
  -  `keys` (Instead use `objectKeys(obj)` or `wrapKeys({ keys(); }))`)
  -  `values` (Instead use `objectValues(obj)` or `wrapValues({ values(); }))`)
  -  `entries` (Instead use `objectEntries(obj)` or `wrapEntries({ entries(); }))`)
@@ -74,7 +74,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
  -  `group`, `asyncGroup`
  -  `explode`, `asyncExplode`
  -  `reverse`, `asyncReverse`
- -  `window`, `asyncWindow`
+ -  `leadingWindow`, `asyncLeadingWindow`
  -  `trailingWindow`, `asyncTrailingWindow`
  -  `cycleTimes`, `asyncCycleTimes`
  -  `repeatTimes`

@@ -5,7 +5,7 @@ Defaults:
 For every value in `source`, yields a window iterable of size `size` which starts with that value and also contains the next values from `source`. When there are not enough additional values in `source` to fill the window, `filler` will be used in place of the missing values.
 
 ```js
-window(3, [1, 2, 3, 4, 5]);
+leadingWindow(3, [1, 2, 3, 4, 5]);
 // Iterable[
 //   Iterable[1, 2, 3],
 //   Iterable[2, 3, 4]
@@ -14,7 +14,7 @@ window(3, [1, 2, 3, 4, 5]);
 //   Iterable[5, undefined, undefined]
 // ]
 
-window(3, { filler: Infinity }, [1, 2, 3, 4, 5]);
+leadingWindow(3, { filler: Infinity }, [1, 2, 3, 4, 5]);
 // Iterable[
 //   Iterable[1, 2, 3],
 //   Iterable[2, 3, 4]
