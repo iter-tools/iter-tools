@@ -1,5 +1,5 @@
 import { asyncify, asyncIterableCurry } from '../../internal/async-iterable';
-import { Queue } from '../../internal/queues';
+import { Queue } from '../../internal/queue';
 
 export async function* asyncBuffer(source, bufferSize) {
   const iterator = asyncify(source)[Symbol.asyncIterator]();

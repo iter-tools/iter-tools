@@ -7,7 +7,7 @@
  */
 
 import { ensureIterable, isIterable } from '../../internal/iterable';
-import { Exchange } from '../../internal/queues';
+import { Exchange } from './internal/exchange';
 
 function fetch(state) {
   const { exchange, iterator } = state;
