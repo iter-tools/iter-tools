@@ -11,11 +11,17 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
  -  `iter`, `asyncIter`
  -  `iterable`, `asyncIterable`
  -  `tee`, `asyncTee`
- -  `execute`, `asyncExecute` (Instead use `map(_ => callback(), range())`)
- -  `merge`, `asyncMerge` (Instead use either `collate`, `roundRobin`, or `interleave`.)
- -  `splitLines`, `asyncSplitLines`
- -  `regexpSplit` (Instead use `splitWith(regexp, str)`.)
- -  `cursor`, `asyncCursor` (Split and renamed: choose either `window` or `trailingWindow`.)
+ -  `execute`, `asyncExecute` (Instead use `map(_ => callback(), range())` (or `asyncMap(...)`))
+ -  `merge`, `asyncMerge` (Instead use `collate`, `roundRobin`, `interleave` (or async equivalents))
+ -  `splitLines`, `asyncSplitLines` (Instead use `asyncMap(asyncJoinAsString, asyncSplitOnAnySubseq(['\r\n', '\n'], asyncFlat(fileChunks)))` or `splitOnAnySubseq(['\r\n', 'n'], fileString)`). Sorry, a better way is coming soon!)
+ -  `regexpSplit` (Instead use `splitWith(regexp, str)`)
+ -  `cursor`, `asyncCursor` (Instead use `window` or `trailingWindow` (or async equivalents))
+ -  `keys` (Instead use `objectKeys(obj)` or `wrapKeys({ keys(); }))`)
+ -  `values` (Instead use `objectValues(obj)` or `wrapValues({ values(); }))`)
+ -  `entries` (Instead use `objectEntries(obj)` or `wrapEntries({ entries(); }))`)
+
+**Overloads**
+ -  `size({ size })` and `size(array)` (Instead use `getSize`)
 
 **Aliases**
  -  `count` was an alias for `range`
@@ -25,11 +31,6 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 **Arguments**
  -  `concurrency` from `asyncMap`, `asyncFilter`.
  -  Extra arguments from `compose`, `pipe`, `pipeExec`. Previously all initial arguments were given to the outermost composed function.
-
-**Overloads**
- -  `entries({ entries(); })` (Instead use `wrapEntries({ entries(); }))`)
- -  `keys({ keys(); })` (Instead use `wrapKeys({ keys(); }))`)
- -  `values({ values(); })` (Instead use `wrapValues({ values(); }))`)
 
 **Helper methods**
  -  `mergeByComparison`, `mergeByChance`, `mergeByPosition`, `asyncMergeByComparison`, `asyncMergeByChance`, `asyncMergeByPosition`

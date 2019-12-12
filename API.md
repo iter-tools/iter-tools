@@ -74,9 +74,9 @@ Create iterables
 
 Create iterables from objects
 
-[entries](#entries)  
-[keys](#keys)  
-[values](#values)  
+[objectEntries](#objectentries)  
+[objectKeys](#objectkeys)  
+[objectValues](#objectvalues)  
 
 Use iterables from data structures
 
@@ -194,6 +194,7 @@ Utilities
 [call](#call)  
 [compose](#compose)  
 [execPipe](#execpipe)  
+[getSize](#getsize)  
 [pipe](#pipe)  
 [when](#when)  
 
@@ -269,37 +270,37 @@ repeat('x'); // 'x', 'x', 'x' .... forever
 
 ## Create iterables from objects
 
-### entries
+### objectEntries
 
-**entries(obj)**
+**objectEntries(obj)**
 
-Returns the `[key, value]` entries of own properties of `obj`. When `obj` is `null` or `undefined` it yields nothing, but it is otherwise equivalent to `Object.keys`.
+Yields the `[key, value]` entries of own, iterable (in the object sense) properties of `obj`. When `obj` is `null` or `undefined` it yields nothing, but it is otherwise equivalent to `Object.keys`.
 
-`entries` is a great way to construct `Map` instances from objects!
+`objectEntries` is a great way to construct `Map` instances from objects!
 
 ```js
-entries({ foo: 'bar', fox: 'far' }); // Iterable[['foo': 'bar'], ['fox': 'far']]
-new Map(entries(obj)); // Map{foo => 'bar', fox => 'far'}
+objectEntries({ foo: 'bar', fox: 'far' }); // Iterable[['foo': 'bar'], ['fox': 'far']]
+new Map(objectEntries(obj)); // Map{foo => 'bar', fox => 'far'}
 ```
 
-### keys
+### objectKeys
 
-**keys(obj)**
+**objectKeys(obj)**
 
-Returns the string names of the own properties of `obj`. When `obj` is `null` or `undefined` it yields nothing, but it is otherwise equivalent to `Object.keys`.
+Yields the string names of the own, iterable (in the object sense) properties of `obj`. When `obj` is `null` or `undefined` it yields nothing, but it is otherwise equivalent to `Object.keys`.
 
 ```js
-keys({ foo: 'bar', fox: 'far' }); // Iterable['foo', 'fox'];
+objectKeys({ foo: 'bar', fox: 'far' }); // Iterable['foo', 'fox'];
 ```
 
-### values
+### objectValues
 
-**values(obj)**
+**objectValues(obj)**
 
-Returns the values of own properies of `obj`. When `obj` is `null` or `undefined` it yields nothing, but it is otherwise equivalent to `Object.values`.
+Yields the values of own, iterable (in the object sense) properies of `obj`. When `obj` is `null` or `undefined` it yields nothing, but it is otherwise equivalent to `Object.values`.
 
 ```js
-values({ foo: 'bar', fox: 'far' }); // Iterable['bar', 'far']
+objectValues({ foo: 'bar', fox: 'far' }); // Iterable['bar', 'far']
 ```
 
 
@@ -1667,9 +1668,7 @@ See [reduce](#reduce)
 
 **size(iterable)**
 
-Returns the number of values in `iterable` by iterating over it. Will optimize by reading the `length` property if `iterable` is an array, or `size` if it is a `Map` or `Set`.
-
-Note: the optimizations on `Map` and `Set` are not guaranteed to trigger, in particular because the `instanceof` check can be fragile [in certain circumstances](https://stackoverflow.com/questions/49832187/how-to-understand-js-realms).
+Returns the number of values in `iterable` **by iterating over it**. This is more work than is neccessary for any concrete type like `Array`, `Map`, or `Set`. If you know your data is one of those types, use [getSize](#getsize) instead.
 
 ```js
 size([1, 2, 3]); // 3
@@ -2140,6 +2139,18 @@ execPipe(
   filter(x => x % 2 === 0)
   map(x => x + 1),
 ); // Iterable[1, 3, 5]
+```
+
+### getSize
+
+**getSize(sequence)**
+
+Returns the size of `sequence` as determined by accessing `length` if `Array.isArray(sequence)`, or `sequence.size` otherwise. The size of `null` or `undefined` is `0`. Throws an error if a numeric size cannot be found in this way. If you have an iterable with no cached size you should instead use [size](#size).
+
+```js
+getSize([1, 2, 3]); // 3
+getSize(new Map([1, 2, 3])); // 3
+getSize(null); // 0
 ```
 
 ### pipe
