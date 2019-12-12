@@ -9,14 +9,14 @@
 import { asyncIterableCurry } from '../../internal/async-iterable';
 import { CircularBuffer, ReadOnlyCircularBuffer } from '../../internal/circular-buffer';
 import { asyncConcat } from '../$concat/async-concat';
-import { repeat } from '../repeat/repeat';
+import { repeatTimes } from '../repeat-times/repeat-times';
 export async function* asyncWindow(source, size, { filler } = {}) {
   const buffer = new CircularBuffer(size);
   const bufferReadProxy = new ReadOnlyCircularBuffer(buffer);
   buffer.fill(filler);
   let index = 0;
 
-  for await (const item of asyncConcat(source, repeat(size - 1, filler))) {
+  for await (const item of asyncConcat(source, repeatTimes(size - 1, filler))) {
     buffer.push(item);
 
     if (index + 1 >= size) {

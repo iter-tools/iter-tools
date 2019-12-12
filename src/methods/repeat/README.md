@@ -1,10 +1,5 @@
-Defaults:
-
-- `n`: `Infinity`
-
-Create an iterable that returns the same value repeated `n` times.
+Create an iterable that yields the same `value` ad infintum.
 
 ```js
-repeat(3, 'x'); // 'x', 'x', 'x'
-repeat('x'); // 'x', 'x', 'x' .... forever
+repeat('x'); // Iterable['x', 'x', 'x', ... 'x', .........]
 ```

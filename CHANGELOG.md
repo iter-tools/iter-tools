@@ -22,6 +22,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 **Overloads**
  -  `size({ size })` and `size(array)` (Instead use `getSize`)
+ -  `cycle(times, iterable)`, `asyncCycle(times, iterable)` and `repeat(times, value)` (Instead use `cycleTimes(n, iterable)` (or `asyncCycleTimes`), and `repeatTimes(n, iterable)`)
 
 **Aliases**
  -  `count` was an alias for `range`
@@ -75,6 +76,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
  -  `reverse`, `asyncReverse`
  -  `window`, `asyncWindow`
  -  `trailingWindow`, `asyncTrailingWindow`
+ -  `cycleTimes`, `asyncCycleTimes`
+ -  `repeatTimes`
  -  `getSize`
 
 **Arguments**

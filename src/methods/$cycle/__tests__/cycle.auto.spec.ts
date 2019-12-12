@@ -6,17 +6,10 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { cycle, slice, toArray, wrap, range } from '../../..';
+import { cycle, slice, toArray } from '../../..';
+import { range } from '../../../__tests__/range';
 describe('cycle', () => {
-  it('return infinite cycle', () => {
-    expect(toArray(slice(0, 6, cycle(wrap([1, 2, 3]))))).toEqual([1, 2, 3, 1, 2, 3]);
-  });
-  it('can be reused', () => {
-    const myCycle = cycle(range(1, 4));
-    expect(toArray(slice(0, 7, myCycle))).toEqual([1, 2, 3, 1, 2, 3, 1]);
-    expect(toArray(slice(0, 7, myCycle))).toEqual([1, 2, 3, 1, 2, 3, 1]);
-  });
-  it('can cycle a limited number of times', () => {
-    expect(toArray(cycle(3, wrap([1, 2, 3])))).toEqual([1, 2, 3, 1, 2, 3, 1, 2, 3]);
+  it('cycles iterable infinitely', () => {
+    expect(toArray(slice(0, 7, cycle(range(1, 4))))).toEqual([1, 2, 3, 1, 2, 3, 1]);
   });
 });

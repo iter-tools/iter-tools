@@ -8,25 +8,11 @@
 
 /* eslint-disable no-unused-vars,import/no-duplicates,no-constant-condition */
 
-import { asyncCycle, asyncSlice, asyncToArray, asyncWrap, range } from '../../..';
+import { asyncCycle, asyncSlice, asyncToArray } from '../../..';
+import { asyncRange } from '../../../__tests__/async-range';
 describe('asyncCycle', () => {
-  it('return infinite cycle', async () => {
-    expect(await asyncToArray(asyncSlice(0, 6, asyncCycle(asyncWrap([1, 2, 3]))))).toEqual([
-      1,
-      2,
-      3,
-      1,
-      2,
-      3,
-    ]);
-  });
-  it('can be reused', async () => {
-    const myCycle = asyncCycle(range(1, 4));
-    expect(await asyncToArray(asyncSlice(0, 7, myCycle))).toEqual([1, 2, 3, 1, 2, 3, 1]);
-    expect(await asyncToArray(asyncSlice(0, 7, myCycle))).toEqual([1, 2, 3, 1, 2, 3, 1]);
-  });
-  it('can cycle a limited number of times', async () => {
-    expect(await asyncToArray(asyncCycle(3, asyncWrap([1, 2, 3])))).toEqual([
+  it('cycles iterable infinitely', async () => {
+    expect(await asyncToArray(asyncSlice(0, 7, asyncCycle(asyncRange(1, 4))))).toEqual([
       1,
       2,
       3,
@@ -34,8 +20,6 @@ describe('asyncCycle', () => {
       2,
       3,
       1,
-      2,
-      3,
     ]);
   });
 });

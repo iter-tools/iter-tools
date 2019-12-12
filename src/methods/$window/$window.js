@@ -2,7 +2,7 @@ import { $async, $await } from '../../../generate/async.macro';
 import { $iterableCurry } from '../../internal/$iterable';
 import { CircularBuffer, ReadOnlyCircularBuffer } from '../../internal/circular-buffer';
 import { $concat } from '../$concat/$concat';
-import { repeat } from '../repeat/repeat';
+import { repeatTimes } from '../repeat-times/repeat-times';
 
 $async;
 export function* $window(source, size, { filler } = {}) {
@@ -13,7 +13,7 @@ export function* $window(source, size, { filler } = {}) {
 
   let index = 0;
   $await;
-  for (const item of $concat(source, repeat(size - 1, filler))) {
+  for (const item of $concat(source, repeatTimes(size - 1, filler))) {
     buffer.push(item);
     if (index + 1 >= size) {
       yield bufferReadProxy;
