@@ -1,0 +1,3 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`getSize throws when the object does not have a size 1`] = `"The argument passed to getSize did not have a size"`;

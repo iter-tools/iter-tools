@@ -1,6 +1,4 @@
-Returns the number of values in `iterable` by iterating over it. Will optimize by reading the `length` property if `iterable` is an array, or `size` if it is a `Map` or `Set`.
-
-Note: the optimizations on `Map` and `Set` are not guaranteed to trigger, in particular because the `instanceof` check can be fragile [in certain circumstances](https://stackoverflow.com/questions/49832187/how-to-understand-js-realms).
+Returns the number of values in `iterable` **by iterating over it**. This is more work than is neccessary for any concrete type like `Array`, `Map`, or `Set`. If you know your data is one of those types, use [getSize](#getsize) instead.
 
 ```js
 size([1, 2, 3]); // 3

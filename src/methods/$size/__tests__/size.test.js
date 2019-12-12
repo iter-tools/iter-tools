@@ -8,26 +8,14 @@
 
 /* eslint-disable no-unused-vars,import/no-duplicates,no-constant-condition */
 
-import { size, range } from '../../..';
+import { size } from '../../..';
+import { range } from '../../../__tests__/range';
 describe('size', () => {
-  it('return length of array', () => {
-    expect(size([1, 2, 3, 4, 5, 6])).toBe(6);
+  it('return number of items in iterable', () => {
+    expect(size(range(1, 7))).toBe(6);
   });
   it('returns 0 for null or undefined', () => {
     expect(size(null)).toBe(0);
     expect(size(undefined)).toBe(0);
-  });
-  it('returns the size of a map', () => {
-    expect(size(new Map([[1, 1], [2, 2]]))).toBe(2);
-  });
-  it('return number of items in iterable', () => {
-    expect(
-      size(
-        range({
-          start: 1,
-          end: 7,
-        }),
-      ),
-    ).toBe(6);
   });
 });
