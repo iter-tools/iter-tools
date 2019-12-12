@@ -13,7 +13,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
  -  `tee`, `asyncTee`
  -  `execute`, `asyncExecute` (Instead use `map(_ => callback(), range())` (or `asyncMap(...)`))
  -  `merge`, `asyncMerge` (Instead use `collate`, `roundRobin`, `interleave` (or async equivalents))
- -  `splitLines`, `asyncSplitLines` (Instead use `asyncMap(asyncJoinAsString, asyncSplitOnAnySubseq(['\r\n', '\n'], asyncFlat(fileChunks)))` or `splitOnAnySubseq(['\r\n', 'n'], fileString)`). Sorry, a better way is coming soon!)
+ -  `splitLines`, `asyncSplitLines` (Instead use `asyncMap(asyncJoinAsString, asyncSplitOnAnySubseq(['\r\n', '\n'], asyncFlat(fileChunks)))` or `splitOnAnySubseq(['\r\n', 'n'], fileString)`. Sorry, a better way is coming soon!)
  -  `regexpSplit` (Instead use `splitWith(regexp, str)`)
  -  `cursor`, `asyncCursor` (Instead use `leadingWindow` or `trailingWindow` (or async equivalents))
  -  `keys` (Instead use `objectKeys(obj)` or `wrapKeys({ keys(); }))`)
@@ -68,8 +68,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
  -  `includes`, `includesAny`, `includesSubseq`, `includesAnySubseq`, `asyncIncludes`, `asyncIncludesAny`, `asyncIncludesSubseq`, `asyncIncludesAnySubseq`
  -  `startsWith`, `startsWithAny`, `startsWithSubseq`, `startsWithAnySubseq`, `asyncStartsWith`, `asyncStartsWithAny`, `asyncStartsWithSubseq`, `asyncStartsWithAnySubseq`
  -  `splitOn`, `splitOnAny`, `splitOnSubseq`, `splitOnAnySubseq`, `asyncSplitOn`, `asyncSplitOnAny`, `asyncSplitOnSubseq`, `asyncSplitOnAnySubseq`
+ -  `split`, `asyncSplit`
  -  `splitWith`, `asyncSplitWith`
  -  `splitAt`, `asyncSplitAt`
+ -  `join`, `asyncJoin`
  -  `joinWith`, `joinWithSubseq`, `asyncJoinWith`, `asyncJoinWithSubseq`
  -  `joinAsStringWith`, `asyncJoinAsStringWith`
  -  `group`, `asyncGroup`
