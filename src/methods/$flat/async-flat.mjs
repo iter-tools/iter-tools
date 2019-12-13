@@ -6,12 +6,9 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { asyncIterableCurry } from '../../internal/async-iterable';
+import { asyncIterableCurry, asyncIsIterable } from '../../internal/async-iterable';
 
-const defaultShouldFlat = item =>
-  (typeof item[Symbol.iterator] === 'function' ||
-    typeof item[Symbol.asyncIterator] === 'function') &&
-  typeof item !== 'string';
+const defaultShouldFlat = item => typeof item !== 'string' && asyncIsIterable(item);
 
 async function* asyncFlatInternal(shouldFlat, depth, currentDepth, source) {
   for await (const item of source) {

@@ -1,4 +1,6 @@
-import { $isAsync, $iteratorSymbol, $async, $await } from '../../generate/async.macro';
+import { $async, $await } from '../../generate/async.macro';
+
+import { $isIterable } from '../internal/$iterable';
 
 $async;
 export function $unwrapDeep(iterable) {
@@ -6,12 +8,7 @@ export function $unwrapDeep(iterable) {
 
   $await;
   for (const item of iterable) {
-    if (
-      item != null &&
-      typeof item !== 'string' &&
-      (typeof item[$iteratorSymbol] === 'function' ||
-        ($isAsync && typeof item[Symbol.iterator] === 'function'))
-    ) {
+    if (typeof item !== 'string' && $isIterable(item)) {
       items.push($await($unwrapDeep(item)));
     } else {
       items.push(item);

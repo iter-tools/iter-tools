@@ -6,10 +6,9 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { iterableCurry } from '../../internal/iterable';
+import { iterableCurry, isIterable } from '../../internal/iterable';
 
-const defaultShouldFlat = item =>
-  typeof item[Symbol.iterator] === 'function' && typeof item !== 'string';
+const defaultShouldFlat = item => typeof item !== 'string' && isIterable(item);
 
 function* flatInternal(shouldFlat, depth, currentDepth, source) {
   for (const item of source) {

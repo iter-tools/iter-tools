@@ -152,6 +152,7 @@ Reduce an iterable to a single value
 [includesSubseq](#includessubseq) ([async](#asyncincludessubseq))  
 [isEmpty](#isempty) ([async](#asyncisempty))  
 [isSorted](#issorted) ([async](#asyncissorted))  
+[joinAsString](#joinasstring) ([async](#asyncjoinasstring))  
 [last](#last) ([async](#asynclast))  
 [lastOr](#lastor) ([async](#asynclastor))  
 [reduce](#reduce) ([async](#asyncreduce))  
@@ -1269,7 +1270,7 @@ asyncInterleaveReady(aItems, bItems);
 
 ### join
 
-**join([source](#sourceiterable))**
+**join(source)**
 
 Given `source`, an iterable of iterables, yields all values from each iterable. It is the inverse of `split`.
 
@@ -1279,7 +1280,7 @@ join([[1], [2], [3]]); // Iterable[1, 2, 3]
 
 ### asyncJoin
 
-**asyncJoin([source](#asyncsourceiterable))**
+**asyncJoin(source)**
 
 See [join](#join)
 
@@ -1616,6 +1617,18 @@ isSorted((a, b) => b - a, [3, 2, 1]); // true
 **asyncIsSorted([iterable](#asyncsourceiterable))**
 
 See [isSorted](#issorted)
+
+### joinAsString
+
+**joinAsString(source)**
+
+`joinAsString` is undocumented.
+
+### asyncJoinAsString
+
+**asyncJoinAsString(source)**
+
+See [joinAsString](#joinasstring)
 
 ### last
 

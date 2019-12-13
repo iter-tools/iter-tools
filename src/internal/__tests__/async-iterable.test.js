@@ -39,8 +39,8 @@ describe('asyncEnsureIterable', () => {
 });
 describe('asyncIsIterable', () => {
   it('works', () => {
-    expect(asyncIsIterable(range(3))).toBe(false);
-    expect(asyncIsIterable([])).toBe(false);
+    expect(asyncIsIterable(range(3))).toBe(true);
+    expect(asyncIsIterable([])).toBe(true);
     expect(asyncIsIterable(null)).toBe(false);
     expect(asyncIsIterable(asyncify([]))).toBe(true);
   });

@@ -8,16 +8,12 @@
 
 /* eslint-disable no-unused-vars,import/no-duplicates,no-constant-condition */
 
+import { isIterable } from '../internal/iterable';
 export function unwrapDeep(iterable) {
   const items = [];
 
   for (const item of iterable) {
-    if (
-      item != null &&
-      typeof item !== 'string' &&
-      (typeof item[Symbol.iterator] === 'function' ||
-        (false && typeof item[Symbol.iterator] === 'function'))
-    ) {
+    if (typeof item !== 'string' && isIterable(item)) {
       items.push(unwrapDeep(item));
     } else {
       items.push(item);

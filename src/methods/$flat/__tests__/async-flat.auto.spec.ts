@@ -40,6 +40,10 @@ describe('asyncFlat', () => {
     const iter = asyncFlat(2, ['foo', ['bar', ['baz']]]);
     expect(await asyncToArray(iter)).toEqual(['foo', 'bar', 'baz']);
   });
+  it('does not treat null as an iterable', async () => {
+    const iter = asyncFlat(2, ['foo', null]);
+    expect(await asyncToArray(iter)).toEqual(['foo', null]);
+  });
   it('flats using custom function', async () => {
     const iter = asyncFlat(iter => !(typeof iter === 'string' && iter.length === 1), Infinity, [
       ['a', 'b'],

@@ -6,10 +6,10 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { iterableCurry } from '../../internal/iterable';
+import { wrapWithMethodIterable, ensureIterable } from '../../internal/iterable';
 import { joinWithSubseq } from '../$join-with-subseq/join-with-subseq';
 const emptySubseq = [];
 export function join(source) {
-  return joinWithSubseq(source, emptySubseq);
+  return joinWithSubseq(ensureIterable(source), emptySubseq);
 }
-export default iterableCurry(join);
+export default wrapWithMethodIterable(join);
