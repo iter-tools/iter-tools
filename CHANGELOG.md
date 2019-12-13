@@ -73,7 +73,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
  -  `splitAt`, `asyncSplitAt`
  -  `join`, `asyncJoin`
  -  `joinWith`, `joinWithSubseq`, `asyncJoinWith`, `asyncJoinWithSubseq`
- -  `joinAsStringWith`, `asyncJoinAsStringWith`
+ -  `joinAsString`, `joinAsStringWith`, `asyncJoinAsString`, `asyncJoinAsStringWith`
  -  `group`, `asyncGroup`
  -  `explode`, `asyncExplode`
  -  `reverse`, `asyncReverse`

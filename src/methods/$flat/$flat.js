@@ -1,12 +1,8 @@
-import { $async, $await, $isAsync } from '../../../generate/async.macro';
+import { $async, $await } from '../../../generate/async.macro';
 
-import { $iterableCurry } from '../../internal/$iterable';
+import { $iterableCurry, $isIterable } from '../../internal/$iterable';
 
-const defaultShouldFlat = item =>
-  ($isAsync
-    ? typeof item[Symbol.iterator] === 'function' ||
-      typeof item[Symbol.asyncIterator] === 'function'
-    : typeof item[Symbol.iterator] === 'function') && typeof item !== 'string';
+const defaultShouldFlat = item => typeof item !== 'string' && $isIterable(item);
 
 $async;
 function* $flatInternal(shouldFlat, depth, currentDepth, source) {

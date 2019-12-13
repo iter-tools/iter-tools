@@ -6,14 +6,22 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { asyncIterableCurry } from '../../internal/async-iterable';
+import { asyncIterableCurry, asyncIsIterable } from '../../internal/async-iterable';
 export async function asyncJoinAsStringWith(strings, separator) {
   let result = '';
   let first = true;
 
   for await (const str of strings) {
     if (!first && separator !== '') result += separator;
-    result += str;
+
+    if (typeof str !== 'string' && asyncIsIterable(str)) {
+      for await (const character of str) {
+        result += character;
+      }
+    } else {
+      result += str;
+    }
+
     first = false;
   }
 

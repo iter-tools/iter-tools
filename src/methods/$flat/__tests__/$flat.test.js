@@ -68,6 +68,14 @@ describe($`flat`, () => {
   );
 
   it(
+    'does not treat null as an iterable',
+    $async(() => {
+      const iter = $flat(2, ['foo', null]);
+      expect($await($toArray(iter))).toEqual(['foo', null]);
+    }),
+  );
+
+  it(
     'flats using custom function',
     $async(() => {
       const iter = $flat(iter => !(typeof iter === 'string' && iter.length === 1), Infinity, [

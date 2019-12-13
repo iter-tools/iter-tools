@@ -6,14 +6,22 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { iterableCurry } from '../../internal/iterable';
+import { iterableCurry, isIterable } from '../../internal/iterable';
 export function joinAsStringWith(strings, separator) {
   let result = '';
   let first = true;
 
   for (const str of strings) {
     if (!first && separator !== '') result += separator;
-    result += str;
+
+    if (typeof str !== 'string' && isIterable(str)) {
+      for (const character of str) {
+        result += character;
+      }
+    } else {
+      result += str;
+    }
+
     first = false;
   }
 

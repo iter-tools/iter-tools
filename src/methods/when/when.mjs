@@ -13,10 +13,7 @@ const emptySpreadable = Object.freeze(
 );
 
 export function when(condition, value) {
-  if (
-    value != null &&
-    !(typeof value[Symbol.iterator] === 'function' || typeof value === 'object')
-  ) {
+  if (value != null && !(value[Symbol.iterator] || typeof value === 'object')) {
     throw new Error('Second argument to when must be an object or iterable.');
   }
 

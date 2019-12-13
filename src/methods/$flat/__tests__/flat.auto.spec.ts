@@ -40,6 +40,10 @@ describe('flat', () => {
     const iter = flat(2, ['foo', ['bar', ['baz']]]);
     expect(toArray(iter)).toEqual(['foo', 'bar', 'baz']);
   });
+  it('does not treat null as an iterable', () => {
+    const iter = flat(2, ['foo', null]);
+    expect(toArray(iter)).toEqual(['foo', null]);
+  });
   it('flats using custom function', () => {
     const iter = flat(iter => !(typeof iter === 'string' && iter.length === 1), Infinity, [
       ['a', 'b'],

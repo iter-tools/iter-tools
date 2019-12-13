@@ -1,4 +1,4 @@
-import { $, $isAsync, $isSync, $async, $await } from '../../../generate/async.macro';
+import { $, $isAsync, $async, $await } from '../../../generate/async.macro';
 
 import { asyncify } from '../async-iterable';
 import { $ensureIterable, $isIterable, $iterableCurry } from '../$iterable';
@@ -32,8 +32,8 @@ describe($`ensureIterable`, () => {
 
 describe($`isIterable`, () => {
   it('works', () => {
-    expect($isIterable(range(3))).toBe($isSync);
-    expect($isIterable([])).toBe($isSync);
+    expect($isIterable(range(3))).toBe(true);
+    expect($isIterable([])).toBe(true);
     expect($isIterable(null)).toBe(false);
     if ($isAsync) {
       expect($isIterable(asyncify([]))).toBe(true);

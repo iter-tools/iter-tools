@@ -8,16 +8,12 @@
 
 /* eslint-disable no-unused-vars,import/no-duplicates,no-constant-condition */
 
+import { asyncIsIterable } from '../internal/async-iterable';
 export async function asyncUnwrapDeep(iterable) {
   const items = [];
 
   for await (const item of iterable) {
-    if (
-      item != null &&
-      typeof item !== 'string' &&
-      (typeof item[Symbol.asyncIterator] === 'function' ||
-        (true && typeof item[Symbol.iterator] === 'function'))
-    ) {
+    if (typeof item !== 'string' && asyncIsIterable(item)) {
       items.push(await asyncUnwrapDeep(item));
     } else {
       items.push(item);
