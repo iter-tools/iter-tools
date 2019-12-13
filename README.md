@@ -16,7 +16,7 @@ If you want even more ideas about how and when Iterables and iter-tools can help
 
 ## API docs
 
-Please read our [API docs](https://github.com/iter-tools/iter-tools/blob/master/API.md)!
+Please read our [API docs](https://github.com/iter-tools/iter-tools/blob/v7.0.0-rc.0/API.md)!
 
 ## Why iter-tools?
 
