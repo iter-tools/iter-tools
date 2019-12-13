@@ -188,7 +188,10 @@ Consume an iterable
 [arrayFromAsync](#arrayfromasync)  
 [consume](#consume) ([async](#asyncconsume))  
 [forEach](#foreach) ([async](#asyncforeach))  
+[objectFrom](#objectfrom)  
+[objectFromAsync](#objectfromasync)  
 [toArray](#arrayfrom) ([async](#arrayfromasync))  
+[toObject](#objectfrom) ([async](#objectfromasync))  
 
 Utilities
 
@@ -2107,6 +2110,38 @@ forEach(value => console.log(value), null); //
 
 See [forEach](#foreach)
 
+### objectFrom
+
+**objectFrom([entries](#sourceiterable))**
+
+Aliases: `toObject`
+
+Transforms an `entries` iterable into an object. Each entry should be of the form `[key, value]`. Roughly equivalent to `Object.fromEntries`, except that it turns `null` and `undefined` into `{}`.
+
+```js
+objectFrom([
+  ['droids', ['R2', '3PO']],
+  ['people': ['Luke', 'Leia', 'Han']]
+]); // { droids: ['R2', '3PO'], people: ['Luke', 'Leia', 'Han'] }
+objectFrom(null); // {}
+```
+
+### objectFromAsync
+
+**objectFromAsync([entries](#asyncsourceiterable))**
+
+Aliases: `asyncToObject`
+
+Transform an async `entries` iterable (or a sync one) into an object. Each entry should be of the form `[key, value]`.
+
+```js
+objectFromAsync(asyncWrap([
+  ['droids', ['R2', '3PO']],
+  ['people': ['Luke', 'Leia', 'Han']]
+])); // { droids: ['R2', '3PO'], people: ['Luke', 'Leia', 'Han'] }
+await objectFromAsync(null); // []
+```
+
 ### toArray
 
 **toArray(source)**
@@ -2118,6 +2153,18 @@ See [arrayFrom](#arrayfrom)
 **asyncToArray(source)**
 
 See [arrayFromAsync](#arrayfromasync)
+
+### toObject
+
+**toObject(source)**
+
+See [objectFrom](#objectfrom)
+
+### asyncToObject
+
+**asyncToObject(source)**
+
+See [objectFromAsync](#objectfromasync)
 
 
 ## Utilities

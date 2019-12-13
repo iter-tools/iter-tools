@@ -1,0 +1,5 @@
+{
+  "type": "consume",
+  "aliases": ["toObject"],
+  "signatures": [[{ "name": "entries", "isIterable": true }]]
+}
