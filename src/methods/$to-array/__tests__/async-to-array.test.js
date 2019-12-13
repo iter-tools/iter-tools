@@ -8,9 +8,10 @@
 
 /* eslint-disable no-unused-vars,import/no-duplicates,no-constant-condition */
 
-import { asyncToArray, range } from '../../..';
+import { asyncToArray } from '../../..';
+import { asyncRange } from '../../../__tests__/async-range';
 describe('asyncToArray', () => {
-  it('works', async () => {
-    expect(await asyncToArray(range(3))).toEqual([0, 1, 2]);
+  it('turns an iterable into an array', async () => {
+    expect(await asyncToArray(asyncRange(0, 3))).toEqual([0, 1, 2]);
   });
 });

@@ -53,6 +53,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
  -  `objectKeys`
  -  `objectValues`
  -  `objectEntries`
+ -  `toObject`, `asyncToObject`
  -  `findOr`, `asyncFindOr`
  -  `firstOr`, `asyncFirstOr`
  -  `last`, `asyncLast`
@@ -79,6 +80,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
  -  `cycleTimes`, `asyncCycleTimes`
  -  `repeatTimes`
  -  `getSize`
+
+**Aliases**
+ -  `arrayFrom`, `arrayFromAsync` as aliases for `toArray`, `asyncToArray`
+ -  `objectFrom`, `objectFromAsync` as aliases for `toObject`, `asyncToObject`
 
 **Arguments**
  -  [optional] `n` (count) for `fork` and `asyncFork`

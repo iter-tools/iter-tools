@@ -6,9 +6,10 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { toArray, range } from '../../..';
+import { toArray } from '../../..';
+import { range } from '../../../__tests__/range';
 describe('toArray', () => {
-  it('works', () => {
-    expect(toArray(range(3))).toEqual([0, 1, 2]);
+  it('turns an iterable into an array', () => {
+    expect(toArray(range(0, 3))).toEqual([0, 1, 2]);
   });
 });
