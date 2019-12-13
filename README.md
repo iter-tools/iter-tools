@@ -28,46 +28,62 @@ Iter-tools is at present the only fully-featured library of its kind. Here is wh
 
 - **null/undefined are empty iterables**: iter-tools methods treat both null and undefined as empty iterables. This allows you to write transforms on array-ish data without first needing to check whether the array exists.
 
-- **Multiple iteration**: iter-tools transforms (as of v7.0.0) can be evaluated multiple times if the source iterator can be. Not all iterables can be evaluated multiple times though: generator functions, notably, cannot be. Arrays, Maps, and Sets (and null/undefined) always can be. All iter-tools functions returning iterables (range, cycle for example), are designed to be iterated multiple times.
+- **Stateless iterables**: iter-tools iterables (as of v7.0.0) are stateless if their source is, which is to say that each call to `[Symbol.iterator]()` returns a fresh iterator the consumption of which will not influence any other iterator. Not all iterables are stateless though: generator functions, notably, are stateful. Arrays, Maps, and Sets (and null/undefined) are stateless iterables. All iter-tools functions returning iterables (range, cycle for example), are stateless.
 
 - **Iterator closing**: The iterator protocol specifies a `return()` method, which can be used to prematurely terminate iteration. If iteration is terminated by code external to the iterator, the iterator's return method gives it a chance to clean up, releasing any resources which it requested in order to do its iteration. Resources might include file handles, network sockets, or event handlers, for example. This behavior makes iter-tools the only library known to the authors which is entirely safe for working with these kinds of iterators.
 
 - **Async/sync parity**: The tools are implemented for both synchronous and asynchronous iterables, and additionally the asynchronous methods can be used on sync iterables, though their output will always be asynchronous. Async methods which which take a callback argument allow the callback to be async, unless otherwise noted.
 
-- **Pay what you need on web**: Iter-tools is designed to be modular, meaning that only the methods you actually use end up being bundled and shipped if you are using a supported bundler. Webpack/uglify are capable of tree-shaking iter-tools, as is Rollup after v1.3.0. If you are not using a bundler that supports tree-shaking, you can still transpile an expression like `import { map, filter } from "iter-tools"` into imports of individual files: `iter-tools/es5/map` and `iter-tools/es5/filter`. To do this use the `iter-tools-explode-imports` package.
+- **Pay what you need on web**: Iter-tools is designed to be modular, meaning that only the methods you actually use end up being bundled and shipped if you are using a supported bundler. See the [usage section](#usage) below.
 
-#### Javascript support
+#### Usage
 
 Every module is available in 3 ecmascript editions: ES5, ES2015, ES2018.
 
-- Use ES5 when you need to support IE11 or when you are authoring a library.
-- Use ES2015 when you need to support modern browsers that don't support async iterables yet. This is also the right version for node 8 and below.
+- Use ES5 when you need to support IE11 or when you are authoring a library transpiled to ES5.
+- Use ES2015 for node 8 and below.
 - Use ES2018 when you know all your target environments natively support async iterables. Node 10 and above do.
+- There will soon be a separate pacakge, `iter-tools-es` which will be suitable for use when transpiling `node_modules`, such as if you are developing in `create-react-app`.
 
-The individual modules can be required either using named imports, or by importing the specific submodule you need. Using named imports will include the entire library and thus should only be done when bundle weight is not a concern (node) or when using a es2015+ module versions in combination with webpack3+ or rollup.
+Methods can also be required individually. Their file names are dasherized. Using named imports will include the entire library and thus is the preferred approach when bundle weight is not a concern (node) or when using a tree-shaking bundler (with support for `/*#__PURE__ */` comments) such as webpack@3+ or rollup@1.3.0+.
 
 Here are some examples:
 
 ```js
-const takeWhile = require('iter-tools').takeWhile; // ES5 is default
+const { takeWhile } = require('iter-tools'); // ES5 is default
+const takeWhile = require('iter-tools/take-while'); // ES5
+import { takeWhile } from 'iter-tools'; // ES5
 
+const { takeWhile } = require('iter-tools/es2015'); // ES2015
 const takeWhile = require('iter-tools/es2015/take-while'); // ES2015
 import { takeWhile } from 'iter-tools/es2015'; // ES2015
 
+const { takeWhile } = require('iter-tools/es2018'); // ES2018
 const takeWhile = require('iter-tools/es2018/take-while'); // ES2018
 import { takeWhile } from 'iter-tools/es2018'; // ES2018
 ```
 
-Note: **file names are all lowercase, dash separated. Module names are camelcase.**
+## Roadmap
+
+Some major improvements are still to come. They are:
+
+- An `iter-tools-es` package for use in environments which transpile `node_modules`
+- Configurable comparators for instead of forcing `===` comparison
+- Flow types
+- More packages in the iter-tools org, such as `@iter-tools/read-dir` (an iterable of the contents of a directory), and `@iter-tools/read-lines` (an iterable of the lines in a file).
 
 ## Issues and limitations
 
-There are a few limitations that you need to be aware of.
-First of all, when you consume an iterator object (using next) you are mutating the object for good.
-Some of these functions makes an in memory copy of the output. For example: cycle, product or fork. They do that in a efficient lazy way. Still you need to consider that.
-Also with the iterator protocol you can create infinite iterables (repeat, cycle, count etc.). These iterables can't be used by all generators. For example combinatory generators require finite iterables.
-Some of the obvious things you can do with arrays, are not efficients with iterables. For example: sorting, shuffling and in general all operations that rely on having the full array at your disposal. In that case the way to go is to convert the iterable in an array and use that.
+Some methods in iter-tools consume an entire iterable, such as `arrayFrom`, `last`, or `cycle`. These methods will not terminate if you pass them an infinite iterable such as `range()`. Eventually we may have a better system for warning you in the circumstances when we know you've done something obviously wrong like `cycle(range())`, but this does not exist yet.
+
+It is also important to note that iterables may be stateful or stateless (which is to say whether there is one or more than one underlying iterator), and there is no way that you can necessarily tell which is which. This is a limitation of the underlying technology, not iter-tools itself. Iter-tools iterables are themselves are stateless, except for `PartIterable` instances such as are yielded by methods like `splitOn`, and `groupBy`.
+
+With transforms (like `map`) you are not guaranteed that each iterator returned by `[Symbol.iterator]()` will yield the same values. For example if the source for the transform was an Array, the values in the array may have mutated.
+
+Finally, some of the obvious things you can do with arrays like sorting and shuffling are not possible to do on iterables unless you first store the values in an array. iter-tools will not offer you such methods, instead you should use, for example, `arrayFrom(iterable).sort()`.
 
 ## Acknowledgements
 
-Of course I give a lot of credit to the great itertools Python library. It doesn't want to be a mere port, but a properly documented and resonably performant Javascript alternative.
+I give a lot of credit to the great itertools Python library. This package doesn't want to be a mere port, but rather aims to solve the same problems as Python's library.
+
+Many thanks to Maurizio Lupo (sithmel) for doing the initial porting and development from Python's itertools, for being accepting of new contributors (and patient with us), and for eventually passing maintainership along.
