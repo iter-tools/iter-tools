@@ -3,6 +3,5 @@
 .DS_Store
 
 /coverage/*
-!/coverage/badge-*.svg
 
 /report.*

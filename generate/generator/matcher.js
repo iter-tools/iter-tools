@@ -2,7 +2,9 @@
 
 const { matcher: mmMatcher } = require('micromatch');
 const { relative } = require('path');
-const { path: rootDir } = require('package.root');
+const pkgDir = require('pkg-dir');
+
+const rootDir = pkgDir.sync(__dirname);
 
 function matcher(glob) {
   let isMatch;

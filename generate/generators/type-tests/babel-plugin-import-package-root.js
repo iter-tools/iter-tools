@@ -1,7 +1,9 @@
 'use strict';
 
 const { relative, join, dirname } = require('path');
-const { path: rootDir } = require('package.root');
+const pkgDir = require('pkg-dir');
+
+const rootDir = pkgDir.sync(__dirname);
 
 module.exports = function importPackageRoot({ types: t }, { ASYNC }) {
   const visitor = {

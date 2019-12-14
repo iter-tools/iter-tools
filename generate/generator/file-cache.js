@@ -3,7 +3,9 @@
 const fs = require('fs');
 const { join } = require('path');
 const md5 = require('md5');
-const { path: rootDir } = require('package.root');
+const pkgDir = require('pkg-dir');
+
+const rootDir = pkgDir.sync(__dirname);
 
 function mtime(path) {
   return fs.statSync(path).mtimeMs;

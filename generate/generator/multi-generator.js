@@ -2,13 +2,15 @@
 
 const loglevel = require('loglevel');
 const { join } = require('path');
-const { path: rootDir } = require('package.root');
+const pkgDir = require('pkg-dir');
 
 const { traverse, watch } = require('./traverse');
 const FileCache = require('./file-cache');
 const { debounce, handleError } = require('./utils');
 
 const log = loglevel.getLogger('generator');
+
+const rootDir = pkgDir.sync(__dirname);
 
 class MultiGenerator {
   constructor(GeneratorClasses, options) {
