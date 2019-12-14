@@ -60,7 +60,7 @@
     "utils",
     "async"
   ],
-  "repository": "git@github.com:sithmel/iter-tools.git",
+  "repository": "git@github.com:iter-tools/iter-tools.git",
   "author": "Maurizio Lupo <maurizio.lupo@gmail.com>",
   "contributors": [
     "Conrad Buck <conartist6@gmail.com>"
