@@ -5,16 +5,15 @@ const fs = require('fs');
 const camelcase = require('camelcase');
 const babylon = require('@babel/parser');
 const fullExtname = require('path-complete-extname');
-const Generator = require('../../generator');
+const { Generator, REMOVE } = require('macrome');
+
 const apiMdFile = require('../_templates/api-md-file');
 const { renameDollar } = require('../../names');
 const extractMethodSignatures = require('./extract-method-signatures');
 
-const { REMOVE } = Generator;
-
-class MonoliticGenerator extends Generator {
-  constructor(options) {
-    super(options);
+class ApiMdGenerator extends Generator {
+  constructor() {
+    super();
 
     this.docsChanged = this.debounce(this.docsChanged);
 
@@ -53,7 +52,7 @@ class MonoliticGenerator extends Generator {
     return camelcase(basename(path));
   }
 
-  recordOperation(path, operation) {
+  recordChange({ path, operation }) {
     if (operation === REMOVE) {
       this.files.delete(path);
     } else {
@@ -107,4 +106,4 @@ class MonoliticGenerator extends Generator {
   }
 }
 
-module.exports = MonoliticGenerator;
+module.exports = ApiMdGenerator;

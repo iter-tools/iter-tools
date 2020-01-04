@@ -11,27 +11,28 @@ const generationErrorFile = require('./_templates/generation-error-file');
 const BaseGenerator = require('./base-generator');
 
 class BaseAsyncGenerator extends BaseGenerator {
-  constructor(options) {
-    super(options);
+  constructor({ ASYNC }) {
+    super();
 
-    this.configurations = [{ ASYNC: true }, { ASYNC: false }];
+    this.ASYNC = ASYNC;
   }
 
-  getDestPath(templatePath, { ASYNC }) {
+  getDestPath(templatePath) {
     const dir = dirname(templatePath);
     const ext = completeExtname(templatePath);
     const base = basename(templatePath, ext);
     const destName = this.getDestName(base, ext);
-    return join(dir, ASYNC ? `async-${destName}` : destName);
+    return join(dir, this.ASYNC ? `async-${destName}` : destName);
   }
 
   getDestName(starMatch, ext) {
     return `${starMatch.slice(1)}${ext}`;
   }
 
-  generatePath(templatePath, destPath, { ASYNC }) {
-    let content;
+  generatePath(templatePath, destPath) {
+    const { ASYNC } = this;
     const generatedFrom = relative(dirname(destPath), templatePath);
+    let content;
 
     try {
       const { code: impl } = babel.transformFileSync(templatePath, {

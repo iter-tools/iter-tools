@@ -9,8 +9,8 @@ const generatedFunctionFile = require('../_templates/generated-function-file');
 const generationErrorFile = require('../_templates/generation-error-file');
 
 class MethodsLinksGenerator extends BaseGenerator {
-  constructor(options) {
-    super(options);
+  constructor() {
+    super();
 
     this.glob = ['src/methods/*/[^$]*.{mjs,d.ts}'];
     this.ignored = ['src/methods/*_/**'];

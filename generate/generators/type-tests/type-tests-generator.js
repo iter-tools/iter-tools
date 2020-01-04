@@ -9,8 +9,8 @@ const generatedFunctionFile = require('../_templates/generated-function-file');
 const generationErrorFile = require('../_templates/generation-error-file');
 
 class TypeTestsGenerator extends BaseGenerator {
-  constructor(options) {
-    super(options);
+  constructor() {
+    super();
 
     this.glob = 'src/methods/*/__tests__/[^$]*.test.js';
     this.ignored = 'src/methods/*/__tests__/*.deprecated.test.js';

@@ -3,12 +3,15 @@
 
 const parseArgs = require('minimist');
 const camelize = require('camelize');
+const { Macrome } = require('macrome');
+const pkgDir = require('pkg-dir');
 
-const MultiGenerator = require('./generator/multi-generator');
-const MethodsGenerator = require('./generators/methods');
+const $MethodsGenerator = require('./generators/$methods');
+const $TypesGenerator = require('./generators/$types');
+const $TestsGenerator = require('./generators/$tests');
 const MethodsLinksGenerator = require('./generators/methods-links');
-const TestsGenerator = require('./generators/tests');
-const TypesGenerator = require('./generators/types');
+const IndexJsGenerator = require('./generators/index-js');
+const IndexTsGenerator = require('./generators/index-ts');
 const TypeTestsGenerator = require('./generators/type-tests');
 const ApiMDGenerator = require('./generators/api-md');
 const MonolithicGenerator = require('./generators/monolithic');
@@ -43,25 +46,31 @@ if (argv.help) {
   console.log(usage);
 } else {
   const alwaysIgnored = ['es5', 'es2015', 'es2018', 'coverage'];
-  if (argv.clean) {
-    require('./generator/clean')('.', { glob: ['src/**'], ignored: alwaysIgnored });
-  } else {
-    const generator = new MultiGenerator(
-      [
-        MethodsGenerator,
-        MethodsLinksGenerator,
-        TestsGenerator,
-        TypesGenerator,
-        TypeTestsGenerator,
-        ApiMDGenerator,
-        MonolithicGenerator,
-      ],
-      {
-        ...argv,
-        alwaysIgnored,
-      },
-    );
 
-    generator.generate();
+  const macrome = new Macrome(
+    [
+      new $MethodsGenerator({ ASYNC: true }),
+      new $MethodsGenerator({ ASYNC: false }),
+      new $TypesGenerator({ ASYNC: true }),
+      new $TypesGenerator({ ASYNC: false }),
+      new $TestsGenerator({ ASYNC: true }),
+      new $TestsGenerator({ ASYNC: false }),
+      new MethodsLinksGenerator(),
+      new IndexJsGenerator(),
+      new IndexTsGenerator(),
+      new TypeTestsGenerator(),
+      new ApiMDGenerator(),
+      new MonolithicGenerator(),
+    ],
+    {
+      rootDir: pkgDir.sync(__dirname),
+      ...argv,
+      alwaysIgnored,
+    },
+  );
+  if (argv.clean) {
+    macrome.clean();
+  } else {
+    macrome.generate();
   }
 }

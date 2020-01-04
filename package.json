@@ -20,7 +20,7 @@
     "generate:clean": "node ./generate -c",
     "build": "run-s clean generate lint :build",
     ":build": "run-s build:*",
-    "build:es5": "cross-env BABEL_ENV=es babel --config-file ./babel-es5.config.js --keep-file-extension -x .mjs,.ts src -d dist",
+    "build:es5": "cross-env BABEL_ENV=es babel --keep-file-extension --config-file ./babel-es5.config.js -x .mjs,.ts src -d dist",
     "build:es5-cjs": "cross-env BABEL_ENV=cjs babel --config-file ./babel-es5.config.js -x .mjs src -d dist",
     "build:es2015": "cross-env BABEL_ENV=es babel --keep-file-extension --config-file ./babel-es2015.config.js -x .mjs,.ts src -d dist/es2015",
     "build:es2015-cjs": "cross-env BABEL_ENV=cjs babel --config-file ./babel-es2015.config.js -x .mjs src -d dist/es2015",

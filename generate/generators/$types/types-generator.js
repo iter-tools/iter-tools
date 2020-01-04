@@ -16,7 +16,7 @@ class TypesGenerator extends BaseAsyncGenerator {
   }
 
   getBabelConfigPath() {
-    return resolve(__dirname, '../methods/babel.config.js');
+    return resolve(__dirname, '../$methods/babel.config.js');
   }
 }
 

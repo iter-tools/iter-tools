@@ -1,8 +1,7 @@
 'use strict';
 
 const prettier = require('prettier');
-
-const Generator = require('../generator');
+const { Generator } = require('macrome');
 
 class BaseGenerator extends Generator {
   getPrettierOptions(filepath) {
