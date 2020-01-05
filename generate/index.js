@@ -64,6 +64,7 @@ if (argv.help) {
     ],
     {
       rootDir: pkgDir.sync(__dirname),
+      sourceControl: 'git',
       ...argv,
       alwaysIgnored,
     },

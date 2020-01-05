@@ -36,7 +36,8 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "lint-staged && tsc"
+      "pre-commit": "lint-staged && tsc",
+      "post-index-change": "touch index-changed-by-hook"
     }
   },
   "lint-staged": {
