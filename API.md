@@ -140,6 +140,8 @@ Combine multiple iterables
 
 Reduce an iterable to a single value
 
+[deepEqual](#deepequal) ([async](#asyncdeepequal))  
+[deepEqualFactory](#deepequalfactory) ([async](#asyncdeepequalfactory))  
 [equal](#equal) ([async](#asyncequal))  
 [every](#every) ([async](#asyncevery))  
 [find](#find) ([async](#asyncfind))  
@@ -1040,7 +1042,7 @@ lastThree; // AsyncIterable[7, 8, 9]
 
 ### splitOn
 
-**splitOn(separator, [source](#sourceiterable))**
+
 
 Yields a [PartsIterable](#partsiterable) of parts from `source`, where `separatorValue` is used to mark the boundary between parts in `source`. `separatorValue` will not occur in the output. `separatorValue` is compared using `===`.
 
@@ -1050,15 +1052,15 @@ splitOn(null, [1, null, 2, null, 3]); // Iterable[[1], [2], [3]]
 
 ### asyncSplitOn
 
-**asyncSplitOn(separator, [source](#asyncsourceiterable))**
+
 
 See [splitOn](#spliton)
 
 ### splitOnAny
 
-**splitOnAny(separators, [source](#sourceiterable))**
 
-Yields a [PartsIterable](#partsiterable) of parts from `source`, where `separatorValues` are used to mark the boundary between parts in `source`. None of the `separatorValues` will not occur in the output. `separatorValues` are compared using `===`.
+
+Yields a [PartsIterable](#partsiterable) of parts from `source`, where `separatorValues` are used to mark the boundary between parts in `source`. None of the `separatorValues` will not occur in the output.
 
 ```js
 splitOnAny([null, undefined], [1, null, 2, undefined, 3]); // Iterable[[1], [2], [3]]
@@ -1066,15 +1068,15 @@ splitOnAny([null, undefined], [1, null, 2, undefined, 3]); // Iterable[[1], [2],
 
 ### asyncSplitOnAny
 
-**asyncSplitOnAny(predicate, [source](#asyncsourceiterable))**
+
 
 See [splitOnAny](#splitonany)
 
 ### splitOnAnySubseq
 
-**splitOnAnySubseq(separatorSubseqs, [source](#sourceiterable))**
 
-Yields a [PartsIterable](#partsiterable) of parts from `source`, where `separatorSubseqs` are used to mark the boundary between parts in `source`. When any `separatorSubseq` in `separatorSubseqs` is matched, all matched values are consumed from `source` and will not appear in any `part`, nor may they be part of any other `separatorSubseq` match. Matches greedily, which is to say the longest possible separator match will be prioritized. Each value in a `separatorSubseq` is compared using `===`.
+
+Yields a [PartsIterable](#partsiterable) of parts from `source`, where `separatorSubseqs` are used to mark the boundary between parts in `source`. When any `separatorSubseq` in `separatorSubseqs` is matched, all matched values are consumed from `source` and will not appear in any `part`, nor may they be part of any other `separatorSubseq` match. Matches greedily, which is to say the longest possible separator match will be prioritized.
 
 ```js
 splitOnAnySubseq(
@@ -1085,15 +1087,15 @@ splitOnAnySubseq(
 
 ### asyncSplitOnAnySubseq
 
-**asyncSplitOnAnySubseq(separatorSubseqs, [source](#asyncsourceiterable))**
+
 
 See [splitOnAnySubseq](#splitonanysubseq)
 
 ### splitOnSubseq
 
-**splitOnSubseq(separatorSubseq, [source](#sourceiterable))**
 
-Yields a [PartsIterable](#partsiterable) of parts from `source`, where `separatorSubseq` is used to mark the boundary between parts in `source`. When `separatorSubseq` is matched, all matched values are consumed from `source`. They will not appear in any `part`, nor may they be part of any other `separatorSubseq` match. Each value in `separatorSubseq` is compared using `===`.
+
+Yields a [PartsIterable](#partsiterable) of parts from `source`, where `separatorSubseq` is used to mark the boundary between parts in `source`. When `separatorSubseq` is matched, all matched values are consumed from `source`. They will not appear in any `part`, nor may they be part of any other `separatorSubseq` match.
 
 ```js
 splitOnSubseq([0, 0], [1, 0, 0, 2, 0, 0, 3]); // Iterable[[1], [2], [3]]
@@ -1104,7 +1106,7 @@ splitOnSubseq([0, 0], [0, 0, 0, 1, 2]); // Iterable[[], [0, 1, 2]]
 
 ### asyncSplitOnSubseq
 
-**asyncSplitOnSubseq(separatorSubseq, [source](#asyncsourceiterable))**
+
 
 See [splitOnSubseq](#splitonsubseq)
 
@@ -1410,9 +1412,127 @@ See [zipAll](#zipall)
 
 ## Reduce an iterable to a single value
 
-### equal
+### deepEqual
 
-**equal(...[iterables](#sourceiterable))**
+**deepEqual(...values)**
+
+Returns `true` if all `values` are deep equal. Compares objects by their entries.
+
+Implemented as `deepEqualFactory()`, meaning that all factory options are default. For further documentation, see [deepEqualFactory](#deepequalfactory).
+
+### asyncDeepEqual
+
+**asyncDeepEqual(...values)**
+
+See [deepEqual](#deepequal)
+
+### deepEqualFactory
+
+**deepEqualFactory(?compareFactory)**  
+**deepEqualFactory({ compareFactory, compare, compareValues, iterableNullish, syncEqualsAsync })**
+
+A configurable factory for `deepEqual` methods having the signature `deepEqual(...values) => boolean`. The factory allows `options` to be passed to customize of comparison behavior. Permissive defaults (see below) have been chosen, so if that is all you need you can simply use the exported [deepEqual](#deepequal) method.
+
+Some behavior is common to all `deepEqual` methods, regardless of the `options` they were created with:
+
+All `deepEqual` methods recurse when ecountering nested iterables.
+
+```js
+deepEqual([], []); // true
+deepEqual([[]], [[]]); // true
+```
+
+All `deepEqual` methods consider iterables equal if their contents are equal. The prototype and own properties of iterable objects cannot be considered.
+
+No `deepEqual` method will consider an iterable equal to a non-iterable.
+
+```js
+deepEqual([{}], [[]]); // false
+```
+
+No `deepEqual` method will consider a string equal to an iterable of characters. While they may be equivalent from the perspective of their iterators, there are virtually no APIs where you may safely substitute one representation for the other.
+
+```js
+deepEqual('abc', ['a', 'b', 'c']); // false
+```
+
+The following are the available `options`:
+
+#### compareFactory
+
+A factory of the form `options => compare`, where compare is described above and `options` are those passed to the factory. Having the options allows you to make a new `deepCompare` which you can use to recurse in the same (or a modified) fashion. This is best illustrated by showing the default value for `compareFactory`, which recurses on the entries of objects.
+
+```js
+const isObj = o => o && typeof o === 'object'
+
+const compareFactory = options => {
+  return (a, b) =>
+  const deepEqual = deepEqualFactory(options);
+    isObject(a) && isObject(b)
+      ? deepEqual(objectEntries(a), objectEntries(b))
+      : Object.is(a, b);
+};
+
+const deepEqual = deepEqualFactory({ compareFactory });
+deepEqual({}, {}); // true
+deepEqual([{}], [{}]); // true
+deepEqual({ iter: ['val'] }, { iter: ['val'] }); // true
+```
+
+#### compare
+
+Syntactic sugar for `compareFactory: _ => compare` for use when recursive comparison inside values is not needed. One of `compare` or `compareFactory` may be specified, but not both.
+
+```js
+const obj = {};
+const compare = (a, b) => a === b;
+const deepEqual = deepEqualFactory({ compare });
+deepEqual([obj], [obj]); // true
+deepEqual([[obj]], [[obj]]); // true
+deepEqual([{}], [{}]); // false
+```
+
+#### compareValues (default: true)
+
+If `deepEqual` is passed all non-iterables, whether to test them with `compare`. If `false`, the resulting method will throw if not all `values` are iterable.
+
+```js
+let deepEqual;
+deepEqual = deepEqualFactory({ compareValues: false });
+deepEqual(1, 1); // throws (numbers are not iterable)
+deepEqual([1], [1]); // true
+
+deepEqual = deepEqualFactory({ compareValues: true });
+deepEqual(1, 1); // true
+deepEqual([1], [1]); // true
+```
+
+#### iterableNullish (default: true)
+
+Whether `null` and `undefined` are considered equal to `Iterable[]`.
+
+```js
+let deepEqual;
+deepEqual = deepEqualFactory({ iterableNullish: true });
+deepEqual([null], [undefined], [[]]); // true
+
+deepEqual = deepEqualFactory({ iterableNullish: false });
+deepEqual([null], [undefined]); // false
+deepEqual([null], [[]]); // false
+```
+
+#### syncEqualsAsync (default: true)
+
+Whether an `AsyncIterable` may be considered equal to an `Iterable` having the same contents.
+
+### asyncDeepEqualFactory
+
+**asyncDeepEqualFactory(?compareFactory)**  
+**asyncDeepEqualFactory({ compareFactory, compare, compareValues, iterableNullish, syncEqualsAsync })**
+
+See [deepEqualFactory](#deepequalfactory)
+
+### equal
 
 Returns `true` if all `iterables` are equal to each other, and `false` otherwise. Only considers the values yielded by the iterables, which it compares with `===`.
 
@@ -1422,8 +1542,6 @@ equals([1, 2, 3], [3, 2, 1]); // false
 ```
 
 ### asyncEqual
-
-**asyncEqual(...[iterables](#asyncsourceiterable))**
 
 See [equal](#equal)
 
@@ -1515,9 +1633,9 @@ See [firstOr](#firstor)
 
 ### includes
 
-**includes(value, [iterable](#sourceiterable))**
 
-Retuns `true` if `iterable` includes the specified `value`, or `false` otherwise. Compares values with `===`.
+
+Retuns `true` if `iterable` includes the specified `value`, or `false` otherwise. Two values are considered equivalent if the result of `compare(a, b)` is truthy. The default `compare` method is `Object.is`.
 
 ```js
 includes(2, [1, 2, 3]); // true
@@ -1526,15 +1644,15 @@ includes(0, [1, 2, 3]); // false
 
 ### asyncIncludes
 
-**asyncIncludes(value, [iterable](#asyncsourceiterable))**
+
 
 See [includes](#includes)
 
 ### includesAny
 
-**includesAny(values, [iterable](#sourceiterable))**
 
-Retuns `true` if `iterable` includes any of the specified `values`, or `false` otherwise. Compares values with `===`.
+
+Retuns `true` if `iterable` includes any of the specified `values`, or `false` otherwise. Two values are considered equivalent if the result of `compare(a, b)` is truthy. The default `compare` method is `Object.is`.
 
 ```js
 includesAny([0, 1], [1, 2, 3]); // true
@@ -1543,15 +1661,15 @@ includesAny([0, 1], [2, 3, 4]); // false
 
 ### asyncIncludesAny
 
-**asyncIncludesAny(values, [iterable](#asyncsourceiterable))**
+
 
 See [includesAny](#includesany)
 
 ### includesAnySubseq
 
-**includesAnySubseq(subseqs, [iterable](#sourceiterable))**
 
-Retuns `true` if any of the the `subseqs` (subsequences) of values can be found somewhere in `iterable`, or `false` otherwise. Compares values with `===`.
+
+Retuns `true` if any of the the `subseqs` (subsequences) of values can be found somewhere in `iterable`, or `false` otherwise. Two values are considered equivalent if the result of `compare(a, b)` is truthy. The default `compare` method is `Object.is`.
 
 ```js
 includesAnySubseq([[1, 2], [2, 3]], [1, 2, 3]); // true
@@ -1561,15 +1679,15 @@ includesAnySubseq([[0, 1], [3, 4]], [1, 2, 3]); // false
 
 ### asyncIncludesAnySubseq
 
-**asyncIncludesAnySubseq(subseqs, [iterable](#asyncsourceiterable))**
+
 
 See [includesAnySubseq](#includesanysubseq)
 
 ### includesSubseq
 
-**includesSubseq(subseq, [iterable](#sourceiterable))**
 
-Retuns `true` if the `subseq` (subsequence) of values can be found somewhere in `iterable`, or `false` otherwise. Compares values with `===`.
+
+Retuns `true` if the `subseq` (subsequence) of values can be found somewhere in `iterable`, or `false` otherwise. Two values are considered equivalent if the result of `compare(a, b)` is truthy. The default `compare` method is `Object.is`.
 
 ```js
 includesSubseq([1, 2], [1, 2, 3]); // true
@@ -1579,7 +1697,7 @@ includesSubseq([2, 3, 4], [1, 2, 3]); // false
 
 ### asyncIncludesSubseq
 
-**asyncIncludesSubseq(subseq, [iterable](#asyncsourceiterable))**
+
 
 See [includesSubseq](#includessubseq)
 
@@ -1730,9 +1848,9 @@ See [some](#some)
 
 ### startsWith
 
-**startsWith(value, [iterable](#sourceiterable))**
 
-Returns `true` if the first value in `source` is `value`, as compared with `===`. Otherwise returns `false`.
+
+Returns `true` if the first value in `source` is `value`. Otherwise returns `false`.
 
 ```js
 startsWith(1, [1, 2, 3]); // true
@@ -1740,15 +1858,15 @@ startsWith(1, [1, 2, 3]); // true
 
 ### asyncStartsWith
 
-**asyncStartsWith(value, [iterable](#asyncsourceiterable))**
+
 
 See [startsWith](#startswith)
 
 ### startsWithAny
 
-**startsWithAny(value, [iterable](#sourceiterable))**
 
-Returns `true` if the first value in `source` is any `value` in `values`, as compared with `===`. Otherwise returns `false`.
+
+Returns `true` if the first value in `source` is any `value` in `values`. Otherwise returns `false`.
 
 ```js
 startsWithAny([0, 1], [1, 2, 3]); // true
@@ -1756,15 +1874,15 @@ startsWithAny([0, 1], [1, 2, 3]); // true
 
 ### asyncStartsWithAny
 
-**asyncStartsWithAny(value, [iterable](#asyncsourceiterable))**
+
 
 See [startsWithAny](#startswithany)
 
 ### startsWithAnySubseq
 
-**startsWithAnySubseq(valueSubseqs, [iterable](#sourceiterable))**
 
-Returns `true` if the first subsequence of values in `source` match any `valueSubseq` in `valueSubseqs`, where each value is compared with `===`. Otherwise returns `false`.
+
+Returns `true` if the first subsequence of values in `source` match any `valueSubseq` in `valueSubseqs`. Otherwise returns `false`.
 
 ```js
 startsWithAnySubseq([[0, 1], [1, 2]], [1, 2, 3]); // true
@@ -1772,15 +1890,15 @@ startsWithAnySubseq([[0, 1], [1, 2]], [1, 2, 3]); // true
 
 ### asyncStartsWithAnySubseq
 
-**asyncStartsWithAnySubseq(valueSubseqs, [iterable](#asyncsourceiterable))**
+
 
 See [startsWithAnySubseq](#startswithanysubseq)
 
 ### startsWithSubseq
 
-**startsWithSubseq(valueSubseq, [iterable](#sourceiterable))**
+**startsWithSubseq(valueSubseq, compare, [iterable](#sourceiterable))**
 
-Returns `true` if the first subsequence of values in `source` matches `valueSubseq`, where each value is compared with `===`. Otherwise returns `false`.
+Returns `true` if the first subsequence of values in `source` matches `valueSubseq`. Otherwise returns `false`.
 
 ```js
 startsWithSubseq([1, 2], [1, 2, 3]); // true
@@ -1788,7 +1906,7 @@ startsWithSubseq([1, 2], [1, 2, 3]); // true
 
 ### asyncStartsWithSubseq
 
-**asyncStartsWithSubseq(valueSubseq, [iterable](#asyncsourceiterable))**
+**asyncStartsWithSubseq(valueSubseq, compare, [iterable](#asyncsourceiterable))**
 
 See [startsWithSubseq](#startswithsubseq)
 

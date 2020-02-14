@@ -1,12 +1,12 @@
 import { $iterableCurry } from '../../internal/$iterable';
-import { $includes_ } from '../$includes_/$includes_';
+import { $includesAny } from '../$includes-any/$includes-any';
 
-const config = { any: false, subseq: false };
-
-export function $includes(iterable, value) {
-  return $includes_(iterable, config, value);
+export function $includes(iterable, value, compare = Object.is) {
+  return $includesAny(iterable, [value], compare);
 }
 
 export default $iterableCurry($includes, {
   reduces: true,
+  maxArgs: 2,
+  optionalArgsAtEnd: true,
 });

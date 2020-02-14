@@ -10,6 +10,7 @@ import { CircularBuffer } from '../../internal/circular-buffer';
 import { asyncIterableCurry } from '../../internal/async-iterable';
 import { IterableIterator } from '../../internal/iterable-iterator';
 import { AsyncPartsIterator, split } from '../../internal/async-spliterator';
+import { wrap } from '../$wrap/wrap';
 export async function* AsyncIndexSpliterator(source, idx) {
   const sourceIterator = source[Symbol.asyncIterator]();
   const fromEnd = idx < 0;
@@ -129,8 +130,10 @@ export class AsyncSplitAt extends IterableIterator {
     };
   }
 }
-export function* asyncSplitAt(source, idx) {
-  yield* new AsyncSplitAt(source, idx);
+export function asyncSplitAt(source, idx) {
+  return typeof source === 'string'
+    ? wrap([source.slice(0, idx), source.slice(idx, Infinity)])
+    : wrap(new AsyncSplitAt(source, idx));
 }
 export default asyncIterableCurry(asyncSplitAt, {
   forceSync: true,

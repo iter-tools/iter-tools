@@ -7,14 +7,12 @@
  */
 
 import { asyncIterableCurry } from '../../internal/async-iterable';
-import { asyncIncludes_ } from '../$includes_/async-includes_';
-const config = {
-  any: false,
-  subseq: true,
-};
-export function asyncIncludesSubseq(iterable, subseq) {
-  return asyncIncludes_(iterable, config, subseq);
+import { asyncIncludesAnySubseq } from '../$includes-any-subseq/async-includes-any-subseq';
+export function asyncIncludesSubseq(iterable, subseq, compare = Object.is) {
+  return asyncIncludesAnySubseq(iterable, [subseq], compare);
 }
 export default asyncIterableCurry(asyncIncludesSubseq, {
   reduces: true,
+  maxArgs: 2,
+  optionalArgsAtEnd: true,
 });

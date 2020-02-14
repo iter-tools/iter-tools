@@ -11,4 +11,15 @@ declare function $includesSubseq(
   iterable: $SourceIterable<any>,
 ): $Promise<boolean>;
 
+declare function $includesSubseq<V, T>(
+  subseq: $SourceIterable<V>,
+  compare: (value: V, item: T) => boolean,
+): (iterable: $SourceIterable<T>) => $Promise<boolean>;
+
+declare function $includesSubseq<V, T>(
+  subseq: $SourceIterable<V>,
+  compare: (value: V, item: T) => boolean,
+  iterable: $SourceIterable<T>,
+): $Promise<boolean>;
+
 export default $includesSubseq;

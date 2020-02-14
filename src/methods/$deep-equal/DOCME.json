@@ -1,0 +1,4 @@
+{
+  "type": "reduce",
+  "signatures": [[{ "name": "values", "isRest": true }]]
+}

@@ -7,17 +7,30 @@
  */
 
 import { SourceIterable as SyncSourceIterable } from '../../types/iterable';
-import { AsyncSourceIterable, AsyncResultIterable } from '../../types/async-iterable';
-declare function asyncSplitOnAny(
-  separatorValues: SyncSourceIterable<string>,
-): (source: string) => AsyncResultIterable<string>;
+import { AsyncSourceIterable, AsyncResultIterable } from '../../types/async-iterable'; // curried
+// prettier-ignore
+
+declare function asyncSplitOnAny(separatorValues: SyncSourceIterable<string>, compare?: (value: string, item: string) => boolean): (source: string) => AsyncResultIterable<string>;
 declare function asyncSplitOnAny(
   separatorValues: SyncSourceIterable<any>,
 ): <T>(source: AsyncSourceIterable<T>) => AsyncResultIterable<AsyncResultIterable<T>>;
+declare function asyncSplitOnAny<V, T>(
+  separatorValues: SyncSourceIterable<V>,
+  compare: (value: V, item: T) => boolean,
+): (source: AsyncSourceIterable<T>) => AsyncResultIterable<AsyncResultIterable<T>>; // noncurried
+// prettier-ignore
+
+declare function asyncSplitOnAny(separatorValues: SyncSourceIterable<string>, compare: (value: string, item: string) => boolean, source: string): AsyncResultIterable<string>; // prettier-ignore
+
 declare function asyncSplitOnAny(
   separatorValues: SyncSourceIterable<string>,
   source: string,
 ): AsyncResultIterable<string>;
+declare function asyncSplitOnAny<V, T>(
+  separatorValues: SyncSourceIterable<V>,
+  compare: (value: V, item: T) => boolean,
+  source: AsyncSourceIterable<T>,
+): AsyncResultIterable<AsyncResultIterable<T>>;
 declare function asyncSplitOnAny<T>(
   separatorValues: SyncSourceIterable<any>,
   source: AsyncSourceIterable<T>,

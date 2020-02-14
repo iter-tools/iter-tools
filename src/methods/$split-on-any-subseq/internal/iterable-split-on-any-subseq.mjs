@@ -8,24 +8,21 @@
 
 import { PartsIterator, Spliterator, split } from '../../../internal/spliterator';
 import { CircularBuffer } from '../../../internal/circular-buffer';
-import { iterableStartsWith_ } from '../../$starts-with_/iterable-starts-with_';
+import { iterableStartsWithAnySubseq } from '../../$starts-with-any-subseq/internal/iterable-starts-with-any-subseq';
 import map from '../../$map/map';
 import toArray from '../../$to-array/to-array';
-const startsWithConfig = {
-  any: false,
-  subseq: true,
-};
 
 class AnySubseqSpliterator extends Spliterator {
-  constructor(sourceIterator, separatorSubseqs) {
+  constructor(sourceIterator, separatorSubseqs, equals) {
     super(sourceIterator);
-    const maxMatchLength = separatorSubseqs.reduce((max, { length }) => Math.max(max, length), 1);
     this.separatorSubseqs = separatorSubseqs;
+    this.equals = equals;
+    const maxMatchLength = separatorSubseqs.reduce((max, { length }) => Math.max(max, length), 1);
     this.buffer = new CircularBuffer(maxMatchLength);
   }
 
-  static nullOrInstance(sourceIterator, separatorSubseqs) {
-    const inst = new AnySubseqSpliterator(sourceIterator, separatorSubseqs);
+  static nullOrInstance(sourceIterator, separatorSubseqs, equals) {
+    const inst = new AnySubseqSpliterator(sourceIterator, separatorSubseqs, equals);
     return inst._isEmpty() ? null : inst;
   }
 
@@ -41,7 +38,7 @@ class AnySubseqSpliterator extends Spliterator {
 
   getMatchingLength() {
     for (const subsequence of this.separatorSubseqs) {
-      if (iterableStartsWith_(this.buffer, startsWithConfig, subsequence)) {
+      if (iterableStartsWithAnySubseq(this.buffer, [subsequence], this.equals)) {
         return subsequence.length;
       }
     }
@@ -78,12 +75,12 @@ class AnySubseqSpliterator extends Spliterator {
   }
 }
 
-export function* iterableSplitOnAnySubseq(source, separatorSubseqs) {
+export function* iterableSplitOnAnySubseq(source, separatorSubseqs, equals) {
   const _separatorSubseqs = toArray(map(toArray, separatorSubseqs))
     .filter(subseq => subseq.length)
     .sort((a, b) => b.length - a.length);
 
   yield* new PartsIterator(
-    AnySubseqSpliterator.nullOrInstance(source[Symbol.iterator](), _separatorSubseqs),
+    AnySubseqSpliterator.nullOrInstance(source[Symbol.iterator](), _separatorSubseqs, equals),
   );
 }

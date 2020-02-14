@@ -5,6 +5,23 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 
+## [Unreleased]
+### Changed
+ -  `splitAt` and `asyncSplitAt` now return string parts when splitting strings.
+
+### Added
+**Methods**
+ -  `equalFactory`
+ -  `deepEqual`, `deepEqualFactory`
+
+**Arguments**
+ -  `compare` argument of form `(a, b) => boolean` appended to:
+    -  `startsWith`, `startsWithAny`, `startsWithSubseq`, `startsWithAnySubseq`
+    -  `includes`, `includesAny`, `includesSubseq`, `includesAnySubseq`
+    -  `splitOn`, `splitOnAny`, `splitOnSubseq`, `splitOnAnySubseq`
+
+
+
 ## [7.0.0-rc.0] - 2019-12-13
 ### Removed
 **Methods**
@@ -149,6 +166,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
  -  combinatory function generators return an iterable with an extra method to calculate the size
 
 
+
 ## [6.1.7] - 2018-11-06
 ### Fixed
  -  Added polyfills to transpiled versions
@@ -212,6 +230,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
  -  `slice` and `asyncSlice` now support negative `start` and `end`.
 
 
+
 ## [5.0.0] - 2018-6-20
 ### Added
 **Methods**
@@ -227,6 +246,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
  -  `iter({next: 'foo'})` now returns `Iterator[[next, 'foo']]` not `{next: 'foo'}`. This is particular to objects having any property named next.
 
 
+
 ## [4.1.0] - 2018-6-12
 ### Added
 **Methods**
@@ -234,6 +254,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
  -  `batch`, `asyncBatch`, `asyncMapBatch`
  -  `regexpExecIter`, `asyncRegexpExecIter`
  -  `asyncThrottle`
+
 
 ## [4.0.0] - 2018-6-2
 ### Changed

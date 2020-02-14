@@ -15,4 +15,13 @@ declare function startsWithAny(
   values: SyncSourceIterable<any>,
   iterable: SourceIterable<any>,
 ): boolean;
+declare function startsWithAny<V, T>(
+  values: SyncSourceIterable<V>,
+  compare: (value: V, item: T) => boolean,
+): (iterable: SourceIterable<T>) => boolean;
+declare function startsWithAny<V, T>(
+  values: SyncSourceIterable<V>,
+  compare: (value: V, item: T) => boolean,
+  iterable: SourceIterable<T>,
+): boolean;
 export default startsWithAny;

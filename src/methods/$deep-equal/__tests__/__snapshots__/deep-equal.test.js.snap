@@ -1,0 +1,3 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`deepEqual given no values throws 1`] = `[Error: deepEqual received no values to compare.]`;

@@ -1,12 +1,12 @@
 import { $iterableCurry } from '../../internal/$iterable';
-import { $startsWith_ } from '../$starts-with_/$starts-with_';
+import { $startsWithAny } from '../$starts-with-any/$starts-with-any';
 
-const config = { any: false, subseq: false };
-
-export function $startsWith(iterable, value) {
-  return $startsWith_(iterable, config, value);
+export function $startsWith(iterable, value, compare = Object.is) {
+  return $startsWithAny(iterable, [value], compare);
 }
 
 export default $iterableCurry($startsWith, {
   reduces: true,
+  maxArgs: 2,
+  optionalArgsAtEnd: true,
 });

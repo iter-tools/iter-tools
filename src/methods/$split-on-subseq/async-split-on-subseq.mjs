@@ -8,7 +8,10 @@
 
 import { asyncIterableCurry } from '../../internal/async-iterable';
 import { asyncSplitOnAnySubseq } from '../$split-on-any-subseq/async-split-on-any-subseq';
-export function asyncSplitOnSubseq(source, separatorSubseq) {
-  return asyncSplitOnAnySubseq(source, [separatorSubseq]);
+export function asyncSplitOnSubseq(source, separatorSubseq, equals = Object.is) {
+  return asyncSplitOnAnySubseq(source, [separatorSubseq], equals);
 }
-export default asyncIterableCurry(asyncSplitOnSubseq);
+export default asyncIterableCurry(asyncSplitOnSubseq, {
+  maxArgs: 2,
+  optionalArgsAtEnd: true,
+});

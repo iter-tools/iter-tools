@@ -7,10 +7,12 @@
  */
 
 import { ResultIterable as SyncResultIterable } from '../../types/iterable';
-import { AsyncSourceIterable, AsyncResultIterable } from '../../types/async-iterable';
-declare function asyncSplitAt(
-  idx: number,
-): <T>(source: AsyncSourceIterable<T>) => SyncResultIterable<AsyncResultIterable<T>>;
+import { AsyncSourceIterable, AsyncResultIterable } from "../../types/async-iterable"; // prettier-ignore
+
+declare function asyncSplitAt(idx: number): (source: string) => SyncResultIterable<string>;
+declare function asyncSplitAt(idx: number): <T>(source: AsyncSourceIterable<T>) => SyncResultIterable<AsyncResultIterable<T>>; // prettier-ignore
+
+declare function asyncSplitAt(idx: number, source: string): SyncResultIterable<string>;
 declare function asyncSplitAt<T>(
   idx: number,
   source: AsyncSourceIterable<T>,

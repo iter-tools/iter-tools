@@ -9,4 +9,13 @@
 import { SourceIterable } from '../../types/iterable';
 declare function includes(value: any): (iterable: SourceIterable<any>) => boolean;
 declare function includes(value: any, iterable: SourceIterable<any>): boolean;
+declare function includes<V, T>(
+  value: V,
+  compare: (value: V, item: T) => boolean,
+): (iterable: SourceIterable<T>) => boolean;
+declare function includes<V, T>(
+  value: V,
+  compare: (value: V, item: T) => boolean,
+  iterable: SourceIterable<T>,
+): boolean;
 export default includes;

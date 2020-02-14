@@ -11,6 +11,9 @@ describe('startsWithAny', () => {
   it('returns true if the iterable starts with any of the given values', () => {
     expect(startsWithAny([0, 1], range(1, 10))).toBe(true);
   });
+  it('returns true if the iterable starts with the given value using the given equality comparator', () => {
+    expect(startsWithAny(['0', '1'], (a, b) => a === b.toString(), range(1, 10))).toBe(true);
+  });
   it('returns true if the iterable starts with all of the given values', () => {
     expect(startsWithAny([1, 1], range(1, 10))).toBe(true);
   });

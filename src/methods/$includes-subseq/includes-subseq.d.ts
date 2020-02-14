@@ -14,4 +14,13 @@ declare function includesSubseq(
   subseq: SourceIterable<any>,
   iterable: SourceIterable<any>,
 ): boolean;
+declare function includesSubseq<V, T>(
+  subseq: SourceIterable<V>,
+  compare: (value: V, item: T) => boolean,
+): (iterable: SourceIterable<T>) => boolean;
+declare function includesSubseq<V, T>(
+  subseq: SourceIterable<V>,
+  compare: (value: V, item: T) => boolean,
+  iterable: SourceIterable<T>,
+): boolean;
 export default includesSubseq;

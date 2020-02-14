@@ -12,4 +12,15 @@ declare function $startsWithAny(
   iterable: $SourceIterable<any>,
 ): $Promise<boolean>;
 
+declare function $startsWithAny<V, T>(
+  values: SyncSourceIterable<V>,
+  compare: (value: V, item: T) => boolean,
+): (iterable: $SourceIterable<T>) => $Promise<boolean>;
+
+declare function $startsWithAny<V, T>(
+  values: SyncSourceIterable<V>,
+  compare: (value: V, item: T) => boolean,
+  iterable: $SourceIterable<T>,
+): $Promise<boolean>;
+
 export default $startsWithAny;

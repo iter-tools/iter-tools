@@ -1,4 +1,4 @@
-Retuns `true` if the `subseq` (subsequence) of values can be found somewhere in `iterable`, or `false` otherwise. Compares values with `===`.
+Retuns `true` if the `subseq` (subsequence) of values can be found somewhere in `iterable`, or `false` otherwise. Two values are considered equivalent if the result of `compare(a, b)` is truthy. The default `compare` method is `Object.is`.
 
 ```js
 includesSubseq([1, 2], [1, 2, 3]); // true

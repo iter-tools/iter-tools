@@ -15,4 +15,13 @@ declare function includesAny(
   values: SyncSourceIterable<any>,
   iterable: SourceIterable<any>,
 ): boolean;
+declare function includesAny<V, T>(
+  values: SyncSourceIterable<V>,
+  compare: (value: V, item: T) => boolean,
+): (iterable: SourceIterable<T>) => boolean;
+declare function includesAny<V, T>(
+  values: SyncSourceIterable<V>,
+  compare: (value: V, item: T) => boolean,
+  iterable: SourceIterable<T>,
+): boolean;
 export default includesAny;

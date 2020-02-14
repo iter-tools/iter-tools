@@ -1,19 +1,20 @@
-const orInifity = value => (value === -1 ? Infinity : value);
+import { stringIndexOf } from '../../$includes/internal/string-index-of';
 
-function findNext(str, separatorStrings, start = 0) {
+function findNext(equals, str, separators, position = 0) {
   let index = Infinity;
   let size = null;
 
-  for (const separatorString of separatorStrings) {
-    if (str.indexOf(separatorString, start) < index) {
-      size = separatorString.length;
+  for (const separator of separators) {
+    const matchIndex = stringIndexOf(str, separator, equals, position);
+    if (matchIndex >= 0 && matchIndex < index) {
+      size = separator.length;
+      index = matchIndex;
     }
-    index = Math.min(orInifity(str.indexOf(separatorString, start)), index);
   }
   return index === Infinity ? null : { index, size };
 }
 
-export function* stringSplitOnAny(str, separatorStrings) {
+export function* stringSplitOnAny(str, separators, equals) {
   if (str === '') return;
 
   let match = {
@@ -21,7 +22,7 @@ export function* stringSplitOnAny(str, separatorStrings) {
     size: 0,
   };
   let nextMatch;
-  while ((nextMatch = findNext(str, separatorStrings, match.index + match.size))) {
+  while ((nextMatch = findNext(equals, str, separators, match.index + match.size))) {
     yield str.slice(match.index + match.size, nextMatch.index);
     match = nextMatch;
   }

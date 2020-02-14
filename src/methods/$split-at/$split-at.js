@@ -4,6 +4,7 @@ import { CircularBuffer } from '../../internal/circular-buffer';
 import { $iterableCurry } from '../../internal/$iterable';
 import { IterableIterator } from '../../internal/iterable-iterator';
 import { $PartsIterator, split } from '../../internal/$spliterator';
+import { wrap } from '../$wrap/wrap';
 
 $async;
 export function* $IndexSpliterator(source, idx) {
@@ -118,8 +119,10 @@ export class $SplitAt extends IterableIterator {
   }
 }
 
-export function* $splitAt(source, idx) {
-  yield* new $SplitAt(source, idx);
+export function $splitAt(source, idx) {
+  return typeof source === 'string'
+    ? wrap([source.slice(0, idx), source.slice(idx, Infinity)])
+    : wrap(new $SplitAt(source, idx));
 }
 
 export default $iterableCurry($splitAt, {

@@ -23,6 +23,12 @@ module.exports = {
       },
     },
     {
+      files: ['*.spec.ts', '*.test.js'],
+      rules: {
+        eqeqeq: 'off',
+      },
+    },
+    {
       files: ['*.auto.spec.ts'],
       rules: {
         '@typescript-eslint/explicit-function-return-type': 'off',

@@ -1,0 +1,18 @@
+{
+  "type": "reduce",
+  "signatures": [
+    [{ "name": "compareFactory", "isOptional": true }],
+    [
+      {
+        "name": null,
+        "properties": [
+          "compareFactory",
+          "compare",
+          "compareValues",
+          "iterableNullish",
+          "syncEqualsAsync"
+        ]
+      }
+    ]
+  ]
+}

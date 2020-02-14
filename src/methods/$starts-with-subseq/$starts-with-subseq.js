@@ -1,10 +1,8 @@
 import { $iterableCurry } from '../../internal/$iterable';
-import { $startsWith_ } from '../$starts-with_/$starts-with_';
+import { $startsWithAnySubseq } from '../$starts-with-any-subseq/$starts-with-any-subseq';
 
-const config = { any: false, subseq: true };
-
-export function $startsWithSubseq(iterable, valueSubseq) {
-  return $startsWith_(iterable, config, valueSubseq);
+export function $startsWithSubseq(iterable, valueSubseq, compare) {
+  return $startsWithAnySubseq(iterable, [valueSubseq], compare);
 }
 
 export default $iterableCurry($startsWithSubseq, {

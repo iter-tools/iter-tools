@@ -6,4 +6,15 @@ declare function $includes(value: any): (iterable: $SourceIterable<any>) => $Pro
 
 declare function $includes(value: any, iterable: $SourceIterable<any>): $Promise<boolean>;
 
+declare function $includes<V, T>(
+  value: V,
+  compare: (value: V, item: T) => boolean,
+): (iterable: $SourceIterable<T>) => $Promise<boolean>;
+
+declare function $includes<V, T>(
+  value: V,
+  compare: (value: V, item: T) => boolean,
+  iterable: $SourceIterable<T>,
+): $Promise<boolean>;
+
 export default $includes;

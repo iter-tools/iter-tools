@@ -11,6 +11,9 @@ describe('startsWith', () => {
   it('returns true if the iterable starts with the given value', () => {
     expect(startsWith(1, range(1, 10))).toBe(true);
   });
+  it('returns true if the iterable starts with the given value using the given equality comparator', () => {
+    expect(startsWith('1', (a, b) => a === b.toString(), range(1, 10))).toBe(true);
+  });
   it('returns false if the iterable contains but does not start with the given value', () => {
     expect(startsWith(1, range(0, 10))).toBe(false);
   });

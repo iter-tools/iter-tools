@@ -9,10 +9,19 @@
 import { AsyncSourceIterable } from '../../types/async-iterable';
 import { SourceIterable as SyncSourceIterable } from '../../types/iterable';
 declare function asyncIncludesAnySubseq(
-  subseqs: SyncSourceIterable<AsyncSourceIterable<any>>,
+  valueSubseqs: SyncSourceIterable<AsyncSourceIterable<any>>,
 ): (iterable: AsyncSourceIterable<any>) => Promise<boolean>;
 declare function asyncIncludesAnySubseq(
-  subseqs: SyncSourceIterable<AsyncSourceIterable<any>>,
+  valueSubseqs: SyncSourceIterable<AsyncSourceIterable<any>>,
   iterable: AsyncSourceIterable<any>,
+): Promise<boolean>;
+declare function asyncIncludesAnySubseq<V, T>(
+  valueSubseqs: SyncSourceIterable<AsyncSourceIterable<V>>,
+  compare: (value: V, item: T) => boolean,
+): (iterable: AsyncSourceIterable<T>) => Promise<boolean>;
+declare function asyncIncludesAnySubseq<V, T>(
+  valueSubseqs: SyncSourceIterable<AsyncSourceIterable<V>>,
+  compare: (value: V, item: T) => boolean,
+  iterable: AsyncSourceIterable<T>,
 ): Promise<boolean>;
 export default asyncIncludesAnySubseq;

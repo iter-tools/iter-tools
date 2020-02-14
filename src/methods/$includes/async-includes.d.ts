@@ -11,4 +11,13 @@ declare function asyncIncludes(
   value: any,
 ): (iterable: AsyncSourceIterable<any>) => Promise<boolean>;
 declare function asyncIncludes(value: any, iterable: AsyncSourceIterable<any>): Promise<boolean>;
+declare function asyncIncludes<V, T>(
+  value: V,
+  compare: (value: V, item: T) => boolean,
+): (iterable: AsyncSourceIterable<T>) => Promise<boolean>;
+declare function asyncIncludes<V, T>(
+  value: V,
+  compare: (value: V, item: T) => boolean,
+  iterable: AsyncSourceIterable<T>,
+): Promise<boolean>;
 export default asyncIncludes;

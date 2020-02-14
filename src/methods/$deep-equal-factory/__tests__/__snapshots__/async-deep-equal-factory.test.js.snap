@@ -1,0 +1,5 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`asyncDeepEqualFactory cannot have both compare and compareFactory arguments 1`] = `[Error: deepEqualFactory cannot have both compare and compareFactory arguments]`;
+
+exports[`asyncDeepEqualFactory compareValues: false throws if values are not iterable 1`] = `[Error: A value passed to asyncDeepEqual was not iterable]`;

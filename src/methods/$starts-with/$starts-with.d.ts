@@ -6,4 +6,15 @@ declare function $startsWith(value: any): (iterable: $SourceIterable<any>) => $P
 
 declare function $startsWith(value: any, iterable: $SourceIterable<any>): $Promise<boolean>;
 
+declare function $startsWith<V, T>(
+  value: V,
+  compare: (value: V, item: T) => boolean,
+): (iterable: $SourceIterable<T>) => $Promise<boolean>;
+
+declare function $startsWith<V, T>(
+  value: V,
+  compare: (value: V, item: T) => boolean,
+  iterable: $SourceIterable<T>,
+): $Promise<boolean>;
+
 export default $startsWith;

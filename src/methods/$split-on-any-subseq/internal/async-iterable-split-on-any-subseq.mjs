@@ -8,24 +8,21 @@
 
 import { AsyncPartsIterator, AsyncSpliterator, split } from '../../../internal/async-spliterator';
 import { CircularBuffer } from '../../../internal/circular-buffer';
-import { iterableStartsWith_ } from '../../$starts-with_/iterable-starts-with_';
+import { iterableStartsWithAnySubseq } from '../../$starts-with-any-subseq/internal/iterable-starts-with-any-subseq';
 import asyncMap from '../../$map/async-map';
 import asyncToArray from '../../$to-array/async-to-array';
-const startsWithConfig = {
-  any: false,
-  subseq: true,
-};
 
 class AsyncAnySubseqSpliterator extends AsyncSpliterator {
-  constructor(sourceIterator, separatorSubseqs) {
+  constructor(sourceIterator, separatorSubseqs, equals) {
     super(sourceIterator);
-    const maxMatchLength = separatorSubseqs.reduce((max, { length }) => Math.max(max, length), 1);
     this.separatorSubseqs = separatorSubseqs;
+    this.equals = equals;
+    const maxMatchLength = separatorSubseqs.reduce((max, { length }) => Math.max(max, length), 1);
     this.buffer = new CircularBuffer(maxMatchLength);
   }
 
-  static async nullOrInstance(sourceIterator, separatorSubseqs) {
-    const inst = new AsyncAnySubseqSpliterator(sourceIterator, separatorSubseqs);
+  static async nullOrInstance(sourceIterator, separatorSubseqs, equals) {
+    const inst = new AsyncAnySubseqSpliterator(sourceIterator, separatorSubseqs, equals);
     return (await inst._isEmpty()) ? null : inst;
   }
 
@@ -41,7 +38,7 @@ class AsyncAnySubseqSpliterator extends AsyncSpliterator {
 
   getMatchingLength() {
     for (const subsequence of this.separatorSubseqs) {
-      if (iterableStartsWith_(this.buffer, startsWithConfig, subsequence)) {
+      if (iterableStartsWithAnySubseq(this.buffer, [subsequence], this.equals)) {
         return subsequence.length;
       }
     }
@@ -78,7 +75,7 @@ class AsyncAnySubseqSpliterator extends AsyncSpliterator {
   }
 }
 
-export async function* asyncIterableSplitOnAnySubseq(source, separatorSubseqs) {
+export async function* asyncIterableSplitOnAnySubseq(source, separatorSubseqs, equals) {
   const _separatorSubseqs = (await asyncToArray(asyncMap(asyncToArray, separatorSubseqs)))
     .filter(subseq => subseq.length)
     .sort((a, b) => b.length - a.length);
@@ -87,6 +84,7 @@ export async function* asyncIterableSplitOnAnySubseq(source, separatorSubseqs) {
     await AsyncAnySubseqSpliterator.nullOrInstance(
       source[Symbol.asyncIterator](),
       _separatorSubseqs,
+      equals,
     ),
   );
 }

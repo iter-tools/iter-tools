@@ -14,4 +14,13 @@ declare function asyncStartsWithSubseq(
   valueSubseq: AsyncSourceIterable<any>,
   iterable: AsyncSourceIterable<any>,
 ): Promise<boolean>;
+declare function asyncStartsWithSubseq<V, T>(
+  valueSubseq: AsyncSourceIterable<V>,
+  compare: (value: V, item: T) => boolean,
+): (iterable: AsyncSourceIterable<T>) => Promise<boolean>;
+declare function asyncStartsWithSubseq<V, T>(
+  valueSubseq: AsyncSourceIterable<V>,
+  compare: (value: V, item: T) => boolean,
+  iterable: AsyncSourceIterable<T>,
+): Promise<boolean>;
 export default asyncStartsWithSubseq;

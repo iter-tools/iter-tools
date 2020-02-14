@@ -6,16 +6,29 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { AsyncSourceIterable, AsyncResultIterable } from "../../types/async-iterable"; // prettier-ignore
+import { AsyncSourceIterable, AsyncResultIterable } from '../../types/async-iterable'; // curried
+// prettier-ignore
 
-declare function asyncSplit(
-  separatorValue: string,
-): (source: string) => AsyncResultIterable<string>;
-declare function asyncSplit(separatorValue: any): <T>(source: AsyncSourceIterable<T>) => AsyncResultIterable<AsyncResultIterable<T>>; // prettier-ignore
+declare function asyncSplitOn(separatorValue: string, compare?: (value: string, item: string) => boolean): (source: string) => AsyncResultIterable<string>;
+declare function asyncSplitOn(
+  separatorValue: any,
+): <T>(source: AsyncSourceIterable<T>) => AsyncResultIterable<AsyncResultIterable<T>>;
+declare function asyncSplitOn<V, T>(
+  separatorValue: V,
+  compare: (value: V, item: T) => boolean,
+): (source: AsyncSourceIterable<T>) => AsyncResultIterable<AsyncResultIterable<T>>; // noncurried
+// prettier-ignore
 
-declare function asyncSplit(separatorValue: string, source: string): AsyncResultIterable<string>;
-declare function asyncSplit<T>(
+declare function asyncSplitOn(separatorValue: string, compare: (value: string, item: string) => boolean, source: string): AsyncResultIterable<string>; // prettier-ignore
+
+declare function asyncSplitOn(separatorValue: string, source: string): AsyncResultIterable<string>;
+declare function asyncSplitOn<V, T>(
+  separatorValue: V,
+  compare: (value: V, item: T) => boolean,
+  source: AsyncSourceIterable<T>,
+): AsyncResultIterable<AsyncResultIterable<T>>;
+declare function asyncSplitOn<T>(
   separatorValue: any,
   source: AsyncSourceIterable<T>,
 ): AsyncResultIterable<AsyncResultIterable<T>>;
-export default asyncSplit;
+export default asyncSplitOn;
