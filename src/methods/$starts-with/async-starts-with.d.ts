@@ -13,11 +13,11 @@ declare function asyncStartsWith(
 declare function asyncStartsWith(value: any, iterable: AsyncSourceIterable<any>): Promise<boolean>;
 declare function asyncStartsWith<V, T>(
   value: V,
-  compare: (value: V, item: T) => boolean,
+  compareEquality: (value: V, item: T) => boolean,
 ): (iterable: AsyncSourceIterable<T>) => Promise<boolean>;
 declare function asyncStartsWith<V, T>(
   value: V,
-  compare: (value: V, item: T) => boolean,
+  compareEquality: (value: V, item: T) => boolean,
   iterable: AsyncSourceIterable<T>,
 ): Promise<boolean>;
 export default asyncStartsWith;

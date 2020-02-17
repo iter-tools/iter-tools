@@ -8,8 +8,8 @@
 
 import { asyncIterableCurry } from '../../internal/async-iterable';
 import { asyncIncludesAnySubseq } from '../$includes-any-subseq/async-includes-any-subseq';
-export function asyncIncludesSubseq(iterable, subseq, compare = Object.is) {
-  return asyncIncludesAnySubseq(iterable, [subseq], compare);
+export function asyncIncludesSubseq(iterable, subseq, compareEquality = Object.is) {
+  return asyncIncludesAnySubseq(iterable, [subseq], compareEquality);
 }
 export default asyncIterableCurry(asyncIncludesSubseq, {
   reduces: true,

@@ -5,7 +5,10 @@ import { wrap as syncWrap } from '../../..';
 
 describe($`deepEqualFactory`, () => {
   describe('iterableNullish: false', () => {
-    const $deepEqual = $deepEqualFactory({ iterableNullish: false, compare: (a, b) => a == b });
+    const $deepEqual = $deepEqualFactory({
+      iterableNullish: false,
+      compareEquality: (a, b) => a == b,
+    });
     it(
       'null and undefined are handled by compare',
       $async(() => {
@@ -49,12 +52,12 @@ describe($`deepEqualFactory`, () => {
   it(
     'can have a custom value comparator',
     $async(() => {
-      const $deepNotEqual = $deepEqualFactory({ compare: () => false });
+      const $deepNotEqual = $deepEqualFactory({ compareEquality: () => false });
       expect($await($deepNotEqual(1, 1))).toBe(false);
 
       const $deepDoubleEqual = $deepEqualFactory({
         iterableNullish: false,
-        compare: (a, b) => a == b,
+        compareEquality: (a, b) => a == b,
       });
       expect(
         $await(
@@ -72,7 +75,7 @@ describe($`deepEqualFactory`, () => {
     $async(() => {
       let error;
       try {
-        $deepEqualFactory({ compare: _ => _, compareFactory: _ => _ });
+        $deepEqualFactory({ compareEquality: _ => _, compareEqualityFactory: _ => _ });
       } catch (e) {
         error = e;
       }

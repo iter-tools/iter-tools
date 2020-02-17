@@ -1,8 +1,8 @@
 import { stringStartsWith } from '../../$starts-with/internal/string-starts-with';
 
-export function stringStartsWithAny(str, substrs, compare) {
+export function stringStartsWithAny(str, substrs, compareEquality) {
   for (const substr of substrs) {
-    if (stringStartsWith(str, substr, compare)) return true;
+    if (stringStartsWith(str, substr, compareEquality)) return true;
   }
 
   return false;

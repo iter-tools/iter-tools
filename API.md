@@ -104,6 +104,7 @@ Transform a single iterable
 [prepend](#prepend) ([async](#asyncprepend))  
 [reverse](#reverse) ([async](#asyncreverse))  
 [slice](#slice) ([async](#asyncslice))  
+[sort](#sort) ([async](#asyncsort))  
 [take](#take) ([async](#asynctake))  
 [takeSorted](#takesorted) ([async](#asynctakesorted))  
 [takeWhile](#takewhile) ([async](#asynctakewhile))  
@@ -795,6 +796,18 @@ When no arguments are passed to `slice` it is functionally equivalent to `wrap`.
 
 See [slice](#slice)
 
+### sort
+
+**sort([source](#sourceiterable))**
+
+Sugar for `takeSorted(Infinity)`. For more information, see the docs for [takeSorted](#takesorted).
+
+### asyncSort
+
+**asyncSort([source](#asyncsourceiterable))**
+
+See [sort](#sort)
+
 ### take
 
 **take(n, [iterable](#sourceiterable))**
@@ -815,7 +828,6 @@ See [take](#take)
 
 **takeSorted(n, [comparator](#comparator), [source](#sourceiterable))**  
 **takeSorted(n, [source](#sourceiterable))**  
-**takeSorted([comparator](#comparator), [source](#sourceiterable))**  
 **takeSorted([source](#sourceiterable))**
 
 Defaults:
@@ -834,7 +846,6 @@ takeSorted(3, (a, b) => b - a, [4, 5, 2, 3, 1]); // Iterable[5, 4, 3]
 
 **asyncTakeSorted(n, [comparator](#comparator), [source](#asyncsourceiterable))**  
 **asyncTakeSorted(n, [source](#asyncsourceiterable))**  
-**asyncTakeSorted([comparator](#comparator), [source](#asyncsourceiterable))**  
 **asyncTakeSorted([source](#asyncsourceiterable))**
 
 See [takeSorted](#takesorted)
@@ -1722,7 +1733,7 @@ See [isEmpty](#isempty)
 
 ### isSorted
 
-**isSorted([comparator](#comparator), [iterable](#sourceiterable))**  
+**isSorted(compareEquality, [iterable](#sourceiterable))**  
 **isSorted([iterable](#sourceiterable))**
 
 Returns `true` if the values in `iterable` are sorted in ascending order according to `comparator`, and `false` otherwise.
@@ -1734,7 +1745,7 @@ isSorted((a, b) => b - a, [3, 2, 1]); // true
 
 ### asyncIsSorted
 
-**asyncIsSorted([comparator](#comparator), [iterable](#asyncsourceiterable))**  
+**asyncIsSorted(compareEquality, [iterable](#asyncsourceiterable))**  
 **asyncIsSorted([iterable](#asyncsourceiterable))**
 
 See [isSorted](#issorted)
@@ -1896,7 +1907,7 @@ See [startsWithAnySubseq](#startswithanysubseq)
 
 ### startsWithSubseq
 
-**startsWithSubseq(valueSubseq, compare, [iterable](#sourceiterable))**
+**startsWithSubseq(valueSubseq, compareEquality, [iterable](#sourceiterable))**
 
 Returns `true` if the first subsequence of values in `source` matches `valueSubseq`. Otherwise returns `false`.
 
@@ -1906,7 +1917,7 @@ startsWithSubseq([1, 2], [1, 2, 3]); // true
 
 ### asyncStartsWithSubseq
 
-**asyncStartsWithSubseq(valueSubseq, compare, [iterable](#asyncsourceiterable))**
+**asyncStartsWithSubseq(valueSubseq, compareEquality, [iterable](#asyncsourceiterable))**
 
 See [startsWithSubseq](#startswithsubseq)
 

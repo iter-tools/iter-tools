@@ -7,8 +7,8 @@
  */
 
 import { iterableCurry } from '../../internal/iterable';
-import defaultCompare from '../../internal/compare';
-export function isSorted(iterable, comparator = defaultCompare) {
+import { defaultCompareOrder } from '../../internal/order';
+export function isSorted(iterable, compareEquality = defaultCompareOrder) {
   let a;
   let b;
   let iter;
@@ -22,7 +22,7 @@ export function isSorted(iterable, comparator = defaultCompare) {
       a = b;
       ({ done, value: b } = iter.next());
 
-      if (!done && comparator(a, b) > 0) {
+      if (!done && compareEquality(a, b) > 0) {
         return false;
       }
     }

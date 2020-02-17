@@ -2,11 +2,11 @@ import { $async, $await } from '../../../generate/async.macro';
 
 import Heap from 'little-ds-toolkit/lib/heap';
 import { $iterableCurry } from '../../internal/$iterable';
-import defaultCompare from '../../internal/compare';
+import { defaultCompareOrder } from '../../internal/order';
 
 $async;
-export function* $takeSorted(source, n = Infinity, comparator = defaultCompare) {
-  const heap = new Heap(comparator);
+export function* $takeSorted(source, n, compareEquality = defaultCompareOrder) {
+  const heap = new Heap(compareEquality);
   $await;
   for (const item of source) {
     heap.push(item);
@@ -21,12 +21,6 @@ export function* $takeSorted(source, n = Infinity, comparator = defaultCompare) 
 }
 
 export default $iterableCurry($takeSorted, {
-  minArgs: 0,
+  minArgs: 1,
   maxArgs: 2,
-  validateArgs(args) {
-    if (typeof args[1] === 'number') {
-      args[0] = args[1];
-      args[1] = undefined;
-    }
-  },
 });

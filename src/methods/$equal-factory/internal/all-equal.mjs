@@ -6,12 +6,12 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-export function allEqual(values, compare) {
+export function allEqual(values, compareEquality) {
   if (!values.length) return true;
   let first = true;
 
   for (const value of values) {
-    if (!first && !compare(values[0], value)) {
+    if (!first && !compareEquality(values[0], value)) {
       return false;
     }
 

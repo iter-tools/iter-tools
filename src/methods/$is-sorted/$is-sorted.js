@@ -1,9 +1,10 @@
 import { $async, $await, $iteratorSymbol } from '../../../generate/async.macro';
+
 import { $iterableCurry } from '../../internal/$iterable';
-import defaultCompare from '../../internal/compare';
+import { defaultCompareOrder } from '../../internal/order';
 
 $async;
-export function $isSorted(iterable, comparator = defaultCompare) {
+export function $isSorted(iterable, compareEquality = defaultCompareOrder) {
   let a;
   let b;
   let iter;
@@ -18,7 +19,7 @@ export function $isSorted(iterable, comparator = defaultCompare) {
       a = b;
       ({ done, value: b } = $await(iter.next()));
 
-      if (!done && comparator(a, b) > 0) {
+      if (!done && compareEquality(a, b) > 0) {
         return false;
       }
     }

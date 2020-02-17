@@ -5,7 +5,7 @@ import { $SourceIterable, $ResultIterable } from '../../types/$iterable';
 // prettier-ignore
 declare function $splitOnSubseq(
   separatorSubseq: $SourceIterable<string>,
-  compare?: (value: string, item: string) => boolean,
+  compareEquality?: (value: string, item: string) => boolean,
 ): (source: string) => $ResultIterable<string>;
 
 declare function $splitOnSubseq(
@@ -14,7 +14,7 @@ declare function $splitOnSubseq(
 
 declare function $splitOnSubseq<V, T>(
   separatorSubseq: $SourceIterable<V>,
-  compare: (value: V, item: T) => boolean,
+  compareEquality: (value: V, item: T) => boolean,
 ): (source: $SourceIterable<T>) => $ResultIterable<$ResultIterable<T>>;
 
 // noncurried
@@ -22,7 +22,7 @@ declare function $splitOnSubseq<V, T>(
 // prettier-ignore
 declare function $splitOnSubseq(
   separatorSubseq: $SourceIterable<string>,
-  compare: (value: string, item: string) => boolean,
+  compareEquality: (value: string, item: string) => boolean,
   source: string
 ): $ResultIterable<string>;
 
@@ -34,7 +34,7 @@ declare function $splitOnSubseq(
 
 declare function $splitOnSubseq<V, T>(
   separatorSubseq: $SourceIterable<V>,
-  compare: (value: V, item: T) => boolean,
+  compareEquality: (value: V, item: T) => boolean,
   source: $SourceIterable<T>,
 ): $ResultIterable<$ResultIterable<T>>;
 

@@ -40,6 +40,54 @@ describe($`splitAt`, () => {
         expect([first, second]).toEqual([[0, 1], []]);
       });
     });
+
+    describe('given strings', () => {
+      describe('with 0 index', () => {
+        it(
+          'when all values are in second part',
+          $async(() => {
+            const [first, second] = $splitAt(0, 'abcdef');
+            expect([$await(first), $await(second)]).toEqual(['', 'abcdef']);
+          }),
+        );
+      });
+
+      describe('with positive index', () => {
+        it(
+          'works when the string is longer than the split index',
+          $async(() => {
+            const [first, second] = $splitAt(3, 'abcdef');
+            expect([$await(first), $await(second)]).toEqual(['abc', 'def']);
+          }),
+        );
+
+        it(
+          'works when the string is shorter than the split index',
+          $async(() => {
+            const [first, second] = $splitAt(3, 'ab');
+            expect([$await(first), $await(second)]).toEqual(['ab', '']);
+          }),
+        );
+      });
+
+      describe('with negative index', () => {
+        it(
+          'works when the string is longer than the split index',
+          $async(() => {
+            const [first, second] = $splitAt(-3, 'abcdef');
+            expect([$await(first), $await(second)]).toEqual(['abc', 'def']);
+          }),
+        );
+
+        it(
+          'works when the string is shorter than the split index',
+          $async(() => {
+            const [first, second] = $splitAt(-3, 'ab');
+            expect([$await(first), $await(second)]).toEqual(['', 'ab']);
+          }),
+        );
+      });
+    });
   }
 
   describe('with positive index', () => {

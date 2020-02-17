@@ -5,19 +5,19 @@ import { $allEqual } from './internal/$all-equal';
 import { $iterableEqual } from './internal/$iterable-equal';
 
 function validateOptions(options = {}) {
-  const _options = typeof options === 'function' ? { compare: options } : options;
+  const _options = typeof options === 'function' ? { compareEquality: options } : options;
   const {
-    compare = Object.is,
+    compareEquality = Object.is,
     iterableNullish = true,
-    compareValues = true,
+    shouldCompareValues = true,
     syncEqualsAsync = true,
   } = _options;
-  return { compare, iterableNullish, compareValues, syncEqualsAsync };
+  return { compareEquality, iterableNullish, shouldCompareValues, syncEqualsAsync };
 }
 
 export function $equalFactory(options = {}) {
   const _options = validateOptions(options);
-  const { compare, iterableNullish, compareValues, syncEqualsAsync } = _options;
+  const { compareEquality, iterableNullish, shouldCompareValues, syncEqualsAsync } = _options;
 
   const $equal = $async((...values) => {
     if (!values.length) {
@@ -33,8 +33,8 @@ export function $equalFactory(options = {}) {
     return (
       !failed &&
       (comparingIterables
-        ? $await($iterableEqual(coercedValues, compare))
-        : compareValues && $await($allEqual(values, compare)))
+        ? $await($iterableEqual(coercedValues, compareEquality))
+        : shouldCompareValues && $await($allEqual(values, compareEquality)))
     );
   });
 

@@ -6,7 +6,7 @@ import { $SourceIterable, $ResultIterable } from '../../types/$iterable';
 // prettier-ignore
 declare function $splitOnAny(
   separatorValues: SyncSourceIterable<string>,
-  compare?: (value: string, item: string) => boolean,
+  compareEquality?: (value: string, item: string) => boolean,
 ): (source: string) => $ResultIterable<string>;
 
 declare function $splitOnAny(
@@ -15,7 +15,7 @@ declare function $splitOnAny(
 
 declare function $splitOnAny<V, T>(
   separatorValues: SyncSourceIterable<V>,
-  compare: (value: V, item: T) => boolean,
+  compareEquality: (value: V, item: T) => boolean,
 ): (source: $SourceIterable<T>) => $ResultIterable<$ResultIterable<T>>;
 
 // noncurried
@@ -23,7 +23,7 @@ declare function $splitOnAny<V, T>(
 // prettier-ignore
 declare function $splitOnAny(
   separatorValues: SyncSourceIterable<string>,
-  compare: (value: string, item: string) => boolean,
+  compareEquality: (value: string, item: string) => boolean,
   source: string
 ): $ResultIterable<string>;
 
@@ -35,7 +35,7 @@ declare function $splitOnAny(
 
 declare function $splitOnAny<V, T>(
   separatorValues: SyncSourceIterable<V>,
-  compare: (value: V, item: T) => boolean,
+  compareEquality: (value: V, item: T) => boolean,
   source: $SourceIterable<T>,
 ): $ResultIterable<$ResultIterable<T>>;
 

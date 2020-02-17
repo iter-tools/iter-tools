@@ -12,7 +12,7 @@ describe('asyncDeepEqualFactory', () => {
   describe('iterableNullish: false', () => {
     const asyncDeepEqual = asyncDeepEqualFactory({
       iterableNullish: false,
-      compare: (a, b) => a == b,
+      compareEquality: (a, b) => a == b,
     });
     it('null and undefined are handled by compare', async () => {
       expect(await asyncDeepEqual(null, undefined)).toBe(true);
@@ -43,12 +43,12 @@ describe('asyncDeepEqualFactory', () => {
   });
   it('can have a custom value comparator', async () => {
     const asyncDeepNotEqual = asyncDeepEqualFactory({
-      compare: () => false,
+      compareEquality: () => false,
     });
     expect(await asyncDeepNotEqual(1, 1)).toBe(false);
     const asyncDeepDoubleEqual = asyncDeepEqualFactory({
       iterableNullish: false,
-      compare: (a, b) => a == b,
+      compareEquality: (a, b) => a == b,
     });
     expect(
       await asyncDeepDoubleEqual(
@@ -62,8 +62,8 @@ describe('asyncDeepEqualFactory', () => {
 
     try {
       asyncDeepEqualFactory({
-        compare: _ => _,
-        compareFactory: _ => _,
+        compareEquality: _ => _,
+        compareEqualityFactory: _ => _,
       });
     } catch (e) {
       error = e;

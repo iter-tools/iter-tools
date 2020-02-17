@@ -1,10 +1,8 @@
-import { $async, $await, $iteratorSymbol } from '../../../generate/async.macro';
+import { $async, $await, $iteratorSymbol } from '../../../../generate/async.macro';
 
-import { CircularBuffer } from '../../internal/circular-buffer';
-import { $iterableCurry } from '../../internal/$iterable';
-import { IterableIterator } from '../../internal/iterable-iterator';
-import { $PartsIterator, split } from '../../internal/$spliterator';
-import { wrap } from '../$wrap/wrap';
+import { CircularBuffer } from '../../../internal/circular-buffer';
+import { IterableIterator } from '../../../internal/iterable-iterator';
+import { $PartsIterator, split } from '../../../internal/$spliterator';
 
 $async;
 export function* $IndexSpliterator(source, idx) {
@@ -118,13 +116,3 @@ export class $SplitAt extends IterableIterator {
     return { value: undefined, done: true };
   }
 }
-
-export function $splitAt(source, idx) {
-  return typeof source === 'string'
-    ? wrap([source.slice(0, idx), source.slice(idx, Infinity)])
-    : wrap(new $SplitAt(source, idx));
-}
-
-export default $iterableCurry($splitAt, {
-  forceSync: true,
-});

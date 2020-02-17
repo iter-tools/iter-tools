@@ -5,7 +5,7 @@ import { $SourceIterable, $ResultIterable } from '../../types/$iterable';
 // prettier-ignore
 declare function $splitOn(
   separatorValue: string,
-  compare?: (value: string, item: string) => boolean,
+  compareEquality?: (value: string, item: string) => boolean,
 ): (source: string) => $ResultIterable<string>;
 
 declare function $splitOn(
@@ -14,7 +14,7 @@ declare function $splitOn(
 
 declare function $splitOn<V, T>(
   separatorValue: V,
-  compare: (value: V, item: T) => boolean,
+  compareEquality: (value: V, item: T) => boolean,
 ): (source: $SourceIterable<T>) => $ResultIterable<$ResultIterable<T>>;
 
 // noncurried
@@ -22,7 +22,7 @@ declare function $splitOn<V, T>(
 // prettier-ignore
 declare function $splitOn(
   separatorValue: string,
-  compare: (value: string, item: string) => boolean,
+  compareEquality: (value: string, item: string) => boolean,
   source: string
 ): $ResultIterable<string>;
 
@@ -34,7 +34,7 @@ declare function $splitOn(
 
 declare function $splitOn<V, T>(
   separatorValue: V,
-  compare: (value: V, item: T) => boolean,
+  compareEquality: (value: V, item: T) => boolean,
   source: $SourceIterable<T>,
 ): $ResultIterable<$ResultIterable<T>>;
 

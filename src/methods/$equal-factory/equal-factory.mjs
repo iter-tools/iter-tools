@@ -14,20 +14,20 @@ function validateOptions(options = {}) {
   const _options =
     typeof options === 'function'
       ? {
-          compare: options,
+          compareEquality: options,
         }
       : options;
 
   const {
-    compare = Object.is,
+    compareEquality = Object.is,
     iterableNullish = true,
-    compareValues = true,
+    shouldCompareValues = true,
     syncEqualsAsync = true,
   } = _options;
   return {
-    compare,
+    compareEquality,
     iterableNullish,
-    compareValues,
+    shouldCompareValues,
     syncEqualsAsync,
   };
 }
@@ -35,7 +35,7 @@ function validateOptions(options = {}) {
 export function equalFactory(options = {}) {
   const _options = validateOptions(options);
 
-  const { compare, iterableNullish, compareValues, syncEqualsAsync } = _options;
+  const { compareEquality, iterableNullish, shouldCompareValues, syncEqualsAsync } = _options;
   return (...values) => {
     if (!values.length) {
       throw new Error(`${'equal'} received no values to compare.`);
@@ -49,8 +49,8 @@ export function equalFactory(options = {}) {
     return (
       !failed &&
       (comparingIterables
-        ? iterableEqual(coercedValues, compare)
-        : compareValues && allEqual(values, compare))
+        ? iterableEqual(coercedValues, compareEquality)
+        : shouldCompareValues && allEqual(values, compareEquality))
     );
   };
 } // export default options => {

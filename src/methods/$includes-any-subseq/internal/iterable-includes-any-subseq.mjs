@@ -9,13 +9,13 @@
 import { ensureSubseqs } from '../../../internal/ensure-subseqs';
 import { leadingWindow } from '../../$leading-window/leading-window';
 import { iterableStartsWithAnySubseq } from '../../$starts-with-any-subseq/internal/iterable-starts-with-any-subseq';
-export function iterableIncludesAnySubseq(iterable, valueSubseqs, compare) {
+export function iterableIncludesAnySubseq(iterable, valueSubseqs, compareEquality) {
   const valueArrays = ensureSubseqs(valueSubseqs);
   const maxMatchLength = valueArrays.reduce((max, { length }) => Math.max(max, length), 1);
   let hasItems = false;
 
   for (const buffer of leadingWindow(iterable, maxMatchLength)) {
-    if (iterableStartsWithAnySubseq(buffer, valueArrays, compare)) {
+    if (iterableStartsWithAnySubseq(buffer, valueArrays, compareEquality)) {
       return true;
     }
 

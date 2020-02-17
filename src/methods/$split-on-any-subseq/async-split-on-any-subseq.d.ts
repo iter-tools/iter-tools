@@ -7,20 +7,20 @@
  */
 
 import { SourceIterable as SyncSourceIterable } from '../../types/iterable';
-import { AsyncSourceIterable } from '../../types/async-iterable'; // curried
+import { AsyncSourceIterable, AsyncResultIterable } from '../../types/async-iterable'; // curried
 // prettier-ignore
 
-declare function asyncSplitOnAnySubseq(separatorSubseqs: SyncSourceIterable<AsyncSourceIterable<string>>, compare?: (value: string, item: string) => boolean): (source: string) => AsyncResultIterable<string>;
+declare function asyncSplitOnAnySubseq(separatorSubseqs: SyncSourceIterable<AsyncSourceIterable<string>>, compareEquality?: (value: string, item: string) => boolean): (source: string) => AsyncResultIterable<string>;
 declare function asyncSplitOnAnySubseq(
   separatorSubseqs: SyncSourceIterable<AsyncSourceIterable<any>>,
 ): <T>(source: AsyncSourceIterable<T>) => AsyncResultIterable<AsyncResultIterable<T>>;
 declare function asyncSplitOnAnySubseq<V, T>(
   separatorSubseqs: SyncSourceIterable<AsyncSourceIterable<V>>,
-  compare: (value: V, item: T) => boolean,
+  compareEquality: (value: V, item: T) => boolean,
 ): (source: AsyncSourceIterable<T>) => AsyncResultIterable<AsyncResultIterable<T>>; // noncurried
 // prettier-ignore
 
-declare function asyncSplitOnAnySubseq(separatorSubseqs: SyncSourceIterable<AsyncSourceIterable<string>>, compare: (value: string, item: string) => boolean, source: string): AsyncResultIterable<string>; // prettier-ignore
+declare function asyncSplitOnAnySubseq(separatorSubseqs: SyncSourceIterable<AsyncSourceIterable<string>>, compareEquality: (value: string, item: string) => boolean, source: string): AsyncResultIterable<string>; // prettier-ignore
 
 declare function asyncSplitOnAnySubseq(
   separatorSubseqs: SyncSourceIterable<AsyncSourceIterable<string>>,
@@ -28,7 +28,7 @@ declare function asyncSplitOnAnySubseq(
 ): AsyncResultIterable<string>;
 declare function asyncSplitOnAnySubseq<V, T>(
   separatorSubseqs: SyncSourceIterable<AsyncSourceIterable<V>>,
-  compare: (value: V, item: T) => boolean,
+  compareEquality: (value: V, item: T) => boolean,
   source: AsyncSourceIterable<T>,
 ): AsyncResultIterable<AsyncResultIterable<T>>;
 declare function asyncSplitOnAnySubseq<T>(

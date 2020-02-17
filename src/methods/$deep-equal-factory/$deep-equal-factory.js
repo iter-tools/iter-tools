@@ -17,34 +17,47 @@ const defaultCompareFactory = options => {
 };
 
 function validateOptions(options) {
-  const _options = typeof options === 'function' ? { compareFactory: options } : options;
+  const _options = typeof options === 'function' ? { compareEqualityFactory: options } : options;
   const {
-    compare,
-    compareFactory = compare ? undefined : defaultCompareFactory,
-    compareValues = true,
+    compareEquality,
+    compareEqualityFactory = compareEquality ? undefined : defaultCompareFactory,
+    shouldCompareValues = true,
     iterableNullish = true,
     syncEqualsAsync = true,
   } = _options;
-  if (compare && compareFactory) {
-    throw new Error('deepEqualFactory cannot have both compare and compareFactory arguments');
+
+  if (compareEquality && compareEqualityFactory) {
+    throw new Error(
+      'deepEqualFactory cannot have both compareEquality and compareEqualityFactory arguments',
+    );
   }
-  return { compare, compareFactory, iterableNullish, compareValues, syncEqualsAsync };
+
+  return {
+    compareEquality,
+    compareEqualityFactory,
+    iterableNullish,
+    shouldCompareValues,
+    syncEqualsAsync,
+  };
 }
 
 export function $deepEqualFactory(options = {}) {
   const _options = validateOptions(options);
-  const { compareFactory, iterableNullish, syncEqualsAsync } = _options;
-  let { compare, compareValues } = _options;
+  const { compareEqualityFactory, iterableNullish, syncEqualsAsync } = _options;
+  let { compareEquality, shouldCompareValues } = _options;
 
   const $deepEqual = $async((...values) => {
     if (!values.length) {
       throw new Error(`${$`deepEqual`} received no values to compare.`);
     }
 
-    // Set compareValues to false to nudge the user away from creating an infinite loop like:
-    // compare => deepEqual => allEqual => compare => deepEqual => ...
-    compare =
-      compare || compareFactory(compareValues ? _options : { ..._options, compareValues: false });
+    // Set shouldCompareValues to false to nudge the user away from creating an infinite loop like:
+    // compareEquality => deepEqual => allEqual => compareEquality => deepEqual => ...
+    compareEquality =
+      compareEquality ||
+      compareEqualityFactory(
+        shouldCompareValues ? _options : { ..._options, shouldCompareValues: false },
+      );
 
     const [failed, comparingIterables, coercedValues] = coerceValues(
       values,
@@ -52,8 +65,8 @@ export function $deepEqualFactory(options = {}) {
       syncEqualsAsync,
     );
 
-    if (!compareValues) {
-      compareValues = true; // essential for recursion
+    if (!shouldCompareValues) {
+      shouldCompareValues = true; // essential for recursion
       if (failed || !comparingIterables) {
         throw new Error(`A value passed to ${$`deepEqual`} was not iterable`);
       }
@@ -63,7 +76,7 @@ export function $deepEqualFactory(options = {}) {
       !failed &&
       (comparingIterables
         ? $await($iterableEqual(coercedValues, $deepEqual))
-        : $await($allEqual(values, compare)))
+        : $await($allEqual(values, compareEquality)))
     );
   });
 

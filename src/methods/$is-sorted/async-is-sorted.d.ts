@@ -9,7 +9,7 @@
 import { AsyncSourceIterable } from '../../types/async-iterable';
 declare function asyncIsSorted(iterable: AsyncSourceIterable<any>): boolean | Promise<boolean>;
 declare function asyncIsSorted<T>(
-  comparator: (a: T, b: T) => number,
+  compareEquality: (a: T, b: T) => number,
   iterable: AsyncSourceIterable<T>,
 ): boolean | Promise<boolean>;
 export default asyncIsSorted;

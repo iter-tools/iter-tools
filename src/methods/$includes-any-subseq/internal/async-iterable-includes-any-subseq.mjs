@@ -9,13 +9,13 @@
 import { asyncEnsureSubseqs } from '../../../internal/async-ensure-subseqs';
 import { asyncLeadingWindow } from '../../$leading-window/async-leading-window';
 import { iterableStartsWithAnySubseq } from '../../$starts-with-any-subseq/internal/iterable-starts-with-any-subseq';
-export async function asyncIterableIncludesAnySubseq(iterable, valueSubseqs, compare) {
+export async function asyncIterableIncludesAnySubseq(iterable, valueSubseqs, compareEquality) {
   const valueArrays = await asyncEnsureSubseqs(valueSubseqs);
   const maxMatchLength = valueArrays.reduce((max, { length }) => Math.max(max, length), 1);
   let hasItems = false;
 
   for await (const buffer of asyncLeadingWindow(iterable, maxMatchLength)) {
-    if (iterableStartsWithAnySubseq(buffer, valueArrays, compare)) {
+    if (iterableStartsWithAnySubseq(buffer, valueArrays, compareEquality)) {
       return true;
     }
 

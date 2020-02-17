@@ -12,7 +12,7 @@ describe('deepEqualFactory', () => {
   describe('iterableNullish: false', () => {
     const deepEqual = deepEqualFactory({
       iterableNullish: false,
-      compare: (a, b) => a == b,
+      compareEquality: (a, b) => a == b,
     });
     it('null and undefined are handled by compare', () => {
       expect(deepEqual(null, undefined)).toBe(true);
@@ -43,12 +43,12 @@ describe('deepEqualFactory', () => {
   });
   it('can have a custom value comparator', () => {
     const deepNotEqual = deepEqualFactory({
-      compare: () => false,
+      compareEquality: () => false,
     });
     expect(deepNotEqual(1, 1)).toBe(false);
     const deepDoubleEqual = deepEqualFactory({
       iterableNullish: false,
-      compare: (a, b) => a == b,
+      compareEquality: (a, b) => a == b,
     });
     expect(
       deepDoubleEqual(
@@ -62,8 +62,8 @@ describe('deepEqualFactory', () => {
 
     try {
       deepEqualFactory({
-        compare: _ => _,
-        compareFactory: _ => _,
+        compareEquality: _ => _,
+        compareEqualityFactory: _ => _,
       });
     } catch (e) {
       error = e;

@@ -8,12 +8,12 @@ declare function $includes(value: any, iterable: $SourceIterable<any>): $Promise
 
 declare function $includes<V, T>(
   value: V,
-  compare: (value: V, item: T) => boolean,
+  compareEquality: (value: V, item: T) => boolean,
 ): (iterable: $SourceIterable<T>) => $Promise<boolean>;
 
 declare function $includes<V, T>(
   value: V,
-  compare: (value: V, item: T) => boolean,
+  compareEquality: (value: V, item: T) => boolean,
   iterable: $SourceIterable<T>,
 ): $Promise<boolean>;
 

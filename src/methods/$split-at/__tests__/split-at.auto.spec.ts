@@ -39,6 +39,34 @@ describe('splitAt', () => {
       expect([first, second]).toEqual([[0, 1], []]);
     });
   });
+  describe('given strings', () => {
+    describe('with 0 index', () => {
+      it('when all values are in second part', () => {
+        const [first, second] = splitAt(0, 'abcdef');
+        expect([first, second]).toEqual(['', 'abcdef']);
+      });
+    });
+    describe('with positive index', () => {
+      it('works when the string is longer than the split index', () => {
+        const [first, second] = splitAt(3, 'abcdef');
+        expect([first, second]).toEqual(['abc', 'def']);
+      });
+      it('works when the string is shorter than the split index', () => {
+        const [first, second] = splitAt(3, 'ab');
+        expect([first, second]).toEqual(['ab', '']);
+      });
+    });
+    describe('with negative index', () => {
+      it('works when the string is longer than the split index', () => {
+        const [first, second] = splitAt(-3, 'abcdef');
+        expect([first, second]).toEqual(['abc', 'def']);
+      });
+      it('works when the string is shorter than the split index', () => {
+        const [first, second] = splitAt(-3, 'ab');
+        expect([first, second]).toEqual(['', 'ab']);
+      });
+    });
+  });
   describe('with positive index', () => {
     it('works when the halves are consumed in order', () => {
       const [first, second] = splitAt(3, range(0, 6));

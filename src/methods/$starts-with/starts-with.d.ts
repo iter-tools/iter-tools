@@ -11,11 +11,11 @@ declare function startsWith(value: any): (iterable: SourceIterable<any>) => bool
 declare function startsWith(value: any, iterable: SourceIterable<any>): boolean;
 declare function startsWith<V, T>(
   value: V,
-  compare: (value: V, item: T) => boolean,
+  compareEquality: (value: V, item: T) => boolean,
 ): (iterable: SourceIterable<T>) => boolean;
 declare function startsWith<V, T>(
   value: V,
-  compare: (value: V, item: T) => boolean,
+  compareEquality: (value: V, item: T) => boolean,
   iterable: SourceIterable<T>,
 ): boolean;
 export default startsWith;

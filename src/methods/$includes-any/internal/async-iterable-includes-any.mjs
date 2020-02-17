@@ -6,10 +6,10 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-export async function asyncIterableIncludesAny(iterable, values, compare = Object.is) {
+export async function asyncIterableIncludesAny(iterable, values, compareEquality = Object.is) {
   for await (const value of iterable) {
     for (const includedValue of values) {
-      if (compare(includedValue, value)) return true;
+      if (compareEquality(includedValue, value)) return true;
     }
   }
 

@@ -17,11 +17,11 @@ declare function startsWithAnySubseq(
 ): boolean;
 declare function startsWithAnySubseq<V, T>(
   valueSubseqs: SyncSourceIterable<SourceIterable<V>>,
-  compare: (value: V, item: T) => boolean,
+  compareEquality: (value: V, item: T) => boolean,
 ): (iterable: SourceIterable<T>) => boolean;
 declare function startsWithAnySubseq<V, T>(
   valueSubseqs: SyncSourceIterable<SourceIterable<V>>,
-  compare: (value: V, item: T) => boolean,
+  compareEquality: (value: V, item: T) => boolean,
   iterable: SourceIterable<T>,
 ): boolean;
 export default startsWithAnySubseq;

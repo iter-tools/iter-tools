@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 **Methods**
  -  `equalFactory`
  -  `deepEqual`, `deepEqualFactory`
+ -  `sort`, `asyncSort`
 
 **Arguments**
  -  `compare` argument of form `(a, b) => boolean` appended to:

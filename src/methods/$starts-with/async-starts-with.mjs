@@ -8,8 +8,8 @@
 
 import { asyncIterableCurry } from '../../internal/async-iterable';
 import { asyncStartsWithAny } from '../$starts-with-any/async-starts-with-any';
-export function asyncStartsWith(iterable, value, compare = Object.is) {
-  return asyncStartsWithAny(iterable, [value], compare);
+export function asyncStartsWith(iterable, value, compareEquality = Object.is) {
+  return asyncStartsWithAny(iterable, [value], compareEquality);
 }
 export default asyncIterableCurry(asyncStartsWith, {
   reduces: true,

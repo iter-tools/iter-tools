@@ -8,8 +8,8 @@
 
 import { asyncIterableCurry } from '../../internal/async-iterable';
 import { asyncIncludesAny } from '../$includes-any/async-includes-any';
-export function asyncIncludes(iterable, value, compare = Object.is) {
-  return asyncIncludesAny(iterable, [value], compare);
+export function asyncIncludes(iterable, value, compareEquality = Object.is) {
+  return asyncIncludesAny(iterable, [value], compareEquality);
 }
 export default asyncIterableCurry(asyncIncludes, {
   reduces: true,

@@ -7,8 +7,8 @@
  */
 
 import { asyncIterableCurry } from '../../internal/async-iterable';
-import defaultCompare from '../../internal/compare';
-export async function asyncIsSorted(iterable, comparator = defaultCompare) {
+import { defaultCompareOrder } from '../../internal/order';
+export async function asyncIsSorted(iterable, compareEquality = defaultCompareOrder) {
   let a;
   let b;
   let iter;
@@ -22,7 +22,7 @@ export async function asyncIsSorted(iterable, comparator = defaultCompare) {
       a = b;
       ({ done, value: b } = await iter.next());
 
-      if (!done && comparator(a, b) > 0) {
+      if (!done && compareEquality(a, b) > 0) {
         return false;
       }
     }

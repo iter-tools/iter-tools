@@ -26,27 +26,29 @@ function validateOptions(options) {
   const _options =
     typeof options === 'function'
       ? {
-          compareFactory: options,
+          compareEqualityFactory: options,
         }
       : options;
 
   const {
-    compare,
-    compareFactory = compare ? undefined : defaultCompareFactory,
-    compareValues = true,
+    compareEquality,
+    compareEqualityFactory = compareEquality ? undefined : defaultCompareFactory,
+    shouldCompareValues = true,
     iterableNullish = true,
     syncEqualsAsync = true,
   } = _options;
 
-  if (compare && compareFactory) {
-    throw new Error('deepEqualFactory cannot have both compare and compareFactory arguments');
+  if (compareEquality && compareEqualityFactory) {
+    throw new Error(
+      'deepEqualFactory cannot have both compareEquality and compareEqualityFactory arguments',
+    );
   }
 
   return {
-    compare,
-    compareFactory,
+    compareEquality,
+    compareEqualityFactory,
     iterableNullish,
-    compareValues,
+    shouldCompareValues,
     syncEqualsAsync,
   };
 }
@@ -54,25 +56,28 @@ function validateOptions(options) {
 export function deepEqualFactory(options = {}) {
   const _options = validateOptions(options);
 
-  const { compareFactory, iterableNullish, syncEqualsAsync } = _options;
-  let { compare, compareValues } = _options;
+  const { compareEqualityFactory, iterableNullish, syncEqualsAsync } = _options;
+  let { compareEquality, shouldCompareValues } = _options;
 
   const deepEqual = (...values) => {
     if (!values.length) {
       throw new Error(`${'deepEqual'} received no values to compare.`);
-    } // Set compareValues to false to nudge the user away from creating an infinite loop like:
-    // compare => deepEqual => allEqual => compare => deepEqual => ...
+    } // Set shouldCompareValues to false to nudge the user away from creating an infinite loop like:
+    // compareEquality => deepEqual => allEqual => compareEquality => deepEqual => ...
 
-    compare =
-      compare || compareFactory(compareValues ? _options : { ..._options, compareValues: false });
+    compareEquality =
+      compareEquality ||
+      compareEqualityFactory(
+        shouldCompareValues ? _options : { ..._options, shouldCompareValues: false },
+      );
     const [failed, comparingIterables, coercedValues] = coerceValues(
       values,
       iterableNullish,
       syncEqualsAsync,
     );
 
-    if (!compareValues) {
-      compareValues = true; // essential for recursion
+    if (!shouldCompareValues) {
+      shouldCompareValues = true; // essential for recursion
 
       if (failed || !comparingIterables) {
         throw new Error(`A value passed to ${'deepEqual'} was not iterable`);
@@ -81,7 +86,9 @@ export function deepEqualFactory(options = {}) {
 
     return (
       !failed &&
-      (comparingIterables ? iterableEqual(coercedValues, deepEqual) : allEqual(values, compare))
+      (comparingIterables
+        ? iterableEqual(coercedValues, deepEqual)
+        : allEqual(values, compareEquality))
     );
   };
 
