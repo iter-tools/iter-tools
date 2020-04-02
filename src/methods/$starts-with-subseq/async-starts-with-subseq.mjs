@@ -8,7 +8,7 @@
 
 import { asyncIterableCurry } from '../../internal/async-iterable';
 import { asyncStartsWithAnySubseq } from '../$starts-with-any-subseq/async-starts-with-any-subseq';
-export function asyncStartsWithSubseq(iterable, valueSubseq, compareEquality) {
+export function asyncStartsWithSubseq(iterable, valueSubseq, compareEquality = Object.is) {
   return asyncStartsWithAnySubseq(iterable, [valueSubseq], compareEquality);
 }
 export default asyncIterableCurry(asyncStartsWithSubseq, {

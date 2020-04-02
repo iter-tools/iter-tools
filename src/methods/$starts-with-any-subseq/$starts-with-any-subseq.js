@@ -1,15 +1,16 @@
-import { $isSync, $async, $await } from '../../../../generate/async.macro';
+import { $isSync, $async, $await } from '../../../generate/async.macro';
 
-import { $ensureSubseqs } from '../../../internal/$ensure-subseqs';
-import { $zipAll } from '../../$zip-all/$zip-all';
-import { simpleSlice } from '../../$slice/slice';
-import { $wrap } from '../../$wrap/$wrap';
+import { $iterableCurry } from '../../internal/$iterable';
+import { $ensureSubseqs } from '../../internal/$ensure-subseqs';
+import { $zipAll } from '../$zip-all/$zip-all';
+import { simpleSlice } from '../$slice/slice';
+import { $wrap } from '../$wrap/$wrap';
 
 const none = {};
 const zipAllConfig = { filler: none };
 
 $async;
-export function $iterableStartsWithAnySubseq(iterable, valueSubseqs, equals) {
+export function $startsWithAnySubseq(iterable, valueSubseqs, equals = Object.is) {
   const valueArrays = $await($ensureSubseqs(valueSubseqs));
   const states = valueArrays.map(_ => ({
     matches: true,
@@ -40,3 +41,9 @@ export function $iterableStartsWithAnySubseq(iterable, valueSubseqs, equals) {
 
   return true;
 }
+
+export default $iterableCurry($startsWithAnySubseq, {
+  reduces: true,
+  maxArgs: 2,
+  optionalArgsAtEnd: true,
+});

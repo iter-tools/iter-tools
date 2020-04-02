@@ -1,10 +1,11 @@
-import { $async, $await, $iteratorSymbol } from '../../../../generate/async.macro';
+import { $async, $await, $iteratorSymbol } from '../../../generate/async.macro';
 
-import { $PartsIterator, $Spliterator, split } from '../../../internal/$spliterator';
-import { CircularBuffer } from '../../../internal/circular-buffer';
-import { iterableStartsWithAnySubseq } from '../../$starts-with-any-subseq/internal/iterable-starts-with-any-subseq';
-import $map from '../../$map/$map';
-import $toArray from '../../$to-array/$to-array';
+import { $iterableCurry } from '../../internal/$iterable';
+import { $PartsIterator, $Spliterator, split } from '../../internal/$spliterator';
+import { CircularBuffer } from '../../internal/circular-buffer';
+import { startsWithAnySubseq } from '../$starts-with-any-subseq/starts-with-any-subseq';
+import $map from '../$map/$map';
+import $toArray from '../$to-array/$to-array';
 
 class $AnySubseqSpliterator extends $Spliterator {
   constructor(sourceIterator, separatorSubseqs, equals) {
@@ -33,7 +34,7 @@ class $AnySubseqSpliterator extends $Spliterator {
 
   getMatchingLength() {
     for (const subsequence of this.separatorSubseqs) {
-      if (iterableStartsWithAnySubseq(this.buffer, [subsequence], this.equals)) {
+      if (startsWithAnySubseq(this.buffer, [subsequence], this.equals)) {
         return subsequence.length;
       }
     }
@@ -65,7 +66,7 @@ class $AnySubseqSpliterator extends $Spliterator {
 }
 
 $async;
-export function* $iterableSplitOnAnySubseq(source, separatorSubseqs, equals) {
+export function* $splitOnAnySubseq(source, separatorSubseqs, equals) {
   const _separatorSubseqs = $await($toArray($map($toArray, separatorSubseqs)))
     .filter(subseq => subseq.length)
     .sort((a, b) => b.length - a.length);
@@ -76,3 +77,8 @@ export function* $iterableSplitOnAnySubseq(source, separatorSubseqs, equals) {
     ),
   );
 }
+
+export default $iterableCurry($splitOnAnySubseq, {
+  maxArgs: 2,
+  optionalArgsAtEnd: true,
+});

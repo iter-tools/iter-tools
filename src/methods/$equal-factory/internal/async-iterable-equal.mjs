@@ -7,7 +7,7 @@
  */
 
 import { asyncZipAll } from '../../$zip-all/async-zip-all';
-import { asyncIterableIncludesAny } from '../../$includes-any/internal/async-iterable-includes-any';
+import { asyncIncludesAny } from '../../$includes-any/async-includes-any';
 import { asyncAllEqual } from './async-all-equal';
 const none = {};
 const zipAllConfig = {
@@ -15,10 +15,7 @@ const zipAllConfig = {
 };
 export async function asyncIterableEqual(iterables, equals) {
   for await (const values of asyncZipAll(iterables, zipAllConfig)) {
-    if (
-      (await asyncIterableIncludesAny(values, [none])) ||
-      !(await asyncAllEqual(values, equals))
-    ) {
+    if ((await asyncIncludesAny(values, [none])) || !(await asyncAllEqual(values, equals))) {
       return false;
     }
   }

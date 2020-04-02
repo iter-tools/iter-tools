@@ -1,6 +1,7 @@
-import { $async, $await, $iteratorSymbol } from '../../../../generate/async.macro';
+import { $async, $await, $iteratorSymbol } from '../../../generate/async.macro';
 
-import { $PartsIterator, $Spliterator, split } from '../../../internal/$spliterator';
+import { $iterableCurry } from '../../internal/$iterable';
+import { $PartsIterator, $Spliterator, split } from '../../internal/$spliterator';
 
 class $PredicateSpliterator extends $Spliterator {
   constructor(sourceIterator, predicate) {
@@ -41,8 +42,10 @@ class $PredicateSpliterator extends $Spliterator {
 }
 
 $async;
-export function* $iterableSplitWith(source, predicate) {
+export function* $splitWith(source, predicate) {
   yield* new $PartsIterator(
     $await($PredicateSpliterator.nullOrInstance(source[$iteratorSymbol](), predicate)),
   );
 }
+
+export default $iterableCurry($splitWith);

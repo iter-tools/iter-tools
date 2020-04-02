@@ -7,7 +7,7 @@
  */
 
 import { zipAll } from '../../$zip-all/zip-all';
-import { iterableIncludesAny } from '../../$includes-any/internal/iterable-includes-any';
+import { includesAny } from '../../$includes-any/includes-any';
 import { allEqual } from './all-equal';
 const none = {};
 const zipAllConfig = {
@@ -15,7 +15,7 @@ const zipAllConfig = {
 };
 export function iterableEqual(iterables, equals) {
   for (const values of zipAll(iterables, zipAllConfig)) {
-    if (iterableIncludesAny(values, [none]) || !allEqual(values, equals)) {
+    if (includesAny(values, [none]) || !allEqual(values, equals)) {
       return false;
     }
   }
