@@ -5,12 +5,11 @@ const camelcase = require('camelcase');
 const completeExtname = require('path-complete-extname');
 
 const BaseGenerator = require('../base-generator');
-const generatedFunctionFile = require('../_templates/generated-function-file');
-const generationErrorFile = require('../_templates/generation-error-file');
+const template = require('../base-template');
 
 class MethodsLinksGenerator extends BaseGenerator {
-  constructor() {
-    super();
+  constructor(macrome, options) {
+    super(macrome, options);
 
     this.glob = ['src/methods/*/[^$]*.{mjs,d.ts}'];
     this.ignored = ['src/methods/*_/**'];
@@ -24,7 +23,6 @@ class MethodsLinksGenerator extends BaseGenerator {
   }
 
   generatePath(implPath, destPath) {
-    let content;
     const generatedFrom = relative(dirname(destPath), implPath);
     const extName = completeExtname(implPath);
     const moduleName = basename(implPath, extName);
@@ -33,14 +31,7 @@ class MethodsLinksGenerator extends BaseGenerator {
 
     const impl = `import ${methodName} from './methods/${methodDirName}/${moduleName}';\n\nexport default ${methodName};`;
 
-    try {
-      content = generatedFunctionFile(impl, generatedFrom);
-    } catch (e) {
-      console.warn(`Failed generating ${implPath}`);
-      content = generationErrorFile(e, generatedFrom);
-    }
-
-    return content;
+    return template(impl, generatedFrom);
   }
 }
 

@@ -7,13 +7,13 @@ const babylon = require('@babel/parser');
 const fullExtname = require('path-complete-extname');
 const { Generator, REMOVE } = require('macrome');
 
-const apiMdFile = require('../_templates/api-md-file');
+const template = require('./template');
 const { renameDollar } = require('../../names');
 const extractMethodSignatures = require('./extract-method-signatures');
 
 class ApiMdGenerator extends Generator {
-  constructor() {
-    super();
+  constructor(macrome, options) {
+    super(macrome, options);
 
     this.docsChanged = this.debounce(this.docsChanged);
 
@@ -102,7 +102,7 @@ class ApiMdGenerator extends Generator {
 
   docsChanged() {
     const typesDoc = fs.readFileSync(this.resolve('src/types/API.md'), 'utf8');
-    this.writeMonolithic('API.md', apiMdFile(typesDoc, this.buildMethods(), this.aliases));
+    this.writeMonolithic('API.md', template(typesDoc, this.buildMethods(), this.aliases));
   }
 }
 

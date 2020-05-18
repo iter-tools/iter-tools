@@ -1,7 +1,7 @@
 'use strict';
 
 const { renameDollar, syncName } = require('../../names');
-const methodSignaturesTemplate = require('./method-signatures');
+const methodSignaturesTemplate = require('./method-signatures-template');
 
 function groupBy(accessor, arr) {
   const groups = new Map();

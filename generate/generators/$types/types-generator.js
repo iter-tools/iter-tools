@@ -5,8 +5,8 @@ const { resolve } = require('path');
 const BaseAsyncGenerator = require('../base-async-generator');
 
 class TypesGenerator extends BaseAsyncGenerator {
-  constructor(options) {
-    super(options);
+  constructor(macrome, options) {
+    super(macrome, options);
 
     this.glob = ['src/**/$*.d.ts', 'src/**/__tests__/$*.spec.ts'];
   }

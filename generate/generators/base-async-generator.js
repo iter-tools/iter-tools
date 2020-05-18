@@ -5,18 +5,10 @@ const babel = require('@babel/core');
 const prettier = require('prettier');
 const completeExtname = require('path-complete-extname');
 
-const generatedFunctionFile = require('./_templates/generated-function-file');
-const generationErrorFile = require('./_templates/generation-error-file');
-
 const BaseGenerator = require('./base-generator');
+const baseTemplate = require('./base-template');
 
 class BaseAsyncGenerator extends BaseGenerator {
-  constructor({ ASYNC }) {
-    super();
-
-    this.ASYNC = ASYNC;
-  }
-
   getDestPath(templatePath) {
     const dir = dirname(templatePath);
     const ext = completeExtname(templatePath);
@@ -30,37 +22,24 @@ class BaseAsyncGenerator extends BaseGenerator {
   }
 
   generatePath(templatePath, destPath) {
-    const { ASYNC } = this;
-    const generatedFrom = relative(dirname(destPath), templatePath);
-    let content;
+    const { ASYNC } = this.options;
 
-    try {
-      const { code: impl } = babel.transformFileSync(templatePath, {
-        caller: { name: ASYNC ? 'generateAsync' : 'generateSync', ASYNC },
-        configFile: this.getBabelConfigPath(),
-      });
+    const { code: impl } = babel.transformFileSync(this.resolve(templatePath), {
+      caller: { name: ASYNC ? 'generateAsync' : 'generateSync', ASYNC },
+      configFile: this.getBabelConfigPath(),
+    });
 
-      const templateOutput = this.applyTemplate(impl, generatedFrom);
+    const templateOutput = this.applyTemplate(impl);
 
-      content = prettier.format(templateOutput, this.getPrettierOptions(destPath));
-    } catch (e) {
-      console.warn(`Failed generating ${templatePath}`);
-      content = this.applyErrorTemplate(e, generatedFrom);
-    }
-
-    return content;
+    return prettier.format(templateOutput, this.getPrettierOptions(destPath));
   }
 
-  applyTemplate(source, generatedFrom) {
-    return generatedFunctionFile(source, generatedFrom);
+  applyTemplate(source) {
+    return baseTemplate(source);
   }
 
-  applyErrorTemplate(error, generatedFrom) {
-    return generationErrorFile(error, generatedFrom);
-  }
-
-  getBabelConfigPath() {
-    return join(__dirname, 'babel.config.js');
+  static getBabelConfig() {
+    throw new Error('not implemented');
   }
 }
 

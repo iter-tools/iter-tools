@@ -8,8 +8,8 @@ const BaseAsyncGenerator = require('../base-async-generator');
 const log = loglevel.getLogger('generator');
 
 class MethodsGenerator extends BaseAsyncGenerator {
-  constructor(options) {
-    super(options);
+  constructor(macrome, options) {
+    super(macrome, options);
 
     this.glob = ['src/**/$*.js'];
     this.ignored = [...this.ignored, '**/__tests__/**'];

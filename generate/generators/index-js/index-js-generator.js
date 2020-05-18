@@ -2,11 +2,11 @@
 
 const { Generator, REMOVE } = require('macrome');
 
-const indexJsFile = require('../_templates/index-js-file');
+const template = require('./template');
 
 class IndexJsGenerator extends Generator {
-  constructor() {
-    super();
+  constructor(macrome, options) {
+    super(macrome, options);
 
     this.glob = ['src/methods/*/[^$]*.mjs'];
     this.ignored = ['src/methods/*_/**'];
@@ -24,7 +24,7 @@ class IndexJsGenerator extends Generator {
 
   afterPathsChanged() {
     const destPath = 'src/index.mjs';
-    this.writeMonolithic(destPath, indexJsFile(this.methods, destPath));
+    this.writeMonolithic(destPath, template(this.methods, destPath));
   }
 }
 

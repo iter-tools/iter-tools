@@ -1,12 +1,12 @@
 'use strict';
 
 const IndexJsGenerator = require('../index-js');
-const indexTsFile = require('../_templates/index-ts-file');
+const template = require('./template');
 
 class IndexTsGenerator extends IndexJsGenerator {
   afterPathsChanged() {
     const destPath = 'src/index.d.ts';
-    this.writeMonolithic(destPath, indexTsFile(this.methods, destPath));
+    this.writeMonolithic(destPath, template(this.methods, destPath));
   }
 }
 
