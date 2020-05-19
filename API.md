@@ -97,7 +97,6 @@ Transform a single iterable
 [flat](#flat) ([async](#asyncflat))  
 [flatMap](#flatmap) ([async](#asyncflatmap)) ([parallel-async](#asyncflatmapparallel))  
 [interpose](#interpose) ([async](#asyncinterpose))  
-[leadingWindow](#leadingwindow) ([async](#asyncleadingwindow))  
 [map](#map) ([async](#asyncmap)) ([parallel-async](#asyncmapparallel))  
 [nullOr](#nullor)  
 [nullOrAsync](#nullorasync)  
@@ -108,6 +107,8 @@ Transform a single iterable
 [takeSorted](#takesorted) ([async](#asynctakesorted))  
 [takeWhile](#takewhile) ([async](#asynctakewhile))  
 [tap](#tap) ([async](#asynctap))  
+[window](#window) ([async](#asyncwindow))  
+[leadingWindow](#leadingwindow) ([async](#asyncleadingwindow))  
 [trailingWindow](#trailingwindow) ([async](#asynctrailingwindow))  
 [wrap](#wrap) ([async](#asyncwrap))  
 
@@ -597,44 +598,6 @@ interpose(null, [1, 2, 3]); // Iterable[1, null, 2, null, 3]
 
 See [interpose](#interpose)
 
-### leadingWindow
-
-**leadingWindow(size, { filler }, [source](#sourceiterable))**  
-**leadingWindow(size, [source](#sourceiterable))**
-
-Defaults:
-
-- `filler`: `undefined`
-
-For every value in `source`, yields a window iterable of size `size` which starts with that value and also contains the next values from `source`. When there are not enough additional values in `source` to fill the window, `filler` will be used in place of the missing values.
-
-```js
-leadingWindow(3, [1, 2, 3, 4, 5]);
-// Iterable[
-//   Iterable[1, 2, 3],
-//   Iterable[2, 3, 4]
-//   Iterable[3, 4, 5]
-//   Iterable[4, 5, undefined]
-//   Iterable[5, undefined, undefined]
-// ]
-
-leadingWindow(3, { filler: Infinity }, [1, 2, 3, 4, 5]);
-// Iterable[
-//   Iterable[1, 2, 3],
-//   Iterable[2, 3, 4]
-//   Iterable[3, 4, 5]
-//   Iterable[4, 5, Infinity]
-//   Iterable[5, Infinity, Infinity]
-// ]
-```
-
-### asyncLeadingWindow
-
-**asyncLeadingWindow(size, { filler }, [source](#asyncsourceiterable))**  
-**asyncLeadingWindow(size, [source](#asyncsourceiterable))**
-
-See [leadingWindow](#leadingwindow)
-
 ### map
 
 **map(func, [source](#sourceiterable))**
@@ -875,6 +838,68 @@ pipeExec(
 
 See [tap](#tap)
 
+### window
+
+**window(size, [source](#sourceiterable))**
+
+For every value in `source`, yields a `window` iterable of size `size` which starts with that value and also contains the next values from `source`. The `window` instance is the same on every iteration. Only emits full windows, which means fewer windows will be emitted than there are items in `source`. If you need one window for each item in `source`, use [leadingWindow](#leadingwindow) or [trailingWindow](#trailingwindow).
+
+```js
+window(3, [1, 2, 3, 4, 5]);
+// Iterable[
+//   Iterable[1, 2, 3],
+//   Iterable[2, 3, 4]
+//   Iterable[3, 4, 5]
+// ]
+
+window(5, [1, 2, 3]);
+// Iterable[]
+```
+
+### asyncWindow
+
+**asyncWindow(size, [source](#asyncsourceiterable))**
+
+See [window](#window)
+
+### leadingWindow
+
+**leadingWindow(size, { filler }, [source](#sourceiterable))**  
+**leadingWindow(size, [source](#sourceiterable))**
+
+Defaults:
+
+- `filler`: `undefined`
+
+For every value in `source`, yields an iterable `window` of size `size` which starts with that value and also contains the next values from `source`. The `window` instance is the same on every iteration. When there are not enough additional values in `source` to fill the window, `filler` will be used in place of the missing values.
+
+```js
+leadingWindow(3, [1, 2, 3, 4, 5]);
+// Iterable[
+//   Iterable[1, 2, 3],
+//   Iterable[2, 3, 4]
+//   Iterable[3, 4, 5]
+//   Iterable[4, 5, undefined]
+//   Iterable[5, undefined, undefined]
+// ]
+
+leadingWindow(3, { filler: Infinity }, [1, 2, 3, 4, 5]);
+// Iterable[
+//   Iterable[1, 2, 3],
+//   Iterable[2, 3, 4]
+//   Iterable[3, 4, 5]
+//   Iterable[4, 5, Infinity]
+//   Iterable[5, Infinity, Infinity]
+// ]
+```
+
+### asyncLeadingWindow
+
+**asyncLeadingWindow(size, { filler }, [source](#asyncsourceiterable))**  
+**asyncLeadingWindow(size, [source](#asyncsourceiterable))**
+
+See [leadingWindow](#leadingwindow)
+
 ### trailingWindow
 
 **trailingWindow(size, { filler }, [source](#sourceiterable))**  
@@ -884,7 +909,7 @@ Defaults:
 
 - `filler`: `undefined`
 
-For every value in `source`, yields a window iterable of size `size` which contains the values leading up to and including that value. When there are not enough prior values to fill the window, `filler` will be used in place of the missing values.
+For every value in `source`, yields a `window` iterable of size `size` which contains the values leading up to and including that value. The `window` instance is the same on every iteration. When there are not enough prior values to fill the window, `filler` will be used in place of the missing values.
 
 ```js
 trailingWindow(3, [1, 2, 3, 4, 5]);

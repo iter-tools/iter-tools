@@ -10,6 +10,7 @@ import { asyncIterableCurry } from '../../internal/async-iterable';
 import { CircularBuffer, ReadOnlyCircularBuffer } from '../../internal/circular-buffer';
 import { asyncConcat } from '../$concat/async-concat';
 import { repeatTimes } from '../repeat-times/repeat-times';
+import { validateWindowArgs } from '../$trailing-window/internal/validate-window-args';
 export async function* asyncLeadingWindow(source, size, { filler } = {}) {
   const buffer = new CircularBuffer(size);
   const bufferReadProxy = new ReadOnlyCircularBuffer(buffer);
@@ -30,21 +31,5 @@ export default asyncIterableCurry(asyncLeadingWindow, {
   minArgs: 1,
   maxArgs: 2,
   optionalArgsAtEnd: true,
-
-  validateArgs(args) {
-    if (args[0] && typeof args[0] === 'object') {
-      const { filler, size } = args[0];
-
-      if (size !== undefined && args[1] !== undefined) {
-        throw new Error(
-          'size cannot be specified as both a positional and named argument to leadingWindow',
-        );
-      }
-
-      args[0] = size;
-      args[1] = {
-        filler,
-      };
-    }
-  },
+  validateArgs: validateWindowArgs('asyncLeadingWindow'),
 });

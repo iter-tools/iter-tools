@@ -1,3 +1,4 @@
 {
-  "type": "transform"
+  "type": "transform",
+  "alphabetizationName": "$window-leading"
 }
