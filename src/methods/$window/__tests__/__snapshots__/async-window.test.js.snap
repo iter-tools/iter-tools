@@ -1,0 +1,3 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`asyncWindow invalid inputs throw 1`] = `"asyncWindow must be passed a numeric size"`;

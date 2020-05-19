@@ -2,7 +2,7 @@ Defaults:
 
 - `filler`: `undefined`
 
-For every value in `source`, yields a window iterable of size `size` which starts with that value and also contains the next values from `source`. When there are not enough additional values in `source` to fill the window, `filler` will be used in place of the missing values.
+For every value in `source`, yields an iterable `window` of size `size` which starts with that value and also contains the next values from `source`. The `window` instance is the same on every iteration. When there are not enough additional values in `source` to fill the window, `filler` will be used in place of the missing values.
 
 ```js
 leadingWindow(3, [1, 2, 3, 4, 5]);

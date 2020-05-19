@@ -1,8 +1,10 @@
-import { $async, $await } from '../../../generate/async.macro';
+import { $, $async, $await } from '../../../generate/async.macro';
 import { $iterableCurry } from '../../internal/$iterable';
 import { CircularBuffer, ReadOnlyCircularBuffer } from '../../internal/circular-buffer';
 import { $concat } from '../$concat/$concat';
 import { repeatTimes } from '../repeat-times/repeat-times';
+
+import { validateWindowArgs } from '../$trailing-window/internal/validate-window-args';
 
 $async;
 export function* $leadingWindow(source, size, { filler } = {}) {
@@ -26,17 +28,5 @@ export default $iterableCurry($leadingWindow, {
   minArgs: 1,
   maxArgs: 2,
   optionalArgsAtEnd: true,
-  validateArgs(args) {
-    if (args[0] && typeof args[0] === 'object') {
-      const { filler, size } = args[0];
-
-      if (size !== undefined && args[1] !== undefined) {
-        throw new Error(
-          'size cannot be specified as both a positional and named argument to leadingWindow',
-        );
-      }
-      args[0] = size;
-      args[1] = { filler };
-    }
-  },
+  validateArgs: validateWindowArgs($`leadingWindow`),
 });
