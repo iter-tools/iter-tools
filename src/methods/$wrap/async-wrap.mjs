@@ -6,8 +6,8 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { asyncWrapWithMethodIterable, asyncEnsureIterable } from '../../internal/async-iterable';
+import { asyncWrapWithResultIterable, asyncEnsureIterable } from '../../internal/async-iterable';
 export async function* asyncWrap(source) {
   yield* asyncEnsureIterable(source)[Symbol.asyncIterator]();
 }
-export default asyncWrapWithMethodIterable(asyncWrap);
+export default asyncWrapWithResultIterable(asyncWrap);

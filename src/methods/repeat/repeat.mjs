@@ -1,4 +1,4 @@
-import { wrapWithMethodIterable } from '../../internal/iterable';
+import { wrapWithResultIterable } from '../../internal/iterable';
 
 export function* repeat(value) {
   while (true) {
@@ -6,4 +6,4 @@ export function* repeat(value) {
   }
 }
 
-export default wrapWithMethodIterable(repeat);
+export default wrapWithResultIterable(repeat);

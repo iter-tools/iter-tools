@@ -1,4 +1,4 @@
-import { empty, wrapWithMethodIterable } from '../../internal/iterable';
+import { empty, wrapWithResultIterable } from '../../internal/iterable';
 
 export function* wrapValues(valuesable) {
   if (valuesable == null) {
@@ -8,4 +8,4 @@ export function* wrapValues(valuesable) {
   }
 }
 
-export default wrapWithMethodIterable(wrapValues);
+export default wrapWithResultIterable(wrapValues);

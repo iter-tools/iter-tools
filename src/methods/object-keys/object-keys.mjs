@@ -1,4 +1,4 @@
-import { wrapWithMethodIterable } from '../../internal/iterable';
+import { wrapWithResultIterable } from '../../internal/iterable';
 
 const { hasOwnProperty } = Object.prototype;
 
@@ -14,7 +14,7 @@ export function* objectKeys(obj) {
   }
 }
 
-export default wrapWithMethodIterable(objectKeys, {
+export default wrapWithResultIterable(objectKeys, {
   validateArgs(args) {
     if (!(args[0] == null || typeof args[0] === 'object')) {
       throw new Error('the argument to objectKeys was not an object, null, or undefined');

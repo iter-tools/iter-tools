@@ -1,6 +1,6 @@
 import {
-  BaseMethodIterable,
-  MethodIterable,
+  BaseResultIterable,
+  ResultIterable,
   ensureIterable,
   isValidIterableArgument,
   isIterable,
@@ -38,22 +38,22 @@ export function isValidAsyncIterableArgument(i) {
   return isAsyncIterable(i) || isValidIterableArgument(i);
 }
 
-export function AsyncMethodIterable(...args) {
-  BaseMethodIterable.apply(this, args);
+export function AsyncResultIterable(...args) {
+  BaseResultIterable.apply(this, args);
 }
 
-AsyncMethodIterable.prototype = Object.assign(Object.create(BaseMethodIterable.prototype), {
-  constructor: AsyncMethodIterable,
+AsyncResultIterable.prototype = Object.assign(Object.create(BaseResultIterable.prototype), {
+  constructor: AsyncResultIterable,
   [Symbol.asyncIterator]() {
     return this.__iterate();
   },
 });
 
-function AsyncSimpleMethodIterable(...args) {
-  AsyncMethodIterable.apply(this, args);
+function AsyncSimpleResultIterable(...args) {
+  AsyncResultIterable.apply(this, args);
 }
 
-AsyncSimpleMethodIterable.prototype = Object.assign(Object.create(AsyncMethodIterable.prototype), {
+AsyncSimpleResultIterable.prototype = Object.assign(Object.create(AsyncResultIterable.prototype), {
   __iterate() {
     return this._fn(...this._args);
   },
@@ -81,14 +81,14 @@ function makeFunctionConfig(fn, fnConfig = {}) {
     isIterable: isValidAsyncIterableArgument,
     iterableType: 'asyncIterable',
     applyOnIterableArgs: asyncEnsureIterable,
-    IterableClass: forceSync ? MethodIterable : AsyncMethodIterable,
+    IterableClass: forceSync ? ResultIterable : AsyncResultIterable,
   };
 }
 
-export function asyncWrapWithMethodIterable(fn, { validateArgs = _ => _ } = {}) {
+export function asyncWrapWithResultIterable(fn, { validateArgs = _ => _ } = {}) {
   return (...args) => {
     validateArgs(args);
-    return new AsyncSimpleMethodIterable(fn, args);
+    return new AsyncSimpleResultIterable(fn, args);
   };
 }
 
