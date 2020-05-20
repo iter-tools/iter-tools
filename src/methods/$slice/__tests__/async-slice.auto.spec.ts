@@ -255,6 +255,20 @@ describe('asyncSlice', () => {
         ),
       ).toEqual([5, 7]);
     });
+    it('returns a smaller slice when start is negative and larger than source', async () => {
+      expect(
+        await asyncToArray(
+          asyncSlice(
+            {
+              start: -3,
+              end: 1,
+              step: 1,
+            },
+            [1, 2],
+          ),
+        ),
+      ).toEqual([1]);
+    });
   });
   it('when given invalid parameters', () => {
     const asyncUntypedSlice: any = asyncSlice;

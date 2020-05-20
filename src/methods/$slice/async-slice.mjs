@@ -22,7 +22,7 @@ async function bufferedSlice(source, start, end, step) {
   let newEnd;
 
   if (isFinite(end) && end > 0) {
-    newEnd = end - (counter - bufferSize);
+    newEnd = end - (counter - buffer.size);
     if (newEnd < 0) return [];
   } else {
     newEnd = end;

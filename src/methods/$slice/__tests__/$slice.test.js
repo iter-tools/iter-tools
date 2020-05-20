@@ -154,6 +154,13 @@ describe($`slice`, () => {
         expect($await($toArray($slice({ start: -5, end: 9, step: 2 }, list)))).toEqual([5, 7]);
       }),
     );
+
+    it(
+      'returns a smaller slice when start is negative and larger than source',
+      $async(() => {
+        expect($await($toArray($slice({ start: -3, end: 1, step: 1 }, [1, 2])))).toEqual([1]);
+      }),
+    );
   });
 
   it('when given invalid parameters', () => {
