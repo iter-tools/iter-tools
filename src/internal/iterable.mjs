@@ -24,14 +24,14 @@ export function isValidIterableArgument(i) {
   return i == null || isIterable(i);
 }
 
-export function BaseMethodIterable(fn, args, iterablesArg) {
+export function BaseResultIterable(fn, args, iterablesArg) {
   this._fn = fn;
   this._args = args;
   this._iterablesArg = iterablesArg;
   this._staticIterator = null;
 }
 
-Object.assign(BaseMethodIterable.prototype, {
+Object.assign(BaseResultIterable.prototype, {
   __iterate() {
     return this._fn(this._iterablesArg, ...this._args);
   },
@@ -53,22 +53,22 @@ Object.assign(BaseMethodIterable.prototype, {
   },
 });
 
-export function MethodIterable(...args) {
-  BaseMethodIterable.apply(this, args);
+export function ResultIterable(...args) {
+  BaseResultIterable.apply(this, args);
 }
 
-MethodIterable.prototype = Object.assign(Object.create(BaseMethodIterable.prototype), {
-  constructor: MethodIterable,
+ResultIterable.prototype = Object.assign(Object.create(BaseResultIterable.prototype), {
+  constructor: ResultIterable,
   [Symbol.iterator]() {
     return this.__iterate();
   },
 });
 
-function SimpleMethodIterable(...args) {
-  MethodIterable.apply(this, args);
+function SimpleResultIterable(...args) {
+  ResultIterable.apply(this, args);
 }
 
-SimpleMethodIterable.prototype = Object.assign(Object.create(MethodIterable.prototype), {
+SimpleResultIterable.prototype = Object.assign(Object.create(ResultIterable.prototype), {
   __iterate() {
     return this._fn(...this._args);
   },
@@ -88,14 +88,14 @@ function makeFunctionConfig(fn, fnConfig = {}) {
     isIterable: isValidIterableArgument,
     iterableType: 'iterable',
     applyOnIterableArgs: ensureIterable,
-    IterableClass: MethodIterable,
+    IterableClass: ResultIterable,
   };
 }
 
-export function wrapWithMethodIterable(fn, { validateArgs = _ => _ } = {}) {
+export function wrapWithResultIterable(fn, { validateArgs = _ => _ } = {}) {
   return (...args) => {
     validateArgs(args);
-    return new SimpleMethodIterable(fn, args);
+    return new SimpleResultIterable(fn, args);
   };
 }
 

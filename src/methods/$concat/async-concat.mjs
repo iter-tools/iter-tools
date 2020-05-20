@@ -6,10 +6,10 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { asyncWrapWithMethodIterable, asyncEnsureIterable } from '../../internal/async-iterable';
+import { asyncWrapWithResultIterable, asyncEnsureIterable } from '../../internal/async-iterable';
 export async function* asyncConcat(...sources) {
   for (const iterable of sources) {
     yield* asyncEnsureIterable(iterable);
   }
 }
-export default asyncWrapWithMethodIterable(asyncConcat);
+export default asyncWrapWithResultIterable(asyncConcat);

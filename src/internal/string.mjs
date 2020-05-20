@@ -1,5 +1,5 @@
 import { variadicCurryWithValidation } from './curry';
-import { MethodIterable } from './iterable';
+import { ResultIterable } from './iterable';
 
 export function isString(s) {
   return typeof s === 'string';
@@ -32,7 +32,7 @@ function makeFunctionConfig(fn, fnConfig = {}) {
     isIterable: isValidStringArgument,
     iterableType: 'string',
     applyOnIterableArgs: ensureString,
-    IterableClass: MethodIterable,
+    IterableClass: ResultIterable,
   };
 }
 

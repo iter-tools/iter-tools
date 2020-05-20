@@ -6,9 +6,9 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { asyncWrapWithMethodIterable, asyncEnsureIterable } from '../../internal/async-iterable';
+import { asyncWrapWithResultIterable, asyncEnsureIterable } from '../../internal/async-iterable';
 import { asyncGroupBy } from '../$group-by/async-group-by';
 export function group(iterable) {
   return asyncGroupBy(asyncEnsureIterable(iterable), _ => _);
 }
-export default asyncWrapWithMethodIterable(group);
+export default asyncWrapWithResultIterable(group);

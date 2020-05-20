@@ -1,5 +1,5 @@
 import { curry } from '../../internal/curry';
-import { wrapWithMethodIterable } from '../../internal/iterable';
+import { wrapWithResultIterable } from '../../internal/iterable';
 
 export function* repeatTimes(n, item) {
   while (n--) {
@@ -7,4 +7,4 @@ export function* repeatTimes(n, item) {
   }
 }
 
-export default curry(wrapWithMethodIterable(repeatTimes), repeatTimes.length);
+export default curry(wrapWithResultIterable(repeatTimes), repeatTimes.length);

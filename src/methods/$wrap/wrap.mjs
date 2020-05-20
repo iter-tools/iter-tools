@@ -6,8 +6,8 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { wrapWithMethodIterable, ensureIterable } from '../../internal/iterable';
+import { wrapWithResultIterable, ensureIterable } from '../../internal/iterable';
 export function* wrap(source) {
   yield* ensureIterable(source)[Symbol.iterator]();
 }
-export default wrapWithMethodIterable(wrap);
+export default wrapWithResultIterable(wrap);
