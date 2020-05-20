@@ -255,6 +255,20 @@ describe('slice', () => {
         ),
       ).toEqual([5, 7]);
     });
+    it('returns a smaller slice when start is negative and larger than source', () => {
+      expect(
+        toArray(
+          slice(
+            {
+              start: -3,
+              end: 1,
+              step: 1,
+            },
+            [1, 2],
+          ),
+        ),
+      ).toEqual([1]);
+    });
   });
   it('when given invalid parameters', () => {
     const untypedSlice: any = slice;
