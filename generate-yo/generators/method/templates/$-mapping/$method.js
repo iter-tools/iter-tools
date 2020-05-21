@@ -3,9 +3,9 @@ import { $async, $await } from '../../../generate/async.macro';
 import { $iterableCurry } from '../../internal/$iterable';
 
 $async;
-export function* $__method__(iterable) {
+export function* $__method__(source) {
   $await;
-  for (const item of iterable) {
+  for (const item of source) {
     yield item;
   }
 

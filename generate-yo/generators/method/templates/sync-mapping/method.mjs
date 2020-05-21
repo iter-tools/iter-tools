@@ -1,7 +1,7 @@
 import { iterableCurry } from '../../internal/iterable';
 
-export function* __method__(iterable) {
-  for (const item of iterable) {
+export function* __method__(source) {
+  for (const item of source) {
     yield item;
   }
 
