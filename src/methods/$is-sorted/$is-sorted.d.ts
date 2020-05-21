@@ -1,12 +1,12 @@
-import { $MaybePromise } from '../../../generate/async.macro';
+import { $Promise } from '../../../generate/async.macro';
 
 import { $SourceIterable } from '../../types/$iterable';
 
-declare function $isSorted(iterable: $SourceIterable<any>): $MaybePromise<boolean>;
+declare function $isSorted(iterable: $SourceIterable<any>): $Promise<boolean>;
 
 declare function $isSorted<T>(
   comparator: (a: T, b: T) => number,
   iterable: $SourceIterable<T>,
-): $MaybePromise<boolean>;
+): $Promise<boolean>;
 
 export default $isSorted;
