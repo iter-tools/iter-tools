@@ -1,4 +1,5 @@
-import { __method__, wrap } from '../../..';
+import { __method__ } from '../../..';
+import { wrap } from '../../../__tests__/__framework__/wrap';
 
 describe('__method__', () => {
   it(

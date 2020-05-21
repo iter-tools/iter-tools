@@ -1,4 +1,5 @@
-import { __method__, asyncWrap } from '../../..';
+import { __method__ } from '../../..';
+import { asyncWrap } from '../../../__tests__/__framework__/async-wrap';
 
 describe('__method__', () => {
   it(
