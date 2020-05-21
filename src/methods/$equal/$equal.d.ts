@@ -1,7 +1,7 @@
-import { $MaybePromise } from '../../../generate/async.macro';
+import { $Promise } from '../../../generate/async.macro';
 
 import { $SourceIterable } from '../../types/$iterable';
 
-declare function $equal(...iterables: Array<$SourceIterable<any>>): $MaybePromise<boolean>;
+declare function $equal(...iterables: Array<$SourceIterable<any>>): $Promise<boolean>;
 
 export default $equal;

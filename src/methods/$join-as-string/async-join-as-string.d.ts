@@ -7,8 +7,8 @@
  */
 
 import { AsyncSourceIterable } from '../../types/async-iterable';
-declare function asyncJoinAsString(strings: AsyncSourceIterable<string>): string | Promise<string>;
+declare function asyncJoinAsString(strings: AsyncSourceIterable<string>): Promise<string>;
 declare function asyncJoinAsString(
   strings: AsyncSourceIterable<AsyncSourceIterable<string>>,
-): string | Promise<string>;
+): Promise<string>;
 export default asyncJoinAsString;
