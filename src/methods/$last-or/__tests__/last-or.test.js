@@ -8,17 +8,19 @@
 
 /* eslint-disable no-unused-vars,import/no-duplicates,no-constant-condition */
 
-import { lastOr, wrap } from '../../..';
+import { lastOr } from '../../..';
+import { wrap } from '../../../__tests__/__framework__/wrap';
 describe('lastOr', () => {
-  it('Returns the last item in the iterable', () => {
-    expect(lastOr(0, wrap([1, 2, 3]))).toEqual(3);
-  });
-  it('Returns the last item in an array', () => {
-    expect(lastOr(0, [1, 2, 3])).toEqual(3);
-  });
   describe('when iterable is empty', () => {
     it('returns whenEmpty', () => {
-      expect(lastOr(null, wrap([]))).toBe(null);
+      expect(lastOr(0, null)).toBe(0);
+      expect(lastOr(0, undefined)).toBe(0);
+      expect(lastOr(0, wrap([]))).toBe(0);
+    });
+  });
+  describe('when iterable contains values', () => {
+    it('returns last value', () => {
+      expect(lastOr(null, wrap([1, 2, 3]))).toBe(3);
     });
   });
 });

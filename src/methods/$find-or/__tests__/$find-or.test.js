@@ -1,32 +1,41 @@
 import { $, $isAsync, $async, $await } from '../../../../generate/async.macro';
 
-import { $findOr, $wrap } from '../../..';
+import { $findOr } from '../../..';
+import { $wrap } from '../../../__tests__/__framework__/$wrap';
 
 describe($`findOr`, () => {
-  it(
-    'returns found item',
-    $async(() => {
-      expect($await($findOr(0, item => item === 5, $wrap([1, 2, 3, 4, 5, 6])))).toBe(5);
-    }),
-  );
+  describe('when iterable is empty', () => {
+    it(
+      'returns notFoundValue',
+      $async(() => {
+        expect($await($findOr(0, (item: never) => item, null))).toBe(0);
+        expect($await($findOr(0, (item: never) => item, undefined))).toBe(0);
+        expect($await($findOr(0, (item: never) => item, $wrap([])))).toBe(0);
+      }),
+    );
+  });
 
-  it(
-    'returns notFoundValue if specified and no item found',
-    $async(() => {
-      expect($await($findOr(0, _ => false, $wrap([1, 2, 3, 4, 5, 6])))).toBe(0);
-    }),
-  );
+  describe('when iterable does not contain the desired value', () => {
+    it(
+      'returns notFoundValue',
+      $async(() => {
+        expect($await($findOr(0, _ => false, $wrap([1, 2, 3, 4, 5, 6])))).toBe(0);
+      }),
+    );
+  });
 
-  it(
-    'returns notFoundValue when iterable is empty',
-    $async(() => {
-      expect($await($findOr(null, (item: never) => item, null))).toBe(null);
-    }),
-  );
+  describe('when iterable contains the desired value', () => {
+    it(
+      'returns the value',
+      $async(() => {
+        expect($await($findOr(0, item => item === 5, $wrap([1, 2, 3, 4, 5, 6])))).toBe(5);
+      }),
+    );
 
-  if ($isAsync) {
-    it('returns found item (using a promise)', async () => {
-      expect(await $findOr(0, async item => item === 5, $wrap([1, 2, 3, 4, 5, 6]))).toBe(5);
-    });
-  }
+    if ($isAsync) {
+      it('the predicate may return a promise', async () => {
+        expect(await $findOr(0, async item => item === 5, $wrap([1, 2, 3, 4, 5, 6]))).toBe(5);
+      });
+    }
+  });
 });

@@ -6,18 +6,19 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { asyncFirst, range } from '../../..';
+import { asyncFirst } from '../../..';
+import { asyncWrap } from '../../../__tests__/__framework__/async-wrap';
 describe('asyncFirst', () => {
-  describe('when iterable contains items', () => {
-    it('returns first item', async () => {
-      const iter = range(10);
-      expect(await asyncFirst(iter)).toBe(0);
-    });
-  });
   describe('when iterable is empty', () => {
     it('returns undefined', async () => {
-      const iter = range(0);
-      expect(await asyncFirst(iter)).toBe(undefined);
+      expect(await asyncFirst(null)).toBe(undefined);
+      expect(await asyncFirst(undefined)).toBe(undefined);
+      expect(await asyncFirst(asyncWrap([]))).toBe(undefined);
+    });
+  });
+  describe('when iterable contains values', () => {
+    it('returns first value', async () => {
+      expect(await asyncFirst(asyncWrap([1, 2, 3]))).toBe(1);
     });
   });
 });

@@ -7,7 +7,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ## [7.0.0-rc.1] - UNRELEASED
 ### Added
 **Methods**
+ - `arrayFirst`, `arrayFirstOr`
+ - `arrayLast`, `arrayLastOr`
  - `window`, `asyncWindow`
+
+### Changed
+ - Removed O(1) array optimizations from `last` and `lastOr`.
 
 
 

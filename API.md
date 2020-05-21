@@ -198,6 +198,10 @@ Consume an iterable
 Utilities
 
 [apply](#apply)  
+[arrayFirst](#arrayfirst)  
+[arrayFirstOr](#arrayfirstor)  
+[arrayLast](#arraylast)  
+[arrayLastOr](#arraylastor)  
 [call](#call)  
 [compose](#compose)  
 [execPipe](#execpipe)  
@@ -1506,7 +1510,7 @@ See [findOr](#findor)
 
 ### first
 
-**first(iterable)**
+**first([iterable](#sourceiterable))**
 
 Returns the first value from `iterable`, or `undefined` when `iterable` is empty.
 
@@ -1517,7 +1521,7 @@ first([]); // undefined
 
 ### asyncFirst
 
-**asyncFirst(iterable)**
+**asyncFirst([iterable](#asyncsourceiterable))**
 
 See [first](#first)
 
@@ -1610,7 +1614,7 @@ See [includesSubseq](#includessubseq)
 
 ### isEmpty
 
-**isEmpty(iterable)**
+**isEmpty([iterable](#sourceiterable))**
 
 Returns `true` if `iterable` contains no values, and `false` otherwise.
 
@@ -1623,7 +1627,7 @@ isEmpty([undefined]); // false
 
 ### asyncIsEmpty
 
-**asyncIsEmpty(iterable)**
+**asyncIsEmpty([iterable](#asyncsourceiterable))**
 
 See [isEmpty](#isempty)
 
@@ -1660,9 +1664,11 @@ See [joinAsString](#joinasstring)
 
 ### last
 
-**last(iterable)**
+**last([iterable](#sourceiterable))**
 
-Returns the last value from `iterable`, or `undefined` when `iterable` is empty. If `iterable` is not an array, this requires traversing the whole iterable.
+Returns the last value from `iterable`, or `undefined` when `iterable` is empty.
+
+Performance note: this requires consuming the entire iterable. If `iterable` is an array this method will do a lot of unnecessary work compared to `arrayLast(array)`.
 
 ```js
 last([1, 2, 3]); // 3
@@ -1671,17 +1677,17 @@ last([]); // undefined
 
 ### asyncLast
 
-**asyncLast(iterable)**
+**asyncLast([iterable](#asyncsourceiterable))**
 
 See [last](#last)
-
-Note: Unlike `last`, `asyncLast` will always traverse the entire input iterable, even if it is an array. If this is not acceptable, ensure that you use `last` on arrays.
 
 ### lastOr
 
 **lastOr(whenEmpty, [iterable](#sourceiterable))**
 
-Returns the last value from `iterable`, or `whenEmpty` when `iterable` is empty. If `iterable` is not an array, this requires traversing the whole iterable.
+Returns the last value from `iterable`, or `whenEmpty` when `iterable` is empty.
+
+Performance note: this requires consuming the entire iterable. If `iterable` is an array this method will do a lot of unnecessary work compared to `arrayLastOr(array, whenEmpty)`.
 
 ```js
 lastOr(0, [1, 2, 3]); // 3
@@ -1692,9 +1698,7 @@ lastOr(0, []); // 0
 
 **asyncLastOr(whenEmpty, [iterable](#asyncsourceiterable))**
 
-See [lastOr](#last-or)
-
-Note: Unlike `lastOr`, `asyncLastOr` will always traverse the entire input iterable, even if it is an array. If this is not acceptable, ensure that you use `lastOr` on arrays.
+See [lastOr](#lastor)
 
 ### reduce
 
@@ -2218,6 +2222,30 @@ See [objectFromAsync](#objectfromasync)
 ```
 
 `apply` has three main differences from `Function.prototype.apply`. It does not take a `thisArg`, the args to apply may be specified as an iterable, and if you do not pass the `args` iterable, the result is a partial application, not a no-args call to `fn`.
+
+### arrayFirst
+
+**arrayFirst(array)**
+
+`return array ? array[0] : undefined`
+
+### arrayFirstOr
+
+**arrayFirstOr(whenEmpty, array)**
+
+`return array && array.length ? array[0] : whenEmpty`
+
+### arrayLast
+
+**arrayLast(array)**
+
+`return array ? array[array.length - 1] : undefined`
+
+### arrayLastOr
+
+**arrayLastOr(whenEmpty, array)**
+
+`return array && array.length ? array[array.length - 1] : whenEmpty`
 
 ### call
 

@@ -6,17 +6,19 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { last, wrap } from '../../..';
+import { last } from '../../..';
+import { wrap } from '../../../__tests__/__framework__/wrap';
 describe('last', () => {
-  it('Returns the last item in the iterable', () => {
-    expect(last(wrap([1, 2, 3]))).toEqual(3);
-  });
-  it('Returns the last item in an array', () => {
-    expect(last([1, 2, 3])).toEqual(3);
-  });
   describe('when iterable is empty', () => {
     it('returns undefined', () => {
+      expect(last(null)).toBe(undefined);
+      expect(last(undefined)).toBe(undefined);
       expect(last(wrap([]))).toBe(undefined);
+    });
+  });
+  describe('when iterable contains values', () => {
+    it('returns last value', () => {
+      expect(last(wrap([1, 2, 3]))).toBe(3);
     });
   });
 });

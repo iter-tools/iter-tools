@@ -8,10 +8,6 @@
 
 import { iterableCurry } from '../../internal/iterable';
 export function lastOr(iterable, whenEmpty) {
-  if (true && Array.isArray(iterable)) {
-    return iterable[iterable.length - 1];
-  }
-
   let _item = whenEmpty;
 
   for (const item of iterable) {

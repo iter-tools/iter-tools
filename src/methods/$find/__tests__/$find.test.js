@@ -1,32 +1,41 @@
 import { $, $isAsync, $async, $await } from '../../../../generate/async.macro';
 
 import { $find } from '../../..';
+import { $wrap } from '../../../__tests__/__framework__/$wrap';
 
 describe($`find`, () => {
-  it(
-    'returns found item',
-    $async(() => {
-      expect($await($find(item => item === 5, [1, 2, 3, 4, 5, 6]))).toBe(5);
-    }),
-  );
+  describe('when iterable is empty', () => {
+    it(
+      'returns undefined',
+      $async(() => {
+        expect($await($find((item: never) => item, null))).toBe(undefined);
+        expect($await($find((item: never) => item, undefined))).toBe(undefined);
+        expect($await($find((item: never) => item, $wrap([])))).toBe(undefined);
+      }),
+    );
+  });
 
-  it(
-    'returns undefined if no item found',
-    $async(() => {
-      expect($await($find(_ => false, [1, 2, 3, 4, 5, 6]))).toBe(undefined);
-    }),
-  );
+  describe('when iterable does not contain the desired value', () => {
+    it(
+      'returns undefined',
+      $async(() => {
+        expect($await($find(_ => false, $wrap([1, 2, 3, 4, 5, 6])))).toBe(undefined);
+      }),
+    );
+  });
 
-  it(
-    'returns undefined when iterable is empty',
-    $async(() => {
-      expect($await($find((item: never) => item, null))).toBe(undefined);
-    }),
-  );
+  describe('when iterable contains the desired value', () => {
+    it(
+      'returns the value',
+      $async(() => {
+        expect($await($find(item => item === 5, $wrap([1, 2, 3, 4, 5, 6])))).toBe(5);
+      }),
+    );
 
-  if ($isAsync) {
-    it('returns found item (using a promise)', async () => {
-      expect(await $find(async item => item === 5, [1, 2, 3, 4, 5, 6])).toBe(5);
-    });
-  }
+    if ($isAsync) {
+      it('the predicate may return a promise', async () => {
+        expect(await $find(async item => item === 5, $wrap([1, 2, 3, 4, 5, 6]))).toBe(5);
+      });
+    }
+  });
 });

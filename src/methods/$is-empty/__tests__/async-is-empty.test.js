@@ -8,18 +8,19 @@
 
 /* eslint-disable no-unused-vars,import/no-duplicates,no-constant-condition */
 
-import { asyncIsEmpty, range } from '../../..';
+import { asyncIsEmpty } from '../../..';
+import { asyncWrap } from '../../../__tests__/__framework__/async-wrap';
 describe('asyncIsEmpty', () => {
-  describe('when iterable contains items', () => {
+  describe('when iterable is empty', () => {
     it('returns true', async () => {
-      const iter = range(10);
-      expect(await asyncIsEmpty(iter)).toBe(false);
+      expect(await asyncIsEmpty(null)).toBe(true);
+      expect(await asyncIsEmpty(undefined)).toBe(true);
+      expect(await asyncIsEmpty(asyncWrap([]))).toBe(true);
     });
   });
-  describe('when iterable is empty', () => {
+  describe('when iterable contains values', () => {
     it('returns false', async () => {
-      const iter = range(0);
-      expect(await asyncIsEmpty(iter)).toBe(true);
+      expect(await asyncIsEmpty(asyncWrap([1, 2, 3]))).toBe(false);
     });
   });
 });

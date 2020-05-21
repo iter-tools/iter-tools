@@ -8,18 +8,27 @@
 
 /* eslint-disable no-unused-vars,import/no-duplicates,no-constant-condition */
 
-import { asyncFindOr, asyncWrap } from '../../..';
+import { asyncFindOr } from '../../..';
+import { asyncWrap } from '../../../__tests__/__framework__/async-wrap';
 describe('asyncFindOr', () => {
-  it('returns found item', async () => {
-    expect(await asyncFindOr(0, item => item === 5, asyncWrap([1, 2, 3, 4, 5, 6]))).toBe(5);
+  describe('when iterable is empty', () => {
+    it('returns notFoundValue', async () => {
+      expect(await asyncFindOr(0, (item: never) => item, null)).toBe(0);
+      expect(await asyncFindOr(0, (item: never) => item, undefined)).toBe(0);
+      expect(await asyncFindOr(0, (item: never) => item, asyncWrap([]))).toBe(0);
+    });
   });
-  it('returns notFoundValue if specified and no item found', async () => {
-    expect(await asyncFindOr(0, _ => false, asyncWrap([1, 2, 3, 4, 5, 6]))).toBe(0);
+  describe('when iterable does not contain the desired value', () => {
+    it('returns notFoundValue', async () => {
+      expect(await asyncFindOr(0, _ => false, asyncWrap([1, 2, 3, 4, 5, 6]))).toBe(0);
+    });
   });
-  it('returns notFoundValue when iterable is empty', async () => {
-    expect(await asyncFindOr(null, (item: never) => item, null)).toBe(null);
-  });
-  it('returns found item (using a promise)', async () => {
-    expect(await asyncFindOr(0, async item => item === 5, asyncWrap([1, 2, 3, 4, 5, 6]))).toBe(5);
+  describe('when iterable contains the desired value', () => {
+    it('returns the value', async () => {
+      expect(await asyncFindOr(0, item => item === 5, asyncWrap([1, 2, 3, 4, 5, 6]))).toBe(5);
+    });
+    it('the predicate may return a promise', async () => {
+      expect(await asyncFindOr(0, async item => item === 5, asyncWrap([1, 2, 3, 4, 5, 6]))).toBe(5);
+    });
   });
 });

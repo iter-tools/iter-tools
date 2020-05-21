@@ -7,7 +7,10 @@
  */
 
 import { asyncLastOr } from '../$last-or/async-last-or';
+import { asyncIterableCurry } from '../../internal/async-iterable';
 export function asyncLast(iterable) {
   return asyncLastOr(iterable, undefined);
 }
-export default asyncLast;
+export default asyncIterableCurry(asyncLast, {
+  reduces: true,
+});

@@ -1,29 +1,25 @@
-import { $, $isSync, $async, $await } from '../../../../generate/async.macro';
+import { $, $async, $await } from '../../../../generate/async.macro';
 
-import { $lastOr, $wrap } from '../../..';
+import { $lastOr } from '../../..';
+import { $wrap } from '../../../__tests__/__framework__/$wrap';
 
 describe($`lastOr`, () => {
-  it(
-    'Returns the last item in the iterable',
-    $async(() => {
-      expect($await($lastOr(0, $wrap([1, 2, 3])))).toEqual(3);
-    }),
-  );
-
-  if ($isSync) {
-    it(
-      'Returns the last item in an array',
-      $async(() => {
-        expect($lastOr(0, [1, 2, 3])).toEqual(3);
-      }),
-    );
-  }
-
   describe('when iterable is empty', () => {
     it(
       'returns whenEmpty',
       $async(() => {
-        expect($await($lastOr(null, $wrap([])))).toBe(null);
+        expect($await($lastOr(0, null))).toBe(0);
+        expect($await($lastOr(0, undefined))).toBe(0);
+        expect($await($lastOr(0, $wrap([])))).toBe(0);
+      }),
+    );
+  });
+
+  describe('when iterable contains values', () => {
+    it(
+      'returns last value',
+      $async(() => {
+        expect($await($lastOr(null, $wrap([1, 2, 3])))).toBe(3);
       }),
     );
   });

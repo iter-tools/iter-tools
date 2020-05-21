@@ -9,14 +9,23 @@
 /* eslint-disable no-unused-vars,import/no-duplicates,no-constant-condition */
 
 import { find } from '../../..';
+import { wrap } from '../../../__tests__/__framework__/wrap';
 describe('find', () => {
-  it('returns found item', () => {
-    expect(find(item => item === 5, [1, 2, 3, 4, 5, 6])).toBe(5);
+  describe('when iterable is empty', () => {
+    it('returns undefined', () => {
+      expect(find((item: never) => item, null)).toBe(undefined);
+      expect(find((item: never) => item, undefined)).toBe(undefined);
+      expect(find((item: never) => item, wrap([]))).toBe(undefined);
+    });
   });
-  it('returns undefined if no item found', () => {
-    expect(find(_ => false, [1, 2, 3, 4, 5, 6])).toBe(undefined);
+  describe('when iterable does not contain the desired value', () => {
+    it('returns undefined', () => {
+      expect(find(_ => false, wrap([1, 2, 3, 4, 5, 6]))).toBe(undefined);
+    });
   });
-  it('returns undefined when iterable is empty', () => {
-    expect(find((item: never) => item, null)).toBe(undefined);
+  describe('when iterable contains the desired value', () => {
+    it('returns the value', () => {
+      expect(find(item => item === 5, wrap([1, 2, 3, 4, 5, 6]))).toBe(5);
+    });
   });
 });

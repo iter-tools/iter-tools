@@ -7,22 +7,22 @@
  */
 
 import { SourceIterable } from '../../types/iterable';
-declare function findOr<NF, S extends T, T>(
-  notFoundValue: NF,
+declare function findOr<N, S extends T, T>(
+  notFoundValue: N,
   predicate: (item: T, i: number) => item is S,
-): (iterable: SourceIterable<T>) => S | NF;
-declare function findOr<NF, T>(
-  notFoundValue: NF,
+): (iterable: SourceIterable<T>) => S | N;
+declare function findOr<N, T>(
+  notFoundValue: N,
   predicate: (item: T, i: number) => boolean,
-): (iterable: SourceIterable<T>) => T | NF;
-declare function findOr<NF, S extends T, T>(
-  notFoundValue: NF,
+): (iterable: SourceIterable<T>) => T | N;
+declare function findOr<N, S extends T, T>(
+  notFoundValue: N,
   predicate: (item: T, i: number) => item is S,
   iterable: SourceIterable<T>,
-): S | NF;
-declare function findOr<NF, T>(
-  notFoundValue: NF,
+): S | N;
+declare function findOr<N, T>(
+  notFoundValue: N,
   predicate: (item: T, i: number) => boolean,
   iterable: SourceIterable<T>,
-): T | NF;
+): T | N;
 export default findOr;

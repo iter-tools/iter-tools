@@ -1,24 +1,25 @@
 import { $, $async, $await } from '../../../../generate/async.macro';
 
-import { $isEmpty, range } from '../../..';
+import { $isEmpty } from '../../..';
+import { $wrap } from '../../../__tests__/__framework__/$wrap';
 
 describe($`isEmpty`, () => {
-  describe('when iterable contains items', () => {
+  describe('when iterable is empty', () => {
     it(
       'returns true',
       $async(() => {
-        const iter = range(10);
-        expect($await($isEmpty(iter))).toBe(false);
+        expect($await($isEmpty(null))).toBe(true);
+        expect($await($isEmpty(undefined))).toBe(true);
+        expect($await($isEmpty($wrap([])))).toBe(true);
       }),
     );
   });
 
-  describe('when iterable is empty', () => {
+  describe('when iterable contains values', () => {
     it(
       'returns false',
       $async(() => {
-        const iter = range(0);
-        expect($await($isEmpty(iter))).toBe(true);
+        expect($await($isEmpty($wrap([1, 2, 3])))).toBe(false);
       }),
     );
   });

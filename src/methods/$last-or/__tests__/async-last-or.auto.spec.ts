@@ -6,14 +6,19 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { asyncLastOr, asyncWrap } from '../../..';
+import { asyncLastOr } from '../../..';
+import { asyncWrap } from '../../../__tests__/__framework__/async-wrap';
 describe('asyncLastOr', () => {
-  it('Returns the last item in the iterable', async () => {
-    expect(await asyncLastOr(0, asyncWrap([1, 2, 3]))).toEqual(3);
-  });
   describe('when iterable is empty', () => {
     it('returns whenEmpty', async () => {
-      expect(await asyncLastOr(null, asyncWrap([]))).toBe(null);
+      expect(await asyncLastOr(0, null)).toBe(0);
+      expect(await asyncLastOr(0, undefined)).toBe(0);
+      expect(await asyncLastOr(0, asyncWrap([]))).toBe(0);
+    });
+  });
+  describe('when iterable contains values', () => {
+    it('returns last value', async () => {
+      expect(await asyncLastOr(null, asyncWrap([1, 2, 3]))).toBe(3);
     });
   });
 });

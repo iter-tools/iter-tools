@@ -8,14 +8,19 @@
 
 /* eslint-disable no-unused-vars,import/no-duplicates,no-constant-condition */
 
-import { asyncLast, asyncWrap } from '../../..';
+import { asyncLast } from '../../..';
+import { asyncWrap } from '../../../__tests__/__framework__/async-wrap';
 describe('asyncLast', () => {
-  it('Returns the last item in the iterable', async () => {
-    expect(await asyncLast(asyncWrap([1, 2, 3]))).toEqual(3);
-  });
   describe('when iterable is empty', () => {
     it('returns undefined', async () => {
+      expect(await asyncLast(null)).toBe(undefined);
+      expect(await asyncLast(undefined)).toBe(undefined);
       expect(await asyncLast(asyncWrap([]))).toBe(undefined);
+    });
+  });
+  describe('when iterable contains values', () => {
+    it('returns last value', async () => {
+      expect(await asyncLast(asyncWrap([1, 2, 3]))).toBe(3);
     });
   });
 });
