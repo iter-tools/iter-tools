@@ -6,8 +6,12 @@
 
 export { default as append } from './append';
 export { default as apply } from './apply';
+export { default as arrayFirst } from './array-first';
+export { default as arrayFirstOr } from './array-first-or';
 export { default as arrayFrom } from './array-from';
 export { default as arrayFromAsync } from './array-from-async';
+export { default as arrayLast } from './array-last';
+export { default as arrayLastOr } from './array-last-or';
 export { default as batch } from './batch';
 export { default as call } from './call';
 export { default as collate } from './collate';

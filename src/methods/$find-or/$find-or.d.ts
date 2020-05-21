@@ -2,26 +2,26 @@ import { $Promise, $MaybePromise } from '../../../generate/async.macro';
 
 import { $SourceIterable } from '../../types/$iterable';
 
-declare function $findOr<NF, S extends T, T>(
-  notFoundValue: NF,
+declare function $findOr<N, S extends T, T>(
+  notFoundValue: N,
   predicate: (item: T, i: number) => item is S,
-): (iterable: $SourceIterable<T>) => $Promise<S | NF>;
+): (iterable: $SourceIterable<T>) => $Promise<S | N>;
 
-declare function $findOr<NF, T>(
-  notFoundValue: NF,
+declare function $findOr<N, T>(
+  notFoundValue: N,
   predicate: (item: T, i: number) => $MaybePromise<boolean>,
-): (iterable: $SourceIterable<T>) => $Promise<T | NF>;
+): (iterable: $SourceIterable<T>) => $Promise<T | N>;
 
-declare function $findOr<NF, S extends T, T>(
-  notFoundValue: NF,
+declare function $findOr<N, S extends T, T>(
+  notFoundValue: N,
   predicate: (item: T, i: number) => item is S,
   iterable: $SourceIterable<T>,
-): $Promise<S | NF>;
+): $Promise<S | N>;
 
-declare function $findOr<NF, T>(
-  notFoundValue: NF,
+declare function $findOr<N, T>(
+  notFoundValue: N,
   predicate: (item: T, i: number) => $MaybePromise<boolean>,
   iterable: $SourceIterable<T>,
-): $Promise<T | NF>;
+): $Promise<T | N>;
 
 export default $findOr;

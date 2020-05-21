@@ -6,12 +6,6 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { SourceIterable, Iterable } from '../../types/iterable';
-declare function first<Iter extends SourceIterable<any>>(
-  iterable: Iter,
-): Iter extends [infer First, ...Array<any>]
-  ? First
-  : Iter extends Iterable<infer T>
-  ? T | undefined
-  : undefined;
+import { SourceIterable } from '../../types/iterable';
+declare function first<T>(iterable: SourceIterable<T>): T | undefined;
 export default first;

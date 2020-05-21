@@ -6,18 +6,19 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { isEmpty, range } from '../../..';
+import { isEmpty } from '../../..';
+import { wrap } from '../../../__tests__/__framework__/wrap';
 describe('isEmpty', () => {
-  describe('when iterable contains items', () => {
+  describe('when iterable is empty', () => {
     it('returns true', () => {
-      const iter = range(10);
-      expect(isEmpty(iter)).toBe(false);
+      expect(isEmpty(null)).toBe(true);
+      expect(isEmpty(undefined)).toBe(true);
+      expect(isEmpty(wrap([]))).toBe(true);
     });
   });
-  describe('when iterable is empty', () => {
+  describe('when iterable contains values', () => {
     it('returns false', () => {
-      const iter = range(0);
-      expect(isEmpty(iter)).toBe(true);
+      expect(isEmpty(wrap([1, 2, 3]))).toBe(false);
     });
   });
 });

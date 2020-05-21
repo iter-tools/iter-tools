@@ -6,18 +6,19 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { first, range } from '../../..';
+import { first } from '../../..';
+import { wrap } from '../../../__tests__/__framework__/wrap';
 describe('first', () => {
-  describe('when iterable contains items', () => {
-    it('returns first item', () => {
-      const iter = range(10);
-      expect(first(iter)).toBe(0);
-    });
-  });
   describe('when iterable is empty', () => {
     it('returns undefined', () => {
-      const iter = range(0);
-      expect(first(iter)).toBe(undefined);
+      expect(first(null)).toBe(undefined);
+      expect(first(undefined)).toBe(undefined);
+      expect(first(wrap([]))).toBe(undefined);
+    });
+  });
+  describe('when iterable contains values', () => {
+    it('returns first value', () => {
+      expect(first(wrap([1, 2, 3]))).toBe(1);
     });
   });
 });

@@ -6,9 +6,12 @@
  * More information can be found in CONTRIBUTING.md
  */
 
+import { iterableCurry } from '../../internal/iterable';
 import { firstOr } from '../$first-or/first-or';
 const NONE = {};
 export function isEmpty(iterable) {
   return firstOr(iterable, NONE) === NONE;
 }
-export default isEmpty;
+export default iterableCurry(isEmpty, {
+  reduces: true,
+});

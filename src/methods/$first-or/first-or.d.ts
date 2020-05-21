@@ -6,9 +6,6 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { SourceIterable, Iterable } from '../../types/iterable';
-declare function firstOr<Iter extends SourceIterable<any>, E>(
-  whenEmpty: E,
-  iterable: Iter,
-): Iter extends [infer First, ...Array<any>] ? First : Iter extends Iterable<infer T> ? T | E : E;
+import { SourceIterable } from '../../types/iterable';
+declare function firstOr<E, T>(whenEmpty: E, iterable: SourceIterable<T>): T | E;
 export default firstOr;

@@ -1,24 +1,25 @@
 import { $, $async, $await } from '../../../../generate/async.macro';
 
-import { $firstOr, range } from '../../..';
+import { $firstOr } from '../../..';
+import { $wrap } from '../../../__tests__/__framework__/$wrap';
 
 describe($`firstOr`, () => {
-  describe('when iterable contains items', () => {
-    it(
-      'returns first item',
-      $async(() => {
-        const iter = range(10);
-        expect($await($firstOr(null, iter))).toBe(0);
-      }),
-    );
-  });
-
   describe('when iterable is empty', () => {
     it(
       'returns whenEmpty',
       $async(() => {
-        const iter = range(0);
-        expect($await($firstOr(null, iter))).toBe(null);
+        expect($await($firstOr(0, null))).toBe(0);
+        expect($await($firstOr(0, undefined))).toBe(0);
+        expect($await($firstOr(0, $wrap([])))).toBe(0);
+      }),
+    );
+  });
+
+  describe('when iterable contains values', () => {
+    it(
+      'returns first value',
+      $async(() => {
+        expect($await($firstOr(null, $wrap([1, 2, 3])))).toBe(1);
       }),
     );
   });

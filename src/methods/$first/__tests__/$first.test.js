@@ -1,24 +1,25 @@
 import { $, $async, $await } from '../../../../generate/async.macro';
 
-import { $first, range } from '../../..';
+import { $first } from '../../..';
+import { $wrap } from '../../../__tests__/__framework__/$wrap';
 
 describe($`first`, () => {
-  describe('when iterable contains items', () => {
-    it(
-      'returns first item',
-      $async(() => {
-        const iter = range(10);
-        expect($await($first(iter))).toBe(0);
-      }),
-    );
-  });
-
   describe('when iterable is empty', () => {
     it(
       'returns undefined',
       $async(() => {
-        const iter = range(0);
-        expect($await($first(iter))).toBe(undefined);
+        expect($await($first(null))).toBe(undefined);
+        expect($await($first(undefined))).toBe(undefined);
+        expect($await($first($wrap([])))).toBe(undefined);
+      }),
+    );
+  });
+
+  describe('when iterable contains values', () => {
+    it(
+      'returns first value',
+      $async(() => {
+        expect($await($first($wrap([1, 2, 3])))).toBe(1);
       }),
     );
   });

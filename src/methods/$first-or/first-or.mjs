@@ -6,9 +6,9 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { ensureIterable, iterableCurry } from '../../internal/iterable';
+import { iterableCurry } from '../../internal/iterable';
 export function firstOr(iterable, whenEmpty) {
-  const iter = ensureIterable(iterable)[Symbol.iterator]();
+  const iter = iterable[Symbol.iterator]();
   const { value, done } = iter.next();
   if (done) return whenEmpty;
   if (typeof iter.return === 'function') iter.return();

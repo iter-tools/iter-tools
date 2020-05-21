@@ -9,14 +9,6 @@
 import { iterableCurry } from '../../internal/iterable';
 import { toArray } from '../$to-array/to-array';
 export function* reverse(source) {
-  let array = source;
-
-  if (false || !Array.isArray(array)) {
-    array = toArray(array);
-  }
-
-  for (let i = array.length - 1; i >= 0; i--) {
-    yield array[i];
-  }
+  yield* toArray(source).reverse();
 }
 export default iterableCurry(reverse);

@@ -9,11 +9,6 @@
 import { asyncIterableCurry } from '../../internal/async-iterable';
 import { asyncToArray } from '../$to-array/async-to-array';
 export async function* asyncReverse(source) {
-  let array = source;
-  array = await asyncToArray(array);
-
-  for (let i = array.length - 1; i >= 0; i--) {
-    yield array[i];
-  }
+  yield* (await asyncToArray(source)).reverse();
 }
 export default asyncIterableCurry(asyncReverse);

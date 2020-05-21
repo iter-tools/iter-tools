@@ -8,15 +8,24 @@
 
 /* eslint-disable no-unused-vars,import/no-duplicates,no-constant-condition */
 
-import { findOr, wrap } from '../../..';
+import { findOr } from '../../..';
+import { wrap } from '../../../__tests__/__framework__/wrap';
 describe('findOr', () => {
-  it('returns found item', () => {
-    expect(findOr(0, item => item === 5, wrap([1, 2, 3, 4, 5, 6]))).toBe(5);
+  describe('when iterable is empty', () => {
+    it('returns notFoundValue', () => {
+      expect(findOr(0, (item: never) => item, null)).toBe(0);
+      expect(findOr(0, (item: never) => item, undefined)).toBe(0);
+      expect(findOr(0, (item: never) => item, wrap([]))).toBe(0);
+    });
   });
-  it('returns notFoundValue if specified and no item found', () => {
-    expect(findOr(0, _ => false, wrap([1, 2, 3, 4, 5, 6]))).toBe(0);
+  describe('when iterable does not contain the desired value', () => {
+    it('returns notFoundValue', () => {
+      expect(findOr(0, _ => false, wrap([1, 2, 3, 4, 5, 6]))).toBe(0);
+    });
   });
-  it('returns notFoundValue when iterable is empty', () => {
-    expect(findOr(null, (item: never) => item, null)).toBe(null);
+  describe('when iterable contains the desired value', () => {
+    it('returns the value', () => {
+      expect(findOr(0, item => item === 5, wrap([1, 2, 3, 4, 5, 6]))).toBe(5);
+    });
   });
 });

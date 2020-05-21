@@ -6,12 +6,6 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { AsyncSourceIterable, AsyncIterable } from '../../types/async-iterable';
-declare function asyncFirst<Iter extends AsyncSourceIterable<any>>(
-  iterable: Iter,
-): Iter extends [infer First, ...Array<any>]
-  ? Promise<First>
-  : Iter extends AsyncIterable<infer T>
-  ? Promise<T | undefined>
-  : Promise<undefined>;
+import { AsyncSourceIterable } from '../../types/async-iterable';
+declare function asyncFirst<T>(iterable: AsyncSourceIterable<T>): Promise<T | undefined>;
 export default asyncFirst;

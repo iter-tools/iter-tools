@@ -6,9 +6,9 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { asyncEnsureIterable, asyncIterableCurry } from '../../internal/async-iterable';
+import { asyncIterableCurry } from '../../internal/async-iterable';
 export async function asyncFirstOr(iterable, whenEmpty) {
-  const iter = asyncEnsureIterable(iterable)[Symbol.asyncIterator]();
+  const iter = iterable[Symbol.asyncIterator]();
   const { value, done } = await iter.next();
   if (done) return whenEmpty;
   if (typeof iter.return === 'function') await iter.return();
