@@ -13,11 +13,14 @@ const { rename } = require('./names');
  *
  *
  *           SYNC                    TEMPLATE                    ASYNC
+ *
  *                             $async(function() {})
  *       function() {}                 <--->               async function() {}
  *
+ *
  *                           $async; function fn() {}
  *     function fn() {}                <--->              async function fn() {}
+ *
  *
  *                                   $async`fn`
  *           'fn'                      <--->                   'asyncFn'
@@ -33,14 +36,18 @@ const { rename } = require('./names');
  *                             $await(anyExpression)
  *       anyExpression                 <--->               await anyExpression
  *
+ *
  *                      $await; for(const foo of iterable) {}
  * for(const foo of iterable) {}       <--->       for await(const foo of iterable) {}
+ *
  *
  *                                    $isAsync
  *           false                     <--->                       true
  *
+ *
  *                                    $isSync
  *           true                      <--->                       false
+ *
  *
  *                             $Promise<typeExpression>
  *       typeExpression                                   Promise<typeExpression>
@@ -54,22 +61,37 @@ const { rename } = require('./names');
 
 const { ast } = expression;
 
+function* concat(...iterables) {
+  for (const i of iterables) yield* i;
+}
+
 function asyncMacro({ references, babel, state, config: { ASYNC } }) {
   const t = babel.types;
 
-  for (const reference of references.$isAsync || []) {
+  const {
+    $isAsync = [],
+    $isSync = [],
+    $iteratorSymbol = [],
+    $Promise = [],
+    $MaybePromise = [],
+    $ = [],
+    $async = [],
+    $await = [],
+  } = references;
+
+  for (const reference of $isAsync) {
     reference.replaceWith(t.booleanLiteral(!!ASYNC));
   }
 
-  for (const reference of references.$isSync || []) {
+  for (const reference of $isSync) {
     reference.replaceWith(t.booleanLiteral(!ASYNC));
   }
 
-  for (const reference of references.$iteratorSymbol || []) {
+  for (const reference of $iteratorSymbol) {
     reference.replaceWith(ASYNC ? ast`Symbol.asyncIterator` : ast`Symbol.iterator`);
   }
 
-  for (const reference of [].concat(references.$Promise || [], references.$MaybePromise || [])) {
+  for (const reference of concat($Promise, $MaybePromise)) {
     const { parentPath, parent, node } = reference;
     const { name } = node;
     if (t.isTSTypeReference(parent)) {
@@ -111,7 +133,7 @@ function asyncMacro({ references, babel, state, config: { ASYNC } }) {
     });
   }
 
-  for (const reference of references.$ || []) {
+  for (const reference of $) {
     const { node } = reference.parentPath;
 
     if (node.type === 'TaggedTemplateExpression') {
@@ -125,7 +147,7 @@ function asyncMacro({ references, babel, state, config: { ASYNC } }) {
     }
   }
 
-  for (const reference of [].concat(references.$async || [], references.$await || [])) {
+  for (const reference of concat($async, $await)) {
     const { node, parent } = reference.parentPath;
     const refName = reference.node.name;
 
