@@ -8,22 +8,21 @@
 
 import { asyncIterableCurry } from '../../internal/async-iterable';
 import { map } from '../$map/map';
+
 export async function* asyncZip(sources) {
   const iters = sources.map(arg => arg[Symbol.asyncIterator]());
-  const itersDone = iters.map(iter => ({
-    done: false,
-    iter,
-  }));
+  const itersDone = iters.map(iter => ({ done: false, iter }));
 
   try {
     while (true) {
       const results = map(iters, iter => iter.next());
       const syncResults = await Promise.all(results);
+
       const zipped = new Array(iters.length);
+
       let i = 0;
       let allDone = true;
       let done = false;
-
       for (const result of syncResults) {
         allDone = allDone && result.done;
         done = done || result.done;
@@ -42,6 +41,7 @@ export async function* asyncZip(sources) {
     }
   }
 }
+
 export default asyncIterableCurry(asyncZip, {
   variadic: true,
 });

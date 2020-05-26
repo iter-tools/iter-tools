@@ -6,16 +6,21 @@
  * More information can be found in CONTRIBUTING.md
  */
 
+/* eslint-disable no-unused-vars,import/no-duplicates,no-constant-condition */
+
 import { tap, toArray, range } from '../../..';
+
 describe('tap', () => {
   it('return tapped iterable', () => {
     const iter = tap(item => item * 2, [1, 2, 3]);
     expect(toArray(iter)).toEqual([1, 2, 3]);
   });
+
   it('return tapped iterable from iterable', () => {
     const iter = tap(item => item * 2, range(1, 4));
     expect(toArray(iter)).toEqual([1, 2, 3]);
   });
+
   it('return tapped iterable (curried version)', () => {
     const iter = tap((item: number) => item * 2);
     expect(toArray(iter(range(1, 4)))).toEqual([1, 2, 3]);

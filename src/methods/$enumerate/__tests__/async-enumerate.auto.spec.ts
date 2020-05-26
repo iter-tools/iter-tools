@@ -6,25 +6,18 @@
  * More information can be found in CONTRIBUTING.md
  */
 
+/* eslint-disable no-unused-vars,import/no-duplicates,no-constant-condition */
+
 import { asyncEnumerate, asyncToArray, range } from '../../..';
+
 describe('asyncEnumerate', () => {
   it('enumerates iterables', async () => {
-    const iter = asyncEnumerate(
-      range({
-        start: 1,
-        end: 4,
-      }),
-    );
+    const iter = asyncEnumerate(range({ start: 1, end: 4 }));
     expect(await asyncToArray(iter)).toEqual([[0, 1], [1, 2], [2, 3]]);
   });
+
   it('enumerates iterables with start', async () => {
-    const iter = asyncEnumerate(
-      3,
-      range({
-        start: 1,
-        end: 4,
-      }),
-    );
+    const iter = asyncEnumerate(3, range({ start: 1, end: 4 }));
     expect(await asyncToArray(iter)).toEqual([[3, 1], [4, 2], [5, 3]]);
   });
 });

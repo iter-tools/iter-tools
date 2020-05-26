@@ -7,5 +7,7 @@
  */
 
 import { AsyncSourceIterable } from '../../types/async-iterable';
+
 declare function asyncIsEmpty(iterable: AsyncSourceIterable<any>): Promise<boolean>;
+
 export default asyncIsEmpty;

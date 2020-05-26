@@ -7,11 +7,14 @@
  */
 
 import { AsyncSourceIterable, AsyncResultIterable } from '../../types/async-iterable';
+
 declare function asyncJoinWith<W, T>(
   separator: W,
   source: AsyncSourceIterable<AsyncSourceIterable<T>>,
 ): AsyncResultIterable<T | W>;
+
 declare function asyncJoinWith<W>(
   separator: W,
 ): <T>(source: AsyncSourceIterable<AsyncSourceIterable<T>>) => AsyncResultIterable<T | W>;
+
 export default asyncJoinWith;

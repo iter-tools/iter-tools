@@ -7,5 +7,7 @@
  */
 
 import { AsyncResultIterable } from '../types/async-iterable';
+
 declare function asyncRange(start: number, end: number, step?: number): AsyncResultIterable<number>;
+
 export { asyncRange };

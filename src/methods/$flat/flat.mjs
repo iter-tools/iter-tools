@@ -22,14 +22,11 @@ function* flatInternal(shouldFlat, depth, currentDepth, source) {
 
 export function flat(source, shouldFlat = defaultShouldFlat, depthOrOptions = 1) {
   let depth = depthOrOptions;
-
   if (depthOrOptions && typeof depthOrOptions === 'object') {
     ({ shouldFlat = defaultShouldFlat, depth = 1 } = depthOrOptions);
   }
 
   return flatInternal(shouldFlat, depth, 0, source);
 }
-export default iterableCurry(flat, {
-  minArgs: 0,
-  maxArgs: 2,
-});
+
+export default iterableCurry(flat, { minArgs: 0, maxArgs: 2 });

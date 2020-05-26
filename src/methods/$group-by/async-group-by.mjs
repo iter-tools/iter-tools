@@ -8,6 +8,7 @@
 
 import { asyncIterableCurry } from '../../internal/async-iterable';
 import { AsyncPartsIterator, AsyncSpliterator, split } from '../../internal/async-spliterator';
+
 let warnedNullGetKeyDeprecation = false;
 
 const warnNullGetKeyDeprecation = () => {
@@ -41,16 +42,13 @@ class AsyncGroupingSpliterator extends AsyncSpliterator {
 
   async buffer() {
     const { key } = this;
-
     if (this.item === null) {
       this.item = await super.next();
       const { done, value } = this.item;
-
       if (!done) {
         this.key = await this.getKey(value, this.idx++);
       }
     }
-
     return this.key !== key;
   }
 
@@ -58,10 +56,7 @@ class AsyncGroupingSpliterator extends AsyncSpliterator {
     const newGroup = await this.buffer();
 
     if (this.item.done) {
-      return {
-        value: undefined,
-        done: true,
-      };
+      return { value: undefined, done: true };
     } else {
       const { value } = this.item;
 
@@ -69,10 +64,7 @@ class AsyncGroupingSpliterator extends AsyncSpliterator {
         this.item = null;
       }
 
-      return {
-        value: newGroup ? split : value,
-        done: false,
-      };
+      return { value: newGroup ? split : value, done: false };
     }
   }
 }
@@ -80,13 +72,9 @@ class AsyncGroupingSpliterator extends AsyncSpliterator {
 class AsyncGroupPartsIterator extends AsyncPartsIterator {
   async next() {
     const item = await super.next();
-
     if (!item.done) {
       await this.spliterator.buffer();
-      return {
-        value: [this.spliterator.key, item.value],
-        done: false,
-      };
+      return { value: [this.spliterator.key, item.value], done: false };
     } else {
       return item;
     }
@@ -105,4 +93,5 @@ export async function* asyncGroupBy(source, getKey) {
     ),
   );
 }
+
 export default asyncIterableCurry(asyncGroupBy);

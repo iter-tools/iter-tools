@@ -7,11 +7,14 @@
  */
 
 import { AsyncSourceIterable } from '../../types/async-iterable';
+
 declare function asyncEvery<T>(
   predicate: (item: T) => boolean | Promise<boolean>,
 ): (iterable: AsyncSourceIterable<T>) => Promise<boolean>;
+
 declare function asyncEvery<T>(
   predicate: (item: T) => boolean | Promise<boolean>,
   iterable: AsyncSourceIterable<T>,
 ): Promise<boolean>;
+
 export default asyncEvery;

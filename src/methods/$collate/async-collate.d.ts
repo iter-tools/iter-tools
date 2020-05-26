@@ -7,12 +7,16 @@
  */
 
 import { AsyncSourceIterable, AsyncResultIterable } from '../../types/async-iterable';
+
 declare function asyncCollate<T>(...sources: Array<AsyncSourceIterable<T>>): AsyncResultIterable<T>;
+
 declare function asyncCollate<T>(
   comparator: (a: T, b: T) => number,
   ...sources: Array<AsyncSourceIterable<T>>
 ): AsyncResultIterable<T>;
+
 declare function asyncCollate<T>(
   comparator: (a: T, b: T) => number,
 ): (...sources: Array<AsyncSourceIterable<T>>) => AsyncResultIterable<T>;
+
 export default asyncCollate;

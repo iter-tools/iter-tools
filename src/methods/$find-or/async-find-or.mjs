@@ -7,17 +7,17 @@
  */
 
 import { asyncIterableCurry } from '../../internal/async-iterable';
+
 export async function asyncFindOr(iterable, notFoundValue, func) {
   let c = 0;
-
   for await (const item of iterable) {
     if (await func(item, c++)) {
       return item;
     }
   }
-
   return notFoundValue;
 }
+
 export default asyncIterableCurry(asyncFindOr, {
   reduces: true,
 });

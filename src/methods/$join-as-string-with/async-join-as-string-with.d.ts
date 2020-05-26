@@ -7,18 +7,23 @@
  */
 
 import { AsyncSourceIterable } from '../../types/async-iterable';
+
 declare function asyncJoinAsStringWith(
   separator: string,
   strings: AsyncSourceIterable<string>,
 ): Promise<string>;
+
 declare function asyncJoinAsStringWith(
   separator: string,
   strings: AsyncSourceIterable<AsyncSourceIterable<string>>,
 ): Promise<string>;
+
 declare function asyncJoinAsStringWith(
   separator: string,
 ): (strings: AsyncSourceIterable<string>) => Promise<string>;
+
 declare function asyncJoinAsStringWith(
   separator: string,
 ): (strings: AsyncSourceIterable<AsyncSourceIterable<string>>) => Promise<string>;
+
 export default asyncJoinAsStringWith;

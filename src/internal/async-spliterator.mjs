@@ -9,6 +9,7 @@
 import { AsyncIterableIterator } from './async-iterable-iterator';
 import { AsyncIteratorProxy } from './async-iterator-proxy';
 import { asyncConsumeIterator } from './async-consume-iterator';
+
 export const split = Symbol('split');
 
 async function* asyncWrap(source) {
@@ -30,21 +31,16 @@ export class AsyncPartIterator extends AsyncIterableIterator {
 
   async next() {
     this.assertActive();
+
     const item = await this.spliterator.next();
 
     if (item.value === split) {
       this.partsIterator.activePart = null;
       await this.partsIterator.maybeReturnSource();
-      return {
-        value: undefined,
-        done: true,
-      };
+      return { value: undefined, done: true };
     } else if (item.done) {
       this.partsIterator.sourceDone = true;
-      return {
-        value: undefined,
-        done: true,
-      };
+      return { value: undefined, done: true };
     } else {
       return item;
     }
@@ -52,29 +48,25 @@ export class AsyncPartIterator extends AsyncIterableIterator {
 
   async return(value) {
     this.assertActive();
+
     this.partsIterator.activePart = null;
     await this.partsIterator.maybeReturnSource();
-    return {
-      value,
-      done: true,
-    };
+    return { value, done: true };
   }
 
   async throw(error) {
     this.assertActive();
+
     await this.spliterator.throw(error);
-    return {
-      value: undefined,
-      done: true,
-    };
+    return { value: undefined, done: true };
   }
 }
+
 /**
  * Takes a spliterator -- an iterator that sometimes returns a special split sentinel value,
  * and presents it as an iterator of part iterators, where the part iterators must be
  * consumed in order.
  */
-
 export class AsyncPartsIterator extends AsyncIterableIterator {
   constructor(spliterator) {
     super();
@@ -97,16 +89,10 @@ export class AsyncPartsIterator extends AsyncIterableIterator {
 
     if (this.spliterator === null || this.sourceDone) {
       // When source is empty force Iterable[] instead of Iterable[Iterable[]].
-      return {
-        value: undefined,
-        done: true,
-      };
+      return { value: undefined, done: true };
     } else {
       this.activePart = new AsyncPartIterator(this);
-      return {
-        value: asyncWrap(this.activePart),
-        done: false,
-      };
+      return { value: asyncWrap(this.activePart), done: false };
     }
   }
 
@@ -114,10 +100,7 @@ export class AsyncPartsIterator extends AsyncIterableIterator {
     // There will be no more parts.
     this.returned = true;
     await this.maybeReturnSource();
-    return {
-      value,
-      done: true,
-    };
+    return { value, done: true };
   }
 
   async throw() {
@@ -125,4 +108,5 @@ export class AsyncPartsIterator extends AsyncIterableIterator {
     return this.return();
   }
 }
+
 export class AsyncSpliterator extends AsyncIteratorProxy {}

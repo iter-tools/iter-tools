@@ -7,8 +7,10 @@
  */
 
 import { asyncIterableCurry } from '../../internal/async-iterable';
+
 export async function* asyncPrepend(source, value) {
   yield value;
   yield* source;
 }
+
 export default asyncIterableCurry(asyncPrepend);

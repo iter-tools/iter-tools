@@ -7,7 +7,9 @@
  */
 
 import asyncCycleTimes from '../$cycle-times/async-cycle-times';
+
 export function asyncCycle(iterable) {
   return asyncCycleTimes(Infinity, iterable);
 }
+
 export default asyncCycle;

@@ -7,5 +7,7 @@
  */
 
 import { AsyncSourceIterable } from '../../types/async-iterable';
+
 declare function asyncLastOr<E, T>(whenEmpty: E, iterable: AsyncSourceIterable<T>): Promise<T | E>;
+
 export default asyncLastOr;

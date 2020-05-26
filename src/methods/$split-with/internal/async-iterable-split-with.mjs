@@ -32,18 +32,13 @@ class AsyncPredicateSpliterator extends AsyncSpliterator {
     }
 
     if (this.item.done) {
-      return {
-        value: undefined,
-        done: true,
-      };
+      return { value: undefined, done: true };
     } else {
       const { value } = this.item;
       const shouldSplit = this.predicate(value, this.idx++);
       this.item = null;
-      return {
-        value: shouldSplit ? split : value,
-        done: false,
-      };
+
+      return { value: shouldSplit ? split : value, done: false };
     }
   }
 }

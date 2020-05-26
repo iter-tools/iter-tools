@@ -6,8 +6,11 @@
  * More information can be found in CONTRIBUTING.md
  */
 
+/* eslint-disable no-unused-vars,import/no-duplicates,no-constant-condition */
+
 import { last } from '../../..';
 import { wrap } from '../../../__tests__/__framework__/wrap';
+
 describe('last', () => {
   describe('when iterable is empty', () => {
     it('returns undefined', () => {
@@ -16,6 +19,7 @@ describe('last', () => {
       expect(last(wrap([]))).toBe(undefined);
     });
   });
+
   describe('when iterable contains values', () => {
     it('returns last value', () => {
       expect(last(wrap([1, 2, 3]))).toBe(3);

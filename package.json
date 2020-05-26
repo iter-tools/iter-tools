@@ -96,6 +96,7 @@
     "babel-plugin-macros": "^2.6.0",
     "babel-plugin-minify-dead-code-elimination": "^0.5.0",
     "babel-preset-jest": "^24.6.0",
+    "babel-plugin-recast": "^0.1.2",
     "benchmark": "^2.1.4",
     "camelcase": "^5.3.1",
     "camelize": "^1.0.0",

@@ -6,8 +6,11 @@
  * More information can be found in CONTRIBUTING.md
  */
 
+/* eslint-disable no-unused-vars,import/no-duplicates,no-constant-condition */
+
 import { asyncLastOr } from '../../..';
 import { asyncWrap } from '../../../__tests__/__framework__/async-wrap';
+
 describe('asyncLastOr', () => {
   describe('when iterable is empty', () => {
     it('returns whenEmpty', async () => {
@@ -16,6 +19,7 @@ describe('asyncLastOr', () => {
       expect(await asyncLastOr(0, asyncWrap([]))).toBe(0);
     });
   });
+
   describe('when iterable contains values', () => {
     it('returns last value', async () => {
       expect(await asyncLastOr(null, asyncWrap([1, 2, 3]))).toBe(3);

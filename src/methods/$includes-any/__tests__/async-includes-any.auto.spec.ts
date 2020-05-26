@@ -6,20 +6,27 @@
  * More information can be found in CONTRIBUTING.md
  */
 
+/* eslint-disable no-unused-vars,import/no-duplicates,no-constant-condition */
+
 import { asyncIncludesAny, range } from '../../..';
+
 describe('asyncIncludesAny', () => {
   it('returns true if the iterable starts with any of the given values', async () => {
     expect(await asyncIncludesAny([0, 1], range(1, 10))).toBe(true);
   });
+
   it('returns true if the iterable starts with all of the given values', async () => {
     expect(await asyncIncludesAny([1, 1], range(1, 10))).toBe(true);
   });
+
   it('returns true if the iterable contains any of the given values', async () => {
     expect(await asyncIncludesAny([1], range(0, 10))).toBe(true);
   });
+
   it('returns false if the iterable does not contain any of given values', async () => {
     expect(await asyncIncludesAny([1, 3, 4], [2])).toBe(false);
   });
+
   it('returns false if the iterable is empty', async () => {
     expect(await asyncIncludesAny([undefined], [])).toBe(false);
   });

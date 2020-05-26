@@ -8,11 +8,14 @@
 
 import { SourceIterable } from '../../types/iterable';
 import { SourceIterable as SyncSourceIterable } from '../../types/iterable';
+
 declare function includesAnySubseq(
   subseqs: SyncSourceIterable<SourceIterable<any>>,
 ): (iterable: SourceIterable<any>) => boolean;
+
 declare function includesAnySubseq(
   subseqs: SyncSourceIterable<SourceIterable<any>>,
   iterable: SourceIterable<any>,
 ): boolean;
+
 export default includesAnySubseq;

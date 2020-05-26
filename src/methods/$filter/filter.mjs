@@ -7,13 +7,14 @@
  */
 
 import { iterableCurry } from '../../internal/iterable';
+
 export function* filter(source, predicate) {
   let c = 0;
-
   for (const item of source) {
     if (predicate(item, c++)) {
       yield item;
     }
   }
 }
+
 export default iterableCurry(filter);

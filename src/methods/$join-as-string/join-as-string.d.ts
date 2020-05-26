@@ -7,6 +7,9 @@
  */
 
 import { SourceIterable } from '../../types/iterable';
+
 declare function joinAsString(strings: SourceIterable<string>): string;
+
 declare function joinAsString(strings: SourceIterable<SourceIterable<string>>): string;
+
 export default joinAsString;

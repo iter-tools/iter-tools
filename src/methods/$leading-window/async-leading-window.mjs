@@ -10,23 +10,25 @@ import { asyncIterableCurry } from '../../internal/async-iterable';
 import { CircularBuffer, ReadOnlyCircularBuffer } from '../../internal/circular-buffer';
 import { asyncConcat } from '../$concat/async-concat';
 import { repeatTimes } from '../repeat-times/repeat-times';
+
 import { validateWindowArgs } from '../$trailing-window/internal/validate-window-args';
+
 export async function* asyncLeadingWindow(source, size, { filler } = {}) {
   const buffer = new CircularBuffer(size);
   const bufferReadProxy = new ReadOnlyCircularBuffer(buffer);
-  buffer.fill(filler);
-  let index = 0;
 
+  buffer.fill(filler);
+
+  let index = 0;
   for await (const item of asyncConcat(source, repeatTimes(size - 1, filler))) {
     buffer.push(item);
-
     if (index + 1 >= size) {
       yield bufferReadProxy;
     }
-
     index++;
   }
 }
+
 export default asyncIterableCurry(asyncLeadingWindow, {
   minArgs: 1,
   maxArgs: 2,

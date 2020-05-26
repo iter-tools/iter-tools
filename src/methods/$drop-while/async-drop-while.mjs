@@ -7,20 +7,20 @@
  */
 
 import { asyncIterableCurry } from '../../internal/async-iterable';
+
 export async function* asyncDropWhile(source, predicate) {
   let drop = true;
   let c = 0;
-
   for await (const item of source) {
     if (!drop) {
       yield item;
     } else {
       drop = await predicate(item, c++);
-
       if (!drop) {
         yield item;
       }
     }
   }
 }
+
 export default asyncIterableCurry(asyncDropWhile);

@@ -6,8 +6,11 @@
  * More information can be found in CONTRIBUTING.md
  */
 
+/* eslint-disable no-unused-vars,import/no-duplicates,no-constant-condition */
+
 import { toObject } from '../../..';
 import { wrap } from '../../../__tests__/__framework__/wrap';
+
 describe('toObject', () => {
   it('turns an iterable into an object', () => {
     expect(toObject(wrap([['foo', 'fox'], ['bar', 'box'], ['baz', 'rox']]))).toEqual({

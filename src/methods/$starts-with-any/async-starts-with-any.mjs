@@ -8,13 +8,13 @@
 
 import { asyncIterableCurry } from '../../internal/async-iterable';
 import { asyncStartsWith_ } from '../$starts-with_/async-starts-with_';
-const config = {
-  any: true,
-  subseq: false,
-};
+
+const config = { any: true, subseq: false };
+
 export function asyncStartsWithAny(iterable, value) {
   return asyncStartsWith_(iterable, config, value);
 }
+
 export default asyncIterableCurry(asyncStartsWithAny, {
   reduces: true,
 });

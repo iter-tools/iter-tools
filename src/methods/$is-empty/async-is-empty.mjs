@@ -8,10 +8,13 @@
 
 import { asyncIterableCurry } from '../../internal/async-iterable';
 import { asyncFirstOr } from '../$first-or/async-first-or';
+
 const NONE = {};
+
 export async function asyncIsEmpty(iterable) {
   return (await asyncFirstOr(iterable, NONE)) === NONE;
 }
+
 export default asyncIterableCurry(asyncIsEmpty, {
   reduces: true,
 });

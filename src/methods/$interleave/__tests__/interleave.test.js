@@ -10,10 +10,12 @@
 
 import { Iterable } from '../../../types/iterable';
 import { interleave, InterleaveBuffer, toArray } from '../../..';
+
 describe('interleave', () => {
   const a = [1, 2, 3];
   const b = [4, 5, 6];
   const c = [7, 8, 9];
+
   it('can be used to implement a round robin interleave', () => {
     const roundRobin = interleave(function*(
       canTakeAny: () => InterleaveBuffer<number> | null,
@@ -27,10 +29,13 @@ describe('interleave', () => {
         if (c.canTake()) yield c.take();
       }
     });
+
     expect(toArray(roundRobin(a, b, c))).toEqual([1, 4, 7, 2, 5, 8, 3, 6, 9]);
   });
+
   it('can be passed options for the generator', () => {
     const options = {};
+
     expect.assertions(1);
     toArray(
       interleave(
@@ -42,6 +47,7 @@ describe('interleave', () => {
       ),
     );
   });
+
   describe('the return value of canTakeAny', () => {
     it('can be used to do concatenation', () => {
       const concatenate = interleave(function*(
@@ -57,6 +63,7 @@ describe('interleave', () => {
           buffer = canTakeAny();
         }
       });
+
       expect(Array.from(concatenate(a, b, c))).toEqual([1, 2, 3, 4, 5, 6, 7, 8, 9]);
     });
   });

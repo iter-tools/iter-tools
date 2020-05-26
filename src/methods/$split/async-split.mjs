@@ -20,4 +20,5 @@ export function asyncSplit(source) {
     return asyncMap(source, item => iterableOf(item));
   }
 }
+
 export default asyncSplit;

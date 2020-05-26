@@ -6,20 +6,26 @@
  * More information can be found in CONTRIBUTING.md
  */
 
+/* eslint-disable no-unused-vars,import/no-duplicates,no-constant-condition */
+
 import { filter, toArray, range } from '../../..';
+
 describe('filter', () => {
   it('returns filtered iterable', () => {
     const iter = filter(item => item % 2 === 0, [1, 2, 3, 4, 5, 6]);
     expect(toArray(iter)).toEqual([2, 4, 6]);
   });
+
   it('returns filtered iterable from iterable', () => {
     const iter = filter(item => item % 2 === 0, range(1, 7));
     expect(toArray(iter)).toEqual([2, 4, 6]);
   });
+
   it('returns filtered iterable (curried version)', () => {
     const filterEven = filter((item: number) => item % 2 === 0);
     expect(toArray(filterEven(range(1, 7)))).toEqual([2, 4, 6]);
   });
+
   it('returns empty iterable from null', () => {
     expect(toArray(filter((item: never) => item, null))).toEqual([]);
   });

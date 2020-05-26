@@ -9,15 +9,18 @@
 /* eslint-disable no-unused-vars,import/no-duplicates,no-constant-condition */
 
 import { asyncTap, asyncToArray, range } from '../../..';
+
 describe('asyncTap', () => {
   it('return tapped iterable', async () => {
     const iter = asyncTap(item => item * 2, [1, 2, 3]);
     expect(await asyncToArray(iter)).toEqual([1, 2, 3]);
   });
+
   it('return tapped iterable from iterable', async () => {
     const iter = asyncTap(item => item * 2, range(1, 4));
     expect(await asyncToArray(iter)).toEqual([1, 2, 3]);
   });
+
   it('return tapped iterable (curried version)', async () => {
     const iter = asyncTap((item: number) => item * 2);
     expect(await asyncToArray(iter(range(1, 4)))).toEqual([1, 2, 3]);

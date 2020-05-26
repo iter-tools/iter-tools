@@ -7,8 +7,11 @@
  */
 
 import { AsyncSourceIterable, AsyncResultIterable } from '../../types/async-iterable';
+
 declare function asyncDrop<T>(n: number, iterable: AsyncSourceIterable<T>): AsyncResultIterable<T>;
+
 declare function asyncDrop<T>(
   n: number,
 ): (iterable: AsyncSourceIterable<T>) => AsyncResultIterable<T>;
+
 export default asyncDrop;

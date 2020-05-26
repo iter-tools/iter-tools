@@ -7,13 +7,18 @@
  */
 
 import { iterableCurry } from '../../internal/iterable';
+
 export function firstOr(iterable, whenEmpty) {
   const iter = iterable[Symbol.iterator]();
   const { value, done } = iter.next();
+
   if (done) return whenEmpty;
+
   if (typeof iter.return === 'function') iter.return();
+
   return value;
 }
+
 export default iterableCurry(firstOr, {
   reduces: true,
 });

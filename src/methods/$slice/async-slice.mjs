@@ -20,14 +20,12 @@ async function bufferedSlice(source, start, end, step) {
   }
 
   let newEnd;
-
   if (isFinite(end) && end > 0) {
     newEnd = end - (counter - buffer.size);
     if (newEnd < 0) return [];
   } else {
     newEnd = end;
   }
-
   return asyncSimpleSlice(buffer, 0, newEnd, step);
 }
 
@@ -46,7 +44,6 @@ export async function* asyncSimpleSlice(source, start, end, step = 1) {
     if (buffer) {
       item = buffer.push(item);
       counter++;
-
       if (counter <= bufferSize) {
         continue;
       }
@@ -60,10 +57,10 @@ export async function* asyncSimpleSlice(source, start, end, step = 1) {
       yield item;
       nextValidPos += step;
     }
-
     currentPos++;
   }
 }
+
 export async function* asyncSlice(source, start, end, step = 1) {
   if (start >= 0) {
     yield* asyncSimpleSlice(source, start, end, step);
@@ -71,11 +68,11 @@ export async function* asyncSlice(source, start, end, step = 1) {
     yield* await bufferedSlice(source, start, end, step);
   }
 }
+
 export default asyncIterableCurry(asyncSlice, {
   validateArgs(args) {
     let [optsOrStart = 0, end = Infinity, step = 1] = args;
     let start = typeof optsOrStart === 'number' ? optsOrStart : undefined;
-
     if (optsOrStart && typeof optsOrStart === 'object') {
       ({ start = 0, end = Infinity, step = 1 } = optsOrStart);
     }
@@ -96,7 +93,6 @@ export default asyncIterableCurry(asyncSlice, {
     args[1] = end;
     args[2] = step;
   },
-
   optionalArgsAtEnd: true,
   minArgs: 0,
   maxArgs: 3,

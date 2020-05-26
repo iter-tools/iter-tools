@@ -7,12 +7,13 @@
  */
 
 import { iterableCurry } from '../../internal/iterable';
+
 export function* drop(iterable, n) {
   let i = 0;
-
   for (const item of iterable) {
     if (i++ < n) continue;
     yield item;
   }
 }
+
 export default iterableCurry(drop);

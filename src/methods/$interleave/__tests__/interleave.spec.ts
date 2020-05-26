@@ -9,7 +9,9 @@
 import assert from 'static-type-assert';
 import { ResultIterable } from '../../../types/iterable';
 import InterleaveBuffer from '../internal/buffer';
-import { interleave } from '../../..'; // Without options
+import { interleave } from '../../..';
+
+// Without options
 // ############
 
 assert<ResultIterable<string | number>>(
@@ -20,21 +22,19 @@ assert<ResultIterable<string | number>>(
   ) {
     assert<boolean>(b1.canTake());
     assert<string | undefined>(b1.take());
-
     if (b1.canTake()) {
       assert<string>(b1.take());
       yield b1.take();
     }
-
     assert<boolean>(b2.canTake());
     assert<number | undefined>(b2.take());
-
     if (b2.canTake()) {
       assert<number>(b2.take());
       yield b2.take();
     }
   })(['foo'], [2]),
 );
+
 assert<ResultIterable<string | number | Function>>(
   interleave(function*(
     canTakeAny: Function,
@@ -44,29 +44,25 @@ assert<ResultIterable<string | number | Function>>(
   ) {
     assert<boolean>(b1.canTake());
     assert<string | undefined>(b1.take());
-
     if (b1.canTake()) {
       assert<string>(b1.take());
       yield b1.take();
     }
-
     assert<boolean>(b2.canTake());
     assert<number | undefined>(b2.take());
-
     if (b2.canTake()) {
       assert<number>(b2.take());
       yield b2.take();
     }
-
     assert<boolean>(b3.canTake());
     assert<Function | undefined>(b3.take());
-
     if (b3.canTake()) {
       assert<Function>(b3.take());
       yield b3.take();
     }
   })(['foo'], [2], [(_: any): any => _]),
 );
+
 assert<ResultIterable<string | number | Function | {}>>(
   interleave(function*(
     canTakeAny: Function,
@@ -77,37 +73,32 @@ assert<ResultIterable<string | number | Function | {}>>(
   ) {
     assert<boolean>(b1.canTake());
     assert<string | undefined>(b1.take());
-
     if (b1.canTake()) {
       assert<string>(b1.take());
       yield b1.take();
     }
-
     assert<boolean>(b2.canTake());
     assert<number | undefined>(b2.take());
-
     if (b2.canTake()) {
       assert<number>(b2.take());
       yield b2.take();
     }
-
     assert<boolean>(b3.canTake());
     assert<Function | undefined>(b3.take());
-
     if (b3.canTake()) {
       assert<Function>(b3.take());
       yield b3.take();
     }
-
     assert<boolean>(b4.canTake());
     assert<{} | undefined>(b4.take());
-
     if (b4.canTake()) {
       assert<{}>(b4.take());
       yield b4.take();
     }
   })(['foo'], [2], [(_: any): any => _], [{}]),
-); // With options
+);
+
+// With options
 // ############
 
 assert<ResultIterable<string | number>>(
@@ -119,15 +110,12 @@ assert<ResultIterable<string | number>>(
   ) {
     assert<boolean>(b1.canTake());
     assert<string | undefined>(b1.take());
-
     if (b1.canTake()) {
       assert<string>(b1.take());
       yield b1.take();
     }
-
     assert<boolean>(b2.canTake());
     assert<number | undefined>(b2.take());
-
     if (b2.canTake()) {
       assert<number>(b2.take());
       yield b2.take();
@@ -135,6 +123,7 @@ assert<ResultIterable<string | number>>(
   },
   {})(['foo'], [2]),
 );
+
 assert<ResultIterable<string | number | Function>>(
   interleave(function*(
     options: {},
@@ -145,23 +134,18 @@ assert<ResultIterable<string | number | Function>>(
   ) {
     assert<boolean>(b1.canTake());
     assert<string | undefined>(b1.take());
-
     if (b1.canTake()) {
       assert<string>(b1.take());
       yield b1.take();
     }
-
     assert<boolean>(b2.canTake());
     assert<number | undefined>(b2.take());
-
     if (b2.canTake()) {
       assert<number>(b2.take());
       yield b2.take();
     }
-
     assert<boolean>(b3.canTake());
     assert<Function | undefined>(b3.take());
-
     if (b3.canTake()) {
       assert<Function>(b3.take());
       yield b3.take();
@@ -169,6 +153,7 @@ assert<ResultIterable<string | number | Function>>(
   },
   {})(['foo'], [2], [(_: any): any => _]),
 );
+
 assert<ResultIterable<string | number | Function | {}>>(
   interleave(function*(
     options: {},
@@ -180,31 +165,24 @@ assert<ResultIterable<string | number | Function | {}>>(
   ) {
     assert<boolean>(b1.canTake());
     assert<string | undefined>(b1.take());
-
     if (b1.canTake()) {
       assert<string>(b1.take());
       yield b1.take();
     }
-
     assert<boolean>(b2.canTake());
     assert<number | undefined>(b2.take());
-
     if (b2.canTake()) {
       assert<number>(b2.take());
       yield b2.take();
     }
-
     assert<boolean>(b3.canTake());
     assert<Function | undefined>(b3.take());
-
     if (b3.canTake()) {
       assert<Function>(b3.take());
       yield b3.take();
     }
-
     assert<boolean>(b4.canTake());
     assert<{} | undefined>(b4.take());
-
     if (b4.canTake()) {
       assert<{}>(b4.take());
       yield b4.take();

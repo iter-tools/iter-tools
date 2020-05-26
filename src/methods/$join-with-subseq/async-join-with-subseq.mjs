@@ -8,9 +8,9 @@
 
 import { asyncIterableCurry } from '../../internal/async-iterable';
 import { asyncToArray } from '../$to-array/async-to-array';
+
 export async function* asyncJoinWithSubseq(source, separatorSubseq) {
   const _separatorSubseq = await asyncToArray(separatorSubseq);
-
   let isFirst = true;
 
   for await (const item of source) {
@@ -19,4 +19,5 @@ export async function* asyncJoinWithSubseq(source, separatorSubseq) {
     isFirst = false;
   }
 }
+
 export default asyncIterableCurry(asyncJoinWithSubseq);

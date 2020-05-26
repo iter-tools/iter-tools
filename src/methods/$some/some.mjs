@@ -7,17 +7,15 @@
  */
 
 import { iterableCurry } from '../../internal/iterable';
+
 export function some(iterable, func) {
   let c = 0;
-
   for (const item of iterable) {
     if (func(item, c++)) {
       return true;
     }
   }
-
   return false;
 }
-export default iterableCurry(some, {
-  reduces: true,
-});
+
+export default iterableCurry(some, { reduces: true });

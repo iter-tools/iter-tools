@@ -194,7 +194,7 @@ function asyncMacro({ references, babel, state, config: { ASYNC } }) {
           }
         }
 
-        reference.parentPath.replaceWith(argument);
+        reference.parentPath.replaceWith(t.parenthesizedExpression(argument));
         break;
       }
       case 'Decorator':

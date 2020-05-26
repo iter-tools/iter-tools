@@ -6,8 +6,11 @@
  * More information can be found in CONTRIBUTING.md
  */
 
+/* eslint-disable no-unused-vars,import/no-duplicates,no-constant-condition */
+
 import { asyncToObject } from '../../..';
 import { asyncWrap } from '../../../__tests__/__framework__/async-wrap';
+
 describe('asyncToObject', () => {
   it('turns an iterable into an object', async () => {
     expect(

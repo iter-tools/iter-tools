@@ -9,16 +9,20 @@
 /* eslint-disable no-unused-vars,import/no-duplicates,no-constant-condition */
 
 import { asyncIncludes, range } from '../../..';
+
 describe('asyncIncludes', () => {
   it('returns true if the iterable contains the given value', async () => {
     expect(await asyncIncludes(1, range(0, 10))).toBe(true);
   });
+
   it('returns true if the iterable contains only the given value', async () => {
     expect(await asyncIncludes(1, [1])).toBe(true);
   });
+
   it('returns false if the iterable does not contain the given value', async () => {
     expect(await asyncIncludes(1, [2])).toBe(false);
   });
+
   it('returns false if the iterable is empty', async () => {
     expect(await asyncIncludes(undefined, [])).toBe(false);
   });

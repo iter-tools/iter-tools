@@ -6,8 +6,11 @@
  * More information can be found in CONTRIBUTING.md
  */
 
+/* eslint-disable no-unused-vars,import/no-duplicates,no-constant-condition */
+
 import { group, toArray } from '../../..';
 import { unwrapDeep as uw } from '../../../__tests__/helpers';
+
 describe('group', () => {
   it('main cursor', () => {
     const iter = group('AAABBAACCCCD');
@@ -24,6 +27,7 @@ describe('group', () => {
     next = iter.next();
     expect(next.done).toBe(true);
   });
+
   it('secondary', () => {
     const iter = group('AAABBAACCCCD');
     let next = iter.next();
@@ -44,6 +48,7 @@ describe('group', () => {
     next = iter.next();
     expect(next.done).toBe(true);
   });
+
   it('secondary (consume partially)', () => {
     const iter = group('AAABBAACCCCD');
     let next = iter.next();
@@ -57,24 +62,26 @@ describe('group', () => {
     next = iter.next();
     expect(next.value[0]).toBe('A');
   });
+
   it('grouping an empty iterable returns empty iterable', () => {
     expect(toArray(group(null))).toEqual([]);
     expect(toArray(group(undefined))).toEqual([]);
   });
+
   it('errors if groups are consumed out of order', () => {
     const iter = group('AB');
     const group1 = iter.next().value;
     const group2 = iter.next().value;
+
     expect(group1[0]).toBe('A');
     expect(uw(group2)).toEqual(['B', ['B']]);
-    let error;
 
+    let error;
     try {
       uw(group1[1]);
     } catch (e) {
       error = e;
     }
-
     expect(error).toMatchSnapshot();
   });
 });

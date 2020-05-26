@@ -7,18 +7,23 @@
  */
 
 import { SourceIterable } from '../../types/iterable';
+
 declare function find<S extends T, T>(
   predicate: (item: T, i: number) => item is S,
 ): (iterable: SourceIterable<T>) => S | undefined;
+
 declare function find<T>(
   predicate: (item: T, i: number) => boolean,
 ): (iterable: SourceIterable<T>) => T | undefined;
+
 declare function find<S extends T, T>(
   predicate: (item: T, i: number) => item is S,
   iterable: SourceIterable<T>,
 ): S | undefined;
+
 declare function find<T>(
   predicate: (item: T, i: number) => boolean,
   iterable: SourceIterable<T>,
 ): T | undefined;
+
 export default find;

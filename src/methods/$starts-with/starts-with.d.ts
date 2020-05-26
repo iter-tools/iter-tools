@@ -7,6 +7,9 @@
  */
 
 import { SourceIterable } from '../../types/iterable';
+
 declare function startsWith(value: any): (iterable: SourceIterable<any>) => boolean;
+
 declare function startsWith(value: any, iterable: SourceIterable<any>): boolean;
+
 export default startsWith;

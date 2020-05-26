@@ -9,6 +9,7 @@
 /* eslint-disable no-unused-vars,import/no-duplicates,no-constant-condition */
 
 import { asyncAppend, asyncToArray, asyncWrap } from '../../..';
+
 describe('asyncAppend', () => {
   it('appends a value', async () => {
     expect(await asyncToArray(asyncAppend(3, asyncWrap([1, 2])))).toEqual([1, 2, 3]);

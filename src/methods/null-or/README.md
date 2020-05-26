@@ -5,7 +5,9 @@ When `source` is empty, returns `null`, else yields the values from `source`. Th
 ```js
 function renderData(data) {
   const nullOrData = nullOr(data); // You must make a variable. Calling nullOr(data) 2x would fail.
-  return nullOrData ? joinAsStringWith(', ', nullOrData) : 'No data.';
+  return nullOrData
+    ? joinAsStringWith(', ', nullOrData)
+    : 'No data.';
 }
 
 function* generateData() {

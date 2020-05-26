@@ -7,11 +7,14 @@
  */
 
 import { AsyncSourceIterable } from '../../types/async-iterable';
+
 declare function asyncForEach<T>(
   callback: (item: T, i: number) => void,
 ): (iterable: AsyncSourceIterable<T>) => Promise<void>;
+
 declare function asyncForEach<T>(
   callback: (item: T, i: number) => void,
   iterable: AsyncSourceIterable<T>,
 ): Promise<void>;
+
 export default asyncForEach;

@@ -11,10 +11,8 @@ import { CircularBuffer } from '../../../internal/circular-buffer';
 import { iterableStartsWith_ } from '../../$starts-with_/iterable-starts-with_';
 import asyncMap from '../../$map/async-map';
 import asyncToArray from '../../$to-array/async-to-array';
-const startsWithConfig = {
-  any: false,
-  subseq: true,
-};
+
+const startsWithConfig = { any: false, subseq: true };
 
 class AsyncAnySubseqSpliterator extends AsyncSpliterator {
   constructor(sourceIterator, separatorSubseqs) {
@@ -31,11 +29,9 @@ class AsyncAnySubseqSpliterator extends AsyncSpliterator {
 
   async _isEmpty() {
     let item;
-
     if (!(item = await super.next()).done) {
       this.buffer.push(item.value);
     }
-
     return item.done;
   }
 
@@ -51,16 +47,12 @@ class AsyncAnySubseqSpliterator extends AsyncSpliterator {
 
   async next() {
     let item;
-
     while (!(this.buffer.isFull() || (item = await super.next()).done)) {
       this.buffer.push(item.value);
     }
 
     if (!this.buffer.size) {
-      return {
-        value: undefined,
-        done: true,
-      };
+      return { value: undefined, done: true };
     } else {
       const matchingLength = this.getMatchingLength(this.buffer, this.separatorSubseqs);
 
@@ -70,10 +62,7 @@ class AsyncAnySubseqSpliterator extends AsyncSpliterator {
         }
       }
 
-      return {
-        value: matchingLength ? split : this.buffer.shift(),
-        done: false,
-      };
+      return { value: matchingLength ? split : this.buffer.shift(), done: false };
     }
   }
 }

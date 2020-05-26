@@ -9,10 +9,10 @@
 import toAnySubseq from '../../internal/to-any-subseq';
 import { zipAll } from '../$zip-all/zip-all';
 import { simpleSlice } from '../$slice/slice';
+
 const noItem = {};
-const zipAllConfig = {
-  filler: noItem,
-};
+const zipAllConfig = { filler: noItem };
+
 export function iterableStartsWith_(iterable, config, value) {
   const subseqs = toAnySubseq(config, value);
   const wrappedSubseqs = subseqs;

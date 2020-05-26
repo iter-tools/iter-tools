@@ -6,8 +6,11 @@
  * More information can be found in CONTRIBUTING.md
  */
 
+/* eslint-disable no-unused-vars,import/no-duplicates,no-constant-condition */
+
 import { asyncGroup, asyncToArray } from '../../..';
 import { asyncUnwrapDeep as asyncUw } from '../../../__tests__/async-helpers';
+
 describe('asyncGroup', () => {
   it('main cursor', async () => {
     const iter = asyncGroup('AAABBAACCCCD');
@@ -24,6 +27,7 @@ describe('asyncGroup', () => {
     next = await iter.next();
     expect(next.done).toBe(true);
   });
+
   it('secondary', async () => {
     const iter = asyncGroup('AAABBAACCCCD');
     let next = await iter.next();
@@ -44,6 +48,7 @@ describe('asyncGroup', () => {
     next = await iter.next();
     expect(next.done).toBe(true);
   });
+
   it('secondary (consume partially)', async () => {
     const iter = asyncGroup('AAABBAACCCCD');
     let next = await iter.next();
@@ -57,24 +62,26 @@ describe('asyncGroup', () => {
     next = await iter.next();
     expect(next.value[0]).toBe('A');
   });
+
   it('grouping an empty iterable returns empty iterable', async () => {
     expect(await asyncToArray(asyncGroup(null))).toEqual([]);
     expect(await asyncToArray(asyncGroup(undefined))).toEqual([]);
   });
+
   it('errors if groups are consumed out of order', async () => {
     const iter = asyncGroup('AB');
     const group1 = (await iter.next()).value;
     const group2 = (await iter.next()).value;
+
     expect(group1[0]).toBe('A');
     expect(await asyncUw(group2)).toEqual(['B', ['B']]);
-    let error;
 
+    let error;
     try {
       asyncUw(group1[1]);
     } catch (e) {
       error = e;
     }
-
     expect(error).toMatchSnapshot();
   });
 });

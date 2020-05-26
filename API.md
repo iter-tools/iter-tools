@@ -646,7 +646,9 @@ When `source` is empty, returns `null`, else yields the values from `source`. Th
 ```js
 function renderData(data) {
   const nullOrData = nullOr(data); // You must make a variable. Calling nullOr(data) 2x would fail.
-  return nullOrData ? joinAsStringWith(', ', nullOrData) : 'No data.';
+  return nullOrData
+    ? joinAsStringWith(', ', nullOrData)
+    : 'No data.';
 }
 
 function* generateData() {
@@ -671,7 +673,9 @@ Note that `null` cannot be used with for loops. You can either use [forEach](#fo
 ```js
 async function renderData(data) {
   const nullOrData = await nullOr(data); // Note the await here. This would usually be unnecessary.
-  return nullOrData ? await asyncJoinAsStringWith(', ', nullOrData) : 'No data.';
+  return nullOrData
+    ? await asyncJoinAsStringWith(', ', nullOrData)
+    : 'No data.';
 }
 
 async function* generateAsyncData() {
@@ -1986,7 +1990,10 @@ product([1, 2], [3, 4], [5, 6]).size === 8;
 Starts fetching the next `n` values of `source` so that the wait for a value should be minimal by the time it is needed. Yields the same values in the same order as `source`.
 
 ```js
-const source = asyncMap(_ => new Promise(resolve => setTimeout(resolve, 200)), range());
+const source = asyncMap(
+  _ => new Promise(resolve => setTimeout(resolve, 200)),
+  range(),
+);
 
 const buffered = asyncBuffer(6, source); // Items start buffering
 

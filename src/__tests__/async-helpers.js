@@ -9,6 +9,7 @@
 /* eslint-disable no-unused-vars,import/no-duplicates,no-constant-condition */
 
 import { asyncIsIterable } from '../internal/async-iterable';
+
 export async function asyncUnwrapDeep(iterable) {
   const items = [];
 

@@ -8,18 +8,19 @@
 
 import { asyncIterableCurry } from '../../internal/async-iterable';
 import { CircularBuffer, ReadOnlyCircularBuffer } from '../../internal/circular-buffer';
+
 export async function* asyncWindow(source, size) {
   const buffer = new CircularBuffer(size);
   const bufferReadProxy = new ReadOnlyCircularBuffer(buffer);
 
   for await (const item of source) {
     buffer.push(item);
-
     if (buffer.isFull()) {
       yield bufferReadProxy;
     }
   }
 }
+
 export default asyncIterableCurry(asyncWindow, {
   validateArgs(args) {
     if (typeof args[0] !== 'number') {

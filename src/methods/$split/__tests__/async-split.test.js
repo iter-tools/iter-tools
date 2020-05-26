@@ -9,6 +9,7 @@
 /* eslint-disable no-unused-vars,import/no-duplicates,no-constant-condition */
 
 import { asyncSplit, asyncMap, asyncToArray } from '../../..';
+
 describe('asyncSplit', () => {
   it('should yield an iterable for every item in the iterable', async () => {
     expect(

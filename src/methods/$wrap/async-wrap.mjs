@@ -7,7 +7,9 @@
  */
 
 import { asyncWrapWithResultIterable, asyncEnsureIterable } from '../../internal/async-iterable';
+
 export async function* asyncWrap(source) {
   yield* asyncEnsureIterable(source)[Symbol.asyncIterator]();
 }
+
 export default asyncWrapWithResultIterable(asyncWrap);

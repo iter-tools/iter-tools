@@ -8,11 +8,14 @@
 
 import { AsyncSourceIterable, AsyncResultIterable } from '../../types/async-iterable';
 import { ResultIterable as SyncResultIterable } from '../../types/iterable';
+
 declare function asyncWindow<T>(
   size: number,
   source: AsyncSourceIterable<T>,
 ): AsyncResultIterable<SyncResultIterable<T>>;
+
 declare function asyncWindow(
   size: number,
 ): <T>(source: AsyncSourceIterable<T>) => AsyncResultIterable<SyncResultIterable<T>>;
+
 export default asyncWindow;

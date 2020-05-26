@@ -16,6 +16,7 @@ module.exports = api => {
       ['macros', { async: { ASYNC } }],
       // use dead code elimination to clean up if(false) {} and if(true) {}
       ['minify-dead-code-elimination', { keepFnName: true, keepFnArgs: true, keepClassName: true }],
+      'babel-plugin-recast',
     ],
   };
 };

@@ -20,7 +20,6 @@ class AsyncInterleaveBuffer {
 
   async take() {
     const next = await this._next;
-
     if (!next.done) {
       this._next = this._iterator.next();
       this.index++;

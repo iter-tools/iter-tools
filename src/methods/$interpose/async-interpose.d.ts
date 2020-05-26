@@ -7,11 +7,14 @@
  */
 
 import { AsyncSourceIterable, AsyncResultIterable } from '../../types/async-iterable';
+
 declare function asyncInterpose<I>(
   interposed: I,
 ): <T>(source: AsyncSourceIterable<T>) => AsyncResultIterable<T | I>;
+
 declare function asyncInterpose<I, T>(
   interposed: I,
   source: AsyncSourceIterable<T>,
 ): AsyncResultIterable<T | I>;
+
 export default asyncInterpose;

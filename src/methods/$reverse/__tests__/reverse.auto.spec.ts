@@ -6,11 +6,15 @@
  * More information can be found in CONTRIBUTING.md
  */
 
+/* eslint-disable no-unused-vars,import/no-duplicates,no-constant-condition */
+
 import { reverse, toArray, wrap } from '../../..';
+
 describe('reverse', () => {
   it('Reverses an iterable', () => {
     expect(toArray(reverse(wrap([1, 2, 3])))).toEqual([3, 2, 1]);
   });
+
   it('Reverses an array', () => {
     expect(toArray(reverse([1, 2, 3]))).toEqual([3, 2, 1]);
   });

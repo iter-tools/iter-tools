@@ -7,20 +7,20 @@
  */
 
 import { iterableCurry } from '../../internal/iterable';
+
 export function* dropWhile(source, predicate) {
   let drop = true;
   let c = 0;
-
   for (const item of source) {
     if (!drop) {
       yield item;
     } else {
       drop = predicate(item, c++);
-
       if (!drop) {
         yield item;
       }
     }
   }
 }
+
 export default iterableCurry(dropWhile);

@@ -7,8 +7,11 @@
  */
 
 import { SourceIterable } from '../../types/iterable';
+
 declare function every<T>(
   predicate: (item: T) => boolean,
 ): (iterable: SourceIterable<T>) => boolean;
+
 declare function every<T>(predicate: (item: T) => boolean, iterable: SourceIterable<T>): boolean;
+
 export default every;

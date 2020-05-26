@@ -6,7 +6,10 @@
  * More information can be found in CONTRIBUTING.md
  */
 
+/* eslint-disable no-unused-vars,import/no-duplicates,no-constant-condition */
+
 import { asyncDrop, asyncToArray, asyncWrap } from '../../..';
+
 describe('asyncDrop', () => {
   it('drops n items', async () => {
     expect(await asyncToArray(asyncDrop(1, asyncWrap([1, 2, 3])))).toEqual([2, 3]);

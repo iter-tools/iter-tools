@@ -8,10 +8,13 @@
 
 import { asyncIterableCurry } from '../../internal/async-iterable';
 import { CircularBuffer, ReadOnlyCircularBuffer } from '../../internal/circular-buffer';
+
 import { validateWindowArgs } from './internal/validate-window-args';
+
 export async function* asyncTrailingWindow(source, size, { filler } = {}) {
   const buffer = new CircularBuffer(size);
   const bufferReadProxy = new ReadOnlyCircularBuffer(buffer);
+
   buffer.fill(filler);
 
   for await (const item of source) {
@@ -19,6 +22,7 @@ export async function* asyncTrailingWindow(source, size, { filler } = {}) {
     yield bufferReadProxy;
   }
 }
+
 export default asyncIterableCurry(asyncTrailingWindow, {
   minArgs: 1,
   maxArgs: 2,

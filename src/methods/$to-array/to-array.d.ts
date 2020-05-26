@@ -7,5 +7,7 @@
  */
 
 import { SourceIterable } from '../../types/iterable';
+
 declare function toArray<T>(source: SourceIterable<T>): T[];
+
 export default toArray;

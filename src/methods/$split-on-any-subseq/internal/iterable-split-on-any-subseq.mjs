@@ -11,10 +11,8 @@ import { CircularBuffer } from '../../../internal/circular-buffer';
 import { iterableStartsWith_ } from '../../$starts-with_/iterable-starts-with_';
 import map from '../../$map/map';
 import toArray from '../../$to-array/to-array';
-const startsWithConfig = {
-  any: false,
-  subseq: true,
-};
+
+const startsWithConfig = { any: false, subseq: true };
 
 class AnySubseqSpliterator extends Spliterator {
   constructor(sourceIterator, separatorSubseqs) {
@@ -31,11 +29,9 @@ class AnySubseqSpliterator extends Spliterator {
 
   _isEmpty() {
     let item;
-
     if (!(item = super.next()).done) {
       this.buffer.push(item.value);
     }
-
     return item.done;
   }
 
@@ -51,16 +47,12 @@ class AnySubseqSpliterator extends Spliterator {
 
   next() {
     let item;
-
     while (!(this.buffer.isFull() || (item = super.next()).done)) {
       this.buffer.push(item.value);
     }
 
     if (!this.buffer.size) {
-      return {
-        value: undefined,
-        done: true,
-      };
+      return { value: undefined, done: true };
     } else {
       const matchingLength = this.getMatchingLength(this.buffer, this.separatorSubseqs);
 
@@ -70,10 +62,7 @@ class AnySubseqSpliterator extends Spliterator {
         }
       }
 
-      return {
-        value: matchingLength ? split : this.buffer.shift(),
-        done: false,
-      };
+      return { value: matchingLength ? split : this.buffer.shift(), done: false };
     }
   }
 }

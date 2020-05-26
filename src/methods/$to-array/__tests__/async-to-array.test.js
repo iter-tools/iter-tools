@@ -10,6 +10,7 @@
 
 import { asyncToArray } from '../../..';
 import { asyncRange } from '../../../__tests__/async-range';
+
 describe('asyncToArray', () => {
   it('turns an iterable into an array', async () => {
     expect(await asyncToArray(asyncRange(0, 3))).toEqual([0, 1, 2]);

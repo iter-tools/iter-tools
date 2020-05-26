@@ -9,6 +9,7 @@
 /* eslint-disable no-unused-vars,import/no-duplicates,no-constant-condition */
 
 import { isIterable } from '../internal/iterable';
+
 export function unwrapDeep(iterable) {
   const items = [];
 

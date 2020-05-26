@@ -9,6 +9,7 @@
 import { IterableIterator } from './iterable-iterator';
 import { IteratorProxy } from './iterator-proxy';
 import { consumeIterator } from './consume-iterator';
+
 export const split = Symbol('split');
 
 function* wrap(source) {
@@ -30,21 +31,16 @@ export class PartIterator extends IterableIterator {
 
   next() {
     this.assertActive();
+
     const item = this.spliterator.next();
 
     if (item.value === split) {
       this.partsIterator.activePart = null;
       this.partsIterator.maybeReturnSource();
-      return {
-        value: undefined,
-        done: true,
-      };
+      return { value: undefined, done: true };
     } else if (item.done) {
       this.partsIterator.sourceDone = true;
-      return {
-        value: undefined,
-        done: true,
-      };
+      return { value: undefined, done: true };
     } else {
       return item;
     }
@@ -52,29 +48,25 @@ export class PartIterator extends IterableIterator {
 
   return(value) {
     this.assertActive();
+
     this.partsIterator.activePart = null;
     this.partsIterator.maybeReturnSource();
-    return {
-      value,
-      done: true,
-    };
+    return { value, done: true };
   }
 
   throw(error) {
     this.assertActive();
+
     this.spliterator.throw(error);
-    return {
-      value: undefined,
-      done: true,
-    };
+    return { value: undefined, done: true };
   }
 }
+
 /**
  * Takes a spliterator -- an iterator that sometimes returns a special split sentinel value,
  * and presents it as an iterator of part iterators, where the part iterators must be
  * consumed in order.
  */
-
 export class PartsIterator extends IterableIterator {
   constructor(spliterator) {
     super();
@@ -97,16 +89,10 @@ export class PartsIterator extends IterableIterator {
 
     if (this.spliterator === null || this.sourceDone) {
       // When source is empty force Iterable[] instead of Iterable[Iterable[]].
-      return {
-        value: undefined,
-        done: true,
-      };
+      return { value: undefined, done: true };
     } else {
       this.activePart = new PartIterator(this);
-      return {
-        value: wrap(this.activePart),
-        done: false,
-      };
+      return { value: wrap(this.activePart), done: false };
     }
   }
 
@@ -114,10 +100,7 @@ export class PartsIterator extends IterableIterator {
     // There will be no more parts.
     this.returned = true;
     this.maybeReturnSource();
-    return {
-      value,
-      done: true,
-    };
+    return { value, done: true };
   }
 
   throw() {
@@ -125,4 +108,5 @@ export class PartsIterator extends IterableIterator {
     return this.return();
   }
 }
+
 export class Spliterator extends IteratorProxy {}

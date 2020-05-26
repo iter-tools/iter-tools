@@ -7,9 +7,9 @@
  */
 
 import { AsyncSourceIterable } from '../../types/async-iterable';
+
 declare function asyncToObject<V>(
   source: AsyncSourceIterable<[string, V]>,
-): Promise<{
-  [key: string]: V;
-}>;
+): Promise<{ [key: string]: V }>;
+
 export default asyncToObject;

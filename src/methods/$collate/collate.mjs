@@ -7,17 +7,16 @@
  */
 
 import { iterableCurry } from '../../internal/iterable';
+
 import { interleave } from '../$interleave/interleave';
 
 function* byComparison({ comparator }, canTakeAny, ...buffers) {
   let candidateBuffer;
-
   while ((candidateBuffer = canTakeAny())) {
     let candidateItem = candidateBuffer.peek();
 
     for (const buffer of buffers) {
       const item = buffer.peek();
-
       if (buffer.canTake() && comparator(candidateItem, item) < 0) {
         candidateItem = item;
         candidateBuffer = buffer;
@@ -29,10 +28,9 @@ function* byComparison({ comparator }, canTakeAny, ...buffers) {
 }
 
 export function collate(sources, comparator) {
-  return interleave(sources, byComparison, {
-    comparator,
-  });
+  return interleave(sources, byComparison, { comparator });
 }
+
 export default iterableCurry(collate, {
   variadic: true,
 });

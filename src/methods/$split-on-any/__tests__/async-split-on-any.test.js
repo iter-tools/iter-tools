@@ -11,18 +11,22 @@
 import { asyncSplitOnAny } from '../../..';
 import { asyncUnwrapDeep as asyncUw } from '../../../__tests__/async-helpers';
 import { asyncWrap } from '../../../__tests__/__framework__/async-wrap';
+
 describe('asyncSplitOnAny', () => {
   it('should split on an occurance of any value', async () => {
     expect(
       await asyncUw(asyncSplitOnAny([null, undefined], asyncWrap([1, null, undefined, 3]))),
     ).toEqual([[1], [], [3]]);
   });
+
   it('does not split when passed no values', async () => {
     expect(await asyncUw(asyncSplitOnAny(null, asyncWrap([1, 2, 3])))).toEqual([[1, 2, 3]]);
   });
+
   it('passes through the empty iterable', async () => {
     expect(await asyncUw(asyncSplitOnAny([], null))).toEqual([]);
   });
+
   it('the empty string is an empty iterable', async () => {
     expect(await asyncUw(asyncSplitOnAny([], ''))).toEqual([]);
   });

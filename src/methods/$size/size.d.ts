@@ -7,7 +7,9 @@
  */
 
 import { SourceIterable } from '../../types/iterable';
+
 declare function size<Iter extends SourceIterable<any>>(
   iterable: Iter,
 ): Iter extends any[] ? Iter['length'] : number;
+
 export default size;

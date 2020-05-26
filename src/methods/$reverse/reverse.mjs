@@ -8,7 +8,9 @@
 
 import { iterableCurry } from '../../internal/iterable';
 import { toArray } from '../$to-array/to-array';
+
 export function* reverse(source) {
   yield* toArray(source).reverse();
 }
+
 export default iterableCurry(reverse);

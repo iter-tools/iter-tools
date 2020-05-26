@@ -7,13 +7,14 @@
  */
 
 import { asyncIterableCurry } from '../../internal/async-iterable';
+
 export async function asyncForEach(iterable, callback) {
   let c = 0;
-
   for await (const item of iterable) {
     await callback(item, c++);
   }
 }
+
 export default asyncIterableCurry(asyncForEach, {
   reduces: true,
 });

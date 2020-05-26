@@ -7,13 +7,13 @@
  */
 
 import { asyncIterableCurry, asyncIsIterable } from '../../internal/async-iterable';
+
 export async function asyncJoinAsStringWith(strings, separator) {
   let result = '';
   let first = true;
 
   for await (const str of strings) {
     if (!first && separator !== '') result += separator;
-
     if (typeof str !== 'string' && asyncIsIterable(str)) {
       for await (const character of str) {
         result += character;
@@ -21,12 +21,11 @@ export async function asyncJoinAsStringWith(strings, separator) {
     } else {
       result += str;
     }
-
     first = false;
   }
-
   return result;
 }
+
 export default asyncIterableCurry(asyncJoinAsStringWith, {
   reduces: true,
 });

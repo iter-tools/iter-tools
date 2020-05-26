@@ -6,8 +6,11 @@
  * More information can be found in CONTRIBUTING.md
  */
 
+/* eslint-disable no-unused-vars,import/no-duplicates,no-constant-condition */
+
 import { isEmpty } from '../../..';
 import { wrap } from '../../../__tests__/__framework__/wrap';
+
 describe('isEmpty', () => {
   describe('when iterable is empty', () => {
     it('returns true', () => {
@@ -16,6 +19,7 @@ describe('isEmpty', () => {
       expect(isEmpty(wrap([]))).toBe(true);
     });
   });
+
   describe('when iterable contains values', () => {
     it('returns false', () => {
       expect(isEmpty(wrap([1, 2, 3]))).toBe(false);

@@ -7,11 +7,14 @@
  */
 
 import { AsyncSourceIterable } from '../../types/async-iterable';
+
 declare function asyncIncludesSubseq(
   subseq: AsyncSourceIterable<any>,
 ): (iterable: AsyncSourceIterable<any>) => Promise<boolean>;
+
 declare function asyncIncludesSubseq(
   subseq: AsyncSourceIterable<any>,
   iterable: AsyncSourceIterable<any>,
 ): Promise<boolean>;
+
 export default asyncIncludesSubseq;

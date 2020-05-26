@@ -9,12 +9,14 @@
 /* eslint-disable no-unused-vars,import/no-duplicates,no-constant-condition */
 
 import { consume } from '../../..';
+
 describe('consume', () => {
   it('consumes an iterable with a callback', () => {
     const arr: Array<number> = [];
     consume(item => arr.push(item), [1, 2, 3]);
     expect(arr).toEqual([1, 2, 3]);
   });
+
   it('consumes an iterable with a callback returning a promise', () => {
     const arr: Array<number> = [];
     consume(
@@ -26,6 +28,7 @@ describe('consume', () => {
     );
     expect(arr).toEqual([1, 2, 3]);
   });
+
   it('consumes an iterable (curried)', () => {
     const arr: Array<number> = [];
     const consumePush = consume((item: number) => arr.push(item));

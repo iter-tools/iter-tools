@@ -6,7 +6,10 @@
  * More information can be found in CONTRIBUTING.md
  */
 
+/* eslint-disable no-unused-vars,import/no-duplicates,no-constant-condition */
+
 import { append, toArray, wrap } from '../../..';
+
 describe('append', () => {
   it('appends a value', () => {
     expect(toArray(append(3, wrap([1, 2])))).toEqual([1, 2, 3]);

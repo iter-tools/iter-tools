@@ -7,17 +7,16 @@
  */
 
 import { asyncIterableCurry } from '../../internal/async-iterable';
+
 import { asyncInterleave } from '../$interleave/async-interleave';
 
 async function* asyncByComparison({ comparator }, canTakeAny, ...buffers) {
   let candidateBuffer;
-
   while ((candidateBuffer = await canTakeAny())) {
     let candidateItem = await candidateBuffer.peek();
 
     for (const buffer of buffers) {
       const item = await buffer.peek();
-
       if ((await buffer.canTake()) && comparator(candidateItem, item) < 0) {
         candidateItem = item;
         candidateBuffer = buffer;
@@ -29,10 +28,9 @@ async function* asyncByComparison({ comparator }, canTakeAny, ...buffers) {
 }
 
 export function asyncCollate(sources, comparator) {
-  return asyncInterleave(sources, asyncByComparison, {
-    comparator,
-  });
+  return asyncInterleave(sources, asyncByComparison, { comparator });
 }
+
 export default asyncIterableCurry(asyncCollate, {
   variadic: true,
 });
