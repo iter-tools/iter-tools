@@ -6,59 +6,39 @@
  * More information can be found in CONTRIBUTING.md
  */
 
+/* eslint-disable no-unused-vars,import/no-duplicates,no-constant-condition */
+
 import { asyncZipAll, asyncToArray, asyncSlice, range } from '../../..';
 import { AsyncOneTwoThreeIterable } from '../../../__tests__/__framework__/fixtures';
+
 describe('asyncZipAll', () => {
   it('zips', async () => {
     const iter = asyncZipAll([1, 2, 3], [4, 5, 6], [7, 8, 9]);
     expect(await asyncToArray(iter)).toEqual([[1, 4, 7], [2, 5, 8], [3, 6, 9]]);
   });
+
   it('zips using iterables', async () => {
-    const iter = asyncZipAll(
-      range({
-        start: 1,
-        end: 4,
-      }),
-      range({
-        start: 4,
-        end: 7,
-      }),
-      [7, 8, 9],
-    );
+    const iter = asyncZipAll(range({ start: 1, end: 4 }), range({ start: 4, end: 7 }), [7, 8, 9]);
     expect(await asyncToArray(iter)).toEqual([[1, 4, 7], [2, 5, 8], [3, 6, 9]]);
   });
+
   it('fills with undefined when some iterables are exhausted', async () => {
-    const iter = asyncZipAll(
-      range({
-        start: 1,
-        end: 4,
-      }),
-      range({
-        start: 4,
-        end: 6,
-      }),
-      [7, 8],
-    );
+    const iter = asyncZipAll(range({ start: 1, end: 4 }), range({ start: 4, end: 6 }), [7, 8]);
     expect(await asyncToArray(iter)).toEqual([[1, 4, 7], [2, 5, 8], [3, undefined, undefined]]);
   });
+
   it('fills with filler when some iterables are exhausted', async () => {
     const iter = asyncZipAll(
-      {
-        filler: null,
-      },
-      range({
-        start: 1,
-        end: 4,
-      }),
-      range({
-        start: 4,
-        end: 6,
-      }),
+      { filler: null },
+      range({ start: 1, end: 4 }),
+      range({ start: 4, end: 6 }),
       [7, 8],
     );
     expect(await asyncToArray(iter)).toEqual([[1, 4, 7], [2, 5, 8], [3, null, null]]);
   });
+
   it('closes when stopping earlier', async () => {
+    // broken if transpiled with es5 loose
     const asyncOneTwoThree = new AsyncOneTwoThreeIterable();
     const iter = asyncSlice(0, 2, asyncZipAll(range(2), asyncOneTwoThree));
     expect(await asyncToArray(iter)).toEqual([[0, 1], [1, 2]]);

@@ -7,12 +7,13 @@
  */
 
 import { asyncIterableCurry } from '../../internal/async-iterable';
+
 export async function* asyncTake(iterable, n) {
   let i = 0;
-
   for await (const item of iterable) {
     if (i++ === n) break;
     yield item;
   }
 }
+
 export default asyncIterableCurry(asyncTake);

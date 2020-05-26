@@ -7,13 +7,14 @@
  */
 
 import { AsyncSourceIterable, AsyncResultIterable } from '../../types/async-iterable';
+
 declare function asyncZipAll<F, T>(
-  options: {
-    filler?: F;
-  },
+  options: { filler?: F },
   ...sources: Array<AsyncSourceIterable<T>>
 ): AsyncResultIterable<Array<T | F>>;
+
 declare function asyncZipAll<T>(
   ...sources: Array<AsyncSourceIterable<T>>
 ): AsyncResultIterable<Array<T | undefined>>;
+
 export default asyncZipAll;

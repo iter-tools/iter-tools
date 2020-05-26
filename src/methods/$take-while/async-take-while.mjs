@@ -7,13 +7,13 @@
  */
 
 import { asyncIterableCurry } from '../../internal/async-iterable';
+
 export async function* asyncTakeWhile(source, func) {
   let take = true;
   let c = 0;
 
   for await (const item of source) {
     take = await func(item, c++);
-
     if (take) {
       yield item;
     } else {
@@ -21,4 +21,5 @@ export async function* asyncTakeWhile(source, func) {
     }
   }
 }
+
 export default asyncIterableCurry(asyncTakeWhile);

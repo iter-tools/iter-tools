@@ -9,18 +9,22 @@
 /* eslint-disable no-unused-vars,import/no-duplicates,no-constant-condition */
 
 import { asyncJoinWithSubseq, asyncToArray } from '../../..';
+
 describe('asyncJoinWithSubseq', () => {
   describe('joining on the empty subseq', () => {
     it('should include the items from every group', async () => {
       expect(await asyncToArray(asyncJoinWithSubseq([], [[1], [2], [3]]))).toEqual([1, 2, 3]);
     });
+
     it('should contain no output for an empty group', async () => {
       expect(await asyncToArray(asyncJoinWithSubseq([], [[1], [], [3]]))).toEqual([1, 3]);
     });
   });
+
   it('should yield a single separator when joining two empty groups', async () => {
     expect(await asyncToArray(asyncJoinWithSubseq([1, 2], [[], []]))).toEqual([1, 2]);
   });
+
   it('passes through the empty iterable', async () => {
     expect(await asyncToArray(asyncJoinWithSubseq([], null))).toEqual([]);
   });

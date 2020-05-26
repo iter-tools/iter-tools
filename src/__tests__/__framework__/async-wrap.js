@@ -29,13 +29,9 @@ class AsyncWrappedIterable {
     if (this.done) {
       throw new Error('Called return on an iterator that was done');
     }
-
     this.done = true;
     this.returned = true;
-    return {
-      value,
-      done: true,
-    };
+    return { value, done: true };
   }
 
   [Symbol.asyncIterator]() {
@@ -49,9 +45,11 @@ export function asyncWrap(iterable) {
   wrappedIterables.push(wrapped);
   return wrapped;
 }
+
 beforeEach(() => {
   wrappedIterables.length = 0;
 });
+
 afterEach(() => {
   for (const wrapped of wrappedIterables) {
     if (wrapped.started && !(wrapped.done || wrapped.returned)) {

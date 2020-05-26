@@ -7,8 +7,11 @@
  */
 
 import { AsyncSourceIterable } from '../../types/async-iterable';
+
 declare function asyncIncludes(
   value: any,
 ): (iterable: AsyncSourceIterable<any>) => Promise<boolean>;
+
 declare function asyncIncludes(value: any, iterable: AsyncSourceIterable<any>): Promise<boolean>;
+
 export default asyncIncludes;

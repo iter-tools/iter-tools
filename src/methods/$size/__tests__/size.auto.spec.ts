@@ -6,12 +6,16 @@
  * More information can be found in CONTRIBUTING.md
  */
 
+/* eslint-disable no-unused-vars,import/no-duplicates,no-constant-condition */
+
 import { size } from '../../..';
 import { range } from '../../../__tests__/range';
+
 describe('size', () => {
   it('return number of items in iterable', () => {
     expect(size(range(1, 7))).toBe(6);
   });
+
   it('returns 0 for null or undefined', () => {
     expect(size(null)).toBe(0);
     expect(size(undefined)).toBe(0);

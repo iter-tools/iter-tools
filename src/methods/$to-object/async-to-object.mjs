@@ -7,13 +7,13 @@
  */
 
 import { asyncEnsureIterable } from '../../internal/async-iterable';
+
 export async function asyncToObject(source) {
   const obj = {};
-
   for await (const [key, value] of asyncEnsureIterable(source)) {
     obj[key] = value;
   }
-
   return obj;
 }
+
 export default asyncToObject;

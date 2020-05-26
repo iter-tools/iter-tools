@@ -7,11 +7,14 @@
  */
 
 import { SourceIterable } from '../../types/iterable';
+
 declare function includesSubseq(
   subseq: SourceIterable<any>,
 ): (iterable: SourceIterable<any>) => boolean;
+
 declare function includesSubseq(
   subseq: SourceIterable<any>,
   iterable: SourceIterable<any>,
 ): boolean;
+
 export default includesSubseq;

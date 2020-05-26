@@ -6,15 +6,19 @@
  * More information can be found in CONTRIBUTING.md
  */
 
+/* eslint-disable no-unused-vars,import/no-duplicates,no-constant-condition */
+
 import { asyncSplitWith } from '../../..';
 import { asyncUnwrapDeep as asyncUw } from '../../../__tests__/async-helpers';
 import { asyncWrap } from '../../../__tests__/__framework__/async-wrap';
+
 describe('asyncSplitWith', () => {
   it('should split between every item which is equal to the on argument', async () => {
     expect(
       await asyncUw(asyncSplitWith(i => i === null, asyncWrap([1, null, 2, null, 3]))),
     ).toEqual([[1], [2], [3]]);
   });
+
   it('should return no parts if source is empty', async () => {
     expect(await asyncUw(asyncSplitWith(i => i, null))).toEqual([]);
   });

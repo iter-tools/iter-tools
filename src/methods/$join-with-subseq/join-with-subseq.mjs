@@ -8,9 +8,9 @@
 
 import { iterableCurry } from '../../internal/iterable';
 import { toArray } from '../$to-array/to-array';
+
 export function* joinWithSubseq(source, separatorSubseq) {
   const _separatorSubseq = toArray(separatorSubseq);
-
   let isFirst = true;
 
   for (const item of source) {
@@ -19,4 +19,5 @@ export function* joinWithSubseq(source, separatorSubseq) {
     isFirst = false;
   }
 }
+
 export default iterableCurry(joinWithSubseq);

@@ -9,39 +9,32 @@
 /* eslint-disable no-unused-vars,import/no-duplicates,no-constant-condition */
 
 import { asyncWrap, asyncToArray } from '../../..';
+
 describe('asyncWrap', () => {
   it('returns an empty iterable when passed null or undefined', async () => {
     expect(await asyncToArray(asyncWrap(undefined))).toEqual([]);
     expect(await asyncToArray(asyncWrap(null))).toEqual([]);
   });
+
   it('yields the same elements as its input iterable', async () => {
     expect(await asyncToArray(asyncWrap([1, 2, 3]))).toEqual([1, 2, 3]);
   });
+
   it('yields the same elements as its input iterable', async () => {
     expect(await asyncToArray(asyncWrap([1, 2, 3]))).toEqual([1, 2, 3]);
   });
+
   it('can be consumed multiple times if its input can', async () => {
     const wrapped = asyncWrap([1, 2, 3]);
     expect(await asyncToArray(wrapped)).toEqual([1, 2, 3]);
     expect(await asyncToArray(wrapped)).toEqual([1, 2, 3]);
   });
+
   it('can be consumed as an iterator', async () => {
     const wrapped = asyncWrap([1, 2, 3]);
-    expect(await wrapped.next()).toEqual({
-      value: 1,
-      done: false,
-    });
-    expect(await wrapped.next()).toEqual({
-      value: 2,
-      done: false,
-    });
-    expect(await wrapped.next()).toEqual({
-      value: 3,
-      done: false,
-    });
-    expect(await wrapped.next()).toEqual({
-      value: undefined,
-      done: true,
-    });
+    expect(await wrapped.next()).toEqual({ value: 1, done: false });
+    expect(await wrapped.next()).toEqual({ value: 2, done: false });
+    expect(await wrapped.next()).toEqual({ value: 3, done: false });
+    expect(await wrapped.next()).toEqual({ value: undefined, done: true });
   });
 });

@@ -7,13 +7,13 @@
  */
 
 import { ensureIterable } from '../../internal/iterable';
+
 export function toObject(source) {
   const obj = {};
-
   for (const [key, value] of ensureIterable(source)) {
     obj[key] = value;
   }
-
   return obj;
 }
+
 export default toObject;

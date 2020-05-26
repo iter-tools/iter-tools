@@ -8,8 +8,6 @@
 
 export function consumeIterator(iterator) {
   let item;
-
   while (!(item = iterator.next()).done) {}
-
   return item;
 }

@@ -7,13 +7,14 @@
  */
 
 import { iterableCurry } from '../../internal/iterable';
+
 export function forEach(iterable, callback) {
   let c = 0;
-
   for (const item of iterable) {
     callback(item, c++);
   }
 }
+
 export default iterableCurry(forEach, {
   reduces: true,
 });

@@ -9,22 +9,27 @@
 /* eslint-disable no-unused-vars,import/no-duplicates,no-constant-condition */
 
 import { asyncMap, asyncToArray, range } from '../../..';
+
 describe('asyncMap', () => {
   it('returns mapped iterable', async () => {
     const iter = asyncMap(item => item * 2, [1, 2, 3]);
     expect(await asyncToArray(iter)).toEqual([2, 4, 6]);
   });
+
   it('returns mapped iterable from iterable', async () => {
     const iter = asyncMap(item => item * 2, range(1, 4));
     expect(await asyncToArray(iter)).toEqual([2, 4, 6]);
   });
+
   it('returns mapped iterable (curried version)', async () => {
     const iter = asyncMap((item: number) => item * 2);
     expect(await asyncToArray(iter(range(1, 4)))).toEqual([2, 4, 6]);
   });
+
   it('returns empty iterable from null', async () => {
     expect(await asyncToArray(asyncMap((item: never) => item * 2, null))).toEqual([]);
   });
+
   it('returns mapped iterable (using a promise)', async () => {
     const iter = asyncMap(item => Promise.resolve(item * 2), [1, 2, 3]);
     expect(await asyncToArray(iter)).toEqual([2, 4, 6]);

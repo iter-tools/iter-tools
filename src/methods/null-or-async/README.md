@@ -3,7 +3,9 @@
 ```js
 async function renderData(data) {
   const nullOrData = await nullOr(data); // Note the await here. This would usually be unnecessary.
-  return nullOrData ? await asyncJoinAsStringWith(', ', nullOrData) : 'No data.';
+  return nullOrData
+    ? await asyncJoinAsStringWith(', ', nullOrData)
+    : 'No data.';
 }
 
 async function* generateAsyncData() {

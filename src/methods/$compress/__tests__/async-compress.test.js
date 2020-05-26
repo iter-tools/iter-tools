@@ -9,6 +9,7 @@
 /* eslint-disable no-unused-vars,import/no-duplicates,no-constant-condition */
 
 import { asyncCompress, asyncToArray, range } from '../../..';
+
 describe('asyncCompress', () => {
   it('compress iterables', async () => {
     const iter = asyncCompress(range(10), [false, true, false, true, true]);

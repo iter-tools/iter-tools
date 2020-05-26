@@ -7,11 +7,14 @@
  */
 
 import { AsyncSourceIterable, AsyncResultIterable } from '../../types/async-iterable';
+
 declare function asyncCycleTimes<T>(
   n: number,
   iterable: AsyncSourceIterable<T>,
 ): AsyncResultIterable<T>;
+
 declare function asyncCycleTimes<T>(
   n: number,
 ): (iterable: AsyncSourceIterable<T>) => AsyncResultIterable<T>;
+
 export default asyncCycleTimes;

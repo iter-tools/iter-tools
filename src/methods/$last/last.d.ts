@@ -7,5 +7,7 @@
  */
 
 import { SourceIterable } from '../../types/iterable';
+
 declare function last<T>(iterable: SourceIterable<T>): T | undefined;
+
 export default last;

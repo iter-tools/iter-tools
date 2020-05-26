@@ -10,6 +10,7 @@
 
 import { asyncFind } from '../../..';
 import { asyncWrap } from '../../../__tests__/__framework__/async-wrap';
+
 describe('asyncFind', () => {
   describe('when iterable is empty', () => {
     it('returns undefined', async () => {
@@ -18,15 +19,18 @@ describe('asyncFind', () => {
       expect(await asyncFind((item: never) => item, asyncWrap([]))).toBe(undefined);
     });
   });
+
   describe('when iterable does not contain the desired value', () => {
     it('returns undefined', async () => {
       expect(await asyncFind(_ => false, asyncWrap([1, 2, 3, 4, 5, 6]))).toBe(undefined);
     });
   });
+
   describe('when iterable contains the desired value', () => {
     it('returns the value', async () => {
       expect(await asyncFind(item => item === 5, asyncWrap([1, 2, 3, 4, 5, 6]))).toBe(5);
     });
+
     it('the predicate may return a promise', async () => {
       expect(await asyncFind(async item => item === 5, asyncWrap([1, 2, 3, 4, 5, 6]))).toBe(5);
     });

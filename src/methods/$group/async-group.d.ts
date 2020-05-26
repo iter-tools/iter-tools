@@ -7,7 +7,9 @@
  */
 
 import { AsyncSourceIterable, AsyncResultIterable } from '../../types/async-iterable';
+
 declare function asyncGroup<T>(
   source: AsyncSourceIterable<T>,
 ): AsyncResultIterable<[T, AsyncResultIterable<T>]>;
+
 export default asyncGroup;

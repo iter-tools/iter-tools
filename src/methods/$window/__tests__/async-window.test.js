@@ -10,6 +10,7 @@
 
 import { asyncUnwrapDeep as asyncUw } from '../../../__tests__/async-helpers';
 import { asyncWindow } from '../../..';
+
 describe('asyncWindow', () => {
   it('frames iterable', async () => {
     expect(await asyncUw(asyncWindow(3, [1, 2, 3, 4, 5]))).toEqual([
@@ -18,17 +19,21 @@ describe('asyncWindow', () => {
       [3, 4, 5],
     ]);
   });
+
   it('frames iterable (window equal to the sequence)', async () => {
     expect(await asyncUw(asyncWindow(5, [1, 2, 3, 4, 5]))).toEqual([[1, 2, 3, 4, 5]]);
   });
+
   describe('when the dinwos is bigger than the sequence', () => {
     it('frames iterable (window bigger than the sequence)', async () => {
       expect(await asyncUw(asyncWindow(6, [1, 2, 3, 4, 5]))).toEqual([]);
     });
+
     it('frames iterable (window bigger than the sequence) with filler', async () => {
       expect(await asyncUw(asyncWindow(6, [1, 2, 3, 4, 5]))).toEqual([]);
     });
   });
+
   describe('invalid inputs', () => {
     it('throw', () => {
       const size: any = 'a';

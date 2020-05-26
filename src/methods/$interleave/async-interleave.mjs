@@ -9,6 +9,7 @@
 import { asyncEnsureIterable, asyncIterableCurry } from '../../internal/async-iterable';
 import AsyncInterleaveBuffer from './internal/async-buffer';
 import asyncMakeCanTakeAny from './internal/async-can-take-any';
+
 export async function* asyncInterleave(sources, generateInterleaved, options) {
   const buffers = sources.map(
     (iterable, i) =>
@@ -17,6 +18,7 @@ export async function* asyncInterleave(sources, generateInterleaved, options) {
 
   try {
     const canTakeAny = asyncMakeCanTakeAny(buffers);
+
     yield* options !== undefined
       ? generateInterleaved(options, canTakeAny, ...buffers)
       : generateInterleaved(canTakeAny, ...buffers);
@@ -28,6 +30,7 @@ export async function* asyncInterleave(sources, generateInterleaved, options) {
     }
   }
 }
+
 export default asyncIterableCurry(asyncInterleave, {
   variadic: true,
   optionalArgsAtEnd: true,

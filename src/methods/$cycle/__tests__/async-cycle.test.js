@@ -10,6 +10,7 @@
 
 import { asyncCycle, asyncSlice, asyncToArray } from '../../..';
 import { asyncRange } from '../../../__tests__/async-range';
+
 describe('asyncCycle', () => {
   it('cycles iterable infinitely', async () => {
     expect(await asyncToArray(asyncSlice(0, 7, asyncCycle(asyncRange(1, 4))))).toEqual([

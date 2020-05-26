@@ -10,6 +10,7 @@
 
 import { groupBy } from '../../..';
 import { unwrapDeep as uw } from '../../../__tests__/helpers';
+
 describe('groupBy', () => {
   it('returns source values grouped by key function', () => {
     const iter = groupBy(item => item.toLowerCase(), 'AaaBbaACccCD');
@@ -26,6 +27,7 @@ describe('groupBy', () => {
     next = iter.next();
     expect(next.done).toBe(true);
   });
+
   it('main cursor (curried)', () => {
     const iter = groupBy(_ => _)('AAABBAACCCCD');
     let next = iter.next();
@@ -41,6 +43,7 @@ describe('groupBy', () => {
     next = iter.next();
     expect(next.done).toBe(true);
   });
+
   it('returns source values grouped by key function', () => {
     const iter = groupBy(item => item.toLowerCase(), 'AaaBbaACccCD');
     expect(uw(iter)).toEqual([
@@ -51,6 +54,7 @@ describe('groupBy', () => {
       ['d', ['D']],
     ]);
   });
+
   it('returns source values grouped by identity', () => {
     const iter = groupBy(_ => _)('AAABBAACCCCD');
     expect(uw(iter)).toEqual([
@@ -61,6 +65,7 @@ describe('groupBy', () => {
       ['D', ['D']],
     ]);
   });
+
   it('empty source returns empty iterable', () => {
     expect(uw(groupBy(_ => _, null))).toEqual([]);
     expect(uw(groupBy(_ => _)(null))).toEqual([]);

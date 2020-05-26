@@ -6,7 +6,10 @@
  * More information can be found in CONTRIBUTING.md
  */
 
+/* eslint-disable no-unused-vars,import/no-duplicates,no-constant-condition */
+
 import { consume } from '../../..';
+
 describe('consume', () => {
   it('consumes an iterable', () => {
     const arr: Array<number> = [];

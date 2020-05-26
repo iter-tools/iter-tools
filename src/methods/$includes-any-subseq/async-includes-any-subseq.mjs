@@ -8,13 +8,13 @@
 
 import { asyncIterableCurry } from '../../internal/async-iterable';
 import { asyncIncludes_ } from '../$includes_/async-includes_';
-const config = {
-  any: true,
-  subseq: true,
-};
+
+const config = { any: true, subseq: true };
+
 export function asyncIncludesAnySubseq(iterable, subseqs) {
   return asyncIncludes_(iterable, config, subseqs);
 }
+
 export default asyncIterableCurry(asyncIncludesAnySubseq, {
   reduces: true,
 });

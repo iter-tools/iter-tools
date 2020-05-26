@@ -5,7 +5,6 @@ module.exports = api => {
 
   return {
     babelrc: false,
-    comments: false,
-    plugins: ['@babel/plugin-syntax-typescript'],
+    plugins: ['@babel/plugin-syntax-typescript', 'babel-plugin-recast'],
   };
 };

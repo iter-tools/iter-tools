@@ -1,7 +1,10 @@
 Starts fetching the next `n` values of `source` so that the wait for a value should be minimal by the time it is needed. Yields the same values in the same order as `source`.
 
 ```js
-const source = asyncMap(_ => new Promise(resolve => setTimeout(resolve, 200)), range());
+const source = asyncMap(
+  _ => new Promise(resolve => setTimeout(resolve, 200)),
+  range(),
+);
 
 const buffered = asyncBuffer(6, source); // Items start buffering
 

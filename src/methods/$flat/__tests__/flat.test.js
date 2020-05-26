@@ -9,43 +9,53 @@
 /* eslint-disable no-unused-vars,import/no-duplicates,no-constant-condition */
 
 import { flat, toArray } from '../../..';
+
 describe('flat', () => {
   it('flats iterable', () => {
     const iter = flat(1, [[1, 2], [3, 4], [5]]);
     expect(toArray(iter)).toEqual([1, 2, 3, 4, 5]);
   });
+
   it('flats iterable (default one level)', () => {
     const iter = flat([[1, 2], [3, 4], [5]]);
     expect(toArray(iter)).toEqual([1, 2, 3, 4, 5]);
   });
+
   it('flats iterable, curried', () => {
     const iter = flat(1)([[1, 2], [3, 4], [5]]);
     expect(toArray(iter)).toEqual([1, 2, 3, 4, 5]);
   });
+
   it('flats iterable, curried (default one level)', () => {
     const iter = flat([[1, 2], [3, 4], [5]]);
     expect(toArray(iter)).toEqual([1, 2, 3, 4, 5]);
   });
+
   it('flats iterable depth 0', () => {
     const iter = flat(0, [[1, 2], [3, 4], [5]]);
     expect(toArray(iter)).toEqual([[1, 2], [3, 4], [5]]);
   });
+
   it('flats iterable depth 2', () => {
     const iter = flat(2, [[1, 2], [3, [4, 5]], [[6]]]);
     expect(toArray(iter)).toEqual([1, 2, 3, 4, 5, 6]);
   });
+
   it('flats strings', () => {
     const iter = flat(2, [['a', 'b'], ['c', ['d', 'e']], [['f']]]);
     expect(toArray(iter)).toEqual(['a', 'b', 'c', 'd', 'e', 'f']);
   });
+
   it('does not expand string', () => {
     const iter = flat(2, ['foo', ['bar', ['baz']]]);
     expect(toArray(iter)).toEqual(['foo', 'bar', 'baz']);
   });
+
   it('does not treat null as an iterable', () => {
     const iter = flat(2, ['foo', null]);
     expect(toArray(iter)).toEqual(['foo', null]);
   });
+
   it('flats using custom function', () => {
     const iter = flat(iter => !(typeof iter === 'string' && iter.length === 1), Infinity, [
       ['a', 'b'],

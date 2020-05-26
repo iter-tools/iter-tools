@@ -7,8 +7,10 @@
  */
 
 import { iterableCurry } from '../../internal/iterable';
+
 export function* prepend(source, value) {
   yield value;
   yield* source;
 }
+
 export default iterableCurry(prepend);

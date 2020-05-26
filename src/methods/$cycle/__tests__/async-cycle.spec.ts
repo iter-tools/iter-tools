@@ -9,15 +9,21 @@
 import assert from 'static-type-assert';
 import { AsyncResultIterable } from '../../../types/async-iterable';
 import { asyncCycle } from '../../..';
+
 declare const Ø: never;
+
 assert<AsyncResultIterable<0 | 1 | 2>>(asyncCycle(Ø as [0, 1, 2]));
+
 assert<
   | AsyncResultIterable<never>
   | AsyncResultIterable<0 | 1>
   | AsyncResultIterable<string | number | boolean>
 >(asyncCycle(Ø as [] | [0, 1] | [string, number, boolean]));
+
 assert<AsyncResultIterable<string | number | boolean>>(
   asyncCycle(Ø as [] | [0, 1] | [string, number, boolean]),
 );
+
 assert<AsyncResultIterable<string>>(asyncCycle(Ø as string));
+
 assert<AsyncResultIterable<0 | 1 | 2>>(asyncCycle(Ø as Set<0 | 1 | 2>));

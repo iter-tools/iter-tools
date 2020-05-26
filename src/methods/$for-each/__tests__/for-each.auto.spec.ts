@@ -6,13 +6,17 @@
  * More information can be found in CONTRIBUTING.md
  */
 
+/* eslint-disable no-unused-vars,import/no-duplicates,no-constant-condition */
+
 import { forEach } from '../../..';
+
 describe('forEach', () => {
   it('iterates over an iterable', () => {
     const arr: Array<number> = [];
     forEach(item => arr.push(item), [1, 2, 3]);
     expect(arr).toEqual([1, 2, 3]);
   });
+
   it('iterates over an iterable using a promise', () => {
     const arr: Array<number> = [];
     forEach(
@@ -24,6 +28,7 @@ describe('forEach', () => {
     );
     expect(arr).toEqual([1, 2, 3]);
   });
+
   it('iterates over an iterable (curried)', () => {
     const arr: Array<number> = [];
     const forEachPush = forEach((item: number) => arr.push(item));

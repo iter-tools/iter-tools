@@ -8,6 +8,7 @@
 
 import { iterableCurry } from '../../internal/iterable';
 import { PartsIterator, Spliterator, split } from '../../internal/spliterator';
+
 let warnedNullGetKeyDeprecation = false;
 
 const warnNullGetKeyDeprecation = () => {
@@ -41,16 +42,13 @@ class GroupingSpliterator extends Spliterator {
 
   buffer() {
     const { key } = this;
-
     if (this.item === null) {
       this.item = super.next();
       const { done, value } = this.item;
-
       if (!done) {
         this.key = this.getKey(value, this.idx++);
       }
     }
-
     return this.key !== key;
   }
 
@@ -58,10 +56,7 @@ class GroupingSpliterator extends Spliterator {
     const newGroup = this.buffer();
 
     if (this.item.done) {
-      return {
-        value: undefined,
-        done: true,
-      };
+      return { value: undefined, done: true };
     } else {
       const { value } = this.item;
 
@@ -69,10 +64,7 @@ class GroupingSpliterator extends Spliterator {
         this.item = null;
       }
 
-      return {
-        value: newGroup ? split : value,
-        done: false,
-      };
+      return { value: newGroup ? split : value, done: false };
     }
   }
 }
@@ -80,13 +72,9 @@ class GroupingSpliterator extends Spliterator {
 class GroupPartsIterator extends PartsIterator {
   next() {
     const item = super.next();
-
     if (!item.done) {
       this.spliterator.buffer();
-      return {
-        value: [this.spliterator.key, item.value],
-        done: false,
-      };
+      return { value: [this.spliterator.key, item.value], done: false };
     } else {
       return item;
     }
@@ -105,4 +93,5 @@ export function* groupBy(source, getKey) {
     ),
   );
 }
+
 export default iterableCurry(groupBy);

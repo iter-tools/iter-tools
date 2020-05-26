@@ -7,13 +7,13 @@
  */
 
 import { iterableCurry, isIterable } from '../../internal/iterable';
+
 export function joinAsStringWith(strings, separator) {
   let result = '';
   let first = true;
 
   for (const str of strings) {
     if (!first && separator !== '') result += separator;
-
     if (typeof str !== 'string' && isIterable(str)) {
       for (const character of str) {
         result += character;
@@ -21,12 +21,11 @@ export function joinAsStringWith(strings, separator) {
     } else {
       result += str;
     }
-
     first = false;
   }
-
   return result;
 }
+
 export default iterableCurry(joinAsStringWith, {
   reduces: true,
 });

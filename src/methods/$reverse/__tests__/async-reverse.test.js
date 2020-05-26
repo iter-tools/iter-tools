@@ -9,6 +9,7 @@
 /* eslint-disable no-unused-vars,import/no-duplicates,no-constant-condition */
 
 import { asyncReverse, asyncToArray, asyncWrap } from '../../..';
+
 describe('asyncReverse', () => {
   it('Reverses an iterable', async () => {
     expect(await asyncToArray(asyncReverse(asyncWrap([1, 2, 3])))).toEqual([3, 2, 1]);

@@ -10,6 +10,7 @@
 
 import { ensureIterable, isIterable, iterableCurry } from '../iterable';
 import { range, toArray } from '../..';
+
 describe('ensureIterable', () => {
   it('works with iterables', () => {
     const i = range(3);
@@ -25,6 +26,7 @@ describe('ensureIterable', () => {
     expect(Array.from(i)).toEqual([]);
   });
 });
+
 describe('isIterable', () => {
   it('works', () => {
     expect(isIterable(range(3))).toBe(true);
@@ -34,9 +36,7 @@ describe('isIterable', () => {
 });
 
 class Hello {}
-
 class Goodbye {}
-
 class World {}
 
 const hello = new Hello();
@@ -49,40 +49,31 @@ function* iter(...args) {
 
 function add(initial, iterable) {
   let result = initial;
-
   for (const number of iterable) {
     result += number;
   }
-
   return result;
 }
 
 function addAll(initial, iterables) {
   let result = initial;
-
   for (const iterable of iterables) {
     for (const number of iterable) {
       result += number;
     }
   }
-
   return result;
 }
 
 describe('iterableCurry', () => {
   const f2 = (iterable, a, b) => iter(a, b);
-
   const f1 = (iterable, a) => iter(a);
-
   const f0 = iterable => iter();
-
   const c2 = iterableCurry(f2);
   const c1 = iterableCurry(f1);
   const c0 = iterableCurry(f0);
   /* eslint-disable no-unused-expressions */
-
   f2.name; // Make sure names don't get thrown away by babel-minify
-
   f1.name;
   f0.name;
   /* eslint-enable no-unused-expressions */
@@ -96,31 +87,33 @@ describe('iterableCurry', () => {
     expect(toArray(c1(hello)([]))).toEqual([hello]);
     expect(toArray(c0([]))).toEqual([]);
   });
+
   it('ignores extra arguments after iterable', () => {
     expect(toArray(c2(hello, world, [], 'foo'))).toEqual([hello, world]);
     expect(toArray(c1(hello)([], null))).toEqual([hello]);
     expect(toArray(c0([], 4))).toEqual([]);
   });
+
   it('throws with empty invocations', () => {
     expect(() => c2()(hello)(world)([])).toThrowErrorMatchingSnapshot();
     expect(() => c2(hello)()(world)([])).toThrowErrorMatchingSnapshot();
     expect(() => c2(hello)(world)()([])).toThrowErrorMatchingSnapshot();
   });
+
   it('throws with too many args', () => {
     expect(() => c2(hello)(goodbye)(world)([])).toThrowErrorMatchingSnapshot();
     expect(() => c1(hello)(world)([])).toThrowErrorMatchingSnapshot();
     expect(() => c0(hello)([])).toThrowErrorMatchingSnapshot();
   });
+
   describe('validates args', () => {
     it('can stop method execution by throwing an error', () => {
       const helloImpl = jest.fn();
       const hello = iterableCurry(helloImpl, {
         minArgs: 1,
         maxArgs: 1,
-
         validateArgs(args) {
           const [world] = args;
-
           if (!(world instanceof World)) {
             throw new Error('Expected the world');
           }
@@ -129,14 +122,13 @@ describe('iterableCurry', () => {
       expect(() => hello(null, [])).toThrowErrorMatchingSnapshot();
       expect(helloImpl).not.toHaveBeenCalled();
     });
+
     it('can alter arguments', () => {
       const empty = (function*() {})();
-
       const helloImpl = jest.fn(function*() {});
       const hello = iterableCurry(helloImpl, {
         minArgs: 1,
         maxArgs: 1,
-
         validateArgs(args) {
           args[0] = world;
         },
@@ -145,17 +137,12 @@ describe('iterableCurry', () => {
       expect(helloImpl).toHaveBeenCalledWith(empty, world);
     });
   });
+
   describe('when passed explicit arity', () => {
     const f = (c, a = goodbye, b = world) => iter(a, b);
-
-    const c = iterableCurry(f, {
-      minArgs: 0,
-      maxArgs: 2,
-    });
+    const c = iterableCurry(f, { minArgs: 0, maxArgs: 2 });
     /* eslint-disable no-unused-expressions */
-
     f.name; // Make sure it don't get thrown away by babel-minify
-
     /* eslint-enable no-unused-expressions */
 
     it('curries', () => {
@@ -163,9 +150,11 @@ describe('iterableCurry', () => {
       expect(toArray(c(hello)([]))).toEqual([hello, world]);
       expect(toArray(c([]))).toEqual([goodbye, world]);
     });
+
     it('throws with empty invocations', () => {
       expect(() => c2()(hello)(world)([])).toThrowErrorMatchingSnapshot();
     });
+
     it('throws with too many args', () => {
       expect(() => c(hello)(goodbye)(world)([])).toThrow(
         new Error(
@@ -174,26 +163,16 @@ describe('iterableCurry', () => {
       );
     });
   });
+
   describe('works with reducing functions', () => {
     const f2 = (iterable, a, b) => add(a + b, iterable);
-
     const f1 = (iterable, a) => add(a, iterable);
-
     const f0 = iterable => add(0, iterable);
-
-    const c2 = iterableCurry(f2, {
-      reduces: true,
-    });
-    const c1 = iterableCurry(f1, {
-      reduces: true,
-    });
-    const c0 = iterableCurry(f0, {
-      reduces: true,
-    });
+    const c2 = iterableCurry(f2, { reduces: true });
+    const c1 = iterableCurry(f1, { reduces: true });
+    const c0 = iterableCurry(f0, { reduces: true });
     /* eslint-disable no-unused-expressions */
-
     f2.name; // Make sure names don't get thrown away by babel-minify
-
     f1.name;
     f0.name;
     /* eslint-enable no-unused-expressions */
@@ -203,35 +182,35 @@ describe('iterableCurry', () => {
       expect(c1(1)([2])).toBe(3);
       expect(c0([1])).toBe(1);
     });
+
     it('throws with empty invocations', () => {
       expect(() => c2()(1, 2, [4])).toThrowErrorMatchingSnapshot();
       expect(() => c2(1, 2)()([4])).toThrowErrorMatchingSnapshot();
     });
+
     it('throws with too many args', () => {
       expect(() => c2(1)(2)(3)([])).toThrowErrorMatchingSnapshot();
       expect(() => c1(1)(2)([])).toThrowErrorMatchingSnapshot();
       expect(() => c0(1)([])).toThrowErrorMatchingSnapshot();
     });
   });
+
   describe('works with variadic functions', () => {
     const f1 = (iterables, a) => addAll(a, iterables);
     /* eslint-disable no-unused-expressions */
-
     f1.name; // Make sure it doesn't get thrown away by babel-minify
-
     /* eslint-enable no-unused-expressions */
+    const c1 = iterableCurry(f1, { variadic: true, reduces: true });
 
-    const c1 = iterableCurry(f1, {
-      variadic: true,
-      reduces: true,
-    });
     it('curries', () => {
       expect(c1(1)([2, 4], [8, 16])).toBe(31);
       expect(c1(1)([2, 4])).toBe(7);
     });
+
     it('throws with empty invocations', () => {
       expect(() => c1(1)()([2, 4])).toThrowErrorMatchingSnapshot();
     });
+
     it('throws with too many args', () => {
       expect(() => c1(1)(2)([4, 8])).toThrowErrorMatchingSnapshot();
     });

@@ -7,6 +7,7 @@
  */
 
 import { IterableIterator } from './iterable-iterator';
+
 export class IteratorProxy extends IterableIterator {
   constructor(iterator) {
     super();
@@ -16,16 +17,11 @@ export class IteratorProxy extends IterableIterator {
 
   next() {
     const item = this.__iterator.next();
-
     if (item.done || this.__done) {
-      const doneItem = {
-        value: this.__done ? undefined : item.value,
-        done: true,
-      };
+      const doneItem = { value: this.__done ? undefined : item.value, done: true };
       this.__done = true;
       return doneItem;
     }
-
     return item;
   }
 
@@ -33,26 +29,21 @@ export class IteratorProxy extends IterableIterator {
     const iterator = this.__iterator;
     const done = this.__done;
     this.__done = true;
+
     if (typeof iterator.return === 'function' && !done) iterator.return();
-    return {
-      value,
-      done: true,
-    };
+
+    return { value, done: true };
   }
 
   throw() {
     const iterator = this.__iterator;
-
     if (typeof iterator.throw === 'function') {
       const item = iterator.throw();
       this.__done = item.done;
       return item;
     } else {
       this.__done = true;
-      return {
-        value: undefined,
-        done: true,
-      };
+      return { value: undefined, done: true };
     }
   }
 }

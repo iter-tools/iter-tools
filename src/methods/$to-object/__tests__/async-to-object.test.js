@@ -10,6 +10,7 @@
 
 import { asyncToObject } from '../../..';
 import { asyncWrap } from '../../../__tests__/__framework__/async-wrap';
+
 describe('asyncToObject', () => {
   it('turns an iterable into an object', async () => {
     expect(

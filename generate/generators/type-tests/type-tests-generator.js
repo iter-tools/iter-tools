@@ -1,5 +1,6 @@
 'use strict';
 
+const fs = require('fs');
 const { dirname, basename, join, relative, resolve } = require('path');
 const babel = require('@babel/core');
 const prettier = require('prettier');
@@ -20,7 +21,18 @@ class TypeTestsGenerator extends BaseGenerator {
     let content;
     const generatedFrom = relative(dirname(destPath), testPath);
     try {
-      const { code: impl } = babel.transformFileSync(testPath, {
+      let file = fs.readFileSync(testPath, 'utf8');
+
+      // We will need a more generic way of handling this in the future.
+      if (file.startsWith('/**\n * @generated')) {
+        file = file
+          .split('\n')
+          .slice(7)
+          .join('\n');
+      }
+
+      const { code: impl } = babel.transformSync(file, {
+        filename: testPath,
         configFile: this.getBabelConfigPath(),
       });
 

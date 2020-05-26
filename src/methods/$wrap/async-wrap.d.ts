@@ -7,5 +7,7 @@
  */
 
 import { AsyncSourceIterable, AsyncResultIterable } from '../../types/async-iterable';
+
 declare function asyncWrap<T>(source: AsyncSourceIterable<T>): AsyncResultIterable<T>;
+
 export default asyncWrap;

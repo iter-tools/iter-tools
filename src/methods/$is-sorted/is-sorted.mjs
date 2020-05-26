@@ -8,6 +8,7 @@
 
 import { iterableCurry } from '../../internal/iterable';
 import defaultCompare from '../../internal/compare';
+
 export function isSorted(iterable, comparator = defaultCompare) {
   let a;
   let b;
@@ -16,6 +17,7 @@ export function isSorted(iterable, comparator = defaultCompare) {
 
   try {
     iter = iterable[Symbol.iterator]();
+
     ({ done, value: b } = iter.next());
 
     while (!done) {
@@ -26,7 +28,6 @@ export function isSorted(iterable, comparator = defaultCompare) {
         return false;
       }
     }
-
     return true;
   } finally {
     if (!done && typeof iter.return === 'function') {
@@ -34,6 +35,7 @@ export function isSorted(iterable, comparator = defaultCompare) {
     }
   }
 }
+
 export default iterableCurry(isSorted, {
   reduces: true,
   minArgs: 0,

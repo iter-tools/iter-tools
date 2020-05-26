@@ -7,15 +7,20 @@
  */
 
 import assert from 'static-type-assert';
+
 import { AsyncIterable, AsyncResultIterable } from '../../../types/async-iterable';
 import { asyncFilter } from '../../..';
+
 declare const Ø: never;
+
 assert<AsyncResultIterable<string>>(
   asyncFilter(Ø as (item: string | number) => item is string, Ø as AsyncIterable<string | number>),
 );
+
 assert<AsyncResultIterable<number>>(
   asyncFilter(Ø as (item: string | number) => item is number, Ø as AsyncIterable<string | number>),
 );
+
 assert<AsyncResultIterable<0>>(
   asyncFilter(Ø as (item: string | number) => item is 0, Ø as AsyncIterable<string | number>),
 );

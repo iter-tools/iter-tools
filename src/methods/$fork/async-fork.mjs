@@ -11,6 +11,7 @@ import { Exchange } from './internal/exchange';
 
 function fetch(state) {
   const { exchange, iterator } = state;
+
   return new Promise((resolve, reject) => {
     iterator
       .next()
@@ -40,7 +41,6 @@ async function* generateFork(state, consumer) {
   try {
     state.iterableCounter++;
     yield 'ensure finally';
-
     while (true) {
       if (!consumer.isEmpty()) {
         yield consumer.shift();
@@ -61,14 +61,13 @@ function* generateForks(state, n) {
 
   try {
     for (let counter = 0; counter < n; counter++) {
-      const fork = generateFork(state, exchange.spawnConsumerAtRoot()); // this first call to "next" allows to initiate the function generator
+      const fork = generateFork(state, exchange.spawnConsumerAtRoot());
+      // this first call to "next" allows to initiate the function generator
       // this ensures that "iterableCounter" will be always increased and decreased
       //
       // the default behaviour of a generator is that finally clause is only called
       // if next was called at least once
-
       fork.next(); // ensure finally
-
       yield fork;
     }
   } finally {
@@ -85,8 +84,10 @@ export function asyncFork(source, n = Infinity) {
     done: false,
     doneValue: undefined,
   };
+
   return generateForks(state, n);
 }
+
 export default function curriedFork(...args) {
   if (args.length >= 2) {
     const [n, iterable] = args;

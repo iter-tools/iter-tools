@@ -8,21 +8,20 @@
 
 import { iterableCurry } from '../../internal/iterable';
 import { map } from '../$map/map';
+
 export function* zipAll(sources, { filler } = {}) {
   const iters = sources.map(arg => arg[Symbol.iterator]());
-  const itersDone = iters.map(iter => ({
-    done: false,
-    iter,
-  }));
+  const itersDone = iters.map(iter => ({ done: false, iter }));
 
   try {
     while (true) {
       const results = map(iters, iter => iter.next());
       const syncResults = results;
+
       const zipped = new Array(iters.length);
+
       let i = 0;
       let allDone = true;
-
       for (const { value, done } of syncResults) {
         allDone = allDone && done;
         itersDone[i].done = done;
@@ -39,6 +38,7 @@ export function* zipAll(sources, { filler } = {}) {
     }
   }
 }
+
 export default iterableCurry(zipAll, {
   variadic: true,
   minArgs: 0,

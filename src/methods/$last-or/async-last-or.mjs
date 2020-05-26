@@ -7,6 +7,7 @@
  */
 
 import { asyncIterableCurry } from '../../internal/async-iterable';
+
 export async function asyncLastOr(iterable, whenEmpty) {
   let _item = whenEmpty;
 
@@ -16,6 +17,7 @@ export async function asyncLastOr(iterable, whenEmpty) {
 
   return _item;
 }
+
 export default asyncIterableCurry(asyncLastOr, {
   reduces: true,
 });

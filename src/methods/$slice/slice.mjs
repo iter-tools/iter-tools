@@ -20,14 +20,12 @@ function bufferedSlice(source, start, end, step) {
   }
 
   let newEnd;
-
   if (isFinite(end) && end > 0) {
     newEnd = end - (counter - buffer.size);
     if (newEnd < 0) return [];
   } else {
     newEnd = end;
   }
-
   return simpleSlice(buffer, 0, newEnd, step);
 }
 
@@ -46,7 +44,6 @@ export function* simpleSlice(source, start, end, step = 1) {
     if (buffer) {
       item = buffer.push(item);
       counter++;
-
       if (counter <= bufferSize) {
         continue;
       }
@@ -60,10 +57,10 @@ export function* simpleSlice(source, start, end, step = 1) {
       yield item;
       nextValidPos += step;
     }
-
     currentPos++;
   }
 }
+
 export function* slice(source, start, end, step = 1) {
   if (start >= 0) {
     yield* simpleSlice(source, start, end, step);
@@ -71,11 +68,11 @@ export function* slice(source, start, end, step = 1) {
     yield* bufferedSlice(source, start, end, step);
   }
 }
+
 export default iterableCurry(slice, {
   validateArgs(args) {
     let [optsOrStart = 0, end = Infinity, step = 1] = args;
     let start = typeof optsOrStart === 'number' ? optsOrStart : undefined;
-
     if (optsOrStart && typeof optsOrStart === 'object') {
       ({ start = 0, end = Infinity, step = 1 } = optsOrStart);
     }
@@ -96,7 +93,6 @@ export default iterableCurry(slice, {
     args[1] = end;
     args[2] = step;
   },
-
   optionalArgsAtEnd: true,
   minArgs: 0,
   maxArgs: 3,

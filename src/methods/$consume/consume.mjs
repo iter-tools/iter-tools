@@ -7,6 +7,7 @@
  */
 
 import { iterableCurry } from '../../internal/iterable';
+
 let warnedCallbackDeprecation = false;
 
 const warnCallbackDeprecation = () => {
@@ -21,16 +22,15 @@ const warnCallbackDeprecation = () => {
 
 export function consume(iterable, callback = () => {}) {
   let c = 0;
-
   for (const item of iterable) {
     callback(item, c++);
   }
 }
+
 export default iterableCurry(consume, {
   reduces: true,
   minArgs: 0,
   maxArgs: 1,
-
   validateArgs(args) {
     if (typeof args[0] === 'function') {
       warnCallbackDeprecation();

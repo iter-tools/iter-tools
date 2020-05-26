@@ -7,11 +7,14 @@
  */
 
 import { AsyncSourceIterable, AsyncResultIterable } from '../../types/async-iterable';
+
 declare function asyncPrepend<T, V>(
   value: V,
   source: AsyncSourceIterable<T>,
 ): AsyncResultIterable<V | T>;
+
 declare function asyncPrepend<V>(
   value: V,
 ): <T>(source: AsyncSourceIterable<T>) => AsyncResultIterable<V | T>;
+
 export default asyncPrepend;

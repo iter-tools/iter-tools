@@ -7,6 +7,7 @@
  */
 
 import { iterableCurry } from '../../internal/iterable';
+
 export function lastOr(iterable, whenEmpty) {
   let _item = whenEmpty;
 
@@ -16,6 +17,7 @@ export function lastOr(iterable, whenEmpty) {
 
   return _item;
 }
+
 export default iterableCurry(lastOr, {
   reduces: true,
 });

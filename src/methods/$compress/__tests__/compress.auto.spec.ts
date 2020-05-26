@@ -6,7 +6,10 @@
  * More information can be found in CONTRIBUTING.md
  */
 
+/* eslint-disable no-unused-vars,import/no-duplicates,no-constant-condition */
+
 import { compress, toArray, range } from '../../..';
+
 describe('compress', () => {
   it('compress iterables', () => {
     const iter = compress(range(10), [false, true, false, true, true]);

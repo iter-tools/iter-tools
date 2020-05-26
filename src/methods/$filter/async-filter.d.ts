@@ -7,18 +7,23 @@
  */
 
 import { AsyncSourceIterable, AsyncResultIterable } from '../../types/async-iterable';
+
 declare function asyncFilter<S extends T, T>(
   predicate: (item: T, i: number) => item is S,
 ): (source: AsyncSourceIterable<T>) => AsyncResultIterable<S>;
+
 declare function asyncFilter<T>(
   predicate: (item: T, i: number) => boolean | Promise<boolean>,
 ): (source: AsyncSourceIterable<T>) => AsyncResultIterable<T>;
+
 declare function asyncFilter<S extends T, T>(
   predicate: (item: T, i: number) => item is S,
   source: AsyncSourceIterable<T>,
 ): AsyncResultIterable<S>;
+
 declare function asyncFilter<T>(
   predicate: (item: T, i: number) => boolean | Promise<boolean>,
   source: AsyncSourceIterable<T>,
 ): AsyncResultIterable<T>;
+
 export default asyncFilter;

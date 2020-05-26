@@ -6,7 +6,10 @@
  * More information can be found in CONTRIBUTING.md
  */
 
+/* eslint-disable no-unused-vars,import/no-duplicates,no-constant-condition */
+
 import { asyncPrepend, asyncToArray, asyncWrap } from '../../..';
+
 describe('asyncPrepend', () => {
   it('prepends a value', async () => {
     expect(await asyncToArray(asyncPrepend(1, asyncWrap([2, 3])))).toEqual([1, 2, 3]);

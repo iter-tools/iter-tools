@@ -8,7 +8,9 @@
 
 import assert from 'static-type-assert';
 import { asyncSize } from '../../..';
+
 declare const Ø: never;
+
 assert<Promise<4>>(asyncSize(Ø as [0, 1, 2, 3]));
 assert<Promise<0 | 1 | 2>>(asyncSize(Ø as [] | [number] | [number, number]));
 assert<Promise<number>>(asyncSize(Ø as Array<number>));

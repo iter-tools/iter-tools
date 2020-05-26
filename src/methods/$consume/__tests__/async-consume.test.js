@@ -9,6 +9,7 @@
 /* eslint-disable no-unused-vars,import/no-duplicates,no-constant-condition */
 
 import { asyncConsume } from '../../..';
+
 describe('asyncConsume', () => {
   it('consumes an iterable', async () => {
     const arr: Array<number> = [];

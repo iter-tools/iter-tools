@@ -10,6 +10,7 @@
 
 import { asyncFirst } from '../../..';
 import { asyncWrap } from '../../../__tests__/__framework__/async-wrap';
+
 describe('asyncFirst', () => {
   describe('when iterable is empty', () => {
     it('returns undefined', async () => {
@@ -18,6 +19,7 @@ describe('asyncFirst', () => {
       expect(await asyncFirst(asyncWrap([]))).toBe(undefined);
     });
   });
+
   describe('when iterable contains values', () => {
     it('returns first value', async () => {
       expect(await asyncFirst(asyncWrap([1, 2, 3]))).toBe(1);

@@ -20,7 +20,6 @@ class InterleaveBuffer {
 
   take() {
     const next = this._next;
-
     if (!next.done) {
       this._next = this._iterator.next();
       this.index++;

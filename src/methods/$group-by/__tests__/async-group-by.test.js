@@ -10,6 +10,7 @@
 
 import { asyncGroupBy } from '../../..';
 import { asyncUnwrapDeep as asyncUw } from '../../../__tests__/async-helpers';
+
 describe('asyncGroupBy', () => {
   it('returns source values grouped by key function', async () => {
     const iter = asyncGroupBy(item => item.toLowerCase(), 'AaaBbaACccCD');
@@ -26,6 +27,7 @@ describe('asyncGroupBy', () => {
     next = await iter.next();
     expect(next.done).toBe(true);
   });
+
   it('main cursor (curried)', async () => {
     const iter = asyncGroupBy(_ => _)('AAABBAACCCCD');
     let next = await iter.next();
@@ -41,6 +43,7 @@ describe('asyncGroupBy', () => {
     next = await iter.next();
     expect(next.done).toBe(true);
   });
+
   it('returns source values grouped by key function', async () => {
     const iter = asyncGroupBy(item => item.toLowerCase(), 'AaaBbaACccCD');
     expect(await asyncUw(iter)).toEqual([
@@ -51,6 +54,7 @@ describe('asyncGroupBy', () => {
       ['d', ['D']],
     ]);
   });
+
   it('returns source values grouped by identity', async () => {
     const iter = asyncGroupBy(_ => _)('AAABBAACCCCD');
     expect(await asyncUw(iter)).toEqual([
@@ -61,12 +65,14 @@ describe('asyncGroupBy', () => {
       ['D', ['D']],
     ]);
   });
+
   it('empty source returns empty iterable', async () => {
     expect(await asyncUw(asyncGroupBy(_ => _, null))).toEqual([]);
     expect(await asyncUw(asyncGroupBy(_ => _)(null))).toEqual([]);
     expect(await asyncUw(asyncGroupBy(_ => _, undefined))).toEqual([]);
     expect(await asyncUw(asyncGroupBy(_ => _)(undefined))).toEqual([]);
   });
+
   it('uses key function returning a promise', async () => {
     const iter = asyncGroupBy(async item => item.toLowerCase(), 'AaaBbaACccCD');
     let next = await iter.next();
@@ -82,6 +88,7 @@ describe('asyncGroupBy', () => {
     next = await iter.next();
     expect(next.done).toBe(true);
   });
+
   it('with key function', async () => {
     const iter = asyncGroupBy(async item => item.toLowerCase(), 'AaaBbaACccCD');
     expect(await asyncUw(iter)).toEqual([

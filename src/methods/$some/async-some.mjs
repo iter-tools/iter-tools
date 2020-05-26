@@ -7,17 +7,15 @@
  */
 
 import { asyncIterableCurry } from '../../internal/async-iterable';
+
 export async function asyncSome(iterable, func) {
   let c = 0;
-
   for await (const item of iterable) {
     if (await func(item, c++)) {
       return true;
     }
   }
-
   return false;
 }
-export default asyncIterableCurry(asyncSome, {
-  reduces: true,
-});
+
+export default asyncIterableCurry(asyncSome, { reduces: true });

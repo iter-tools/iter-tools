@@ -6,12 +6,16 @@
  * More information can be found in CONTRIBUTING.md
  */
 
+/* eslint-disable no-unused-vars,import/no-duplicates,no-constant-condition */
+
 import { AsyncIterable } from '../../../types/async-iterable';
 import { asyncInterleave, AsyncInterleaveBuffer, asyncToArray } from '../../..';
+
 describe('asyncInterleave', () => {
   const a = [1, 2, 3];
   const b = [4, 5, 6];
   const c = [7, 8, 9];
+
   it('can be used to implement a round robin interleave', async () => {
     const roundRobin = asyncInterleave(async function*(
       canTakeAny: () => Promise<AsyncInterleaveBuffer<number> | null>,
@@ -25,10 +29,13 @@ describe('asyncInterleave', () => {
         if (await c.canTake()) yield await c.take();
       }
     });
+
     expect(await asyncToArray(roundRobin(a, b, c))).toEqual([1, 4, 7, 2, 5, 8, 3, 6, 9]);
   });
+
   it('can be passed options for the generator', async () => {
     const options = {};
+
     expect.assertions(1);
     await asyncToArray(
       asyncInterleave(

@@ -8,14 +8,18 @@
 
 import { ResultIterable as SyncResultIterable } from '../../types/iterable';
 import { AsyncSourceIterable, AsyncResultIterable } from '../../types/async-iterable';
+
 declare function asyncFork<T>(
   source: AsyncSourceIterable<T>,
 ): SyncResultIterable<AsyncResultIterable<T>>;
+
 declare function asyncFork<T>(
   n: number,
 ): (source: AsyncSourceIterable<T>) => SyncResultIterable<AsyncResultIterable<T>>;
+
 declare function asyncFork<T>(
   n: number,
   source: AsyncSourceIterable<T>,
 ): SyncResultIterable<AsyncResultIterable<T>>;
+
 export default asyncFork;

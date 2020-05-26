@@ -7,27 +7,24 @@
  */
 
 import { iterableCurry } from '../../internal/iterable';
+
 import { interleave } from '../$interleave/interleave';
 
 function* byPosition({ start, step }, canTakeAny, ...buffers) {
   start = start % buffers.length;
-
   for (let i = start; canTakeAny(); i = (i + step) % buffers.length) {
     if (buffers[i].canTake()) yield buffers[i].take();
   }
 }
 
 export function roundRobin(sources, start = 0, step = 1) {
-  return interleave(sources, byPosition, {
-    start,
-    step,
-  });
+  return interleave(sources, byPosition, { start, step });
 }
+
 export default iterableCurry(roundRobin, {
   variadic: true,
   minArgs: 0,
   maxArgs: 2,
-
   validateArgs(args) {
     if (args[1] && typeof args[1] === 'object') {
       const { start, step } = args[1];

@@ -10,47 +10,34 @@
 
 import { unwrapDeep as uw } from '../../../__tests__/helpers';
 import { leadingWindow } from '../../..';
+
 describe('leadingWindow', () => {
   it('frames iterable', () => {
     const result = [[1, 2, 3], [2, 3, 4], [3, 4, 5], [4, 5, undefined], [5, undefined, undefined]];
+
     expect(uw(leadingWindow(3, [1, 2, 3, 4, 5]))).toEqual(result);
-    const opts: any = {
-      size: 3,
-    };
+    const opts: any = { size: 3 };
     expect(uw(leadingWindow(opts, [1, 2, 3, 4, 5]))).toEqual(result);
   });
+
   it('frames iterable', () => {
     const result = [[1, 2, 3], [2, 3, 4], [3, 4, 5], [4, 5, 'x'], [5, 'x', 'x']];
-    expect(
-      uw(
-        leadingWindow(
-          3,
-          {
-            filler: 'x',
-          },
-          [1, 2, 3, 4, 5],
-        ),
-      ),
-    ).toEqual(result);
-    const opts: any = {
-      size: 3,
-      filler: 'x',
-    };
+
+    expect(uw(leadingWindow(3, { filler: 'x' }, [1, 2, 3, 4, 5]))).toEqual(result);
+    const opts: any = { size: 3, filler: 'x' };
     expect(uw(leadingWindow(opts, [1, 2, 3, 4, 5]))).toEqual(result);
   });
+
   it('can have separate size and options arguments', () => {
-    expect(
-      uw(
-        leadingWindow(
-          3,
-          {
-            filler: 'x',
-          },
-          [1, 2, 3, 4, 5],
-        ),
-      ),
-    ).toEqual([[1, 2, 3], [2, 3, 4], [3, 4, 5], [4, 5, 'x'], [5, 'x', 'x']]);
+    expect(uw(leadingWindow(3, { filler: 'x' }, [1, 2, 3, 4, 5]))).toEqual([
+      [1, 2, 3],
+      [2, 3, 4],
+      [3, 4, 5],
+      [4, 5, 'x'],
+      [5, 'x', 'x'],
+    ]);
   });
+
   it('frames iterable (leadingWindow equal to the sequence)', () => {
     expect(uw(leadingWindow(5, [1, 2, 3, 4, 5]))).toEqual([
       [1, 2, 3, 4, 5],
@@ -60,6 +47,7 @@ describe('leadingWindow', () => {
       [5, undefined, undefined, undefined, undefined],
     ]);
   });
+
   it('frames iterable (leadingWindow bigger than the sequence)', () => {
     expect(uw(leadingWindow(6, [1, 2, 3, 4, 5]))).toEqual([
       [1, 2, 3, 4, 5, undefined],
@@ -69,18 +57,9 @@ describe('leadingWindow', () => {
       [5, undefined, undefined, undefined, undefined, undefined],
     ]);
   });
+
   it('frames iterable (leadingWindow bigger than the sequence) with filler', () => {
-    expect(
-      uw(
-        leadingWindow(
-          6,
-          {
-            filler: 'x',
-          },
-          [1, 2, 3, 4, 5],
-        ),
-      ),
-    ).toEqual([
+    expect(uw(leadingWindow(6, { filler: 'x' }, [1, 2, 3, 4, 5]))).toEqual([
       [1, 2, 3, 4, 5, 'x'],
       [2, 3, 4, 5, 'x', 'x'],
       [3, 4, 5, 'x', 'x', 'x'],
@@ -88,6 +67,7 @@ describe('leadingWindow', () => {
       [5, 'x', 'x', 'x', 'x', 'x'],
     ]);
   });
+
   it('frames iterable (leadingWindow bigger than the sequence) 2', () => {
     expect(uw(leadingWindow(7, [1, 2, 3, 4, 5]))).toEqual([
       [1, 2, 3, 4, 5, undefined, undefined],

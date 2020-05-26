@@ -7,11 +7,14 @@
  */
 
 import { AsyncSourceIterable, AsyncResultIterable } from '../../types/async-iterable';
+
 declare function asyncSplitOnSubseq(
   separatorSubseq: AsyncSourceIterable<any>,
 ): <T>(source: AsyncSourceIterable<T>) => AsyncResultIterable<AsyncResultIterable<T>>;
+
 declare function asyncSplitOnSubseq<T>(
   separatorSubseq: AsyncSourceIterable<any>,
   source: AsyncSourceIterable<T>,
 ): AsyncResultIterable<AsyncResultIterable<T>>;
+
 export default asyncSplitOnSubseq;

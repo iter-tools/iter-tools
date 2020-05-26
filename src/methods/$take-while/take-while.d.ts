@@ -7,11 +7,14 @@
  */
 
 import { SourceIterable, ResultIterable } from '../../types/iterable';
+
 declare function takeWhile<T>(
   func: (item: T, i: number) => boolean,
 ): (source: SourceIterable<T>) => ResultIterable<T>;
+
 declare function takeWhile<T>(
   func: (item: T, i: number) => boolean,
   source: SourceIterable<T>,
 ): ResultIterable<T>;
+
 export default takeWhile;

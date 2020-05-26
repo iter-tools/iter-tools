@@ -6,8 +6,11 @@
  * More information can be found in CONTRIBUTING.md
  */
 
+/* eslint-disable no-unused-vars,import/no-duplicates,no-constant-condition */
+
 import { asyncIsEmpty } from '../../..';
 import { asyncWrap } from '../../../__tests__/__framework__/async-wrap';
+
 describe('asyncIsEmpty', () => {
   describe('when iterable is empty', () => {
     it('returns true', async () => {
@@ -16,6 +19,7 @@ describe('asyncIsEmpty', () => {
       expect(await asyncIsEmpty(asyncWrap([]))).toBe(true);
     });
   });
+
   describe('when iterable contains values', () => {
     it('returns false', async () => {
       expect(await asyncIsEmpty(asyncWrap([1, 2, 3]))).toBe(false);

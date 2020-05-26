@@ -15,6 +15,7 @@ function toAnySubseq({ any, subseq }, value) {
   const subseqs = toArray(
     map(values, value => (subseq ? (typeof value === 'string' ? value : toArray(value)) : [value])),
   );
+
   return subseqs;
 }
 

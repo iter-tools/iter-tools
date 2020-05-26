@@ -7,9 +7,11 @@
  */
 
 import { SourceIterable } from '../../types/iterable';
+
 declare function toObject<V>(
   source: SourceIterable<[string, V]>,
 ): {
   [key: string]: V;
 };
+
 export default toObject;

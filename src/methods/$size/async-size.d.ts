@@ -7,7 +7,9 @@
  */
 
 import { AsyncSourceIterable } from '../../types/async-iterable';
+
 declare function asyncSize<Iter extends AsyncSourceIterable<any>>(
   iterable: Iter,
 ): Promise<Iter extends any[] ? Iter['length'] : number>;
+
 export default asyncSize;

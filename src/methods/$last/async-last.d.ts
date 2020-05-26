@@ -7,5 +7,7 @@
  */
 
 import { AsyncSourceIterable } from '../../types/async-iterable';
+
 declare function asyncLast<T>(iterable: AsyncSourceIterable<T>): Promise<T | undefined>;
+
 export default asyncLast;

@@ -7,11 +7,12 @@
  */
 
 import { asyncIterableCurry } from '../../internal/async-iterable';
+
 export async function* asyncMap(source, func) {
   let c = 0;
-
   for await (const item of source) {
     yield await func(item, c++);
   }
 }
+
 export default asyncIterableCurry(asyncMap);

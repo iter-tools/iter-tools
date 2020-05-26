@@ -6,8 +6,11 @@
  * More information can be found in CONTRIBUTING.md
  */
 
+/* eslint-disable no-unused-vars,import/no-duplicates,no-constant-condition */
+
 import { splitAt, toArray } from '../../..';
 import { range } from '../../../__tests__/range';
+
 describe('splitAt', () => {
   describe('with 0 index', () => {
     it('when all values are in second part', () => {
@@ -15,81 +18,91 @@ describe('splitAt', () => {
       expect([first, second]).toEqual([[], [0, 1, 2, 3, 4, 5]]);
     });
   });
+
   describe('with positive index', () => {
     it('works when the halves are consumed in order', () => {
       const [[...first], [...second]] = splitAt(3, range(0, 6));
       expect([first, second]).toEqual([[0, 1, 2], [3, 4, 5]]);
     });
+
     it('works when the source is exhuasted while the first half is being consumed', () => {
       const [[...first], [...second]] = splitAt(3, range(0, 2));
       expect([first, second]).toEqual([[0, 1], []]);
     });
+
     it('works when the source is exhuasted while the second half is being consumed', () => {
       const [[...first], [...second]] = splitAt(3, range(0, 4));
       expect([first, second]).toEqual([[0, 1, 2], [3]]);
     });
   });
+
   describe('with negative index', () => {
     it('works when the halves are consumed in order', () => {
       const [[...first], [...second]] = splitAt(-3, range(0, 6));
       expect([first, second]).toEqual([[0, 1, 2], [3, 4, 5]]);
     });
+
     it('all values are in the first part when |index| is larger than source size', () => {
       const [[...first], [...second]] = splitAt(-3, range(0, 2));
       expect([first, second]).toEqual([[0, 1], []]);
     });
   });
+
   describe('with positive index', () => {
     it('works when the halves are consumed in order', () => {
       const [first, second] = splitAt(3, range(0, 6));
       expect([toArray(first), toArray(second)]).toEqual([[0, 1, 2], [3, 4, 5]]);
     });
+
     it('works when the source is exhuasted while the first half is being consumed', () => {
       const [first, second] = splitAt(3, range(0, 2));
       expect([toArray(first), toArray(second)]).toEqual([[0, 1], []]);
     });
+
     it('works when the source is exhuasted while the second half is being consumed', () => {
       const [first, second] = splitAt(3, range(0, 4));
       expect([toArray(first), toArray(second)]).toEqual([[0, 1, 2], [3]]);
     });
   });
+
   describe('with negative index', () => {
     it('works when the halves are consumed in order', () => {
       const [first, second] = splitAt(-3, range(0, 6));
       expect([toArray(first), toArray(second)]).toEqual([[0, 1, 2], [3, 4, 5]]);
     });
+
     it('all values are in the first part when |index| is larger than source size', () => {
       const [first, second] = splitAt(-3, range(0, 2));
       expect([toArray(first), toArray(second)]).toEqual([[0, 1], []]);
     });
   });
+
   it('allows only the second half to being consumed', () => {
     const [, second] = splitAt(3, range(0, 6));
     expect(toArray(second)).toEqual([3, 4, 5]);
   });
+
   it('throws if only the first half is taken', () => {
     let error;
-
     try {
       const [first] = splitAt(3, range(0, 6));
       toArray(first);
     } catch (e) {
       error = e;
     }
-
     expect(error).toMatchSnapshot();
   });
+
   it('throws when the second half is consumed before the first', () => {
     const [first, second] = splitAt(3, range(0, 6));
     expect(toArray(second)).toEqual([3, 4, 5]);
-    let error;
 
+    let error;
     try {
       toArray(first);
     } catch (e) {
       error = e;
     }
-
     expect(error).toMatchSnapshot();
   });
 });

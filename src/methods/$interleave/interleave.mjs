@@ -9,6 +9,7 @@
 import { ensureIterable, iterableCurry } from '../../internal/iterable';
 import InterleaveBuffer from './internal/buffer';
 import makeCanTakeAny from './internal/can-take-any';
+
 export function* interleave(sources, generateInterleaved, options) {
   const buffers = sources.map(
     (iterable, i) => new InterleaveBuffer(ensureIterable(iterable)[Symbol.iterator](), i),
@@ -16,6 +17,7 @@ export function* interleave(sources, generateInterleaved, options) {
 
   try {
     const canTakeAny = makeCanTakeAny(buffers);
+
     yield* options !== undefined
       ? generateInterleaved(options, canTakeAny, ...buffers)
       : generateInterleaved(canTakeAny, ...buffers);
@@ -27,6 +29,7 @@ export function* interleave(sources, generateInterleaved, options) {
     }
   }
 }
+
 export default iterableCurry(interleave, {
   variadic: true,
   optionalArgsAtEnd: true,

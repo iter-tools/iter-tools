@@ -8,18 +8,19 @@
 
 import { iterableCurry } from '../../internal/iterable';
 import { CircularBuffer, ReadOnlyCircularBuffer } from '../../internal/circular-buffer';
+
 export function* window(source, size) {
   const buffer = new CircularBuffer(size);
   const bufferReadProxy = new ReadOnlyCircularBuffer(buffer);
 
   for (const item of source) {
     buffer.push(item);
-
     if (buffer.isFull()) {
       yield bufferReadProxy;
     }
   }
 }
+
 export default iterableCurry(window, {
   validateArgs(args) {
     if (typeof args[0] !== 'number') {

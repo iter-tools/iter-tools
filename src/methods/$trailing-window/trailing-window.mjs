@@ -8,10 +8,13 @@
 
 import { iterableCurry } from '../../internal/iterable';
 import { CircularBuffer, ReadOnlyCircularBuffer } from '../../internal/circular-buffer';
+
 import { validateWindowArgs } from './internal/validate-window-args';
+
 export function* trailingWindow(source, size, { filler } = {}) {
   const buffer = new CircularBuffer(size);
   const bufferReadProxy = new ReadOnlyCircularBuffer(buffer);
+
   buffer.fill(filler);
 
   for (const item of source) {
@@ -19,6 +22,7 @@ export function* trailingWindow(source, size, { filler } = {}) {
     yield bufferReadProxy;
   }
 }
+
 export default iterableCurry(trailingWindow, {
   minArgs: 1,
   maxArgs: 2,

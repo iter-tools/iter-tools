@@ -7,17 +7,17 @@
  */
 
 import { iterableCurry } from '../../internal/iterable';
+
 export function findOr(iterable, notFoundValue, func) {
   let c = 0;
-
   for (const item of iterable) {
     if (func(item, c++)) {
       return item;
     }
   }
-
   return notFoundValue;
 }
+
 export default iterableCurry(findOr, {
   reduces: true,
 });

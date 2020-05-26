@@ -10,11 +10,11 @@
 
 import { AsyncPartsIterator, split } from '../async-spliterator';
 import { asyncWrap } from '../../__tests__/__framework__/async-wrap';
+
 describe('asyncSpliterator', () => {
   async function* asyncTestSpliterator() {
     const sourceIterator = asyncWrap(['first', 'second']);
     let sourceDone = false;
-
     try {
       yield (await sourceIterator.next()).value;
       yield split;
@@ -30,13 +30,16 @@ describe('asyncSpliterator', () => {
 
   async function* asyncTestSplit() {
     yield* new AsyncPartsIterator(asyncTestSpliterator());
-  } // The assertions in these tests are part of the cleanup defined by $wrap
+  }
+
+  // The assertions in these tests are part of the cleanup defined by $wrap
 
   it('source is cleaned up if no values are taken', async () => {
     const parts = asyncTestSplit();
     await parts.next();
     await parts.return();
   });
+
   it('source is cleaned up if part manager is closed then active part', async () => {
     const parts = asyncTestSplit();
     const part = (await parts.next()).value;
@@ -44,6 +47,7 @@ describe('asyncSpliterator', () => {
     await parts.return();
     await part.return();
   });
+
   it('source is cleaned up if active part is closed then part manager', async () => {
     const parts = asyncTestSplit();
     const part = (await parts.next()).value;
@@ -51,6 +55,7 @@ describe('asyncSpliterator', () => {
     await part.return();
     await parts.return();
   });
+
   it('source is cleaned up if active part is done then part manager is closed', async () => {
     const parts = asyncTestSplit();
     const part = (await parts.next()).value;
@@ -58,6 +63,7 @@ describe('asyncSpliterator', () => {
     await part.next();
     await parts.return();
   });
+
   it('source is cleaned up if part manager is closed then active part is done', async () => {
     const parts = asyncTestSplit();
     const part = (await parts.next()).value;
@@ -65,6 +71,7 @@ describe('asyncSpliterator', () => {
     await part.next();
     await part.next();
   });
+
   it('source is cleaned up if only parts are consumed', async () => {
     const parts = asyncTestSplit();
     await parts.next();

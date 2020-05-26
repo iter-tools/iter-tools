@@ -7,13 +7,13 @@
  */
 
 import { ensureIterable } from '../../internal/iterable';
+
 export function toArray(source) {
   const out = [];
-
   for (const item of ensureIterable(source)) {
     out.push(item);
   }
-
   return out;
 }
+
 export default toArray;

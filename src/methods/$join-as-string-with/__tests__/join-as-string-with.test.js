@@ -9,16 +9,20 @@
 /* eslint-disable no-unused-vars,import/no-duplicates,no-constant-condition */
 
 import { joinAsStringWith } from '../../..';
+
 describe('joinAsStringWith', () => {
   it('joins with the empty string', () => {
     expect(joinAsStringWith('', [['a'], ['b'], ['c']])).toBe('abc');
   });
+
   it('joins with specified separator', () => {
     expect(joinAsStringWith(' ', [['a'], ['b'], ['c']])).toBe('a b c');
   });
+
   it('joins an iterable of strings', () => {
     expect(joinAsStringWith(' ', ['a', 'b', 'c'])).toBe('a b c');
   });
+
   it('turns the empty iterable into the empty string', () => {
     expect(joinAsStringWith(' ', null)).toBe('');
   });

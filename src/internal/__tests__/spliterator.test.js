@@ -10,11 +10,11 @@
 
 import { PartsIterator, split } from '../spliterator';
 import { wrap } from '../../__tests__/__framework__/wrap';
+
 describe('spliterator', () => {
   function* testSpliterator() {
     const sourceIterator = wrap(['first', 'second']);
     let sourceDone = false;
-
     try {
       yield sourceIterator.next().value;
       yield split;
@@ -30,13 +30,16 @@ describe('spliterator', () => {
 
   function* testSplit() {
     yield* new PartsIterator(testSpliterator());
-  } // The assertions in these tests are part of the cleanup defined by $wrap
+  }
+
+  // The assertions in these tests are part of the cleanup defined by $wrap
 
   it('source is cleaned up if no values are taken', () => {
     const parts = testSplit();
     parts.next();
     parts.return();
   });
+
   it('source is cleaned up if part manager is closed then active part', () => {
     const parts = testSplit();
     const part = parts.next().value;
@@ -44,6 +47,7 @@ describe('spliterator', () => {
     parts.return();
     part.return();
   });
+
   it('source is cleaned up if active part is closed then part manager', () => {
     const parts = testSplit();
     const part = parts.next().value;
@@ -51,6 +55,7 @@ describe('spliterator', () => {
     part.return();
     parts.return();
   });
+
   it('source is cleaned up if active part is done then part manager is closed', () => {
     const parts = testSplit();
     const part = parts.next().value;
@@ -58,6 +63,7 @@ describe('spliterator', () => {
     part.next();
     parts.return();
   });
+
   it('source is cleaned up if part manager is closed then active part is done', () => {
     const parts = testSplit();
     const part = parts.next().value;
@@ -65,6 +71,7 @@ describe('spliterator', () => {
     part.next();
     part.next();
   });
+
   it('source is cleaned up if only parts are consumed', () => {
     const parts = testSplit();
     parts.next();

@@ -8,8 +8,6 @@
 
 export async function asyncConsumeIterator(iterator) {
   let item;
-
   while (!(item = await iterator.next()).done) {}
-
   return item;
 }

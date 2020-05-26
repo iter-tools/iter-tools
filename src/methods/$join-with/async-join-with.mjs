@@ -8,7 +8,9 @@
 
 import { asyncIterableCurry } from '../../internal/async-iterable';
 import { asyncJoinWithSubseq } from '../$join-with-subseq/async-join-with-subseq';
+
 export function asyncJoinWith(source, separator) {
   return asyncJoinWithSubseq(source, [separator]);
 }
+
 export default asyncIterableCurry(asyncJoinWith);

@@ -7,17 +7,15 @@
  */
 
 import { asyncIterableCurry } from '../../internal/async-iterable';
+
 export async function asyncEvery(iterable, predicate) {
   let c = 0;
-
   for await (const item of iterable) {
     if (!(await predicate(item, c++))) {
       return false;
     }
   }
-
   return true;
 }
-export default asyncIterableCurry(asyncEvery, {
-  reduces: true,
-});
+
+export default asyncIterableCurry(asyncEvery, { reduces: true });

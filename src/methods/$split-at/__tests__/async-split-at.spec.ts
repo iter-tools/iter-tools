@@ -7,13 +7,17 @@
  */
 
 import assert from 'static-type-assert';
+
 import { ResultIterable as SyncResultIterable } from '../../../types/iterable';
 import { AsyncIterable, AsyncResultIterable } from '../../../types/async-iterable';
 import { asyncSplitAt } from '../../..';
+
 declare const Ø: never;
+
 assert<SyncResultIterable<AsyncResultIterable<number>>>(
   asyncSplitAt(3, Ø as AsyncIterable<number>),
 );
+
 assert<SyncResultIterable<AsyncResultIterable<number>>>(
   asyncSplitAt(3)(Ø as AsyncIterable<number>),
 );

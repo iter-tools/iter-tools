@@ -17,6 +17,7 @@ async function toAnySubseq({ any, subseq }, value) {
       subseq ? (typeof value === 'string' ? value : asyncToArray(value)) : [value],
     ),
   );
+
   return subseqs;
 }
 

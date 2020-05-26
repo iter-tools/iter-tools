@@ -9,10 +9,10 @@
 import { iterableCurry } from '../../internal/iterable';
 import { zipAll } from '../$zip-all/zip-all';
 import { simpleSlice } from '../$slice/slice';
+
 const noItem = {};
-const zipAllConfig = {
-  filler: noItem,
-};
+const zipAllConfig = { filler: noItem };
+
 export function equal(iterables) {
   if (iterables.length <= 1) {
     return true;
@@ -22,7 +22,6 @@ export function equal(iterables) {
 
   for (const allItems of zipAll(wrappedIterables, zipAllConfig)) {
     const firstItem = allItems[0];
-
     for (const item of simpleSlice(allItems, 1, Infinity)) {
       if (item !== firstItem) {
         return false;
@@ -32,6 +31,7 @@ export function equal(iterables) {
 
   return true;
 }
+
 export default iterableCurry(equal, {
   reduces: true,
   variadic: true,

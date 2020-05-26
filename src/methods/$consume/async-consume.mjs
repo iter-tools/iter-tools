@@ -7,6 +7,7 @@
  */
 
 import { asyncIterableCurry } from '../../internal/async-iterable';
+
 let warnedCallbackDeprecation = false;
 
 const warnCallbackDeprecation = () => {
@@ -21,16 +22,15 @@ const warnCallbackDeprecation = () => {
 
 export async function asyncConsume(iterable, callback = () => {}) {
   let c = 0;
-
   for await (const item of iterable) {
     await callback(item, c++);
   }
 }
+
 export default asyncIterableCurry(asyncConsume, {
   reduces: true,
   minArgs: 0,
   maxArgs: 1,
-
   validateArgs(args) {
     if (typeof args[0] === 'function') {
       warnCallbackDeprecation();

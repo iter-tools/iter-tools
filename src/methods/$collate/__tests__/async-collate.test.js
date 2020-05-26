@@ -9,11 +9,13 @@
 /* eslint-disable no-unused-vars,import/no-duplicates,no-constant-condition */
 
 import { asyncCollate, asyncToArray } from '../../..';
+
 describe('asyncCollate', () => {
   it('output is sorted if passed a comparator', async () => {
     const iter = asyncCollate((a, b) => b - a, [1, 8, 9], [4, 6, 7], [2, 3, 5]);
     expect(await asyncToArray(iter)).toEqual([1, 2, 3, 4, 5, 6, 7, 8, 9]);
   });
+
   it('works with input iterables of different lengths', async () => {
     const iter = asyncCollate((a, b) => b - a, [], [2, 3], [1]);
     expect(await asyncToArray(iter)).toEqual([1, 2, 3]);

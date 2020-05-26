@@ -8,7 +8,9 @@
 
 import { asyncEnsureIterable } from '../../internal/async-iterable';
 import { asyncJoinAsStringWith } from '../$join-as-string-with/async-join-as-string-with';
+
 export function asyncJoinAsString(source) {
   return asyncJoinAsStringWith(asyncEnsureIterable(source), '');
 }
+
 export default asyncJoinAsString;

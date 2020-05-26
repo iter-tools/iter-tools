@@ -8,9 +8,11 @@
 
 import { iterableCurry } from '../../internal/iterable';
 import { map } from '../$map/map';
+
 export function* flatMap(source, func) {
   for (const item of map(source, func)) {
     yield* item;
   }
 }
+
 export default iterableCurry(flatMap);

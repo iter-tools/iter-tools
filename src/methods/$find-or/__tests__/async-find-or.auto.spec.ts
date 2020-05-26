@@ -6,8 +6,11 @@
  * More information can be found in CONTRIBUTING.md
  */
 
+/* eslint-disable no-unused-vars,import/no-duplicates,no-constant-condition */
+
 import { asyncFindOr } from '../../..';
 import { asyncWrap } from '../../../__tests__/__framework__/async-wrap';
+
 describe('asyncFindOr', () => {
   describe('when iterable is empty', () => {
     it('returns notFoundValue', async () => {
@@ -16,15 +19,18 @@ describe('asyncFindOr', () => {
       expect(await asyncFindOr(0, (item: never) => item, asyncWrap([]))).toBe(0);
     });
   });
+
   describe('when iterable does not contain the desired value', () => {
     it('returns notFoundValue', async () => {
       expect(await asyncFindOr(0, _ => false, asyncWrap([1, 2, 3, 4, 5, 6]))).toBe(0);
     });
   });
+
   describe('when iterable contains the desired value', () => {
     it('returns the value', async () => {
       expect(await asyncFindOr(0, item => item === 5, asyncWrap([1, 2, 3, 4, 5, 6]))).toBe(5);
     });
+
     it('the predicate may return a promise', async () => {
       expect(await asyncFindOr(0, async item => item === 5, asyncWrap([1, 2, 3, 4, 5, 6]))).toBe(5);
     });

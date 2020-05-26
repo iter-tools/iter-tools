@@ -8,6 +8,7 @@
 
 import { AsyncSourceIterable, AsyncResultIterable } from '../../types/async-iterable';
 import { ResultIterable as SyncResultIterable } from '../../types/iterable';
+
 declare function asyncTrailingWindow<T, Filler = undefined>(
   size: number,
   opts: {
@@ -15,17 +16,21 @@ declare function asyncTrailingWindow<T, Filler = undefined>(
   },
   source: AsyncSourceIterable<T>,
 ): AsyncResultIterable<SyncResultIterable<T | Filler>>;
+
 declare function asyncTrailingWindow<T>(
   size: number,
   source: AsyncSourceIterable<T>,
 ): AsyncResultIterable<SyncResultIterable<T | undefined>>;
+
 declare function asyncTrailingWindow(
   size: number,
   opts: {
     readonly filler: any;
   },
 ): <T>(source: AsyncSourceIterable<T>) => AsyncResultIterable<SyncResultIterable<T>>;
+
 declare function asyncTrailingWindow(
   size: number,
 ): <T>(source: AsyncSourceIterable<T>) => AsyncResultIterable<SyncResultIterable<T | undefined>>;
+
 export default asyncTrailingWindow;

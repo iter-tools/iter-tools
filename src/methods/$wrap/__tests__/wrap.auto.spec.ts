@@ -6,40 +6,35 @@
  * More information can be found in CONTRIBUTING.md
  */
 
+/* eslint-disable no-unused-vars,import/no-duplicates,no-constant-condition */
+
 import { wrap, toArray } from '../../..';
+
 describe('wrap', () => {
   it('returns an empty iterable when passed null or undefined', () => {
     expect(toArray(wrap(undefined))).toEqual([]);
     expect(toArray(wrap(null))).toEqual([]);
   });
+
   it('yields the same elements as its input iterable', () => {
     expect(toArray(wrap([1, 2, 3]))).toEqual([1, 2, 3]);
   });
+
   it('yields the same elements as its input iterable', () => {
     expect(toArray(wrap([1, 2, 3]))).toEqual([1, 2, 3]);
   });
+
   it('can be consumed multiple times if its input can', () => {
     const wrapped = wrap([1, 2, 3]);
     expect(toArray(wrapped)).toEqual([1, 2, 3]);
     expect(toArray(wrapped)).toEqual([1, 2, 3]);
   });
+
   it('can be consumed as an iterator', () => {
     const wrapped = wrap([1, 2, 3]);
-    expect(wrapped.next()).toEqual({
-      value: 1,
-      done: false,
-    });
-    expect(wrapped.next()).toEqual({
-      value: 2,
-      done: false,
-    });
-    expect(wrapped.next()).toEqual({
-      value: 3,
-      done: false,
-    });
-    expect(wrapped.next()).toEqual({
-      value: undefined,
-      done: true,
-    });
+    expect(wrapped.next()).toEqual({ value: 1, done: false });
+    expect(wrapped.next()).toEqual({ value: 2, done: false });
+    expect(wrapped.next()).toEqual({ value: 3, done: false });
+    expect(wrapped.next()).toEqual({ value: undefined, done: true });
   });
 });

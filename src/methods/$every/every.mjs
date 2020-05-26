@@ -7,17 +7,15 @@
  */
 
 import { iterableCurry } from '../../internal/iterable';
+
 export function every(iterable, predicate) {
   let c = 0;
-
   for (const item of iterable) {
     if (!predicate(item, c++)) {
       return false;
     }
   }
-
   return true;
 }
-export default iterableCurry(every, {
-  reduces: true,
-});
+
+export default iterableCurry(every, { reduces: true });

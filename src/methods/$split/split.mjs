@@ -20,4 +20,5 @@ export function split(source) {
     return map(source, item => iterableOf(item));
   }
 }
+
 export default split;

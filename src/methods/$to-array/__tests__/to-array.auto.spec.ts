@@ -6,8 +6,11 @@
  * More information can be found in CONTRIBUTING.md
  */
 
+/* eslint-disable no-unused-vars,import/no-duplicates,no-constant-condition */
+
 import { toArray } from '../../..';
 import { range } from '../../../__tests__/range';
+
 describe('toArray', () => {
   it('turns an iterable into an array', () => {
     expect(toArray(range(0, 3))).toEqual([0, 1, 2]);

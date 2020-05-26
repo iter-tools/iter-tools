@@ -7,10 +7,13 @@
  */
 
 import { asyncFirstOr } from '../$first-or/async-first-or';
+
 import { asyncIterableCurry } from '../../internal/async-iterable';
+
 export function asyncFirst(iterable) {
   return asyncFirstOr(iterable, undefined);
 }
+
 export default asyncIterableCurry(asyncFirst, {
   reduces: true,
 });
