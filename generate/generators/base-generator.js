@@ -4,12 +4,15 @@ const prettier = require('prettier');
 const { Generator } = require('macrome');
 
 class BaseGenerator extends Generator {
-  getPrettierOptions(filepath) {
-    return {
-      filepath,
-      ...prettier.resolveConfig.sync(this.resolve(filepath)),
-    };
+  write(path, content) {
+    this.macrome.write(
+      path,
+      prettier.format(content.toString(), {
+        filepath: path,
+        ...prettier.resolveConfig.sync(this.resolve(path)),
+      }),
+    );
   }
 }
 
-module.exports = BaseGenerator;
+module.exports = { BaseGenerator };

@@ -11,7 +11,7 @@ class MethodsGenerator extends BaseAsyncGenerator {
   constructor(macrome, options) {
     super(macrome, options);
 
-    this.glob = ['src/**/$*.js'];
+    this.included = ['src/**/$*.js'];
     this.ignored = [...this.ignored, '**/__tests__/**'];
   }
 

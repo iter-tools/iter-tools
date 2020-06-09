@@ -39,9 +39,12 @@ describe($`interleave`, () => {
       $await(
         $toArray(
           $interleave(
-            $async(function*(o: {}): $Iterable<any> {
-              expect(o).toBe(options);
-            }),
+            $async(
+              // eslint-disable-next-line require-yield
+              function*(o: {}): $Iterable<any> {
+                expect(o).toBe(options);
+              },
+            ),
             options,
             null,
           ),

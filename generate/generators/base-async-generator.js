@@ -1,14 +1,20 @@
 'use strict';
 
-const { dirname, relative, join, basename } = require('path');
+const { dirname, join, basename } = require('path');
 const babel = require('@babel/core');
-const prettier = require('prettier');
 const completeExtname = require('path-complete-extname');
-
-const BaseGenerator = require('./base-generator');
-const baseTemplate = require('./base-template');
+const { BaseGenerator } = require('./base-generator');
 
 class BaseAsyncGenerator extends BaseGenerator {
+  constructor(macrome, options) {
+    super(macrome, options);
+    this.hasTypes = false;
+  }
+
+  get ASYNC() {
+    return !!this.options.ASYNC;
+  }
+
   getDestPath(templatePath) {
     const dir = dirname(templatePath);
     const ext = completeExtname(templatePath);
@@ -21,21 +27,16 @@ class BaseAsyncGenerator extends BaseGenerator {
     return `${starMatch.slice(1)}${ext}`;
   }
 
-  generatePath(templatePath, destPath) {
-    const { ASYNC } = this.options;
+  generatePath({ ast, path }) {
+    const { ASYNC } = this;
 
-    const { code: impl } = babel.transformFileSync(this.resolve(templatePath), {
-      caller: { name: ASYNC ? 'generateAsync' : 'generateSync', ASYNC },
+    return babel.transformFromAstSync(ast, null, {
+      filename: path,
+      caller: { name: 'generate', ASYNC, hasTypes: this.hasTypes },
+      ast: true,
+      code: false,
       configFile: this.getBabelConfigPath(),
-    });
-
-    const templateOutput = this.applyTemplate(impl);
-
-    return prettier.format(templateOutput, this.getPrettierOptions(destPath));
-  }
-
-  applyTemplate(source) {
-    return baseTemplate(source);
+    }).ast;
   }
 
   static getBabelConfig() {

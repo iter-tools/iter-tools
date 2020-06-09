@@ -17,7 +17,7 @@ class ApiMdGenerator extends Generator {
 
     this.docsChanged = this.debounce(this.docsChanged);
 
-    this.glob = [
+    this.included = [
       'src/methods/*/{README.md,README.async.md,README.parallel.md,DOCME.json}',
       'src/methods/*/*.{js,mjs}',
     ];

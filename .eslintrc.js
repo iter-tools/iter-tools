@@ -30,16 +30,9 @@ module.exports = {
       },
     },
     {
-      files: ['src/methods/$interleave/**/*'],
-      rules: {
-        'require-yield': 'off',
-      },
-    },
-    {
       files: ['$*.js'],
       rules: {
         'no-unused-expressions': 'off',
-        'jest/valid-describe': 'off',
       },
     },
     {
@@ -49,6 +42,7 @@ module.exports = {
         jest: true,
       },
       rules: {
+        'jest/valid-describe': 'off',
         'jest/no-focused-tests': 'error',
         'jest/no-identical-title': 'off', // TODO stop suppressing these
       },

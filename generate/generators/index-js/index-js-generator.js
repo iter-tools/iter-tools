@@ -8,7 +8,7 @@ class IndexJsGenerator extends Generator {
   constructor(macrome, options) {
     super(macrome, options);
 
-    this.glob = ['src/methods/*/[^$]*.mjs'];
+    this.included = ['src/methods/*/[^$]*.mjs'];
     this.ignored = ['src/methods/*_/**'];
 
     this.methods = new Set();

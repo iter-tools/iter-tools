@@ -54,7 +54,7 @@ const { rename } = require('./names');
 
 const { ast } = expression;
 
-function asyncMacro({ references, babel, state, config: { ASYNC } }) {
+function asyncMacro({ references, babel, state, config: { ASYNC, hasTypes } }) {
   const t = babel.types;
 
   for (const reference of references.$isAsync || []) {
@@ -85,7 +85,7 @@ function asyncMacro({ references, babel, state, config: { ASYNC } }) {
     }
   }
 
-  if (/\.ts$/.test(state.filename)) {
+  if (hasTypes) {
     // Unfortunately typescript types lack scope in babel, so we do this the brute force way
     babel.traverse(state.file.ast.program, {
       Identifier(path) {

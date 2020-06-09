@@ -4,14 +4,14 @@ const { dirname, basename, relative, join, normalize } = require('path');
 const camelcase = require('camelcase');
 const completeExtname = require('path-complete-extname');
 
-const BaseGenerator = require('../base-generator');
+const { BaseGenerator } = require('../base-generator');
 const template = require('../base-template');
 
 class MethodsLinksGenerator extends BaseGenerator {
   constructor(macrome, options) {
     super(macrome, options);
 
-    this.glob = ['src/methods/*/[^$]*.{mjs,d.ts}'];
+    this.included = ['src/methods/*/[^$]*.{mjs,d.ts}'];
     this.ignored = ['src/methods/*_/**'];
   }
 
