@@ -5,10 +5,10 @@ const { resolve } = require('path');
 const BaseAsyncGenerator = require('../base-async-generator');
 
 class TypeTestGenerator extends BaseAsyncGenerator {
-  constructor(macrome, options) {
-    super(macrome, options);
+  constructor(api, options) {
+    super(api, options);
 
-    this.included = 'src/**/__tests__/**/$*.js';
+    this.files = 'src/**/__tests__/**/$*.js';
 
     this.hasTypes = true;
   }

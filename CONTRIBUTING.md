@@ -26,21 +26,22 @@ The project is actively maintained, so your issues and PRs will definitely be se
 
 ## What you need
 
-To contribute you will need at least node version 8. We do test our code against language functionality (async generators) that exists only in node 10+, but our CI environment will handle that for you.
+To contribute you will need at least `node@8.3`. We do test our code against language functionality (async generators) that exists only in `node@10`, but our CI environment will handle that for you.
 
 ### The code generator
 
-You'll also need to run our code generator.
-First install its dependencies with `npm install`
+You'll also need to run macrome.
+Macrome depends on the watchman service, so you will need to [install watchman](https://facebook.github.io/watchman/docs/install/).
+If for some reason you cannot install the watchman service macrome will still work, you'll just be stuck doing full rebuilds instead of incremental ones.
+
 Now you can run the generator one of the following ways:
 
 ```
-> npm run generate # to build once, OR
-> npm run generate:watch # to continuously update generated files OR
-> npm run generate:watch -- --watchman # more efficient, but expects watchman to be in your PATH
+> npx macrome # to do a full rebuild
+> npx macrome watch # to rebuild incrementally as you make changes
 ```
 
-We recommend that you run the generator in watch mode whenever you are developing. If you do not, you might discover later that tests have been running against old versions of generated code. For more details on the code generator, take a look at its README.
+We recommend that you run the generator in watch mode whenever you are developing. If you do not, you might discover later that tests have been running against old versions of generated code. For more details on macrome, take a look at its [README](https://github.com/conartist6/macrome/blob/trunk/README.md).
 
 ## Creating a new method
 
@@ -69,9 +70,8 @@ Indications against the creation of a new method include:
 
 ```
 generate/                Anything pertaining to code generation
-├─ generator/               Code generator code (which should become its own package)
 ├─ generators/              Code which describes how/when/where to generated each type of file
-└─ async.macro.js           You'll see this imported in most $ files. Read its docs!!
+└─ async.macro.js           You'll see this imported in most $ files. Read its docs!
 
 generate-yo/			 The yeoman generation code and templates. Used by the create:method script.
 
@@ -83,7 +83,10 @@ src/
 │      │  └─ $my-method.test.js
 │      ├─ $my-method.js     The method implementation. Default export is exported from library
 │      ├─ $my-method.d.ts   The method types. Default export is exported from library
+|      ├─ DOCME.json        Metadata to help the doc generator categorize and render method docs
 │      └─ README.md         Method documentation. Will be intergrated into API.md and website
+├─ types/
+|      └─ API.md         Source for the Types section of API.md
 ├- index.d.ts            Typedefs for index
 └─ index.mjs             Main entry point
 ```

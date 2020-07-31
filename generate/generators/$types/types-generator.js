@@ -5,10 +5,10 @@ const { resolve } = require('path');
 const BaseAsyncGenerator = require('../base-async-generator');
 
 class TypesGenerator extends BaseAsyncGenerator {
-  constructor(macrome, options) {
-    super(macrome, options);
+  constructor(api, options) {
+    super(api, options);
 
-    this.included = ['src/**/$*.d.ts', 'src/**/__tests__/$*.spec.ts'];
+    this.files = ['src/**/$*.d.ts', 'src/**/__tests__/$*.spec.ts'];
   }
 
   getDestName(basename, ext) {

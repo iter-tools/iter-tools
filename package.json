@@ -68,6 +68,9 @@
   "dependencies": {
     "@babel/runtime": "^7.4.3",
     "@babel/runtime-corejs2": "^7.4.3",
+    "@babel/template": "^7.10.3",
+    "@macrome/parser-babylon": "file:.yalc/@macrome/parser-babylon",
+    "@macrome/parser-lines": "file:.yalc/@macrome/parser-lines",
     "codecov": "^3.6.1",
     "decamelize": "^3.2.0",
     "little-ds-toolkit": "^1.1.0",
@@ -115,6 +118,7 @@
     "json": "^9.0.6",
     "lint-staged": "^9.4.1",
     "loglevel": "^1.6.2",
+    "macrome": "file:.yalc/macrome",
     "md5": "^2.2.1",
     "micromatch": "^4.0.2",
     "minimist": "^1.2.0",

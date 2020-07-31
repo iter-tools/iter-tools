@@ -2,18 +2,14 @@
 
 const { dirname, basename, join } = require('path');
 
-const { Generator } = require('macrome');
+const { MapAstGenerator } = require('macrome');
 
-class TypeTestsGenerator extends Generator {
-  constructor(macrome, options) {
-    super(macrome, options);
+class TypeTestsGenerator extends MapAstGenerator {
+  constructor(api, options) {
+    super(api, options);
 
-    this.included = 'src/methods/*/__tests__/[^$]*.test.js';
-    this.ignored = 'src/methods/*/__tests__/*.deprecated.test.js';
-  }
-
-  generatePath({ ast }) {
-    return ast;
+    this.files = 'src/methods/*/__tests__/[^$]*.test.js';
+    this.excludedFiles = 'src/methods/*/__tests__/*.deprecated.test.js';
   }
 
   getDestPath(testName) {

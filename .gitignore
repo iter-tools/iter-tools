@@ -5,3 +5,6 @@
 /coverage/*
 
 /report.*
+
+yalc.lock
+.yalc

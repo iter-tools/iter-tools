@@ -1,37 +1,38 @@
 'use strict';
 
-const { dirname, basename, relative, join, normalize } = require('path');
+const { dirname, basename, join, normalize } = require('path');
 const camelcase = require('camelcase');
 const completeExtname = require('path-complete-extname');
+const { MapAstGenerator } = require('macrome');
 
-const { BaseGenerator } = require('../base-generator');
-const template = require('../base-template');
+class MethodsLinksGenerator extends MapAstGenerator {
+  constructor(api, options) {
+    super(api, options);
 
-class MethodsLinksGenerator extends BaseGenerator {
-  constructor(macrome, options) {
-    super(macrome, options);
-
-    this.included = ['src/methods/*/[^$]*.{mjs,d.ts}'];
-    this.ignored = ['src/methods/*_/**'];
+    this.files = ['src/methods/*/[^$]*.{mjs,d.ts}'];
+    this.excludedFiles = ['src/methods/*_/**'];
   }
 
-  getDestPath(implPath) {
-    const dir = dirname(implPath);
-    const file = basename(implPath);
+  getDestPath(path) {
+    const dir = dirname(path);
+    const file = basename(path);
 
     return normalize(join(dir, '../..', file));
   }
 
-  generatePath(implPath, destPath) {
-    const generatedFrom = relative(dirname(destPath), implPath);
-    const extName = completeExtname(implPath);
-    const moduleName = basename(implPath, extName);
-    const methodName = camelcase(basename(implPath, extName));
-    const methodDirName = basename(dirname(implPath));
+  map({ path }) {
+    const destPath = this.getDestPath(path);
+    const extName = completeExtname(path);
+    const moduleName = basename(path, extName);
+    const methodName = camelcase(basename(path, extName));
+    const methodDirName = basename(dirname(path));
 
-    const impl = `import ${methodName} from './methods/${methodDirName}/${moduleName}';\n\nexport default ${methodName};`;
+    const impl = `import ${methodName} from './methods/${methodDirName}/${moduleName}';\n\nexport default ${methodName};\n`;
+    const ast = this.parse(impl);
 
-    return template(impl, generatedFrom);
+    this.decorate(ast, this.getAnnotations(destPath, path));
+
+    this.write(destPath, this.print(ast).code);
   }
 }
 

@@ -1,29 +1,24 @@
 'use strict';
 
-const { basename, dirname, join } = require('path');
+const { basename, extname, dirname, join } = require('path');
 const fs = require('fs');
 const camelcase = require('camelcase');
-const babylon = require('@babel/parser');
-const fullExtname = require('path-complete-extname');
-const { Generator, REMOVE } = require('macrome');
+const { Generator } = require('macrome');
 
 const template = require('./template');
 const { renameDollar } = require('../../names');
 const extractMethodSignatures = require('./extract-method-signatures');
 
 class ApiMdGenerator extends Generator {
-  constructor(macrome, options) {
-    super(macrome, options);
+  constructor(api, options) {
+    super(api, options);
 
-    this.docsChanged = this.debounce(this.docsChanged);
-
-    this.included = [
-      'src/methods/*/{README.md,README.async.md,README.parallel.md,DOCME.json}',
+    this.files = [
+      'src/methods/*/{README.md,README.{async,parallel}.md,DOCME.json}',
       'src/methods/*/*.{js,mjs}',
     ];
-    this.ignored = ['src/methods/*_/**', 'src/methods/*/$*.{js,mjs}'];
+    this.excludedFiles = ['src/methods/*_/**', 'src/methods/*/$*.{js,mjs}'];
 
-    this.files = new Map();
     this.aliases = new Map();
   }
 
@@ -34,75 +29,68 @@ class ApiMdGenerator extends Generator {
     return join(dir, `${asyncPrefix}${implName}${parallelSuffix}.mjs`);
   }
 
-  parse(path, content) {
-    const ext = fullExtname(path);
-    switch (ext) {
-      case '.json':
-        return JSON.parse(content);
-      case '.mjs':
-        return babylon.parse(content, {
-          sourceType: 'module',
-        });
-      default:
-        return content;
-    }
-  }
-
   getNameForDir(path) {
     return camelcase(basename(path));
   }
 
-  recordChange({ path, operation }) {
-    if (operation === REMOVE) {
-      this.files.delete(path);
-    } else {
-      const content = fs.readFileSync(this.resolve(path), 'utf8');
-      const parsedContent = this.parse(path, content);
-      if (basename(path) === 'DOCME.json' && parsedContent.aliases) {
-        for (const alias of parsedContent.aliases) {
-          this.aliases.set(alias, this.getNameForDir(dirname(path)));
-        }
+  map(api, { path }) {
+    const content = api.read(path, { shouldParse: false });
+    const ext = extname(path);
+
+    let parsedContent = content;
+
+    if (ext === '.json') parsedContent = JSON.parse(content);
+    if (ext === '.mjs') parsedContent = api.parserForPath(path).parse(content);
+
+    if (basename(path) === 'DOCME.json' && parsedContent.aliases) {
+      for (const alias of parsedContent.aliases) {
+        // TODO could stale aliases from deleted files be problematic?
+        // Why did I put aliases in DOCME not aliasFor?
+        this.aliases.set(alias, this.getNameForDir(dirname(path)));
       }
-      this.files.set(path, parsedContent);
     }
-    this.docsChanged();
+    return parsedContent;
   }
 
-  extractMethodSignatures(dir, docme, type) {
+  extractMethodSignatures(pathMap, dir, docme, type) {
     const path = this.getImplPath(dir, type);
     const methodName_ = renameDollar(this.getNameForDir(dir), !!type);
     const methodName = type === 'parallel' ? `${methodName_}Parallel` : methodName_;
 
-    const file = this.files.get(path);
+    const change = pathMap.get(path);
 
-    if (!file) return null;
+    if (!change) return null;
 
-    return extractMethodSignatures(methodName, file, docme);
+    return extractMethodSignatures(methodName, change.mapResult, docme);
   }
 
-  buildMethods() {
-    return [...this.files]
-      .filter(([file]) => basename(file) === 'DOCME.json')
-      .map(([path, docme]) => {
+  buildMethods(pathMap) {
+    return [...pathMap]
+      .filter(([path]) => basename(path) === 'DOCME.json')
+      .map(([path, { mapResult: docme }]) => {
         const dir = dirname(path);
         const name = this.getNameForDir(dirname(path));
+        const readme = pathMap.get(join(dir, 'README.md'));
+        const asyncReadme = pathMap.get(join(dir, 'README.async.md'));
+        const parallelReadme = pathMap.get(join(dir, 'README.parallel.md'));
+
         return {
           name,
           aliasFor: this.aliases.get(name),
           docme,
-          readme: this.files.get(join(dir, 'README.md')),
-          asyncReadme: this.files.get(join(dir, 'README.async.md')),
-          parallelReadme: this.files.get(join(dir, 'README.parallel.md')),
-          signatures: this.extractMethodSignatures(dir, docme),
-          asyncSignatures: this.extractMethodSignatures(dir, docme, 'async'),
-          parallelSignatures: this.extractMethodSignatures(dir, docme, 'parallel'),
+          readme: readme && readme.mapResult,
+          asyncReadme: asyncReadme && asyncReadme.mapResult,
+          parallelReadme: parallelReadme && parallelReadme.mapResult,
+          signatures: this.extractMethodSignatures(pathMap, dir, docme),
+          asyncSignatures: this.extractMethodSignatures(pathMap, dir, docme, 'async'),
+          parallelSignatures: this.extractMethodSignatures(pathMap, dir, docme, 'parallel'),
         };
       });
   }
 
-  docsChanged() {
+  reduce(api, pathMap) {
     const typesDoc = fs.readFileSync(this.resolve('src/types/API.md'), 'utf8');
-    this.writeMonolithic('API.md', template(typesDoc, this.buildMethods(), this.aliases));
+    api.write('API.md', template(typesDoc, this.buildMethods(pathMap), this.aliases));
   }
 }
 

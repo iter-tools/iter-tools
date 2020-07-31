@@ -1,25 +1,29 @@
 'use strict';
 
+const fs = require('fs');
+const ignore = require('ignore');
 const { Generator } = require('macrome');
 
-const template = require('./template');
+const ignoredPaths = [
+  // It's pretty useful to see what's changing in API.md since it can't be tested
+  'API.md',
+];
 
-class MonolithicGenerator extends Generator {
-  constructor(macrome, options) {
-    super(macrome, options);
-    this.ignored = ['**'];
-  }
+class GitattributesGenerator extends Generator {
+  reduce() {
+    const gitignore = ignore().add(fs.readFileSync('.gitignore', 'utf8'));
 
-  afterPathsChanged() {
-    this.generatedPaths.add('.gitattributes');
-    // It is still highly useful to see that API doc changes show up as they should
-    this.generatedPaths.delete('API.md');
-
-    this.writeMonolithic(
+    const lines = [
       '.gitattributes',
-      this.decorate(template(this.generatedPaths), { generated: null }),
-    );
+      ...[...this.generatedPaths]
+        .filter(path => !gitignore.ignores(path) && !ignoredPaths.includes(path))
+        .sort(),
+    ].map(path => `${path} linguist-generated=true`);
+
+    this.decorate(lines, this.getAnnotations('.gitattributes'));
+
+    this.write('.gitattributes', this.print(lines));
   }
 }
 
-module.exports = MonolithicGenerator;
+module.exports = GitattributesGenerator;

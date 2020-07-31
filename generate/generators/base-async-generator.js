@@ -3,11 +3,13 @@
 const { dirname, join, basename } = require('path');
 const babel = require('@babel/core');
 const completeExtname = require('path-complete-extname');
-const { BaseGenerator } = require('./base-generator');
+const { MapAstGenerator } = require('macrome');
 
-class BaseAsyncGenerator extends BaseGenerator {
-  constructor(macrome, options) {
-    super(macrome, options);
+const { FormatMixin } = require('./format-mixin');
+
+class BaseAsyncGenerator extends FormatMixin(MapAstGenerator) {
+  constructor(api, options) {
+    super(api, options);
     this.hasTypes = false;
   }
 
@@ -27,7 +29,7 @@ class BaseAsyncGenerator extends BaseGenerator {
     return `${starMatch.slice(1)}${ext}`;
   }
 
-  generatePath({ ast, path }) {
+  mapAst(ast, { path }) {
     const { ASYNC } = this;
 
     return babel.transformFromAstSync(ast, null, {

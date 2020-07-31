@@ -1,30 +1,52 @@
 'use strict';
 
-const { Generator, REMOVE } = require('macrome');
+const { Generator } = require('macrome');
+const camelcase = require('camelcase');
+const { makeRe } = require('picomatch');
+const { relative, dirname } = require('path');
+const { statement } = require('@babel/template');
 
-const template = require('./template');
+const { compareNames } = require('../../names');
+const { stripExt } = require('../utils');
+const { FormatMixin } = require('../format-mixin');
 
-class IndexJsGenerator extends Generator {
-  constructor(macrome, options) {
-    super(macrome, options);
+const methodNameMatcher = makeRe('src/*.*', { capture: true });
+const getMethodName = path => {
+  const match = methodNameMatcher.exec(path);
+  return match && match[1];
+};
 
-    this.included = ['src/methods/*/[^$]*.mjs'];
-    this.ignored = ['src/methods/*_/**'];
+class IndexJsGenerator extends FormatMixin(Generator) {
+  constructor(api, options) {
+    super(api, options);
 
-    this.methods = new Set();
+    this.files = ['src/*.mjs'];
+    this.excludedFiles = ['src/index.mjs'];
   }
 
-  recordChange({ path, operation }) {
-    if (operation === REMOVE) {
-      this.methods.delete(path);
-    } else {
-      this.methods.add(path);
-    }
+  static generateExports(destPath, pathMap) {
+    return [...pathMap.keys()]
+      .map(path => [getMethodName(path), path])
+      .sort(([a], [b]) => compareNames(a, b))
+      .map(([name, path]) =>
+        statement.ast(
+          `export { default as ${camelcase(name)} } from './${stripExt(
+            relative(dirname(destPath), path),
+          )}';`,
+        ),
+      );
   }
 
-  afterPathsChanged() {
+  reduce(pathMap) {
     const destPath = 'src/index.mjs';
-    this.writeMonolithic(destPath, template(this.methods, destPath));
+
+    const { program } = this.parse('');
+
+    program.body = this.constructor.generateExports(destPath, pathMap);
+
+    this.decorate(program, this.getAnnotations(destPath));
+
+    this.write(destPath, this.print(program).code);
   }
 }
 
