@@ -31,6 +31,8 @@ src/array-last-or.d.ts linguist-generated=true
 src/array-last-or.mjs linguist-generated=true
 src/array-last.d.ts linguist-generated=true
 src/array-last.mjs linguist-generated=true
+src/array-reverse.d.ts linguist-generated=true
+src/array-reverse.mjs linguist-generated=true
 src/async-append.d.ts linguist-generated=true
 src/async-append.mjs linguist-generated=true
 src/async-batch.d.ts linguist-generated=true
@@ -882,6 +884,7 @@ src/methods/array-first-or/__tests__/array-first-or.auto.spec.ts linguist-genera
 src/methods/array-first/__tests__/array-first.auto.spec.ts linguist-generated=true
 src/methods/array-last-or/__tests__/array-last-or.auto.spec.ts linguist-generated=true
 src/methods/array-last/__tests__/array-last.auto.spec.ts linguist-generated=true
+src/methods/array-reverse/__tests__/array-reverse.auto.spec.ts linguist-generated=true
 src/methods/async-buffer/__tests__/async-buffer.auto.spec.ts linguist-generated=true
 src/methods/async-interleave-ready/__tests__/async-interleave-ready.auto.spec.ts linguist-generated=true
 src/methods/async-throttle/__tests__/async-throttle.auto.spec.ts linguist-generated=true
