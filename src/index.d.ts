@@ -15,6 +15,7 @@ export { default as arrayFrom } from './array-from';
 export { default as arrayFromAsync } from './array-from-async';
 export { default as arrayLast } from './array-last';
 export { default as arrayLastOr } from './array-last-or';
+export { default as arrayReverse } from './array-reverse';
 export { default as batch } from './batch';
 export { default as call } from './call';
 export { default as collate } from './collate';

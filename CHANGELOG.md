@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
  - `arrayFirst`, `arrayFirstOr`
  - `arrayLast`, `arrayLastOr`
  - `window`, `asyncWindow`
+ - `arrayReverse`
 
 ### Changed
  - Removed O(1) array optimizations from `last` and `lastOr`.

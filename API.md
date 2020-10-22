@@ -202,6 +202,7 @@ Utilities
 [arrayFirstOr](#arrayfirstor)  
 [arrayLast](#arraylast)  
 [arrayLastOr](#arraylastor)  
+[arrayReverse](#arrayreverse)  
 [call](#call)  
 [compose](#compose)  
 [execPipe](#execpipe)  
@@ -2253,6 +2254,12 @@ See [objectFromAsync](#objectfromasync)
 **arrayLastOr(whenEmpty, array)**
 
 `return array && array.length ? array[array.length - 1] : whenEmpty`
+
+### arrayReverse
+
+**arrayReverse(source)**
+
+Yields the elements from `source` in reverse order. `source` must be an array, string, `null`, or `undefined`.
 
 ### call
 
