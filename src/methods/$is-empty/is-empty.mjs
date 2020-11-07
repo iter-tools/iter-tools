@@ -9,10 +9,10 @@
 import { iterableCurry } from '../../internal/iterable';
 import { firstOr } from '../$first-or/first-or';
 
-const NONE = {};
+const none = Symbol('none');
 
 export function isEmpty(iterable) {
-  return firstOr(iterable, NONE) === NONE;
+  return firstOr(iterable, none) === none;
 }
 
 export default iterableCurry(isEmpty, {

@@ -7,12 +7,12 @@
  */
 
 import { iterableCurry } from '../../internal/iterable';
-import { range } from '../range/range';
-import { zip } from '../$zip/zip';
-import { wrap } from '../$wrap/wrap';
 
-export function enumerate(source, start = 0) {
-  return zip([wrap(range(start, Infinity)), source]);
+export function* enumerate(source, start = 0) {
+  let i = start;
+  for (const value of source) {
+    yield [i++, value];
+  }
 }
 
 export default iterableCurry(enumerate, {
