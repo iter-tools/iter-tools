@@ -8,24 +8,36 @@
 
 import { iterableCurry } from '../../internal/iterable';
 import { CircularBuffer, ReadOnlyCircularBuffer } from '../../internal/circular-buffer';
-import { concat } from '../$concat/concat';
-import { repeatTimes } from '../repeat-times/repeat-times';
 
 import { validateWindowArgs } from '../$trailing-window/internal/validate-window-args';
 
-export function* leadingWindow(source, size, { filler } = {}) {
+export function* leadingWindow(source, size, { filler, useFiller = true } = {}) {
   const buffer = new CircularBuffer(size);
   const bufferReadProxy = new ReadOnlyCircularBuffer(buffer);
 
-  buffer.fill(filler);
-
-  let index = 0;
-  for (const item of concat(source, repeatTimes(size - 1, filler))) {
+  let len = 0;
+  for (const item of source) {
     buffer.push(item);
-    if (index + 1 >= size) {
+    if (buffer.isFull()) {
       yield bufferReadProxy;
     }
-    index++;
+    len++;
+  }
+
+  if (useFiller) {
+    for (let i = len; i < size; i++) {
+      buffer.push(filler);
+    }
+  }
+
+  if (len > 0 && len < size) yield bufferReadProxy;
+
+  for (let i = 0; i < Math.min(size, len) - 1; i++) {
+    buffer.shift();
+    if (useFiller) {
+      buffer.push(filler);
+    }
+    yield bufferReadProxy;
   }
 }
 

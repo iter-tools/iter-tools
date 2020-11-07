@@ -12,6 +12,14 @@ import { unwrapDeep as uw } from '../../../__tests__/helpers';
 import { leadingWindow } from '../../..';
 
 describe('leadingWindow', () => {
+  describe('when source is empty', () => {
+    it('yields no windows', () => {
+      expect(uw(leadingWindow(3, { filler: 'x' }, null))).toEqual([]);
+      expect(uw(leadingWindow(3, { filler: 'x' }, undefined))).toEqual([]);
+      expect(uw(leadingWindow(3, { filler: 'x' }, []))).toEqual([]);
+    });
+  });
+
   it('frames iterable', () => {
     const result = [[1, 2, 3], [2, 3, 4], [3, 4, 5], [4, 5, undefined], [5, undefined, undefined]];
 
@@ -76,5 +84,37 @@ describe('leadingWindow', () => {
       [4, 5, undefined, undefined, undefined, undefined, undefined],
       [5, undefined, undefined, undefined, undefined, undefined, undefined],
     ]);
+  });
+
+  describe('when useFiller is false', () => {
+    it('frames iterable', () => {
+      expect(uw(leadingWindow(3, { useFiller: false }, [1, 2, 3, 4, 5]))).toEqual([
+        [1, 2, 3],
+        [2, 3, 4],
+        [3, 4, 5],
+        [4, 5],
+        [5],
+      ]);
+    });
+
+    it('frames iterable (leadingWindow equal to the sequence)', () => {
+      expect(uw(leadingWindow(5, { useFiller: false }, [1, 2, 3, 4, 5]))).toEqual([
+        [1, 2, 3, 4, 5],
+        [2, 3, 4, 5],
+        [3, 4, 5],
+        [4, 5],
+        [5],
+      ]);
+    });
+
+    it('frames iterable (leadingWindow bigger than the sequence)', () => {
+      expect(uw(leadingWindow(6, { useFiller: false }, [1, 2, 3, 4, 5]))).toEqual([
+        [1, 2, 3, 4, 5],
+        [2, 3, 4, 5],
+        [3, 4, 5],
+        [4, 5],
+        [5],
+      ]);
+    });
   });
 });
