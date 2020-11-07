@@ -1,10 +1,14 @@
-import { $iterableCurry } from '../../internal/$iterable';
-import { range } from '../range/range';
-import { $zip } from '../$zip/$zip';
-import { $wrap } from '../$wrap/$wrap';
+import { $async, $await } from '../../../generate/async.macro';
 
-export function $enumerate(source, start = 0) {
-  return $zip([$wrap(range(start, Infinity)), source]);
+import { $iterableCurry } from '../../internal/$iterable';
+
+$async;
+export function* $enumerate(source, start = 0) {
+  let i = start;
+  $await;
+  for (const value of source) {
+    yield [i++, value];
+  }
 }
 
 export default $iterableCurry($enumerate, {

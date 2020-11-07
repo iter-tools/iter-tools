@@ -7,12 +7,12 @@
  */
 
 import { asyncIterableCurry } from '../../internal/async-iterable';
-import { range } from '../range/range';
-import { asyncZip } from '../$zip/async-zip';
-import { asyncWrap } from '../$wrap/async-wrap';
 
-export function asyncEnumerate(source, start = 0) {
-  return asyncZip([asyncWrap(range(start, Infinity)), source]);
+export async function* asyncEnumerate(source, start = 0) {
+  let i = start;
+  for await (const value of source) {
+    yield [i++, value];
+  }
 }
 
 export default asyncIterableCurry(asyncEnumerate, {

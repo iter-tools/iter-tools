@@ -9,10 +9,10 @@
 import { asyncIterableCurry } from '../../internal/async-iterable';
 import { asyncFirstOr } from '../$first-or/async-first-or';
 
-const NONE = {};
+const none = Symbol('none');
 
 export async function asyncIsEmpty(iterable) {
-  return (await asyncFirstOr(iterable, NONE)) === NONE;
+  return (await asyncFirstOr(iterable, none)) === none;
 }
 
 export default asyncIterableCurry(asyncIsEmpty, {
