@@ -4,6 +4,17 @@ import { $unwrapDeep as $uw } from '../../../__tests__/$helpers';
 import { $leadingWindow } from '../../..';
 
 describe($`leadingWindow`, () => {
+  describe('when source is empty', () => {
+    it(
+      'yields no windows',
+      $async(() => {
+        expect($await($uw($leadingWindow(3, { filler: 'x' }, null)))).toEqual([]);
+        expect($await($uw($leadingWindow(3, { filler: 'x' }, undefined)))).toEqual([]);
+        expect($await($uw($leadingWindow(3, { filler: 'x' }, [])))).toEqual([]);
+      }),
+    );
+  });
+
   it(
     'frames iterable',
     $async(() => {
@@ -98,4 +109,45 @@ describe($`leadingWindow`, () => {
       ]);
     }),
   );
+
+  describe('when useFiller is false', () => {
+    it(
+      'frames iterable',
+      $async(() => {
+        expect($await($uw($leadingWindow(3, { useFiller: false }, [1, 2, 3, 4, 5])))).toEqual([
+          [1, 2, 3],
+          [2, 3, 4],
+          [3, 4, 5],
+          [4, 5],
+          [5],
+        ]);
+      }),
+    );
+
+    it(
+      'frames iterable (leadingWindow equal to the sequence)',
+      $async(() => {
+        expect($await($uw($leadingWindow(5, { useFiller: false }, [1, 2, 3, 4, 5])))).toEqual([
+          [1, 2, 3, 4, 5],
+          [2, 3, 4, 5],
+          [3, 4, 5],
+          [4, 5],
+          [5],
+        ]);
+      }),
+    );
+
+    it(
+      'frames iterable (leadingWindow bigger than the sequence)',
+      $async(() => {
+        expect($await($uw($leadingWindow(6, { useFiller: false }, [1, 2, 3, 4, 5])))).toEqual([
+          [1, 2, 3, 4, 5],
+          [2, 3, 4, 5],
+          [3, 4, 5],
+          [4, 5],
+          [5],
+        ]);
+      }),
+    );
+  });
 });

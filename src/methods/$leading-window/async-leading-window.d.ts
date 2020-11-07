@@ -9,9 +9,27 @@
 import { AsyncSourceIterable, AsyncResultIterable } from '../../types/async-iterable';
 import { ResultIterable as SyncResultIterable } from '../../types/iterable';
 
+declare function asyncLeadingWindow<T>(
+  size: number,
+  opts: {
+    useFiller: false;
+    readonly filler?: any;
+  },
+  source: AsyncSourceIterable<T>,
+): AsyncResultIterable<SyncResultIterable<T>>;
+
+declare function asyncLeadingWindow(
+  size: number,
+  opts?: {
+    useFiller: false;
+    readonly filler?: any;
+  },
+): <T>(source: AsyncSourceIterable<T>) => AsyncResultIterable<SyncResultIterable<T>>;
+
 declare function asyncLeadingWindow<T, Filler = undefined>(
   size: number,
   opts: {
+    useFiller?: boolean;
     readonly filler?: Filler;
   },
   source: AsyncSourceIterable<T>,
@@ -22,15 +40,12 @@ declare function asyncLeadingWindow<T>(
   source: AsyncSourceIterable<T>,
 ): AsyncResultIterable<SyncResultIterable<T | undefined>>;
 
-declare function asyncLeadingWindow(
+declare function asyncLeadingWindow<Filler = undefined>(
   size: number,
-  opts: {
-    readonly filler: any;
+  opts?: {
+    useFiller?: boolean;
+    readonly filler?: Filler;
   },
-): <T>(source: AsyncSourceIterable<T>) => AsyncResultIterable<SyncResultIterable<T>>;
-
-declare function asyncLeadingWindow(
-  size: number,
-): <T>(source: AsyncSourceIterable<T>) => AsyncResultIterable<SyncResultIterable<T | undefined>>;
+): <T>(source: AsyncSourceIterable<T>) => AsyncResultIterable<SyncResultIterable<T | Filler>>;
 
 export default asyncLeadingWindow;

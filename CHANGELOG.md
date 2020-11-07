@@ -12,6 +12,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
  - `window`, `asyncWindow`
  - `arrayReverse`
 
+ **Arguments**
+ - `useFiller` option for `leadingWindow` and `asyncLeadingWindow`.
+
 ### Changed
  - Removed O(1) array optimizations from `last` and `lastOr`.
 
