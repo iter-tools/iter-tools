@@ -1,21 +1,24 @@
 import { $async, $await } from '../../../generate/async.macro';
 
 import { $iterableCurry } from '../../internal/$iterable';
+import { $spliterate } from '../$spliterate/$spliterate';
 
 $async;
-export function* $batch(source, size) {
-  let batch = [];
+function* $batchSpliterator(split, { size }, source) {
+  let i = 0;
   $await;
-  for (const item of source) {
-    batch.push(item);
-    if (batch.length === size) {
-      yield batch;
-      batch = [];
+  for (const value of source) {
+    if (i === size) {
+      yield split;
+      i = 0;
     }
+    yield value;
+    i++;
   }
-  if (batch.length) {
-    yield batch;
-  }
+}
+
+export function $batch(source, size) {
+  return $spliterate(source, $batchSpliterator, { size });
 }
 
 export default $iterableCurry($batch, {

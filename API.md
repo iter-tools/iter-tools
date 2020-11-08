@@ -89,7 +89,6 @@ Use iterables from data structures
 Transform a single iterable
 
 [append](#append) ([async](#asyncappend))  
-[batch](#batch) ([async](#asyncbatch))  
 [drop](#drop) ([async](#asyncdrop))  
 [dropWhile](#dropwhile) ([async](#asyncdropwhile))  
 [enumerate](#enumerate) ([async](#asyncenumerate))  
@@ -114,6 +113,7 @@ Transform a single iterable
 
 Separate an iterable into multiple iterables
 
+[batch](#batch) ([async](#asyncbatch))  
 [group](#group) ([async](#asyncgroup))  
 [groupBy](#groupby) ([async](#asyncgroupby))  
 [split](#split) ([async](#asyncsplit))  
@@ -397,22 +397,6 @@ append(4, [1, 2, 3]); // Iterable[1, 2, 3, 4]
 **asyncAppend(value, [source](#asyncsourceiterable))**
 
 See [append](#append)
-
-### batch
-
-**batch(size, [source](#sourceiterable))**
-
-Yields non-overlapping subsequences each containing `size` values from `source`.
-
-```js
-batch(2, range(5)); // [0, 1], [2, 3], [4]
-```
-
-### asyncBatch
-
-**asyncBatch(size, [source](#asyncsourceiterable))**
-
-See [batch](#batch)
 
 ### drop
 
@@ -986,6 +970,22 @@ Also turns sync iterables into async iterables and ensures async `next()` queuei
 
 
 ## Separate an iterable into multiple iterables
+
+### batch
+
+**batch(size, [source](#sourceiterable))**
+
+Yields non-overlapping subsequences each containing `size` values from `source`.
+
+```js
+batch(2, range(5)); // [0, 1], [2, 3], [4]
+```
+
+### asyncBatch
+
+**asyncBatch(size, [source](#asyncsourceiterable))**
+
+See [batch](#batch)
 
 ### group
 

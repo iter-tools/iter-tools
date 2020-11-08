@@ -7,19 +7,22 @@
  */
 
 import { asyncIterableCurry } from '../../internal/async-iterable';
+import { asyncSpliterate } from '../$spliterate/async-spliterate';
 
-export async function* asyncBatch(source, size) {
-  let batch = [];
-  for await (const item of source) {
-    batch.push(item);
-    if (batch.length === size) {
-      yield batch;
-      batch = [];
+async function* asyncBatchSpliterator(split, { size }, source) {
+  let i = 0;
+  for await (const value of source) {
+    if (i === size) {
+      yield split;
+      i = 0;
     }
+    yield value;
+    i++;
   }
-  if (batch.length) {
-    yield batch;
-  }
+}
+
+export function asyncBatch(source, size) {
+  return asyncSpliterate(source, asyncBatchSpliterator, { size });
 }
 
 export default asyncIterableCurry(asyncBatch, {
