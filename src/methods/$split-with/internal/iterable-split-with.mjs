@@ -6,45 +6,15 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { PartsIterator, Spliterator, split } from '../../../internal/spliterator';
+import { spliterate } from '../../$spliterate/spliterate';
 
-class PredicateSpliterator extends Spliterator {
-  constructor(sourceIterator, predicate) {
-    super(sourceIterator);
-    this.predicate = predicate;
-    this.item = null;
-    this.idx = 0;
-  }
-
-  static nullOrInstance(sourceIterator, predicate) {
-    const inst = new PredicateSpliterator(sourceIterator, predicate);
-    return inst._isEmpty() ? null : inst;
-  }
-
-  _isEmpty() {
-    this.item = super.next();
-    return this.item.done;
-  }
-
-  next() {
-    if (this.item === null) {
-      this.item = super.next();
-    }
-
-    if (this.item.done) {
-      return { value: undefined, done: true };
-    } else {
-      const { value } = this.item;
-      const shouldSplit = this.predicate(value, this.idx++);
-      this.item = null;
-
-      return { value: shouldSplit ? split : value, done: false };
-    }
+function* predicateSpliterator(split, { predicate }, source) {
+  let i = 0;
+  for (const value of source) {
+    yield predicate(value, i++) ? split : value;
   }
 }
 
-export function* iterableSplitWith(source, predicate) {
-  yield* new PartsIterator(
-    PredicateSpliterator.nullOrInstance(source[Symbol.iterator](), predicate),
-  );
+export function iterableSplitWith(source, predicate) {
+  return spliterate(source, predicateSpliterator, { predicate });
 }

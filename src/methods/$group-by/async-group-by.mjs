@@ -7,7 +7,10 @@
  */
 
 import { asyncIterableCurry } from '../../internal/async-iterable';
-import { AsyncPartsIterator, AsyncSpliterator, split } from '../../internal/async-spliterator';
+import { asyncSpliterateGrouped } from '../$spliterate-grouped/async-spliterate-grouped';
+import { asyncPeekerate } from '../$peekerate/async-peekerate';
+
+const initialKey = Symbol('initial group key');
 
 let warnedNullGetKeyDeprecation = false;
 
@@ -21,77 +24,33 @@ const warnNullGetKeyDeprecation = () => {
   }
 };
 
-class AsyncGroupingSpliterator extends AsyncSpliterator {
-  constructor(sourceIterator, getKey) {
-    super(sourceIterator);
-    this.getKey = getKey;
-    this.key = undefined;
-    this.item = null;
-    this.idx = 0;
-  }
+async function* asyncGroupingSpliterator(split, { getKey }, source) {
+  const peekr = await asyncPeekerate(source);
+  let key = initialKey;
+  let idx = 0;
 
-  static async nullOrInstance(sourceIterator, getKey) {
-    const inst = new AsyncGroupingSpliterator(sourceIterator, getKey);
-    return (await inst._isEmpty()) ? null : inst;
-  }
+  while (!peekr.done) {
+    const lastKey = key;
 
-  async _isEmpty() {
-    await this.buffer();
-    return this.item.done;
-  }
+    key = await getKey(peekr.value, idx++);
 
-  async buffer() {
-    const { key } = this;
-    if (this.item === null) {
-      this.item = await super.next();
-      const { done, value } = this.item;
-      if (!done) {
-        this.key = await this.getKey(value, this.idx++);
-      }
+    if (lastKey !== key) {
+      yield split;
+      yield key;
     }
-    return this.key !== key;
-  }
 
-  async next() {
-    const newGroup = await this.buffer();
+    yield peekr.value;
 
-    if (this.item.done) {
-      return { value: undefined, done: true };
-    } else {
-      const { value } = this.item;
-
-      if (!newGroup) {
-        this.item = null;
-      }
-
-      return { value: newGroup ? split : value, done: false };
-    }
+    await peekr.advance();
   }
 }
 
-class AsyncGroupPartsIterator extends AsyncPartsIterator {
-  async next() {
-    const item = await super.next();
-    if (!item.done) {
-      await this.spliterator.buffer();
-      return { value: [this.spliterator.key, item.value], done: false };
-    } else {
-      return item;
-    }
-  }
-}
-
-export async function* asyncGroupBy(source, getKey) {
+export function asyncGroupBy(source, getKey) {
   if (getKey === null) {
     warnNullGetKeyDeprecation();
   }
 
-  yield* new AsyncGroupPartsIterator(
-    await AsyncGroupingSpliterator.nullOrInstance(
-      source[Symbol.asyncIterator](),
-      getKey === null ? _ => _ : getKey,
-    ),
-  );
+  return asyncSpliterateGrouped(source, asyncGroupingSpliterator, { getKey });
 }
 
 export default asyncIterableCurry(asyncGroupBy);

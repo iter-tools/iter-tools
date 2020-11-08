@@ -9,7 +9,7 @@
 /* eslint-disable no-unused-vars,import/no-duplicates,no-constant-condition */
 
 import { Iterable } from '../../../types/iterable';
-import { interleave, InterleaveBuffer, toArray } from '../../..';
+import { interleave, Peekerator, toArray } from '../../..';
 
 describe('interleave', () => {
   const a = [1, 2, 3];
@@ -18,15 +18,25 @@ describe('interleave', () => {
 
   it('can be used to implement a round robin interleave', () => {
     const roundRobin = interleave(function*(
-      canTakeAny: () => InterleaveBuffer<number> | null,
-      a: InterleaveBuffer<number>,
-      b: InterleaveBuffer<number>,
-      c: InterleaveBuffer<number>,
+      options: Record<string, any>,
+      all: Peekerator<Peekerator<number>>,
+      a: Peekerator<number>,
+      b: Peekerator<number>,
+      c: Peekerator<number>,
     ) {
-      while (canTakeAny()) {
-        if (a.canTake()) yield a.take();
-        if (b.canTake()) yield b.take();
-        if (c.canTake()) yield c.take();
+      while (!all.done) {
+        if (!a.done) {
+          yield a.value;
+          a.advance();
+        }
+        if (!b.done) {
+          yield b.value;
+          b.advance();
+        }
+        if (!c.done) {
+          yield c.value;
+          c.advance();
+        }
       }
     });
 
@@ -39,7 +49,7 @@ describe('interleave', () => {
     expect.assertions(1);
     toArray(
       interleave(
-        function*(o: {}): Iterable<any> {
+        function*(o: Record<string, any>): Iterable<any> {
           expect(o).toBe(options);
         },
         options,
@@ -48,19 +58,16 @@ describe('interleave', () => {
     );
   });
 
-  describe('the return value of canTakeAny', () => {
+  describe('the value of the summary', () => {
     it('can be used to do concatenation', () => {
       const concatenate = interleave(function*(
-        canTakeAny: () => InterleaveBuffer<number> | null,
-        _a: InterleaveBuffer<number>,
-        _b: InterleaveBuffer<number>,
-        _c: InterleaveBuffer<number>,
+        _: Record<string, any>,
+        all: Peekerator<Peekerator<number>>,
       ) {
-        let buffer = canTakeAny();
-
-        while (buffer) {
-          yield buffer.take();
-          buffer = canTakeAny();
+        while (!all.done) {
+          const buffer = all.value;
+          yield buffer.value;
+          buffer.advance();
         }
       });
 

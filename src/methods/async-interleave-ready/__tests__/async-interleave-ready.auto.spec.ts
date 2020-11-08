@@ -8,23 +8,21 @@
 
 import { asyncInterleaveReady, asyncToArray } from '../../..';
 
-function wait(ms: number) {
-  return new Promise(resolve => setTimeout(resolve, ms));
-}
+import delay from '../../../internal/delay';
 
 describe('asyncInterleaveReady', () => {
   it('can use the return value of canTakeAny to interleave by promise readiness', async () => {
     const a = (async function*() {
-      await wait(10);
+      await delay(10);
       yield 1;
-      await wait(30);
+      await delay(30);
       yield 2;
     })();
 
     const b = (async function*() {
-      await wait(20);
+      await delay(20);
       yield 3;
-      await wait(10);
+      await delay(10);
       yield 4;
     })();
 

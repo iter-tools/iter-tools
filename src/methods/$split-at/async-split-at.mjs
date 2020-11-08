@@ -8,11 +8,12 @@
 
 import { CircularBuffer } from '../../internal/circular-buffer';
 import { asyncIterableCurry } from '../../internal/async-iterable';
-import { IterableIterator } from '../../internal/iterable-iterator';
-import { AsyncPartsIterator, split } from '../../internal/async-spliterator';
+import { AsyncBisector } from '../../internal/async-bisector';
+import { wrap } from '../../internal/wrap';
+import { asyncPeekerate } from '../$peekerate/async-peekerate';
 
-export async function* AsyncIndexSpliterator(source, idx) {
-  const sourceIterator = source[Symbol.asyncIterator]();
+export async function* asyncIndexSplitStrategy(split, { idx }, source) {
+  const sourcePeekr = await asyncPeekerate(source);
   const fromEnd = idx < 0;
   const offset = Math.abs(idx);
   const buffer = fromEnd ? new CircularBuffer(offset) : null;
@@ -21,24 +22,23 @@ export async function* AsyncIndexSpliterator(source, idx) {
   let sourceDone = false;
 
   try {
-    let item;
     let value;
     /* eslint-disable no-unmodified-loop-condition */
-    while ((fromEnd || currentPos < idx) && !(item = await sourceIterator.next()).done) {
+    while ((fromEnd || currentPos < idx) && !sourcePeekr.done) {
       /* eslint-enable no-unmodified-loop-condition */
       currentPos++;
-      ({ value } = item);
+      ({ value } = sourcePeekr);
 
       if (fromEnd) {
         value = buffer.push(value);
       }
 
-      if (fromEnd && currentPos <= offset) {
-        continue;
-      } else {
+      if (!fromEnd || currentPos > offset) {
         yield value;
         yielded++;
       }
+
+      await sourcePeekr.advance();
     }
 
     if (fromEnd) {
@@ -53,78 +53,21 @@ export async function* AsyncIndexSpliterator(source, idx) {
     if (fromEnd) {
       yield* buffer;
     } else {
-      while (!(item = await sourceIterator.next()).done) {
-        yield item.value;
+      while (!sourcePeekr.done) {
+        yield sourcePeekr.value;
+        await sourcePeekr.advance();
       }
     }
     sourceDone = true;
   } finally {
     if (!sourceDone) {
-      sourceIterator.return && sourceIterator.return();
+      sourcePeekr.return();
     }
   }
 }
 
-// This unfortunately could not be expressed as a generator function
-// because you can't throw an error safely inside a finally block,
-// which is the only way to manage return behavior in a generator function.
-export class AsyncSplitAt extends IterableIterator {
-  constructor(source, idx) {
-    super();
-    this.source = source;
-    this.idx = idx;
-    this.partsIterator = null;
-    this.firstPart = null;
-    this.secondPart = null;
-    this.currentIdx = 0;
-  }
-
-  async setupFirst() {
-    this.partsIterator =
-      this.partsIterator ||
-      new AsyncPartsIterator(await AsyncIndexSpliterator(this.source, this.idx));
-    this.firstPart = this.firstPart || (await this.partsIterator.next()).value;
-  }
-
-  next() {
-    const self = this;
-    switch (this.currentIdx++) {
-      case 0:
-        return {
-          value: (async function*() {
-            await self.setupFirst();
-
-            yield* self.firstPart;
-          })(),
-          done: false,
-        };
-
-      case 1:
-        return {
-          value: (async function*() {
-            await self.setupFirst();
-            self.secondPart = (await self.partsIterator.next()).value;
-
-            yield* self.secondPart;
-          })(),
-          done: false,
-        };
-
-      default:
-        return { value: undefined, done: true };
-    }
-  }
-
-  return() {
-    if (this.currentIdx === 1) {
-      throw new Error('You must take both parts from splitAt or neither.');
-    }
-    return { value: undefined, done: true };
-  }
-}
-
-export function* asyncSplitAt(source, idx) {
-  yield* new AsyncSplitAt(source, idx);
+export function asyncSplitAt(source, idx) {
+  return wrap(new AsyncBisector(source, asyncIndexSplitStrategy, { idx }));
 }
 
 export default asyncIterableCurry(asyncSplitAt, {

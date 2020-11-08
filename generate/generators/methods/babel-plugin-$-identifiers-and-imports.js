@@ -127,11 +127,11 @@ module.exports = function resolveDollarIdentifiersAndImports({ types: t }, { ASY
       const { source, specifiers } = path.node;
       if (source) {
         source.value = renameImport(source.value, ASYNC);
+      }
 
-        for (const specifier of specifiers) {
-          if (specifier.exported.name.startsWith('$')) {
-            specifier.exported.name = renameDollar(specifier.exported.name, ASYNC);
-          }
+      for (const specifier of specifiers) {
+        if (specifier.exported.name.startsWith('$')) {
+          specifier.exported.name = renameDollar(specifier.exported.name, ASYNC);
         }
       }
     },

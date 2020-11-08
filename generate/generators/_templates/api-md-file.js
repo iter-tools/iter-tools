@@ -52,6 +52,7 @@ const sections = new Map(
     ['cache', 'Cache an iterable'],
     ['consume', 'Consume an iterable'],
     ['utility', 'Utilities'],
+    ['higher-order', 'Generator helpers'],
     [undefined, 'Uncategorized'],
   ].map(([section, title], idx) => [section, { title, idx }]),
 );

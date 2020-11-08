@@ -1,4 +1,5 @@
 import { variadicCurryWithValidation } from './curry';
+import { _, __iterate } from './symbols';
 
 export function* empty() {}
 
@@ -14,8 +15,7 @@ export function ensureIterable(i) {
       throw new TypeError(
         'Iterators are not supported arguments to iter-tools. It must be an iterable. For example: { [Symbol.iterator] : () => currentArgument }',
       );
-    }
-    throw new TypeError('The argument is not an iterable or null');
+    } else throw new TypeError('The argument is not an iterable or null');
   }
   return i;
 }
@@ -25,31 +25,35 @@ export function isValidIterableArgument(i) {
 }
 
 export function BaseResultIterable(fn, args, iterablesArg) {
-  this._fn = fn;
-  this._args = args;
-  this._iterablesArg = iterablesArg;
-  this._staticIterator = null;
+  this[_] = {
+    fn,
+    args,
+    iterablesArg,
+    staticIterator: null,
+  };
 }
 
 Object.assign(BaseResultIterable.prototype, {
-  __iterate() {
-    return this._fn(this._iterablesArg, ...this._args);
-  },
+  constructor: BaseResultIterable,
 
-  throw() {
-    this._staticIterator = this._staticIterator || this.__iterate();
-    return this._staticIterator.throw();
+  [__iterate]() {
+    const { fn, iterablesArg, args } = this[_];
+    return fn(iterablesArg, ...args);
   },
 
   next() {
-    this._staticIterator = this._staticIterator || this.__iterate();
-    return this._staticIterator.next();
+    this[_].staticIterator = this[_].staticIterator || this[__iterate]();
+    return this[_].staticIterator.next();
   },
 
   return(...args) {
-    if (typeof this._staticIterator.return === 'function') {
-      this._staticIterator.return(...args);
-    }
+    this[_].staticIterator = this[_].staticIterator || this[__iterate]();
+    return this[_].staticIterator.return(...args);
+  },
+
+  throw() {
+    this[_].staticIterator = this[_].staticIterator || this[__iterate]();
+    return this[_].staticIterator.throw();
   },
 });
 
@@ -60,7 +64,7 @@ export function ResultIterable(...args) {
 ResultIterable.prototype = Object.assign(Object.create(BaseResultIterable.prototype), {
   constructor: ResultIterable,
   [Symbol.iterator]() {
-    return this.__iterate();
+    return this[__iterate]();
   },
 });
 
@@ -69,8 +73,9 @@ function SimpleResultIterable(...args) {
 }
 
 SimpleResultIterable.prototype = Object.assign(Object.create(ResultIterable.prototype), {
-  __iterate() {
-    return this._fn(...this._args);
+  constructor: SimpleResultIterable,
+  [__iterate]() {
+    return this[_].fn(...this[_].args);
   },
 });
 

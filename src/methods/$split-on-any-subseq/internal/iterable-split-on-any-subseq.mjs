@@ -6,73 +6,49 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { PartsIterator, Spliterator, split } from '../../../internal/spliterator';
-import { CircularBuffer } from '../../../internal/circular-buffer';
 import { iterableStartsWith_ } from '../../$starts-with_/iterable-starts-with_';
 import map from '../../$map/map';
 import toArray from '../../$to-array/to-array';
+import { leadingWindow } from '../../$leading-window/leading-window';
+import { spliterate } from '../../$spliterate/spliterate';
 
 const startsWithConfig = { any: false, subseq: true };
 
-class AnySubseqSpliterator extends Spliterator {
-  constructor(sourceIterator, separatorSubseqs) {
-    super(sourceIterator);
-    const maxMatchLength = separatorSubseqs.reduce((max, { length }) => Math.max(max, length), 1);
-    this.separatorSubseqs = separatorSubseqs;
-    this.buffer = new CircularBuffer(maxMatchLength);
-  }
-
-  static nullOrInstance(sourceIterator, separatorSubseqs) {
-    const inst = new AnySubseqSpliterator(sourceIterator, separatorSubseqs);
-    return inst._isEmpty() ? null : inst;
-  }
-
-  _isEmpty() {
-    let item;
-    if (!(item = super.next()).done) {
-      this.buffer.push(item.value);
+function getMatchingLength(buffer, separatorSubseqs) {
+  for (const subsequence of separatorSubseqs) {
+    if (iterableStartsWith_(buffer, startsWithConfig, subsequence)) {
+      return subsequence.length;
     }
-    return item.done;
   }
 
-  getMatchingLength() {
-    for (const subsequence of this.separatorSubseqs) {
-      if (iterableStartsWith_(this.buffer, startsWithConfig, subsequence)) {
-        return subsequence.length;
-      }
+  return 0;
+}
+
+function* anySubseqSpliterator(split, { separatorSubseqs }, source) {
+  const maxMatchLength = separatorSubseqs.reduce((max, { length }) => Math.max(max, length), 1);
+
+  let skip = 0;
+
+  for (const buffer of leadingWindow(source, maxMatchLength, { useFiller: false })) {
+    if (skip > 0) {
+      skip--;
+      continue;
     }
+    const matchingLength = getMatchingLength(buffer, separatorSubseqs);
 
-    return 0;
-  }
-
-  next() {
-    let item;
-    while (!(this.buffer.isFull() || (item = super.next()).done)) {
-      this.buffer.push(item.value);
-    }
-
-    if (!this.buffer.size) {
-      return { value: undefined, done: true };
+    if (matchingLength > 0) {
+      yield split;
+      skip = matchingLength - 1;
     } else {
-      const matchingLength = this.getMatchingLength(this.buffer, this.separatorSubseqs);
-
-      if (matchingLength) {
-        for (let i = 0; i < matchingLength; i++) {
-          this.buffer.shift();
-        }
-      }
-
-      return { value: matchingLength ? split : this.buffer.shift(), done: false };
+      yield buffer.get(0);
     }
   }
 }
 
 export function* iterableSplitOnAnySubseq(source, separatorSubseqs) {
-  const _separatorSubseqs = toArray(map(toArray, separatorSubseqs))
-    .filter(subseq => subseq.length)
-    .sort((a, b) => b.length - a.length);
-
-  yield* new PartsIterator(
-    AnySubseqSpliterator.nullOrInstance(source[Symbol.iterator](), _separatorSubseqs),
-  );
+  yield* spliterate(source, anySubseqSpliterator, {
+    separatorSubseqs: toArray(map(toArray, separatorSubseqs))
+      .filter(subseq => subseq.length)
+      .sort((a, b) => b.length - a.length),
+  });
 }

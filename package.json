@@ -48,8 +48,9 @@
     ]
   },
   "keywords": [
-    "Iterator",
-    "Generator",
+    "iterator",
+    "iterable",
+    "generator",
     "Map",
     "Set",
     "map",
@@ -58,6 +59,9 @@
     "itertools",
     "tools",
     "utils",
+    "pull",
+    "pull-based",
+    "streaming",
     "async"
   ],
   "repository": "git@github.com:iter-tools/iter-tools.git",
@@ -67,9 +71,7 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "@babel/runtime": "^7.4.3",
-    "@babel/runtime-corejs2": "^7.4.3",
-    "codecov": "^3.6.1",
+    "@iter-tools/queue": "^1.0.0",
     "decamelize": "^3.2.0",
     "little-ds-toolkit": "^1.1.0",
     "typescript-tuple": "^2.1.0"
@@ -95,11 +97,12 @@
     "babel-plugin-add-module-exports": "^0.2.1",
     "babel-plugin-macros": "^2.6.0",
     "babel-plugin-minify-dead-code-elimination": "^0.5.0",
-    "babel-preset-jest": "^24.6.0",
     "babel-plugin-recast": "^0.1.2",
+    "babel-preset-jest": "^24.6.0",
     "benchmark": "^2.1.4",
     "camelcase": "^5.3.1",
     "camelize": "^1.0.0",
+    "codecov": "^3.7.2",
     "cross-env": "^5.1.6",
     "eslint": "^6.5.0",
     "eslint-config-prettier": "^6.3.0",
@@ -114,7 +117,7 @@
     "git-state": "^4.1.0",
     "husky": "^3.0.7",
     "ignore": "^5.1.4",
-    "jest": "^24.7.1",
+    "jest": "^24.0.15",
     "jest-coverage-badges": "^1.0.0",
     "json": "^9.0.6",
     "lint-staged": "^9.4.1",
@@ -133,14 +136,11 @@
     "rimraf": "^2.6.2",
     "sane": "conartist6/sane#micromatch-watchman-parse-glob",
     "static-type-assert": "^3.0.1",
-    "typescript": "^3.4.5",
+    "typescript": "3.6.4",
     "yeoman-environment": "^2.4.0",
     "yeoman-generator": "^4.0.2"
   },
   "resolutions": {
     "babel-core": "7.0.0-bridge.0"
-  },
-  "jest": {
-    "coverageDirectory": "./coverage/"
   }
 }

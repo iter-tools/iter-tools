@@ -6,28 +6,115 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { ensureIterable, iterableCurry } from '../../internal/iterable';
-import InterleaveBuffer from './internal/buffer';
-import makeCanTakeAny from './internal/can-take-any';
+import { iterableCurry } from '../../internal/iterable';
+import { Peekerator } from '../../internal/peekerator';
+import { map } from '../$map/map';
+import { toArray } from '../$to-array/to-array';
 
-export function* interleave(sources, generateInterleaved, options) {
-  const buffers = sources.map(
-    (iterable, i) => new InterleaveBuffer(ensureIterable(iterable)[Symbol.iterator](), i),
-  );
+const _ = Symbol.for('_');
+const __advance = Symbol.for('__advance');
 
-  try {
-    const canTakeAny = makeCanTakeAny(buffers);
+class SummarizedPeekerator extends Peekerator {
+  constructor(iterator, first, inputSummary) {
+    super(iterator, first);
+    this[_].inputSummary = inputSummary;
+  }
 
-    yield* options !== undefined
-      ? generateInterleaved(options, canTakeAny, ...buffers)
-      : generateInterleaved(canTakeAny, ...buffers);
-  } finally {
-    for (const buffer of buffers) {
-      if (buffer.canTake() && typeof buffer._iterator.return === 'function') {
-        buffer._iterator.return();
-      }
+  advance() {
+    this[_].inputSummary.advanceBuffer(this);
+  }
+
+  [__advance]() {
+    super.advance();
+  }
+}
+
+class InputSummaryInternal {
+  constructor() {
+    this.buffers = [];
+    this.notDoneBuffer = null;
+  }
+
+  init(buffers) {
+    this.buffers = buffers;
+    this.updateNotDone();
+  }
+
+  updateNotDone() {
+    this.notDoneBuffer = this.buffers.find(buffer => !buffer.done);
+  }
+
+  advanceBuffer(buffer) {
+    const wasDone = buffer.done;
+
+    buffer[__advance]();
+
+    if (!wasDone && buffer.done) {
+      this.updateNotDone();
     }
   }
+}
+
+export class InputSummary {
+  constructor(internal) {
+    this[_] = internal;
+  }
+
+  advance() {
+    throw new Error('advance() is not supported on an interleave summary');
+  }
+
+  get current() {
+    return { done: this.done, value: this.value };
+  }
+
+  get value() {
+    return this[_].notDoneBuffer;
+  }
+
+  get done() {
+    return this[_].notDoneBuffer === undefined;
+  }
+
+  get index() {
+    return this[_].index;
+  }
+}
+
+class Interleaver {
+  constructor(sources, strategy, options) {
+    this.sources = sources;
+    this.strategy = strategy;
+    this.options = options;
+
+    this.initialized = false;
+    this.inputSummary = new InputSummaryInternal(sources);
+  }
+
+  init() {
+    this.initialized = true;
+    const { strategy, options, inputSummary } = this;
+    this.buffers = toArray(
+      map(this.sources, source => SummarizedPeekerator.from(source, inputSummary)),
+    );
+    this.iterator = strategy(options, new InputSummary(inputSummary), ...this.buffers);
+
+    inputSummary.init(this.buffers);
+  }
+
+  next() {
+    if (!this.initialized) this.init();
+
+    return this.iterator.next();
+  }
+
+  return() {
+    for (const buffer of this.buffers) buffer.return();
+  }
+}
+
+export function interleave(sources, strategy, options = {}) {
+  return new Interleaver(sources, strategy, options);
 }
 
 export default iterableCurry(interleave, {

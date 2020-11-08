@@ -9,9 +9,11 @@ module.exports = {
   env: { es6: true },
   rules: {
     'import/no-duplicates': 'off',
+    'no-return-await': 'off',
   },
   globals: {
     never: 'readonly',
+    Record: 'readonly',
   },
   overrides: [
     {
@@ -20,6 +22,8 @@ module.exports = {
       rules: {
         '@typescript-eslint/no-explicit-any': 'off',
         '@typescript-eslint/no-unused-vars': ['warn', { argsIgnorePattern: '^_' }],
+        '@typescript-eslint/class-name-casing': 'off', // can't deal with $PascalCased
+        'no-useless-constructor': 'off', // was causing `Cannot read property 'body' of null`
       },
     },
     {

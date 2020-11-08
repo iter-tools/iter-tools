@@ -1,24 +1,21 @@
 import { $async, $await } from '../../../generate/async.macro';
 
 import { $iterableCurry } from '../../internal/$iterable';
-
 import { $interleave } from '../$interleave/$interleave';
 
 $async;
-function* $byComparison({ comparator }, canTakeAny, ...buffers) {
-  let candidateBuffer;
-  while ((candidateBuffer = $await(canTakeAny()))) {
-    let candidateItem = $await(candidateBuffer.peek());
-
-    for (const buffer of buffers) {
-      const item = $await(buffer.peek());
-      if ($await(buffer.canTake()) && comparator(candidateItem, item) < 0) {
-        candidateItem = item;
-        candidateBuffer = buffer;
+function* $byComparison({ comparator }, all, ...peekrs) {
+  let candidate;
+  while (!all.done) {
+    candidate = all.value;
+    for (const peekr of peekrs) {
+      if (!peekr.done && comparator(candidate.value, peekr.value) < 0) {
+        candidate = peekr;
       }
     }
 
-    yield $await(candidateBuffer.take());
+    yield candidate.value;
+    $await(candidate.advance());
   }
 }
 

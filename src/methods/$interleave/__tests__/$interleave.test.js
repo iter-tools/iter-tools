@@ -1,7 +1,8 @@
-import { $, $isAsync, $async, $await, $Promise } from '../../../../generate/async.macro';
+/* eslint-disable no-sequences */
+import { $, $isAsync, $async, $await } from '../../../../generate/async.macro';
 
 import { $Iterable } from '../../../types/$iterable';
-import { $interleave, $InterleaveBuffer, $toArray } from '../../..';
+import { $interleave, $Peekerator, $toArray } from '../../..';
 
 describe($`interleave`, () => {
   const a = [1, 2, 3];
@@ -13,15 +14,25 @@ describe($`interleave`, () => {
     $async(() => {
       const roundRobin = $interleave(
         $async(function*(
-          canTakeAny: () => $Promise<$InterleaveBuffer<number> | null>,
-          a: $InterleaveBuffer<number>,
-          b: $InterleaveBuffer<number>,
-          c: $InterleaveBuffer<number>,
+          options: Record<string, any>,
+          all: $Peekerator<$Peekerator<number>>,
+          a: $Peekerator<number>,
+          b: $Peekerator<number>,
+          c: $Peekerator<number>,
         ) {
-          while ($await(canTakeAny())) {
-            if ($await(a.canTake())) yield $await(a.take());
-            if ($await(b.canTake())) yield $await(b.take());
-            if ($await(c.canTake())) yield $await(c.take());
+          while (!all.done) {
+            if (!a.done) {
+              yield a.value;
+              $await(a.advance());
+            }
+            if (!b.done) {
+              yield b.value;
+              $await(b.advance());
+            }
+            if (!c.done) {
+              yield c.value;
+              $await(c.advance());
+            }
           }
         }),
       );
@@ -39,7 +50,7 @@ describe($`interleave`, () => {
       $await(
         $toArray(
           $interleave(
-            $async(function*(o: {}): $Iterable<any> {
+            $async(function*(o: Record<string, any>): $Iterable<any> {
               expect(o).toBe(options);
             }),
             options,
@@ -53,21 +64,17 @@ describe($`interleave`, () => {
   if ($isAsync) {
     // see tests for interleaveReady which exercise this functionality
   } else {
-    describe('the return value of canTakeAny', () => {
+    describe('the value of the summary', () => {
       it('can be used to do concatenation', () => {
-        const concatenate = $interleave(function*(
-          canTakeAny: () => $Promise<$InterleaveBuffer<number> | null>,
-          _a: $InterleaveBuffer<number>,
-          _b: $InterleaveBuffer<number>,
-          _c: $InterleaveBuffer<number>,
-        ) {
-          let buffer = canTakeAny();
-
-          while (buffer) {
-            yield buffer.take();
-            buffer = canTakeAny();
-          }
-        });
+        const concatenate = $interleave(
+          $async(function*(_: Record<string, any>, all: $Peekerator<$Peekerator<number>>) {
+            while (!all.done) {
+              const buffer = all.value;
+              yield buffer.value;
+              $await(buffer.advance());
+            }
+          }),
+        );
 
         expect(Array.from(concatenate(a, b, c))).toEqual([1, 2, 3, 4, 5, 6, 7, 8, 9]);
       });

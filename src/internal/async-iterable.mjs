@@ -6,6 +6,7 @@ import {
   isIterable,
 } from './iterable';
 import { variadicCurryWithValidation } from './curry';
+import { _, __iterate } from './symbols';
 
 export function isAsyncIterable(i) {
   return Boolean(i != null && i[Symbol.asyncIterator]);
@@ -45,7 +46,7 @@ export function AsyncResultIterable(...args) {
 AsyncResultIterable.prototype = Object.assign(Object.create(BaseResultIterable.prototype), {
   constructor: AsyncResultIterable,
   [Symbol.asyncIterator]() {
-    return this.__iterate();
+    return this[__iterate]();
   },
 });
 
@@ -54,8 +55,8 @@ function AsyncSimpleResultIterable(...args) {
 }
 
 AsyncSimpleResultIterable.prototype = Object.assign(Object.create(AsyncResultIterable.prototype), {
-  __iterate() {
-    return this._fn(...this._args);
+  [__iterate]() {
+    return this[_].fn(...this[_].args);
   },
 });
 
