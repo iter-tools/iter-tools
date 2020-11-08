@@ -5,11 +5,15 @@ import { $iterableCurry } from '../../internal/$iterable';
 import { $interleave } from '../$interleave/$interleave';
 
 $async;
-function* $byPosition({ start, step }, canTakeAny, ...buffers) {
-  start = start % buffers.length;
+function* $byPosition({ start, step }, all, ...peekrs) {
+  start = start % peekrs.length;
   $await;
-  for (let i = start; $await(canTakeAny()); i = (i + step) % buffers.length) {
-    if ($await(buffers[i].canTake())) yield $await(buffers[i].take());
+  for (let i = start; !all.done; i = (i + step) % peekrs.length) {
+    const peekr = peekrs[i];
+    if (!peekr.done) {
+      yield peekr.value;
+      $await(peekr.advance());
+    }
   }
 }
 

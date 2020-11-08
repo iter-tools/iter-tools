@@ -7,23 +7,20 @@
  */
 
 import { iterableCurry } from '../../internal/iterable';
-
 import { interleave } from '../$interleave/interleave';
 
-function* byComparison({ comparator }, canTakeAny, ...buffers) {
-  let candidateBuffer;
-  while ((candidateBuffer = canTakeAny())) {
-    let candidateItem = candidateBuffer.peek();
-
-    for (const buffer of buffers) {
-      const item = buffer.peek();
-      if (buffer.canTake() && comparator(candidateItem, item) < 0) {
-        candidateItem = item;
-        candidateBuffer = buffer;
+function* byComparison({ comparator }, all, ...peekrs) {
+  let candidate;
+  while (!all.done) {
+    candidate = all.value;
+    for (const peekr of peekrs) {
+      if (!peekr.done && comparator(candidate.value, peekr.value) < 0) {
+        candidate = peekr;
       }
     }
 
-    yield candidateBuffer.take();
+    yield candidate.value;
+    candidate.advance();
   }
 }
 

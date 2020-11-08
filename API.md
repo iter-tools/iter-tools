@@ -129,7 +129,6 @@ Combine multiple iterables
 [collate](#collate) ([async](#asynccollate))  
 [compress](#compress) ([async](#asynccompress))  
 [concat](#concat) ([async](#asyncconcat))  
-[interleave](#interleave) ([async](#asyncinterleave))  
 [asyncInterleaveReady](#asyncinterleaveready)  
 [join](#join) ([async](#asyncjoin))  
 [joinAsStringWith](#joinasstringwith) ([async](#asyncjoinasstringwith))  
@@ -209,6 +208,13 @@ Utilities
 [getSize](#getsize)  
 [pipe](#pipe)  
 [when](#when)  
+
+Generator helpers
+
+[interleave](#interleave) ([async](#asyncinterleave))  
+[peekerate](#peekerate) ([async](#asyncpeekerate))  
+[spliterate](#spliterate) ([async](#asyncspliterate))  
+[spliterateGrouped](#spliterategrouped) ([async](#asyncspliterategrouped))  
 
 
 ## Create iterables
@@ -1227,87 +1233,9 @@ concat([3, 5, 6], [1, 1], [10]); // 3, 5, 6, 1, 1, 10
 
 See [concat](#concat)
 
-### interleave
-
-**interleave(generateInterleaved, options, ...[sources](#sourceiterable))**  
-**interleave(generateInterleaved, ...[sources](#sourceiterable))**
-
-Facilitates the creation of new strategies for interleaving items from multiple iterables. It does this by decorating the `generateInterleaved` generator, which is to say providing it with arguments and yielding its values. While `generateInterleaved` may yield many values, being a [generator function](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function*) it is called only once. The call will look like: `generateInterleaved(canTakeAny, ...buffers)`. Fuller documentation of what each of these arguments is and does follows the example, which shows the curried form of the function.
-
-```js
-const aabbInterleave = interleave(function*(
-  canTakeAny,
-  ...buffers
-) {
-  const [a, b] = buffers;
-  // canTakeAny returns a truthy value if any buffer canTake()
-  while (canTakeAny()) {
-    if (a.canTake()) yield a.take();
-    if (a.canTake()) yield a.take();
-    if (b.canTake()) yield b.take();
-    if (b.canTake()) yield b.take();
-  }
-});
-
-const a = [1, 2, 5, 6];
-const b = [3, 4, 7];
-
-aabbInterleave(a, b); // [1, 2, 3, 4, 5, 6, 7]
-```
-
-Hopefully now that you can see how `buffers` is used, the definition of a `buffer` will make more sense: each `buffer` is an instance of `InterleaveBuffer` which stores a single value from a single `source` iterable.
-
-```ts
-class InterleaveBuffer<T> {
-  // The index of the current buffered value in the source
-  index: number;
-
-  // The index of the source which this buffer represents
-  bufferIndex: number;
-
-  // Returns the current buffered value
-  peek(): T;
-
-  // Returns false if the source iterable is done
-  // To be sure that your output is the same size as your combined inputs always call canTake before take.
-  canTake(): boolean;
-
-  // Returns the current buffered value and buffers the next one.
-  // Expected to be used with yield.
-  take(): T;
-}
-```
-
-When `generateInterleaved` has finished `interleave` will clean up any `source` which was not fully consumed.
-
-There is also an overload of `interleave` which allows you to pass an `options` argument to `generateInterleaved`. This allows you to create interleaves which are parameterized, like so:
-
-```js
-const roundRobin = interleave(function*(
-  options,
-  canTakeAny,
-  ...buffers
-) {
-  let i = options.start || 0;
-  while (canTakeAny()) {
-    yield buffers[i];
-    i = (i + 1) % buffers.length;
-  }
-});
-
-roundRobin({ start: 1 }, [2, 4, 6], [1, 3, 5]); // [1, 2, 3, 4, 5, 6]
-```
-
-### asyncInterleave
-
-**asyncInterleave(generateInterleaved, options, ...[sources](#asyncsourceiterable))**  
-**asyncInterleave(generateInterleaved, ...[sources](#asyncsourceiterable))**
-
-See [interleave](#interleave)
-
 ### asyncInterleaveReady
 
-**asyncInterleaveReady([sources](#asyncsourceiterable))**
+**asyncInterleaveReady(...[sources](#asyncsourceiterable))**
 
 Interleaves values from each `source` in `sources`, yielding values in whatever order they resolve (become ready). Note that this means that the results of this interleave will usually not be repeatable.
 
@@ -2375,5 +2303,257 @@ const whenObj = {
   ...when(sometimes, null),
 }; // { always: true } OR { always: true, somtimes: true }
 ```
+
+
+## Generator helpers
+
+### interleave
+
+**interleave(strategy, options, ...[sources](#sourceiterable))**  
+**interleave(strategy, ...[sources](#sourceiterable))**
+
+Facilitates the creation of new strategies for interleaving items from multiple iterables. It does this by decorating the `strategy` [generator](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function*), which is to say providing it with arguments and yielding its values. The responsibilities of the wrapping code are to forward any provided `options`, decorate the source iterables with [peekerators](#peekerate), manage the special `all` peekerator, and to call `return()` on any incomplete peekerators. The `all` peekerator provides `all.done` to indicate whether interleaving is complete, and `all.value`: a reference to the first peekerator which is not done. The `all` peekerator cannot be advanced.
+
+Both [collate](#collate) and [roundRobin](#roundrobin) are implemented using `interleave`, and it is expected that most use cases will be served by one or the other. Their implementations also serve as useful examples.
+
+```js
+function* alternatingStrategy(
+  options,
+  all,
+  ...peekerators
+) {
+  const { count = 1 } = options;
+
+  while (!all.done) {
+    for (const peekr of peekerators) {
+      for (let i = 0; i < count; i++) {
+        if (!peekr.done) {
+          yield peekr.value;
+          peekr.advance();
+        }
+      }
+    }
+  }
+}
+
+const alternatingInterleave = interleave(
+  alternatingStrategy,
+);
+
+const a = [1, 2, 5, 6];
+const b = [3, 4, 7];
+
+alternatingInterleave({ count: 2 }, a, b); // [1, 2, 3, 4, 5, 6, 7]
+```
+
+Note: This method has only cursory Typecript support because Typescript lacks the power to describe it. Instead you should include your own type definitions. The example code with typedefs might look like this:
+
+```js
+function* alternatingStrategy<T>(
+  options: { count: number },
+  all: Peekerator<Peekerator<T>>,
+  ...peekerators: Array<Peekerator<T>>
+) {
+  // implementation is unchanged, but now type-safe
+}
+
+function alternatingInterleave<T>(
+  count: number,
+  ...sources: Array<Iterable<T>>
+): IterableIterator<T> {
+  return interleave(alternatingStrategy, { count }, ...sources);
+});
+```
+
+A final note: if you are creating a strategy which takes no options, it would be wise to bind an empty options object to avoid the confusion that iter-tools' partial application rules could cause.
+
+```js
+const myInterleave = interleave(myStrategy, {});
+```
+
+### asyncInterleave
+
+**asyncInterleave(strategy, options, ...[sources](#asyncsourceiterable))**  
+**asyncInterleave(strategy, ...[sources](#asyncsourceiterable))**
+
+See [interleave](#interleave)
+
+### peekerate
+
+**peekerate(source)**
+
+Turns `source` into a peekerator (often shortened to `peekr`), which is conceptually equivalent to an iterator but is often easier to work with. Peekerators always have a `{done, value}` item from the source iterator stored as `peekr.current`. For convenience `peekr.done` and `peekr.value` are also present. To load the next item call `peekr.advance()`. No value is returned.
+
+Peekerators allow an iterator to be used as internal state. Normal iterators are of course stateful, but less useful for this purpose as it is not possible to access their state without altering it. Peekerators are also have safer typedefs than iterators.
+
+```js
+const peekerator = peekerate([0, 1, 2]);
+
+while (!peekerator.done) {
+  log(peekerator.value + 1);
+  peekerator.advance();
+}
+
+// logs 1, 2, 3
+```
+
+Also exported is the `Peekerator` base class. Instances should be made using `Peekerator.from(iteratable)`.
+
+Note that in typescript definitions `Peekerator` is a type not a class, so if you need the class e.g. for `extends` or `instanceof` I have included an alias for `Peekerator` named `PeekeratorClass`. The alias has different typedefs that are less safe but also will not throw errors on value usages.
+
+### asyncPeekerate
+
+**asyncPeekerate(source)**
+
+See [peekerate](#peekerate)
+
+Note: Returns a promise of a peekerator, which is necessary for the first item to be fetched.
+
+```js
+const peekerator = await asyncPeekerate([1, 2, 3]);
+
+while (!peekerator.done) {
+  log(peekerator.value + 1);
+  await peekerator.advance();
+}
+```
+
+### spliterate
+
+**spliterate(strategy, options, [source](#sourceiterable))**  
+**spliterate(options, [source](#sourceiterable))**
+
+Facilitates the creation of methods which split a `source` iterable into multiple parts. The `strategy` generator yield a flat output containing values from `source` as well as special `split` sentinel values. `spliterate` decorates the values yielded from `strategy()`. Each instance of the `split` sentinel will yield a new part. Thus for a `strategy` which yields `split` `n` times, `n + 1` parts will be yielded.
+
+Other methods in the split\* family (e.g. [splitAt](#splitat), [splitOn](#spliton), [splitWith](#splitwith)) are implemented using `spliterate` under the hood. It is expected that most use cases will be served by one of these existing methods. Their implementations also serve as useful examples.
+
+Here is a slightly simplified implementation of [batch](#batch):
+
+<!-- prettier-ignore -->
+```js
+function* batchStrategy(split { size }, source) {
+  for (const [value, i] of enumerate(source)) {
+    if (i % size === 0) yield split;
+    yield value;
+  }
+}
+
+const batch = spliterate(batchStrategy);
+
+const iterable = [0, 'a', 1, 'b', 2, 'c'];
+
+for (const [idx, letter] of batch({ size: 2 }, iterable)) {
+  log(idx, letter);
+}
+// 0 a
+// 1 b
+// 2 c
+```
+
+Note: This method has only cursory Typecript support because Typescript lacks the power to describe it. Instead you should include your own type definitions. The example code with typedefs might look like this:
+
+```js
+function* batchStrategy<T>(
+  split: symbol,
+  options: { size: number },
+  source: Iterable<T>,
+) {
+  // implementation is unchanged
+}
+
+function batch<T>(
+  size: number,
+  source: Iterable<T>,
+): IterableIterator<IterableIterator<T>> {
+  return spliterate(batchStrategy, { size }, source);
+}
+```
+
+A final note: if you are creating a strategy which takes no options, it would be wise to bind an empty options object to avoid the confusion that iter-tools' partial application rules could cause.
+
+```js
+const mySpliterate = spliterate(myStrategy, {});
+```
+
+### asyncSpliterate
+
+**asyncSpliterate(strategy, options, [source](#asyncsourceiterable))**  
+**asyncSpliterate(options, [source](#asyncsourceiterable))**
+
+See [spliterate](#spliterate)
+
+### spliterateGrouped
+
+**spliterateGrouped(strategy, options, [source](#sourceiterable))**  
+**spliterateGrouped(options, [source](#sourceiterable))**
+
+Facilitates the creation of methods which split a `source` iterable into multiple keyed groups. The `strategy` generator yield a flat output containing values from `source` as well as special `split` sentinel values. `spliterate` decorates the values yielded from `strategy()`. Each instance of the `split` sentinel starts a new group. The value immediately following a `split` is the key for the group. This means that a `strategy` which yields `split` `n` times, `n` groups will be yielded.
+
+[groupBy](#groupby) is implemented using `spliterateGrouped` under the hood. It is expected that most use cases will be served by using that method instead.
+
+Included as an example is a lightly edited version of the implementation of `groupBy`. It is expected that in the vast majority of circumstances it will be correct to use the actual [groupBy](#groupby) method and not this one.
+
+<!-- prettier-ignore -->
+```js
+function* groupingSpliterator(split, { getKey }, source) {
+  const peekr = peekerate(source);
+  let key = Symbol();
+
+  while (!peekr.done) {
+    const lastKey = key;
+
+    key = getKey(peekr.value);
+
+    if (lastKey !== key) {
+      yield split;
+      yield key;
+    }
+
+    yield peekr.value;
+
+    peekr.advance();
+  }
+}
+
+function groupBy(source, getKey) {
+  return spliterateGrouped({ getKey }, source);
+}
+```
+
+Note: This method has only cursory Typecript support because Typescript lacks the power to describe it. Instead you should include your own type definitions. The example code with typedefs might look like this:
+
+```js
+function* groupingSpliterator<T>(
+  split: symbol,
+  options: { getKey: Function },
+  source: Iterable<T>,
+) {
+  // implementation is unchanged
+}
+
+function groupBy<K, T>(
+  getKey: (value: T) => K,
+  source: Iterable<T>,
+): IterableIterator<[K, IterableIterator<T>]> {
+  return spliterateGrouped(
+    groupingSpliterator,
+    { getKey },
+    source,
+  );
+}
+```
+
+A final note: if you are creating a strategy which takes no options, it would be wise to bind an empty options object to avoid the confusion that iter-tools' partial application rules could cause.
+
+```js
+const mySpliterate = spliterate(myStrategy, {});
+```
+
+### asyncSpliterateGrouped
+
+**asyncSpliterateGrouped(strategy, options, [source](#asyncsourceiterable))**  
+**asyncSpliterateGrouped(options, [source](#asyncsourceiterable))**
+
+See [spliterateGrouped](#spliterategrouped)
 
 

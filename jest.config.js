@@ -17,6 +17,7 @@ module.exports = {
   testEnvironment: 'node',
   testMatch: [],
   coverageReporters: ['json-summary', 'text', 'lcov'],
+  coverageDirectory: './coverage/',
   projects: [
     makeProject({
       name: 'es5',

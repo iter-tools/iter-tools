@@ -6,45 +6,15 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { AsyncPartsIterator, AsyncSpliterator, split } from '../../../internal/async-spliterator';
+import { asyncSpliterate } from '../../$spliterate/async-spliterate';
 
-class AsyncPredicateSpliterator extends AsyncSpliterator {
-  constructor(sourceIterator, predicate) {
-    super(sourceIterator);
-    this.predicate = predicate;
-    this.item = null;
-    this.idx = 0;
-  }
-
-  static async nullOrInstance(sourceIterator, predicate) {
-    const inst = new AsyncPredicateSpliterator(sourceIterator, predicate);
-    return (await inst._isEmpty()) ? null : inst;
-  }
-
-  async _isEmpty() {
-    this.item = await super.next();
-    return this.item.done;
-  }
-
-  async next() {
-    if (this.item === null) {
-      this.item = await super.next();
-    }
-
-    if (this.item.done) {
-      return { value: undefined, done: true };
-    } else {
-      const { value } = this.item;
-      const shouldSplit = this.predicate(value, this.idx++);
-      this.item = null;
-
-      return { value: shouldSplit ? split : value, done: false };
-    }
+async function* asyncPredicateSpliterator(split, { predicate }, source) {
+  let i = 0;
+  for await (const value of source) {
+    yield (await predicate(value, i++)) ? split : value;
   }
 }
 
-export async function* asyncIterableSplitWith(source, predicate) {
-  yield* new AsyncPartsIterator(
-    await AsyncPredicateSpliterator.nullOrInstance(source[Symbol.asyncIterator](), predicate),
-  );
+export function asyncIterableSplitWith(source, predicate) {
+  return asyncSpliterate(source, asyncPredicateSpliterator, { predicate });
 }

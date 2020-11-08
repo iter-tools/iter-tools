@@ -5,18 +5,29 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## [7.0.0-rc.1] - UNRELEASED
+### Removed
+**Exports**
+ - `InterleaveBuffer`, `AsyncInterleaveBuffer`
+
+### Changed
+ - Breaking changes to `interleave` and `asyncInterleave`.
+ - Removed O(1) array optimizations from `last` and `lastOr`.
+
 ### Added
 **Methods**
  - `arrayFirst`, `arrayFirstOr`
  - `arrayLast`, `arrayLastOr`
- - `window`, `asyncWindow`
  - `arrayReverse`
+ - `peekerate`, `asyncPeekerate`
+ - `spliterate`, `asyncSpliterate`
+ - `spliterateGrouped`, `asyncSpliterateGrouped`
+ - `window`, `asyncWindow`
 
- **Arguments**
+**Arguments**
  - `useFiller` option for `leadingWindow` and `asyncLeadingWindow`.
 
-### Changed
- - Removed O(1) array optimizations from `last` and `lastOr`.
+**Classes**
+ - `Peekerator`, `PeekeratorClass`, `AsyncPeekerator`, `AsyncPeekeratorClass`
 
 
 
@@ -54,6 +65,26 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Renamed
 **Methods**
  -  `pipe` to `execPipe`
+
+### Changed
+ -  `import 'iter-tools/es5/method'` should now be `import 'iter-tools/method'`.
+ -  **IMPORTANT**; **BREAKING**: `slice(n)` is now equivalent to `[].slice(n)`, not `[].slice(0, n)`. You should now write `slice(0, n, iterable)`.
+ -  **IMPORTANT**; **BREAKING**: `repeat` order of arguments changed. You must now write `repeat(3, 'x')` instead of `repeat(x, 3)`.
+ -  All functions return iterables that can consumed multiple times.
+ -  It is now an error to make an empty partial application, e.g. `map()`.
+ -  `size(iterable)` now always consumes `iterable`. Use `getSize` if you know this is unnecessary.
+ -  `takeSorted` and `asyncTakeSorted`: Both `n` and `comparator` arguments are now optional.
+ -  `enumerate` and `asyncEnumerate`: optional starting idx is now specified before iterable. 
+ -  Optional configuration arguments can no longer be undefined. This was at odds with considering undefined as a valid iterable.
+ -  `range` can now called as either `range(end)` or `range(start, end, step)`. This matches Python.
+ -  `zipAll` now takes optional `filler` argument to use in place of values from exhausted iterables.
+ -  `fork` and `asyncFork` now take an extra optional argument: the number of forks.
+ -  `permutations`, `combinations`, `combinationsWithReplacement`: order of arguments is changed. Can now be curried.
+ -  `permutations`, `combinations`, `combinationsWithReplacement`, and `product`: `getSize()` is now just `size`.
+ -  `groupBy()` and `asyncGroupBy(null)` now return a partial application instead of an iterable.
+ -  `groupBy` now throws an error if the groups are accessed out of order.
+ -  `asyncBuffer` now starts buffering immediately instead of when the first item is taken.
+ -  For most Typescript generic method types, the order of the generics has changed. (Note: this only matters if you are explicitly providing values for the generics.)
 
 ### Added
 **Methods**
@@ -116,26 +147,6 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
  -  `groupBy(null, source)` and `asyncGroupBy(null, source)`. Instead use `group(source)` and `asyncGroup(source)`.
  -  `consume(callback, source)` and `asyncConsume(callback, source)`. Instead use `forEach(callback, source)` and `asyncForEach(callback, source)`.
 
-### Changed
- -  `import 'iter-tools/es5/method'` should now be `import 'iter-tools/method'`.
- -  **IMPORTANT**; **BREAKING**: `slice(n)` is now equivalent to `[].slice(n)`, not `[].slice(0, n)`. You should now write `slice(0, n, iterable)`.
- -  **IMPORTANT**; **BREAKING**: `repeat` order of arguments changed. You must now write `repeat(3, 'x')` instead of `repeat(x, 3)`.
- -  All functions return iterables that can consumed multiple times.
- -  It is now an error to make an empty partial application, e.g. `map()`.
- -  `size(iterable)` now always consumes `iterable`. Use `getSize` if you know this is unnecessary.
- -  `takeSorted` and `asyncTakeSorted`: Both `n` and `comparator` arguments are now optional.
- -  `enumerate` and `asyncEnumerate`: optional starting idx is now specified before iterable. 
- -  Optional configuration arguments can no longer be undefined. This was at odds with considering undefined as a valid iterable.
- -  `range` can now called as either `range(end)` or `range(start, end, step)`. This matches Python.
- -  `zipAll` now takes optional `filler` argument to use in place of values from exhausted iterables.
- -  `fork` and `asyncFork` now take an extra optional argument: the number of forks.
- -  `permutations`, `combinations`, `combinationsWithReplacement`: order of arguments is changed. Can now be curried.
- -  `permutations`, `combinations`, `combinationsWithReplacement`, and `product`: `getSize()` is now just `size`.
- -  `groupBy()` and `asyncGroupBy(null)` now return a partial application instead of an iterable.
- -  `groupBy` now throws an error if the groups are accessed out of order.
- -  `asyncBuffer` now starts buffering immediately instead of when the first item is taken.
- -  For most Typescript generic method types, the order of the generics has changed. (Note: this only matters if you are explicitly providing values for the generics.)
-
  ### Fixed
  -  A wide variety of Typescript type bugs were identified and squashed. You can see the full list [on Github](https://github.com/iter-tools/iter-tools/issues?utf8=%E2%9C%93&q=is%3Aissue+label%3Agenerate-types)
 
@@ -196,6 +207,14 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 **Arguments**
  -  `filler` argument from `zipLongest`, `asyncZipLongest`
+
+### Changed
+ -  **All methods:** Object parameters are no longer implicitly treated as iterables, and will throw errors.
+ -  **All curried methods:** passing `null` and `undefined` as the iterable will always result in those values being coerced to iterables. Currying happens based on `arguments.length`.
+ -  `compose([...fns])` => `compose(...fns)`
+ -  `asyncRegexpExecIter` and `asyncRegexpSplitIter` now coerce sync iterables to async iterables, matching behavior of all other async methods.
+ -  `regexpExec` now ensures its RegExp parameter is global unless it is already sticky.
+ -  `slice` and `asyncSlice` now support negative `start` and `end`.
  
 ### Deprecated
  -  `iter`, `asyncIter`
@@ -217,14 +236,6 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 **Arguments**
 -  [optional] `initial` for `reduce` and `asyncReduce`. If no initial value is specified, the first item will be used.
-
-### Changed
- -  **All methods:** Object parameters are no longer implicitly treated as iterables, and will throw errors.
- -  **All curried methods:** passing `null` and `undefined` as the iterable will always result in those values being coerced to iterables. Currying happens based on `arguments.length`.
- -  `compose([...fns])` => `compose(...fns)`
- -  `asyncRegexpExecIter` and `asyncRegexpSplitIter` now coerce sync iterables to async iterables, matching behavior of all other async methods.
- -  `regexpExec` now ensures its RegExp parameter is global unless it is already sticky.
- -  `slice` and `asyncSlice` now support negative `start` and `end`.
 
 
 ## [5.0.0] - 2018-6-20

@@ -8,32 +8,20 @@
 
 import { asyncIterableCurry } from '../../internal/async-iterable';
 import defaultCompare from '../../internal/compare';
+import { asyncPeekerate } from '../$peekerate/async-peekerate';
 
 export async function asyncIsSorted(iterable, comparator = defaultCompare) {
-  let a;
-  let b;
-  let iter;
-  let done;
+  const peekr = await asyncPeekerate(iterable);
 
-  try {
-    iter = iterable[Symbol.asyncIterator]();
+  while (!peekr.done) {
+    const { value } = peekr;
+    await peekr.advance();
 
-    ({ done, value: b } = await iter.next());
-
-    while (!done) {
-      a = b;
-      ({ done, value: b } = await iter.next());
-
-      if (!done && comparator(a, b) > 0) {
-        return false;
-      }
-    }
-    return true;
-  } finally {
-    if (!done && typeof iter.return === 'function') {
-      iter.return();
+    if (!peekr.done && comparator(value, peekr.value) > 0) {
+      return false;
     }
   }
+  return true;
 }
 
 export default asyncIterableCurry(asyncIsSorted, {

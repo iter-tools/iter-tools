@@ -1,4 +1,4 @@
-const _sourceBuffer = '@@_sourceBuffer';
+const _sourceBuffer = Symbol('sourceBuffer');
 
 export class ReadOnlyCircularBuffer {
   constructor(sourceBuffer) {

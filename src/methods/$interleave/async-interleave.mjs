@@ -6,29 +6,115 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { asyncEnsureIterable, asyncIterableCurry } from '../../internal/async-iterable';
-import AsyncInterleaveBuffer from './internal/async-buffer';
-import asyncMakeCanTakeAny from './internal/async-can-take-any';
+import { asyncIterableCurry } from '../../internal/async-iterable';
+import { AsyncPeekerator } from '../../internal/async-peekerator';
+import { asyncMap } from '../$map/async-map';
+import { asyncToArray } from '../$to-array/async-to-array';
 
-export async function* asyncInterleave(sources, generateInterleaved, options) {
-  const buffers = sources.map(
-    (iterable, i) =>
-      new AsyncInterleaveBuffer(asyncEnsureIterable(iterable)[Symbol.asyncIterator](), i),
-  );
+const _ = Symbol.for('_');
+const __advance = Symbol.for('__advance');
 
-  try {
-    const canTakeAny = asyncMakeCanTakeAny(buffers);
+class AsyncSummarizedPeekerator extends AsyncPeekerator {
+  constructor(iterator, first, inputSummary) {
+    super(iterator, first);
+    this[_].inputSummary = inputSummary;
+  }
 
-    yield* options !== undefined
-      ? generateInterleaved(options, canTakeAny, ...buffers)
-      : generateInterleaved(canTakeAny, ...buffers);
-  } finally {
-    for (const buffer of buffers) {
-      if ((await buffer.canTake()) && typeof buffer._iterator.return === 'function') {
-        await buffer._iterator.return();
-      }
+  async advance() {
+    await this[_].inputSummary.advanceBuffer(this);
+  }
+
+  async [__advance]() {
+    await super.advance();
+  }
+}
+
+class AsyncInputSummaryInternal {
+  constructor() {
+    this.buffers = [];
+    this.notDoneBuffer = null;
+  }
+
+  init(buffers) {
+    this.buffers = buffers;
+    this.updateNotDone();
+  }
+
+  updateNotDone() {
+    this.notDoneBuffer = this.buffers.find(buffer => !buffer.done);
+  }
+
+  async advanceBuffer(buffer) {
+    const wasDone = buffer.done;
+
+    await buffer[__advance]();
+
+    if (!wasDone && buffer.done) {
+      this.updateNotDone();
     }
   }
+}
+
+export class AsyncInputSummary {
+  constructor(internal) {
+    this[_] = internal;
+  }
+
+  advance() {
+    throw new Error('advance() is not supported on an interleave summary');
+  }
+
+  get current() {
+    return { done: this.done, value: this.value };
+  }
+
+  get value() {
+    return this[_].notDoneBuffer;
+  }
+
+  get done() {
+    return this[_].notDoneBuffer === undefined;
+  }
+
+  get index() {
+    return this[_].index;
+  }
+}
+
+class AsyncInterleaver {
+  constructor(sources, strategy, options) {
+    this.sources = sources;
+    this.strategy = strategy;
+    this.options = options;
+
+    this.initialized = false;
+    this.inputSummary = new AsyncInputSummaryInternal(sources);
+  }
+
+  async init() {
+    this.initialized = true;
+    const { strategy, options, inputSummary } = this;
+    this.buffers = await asyncToArray(
+      asyncMap(this.sources, source => AsyncSummarizedPeekerator.from(source, inputSummary)),
+    );
+    this.iterator = strategy(options, new AsyncInputSummary(inputSummary), ...this.buffers);
+
+    await inputSummary.init(this.buffers);
+  }
+
+  async next() {
+    if (!this.initialized) await this.init();
+
+    return await this.iterator.next();
+  }
+
+  async return() {
+    for (const buffer of this.buffers) await buffer.return();
+  }
+}
+
+export function asyncInterleave(sources, strategy, options = {}) {
+  return new AsyncInterleaver(sources, strategy, options);
 }
 
 export default asyncIterableCurry(asyncInterleave, {

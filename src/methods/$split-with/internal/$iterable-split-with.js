@@ -1,48 +1,16 @@
-import { $async, $await, $iteratorSymbol } from '../../../../generate/async.macro';
+import { $async, $await } from '../../../../generate/async.macro';
 
-import { $PartsIterator, $Spliterator, split } from '../../../internal/$spliterator';
+import { $spliterate } from '../../$spliterate/$spliterate';
 
-class $PredicateSpliterator extends $Spliterator {
-  constructor(sourceIterator, predicate) {
-    super(sourceIterator);
-    this.predicate = predicate;
-    this.item = null;
-    this.idx = 0;
-  }
-
-  @$async
-  static nullOrInstance(sourceIterator, predicate) {
-    const inst = new $PredicateSpliterator(sourceIterator, predicate);
-    return $await(inst._isEmpty()) ? null : inst;
-  }
-
-  @$async
-  _isEmpty() {
-    this.item = $await(super.next());
-    return this.item.done;
-  }
-
-  @$async
-  next() {
-    if (this.item === null) {
-      this.item = $await(super.next());
-    }
-
-    if (this.item.done) {
-      return { value: undefined, done: true };
-    } else {
-      const { value } = this.item;
-      const shouldSplit = this.predicate(value, this.idx++);
-      this.item = null;
-
-      return { value: shouldSplit ? split : value, done: false };
-    }
+$async;
+function* $predicateSpliterator(split, { predicate }, source) {
+  let i = 0;
+  $await;
+  for (const value of source) {
+    yield $await(predicate(value, i++)) ? split : value;
   }
 }
 
-$async;
-export function* $iterableSplitWith(source, predicate) {
-  yield* new $PartsIterator(
-    $await($PredicateSpliterator.nullOrInstance(source[$iteratorSymbol](), predicate)),
-  );
+export function $iterableSplitWith(source, predicate) {
+  return $spliterate(source, $predicateSpliterator, { predicate });
 }

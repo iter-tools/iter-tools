@@ -9,7 +9,7 @@
 /* eslint-disable no-unused-vars,import/no-duplicates,no-constant-condition */
 
 import { AsyncIterable } from '../../../types/async-iterable';
-import { asyncInterleave, AsyncInterleaveBuffer, asyncToArray } from '../../..';
+import { asyncInterleave, AsyncPeekerator, asyncToArray } from '../../..';
 
 describe('asyncInterleave', () => {
   const a = [1, 2, 3];
@@ -18,15 +18,25 @@ describe('asyncInterleave', () => {
 
   it('can be used to implement a round robin interleave', async () => {
     const roundRobin = asyncInterleave(async function*(
-      canTakeAny: () => Promise<AsyncInterleaveBuffer<number> | null>,
-      a: AsyncInterleaveBuffer<number>,
-      b: AsyncInterleaveBuffer<number>,
-      c: AsyncInterleaveBuffer<number>,
+      options: Record<string, any>,
+      all: AsyncPeekerator<AsyncPeekerator<number>>,
+      a: AsyncPeekerator<number>,
+      b: AsyncPeekerator<number>,
+      c: AsyncPeekerator<number>,
     ) {
-      while (await canTakeAny()) {
-        if (await a.canTake()) yield await a.take();
-        if (await b.canTake()) yield await b.take();
-        if (await c.canTake()) yield await c.take();
+      while (!all.done) {
+        if (!a.done) {
+          yield a.value;
+          await a.advance();
+        }
+        if (!b.done) {
+          yield b.value;
+          await b.advance();
+        }
+        if (!c.done) {
+          yield c.value;
+          await c.advance();
+        }
       }
     });
 
@@ -39,7 +49,7 @@ describe('asyncInterleave', () => {
     expect.assertions(1);
     await asyncToArray(
       asyncInterleave(
-        async function*(o: {}): AsyncIterable<any> {
+        async function*(o: Record<string, any>): AsyncIterable<any> {
           expect(o).toBe(options);
         },
         options,

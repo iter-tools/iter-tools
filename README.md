@@ -1,7 +1,8 @@
 # Iter-tools
 
 [![Build Status](https://travis-ci.org/iter-tools/iter-tools.svg?branch=master)](https://travis-ci.org/iter-tools/iter-tools)
-![Codecov](https://img.shields.io/codecov/c/github/iter-tools/iter-tools)
+[![codecov](https://codecov.io/gh/iter-tools/iter-tools/branch/master/graph/badge.svg)](https://codecov.io/gh/iter-tools/iter-tools)
+
 [![npm version](https://img.shields.io/npm/v/iter-tools.svg)](https://www.npmjs.com/package/iter-tools)
 [![Gitter chat](https://badges.gitter.im/gitterHQ/gitter.png)](https://gitter.im/iter-tools/community)
 

@@ -8,11 +8,12 @@
 
 import { CircularBuffer } from '../../internal/circular-buffer';
 import { iterableCurry } from '../../internal/iterable';
-import { IterableIterator } from '../../internal/iterable-iterator';
-import { PartsIterator, split } from '../../internal/spliterator';
+import { Bisector } from '../../internal/bisector';
+import { wrap } from '../../internal/wrap';
+import { peekerate } from '../$peekerate/peekerate';
 
-export function* IndexSpliterator(source, idx) {
-  const sourceIterator = source[Symbol.iterator]();
+export function* indexSplitStrategy(split, { idx }, source) {
+  const sourcePeekr = peekerate(source);
   const fromEnd = idx < 0;
   const offset = Math.abs(idx);
   const buffer = fromEnd ? new CircularBuffer(offset) : null;
@@ -21,24 +22,23 @@ export function* IndexSpliterator(source, idx) {
   let sourceDone = false;
 
   try {
-    let item;
     let value;
     /* eslint-disable no-unmodified-loop-condition */
-    while ((fromEnd || currentPos < idx) && !(item = sourceIterator.next()).done) {
+    while ((fromEnd || currentPos < idx) && !sourcePeekr.done) {
       /* eslint-enable no-unmodified-loop-condition */
       currentPos++;
-      ({ value } = item);
+      ({ value } = sourcePeekr);
 
       if (fromEnd) {
         value = buffer.push(value);
       }
 
-      if (fromEnd && currentPos <= offset) {
-        continue;
-      } else {
+      if (!fromEnd || currentPos > offset) {
         yield value;
         yielded++;
       }
+
+      sourcePeekr.advance();
     }
 
     if (fromEnd) {
@@ -53,77 +53,21 @@ export function* IndexSpliterator(source, idx) {
     if (fromEnd) {
       yield* buffer;
     } else {
-      while (!(item = sourceIterator.next()).done) {
-        yield item.value;
+      while (!sourcePeekr.done) {
+        yield sourcePeekr.value;
+        sourcePeekr.advance();
       }
     }
     sourceDone = true;
   } finally {
     if (!sourceDone) {
-      sourceIterator.return && sourceIterator.return();
+      sourcePeekr.return();
     }
   }
 }
 
-// This unfortunately could not be expressed as a generator function
-// because you can't throw an error safely inside a finally block,
-// which is the only way to manage return behavior in a generator function.
-export class SplitAt extends IterableIterator {
-  constructor(source, idx) {
-    super();
-    this.source = source;
-    this.idx = idx;
-    this.partsIterator = null;
-    this.firstPart = null;
-    this.secondPart = null;
-    this.currentIdx = 0;
-  }
-
-  setupFirst() {
-    this.partsIterator =
-      this.partsIterator || new PartsIterator(IndexSpliterator(this.source, this.idx));
-    this.firstPart = this.firstPart || this.partsIterator.next().value;
-  }
-
-  next() {
-    const self = this;
-    switch (this.currentIdx++) {
-      case 0:
-        return {
-          value: (function*() {
-            self.setupFirst();
-
-            yield* self.firstPart;
-          })(),
-          done: false,
-        };
-
-      case 1:
-        return {
-          value: (function*() {
-            self.setupFirst();
-            self.secondPart = self.partsIterator.next().value;
-
-            yield* self.secondPart;
-          })(),
-          done: false,
-        };
-
-      default:
-        return { value: undefined, done: true };
-    }
-  }
-
-  return() {
-    if (this.currentIdx === 1) {
-      throw new Error('You must take both parts from splitAt or neither.');
-    }
-    return { value: undefined, done: true };
-  }
-}
-
-export function* splitAt(source, idx) {
-  yield* new SplitAt(source, idx);
+export function splitAt(source, idx) {
+  return wrap(new Bisector(source, indexSplitStrategy, { idx }));
 }
 
 export default iterableCurry(splitAt, {

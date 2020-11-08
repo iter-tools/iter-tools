@@ -8,32 +8,20 @@
 
 import { iterableCurry } from '../../internal/iterable';
 import defaultCompare from '../../internal/compare';
+import { peekerate } from '../$peekerate/peekerate';
 
 export function isSorted(iterable, comparator = defaultCompare) {
-  let a;
-  let b;
-  let iter;
-  let done;
+  const peekr = peekerate(iterable);
 
-  try {
-    iter = iterable[Symbol.iterator]();
+  while (!peekr.done) {
+    const { value } = peekr;
+    peekr.advance();
 
-    ({ done, value: b } = iter.next());
-
-    while (!done) {
-      a = b;
-      ({ done, value: b } = iter.next());
-
-      if (!done && comparator(a, b) > 0) {
-        return false;
-      }
-    }
-    return true;
-  } finally {
-    if (!done && typeof iter.return === 'function') {
-      iter.return();
+    if (!peekr.done && comparator(value, peekr.value) > 0) {
+      return false;
     }
   }
+  return true;
 }
 
 export default iterableCurry(isSorted, {

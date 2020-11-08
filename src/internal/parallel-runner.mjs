@@ -1,9 +1,10 @@
 import { CircularBuffer } from './circular-buffer';
-import { AsyncIteratorProxy } from './async-iterator-proxy';
+import { AsyncIterableIterator } from './async-iterable-iterator';
 
-export class ParallelRunner extends AsyncIteratorProxy {
-  constructor(iterator, mapFn, concurrency) {
-    super(iterator);
+export class ParallelRunner extends AsyncIterableIterator {
+  constructor(iterable, mapFn, concurrency) {
+    super();
+    this.iterator = iterable[Symbol.asyncIterator]();
     this.buffer = new CircularBuffer(concurrency - 1);
     this.mapFn = mapFn;
   }
@@ -12,7 +13,7 @@ export class ParallelRunner extends AsyncIteratorProxy {
     const { buffer, mapFn } = this;
     const done = this.__done;
 
-    const promise = super
+    const promise = this.iterator
       .next()
       .then(async item => (item.done ? item : { value: await mapFn(item.value), done: false }));
 

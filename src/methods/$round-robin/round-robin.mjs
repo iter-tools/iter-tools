@@ -10,10 +10,14 @@ import { iterableCurry } from '../../internal/iterable';
 
 import { interleave } from '../$interleave/interleave';
 
-function* byPosition({ start, step }, canTakeAny, ...buffers) {
-  start = start % buffers.length;
-  for (let i = start; canTakeAny(); i = (i + step) % buffers.length) {
-    if (buffers[i].canTake()) yield buffers[i].take();
+function* byPosition({ start, step }, all, ...peekrs) {
+  start = start % peekrs.length;
+  for (let i = start; !all.done; i = (i + step) % peekrs.length) {
+    const peekr = peekrs[i];
+    if (!peekr.done) {
+      yield peekr.value;
+      peekr.advance();
+    }
   }
 }
 

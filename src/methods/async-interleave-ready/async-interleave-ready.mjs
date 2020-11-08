@@ -1,13 +1,19 @@
-import asyncInterleave from '../$interleave/async-interleave';
+import { asyncIterableCurry } from '../../internal/async-iterable';
+import { raceTo } from './internal/race-to';
 
-async function* _asyncInterleaveReady(_, canTakeAny) {
-  let buffer;
-  while ((buffer = await canTakeAny())) yield await buffer.take();
+export async function* asyncInterleaveReady(sources) {
+  const iterators = sources.map(iterable => iterable[Symbol.asyncIterator]());
+
+  const itemPromises = iterators.map((iter, idx) => iter.next().then(item => ({ idx, item })));
+
+  let ready;
+  while ((ready = await raceTo(({ item }) => !item.done, null, itemPromises)) !== null) {
+    const { idx, item } = ready;
+    yield item.value;
+    itemPromises[idx] = iterators[idx].next().then(item => ({ idx, item }));
+  }
 }
 
-// Pass empty options to ensure there's no chance currying would cause
-// an invalid iterable to instead be bound as the options argument.
-const emptyOptions = {};
-export const asyncInterleaveReady = asyncInterleave(_asyncInterleaveReady, emptyOptions);
-
-export default asyncInterleaveReady;
+export default asyncIterableCurry(asyncInterleaveReady, {
+  variadic: true,
+});

@@ -5,15 +5,13 @@ export async function* asyncFilterParallel(iterable, concurrency = 4, func) {
   let c = 0;
 
   const mapped = new ParallelRunner(
-    iterable[Symbol.asyncIterator](),
-    async item => ({ item, value: await func(item, c++) }),
+    iterable,
+    async value => ({ value, result: await func(value, c++) }),
     concurrency,
   );
 
-  for await (const item of mapped) {
-    if (item.value) {
-      yield item.item;
-    }
+  for await (const { value, result } of mapped) {
+    if (result) yield value;
   }
 }
 

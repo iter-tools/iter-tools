@@ -7,7 +7,10 @@
  */
 
 import { iterableCurry } from '../../internal/iterable';
-import { PartsIterator, Spliterator, split } from '../../internal/spliterator';
+import { spliterateGrouped } from '../$spliterate-grouped/spliterate-grouped';
+import { peekerate } from '../$peekerate/peekerate';
+
+const initialKey = Symbol('initial group key');
 
 let warnedNullGetKeyDeprecation = false;
 
@@ -21,77 +24,33 @@ const warnNullGetKeyDeprecation = () => {
   }
 };
 
-class GroupingSpliterator extends Spliterator {
-  constructor(sourceIterator, getKey) {
-    super(sourceIterator);
-    this.getKey = getKey;
-    this.key = undefined;
-    this.item = null;
-    this.idx = 0;
-  }
+function* groupingSpliterator(split, { getKey }, source) {
+  const peekr = peekerate(source);
+  let key = initialKey;
+  let idx = 0;
 
-  static nullOrInstance(sourceIterator, getKey) {
-    const inst = new GroupingSpliterator(sourceIterator, getKey);
-    return inst._isEmpty() ? null : inst;
-  }
+  while (!peekr.done) {
+    const lastKey = key;
 
-  _isEmpty() {
-    this.buffer();
-    return this.item.done;
-  }
+    key = getKey(peekr.value, idx++);
 
-  buffer() {
-    const { key } = this;
-    if (this.item === null) {
-      this.item = super.next();
-      const { done, value } = this.item;
-      if (!done) {
-        this.key = this.getKey(value, this.idx++);
-      }
+    if (lastKey !== key) {
+      yield split;
+      yield key;
     }
-    return this.key !== key;
-  }
 
-  next() {
-    const newGroup = this.buffer();
+    yield peekr.value;
 
-    if (this.item.done) {
-      return { value: undefined, done: true };
-    } else {
-      const { value } = this.item;
-
-      if (!newGroup) {
-        this.item = null;
-      }
-
-      return { value: newGroup ? split : value, done: false };
-    }
+    peekr.advance();
   }
 }
 
-class GroupPartsIterator extends PartsIterator {
-  next() {
-    const item = super.next();
-    if (!item.done) {
-      this.spliterator.buffer();
-      return { value: [this.spliterator.key, item.value], done: false };
-    } else {
-      return item;
-    }
-  }
-}
-
-export function* groupBy(source, getKey) {
+export function groupBy(source, getKey) {
   if (getKey === null) {
     warnNullGetKeyDeprecation();
   }
 
-  yield* new GroupPartsIterator(
-    GroupingSpliterator.nullOrInstance(
-      source[Symbol.iterator](),
-      getKey === null ? _ => _ : getKey,
-    ),
-  );
+  return spliterateGrouped(source, groupingSpliterator, { getKey });
 }
 
 export default iterableCurry(groupBy);

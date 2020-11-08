@@ -27,5 +27,5 @@ ${[...generatedPaths]
   .map(name => `export { default as ${camelcase(name)} } from './${name}';`)
   .join('\n')}
 
-export * from './index-interfaces';
+export * from './index-static';
 `;
