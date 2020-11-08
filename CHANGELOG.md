@@ -12,6 +12,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Changed
  - Breaking changes to `interleave` and `asyncInterleave`.
  - Removed O(1) array optimizations from `last` and `lastOr`.
+ - `batch`, `asyncBatch`: Each batch is now an iterator (was array). Batches must be consumed in order.
 
 ### Added
 **Methods**
