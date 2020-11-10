@@ -10,7 +10,7 @@
 
 import { asyncStartsWithAny, range } from '../../..';
 
-describe.skip('asyncStartsWithAny', () => {
+describe('asyncStartsWithAny', () => {
   it('returns true if the iterable starts with any of the given values', async () => {
     expect(await asyncStartsWithAny([0, 1], range(1, 10))).toBe(true);
   });

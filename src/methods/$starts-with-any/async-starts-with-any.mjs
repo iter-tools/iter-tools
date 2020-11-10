@@ -7,14 +7,15 @@
  */
 
 import { asyncIterableCurry } from '../../internal/async-iterable';
-import { asyncStartsWith_ } from '../$starts-with_/async-starts-with_';
+import { asyncFirstOr } from '../$first-or/async-first-or';
 
-const config = { any: true, subseq: false };
+const none = Symbol('none');
 
-export function asyncStartsWithAny(iterable, value) {
-  return asyncStartsWith_(iterable, config, value);
+export async function asyncStartsWithAny(iterable, values) {
+  return values.includes(await asyncFirstOr(iterable, none));
 }
 
 export default asyncIterableCurry(asyncStartsWithAny, {
   reduces: true,
+  validateArgs(args) {},
 });

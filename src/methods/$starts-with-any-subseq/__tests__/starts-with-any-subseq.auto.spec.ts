@@ -10,7 +10,7 @@
 
 import { startsWithAnySubseq, range } from '../../..';
 
-describe.skip('startsWithAnySubseq', () => {
+describe('startsWithAnySubseq', () => {
   it('returns true if the iterable starts with any of the given subsequences', () => {
     expect(startsWithAnySubseq([[0, 1], [1, 2]], range(0, 10))).toBe(true);
   });
@@ -23,8 +23,8 @@ describe.skip('startsWithAnySubseq', () => {
     expect(startsWithAnySubseq([range(0, 2), range(1, 3)], range(1, 3))).toBe(true);
   });
 
-  it('returns true if no subsequences are given', () => {
-    expect(startsWithAnySubseq([], range(1, 3))).toBe(true);
+  it('returns false if no subsequences are given', () => {
+    expect(startsWithAnySubseq([], range(1, 3))).toBe(false);
   });
 
   it('returns false if the given subsequences are longer than the iterable', () => {
@@ -34,6 +34,7 @@ describe.skip('startsWithAnySubseq', () => {
   describe('when the iterable is empty', () => {
     it('returns true if any subsequence is empty', () => {
       expect(startsWithAnySubseq([[], [null]], [])).toBe(true);
+      expect(startsWithAnySubseq([null], [])).toBe(true);
     });
 
     it('returns false if all subsequences are not empty', () => {

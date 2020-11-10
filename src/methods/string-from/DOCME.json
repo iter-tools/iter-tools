@@ -1,0 +1,5 @@
+{
+  "type": "consume",
+  "aliases": ["str"],
+  "signatures": [[{ "name": "source", "isIterable": true }]]
+}

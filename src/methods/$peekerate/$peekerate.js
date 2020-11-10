@@ -1,3 +1,4 @@
+import { $ensureIterable } from '../../internal/$iterable';
 import { $Peekerator } from '../../internal/$peekerator';
 
 // This is for the benefit of the type system.
@@ -8,4 +9,8 @@ export function $peekerate(source) {
   return $Peekerator.from(source);
 }
 
-export default $peekerate;
+function $wrapWithEnsureIterable(fn) {
+  return source => fn($ensureIterable(source));
+}
+
+export default $wrapWithEnsureIterable($peekerate);

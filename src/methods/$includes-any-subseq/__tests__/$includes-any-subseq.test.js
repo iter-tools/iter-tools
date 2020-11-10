@@ -18,9 +18,9 @@ describe($`includesAnySubseq`, () => {
   );
 
   it(
-    'returns true if no subsequences are given',
+    'returns false if no subsequences are given',
     $async(() => {
-      expect($await($includesAnySubseq([], range(1, 3)))).toBe(true);
+      expect($await($includesAnySubseq([], range(1, 3)))).toBe(false);
     }),
   );
 

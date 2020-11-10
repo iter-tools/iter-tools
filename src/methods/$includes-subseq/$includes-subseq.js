@@ -1,12 +1,13 @@
-import { $iterableCurry } from '../../internal/$iterable';
-import { $includes_ } from '../$includes_/$includes_';
-
-const config = { any: false, subseq: true };
+import { $iterableCurry, $ensureIterable } from '../../internal/$iterable';
+import { $includesAnySubseq } from '../$includes-any-subseq/$includes-any-subseq';
 
 export function $includesSubseq(iterable, subseq) {
-  return $includes_(iterable, config, subseq);
+  return $includesAnySubseq(iterable, [subseq]);
 }
 
 export default $iterableCurry($includesSubseq, {
   reduces: true,
+  validateArgs(args) {
+    args[0] = $ensureIterable(args[0]);
+  },
 });

@@ -6,15 +6,51 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { iterableCurry } from '../../internal/iterable';
-import { startsWith_ } from '../$starts-with_/starts-with_';
+import { iterableCurry, ensureIterable } from '../../internal/iterable';
+import { zipAll } from '../$zip-all/zip-all';
+import { peekerate } from '../$peekerate/peekerate';
 
-const config = { any: true, subseq: true };
+const none = Symbol('none');
 
-export function startsWithAnySubseq(iterable, valueSubseqs) {
-  return startsWith_(iterable, config, valueSubseqs);
+export function startsWithAnySubseq_(peekr, subseqPeekr) {
+  if (subseqPeekr.done || subseqPeekr.value.includes(none)) return true;
+
+  const matches = subseqPeekr.value.map(() => true);
+
+  while (!peekr.done && !subseqPeekr.done) {
+    const { value } = peekr; // the value to match
+    const { value: seqValue } = subseqPeekr;
+
+    for (let i = 0; i < seqValue.length; i++) {
+      if (seqValue[i] === none) {
+        if (matches[i]) return true;
+      } else {
+        matches[i] = matches[i] && seqValue[i] === value;
+      }
+    }
+    subseqPeekr.advance();
+    peekr.advance();
+  }
+
+  return subseqPeekr.done && matches.includes(true);
+}
+
+export function startsWithAnySubseq(iterable, subseqs) {
+  if (!subseqs.length) return false;
+  const peekr = peekerate(iterable);
+  const subseqPeekr = peekerate(zipAll(subseqs, { filler: none }));
+
+  const seqFound = startsWithAnySubseq_(peekr, subseqPeekr);
+
+  subseqPeekr.return();
+  peekr.return();
+
+  return seqFound;
 }
 
 export default iterableCurry(startsWithAnySubseq, {
   reduces: true,
+  validateArgs(args) {
+    args[0] = args[0].map(arg => ensureIterable(arg));
+  },
 });

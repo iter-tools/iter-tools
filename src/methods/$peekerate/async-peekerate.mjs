@@ -6,6 +6,7 @@
  * More information can be found in CONTRIBUTING.md
  */
 
+import { asyncEnsureIterable } from '../../internal/async-iterable';
 import { AsyncPeekerator } from '../../internal/async-peekerator';
 
 // This is for the benefit of the type system.
@@ -16,4 +17,8 @@ export function asyncPeekerate(source) {
   return AsyncPeekerator.from(source);
 }
 
-export default asyncPeekerate;
+function asyncWrapWithEnsureIterable(fn) {
+  return source => fn(asyncEnsureIterable(source));
+}
+
+export default asyncWrapWithEnsureIterable(asyncPeekerate);

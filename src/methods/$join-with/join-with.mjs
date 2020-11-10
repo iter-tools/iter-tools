@@ -13,4 +13,10 @@ export function joinWith(source, separator) {
   return joinWithSubseq(source, [separator]);
 }
 
-export default iterableCurry(joinWith);
+export default iterableCurry(joinWith, {
+  validateArgs(args) {
+    if (true && typeof args[1] === 'string') {
+      console.warn(`For string inputs use joinWithSubseq instead of joinWith`);
+    }
+  },
+});

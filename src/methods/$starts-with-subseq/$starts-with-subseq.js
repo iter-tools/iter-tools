@@ -1,12 +1,14 @@
-import { $iterableCurry } from '../../internal/$iterable';
-import { $startsWith_ } from '../$starts-with_/$starts-with_';
+import { $iterableCurry, $ensureIterable } from '../../internal/$iterable';
 
-const config = { any: false, subseq: true };
+import { $startsWithAnySubseq } from '../$starts-with-any-subseq/$starts-with-any-subseq';
 
-export function $startsWithSubseq(iterable, valueSubseq) {
-  return $startsWith_(iterable, config, valueSubseq);
+export function $startsWithSubseq(iterable, subseq) {
+  return $startsWithAnySubseq(iterable, [subseq]);
 }
 
 export default $iterableCurry($startsWithSubseq, {
   reduces: true,
+  validateArgs(args) {
+    args[0] = $ensureIterable(args[0]);
+  },
 });

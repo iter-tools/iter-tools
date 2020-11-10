@@ -1,12 +1,7 @@
 import { $SourceIterable, $ResultIterable } from '../../types/$iterable';
 
-declare function $interpose<I>(
-  interposed: I,
-): <T>(source: $SourceIterable<T>) => $ResultIterable<T | I>;
+declare function $interpose<V>(value: V): <T>(source: $SourceIterable<T>) => $ResultIterable<T | V>;
 
-declare function $interpose<I, T>(
-  interposed: I,
-  source: $SourceIterable<T>,
-): $ResultIterable<T | I>;
+declare function $interpose<V, T>(value: V, source: $SourceIterable<T>): $ResultIterable<T | V>;
 
 export default $interpose;

@@ -7,14 +7,13 @@
  */
 
 import { AsyncSourceIterable } from '../../types/async-iterable';
-import { SourceIterable as SyncSourceIterable } from '../../types/iterable';
 
 declare function asyncStartsWithAny(
-  values: SyncSourceIterable<any>,
+  values: Array<any>,
 ): (iterable: AsyncSourceIterable<any>) => Promise<boolean>;
 
 declare function asyncStartsWithAny(
-  values: SyncSourceIterable<any>,
+  values: Array<any>,
   iterable: AsyncSourceIterable<any>,
 ): Promise<boolean>;
 

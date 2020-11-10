@@ -6,23 +6,35 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [7.0.0-rc.1] - UNRELEASED
 ### Removed
+**Methods**
+ - `joinAsString`, `asyncJoinAsString` (Instead use `str(join(...))`)
+ - `joinAsStringWith`, `asyncJoinAsStringWith` (Instead use `str(joinWith(sep, ...))`)
+ - `regexpExec`
+
 **Exports**
  - `InterleaveBuffer`, `AsyncInterleaveBuffer`
 
 ### Changed
- - Breaking changes to `interleave` and `asyncInterleave`.
- - Removed O(1) array optimizations from `last` and `lastOr`.
- - `batch`, `asyncBatch`: Each batch is now an iterator (was array). Batches must be consumed in order.
+ - `interleave` and `asyncInterleave` now wrap sources with `Peekerator` instead of `InterleaveBuffer`. Change `function* (canTakeAny, ...buffers) { while(canTakeAny()) { ... } }` to `function* (all, ...peekrs) { while(!all.done) { ... } }`.
+ - `last` and `lastOr` no longer have O(1) optimizations for array inputs. Instead use `arrayLast` or `arrayLastOr`.
+ - `batch`, `asyncBatch` now yield batches which are iterables but not arrays. The batches must be consumed in order. For the old behavior use `map(toArray, batch(...))`.
+ - `*any` and `*anySubseq` methods now require the possible values or subseqs to be passed as a non-nullable array. To replicate the old behavior change `startsWithAny(valuesIterable)` to `startsWithAny(wrap([...valuesIterable])`.
+ - `includesAny`, `startsWithAny` (and async and subseq variants) now return `false` when nothing is being searched for, e.g. `includesAny([], iterable) === false`.
 
 ### Added
 **Methods**
  - `arrayFirst`, `arrayFirstOr`
  - `arrayLast`, `arrayLastOr`
  - `arrayReverse`
+ - `interposeSubseq`, `asyncInterposeSubseq`
  - `peekerate`, `asyncPeekerate`
  - `spliterate`, `asyncSpliterate`
  - `spliterateGrouped`, `asyncSpliterateGrouped`
  - `window`, `asyncWindow`
+ - `stringFrom`, `stringFromAsync`
+
+**Aliases**
+ - `str` for `stringFrom`, `asyncStr` for `stringFromAsync`
 
 **Arguments**
  - `useFiller` option for `leadingWindow` and `asyncLeadingWindow`.

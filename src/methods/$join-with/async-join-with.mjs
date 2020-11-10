@@ -13,4 +13,6 @@ export function asyncJoinWith(source, separator) {
   return asyncJoinWithSubseq(source, [separator]);
 }
 
-export default asyncIterableCurry(asyncJoinWith);
+export default asyncIterableCurry(asyncJoinWith, {
+  validateArgs(args) {},
+});

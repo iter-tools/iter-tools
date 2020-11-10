@@ -22,7 +22,7 @@ class MonoliticGenerator extends Generator {
       'src/methods/*/{README.md,README.async.md,README.parallel.md,DOCME.json}',
       'src/methods/*/*.{js,mjs}',
     ];
-    this.ignored = ['src/methods/*_/**', 'src/methods/*/$*.{js,mjs}'];
+    this.ignored = ['src/methods/*/$*.{js,mjs}'];
 
     this.files = new Map();
     this.aliases = new Map();

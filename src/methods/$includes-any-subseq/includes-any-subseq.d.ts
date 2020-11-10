@@ -6,14 +6,14 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { SourceIterable, SourceIterable as SyncSourceIterable } from '../../types/iterable';
+import { SourceIterable } from '../../types/iterable';
 
 declare function includesAnySubseq(
-  subseqs: SyncSourceIterable<SourceIterable<any>>,
+  subseqs: Array<SourceIterable<any>>,
 ): (iterable: SourceIterable<any>) => boolean;
 
 declare function includesAnySubseq(
-  subseqs: SyncSourceIterable<SourceIterable<any>>,
+  subseqs: Array<SourceIterable<any>>,
   iterable: SourceIterable<any>,
 ): boolean;
 

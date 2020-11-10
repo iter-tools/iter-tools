@@ -1,9 +1,9 @@
-import { $async, $iteratorSymbol } from '../../../generate/async.macro';
+import { $async } from '../../../generate/async.macro';
 import { $wrapWithResultIterable, $ensureIterable } from '../../internal/$iterable';
 
 $async;
 export function* $wrap(source) {
-  yield* $ensureIterable(source)[$iteratorSymbol]();
+  yield* $ensureIterable(source);
 }
 
 export default $wrapWithResultIterable($wrap);
