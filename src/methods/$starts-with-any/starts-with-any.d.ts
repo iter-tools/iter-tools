@@ -6,15 +6,10 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { SourceIterable, SourceIterable as SyncSourceIterable } from '../../types/iterable';
+import { SourceIterable } from '../../types/iterable';
 
-declare function startsWithAny(
-  values: SyncSourceIterable<any>,
-): (iterable: SourceIterable<any>) => boolean;
+declare function startsWithAny(values: Array<any>): (iterable: SourceIterable<any>) => boolean;
 
-declare function startsWithAny(
-  values: SyncSourceIterable<any>,
-  iterable: SourceIterable<any>,
-): boolean;
+declare function startsWithAny(values: Array<any>, iterable: SourceIterable<any>): boolean;
 
 export default startsWithAny;

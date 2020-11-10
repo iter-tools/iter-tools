@@ -10,7 +10,7 @@
 
 import { startsWithSubseq, range } from '../../..';
 
-describe.skip('startsWithSubseq', () => {
+describe('startsWithSubseq', () => {
   it('returns true if the iterable starts with the given subsequence', () => {
     expect(startsWithSubseq([1, 2], range(1, 10))).toBe(true);
   });

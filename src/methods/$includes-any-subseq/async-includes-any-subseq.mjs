@@ -7,12 +7,24 @@
  */
 
 import { asyncIterableCurry } from '../../internal/async-iterable';
-import { asyncIncludes_ } from '../$includes_/async-includes_';
+import { asyncSubseqsToArray } from '../../internal/async-any-subseq';
+import { asyncLeadingWindow } from '../$leading-window/async-leading-window';
+import { startsWithAnySubseq } from '../$starts-with-any-subseq/starts-with-any-subseq';
 
-const config = { any: true, subseq: true };
+export async function asyncIncludesAnySubseq(iterable, subseqs) {
+  const subseqsArr = await asyncSubseqsToArray(subseqs);
 
-export function asyncIncludesAnySubseq(iterable, subseqs) {
-  return asyncIncludes_(iterable, config, subseqs);
+  if (!subseqsArr.length) return false;
+  if (subseqsArr.find(subseq => !subseq.length)) return true;
+
+  const maxMatchLength = subseqsArr.reduce((max, { length }) => Math.max(max, length), 1);
+
+  for await (const buffer of asyncLeadingWindow(iterable, maxMatchLength)) {
+    if (startsWithAnySubseq(buffer, subseqsArr)) {
+      return true;
+    }
+  }
+  return false;
 }
 
 export default asyncIterableCurry(asyncIncludesAnySubseq, {

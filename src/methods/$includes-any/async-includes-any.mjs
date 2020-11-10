@@ -7,14 +7,15 @@
  */
 
 import { asyncIterableCurry } from '../../internal/async-iterable';
-import { asyncIncludes_ } from '../$includes_/async-includes_';
+import { asyncFindOr } from '../$find-or/async-find-or';
 
-const config = { any: true, subseq: false };
+const none = Symbol('none');
 
-export function asyncIncludesAny(iterable, values) {
-  return asyncIncludes_(iterable, config, values);
+export async function asyncIncludesAny(iterable, values) {
+  return (await asyncFindOr(iterable, none, value => values.includes(value))) !== none;
 }
 
 export default asyncIterableCurry(asyncIncludesAny, {
   reduces: true,
+  validateArgs(args) {},
 });

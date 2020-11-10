@@ -6,24 +6,23 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { SourceIterable as SyncSourceIterable } from '../../types/iterable';
 import { AsyncSourceIterable, AsyncResultIterable } from '../../types/async-iterable';
 
 declare function asyncSplitOnAny(
-  separatorValues: SyncSourceIterable<string>,
+  separatorValues: Array<string>,
 ): (source: string) => AsyncResultIterable<string>;
 
 declare function asyncSplitOnAny(
-  separatorValues: SyncSourceIterable<any>,
+  separatorValues: Array<any>,
 ): <T>(source: AsyncSourceIterable<T>) => AsyncResultIterable<AsyncResultIterable<T>>;
 
 declare function asyncSplitOnAny(
-  separatorValues: SyncSourceIterable<string>,
+  separatorValues: Array<string>,
   source: string,
 ): AsyncResultIterable<string>;
 
 declare function asyncSplitOnAny<T>(
-  separatorValues: SyncSourceIterable<any>,
+  separatorValues: Array<any>,
   source: AsyncSourceIterable<T>,
 ): AsyncResultIterable<AsyncResultIterable<T>>;
 

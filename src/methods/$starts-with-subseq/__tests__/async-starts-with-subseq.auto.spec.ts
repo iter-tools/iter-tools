@@ -10,7 +10,7 @@
 
 import { asyncStartsWithSubseq, range } from '../../..';
 
-describe.skip('asyncStartsWithSubseq', () => {
+describe('asyncStartsWithSubseq', () => {
   it('returns true if the iterable starts with the given subsequence', async () => {
     expect(await asyncStartsWithSubseq([1, 2], range(1, 10))).toBe(true);
   });

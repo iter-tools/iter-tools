@@ -7,38 +7,29 @@
  */
 
 import { iterableCurry } from '../../internal/iterable';
+import { peekerate } from '../$peekerate/peekerate';
 import { map } from '../$map/map';
+import { some } from '../$some/some';
+import { toArray } from '../$to-array/to-array';
+
+const isDone = peekr => peekr.done;
 
 export function* zip(sources) {
-  const iters = sources.map(arg => arg[Symbol.iterator]());
-  const itersDone = iters.map(iter => ({ done: false, iter }));
+  if (!sources.length) return;
+
+  const peekrs = toArray(map(sources, peekerate));
+  let done = some(peekrs, isDone);
 
   try {
-    while (true) {
-      const results = map(iters, iter => iter.next());
-      const syncResults = results;
+    while (!done) {
+      yield peekrs.map(({ value }) => value);
 
-      const zipped = new Array(iters.length);
+      for (const peekr of peekrs) peekr.advance();
 
-      let i = 0;
-      let allDone = true;
-      let done = false;
-      for (const result of syncResults) {
-        allDone = allDone && result.done;
-        done = done || result.done;
-        itersDone[i].done = result.done;
-        zipped[i] = result.value;
-        i++;
-      }
-
-      if (done) break;
-      yield zipped;
-      if (allDone) break;
+      done = some(peekrs, isDone);
     }
   } finally {
-    for (const { iter, done } of itersDone) {
-      if (!done && typeof iter.return === 'function') iter.return();
-    }
+    for (const peekr of peekrs) peekr.return();
   }
 }
 

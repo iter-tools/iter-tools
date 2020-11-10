@@ -41,14 +41,4 @@ describe('splitOn', () => {
   it('passes through the empty iterable', () => {
     expect(uw(splitOn(0, null))).toEqual([]);
   });
-
-  it('passes through the empty string', () => {
-    expect(uw(splitOn(' ', ''))).toEqual([]);
-  });
-
-  describe('given a string', () => {
-    it('should split on every item which is equal to the on argument', () => {
-      expect(uw(splitOn('Ø', '11Ø22Ø33'))).toEqual(['11', '22', '33']);
-    });
-  });
 });

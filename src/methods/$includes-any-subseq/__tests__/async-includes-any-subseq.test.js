@@ -19,8 +19,8 @@ describe('asyncIncludesAnySubseq', () => {
     expect(await asyncIncludesAnySubseq([range(0, 2), range(1, 3)], range(1, 3))).toBe(true);
   });
 
-  it('returns true if no subsequences are given', async () => {
-    expect(await asyncIncludesAnySubseq([], range(1, 3))).toBe(true);
+  it('returns false if no subsequences are given', async () => {
+    expect(await asyncIncludesAnySubseq([], range(1, 3))).toBe(false);
   });
 
   it('returns false if the given subsequences are longer than the iterable', async () => {

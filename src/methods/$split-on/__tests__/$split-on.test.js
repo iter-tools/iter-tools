@@ -1,4 +1,4 @@
-import { $, $isSync, $async, $await } from '../../../../generate/async.macro';
+import { $, $async, $await } from '../../../../generate/async.macro';
 
 import { $splitOn } from '../../..';
 import { $unwrapDeep as $uw } from '../../../__tests__/$helpers';
@@ -48,16 +48,4 @@ describe($`splitOn`, () => {
       expect($await($uw($splitOn(0, null)))).toEqual([]);
     }),
   );
-
-  if ($isSync) {
-    it('passes through the empty string', () => {
-      expect($uw($splitOn(' ', ''))).toEqual([]);
-    });
-
-    describe('given a string', () => {
-      it('should split on every item which is equal to the on argument', () => {
-        expect($uw($splitOn('Ø', '11Ø22Ø33'))).toEqual(['11', '22', '33']);
-      });
-    });
-  }
 });

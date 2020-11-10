@@ -6,15 +6,17 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { asyncIterableCurry } from '../../internal/async-iterable';
-import { asyncStartsWith_ } from '../$starts-with_/async-starts-with_';
+import { asyncIterableCurry, asyncEnsureIterable } from '../../internal/async-iterable';
 
-const config = { any: false, subseq: true };
+import { asyncStartsWithAnySubseq } from '../$starts-with-any-subseq/async-starts-with-any-subseq';
 
-export function asyncStartsWithSubseq(iterable, valueSubseq) {
-  return asyncStartsWith_(iterable, config, valueSubseq);
+export function asyncStartsWithSubseq(iterable, subseq) {
+  return asyncStartsWithAnySubseq(iterable, [subseq]);
 }
 
 export default asyncIterableCurry(asyncStartsWithSubseq, {
   reduces: true,
+  validateArgs(args) {
+    args[0] = asyncEnsureIterable(args[0]);
+  },
 });

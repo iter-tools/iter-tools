@@ -46,7 +46,6 @@ const sections = new Map(
     ['separate', 'Separate an iterable into multiple iterables'],
     ['combine', 'Combine multiple iterables'],
     ['reduce', 'Reduce an iterable to a single value'],
-    ['regex', 'Work with Regular Expressions'],
     ['permute', 'Combinatory iterables'],
     ['temporal', 'Control timing inside an async iterable'],
     ['cache', 'Cache an iterable'],

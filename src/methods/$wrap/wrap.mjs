@@ -9,7 +9,7 @@
 import { wrapWithResultIterable, ensureIterable } from '../../internal/iterable';
 
 export function* wrap(source) {
-  yield* ensureIterable(source)[Symbol.iterator]();
+  yield* ensureIterable(source);
 }
 
 export default wrapWithResultIterable(wrap);

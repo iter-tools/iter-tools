@@ -20,14 +20,4 @@ describe('splitWith', () => {
   it('should return no parts if source is empty', () => {
     expect(uw(splitWith(i => i, null))).toEqual([]);
   });
-
-  describe('given a string', () => {
-    it('should split on every character which matches the accessor', () => {
-      expect(Array.from(splitWith(i => i === 'Ø', '11Ø22Ø33'))).toEqual(['11', '22', '33']);
-    });
-
-    it('should split on a regex', () => {
-      expect(Array.from(splitWith(/Ø/, '11Ø22Ø33'))).toEqual(['11', '22', '33']);
-    });
-  });
 });

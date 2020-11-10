@@ -97,6 +97,10 @@ function makeFunctionConfig(fn, fnConfig = {}) {
   };
 }
 
+export function cache(it) {
+  return [...it];
+}
+
 export function wrapWithResultIterable(fn, { validateArgs = _ => _ } = {}) {
   return (...args) => {
     validateArgs(args);

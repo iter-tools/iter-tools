@@ -1,12 +1,56 @@
-import { $iterableCurry } from '../../internal/$iterable';
-import { $startsWith_ } from '../$starts-with_/$starts-with_';
+import { $isSync, $async, $await } from '../../../generate/async.macro';
 
-const config = { any: true, subseq: true };
+import { $iterableCurry, $ensureIterable } from '../../internal/$iterable';
+import { $zipAll } from '../$zip-all/$zip-all';
+import { $peekerate } from '../$peekerate/$peekerate';
 
-export function $startsWithAnySubseq(iterable, valueSubseqs) {
-  return $startsWith_(iterable, config, valueSubseqs);
+const none = Symbol('none');
+
+$async;
+export function $startsWithAnySubseq_(peekr, subseqPeekr) {
+  if (subseqPeekr.done || subseqPeekr.value.includes(none)) return true;
+
+  const matches = subseqPeekr.value.map(() => true);
+
+  while (!peekr.done && !subseqPeekr.done) {
+    const { value } = peekr; // the value to match
+    const { value: seqValue } = subseqPeekr;
+
+    for (let i = 0; i < seqValue.length; i++) {
+      if (seqValue[i] === none) {
+        if (matches[i]) return true;
+      } else {
+        matches[i] = matches[i] && seqValue[i] === value;
+      }
+    }
+    if ($isSync) {
+      subseqPeekr.advance();
+      peekr.advance();
+    } else {
+      $await(Promise.all([subseqPeekr.advance(), peekr.advance()]));
+    }
+  }
+
+  return subseqPeekr.done && matches.includes(true);
+}
+
+$async;
+export function $startsWithAnySubseq(iterable, subseqs) {
+  if (!subseqs.length) return false;
+  const peekr = $await($peekerate(iterable));
+  const subseqPeekr = $await($peekerate($zipAll(subseqs, { filler: none })));
+
+  const seqFound = $await($startsWithAnySubseq_(peekr, subseqPeekr));
+
+  $await(subseqPeekr.return());
+  $await(peekr.return());
+
+  return seqFound;
 }
 
 export default $iterableCurry($startsWithAnySubseq, {
   reduces: true,
+  validateArgs(args) {
+    args[0] = args[0].map(arg => $ensureIterable(arg));
+  },
 });

@@ -1,0 +1,1 @@
+See [stingFrom](#stringfrom)

@@ -1,12 +1,17 @@
+import { $isSync } from '../../../generate/async.macro';
+
 import { $iterableCurry } from '../../internal/$iterable';
-import { $startsWith_ } from '../$starts-with_/$starts-with_';
+import { $startsWithAny } from '../$starts-with-any/$starts-with-any';
 
-const config = { any: false, subseq: false };
-
-export function $startsWith(iterable, value) {
-  return $startsWith_(iterable, config, value);
+export function $startsWith(iterable, values) {
+  return $startsWithAny(iterable, [values]);
 }
 
 export default $iterableCurry($startsWith, {
   reduces: true,
+  validateArgs(args) {
+    if ($isSync && typeof args[1] === 'string') {
+      console.warn('For string inputs use startsWithSubseq instead of startsWith');
+    }
+  },
 });

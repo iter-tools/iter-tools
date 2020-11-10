@@ -7,14 +7,19 @@
  */
 
 import { iterableCurry } from '../../internal/iterable';
-import { includes_ } from '../$includes_/includes_';
+import { findOr } from '../$find-or/find-or';
 
-const config = { any: true, subseq: false };
+const none = Symbol('none');
 
 export function includesAny(iterable, values) {
-  return includes_(iterable, config, values);
+  return findOr(iterable, none, value => values.includes(value)) !== none;
 }
 
 export default iterableCurry(includesAny, {
   reduces: true,
+  validateArgs(args) {
+    if (true && typeof args[1] === 'string') {
+      console.warn(`For string inputs use includesAnySubseq instead of includesAny`);
+    }
+  },
 });

@@ -7,16 +7,12 @@
  */
 
 import { asyncIterableCurry } from '../../internal/async-iterable';
+import { asyncInterposeSubseq } from '../$interpose-subseq/async-interpose-subseq';
 
-export async function* asyncInterpose(source, interposed) {
-  let first = true;
-  for await (const sourceValue of source) {
-    if (!first) {
-      yield interposed;
-    }
-    yield sourceValue;
-    first = false;
-  }
+export function asyncInterpose(source, value) {
+  return asyncInterposeSubseq(source, [value]);
 }
 
-export default asyncIterableCurry(asyncInterpose);
+export default asyncIterableCurry(asyncInterpose, {
+  validateArgs(args) {},
+});

@@ -28,10 +28,4 @@ describe('splitOnSubseq', () => {
   it('passes through the empty string', () => {
     expect(toArray(splitOnSubseq(' ', ''))).toEqual([]);
   });
-
-  describe('given a string', () => {
-    it('should split on every item which is equal to the on argument', () => {
-      expect(toArray(splitOnSubseq('Ø', '11Ø22Ø33'))).toEqual(['11', '22', '33']);
-    });
-  });
 });

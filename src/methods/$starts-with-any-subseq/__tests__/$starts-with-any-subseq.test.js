@@ -2,7 +2,7 @@ import { $, $async, $await } from '../../../../generate/async.macro';
 
 import { $startsWithAnySubseq, range } from '../../..';
 
-describe.skip($`startsWithAnySubseq`, () => {
+describe($`startsWithAnySubseq`, () => {
   it(
     'returns true if the iterable starts with any of the given subsequences',
     $async(() => {
@@ -25,9 +25,9 @@ describe.skip($`startsWithAnySubseq`, () => {
   );
 
   it(
-    'returns true if no subsequences are given',
+    'returns false if no subsequences are given',
     $async(() => {
-      expect($await($startsWithAnySubseq([], range(1, 3)))).toBe(true);
+      expect($await($startsWithAnySubseq([], range(1, 3)))).toBe(false);
     }),
   );
 
@@ -43,6 +43,7 @@ describe.skip($`startsWithAnySubseq`, () => {
       'returns true if any subsequence is empty',
       $async(() => {
         expect($await($startsWithAnySubseq([[], [null]], []))).toBe(true);
+        expect($await($startsWithAnySubseq([null], []))).toBe(true);
       }),
     );
 

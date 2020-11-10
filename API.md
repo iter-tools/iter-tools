@@ -96,6 +96,7 @@ Transform a single iterable
 [flat](#flat) ([async](#asyncflat))  
 [flatMap](#flatmap) ([async](#asyncflatmap)) ([parallel-async](#asyncflatmapparallel))  
 [interpose](#interpose) ([async](#asyncinterpose))  
+[interposeSubseq](#interposesubseq) ([async](#asyncinterposesubseq))  
 [map](#map) ([async](#asyncmap)) ([parallel-async](#asyncmapparallel))  
 [nullOr](#nullor)  
 [nullOrAsync](#nullorasync)  
@@ -131,7 +132,6 @@ Combine multiple iterables
 [concat](#concat) ([async](#asyncconcat))  
 [asyncInterleaveReady](#asyncinterleaveready)  
 [join](#join) ([async](#asyncjoin))  
-[joinAsStringWith](#joinasstringwith) ([async](#asyncjoinasstringwith))  
 [joinWith](#joinwith) ([async](#asyncjoinwith))  
 [joinWithSubseq](#joinwithsubseq) ([async](#asyncjoinwithsubseq))  
 [roundRobin](#roundrobin) ([async](#asyncroundrobin))  
@@ -152,7 +152,6 @@ Reduce an iterable to a single value
 [includesSubseq](#includessubseq) ([async](#asyncincludessubseq))  
 [isEmpty](#isempty) ([async](#asyncisempty))  
 [isSorted](#issorted) ([async](#asyncissorted))  
-[joinAsString](#joinasstring) ([async](#asyncjoinasstring))  
 [last](#last) ([async](#asynclast))  
 [lastOr](#lastor) ([async](#asynclastor))  
 [reduce](#reduce) ([async](#asyncreduce))  
@@ -162,10 +161,7 @@ Reduce an iterable to a single value
 [startsWithAny](#startswithany) ([async](#asyncstartswithany))  
 [startsWithAnySubseq](#startswithanysubseq) ([async](#asyncstartswithanysubseq))  
 [startsWithSubseq](#startswithsubseq) ([async](#asyncstartswithsubseq))  
-
-Work with Regular Expressions
-
-[regexpExec](#regexpexec)  
+[str](#stringfrom) ([async](#stringfromasync))  
 
 Combinatory iterables
 
@@ -191,6 +187,8 @@ Consume an iterable
 [forEach](#foreach) ([async](#asyncforeach))  
 [objectFrom](#objectfrom)  
 [objectFromAsync](#objectfromasync)  
+[stringFrom](#stringfrom)  
+[stringFromAsync](#stringfromasync)  
 [toArray](#arrayfrom) ([async](#arrayfromasync))  
 [toObject](#objectfrom) ([async](#objectfromasync))  
 
@@ -579,19 +577,37 @@ item.value; // 1
 
 ### interpose
 
-**interpose(interposed, [source](#sourceiterable))**
+**interpose(value, [source](#sourceiterable))**
 
-Yields `interposed` between each of the values in `source`.
+Yields `value` between each of the values in `source`.
 
 ```js
 interpose(null, [1, 2, 3]); // Iterable[1, null, 2, null, 3]
 ```
 
+Note: If `source` is a string you should instead use [interposeSubseq](#interposesubseq). A warning will be emitted if you do not.
+
 ### asyncInterpose
 
-**asyncInterpose(interposed, [source](#asyncsourceiterable))**
+**asyncInterpose(value, [source](#asyncsourceiterable))**
 
 See [interpose](#interpose)
+
+### interposeSubseq
+
+**interposeSubseq(subseq, [source](#sourceiterable))**
+
+Yields values from `subseq` between each of the values in `source`.
+
+```js
+interposeSubseq([0, 0], [1, 2, 3]); // Iterable[1, 0, 0, 2, 0, 0, 3]
+```
+
+### asyncInterposeSubseq
+
+**asyncInterposeSubseq(subseq, [source](#asyncsourceiterable))**
+
+See [interposeSubseq](#interposesubseq)
 
 ### map
 
@@ -1098,6 +1114,8 @@ Yields a [PartsIterable](#partsiterable) of parts from `source`, where `separato
 splitOn(null, [1, null, 2, null, 3]); // Iterable[[1], [2], [3]]
 ```
 
+Note: If `source` is a string you should instead use [splitOnSubseq](#splitonsubseq). A warning will be emitted if you do not.
+
 ### asyncSplitOn
 
 **asyncSplitOn(separator, [source](#asyncsourceiterable))**
@@ -1114,9 +1132,11 @@ Yields a [PartsIterable](#partsiterable) of parts from `source`, where `separato
 splitOnAny([null, undefined], [1, null, 2, undefined, 3]); // Iterable[[1], [2], [3]]
 ```
 
+Note: If `source` is a string you should instead use [splitOnAnySubseq](#splitonanysubseq). A warning will be emitted if you do not.
+
 ### asyncSplitOnAny
 
-**asyncSplitOnAny(predicate, [source](#asyncsourceiterable))**
+**asyncSplitOnAny(separators, [source](#asyncsourceiterable))**
 
 See [splitOnAny](#splitonany)
 
@@ -1258,28 +1278,6 @@ join([[1], [2], [3]]); // Iterable[1, 2, 3]
 **asyncJoin(source)**
 
 See [join](#join)
-
-### joinAsStringWith
-
-**joinAsStringWith(separator, [strings](#sourceiterable))**
-
-Returns the concatenation of each string in `strings` with `separator` in between.
-
-```js
-joinAsStringWith(' ', ['aa', 'bb', 'cc']); // "aa bb cc"
-```
-
-Note that the method technically is working with iterables of characters (i.e. length 1 strings). A string is such an iterable but there are other forms too, e.g.:
-
-```js
-joinAsStringWith(' ', [['a', 'a'], ['b'], ['c', 'c']]); // "aa b cc"
-```
-
-### asyncJoinAsStringWith
-
-**asyncJoinAsStringWith(separator, [strings](#asyncsourceiterable))**
-
-See [joinAsStringWith](#joinasstringwith)
 
 ### joinWith
 
@@ -1496,6 +1494,8 @@ includes(2, [1, 2, 3]); // true
 includes(0, [1, 2, 3]); // false
 ```
 
+Note: If `source` is a string you should instead use [includesSeq](#includesseq). A warning will be emitted if you do not.
+
 ### asyncIncludes
 
 **asyncIncludes(value, [iterable](#asyncsourceiterable))**
@@ -1512,6 +1512,8 @@ Retuns `true` if `iterable` includes any of the specified `values`, or `false` o
 includesAny([0, 1], [1, 2, 3]); // true
 includesAny([0, 1], [2, 3, 4]); // false
 ```
+
+Note: If `source` is a string you should instead use [includesAnySeq](#includesanyseq). A warning will be emitted if you do not.
 
 ### asyncIncludesAny
 
@@ -1592,18 +1594,6 @@ isSorted((a, b) => b - a, [3, 2, 1]); // true
 **asyncIsSorted([iterable](#asyncsourceiterable))**
 
 See [isSorted](#issorted)
-
-### joinAsString
-
-**joinAsString(source)**
-
-`joinAsString` is undocumented.
-
-### asyncJoinAsString
-
-**asyncJoinAsString(source)**
-
-See [joinAsString](#joinasstring)
 
 ### last
 
@@ -1702,7 +1692,7 @@ See [some](#some)
 
 ### startsWith
 
-**startsWith(value, [iterable](#sourceiterable))**
+**startsWith(values, [iterable](#sourceiterable))**
 
 Returns `true` if the first value in `source` is `value`, as compared with `===`. Otherwise returns `false`.
 
@@ -1710,15 +1700,17 @@ Returns `true` if the first value in `source` is `value`, as compared with `===`
 startsWith(1, [1, 2, 3]); // true
 ```
 
+Note: If `source` is a string you should instead use [startsWithSubseq](#startswithsubseq). A warning will be emitted if you do not.
+
 ### asyncStartsWith
 
-**asyncStartsWith(value, [iterable](#asyncsourceiterable))**
+**asyncStartsWith(values, [iterable](#asyncsourceiterable))**
 
 See [startsWith](#startswith)
 
 ### startsWithAny
 
-**startsWithAny(value, [iterable](#sourceiterable))**
+**startsWithAny(values, [iterable](#sourceiterable))**
 
 Returns `true` if the first value in `source` is any `value` in `values`, as compared with `===`. Otherwise returns `false`.
 
@@ -1726,15 +1718,17 @@ Returns `true` if the first value in `source` is any `value` in `values`, as com
 startsWithAny([0, 1], [1, 2, 3]); // true
 ```
 
+Note: If `source` is a string you should instead use [startsWithAnySubseq](#startswithanysubseq). A warning will be emitted if you do not.
+
 ### asyncStartsWithAny
 
-**asyncStartsWithAny(value, [iterable](#asyncsourceiterable))**
+**asyncStartsWithAny(values, [iterable](#asyncsourceiterable))**
 
 See [startsWithAny](#startswithany)
 
 ### startsWithAnySubseq
 
-**startsWithAnySubseq(valueSubseqs, [iterable](#sourceiterable))**
+**startsWithAnySubseq(subseqs, [iterable](#sourceiterable))**
 
 Returns `true` if the first subsequence of values in `source` match any `valueSubseq` in `valueSubseqs`, where each value is compared with `===`. Otherwise returns `false`.
 
@@ -1744,13 +1738,13 @@ startsWithAnySubseq([[0, 1], [1, 2]], [1, 2, 3]); // true
 
 ### asyncStartsWithAnySubseq
 
-**asyncStartsWithAnySubseq(valueSubseqs, [iterable](#asyncsourceiterable))**
+**asyncStartsWithAnySubseq(subseqs, [iterable](#asyncsourceiterable))**
 
 See [startsWithAnySubseq](#startswithanysubseq)
 
 ### startsWithSubseq
 
-**startsWithSubseq(valueSubseq, [iterable](#sourceiterable))**
+**startsWithSubseq(subseq, [iterable](#sourceiterable))**
 
 Returns `true` if the first subsequence of values in `source` matches `valueSubseq`, where each value is compared with `===`. Otherwise returns `false`.
 
@@ -1760,28 +1754,21 @@ startsWithSubseq([1, 2], [1, 2, 3]); // true
 
 ### asyncStartsWithSubseq
 
-**asyncStartsWithSubseq(valueSubseq, [iterable](#asyncsourceiterable))**
+**asyncStartsWithSubseq(subseq, [iterable](#asyncsourceiterable))**
 
 See [startsWithSubseq](#startswithsubseq)
 
+### str
 
-## Work with Regular Expressions
+**str([chars](#sourceiterable))**
 
-### regexpExec
+See [stingFrom](#stringfrom)
 
-**regexpExec(str, regexp)**
+### asyncStr
 
-Yields matches from executing `regexp.exec(str)`. A match is an array of `[fullMatch, ...submatches]`. It is beyong the scope of these docs to provide a full accounting of `RegExp.prototype.exec`, which you can find [here](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp/exec).
+**asyncStr([chars](#asyncsourceiterable))**
 
-```js
-const iter = regexpExec(
-  /[0-9]{4}/g,
-  '10/2/2013, 03/03/2015 12/4/1997',
-);
-for (let [match] of iter) {
-  console.log(match); // '2013', '2015', '1997'
-}
-```
+See [stringFromAsync](#stringfromasync)
 
 
 ## Combinatory iterables
@@ -2029,7 +2016,7 @@ Note: Returns an iterable (sync) of async iterables.
 
 ### arrayFrom
 
-**arrayFrom([source](#sourceiterable))**
+**arrayFrom([strings](#sourceiterable))**
 
 Aliases: `toArray`
 
@@ -2129,6 +2116,27 @@ objectFromAsync(asyncWrap([
 ])); // { droids: ['R2', '3PO'], people: ['Luke', 'Leia', 'Han'] }
 await objectFromAsync(null); // []
 ```
+
+### stringFrom
+
+**stringFrom([source](#sourceiterable))**
+
+Aliases: `str`
+
+Concatenate `chars` into a string.
+
+```js
+stringFrom(['a', 'b', 'c', 'def']); // 'abcdef'
+stringFrom(null); // ''
+```
+
+### stringFromAsync
+
+**stringFromAsync([strings](#sourceiterable))**
+
+Aliases: `asyncStr`
+
+See [stringFrom](#string-from).
 
 ### toArray
 

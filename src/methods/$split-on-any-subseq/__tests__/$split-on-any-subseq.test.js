@@ -1,4 +1,4 @@
-import { $, $isSync, $async, $await } from '../../../../generate/async.macro';
+import { $, $async, $await } from '../../../../generate/async.macro';
 
 import { $splitOnAnySubseq } from '../../..';
 import { $unwrapDeep as $uw } from '../../../__tests__/$helpers';
@@ -80,16 +80,4 @@ describe($`splitOnAnySubseq`, () => {
       expect($await($uw($splitOnAnySubseq([], '')))).toEqual([]);
     }),
   );
-
-  if ($isSync) {
-    describe('given a string', () => {
-      it('should split on every item which is equal to the on argument', () => {
-        expect($uw($splitOnAnySubseq(['Ø'], '11Ø22Ø33'))).toEqual(['11', '22', '33']);
-      });
-
-      it('should split when the subseqs are not strings', () => {
-        expect($uw($splitOnAnySubseq([['Ø']], '11Ø22Ø33'))).toEqual(['11', '22', '33']);
-      });
-    });
-  }
 });

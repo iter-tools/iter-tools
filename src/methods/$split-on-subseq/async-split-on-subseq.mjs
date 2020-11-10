@@ -6,11 +6,15 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { asyncIterableCurry } from '../../internal/async-iterable';
+import { asyncIterableCurry, asyncEnsureIterable } from '../../internal/async-iterable';
 import { asyncSplitOnAnySubseq } from '../$split-on-any-subseq/async-split-on-any-subseq';
 
 export function asyncSplitOnSubseq(source, separatorSubseq) {
   return asyncSplitOnAnySubseq(source, [separatorSubseq]);
 }
 
-export default asyncIterableCurry(asyncSplitOnSubseq);
+export default asyncIterableCurry(asyncSplitOnSubseq, {
+  validateArgs(args) {
+    args[0] = asyncEnsureIterable(args[0]);
+  },
+});

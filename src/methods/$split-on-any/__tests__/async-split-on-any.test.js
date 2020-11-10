@@ -20,14 +20,10 @@ describe('asyncSplitOnAny', () => {
   });
 
   it('does not split when passed no values', async () => {
-    expect(await asyncUw(asyncSplitOnAny(null, asyncWrap([1, 2, 3])))).toEqual([[1, 2, 3]]);
+    expect(await asyncUw(asyncSplitOnAny([], asyncWrap([1, 2, 3])))).toEqual([[1, 2, 3]]);
   });
 
   it('passes through the empty iterable', async () => {
     expect(await asyncUw(asyncSplitOnAny([], null))).toEqual([]);
-  });
-
-  it('the empty string is an empty iterable', async () => {
-    expect(await asyncUw(asyncSplitOnAny([], ''))).toEqual([]);
   });
 });

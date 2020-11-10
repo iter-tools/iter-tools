@@ -6,15 +6,16 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { asyncIterableCurry } from '../../internal/async-iterable';
-import { asyncIncludes_ } from '../$includes_/async-includes_';
-
-const config = { any: false, subseq: true };
+import { asyncIterableCurry, asyncEnsureIterable } from '../../internal/async-iterable';
+import { asyncIncludesAnySubseq } from '../$includes-any-subseq/async-includes-any-subseq';
 
 export function asyncIncludesSubseq(iterable, subseq) {
-  return asyncIncludes_(iterable, config, subseq);
+  return asyncIncludesAnySubseq(iterable, [subseq]);
 }
 
 export default asyncIterableCurry(asyncIncludesSubseq, {
   reduces: true,
+  validateArgs(args) {
+    args[0] = asyncEnsureIterable(args[0]);
+  },
 });

@@ -20,7 +20,7 @@ export async function* asyncify(iterable) {
   if (isAsyncIterable(iterable)) {
     yield* iterable;
   } else {
-    // it should be enough "yield * iterable", but it is broken with es5 version
+    // it should be enough "yield* iterable", but it is broken with es5 version
     for (const item of iterable) {
       yield Promise.resolve(item);
     }
@@ -84,6 +84,12 @@ function makeFunctionConfig(fn, fnConfig = {}) {
     applyOnIterableArgs: asyncEnsureIterable,
     IterableClass: forceSync ? ResultIterable : AsyncResultIterable,
   };
+}
+
+export async function asyncCache(it) {
+  const arr = [];
+  for await (const value of it) arr.push(value);
+  return asyncWrapWithResultIterable(asyncify)(arr);
 }
 
 export function asyncWrapWithResultIterable(fn, { validateArgs = _ => _ } = {}) {

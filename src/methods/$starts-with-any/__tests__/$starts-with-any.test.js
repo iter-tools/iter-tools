@@ -2,7 +2,7 @@ import { $, $async, $await } from '../../../../generate/async.macro';
 
 import { $startsWithAny, range } from '../../..';
 
-describe.skip($`startsWithAny`, () => {
+describe($`startsWithAny`, () => {
   it(
     'returns true if the iterable starts with any of the given values',
     $async(() => {

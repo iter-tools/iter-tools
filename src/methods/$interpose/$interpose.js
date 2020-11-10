@@ -1,18 +1,16 @@
-import { $async, $await } from '../../../generate/async.macro';
+import { $isSync } from '../../../generate/async.macro';
 
 import { $iterableCurry } from '../../internal/$iterable';
+import { $interposeSubseq } from '../$interpose-subseq/$interpose-subseq';
 
-$async;
-export function* $interpose(source, interposed) {
-  let first = true;
-  $await;
-  for (const sourceValue of source) {
-    if (!first) {
-      yield interposed;
-    }
-    yield sourceValue;
-    first = false;
-  }
+export function $interpose(source, value) {
+  return $interposeSubseq(source, [value]);
 }
 
-export default $iterableCurry($interpose);
+export default $iterableCurry($interpose, {
+  validateArgs(args) {
+    if ($isSync && typeof args[1] === 'string') {
+      console.warn(`For string inputs use interposeSubseq instead of interpose`);
+    }
+  },
+});

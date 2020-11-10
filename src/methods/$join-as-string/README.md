@@ -1,1 +1,0 @@
-`joinAsString` is undocumented.
