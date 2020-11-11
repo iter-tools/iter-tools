@@ -6,8 +6,7 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { toArray as syncToArray } from '../methods/$to-array/to-array';
-import { toArray } from '../methods/$to-array/to-array';
+import { toArray as syncToArray, toArray } from '../methods/$to-array/to-array';
 import { map } from '../methods/$map/map';
 
 function toAnySubseq({ any, subseq }, value) {

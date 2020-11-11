@@ -2,7 +2,7 @@ import { $, $async, $await } from '../../../../generate/async.macro';
 
 import { $startsWithAnySubseq, range } from '../../..';
 
-describe($`startsWithAnySubseq`, () => {
+describe.skip($`startsWithAnySubseq`, () => {
   it(
     'returns true if the iterable starts with any of the given subsequences',
     $async(() => {

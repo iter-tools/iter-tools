@@ -6,8 +6,11 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { SourceIterable, ResultIterable } from '../../types/iterable';
-import { ResultIterable as SyncResultIterable } from '../../types/iterable';
+import {
+  SourceIterable,
+  ResultIterable,
+  ResultIterable as SyncResultIterable,
+} from '../../types/iterable';
 
 declare function window<T>(
   size: number,

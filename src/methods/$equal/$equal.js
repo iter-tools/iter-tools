@@ -1,7 +1,6 @@
-import { $isAsync, $async, $await } from '../../../generate/async.macro';
+import { $async, $await } from '../../../generate/async.macro';
 import { $iterableCurry } from '../../internal/$iterable';
 import { $zipAll } from '../$zip-all/$zip-all';
-import { asyncWrap } from '../$wrap/async-wrap';
 import { simpleSlice } from '../$slice/slice';
 
 const noItem = {};
@@ -13,10 +12,8 @@ export function $equal(iterables) {
     return true;
   }
 
-  const wrappedIterables = $isAsync ? iterables.map(asyncWrap) : iterables;
-
   $await;
-  for (const allItems of $zipAll(wrappedIterables, zipAllConfig)) {
+  for (const allItems of $zipAll(iterables, zipAllConfig)) {
     const firstItem = allItems[0];
     for (const item of simpleSlice(allItems, 1, Infinity)) {
       if (item !== firstItem) {

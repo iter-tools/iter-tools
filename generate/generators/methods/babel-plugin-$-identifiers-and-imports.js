@@ -1,7 +1,5 @@
 'use strict';
 
-const { basename } = require('path');
-
 const { renameDollar } = require('../../names');
 
 function renameImport(path, ASYNC) {
@@ -77,61 +75,67 @@ module.exports = function resolveDollarIdentifiersAndImports({ types: t }, { ASY
       }
     },
 
-    ImportDeclaration(path, state) {
-      const { source, specifiers } = path.node;
-      source.value = renameImport(source.value, ASYNC);
+    Program(path, state) {
+      const { body } = path.node;
 
-      if (!ASYNC && basename(source.value).startsWith('async-')) {
-        path.remove();
-        return;
-      }
+      const isTs = /\.d\.ts$/.test(state.filename);
 
-      const removeSpecifiers = new Set();
+      const declsBySource = new Map();
 
-      for (const specifier of specifiers) {
-        if (t.isImportSpecifier(specifier)) {
-          const importedName = specifier.imported.name;
-          if (importedName.startsWith('$')) {
-            const newName = renameDollar(importedName, ASYNC);
+      for (let i = body.length - 1; i >= 0; i--) {
+        const decl = body[i];
 
-            specifier.imported.name = newName;
-          }
+        if (!(t.isImportDeclaration(decl) || t.isExportNamedDeclaration(decl))) {
+          continue;
         }
-      }
 
-      for (const specifier of specifiers) {
-        const localName = specifier.local.name;
-        if (localName.startsWith('$')) {
-          const newName = renameDollar(localName, ASYNC);
+        const { source, specifiers, declaration } = decl;
+        if (source) {
+          if (/\.macro$/.test(source.value)) {
+            continue;
+          }
+          source.value = renameImport(source.value, ASYNC);
 
-          if (t.isImportSpecifier(specifier)) {
-            if (
-              specifiers.find(
-                otherSpecifier =>
-                  t.isImportSpecifier(otherSpecifier) &&
-                  otherSpecifier.imported.name === specifier.imported.name &&
-                  otherSpecifier !== specifier,
-              )
-            ) {
-              removeSpecifiers.add(specifier);
+          if (declsBySource.has(source.value)) {
+            const idx = declsBySource.get(source.value);
+            const otherDecl = body[idx];
+            if (otherDecl.type === decl.type) {
+              specifiers.push(...otherDecl.specifiers);
+              body.splice(idx, 1); // remove other decl
             }
           }
-          path.scope.rename(localName, newName);
+
+          declsBySource.set(source.value, i);
         }
-      }
 
-      path.node.specifiers = specifiers.filter(s => !removeSpecifiers.has(s));
-    },
+        if (isTs) continue;
 
-    ExportNamedDeclaration(path, state) {
-      const { source, specifiers } = path.node;
-      if (source) {
-        source.value = renameImport(source.value, ASYNC);
-      }
+        if (declaration) {
+          const { id } = declaration;
+          forceRename(path, id.name, renameDollar(id.name, ASYNC));
+        }
 
-      for (const specifier of specifiers) {
-        if (specifier.exported.name.startsWith('$')) {
-          specifier.exported.name = renameDollar(specifier.exported.name, ASYNC);
+        if (specifiers) {
+          const specsByRemoteName = new Map();
+
+          for (let j = specifiers.length - 1; j >= 0; j--) {
+            const specifier = specifiers[j];
+            const { imported, exported, local } = specifier;
+            const remote = imported || exported;
+            if (imported) imported.name = renameDollar(imported.name, ASYNC);
+            if (exported) exported.name = renameDollar(exported.name, ASYNC);
+            if (local) {
+              path.scope.rename(local.name, renameDollar(local.name, ASYNC));
+            }
+            if (remote) {
+              const existing = specsByRemoteName.get(remote.name);
+              if (existing && existing.local.name === local.name) {
+                specifiers.splice(j, 1);
+                continue;
+              }
+              specsByRemoteName.set(remote.name, specifier);
+            }
+          }
         }
       }
     },

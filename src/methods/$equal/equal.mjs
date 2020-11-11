@@ -18,9 +18,7 @@ export function equal(iterables) {
     return true;
   }
 
-  const wrappedIterables = iterables;
-
-  for (const allItems of zipAll(wrappedIterables, zipAllConfig)) {
+  for (const allItems of zipAll(iterables, zipAllConfig)) {
     const firstItem = allItems[0];
     for (const item of simpleSlice(allItems, 1, Infinity)) {
       if (item !== firstItem) {

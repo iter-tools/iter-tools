@@ -8,7 +8,6 @@
 
 import { asyncIterableCurry } from '../../internal/async-iterable';
 import { asyncZipAll } from '../$zip-all/async-zip-all';
-import { asyncWrap } from '../$wrap/async-wrap';
 import { simpleSlice } from '../$slice/slice';
 
 const noItem = {};
@@ -19,9 +18,7 @@ export async function asyncEqual(iterables) {
     return true;
   }
 
-  const wrappedIterables = iterables.map(asyncWrap);
-
-  for await (const allItems of asyncZipAll(wrappedIterables, zipAllConfig)) {
+  for await (const allItems of asyncZipAll(iterables, zipAllConfig)) {
     const firstItem = allItems[0];
     for (const item of simpleSlice(allItems, 1, Infinity)) {
       if (item !== firstItem) {

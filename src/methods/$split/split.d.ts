@@ -6,8 +6,11 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { ResultIterable as SyncResultIterable } from '../../types/iterable';
-import { SourceIterable, ResultIterable } from '../../types/iterable';
+import {
+  ResultIterable as SyncResultIterable,
+  SourceIterable,
+  ResultIterable,
+} from '../../types/iterable';
 
 declare function split<T>(source: SourceIterable<T>): ResultIterable<SyncResultIterable<T>>;
 

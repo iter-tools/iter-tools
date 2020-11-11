@@ -8,7 +8,6 @@
 
 import asyncToAnySubseq from '../../internal/async-to-any-subseq';
 import { asyncZipAll } from '../$zip-all/async-zip-all';
-import { asyncWrap } from '../$wrap/async-wrap';
 import { simpleSlice } from '../$slice/slice';
 
 const noItem = {};
@@ -16,13 +15,12 @@ const zipAllConfig = { filler: noItem };
 
 export async function asyncIterableStartsWith_(iterable, config, value) {
   const subseqs = await asyncToAnySubseq(config, value);
-  const wrappedSubseqs = subseqs.map(asyncWrap);
   const states = subseqs.map(_ => ({
     matches: true,
     done: false,
   }));
 
-  for await (const allItems of asyncZipAll([iterable, ...wrappedSubseqs], zipAllConfig)) {
+  for await (const allItems of asyncZipAll([iterable, ...subseqs], zipAllConfig)) {
     const item = allItems[0];
     let i = -1;
     let allDone = true;

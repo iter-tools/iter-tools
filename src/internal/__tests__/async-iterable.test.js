@@ -8,8 +8,12 @@
 
 /* eslint-disable no-unused-vars,import/no-duplicates,no-constant-condition */
 
-import { asyncify } from '../async-iterable';
-import { asyncEnsureIterable, asyncIsIterable, asyncIterableCurry } from '../async-iterable';
+import {
+  asyncify,
+  asyncEnsureIterable,
+  asyncIsIterable,
+  asyncIterableCurry,
+} from '../async-iterable';
 import { range, asyncToArray } from '../..';
 
 describe('asyncEnsureIterable', () => {
