@@ -10,7 +10,7 @@
 
 import { startsWith, range } from '../../..';
 
-describe('startsWith', () => {
+describe.skip('startsWith', () => {
   it('returns true if the iterable starts with the given value', () => {
     expect(startsWith(1, range(1, 10))).toBe(true);
   });

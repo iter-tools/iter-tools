@@ -217,7 +217,7 @@ function asyncMacro({ references, babel, state, config: { ASYNC } }) {
 function getNextStatement(reference) {
   const { container } = reference.parentPath;
   const parentNode = reference.parent;
-  const loopIdx = container.findIndex(node => node === parentNode) + 1;
+  const loopIdx = container.indexOf(parentNode) + 1;
   return container[loopIdx];
 }
 

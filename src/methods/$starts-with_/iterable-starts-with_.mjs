@@ -15,13 +15,12 @@ const zipAllConfig = { filler: noItem };
 
 export function iterableStartsWith_(iterable, config, value) {
   const subseqs = toAnySubseq(config, value);
-  const wrappedSubseqs = subseqs;
   const states = subseqs.map(_ => ({
     matches: true,
     done: false,
   }));
 
-  for (const allItems of zipAll([iterable, ...wrappedSubseqs], zipAllConfig)) {
+  for (const allItems of zipAll([iterable, ...subseqs], zipAllConfig)) {
     const item = allItems[0];
     let i = -1;
     let allDone = true;

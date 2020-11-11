@@ -8,8 +8,11 @@
 
 import assert from 'static-type-assert';
 
-import { ResultIterable as SyncResultIterable } from '../../../types/iterable';
-import { Iterable, ResultIterable } from '../../../types/iterable';
+import {
+  ResultIterable as SyncResultIterable,
+  Iterable,
+  ResultIterable,
+} from '../../../types/iterable';
 import { splitAt } from '../../..';
 
 declare const Ø: never;

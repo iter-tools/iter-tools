@@ -8,6 +8,7 @@
 
 /* eslint-disable no-unused-vars,import/no-duplicates,no-constant-condition */
 
+import { asyncify } from '../async-iterable';
 import { ensureIterable, isIterable, iterableCurry } from '../iterable';
 import { range, toArray } from '../..';
 

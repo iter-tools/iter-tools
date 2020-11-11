@@ -6,8 +6,7 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { SourceIterable } from '../../types/iterable';
-import { SourceIterable as SyncSourceIterable } from '../../types/iterable';
+import { SourceIterable, SourceIterable as SyncSourceIterable } from '../../types/iterable';
 
 declare function startsWithAnySubseq(
   valueSubseqs: SyncSourceIterable<SourceIterable<any>>,
