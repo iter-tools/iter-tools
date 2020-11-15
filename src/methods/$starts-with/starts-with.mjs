@@ -17,7 +17,7 @@ export default iterableCurry(startsWith, {
   reduces: true,
   validateArgs(args) {
     if (true && typeof args[1] === 'string') {
-      console.warn('For string inputs use startsWithSubseq instead of startsWith');
+      console.warn('For string inputs use startsWithSeq instead of startsWith');
     }
   },
 });

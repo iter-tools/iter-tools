@@ -16,7 +16,7 @@ export function splitOn(source, separator) {
 export default iterableCurry(splitOn, {
   validateArgs(args) {
     if (true && typeof args[1] === 'string') {
-      console.warn(`For string inputs use splitOnSubseq instead of splitOn`);
+      console.warn(`For string inputs use splitOnSeq instead of splitOn`);
     }
   },
 });

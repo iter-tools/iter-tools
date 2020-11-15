@@ -3,7 +3,7 @@
 exports[`startsWithAny when iterable is a string warns 1`] = `
 Array [
   Array [
-    "For string inputs use startsWithAnySubseq instead of startsWithAny",
+    "For string inputs use startsWithAnySeq instead of startsWithAny",
   ],
 ]
 `;

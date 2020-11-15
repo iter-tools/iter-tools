@@ -3,7 +3,7 @@
 exports[`includes when iterable is a string warns 1`] = `
 Array [
   Array [
-    "For string inputs use includesSubseq instead of includes",
+    "For string inputs use includesSeq instead of includes",
   ],
 ]
 `;

@@ -96,7 +96,7 @@ Transform a single iterable
 [flat](#flat) ([async](#asyncflat))  
 [flatMap](#flatmap) ([async](#asyncflatmap)) ([parallel-async](#asyncflatmapparallel))  
 [interpose](#interpose) ([async](#asyncinterpose))  
-[interposeSubseq](#interposesubseq) ([async](#asyncinterposesubseq))  
+[interposeSeq](#interposeseq) ([async](#asyncinterposeseq))  
 [map](#map) ([async](#asyncmap)) ([parallel-async](#asyncmapparallel))  
 [nullOr](#nullor)  
 [nullOrAsync](#nullorasync)  
@@ -121,8 +121,8 @@ Separate an iterable into multiple iterables
 [splitAt](#splitat) ([async](#asyncsplitat))  
 [splitOn](#spliton) ([async](#asyncspliton))  
 [splitOnAny](#splitonany) ([async](#asyncsplitonany))  
-[splitOnAnySubseq](#splitonanysubseq) ([async](#asyncsplitonanysubseq))  
-[splitOnSubseq](#splitonsubseq) ([async](#asyncsplitonsubseq))  
+[splitOnAnySeq](#splitonanyseq) ([async](#asyncsplitonanyseq))  
+[splitOnSeq](#splitonseq) ([async](#asyncsplitonseq))  
 [splitWith](#splitwith) ([async](#asyncsplitwith))  
 
 Combine multiple iterables
@@ -133,7 +133,7 @@ Combine multiple iterables
 [asyncInterleaveReady](#asyncinterleaveready)  
 [join](#join) ([async](#asyncjoin))  
 [joinWith](#joinwith) ([async](#asyncjoinwith))  
-[joinWithSubseq](#joinwithsubseq) ([async](#asyncjoinwithsubseq))  
+[joinWithSeq](#joinwithseq) ([async](#asyncjoinwithseq))  
 [roundRobin](#roundrobin) ([async](#asyncroundrobin))  
 [zip](#zip) ([async](#asynczip))  
 [zipAll](#zipall) ([async](#asynczipall))  
@@ -148,8 +148,8 @@ Reduce an iterable to a single value
 [firstOr](#firstor) ([async](#asyncfirstor))  
 [includes](#includes) ([async](#asyncincludes))  
 [includesAny](#includesany) ([async](#asyncincludesany))  
-[includesAnySubseq](#includesanysubseq) ([async](#asyncincludesanysubseq))  
-[includesSubseq](#includessubseq) ([async](#asyncincludessubseq))  
+[includesAnySeq](#includesanyseq) ([async](#asyncincludesanyseq))  
+[includesSeq](#includesseq) ([async](#asyncincludesseq))  
 [isEmpty](#isempty) ([async](#asyncisempty))  
 [isSorted](#issorted) ([async](#asyncissorted))  
 [last](#last) ([async](#asynclast))  
@@ -159,8 +159,8 @@ Reduce an iterable to a single value
 [some](#some) ([async](#asyncsome))  
 [startsWith](#startswith) ([async](#asyncstartswith))  
 [startsWithAny](#startswithany) ([async](#asyncstartswithany))  
-[startsWithAnySubseq](#startswithanysubseq) ([async](#asyncstartswithanysubseq))  
-[startsWithSubseq](#startswithsubseq) ([async](#asyncstartswithsubseq))  
+[startsWithAnySeq](#startswithanyseq) ([async](#asyncstartswithanyseq))  
+[startsWithSeq](#startswithseq) ([async](#asyncstartswithseq))  
 [str](#stringfrom) ([async](#stringfromasync))  
 
 Combinatory iterables
@@ -585,7 +585,7 @@ Yields `value` between each of the values in `source`.
 interpose(null, [1, 2, 3]); // Iterable[1, null, 2, null, 3]
 ```
 
-Note: If `source` is a string you should instead use [interposeSubseq](#interposesubseq). A warning will be emitted if you do not.
+Note: If `source` is a string you should instead use [interposeSeq](#interposeseq). A warning will be emitted if you do not.
 
 ### asyncInterpose
 
@@ -593,21 +593,21 @@ Note: If `source` is a string you should instead use [interposeSubseq](#interpos
 
 See [interpose](#interpose)
 
-### interposeSubseq
+### interposeSeq
 
-**interposeSubseq(subseq, [source](#sourceiterable))**
+**interposeSeq(seq, [source](#sourceiterable))**
 
-Yields values from `subseq` between each of the values in `source`.
+Yields values from `seq` between each of the values in `source`.
 
 ```js
-interposeSubseq([0, 0], [1, 2, 3]); // Iterable[1, 0, 0, 2, 0, 0, 3]
+interposeSeq([0, 0], [1, 2, 3]); // Iterable[1, 0, 0, 2, 0, 0, 3]
 ```
 
-### asyncInterposeSubseq
+### asyncInterposeSeq
 
-**asyncInterposeSubseq(subseq, [source](#asyncsourceiterable))**
+**asyncInterposeSeq(seq, [source](#asyncsourceiterable))**
 
-See [interposeSubseq](#interposesubseq)
+See [interposeSeq](#interposeseq)
 
 ### map
 
@@ -1114,7 +1114,7 @@ Yields a [PartsIterable](#partsiterable) of parts from `source`, where `separato
 splitOn(null, [1, null, 2, null, 3]); // Iterable[[1], [2], [3]]
 ```
 
-Note: If `source` is a string you should instead use [splitOnSubseq](#splitonsubseq). A warning will be emitted if you do not.
+Note: If `source` is a string you should instead use [splitOnSeq](#splitonseq). A warning will be emitted if you do not.
 
 ### asyncSplitOn
 
@@ -1132,7 +1132,7 @@ Yields a [PartsIterable](#partsiterable) of parts from `source`, where `separato
 splitOnAny([null, undefined], [1, null, 2, undefined, 3]); // Iterable[[1], [2], [3]]
 ```
 
-Note: If `source` is a string you should instead use [splitOnAnySubseq](#splitonanysubseq). A warning will be emitted if you do not.
+Note: If `source` is a string you should instead use [splitOnAnySeq](#splitonanyseq). A warning will be emitted if you do not.
 
 ### asyncSplitOnAny
 
@@ -1140,43 +1140,43 @@ Note: If `source` is a string you should instead use [splitOnAnySubseq](#spliton
 
 See [splitOnAny](#splitonany)
 
-### splitOnAnySubseq
+### splitOnAnySeq
 
-**splitOnAnySubseq(separatorSubseqs, [source](#sourceiterable))**
+**splitOnAnySeq(separatorSeqs, [source](#sourceiterable))**
 
-Yields a [PartsIterable](#partsiterable) of parts from `source`, where `separatorSubseqs` are used to mark the boundary between parts in `source`. When any `separatorSubseq` in `separatorSubseqs` is matched, all matched values are consumed from `source` and will not appear in any `part`, nor may they be part of any other `separatorSubseq` match. Matches greedily, which is to say the longest possible separator match will be prioritized. Each value in a `separatorSubseq` is compared using `===`.
+Yields a [PartsIterable](#partsiterable) of parts from `source`, where `separatorSeqs` are used to mark the boundary between parts in `source`. When any `separatorSeq` in `separatorSeqs` is matched, all matched values are consumed from `source` and will not appear in any `part`, nor may they be part of any other `separatorSeq` match. Matches greedily, which is to say the longest possible separator match will be prioritized. Each value in a `separatorSeq` is compared using `===`.
 
 ```js
-splitOnAnySubseq(
+splitOnAnySeq(
   [['\n'], ['\r\n']],
   'mixed\r\nline\nterminators',
 ); // Iterable['mixed', 'line', 'terminators']
 ```
 
-### asyncSplitOnAnySubseq
+### asyncSplitOnAnySeq
 
-**asyncSplitOnAnySubseq(separatorSubseqs, [source](#asyncsourceiterable))**
+**asyncSplitOnAnySeq(separatorSeqs, [source](#asyncsourceiterable))**
 
-See [splitOnAnySubseq](#splitonanysubseq)
+See [splitOnAnySeq](#splitonanyseq)
 
-### splitOnSubseq
+### splitOnSeq
 
-**splitOnSubseq(separatorSubseq, [source](#sourceiterable))**
+**splitOnSeq(separatorSeq, [source](#sourceiterable))**
 
-Yields a [PartsIterable](#partsiterable) of parts from `source`, where `separatorSubseq` is used to mark the boundary between parts in `source`. When `separatorSubseq` is matched, all matched values are consumed from `source`. They will not appear in any `part`, nor may they be part of any other `separatorSubseq` match. Each value in `separatorSubseq` is compared using `===`.
+Yields a [PartsIterable](#partsiterable) of parts from `source`, where `separatorSeq` is used to mark the boundary between parts in `source`. When `separatorSeq` is matched, all matched values are consumed from `source`. They will not appear in any `part`, nor may they be part of any other `separatorSeq` match. Each value in `separatorSeq` is compared using `===`.
 
 ```js
-splitOnSubseq([0, 0], [1, 0, 0, 2, 0, 0, 3]); // Iterable[[1], [2], [3]]
+splitOnSeq([0, 0], [1, 0, 0, 2, 0, 0, 3]); // Iterable[[1], [2], [3]]
 
-//`separatorSubseq` is in the result because separators overlap in `source`.
-splitOnSubseq([0, 0], [0, 0, 0, 1, 2]); // Iterable[[], [0, 1, 2]]
+//`separatorSeq` is in the result because separators overlap in `source`.
+splitOnSeq([0, 0], [0, 0, 0, 1, 2]); // Iterable[[], [0, 1, 2]]
 ```
 
-### asyncSplitOnSubseq
+### asyncSplitOnSeq
 
-**asyncSplitOnSubseq(separatorSubseq, [source](#asyncsourceiterable))**
+**asyncSplitOnSeq(separatorSeq, [source](#asyncsourceiterable))**
 
-See [splitOnSubseq](#splitonsubseq)
+See [splitOnSeq](#splitonseq)
 
 ### splitWith
 
@@ -1295,21 +1295,21 @@ joinWith(null, [[1], [2], [3]]); // Iterable[1, null, 2, null, 3]
 
 See [joinWith](#joinwith)
 
-### joinWithSubseq
+### joinWithSeq
 
-**joinWithSubseq(separatorSubseq, [source](#sourceiterable))**
+**joinWithSeq(separatorSeq, [source](#sourceiterable))**
 
-Given `source`, an iterable of iterables, yields all values from each iterable with the `separatorSubseq` values in between. It is the inverse of `splitOnSubseq`.
+Given `source`, an iterable of iterables, yields all values from each iterable with the `separatorSeq` values in between. It is the inverse of `splitOnSeq`.
 
 ```js
-joinWithSubseq([null, null], [[1], [2], [3]]); // Iterable[1, null, null, 2, null, null, 3]
+joinWithSeq([null, null], [[1], [2], [3]]); // Iterable[1, null, null, 2, null, null, 3]
 ```
 
-### asyncJoinWithSubseq
+### asyncJoinWithSeq
 
-**asyncJoinWithSubseq(separatorSubseq, [source](#asyncsourceiterable))**
+**asyncJoinWithSeq(separatorSeq, [source](#asyncsourceiterable))**
 
-See [joinWithSubseq](#joinwithsubseq)
+See [joinWithSeq](#joinwithseq)
 
 ### roundRobin
 
@@ -1521,41 +1521,41 @@ Note: If `source` is a string you should instead use [includesAnySeq](#includesa
 
 See [includesAny](#includesany)
 
-### includesAnySubseq
+### includesAnySeq
 
-**includesAnySubseq(subseqs, [iterable](#sourceiterable))**
+**includesAnySeq(seqs, [iterable](#sourceiterable))**
 
-Retuns `true` if any of the the `subseqs` (subsequences) of values can be found somewhere in `iterable`, or `false` otherwise. Compares values with `===`.
-
-```js
-includesAnySubseq([[1, 2], [2, 3]], [1, 2, 3]); // true
-includesAnySubseq([[2, 3], [3, 4]], [1, 2, 3]); // true
-includesAnySubseq([[0, 1], [3, 4]], [1, 2, 3]); // false
-```
-
-### asyncIncludesAnySubseq
-
-**asyncIncludesAnySubseq(subseqs, [iterable](#asyncsourceiterable))**
-
-See [includesAnySubseq](#includesanysubseq)
-
-### includesSubseq
-
-**includesSubseq(subseq, [iterable](#sourceiterable))**
-
-Retuns `true` if the `subseq` (subsequence) of values can be found somewhere in `iterable`, or `false` otherwise. Compares values with `===`.
+Retuns `true` if any of the the `seqs` (subsequences) of values can be found somewhere in `iterable`, or `false` otherwise. Compares values with `===`.
 
 ```js
-includesSubseq([1, 2], [1, 2, 3]); // true
-includesSubseq([1, 2, 3], [1, 2, 3]); // true
-includesSubseq([2, 3, 4], [1, 2, 3]); // false
+includesAnySeq([[1, 2], [2, 3]], [1, 2, 3]); // true
+includesAnySeq([[2, 3], [3, 4]], [1, 2, 3]); // true
+includesAnySeq([[0, 1], [3, 4]], [1, 2, 3]); // false
 ```
 
-### asyncIncludesSubseq
+### asyncIncludesAnySeq
 
-**asyncIncludesSubseq(subseq, [iterable](#asyncsourceiterable))**
+**asyncIncludesAnySeq(seqs, [iterable](#asyncsourceiterable))**
 
-See [includesSubseq](#includessubseq)
+See [includesAnySeq](#includesanyseq)
+
+### includesSeq
+
+**includesSeq(seq, [iterable](#sourceiterable))**
+
+Retuns `true` if the `seq` (subsequence) of values can be found somewhere in `iterable`, or `false` otherwise. Compares values with `===`.
+
+```js
+includesSeq([1, 2], [1, 2, 3]); // true
+includesSeq([1, 2, 3], [1, 2, 3]); // true
+includesSeq([2, 3, 4], [1, 2, 3]); // false
+```
+
+### asyncIncludesSeq
+
+**asyncIncludesSeq(seq, [iterable](#asyncsourceiterable))**
+
+See [includesSeq](#includesseq)
 
 ### isEmpty
 
@@ -1700,7 +1700,7 @@ Returns `true` if the first value in `source` is `value`, as compared with `===`
 startsWith(1, [1, 2, 3]); // true
 ```
 
-Note: If `source` is a string you should instead use [startsWithSubseq](#startswithsubseq). A warning will be emitted if you do not.
+Note: If `source` is a string you should instead use [startsWithSeq](#startswithseq). A warning will be emitted if you do not.
 
 ### asyncStartsWith
 
@@ -1718,7 +1718,7 @@ Returns `true` if the first value in `source` is any `value` in `values`, as com
 startsWithAny([0, 1], [1, 2, 3]); // true
 ```
 
-Note: If `source` is a string you should instead use [startsWithAnySubseq](#startswithanysubseq). A warning will be emitted if you do not.
+Note: If `source` is a string you should instead use [startsWithAnySeq](#startswithanyseq). A warning will be emitted if you do not.
 
 ### asyncStartsWithAny
 
@@ -1726,37 +1726,37 @@ Note: If `source` is a string you should instead use [startsWithAnySubseq](#star
 
 See [startsWithAny](#startswithany)
 
-### startsWithAnySubseq
+### startsWithAnySeq
 
-**startsWithAnySubseq(subseqs, [iterable](#sourceiterable))**
+**startsWithAnySeq(seqs, [iterable](#sourceiterable))**
 
-Returns `true` if the first subsequence of values in `source` match any `valueSubseq` in `valueSubseqs`, where each value is compared with `===`. Otherwise returns `false`.
-
-```js
-startsWithAnySubseq([[0, 1], [1, 2]], [1, 2, 3]); // true
-```
-
-### asyncStartsWithAnySubseq
-
-**asyncStartsWithAnySubseq(subseqs, [iterable](#asyncsourceiterable))**
-
-See [startsWithAnySubseq](#startswithanysubseq)
-
-### startsWithSubseq
-
-**startsWithSubseq(subseq, [iterable](#sourceiterable))**
-
-Returns `true` if the first subsequence of values in `source` matches `valueSubseq`, where each value is compared with `===`. Otherwise returns `false`.
+Returns `true` if the first subsequence of values in `source` match any `valueSeq` in `valueSeqs`, where each value is compared with `===`. Otherwise returns `false`.
 
 ```js
-startsWithSubseq([1, 2], [1, 2, 3]); // true
+startsWithAnySeq([[0, 1], [1, 2]], [1, 2, 3]); // true
 ```
 
-### asyncStartsWithSubseq
+### asyncStartsWithAnySeq
 
-**asyncStartsWithSubseq(subseq, [iterable](#asyncsourceiterable))**
+**asyncStartsWithAnySeq(seqs, [iterable](#asyncsourceiterable))**
 
-See [startsWithSubseq](#startswithsubseq)
+See [startsWithAnySeq](#startswithanyseq)
+
+### startsWithSeq
+
+**startsWithSeq(seq, [iterable](#sourceiterable))**
+
+Returns `true` if the first subsequence of values in `source` matches `valueSeq`, where each value is compared with `===`. Otherwise returns `false`.
+
+```js
+startsWithSeq([1, 2], [1, 2, 3]); // true
+```
+
+### asyncStartsWithSeq
+
+**asyncStartsWithSeq(seq, [iterable](#asyncsourceiterable))**
+
+See [startsWithSeq](#startswithseq)
 
 ### str
 

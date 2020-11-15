@@ -1,10 +1,10 @@
 import { $wrapWithResultIterable, $ensureIterable } from '../../internal/$iterable';
-import { $joinWithSubseq } from '../$join-with-subseq/$join-with-subseq';
+import { $joinWithSeq } from '../$join-with-seq/$join-with-seq';
 
-const emptySubseq = [];
+const emptySeq = [];
 
 export function $join(source) {
-  return $joinWithSubseq($ensureIterable(source), emptySubseq);
+  return $joinWithSeq($ensureIterable(source), emptySeq);
 }
 
 export default $wrapWithResultIterable($join);

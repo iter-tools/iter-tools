@@ -7,12 +7,12 @@
  */
 
 import { asyncWrapWithResultIterable, asyncEnsureIterable } from '../../internal/async-iterable';
-import { asyncJoinWithSubseq } from '../$join-with-subseq/async-join-with-subseq';
+import { asyncJoinWithSeq } from '../$join-with-seq/async-join-with-seq';
 
-const emptySubseq = [];
+const emptySeq = [];
 
 export function asyncJoin(source) {
-  return asyncJoinWithSubseq(asyncEnsureIterable(source), emptySubseq);
+  return asyncJoinWithSeq(asyncEnsureIterable(source), emptySeq);
 }
 
 export default asyncWrapWithResultIterable(asyncJoin);

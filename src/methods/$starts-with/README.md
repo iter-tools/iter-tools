@@ -4,4 +4,4 @@ Returns `true` if the first value in `source` is `value`, as compared with `===`
 startsWith(1, [1, 2, 3]); // true
 ```
 
-Note: If `source` is a string you should instead use [startsWithSubseq](#startswithsubseq). A warning will be emitted if you do not.
+Note: If `source` is a string you should instead use [startsWithSeq](#startswithseq). A warning will be emitted if you do not.
