@@ -8,32 +8,35 @@
 
 /* eslint-disable no-unused-vars,import/no-duplicates,no-constant-condition */
 
-import { join, toArray } from '../../..';
+import { join } from '../../..';
+import { wrapDeep, unwrap } from '../../../test/helpers';
 
 describe('join', () => {
   it('should join each group with the provided value', () => {
-    expect(toArray(join([[1], [2], [3]]))).toEqual([1, 2, 3]);
+    expect(unwrap(join(wrapDeep([[1], [2], [3]])))).toEqual([1, 2, 3]);
   });
 
   it('should have two adjacent separators when encountering an empty group', () => {
-    expect(toArray(join([[1], [], [3]]))).toEqual([1, 3]);
+    expect(unwrap(join(wrapDeep([[1], [], [3]])))).toEqual([1, 3]);
   });
 
   it('should yield a single separator when joining two empty groups', () => {
-    expect(toArray(join([[], []]))).toEqual([]);
+    expect(unwrap(join(wrapDeep([[], []])))).toEqual([]);
   });
 
   it('passes through the empty iterable', () => {
-    expect(toArray(join(null))).toEqual([]);
+    expect(unwrap(join(null))).toEqual([]);
+    expect(unwrap(join(undefined))).toEqual([]);
+    expect(unwrap(join(wrapDeep([])))).toEqual([]);
   });
 
   it('passes through the empty string', () => {
-    expect(toArray(join(''))).toEqual([]);
+    expect(unwrap(join(''))).toEqual([]);
   });
 
   describe('given a string', () => {
     it('should split on every item which is equal to the on argument', () => {
-      expect(toArray(join(['11', '22', '33']))).toEqual(['1', '1', '2', '2', '3', '3']);
+      expect(unwrap(join(['11', '22', '33']))).toEqual(['1', '1', '2', '2', '3', '3']);
     });
   });
 });

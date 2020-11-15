@@ -6,7 +6,8 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { asyncIterableCurry } from '../../internal/async-iterable';
+import { asyncIterableCurry, asyncCallReturn } from '../../internal/async-iterable';
+import { asyncParallelEach } from '../../internal/async-parallel-each';
 import { AsyncPeekerator } from '../../internal/async-peekerator';
 import { asyncMap } from '../$map/async-map';
 import { asyncToArray } from '../$to-array/async-to-array';
@@ -33,6 +34,7 @@ class AsyncInputSummaryInternal {
   constructor() {
     this.buffers = [];
     this.notDoneBuffer = null;
+    this.index = 0;
   }
 
   init(buffers) {
@@ -48,6 +50,7 @@ class AsyncInputSummaryInternal {
     const wasDone = buffer.done;
 
     await buffer[__advance]();
+    this.index++;
 
     if (!wasDone && buffer.done) {
       this.updateNotDone();
@@ -102,14 +105,21 @@ class AsyncInterleaver {
     await inputSummary.init(this.buffers);
   }
 
+  async returnBuffers() {
+    await asyncParallelEach(this.buffers, buffer => buffer.return());
+  }
+
   async next() {
     if (!this.initialized) await this.init();
 
-    return await this.iterator.next();
+    const item = await this.iterator.next();
+    if (item.done) await this.returnBuffers();
+    return item;
   }
 
   async return() {
-    for (const buffer of this.buffers) await buffer.return();
+    await asyncCallReturn(this.iterator);
+    await this.returnBuffers();
   }
 }
 

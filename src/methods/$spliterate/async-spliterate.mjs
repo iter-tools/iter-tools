@@ -19,4 +19,5 @@ export function asyncSpliterate(source, strategy, options = {}) {
 export default asyncIterableCurry(asyncSpliterate, {
   minArgs: 1,
   maxArgs: 2,
+  optionalArgsAtEnd: true,
 });

@@ -8,14 +8,11 @@
 
 /* eslint-disable no-unused-vars,import/no-duplicates,no-constant-condition */
 
-import { split, map, toArray } from '../../..';
+import { split } from '../../..';
+import { wrap, unwrapDeep } from '../../../test/helpers';
 
 describe('split', () => {
   it('should yield an iterable for every item in the iterable', () => {
-    expect(toArray(map(group => toArray(group), split([1, 2, 3])))).toEqual([[1], [2], [3]]);
-  });
-
-  it('exploding a string should return the string', () => {
-    expect(split('123')).toEqual('123');
+    expect(unwrapDeep(split(wrap([1, 2, 3])))).toEqual([[1], [2], [3]]);
   });
 });

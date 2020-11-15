@@ -9,12 +9,11 @@
 /* eslint-disable no-unused-vars,import/no-duplicates,no-constant-condition */
 
 import { asyncSplitOn } from '../../..';
-import { asyncUnwrapDeep as asyncUw } from '../../../__tests__/async-helpers';
-import { asyncWrap } from '../../../__tests__/__framework__/async-wrap';
+import { asyncWrap, asyncUnwrapDeep } from '../../../test/async-helpers';
 
 describe('asyncSplitOn', () => {
   it('should split between every item which is equal to the on argument', async () => {
-    expect(await asyncUw(asyncSplitOn(null, asyncWrap([1, null, 2, null, 3])))).toEqual([
+    expect(await asyncUnwrapDeep(asyncSplitOn(null, asyncWrap([1, null, 2, null, 3])))).toEqual([
       [1],
       [2],
       [3],
@@ -25,17 +24,20 @@ describe('asyncSplitOn', () => {
     const parts = asyncSplitOn(null, asyncWrap([1, null, 2]));
     const a = (await parts.next()).value;
     const b = (await parts.next()).value;
-    let error;
-    try {
-      await asyncUw([b, a]);
-    } catch (e) {
-      error = e;
-    }
-    expect(error).toMatchSnapshot();
+
+    expect(
+      await (async () => {
+        try {
+          await asyncUnwrapDeep([b, a]);
+        } catch (e) {
+          return e;
+        }
+      })(),
+    ).toMatchSnapshot();
   });
 
   it('should yield [] between two separators', async () => {
-    expect(await asyncUw(asyncSplitOn(null, asyncWrap([1, null, null, 3])))).toEqual([
+    expect(await asyncUnwrapDeep(asyncSplitOn(null, asyncWrap([1, null, null, 3])))).toEqual([
       [1],
       [],
       [3],
@@ -43,10 +45,10 @@ describe('asyncSplitOn', () => {
   });
 
   it('should yield [], [] when only separator', async () => {
-    expect(await asyncUw(asyncSplitOn(null, asyncWrap([null])))).toEqual([[], []]);
+    expect(await asyncUnwrapDeep(asyncSplitOn(null, asyncWrap([null])))).toEqual([[], []]);
   });
 
   it('passes through the empty iterable', async () => {
-    expect(await asyncUw(asyncSplitOn(0, null))).toEqual([]);
+    expect(await asyncUnwrapDeep(asyncSplitOn(0, null))).toEqual([]);
   });
 });

@@ -1,34 +1,23 @@
 import delay from '../../../internal/delay';
-import { asyncMapParallel, asyncToArray, range } from '../../..';
+import { asyncMapParallel } from '../../..';
+import { asyncWrap, asyncUnwrap } from '../../../test/async-helpers';
 
 describe('asyncMapParallel', () => {
   it('returns mapped iterable', async () => {
-    const iter = asyncMapParallel(item => item * 2, [1, 2, 3]);
-    expect(await asyncToArray(iter)).toEqual([2, 4, 6]);
-  });
-
-  it('returns mapped iterable (using a promise)', async () => {
-    const iter = asyncMapParallel(item => Promise.resolve(item * 2), [1, 2, 3]);
-    expect(await asyncToArray(iter)).toEqual([2, 4, 6]);
-  });
-
-  it('returns mapped iterable from iterable', async () => {
-    const iter = asyncMapParallel(item => item * 2, range(1, 4));
-    expect(await asyncToArray(iter)).toEqual([2, 4, 6]);
+    const iter = asyncMapParallel(item => item * 2, asyncWrap([1, 2, 3]));
+    expect(await asyncUnwrap(iter)).toEqual([2, 4, 6]);
   });
 
   it('maps concurrently', async () => {
-    const iter = asyncMapParallel(2, item => item * 2, range(1, 4));
-    expect(await asyncToArray(iter)).toEqual([2, 4, 6]);
+    const iter = asyncMapParallel(2, async item => item * 2, asyncWrap([1, 2, 3]));
+    expect(await asyncUnwrap(iter)).toEqual([2, 4, 6]);
   });
 
-  it('returns mapped iterable (curried version)', async () => {
-    const iter = asyncMapParallel((item: number) => item * 2);
-    expect(await asyncToArray(iter(range(1, 4)))).toEqual([2, 4, 6]);
-  });
-
-  it('returns empty iterable from null', async () => {
-    expect(await asyncToArray(asyncMapParallel((item: never) => item * 2, null))).toEqual([]);
+  it('returns empty iterable from empty iterable', async () => {
+    expect(await asyncUnwrap(asyncMapParallel(async (item: any) => item * 2, null))).toEqual([]);
+    expect(await asyncUnwrap(asyncMapParallel(async (item: any) => item * 2, undefined))).toEqual(
+      [],
+    );
   });
 
   it('maps concurrently (check how many)', async () => {
@@ -43,8 +32,8 @@ describe('asyncMapParallel', () => {
         await delay(Math.min(desiredConcurrency, i + 1) * 50);
         return concurrency--;
       },
-      range(10),
+      asyncWrap([0, 1, 2, 3, 4, 5, 6, 7, 8, 9]),
     );
-    expect(await asyncToArray(iter)).toEqual([3, 3, 3, 3, 3, 3, 3, 3, 2, 1]);
+    expect(await asyncUnwrap(iter)).toEqual([3, 3, 3, 3, 3, 3, 3, 3, 2, 1]);
   });
 });

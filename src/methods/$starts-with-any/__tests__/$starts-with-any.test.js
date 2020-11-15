@@ -1,40 +1,55 @@
-import { $, $async, $await } from '../../../../generate/async.macro';
+import { $, $isSync, $async, $await } from '../../../../generate/async.macro';
 
-import { $startsWithAny, range } from '../../..';
+import { $startsWithAny } from '../../..';
+import { $wrap } from '../../../test/$helpers';
 
 describe($`startsWithAny`, () => {
-  it(
-    'returns true if the iterable starts with any of the given values',
-    $async(() => {
-      expect($await($startsWithAny([0, 1], range(1, 10)))).toBe(true);
-    }),
-  );
+  describe('when no values are given', () => {
+    it(
+      'returns false',
+      $async(() => {
+        expect($await($startsWithAny([], $wrap([])))).toBe(false);
+      }),
+    );
+  });
 
-  it(
-    'returns true if the iterable starts with all of the given values',
-    $async(() => {
-      expect($await($startsWithAny([1, 1], range(1, 10)))).toBe(true);
-    }),
-  );
+  describe('when iterable starts with a given value', () => {
+    it(
+      'returns true',
+      $async(() => {
+        expect($await($startsWithAny([1], $wrap([1, 2, 3])))).toBe(true);
+        expect($await($startsWithAny([2, 1], $wrap([1, 2, 3])))).toBe(true);
+      }),
+    );
+  });
 
-  it(
-    'returns false if the iterable contains but does not start with any of the given values',
-    $async(() => {
-      expect($await($startsWithAny([1], range(0, 10)))).toBe(false);
-    }),
-  );
+  describe('when iterable does not start with with a given value', () => {
+    it(
+      'returns false',
+      $async(() => {
+        expect($await($startsWithAny([2], $wrap([1, 2, 3])))).toBe(false);
+      }),
+    );
+  });
 
-  it(
-    'returns false if the iterable does not contain any of given values',
-    $async(() => {
-      expect($await($startsWithAny([1, 3, 4], [2]))).toBe(false);
-    }),
-  );
+  describe('when iterable is empty', () => {
+    it(
+      'returns false',
+      $async(() => {
+        expect($await($startsWithAny([null], $wrap([])))).toBe(false);
+      }),
+    );
+  });
 
-  it(
-    'returns false if the iterable is empty',
-    $async(() => {
-      expect($await($startsWithAny([undefined], []))).toBe(false);
-    }),
-  );
+  if ($isSync) {
+    describe('when iterable is a string', () => {
+      it(
+        'warns',
+        $async(() => {
+          $startsWithAny([], 'abc');
+          expect(console.warn).callsMatchSnapshot();
+        }),
+      );
+    });
+  }
 });

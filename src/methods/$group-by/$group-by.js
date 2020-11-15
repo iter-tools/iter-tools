@@ -43,6 +43,7 @@ function* $groupingSpliterator(split, { getKey }, source) {
 export function $groupBy(source, getKey) {
   if (getKey === null) {
     warnNullGetKeyDeprecation();
+    getKey = _ => _;
   }
 
   return $spliterateGrouped(source, $groupingSpliterator, { getKey });

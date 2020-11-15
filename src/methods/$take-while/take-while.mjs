@@ -8,12 +8,12 @@
 
 import { iterableCurry } from '../../internal/iterable';
 
-export function* takeWhile(source, func) {
+export function* takeWhile(source, predicate) {
   let take = true;
   let c = 0;
 
   for (const item of source) {
-    take = func(item, c++);
+    take = predicate(item, c++);
     if (take) {
       yield item;
     } else {

@@ -16,3 +16,10 @@ assert<$ResultIterable<number>>(
 assert<$ResultIterable<0>>(
   $filter(Ø as (item: string | number) => item is 0, Ø as $Iterable<string | number>),
 );
+
+assert<$ResultIterable<string | number>>(
+  $filter(
+    Ø as (item: string | number) => boolean,
+    Ø as $Iterable<string | number> | null | undefined,
+  ),
+);

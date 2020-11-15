@@ -9,7 +9,7 @@
 /* eslint-disable no-unused-vars,import/no-duplicates,no-constant-condition */
 
 import { first } from '../../..';
-import { wrap } from '../../../__tests__/__framework__/wrap';
+import { wrap } from '../../../test/helpers';
 
 describe('first', () => {
   describe('when iterable is empty', () => {
@@ -20,7 +20,7 @@ describe('first', () => {
     });
   });
 
-  describe('when iterable contains values', () => {
+  describe('when iterable has values', () => {
     it('returns first value', () => {
       expect(first(wrap([1, 2, 3]))).toBe(1);
     });

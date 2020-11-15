@@ -6,7 +6,7 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { iterableCurry } from '../../internal/iterable';
+import { iterableCurry, callReturn } from '../../internal/iterable';
 
 export function firstOr(iterable, whenEmpty) {
   const iter = iterable[Symbol.iterator]();
@@ -14,7 +14,7 @@ export function firstOr(iterable, whenEmpty) {
 
   if (done) return whenEmpty;
 
-  if (typeof iter.return === 'function') iter.return();
+  callReturn(iter);
 
   return value;
 }

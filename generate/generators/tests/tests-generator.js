@@ -6,7 +6,7 @@ const BaseAsyncGenerator = require('../base-async-generator');
 
 const generatedTestFile = require('../_templates/generated-test-file');
 
-class TypeTestGenerator extends BaseAsyncGenerator {
+class TestsGenerator extends BaseAsyncGenerator {
   constructor(options) {
     super(options);
 
@@ -22,4 +22,4 @@ class TypeTestGenerator extends BaseAsyncGenerator {
   }
 }
 
-module.exports = TypeTestGenerator;
+module.exports = TestsGenerator;

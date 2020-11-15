@@ -11,6 +11,14 @@
 import { asyncPrepend, asyncToArray, asyncWrap } from '../../..';
 
 describe('asyncPrepend', () => {
+  describe('when source is empty', () => {
+    it('yields only the prepended value', async () => {
+      expect(await asyncToArray(asyncPrepend('hello', null))).toEqual(['hello']);
+      expect(await asyncToArray(asyncPrepend('cruel', undefined))).toEqual(['cruel']);
+      expect(await asyncToArray(asyncPrepend('world', asyncWrap([])))).toEqual(['world']);
+    });
+  });
+
   it('prepends a value', async () => {
     expect(await asyncToArray(asyncPrepend(1, asyncWrap([2, 3])))).toEqual([1, 2, 3]);
   });

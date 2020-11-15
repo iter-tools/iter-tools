@@ -8,32 +8,40 @@
 
 /* eslint-disable no-unused-vars,import/no-duplicates,no-constant-condition */
 
-import { asyncIncludesSubseq, range } from '../../..';
+import { asyncIncludesSubseq } from '../../..';
+import { asyncWrap } from '../../../test/async-helpers';
 
 describe('asyncIncludesSubseq', () => {
-  it('returns true if the iterable contains the given subsequence', async () => {
-    expect(await asyncIncludesSubseq([1, 2], range(0, 10))).toBe(true);
+  describe('when iterable includes a given sequence', () => {
+    it('returns true', async () => {
+      expect(await asyncIncludesSubseq(asyncWrap([1, 2]), asyncWrap([1, 2, 3]))).toBe(true);
+      expect(await asyncIncludesSubseq(asyncWrap([3]), asyncWrap([1, 2, 3]))).toBe(true);
+    });
   });
 
-  it('returns true if the iterable equals given subsequence', async () => {
-    expect(await asyncIncludesSubseq(range(1, 3), range(1, 3))).toBe(true);
+  describe('when iterable is equal to a given sequence', () => {
+    it('returns true', async () => {
+      expect(await asyncIncludesSubseq(asyncWrap([1, 2, 3]), asyncWrap([1, 2, 3]))).toBe(true);
+    });
   });
 
-  it('returns true if the given subsequence is empty', async () => {
-    expect(await asyncIncludesSubseq([], range(1, 3))).toBe(true);
+  describe('when iterable is shorter than a matching sequence', () => {
+    it('returns false', async () => {
+      expect(await asyncIncludesSubseq(asyncWrap([1, 2, 3]), asyncWrap([1, 2]))).toBe(false);
+    });
   });
 
-  it('returns false if subsequence is longer than the iterable', async () => {
-    expect(await asyncIncludesSubseq(range(1, 4), range(1, 3))).toBe(false);
-  });
-
-  describe('when the iterable is empty', () => {
-    it('returns true if the subsequence is empty', async () => {
-      expect(await asyncIncludesSubseq([], [])).toBe(true);
+  describe('when iterable is empty', () => {
+    describe('and sequence is empty', () => {
+      it('returns true', async () => {
+        expect(await asyncIncludesSubseq(asyncWrap([]), asyncWrap([]))).toBe(true);
+      });
     });
 
-    it('returns false if the subsequence is not empty', async () => {
-      expect(await asyncIncludesSubseq([undefined], [])).toBe(false);
+    describe('and sequence is not empty', () => {
+      it('returns false', async () => {
+        expect(await asyncIncludesSubseq(asyncWrap([undefined]), asyncWrap([]))).toBe(false);
+      });
     });
   });
 });

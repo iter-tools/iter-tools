@@ -1,43 +1,36 @@
 import { $, $isAsync, $async, $await } from '../../../../generate/async.macro';
 
-import { $filter, $toArray, range } from '../../..';
+import { $filter } from '../../..';
+import { $wrap, $unwrap } from '../../../test/$helpers';
 
 describe($`filter`, () => {
-  it(
-    'returns filtered iterable',
-    $async(() => {
-      const iter = $filter(item => item % 2 === 0, [1, 2, 3, 4, 5, 6]);
-      expect($await($toArray(iter))).toEqual([2, 4, 6]);
-    }),
-  );
+  describe('when source is empty', () => {
+    it(
+      'yields no values',
+      $async(() => {
+        const pred = (v: any) => v;
+        expect($await($unwrap($filter(pred, null)))).toEqual([]);
+        expect($await($unwrap($filter(pred, undefined)))).toEqual([]);
+        expect($await($unwrap($filter(pred, $wrap([]))))).toEqual([]);
+      }),
+    );
+  });
 
-  it(
-    'returns filtered iterable from iterable',
-    $async(() => {
-      const iter = $filter(item => item % 2 === 0, range(1, 7));
-      expect($await($toArray(iter))).toEqual([2, 4, 6]);
-    }),
-  );
-
-  it(
-    'returns filtered iterable (curried version)',
-    $async(() => {
-      const $filterEven = $filter((item: number) => item % 2 === 0);
-      expect($await($toArray($filterEven(range(1, 7))))).toEqual([2, 4, 6]);
-    }),
-  );
-
-  it(
-    'returns empty iterable from null',
-    $async(() => {
-      expect($await($toArray($filter((item: never) => item, null)))).toEqual([]);
-    }),
-  );
+  describe('when source has values', () => {
+    it(
+      'yields items for which predicate(value, i) returns true',
+      $async(() => {
+        expect(
+          $await($unwrap($filter((value, i) => value === i, $wrap([1, 1, 2, 3, 5, 8])))),
+        ).toEqual([1, 2, 3]);
+      }),
+    );
+  });
 
   if ($isAsync) {
-    it('returns filtered iterable (using a promise)', async () => {
-      const iter = $filter(item => Promise.resolve(item % 2 === 0), [1, 2, 3, 4, 5, 6]);
-      expect(await $toArray(iter)).toEqual([2, 4, 6]);
+    it('may take an async predicate', async () => {
+      const iter = $filter(async item => item % 2 === 0, $wrap([1, 2, 3, 4, 5, 6]));
+      expect(await $unwrap(iter)).toEqual([2, 4, 6]);
     });
   }
 });

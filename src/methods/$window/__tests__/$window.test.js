@@ -1,46 +1,55 @@
 import { $, $async, $await } from '../../../../generate/async.macro';
 
-import { $unwrapDeep as $uw } from '../../../__tests__/$helpers';
 import { $window } from '../../..';
+import { $wrap, $unwrapDeep, anyType } from '../../../test/$helpers';
 
 describe($`window`, () => {
-  it(
-    'frames iterable',
-    $async(() => {
-      const result = [[1, 2, 3], [2, 3, 4], [3, 4, 5]];
-
-      expect($await($uw($window(3, [1, 2, 3, 4, 5])))).toEqual(result);
-    }),
-  );
-
-  it(
-    'frames iterable (window equal to the sequence)',
-    $async(() => {
-      expect($await($uw($window(5, [1, 2, 3, 4, 5])))).toEqual([[1, 2, 3, 4, 5]]);
-    }),
-  );
-
-  describe('when the dinwos is bigger than the sequence', () => {
+  describe('when source is empty', () => {
     it(
-      'frames iterable (window bigger than the sequence)',
+      'yields no windows',
       $async(() => {
-        expect($await($uw($window(6, [1, 2, 3, 4, 5])))).toEqual([]);
-      }),
-    );
-
-    it(
-      'frames iterable (window bigger than the sequence) with filler',
-      $async(() => {
-        expect($await($uw($window(6, [1, 2, 3, 4, 5])))).toEqual([]);
+        expect($await($unwrapDeep($window(3, null)))).toEqual([]);
+        expect($await($unwrapDeep($window(3, undefined)))).toEqual([]);
+        expect($await($unwrapDeep($window(3, $wrap([]))))).toEqual([]);
       }),
     );
   });
 
-  describe('invalid inputs', () => {
-    it('throw', () => {
-      const size: any = 'a';
-      size;
-      expect(() => $window(size, [])).toThrowErrorMatchingSnapshot();
-    });
+  describe('when size(source) < size', () => {
+    it(
+      'yields no windows',
+      $async(() => {
+        expect($await($unwrapDeep($window(3, $wrap([1, 2]))))).toEqual([]);
+      }),
+    );
+  });
+
+  describe('when size(source) === size', () => {
+    it(
+      'yields one full window',
+      $async(() => {
+        expect($await($unwrapDeep($window(3, $wrap([1, 2, 3]))))).toEqual([[1, 2, 3]]);
+      }),
+    );
+  });
+
+  describe('when size(source) > size', () => {
+    it(
+      'yields partial windows, then size(source)-size full windows',
+      $async(() => {
+        const result = [[1, 2], [2, 3]];
+
+        expect($await($unwrapDeep($window(2, $wrap([1, 2, 3]))))).toEqual(result);
+      }),
+    );
+  });
+
+  describe('when size is invalid', () => {
+    it(
+      'throws a validation error',
+      $async(() => {
+        expect(() => $window(anyType(''), $wrap([]))).toThrowErrorMatchingSnapshot();
+      }),
+    );
   });
 });

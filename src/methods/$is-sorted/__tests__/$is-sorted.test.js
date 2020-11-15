@@ -1,69 +1,61 @@
 import { $, $async, $await } from '../../../../generate/async.macro';
 
-import { $isSorted, $wrap } from '../../..';
+import { $isSorted } from '../../..';
+import { $wrap } from '../../../test/$helpers';
 
 describe($`isSorted`, () => {
-  it(
-    'returns true for a numerically sorted input iterable',
-    $async(() => {
-      expect($await($isSorted($wrap([1, 2, 3])))).toEqual(true);
-    }),
-  );
-
-  it(
-    'returns true for an alphabetically sorted input string',
-    $async(() => {
-      expect($await($isSorted('abc'))).toEqual(true);
-    }),
-  );
-
-  it(
-    'returns true for a numerically sorted input iterable with duplicates',
-    $async(() => {
-      expect($await($isSorted($wrap([1, 2, 2, 2, 3])))).toEqual(true);
-    }),
-  );
-
-  it(
-    'returns true when the input contains only one item',
-    $async(() => {
-      expect($await($isSorted($wrap([9000])))).toEqual(true);
-    }),
-  );
-
-  it(
-    'returns true when the input is empty',
-    $async(() => {
-      expect($await($isSorted($wrap([])))).toEqual(true);
-    }),
-  );
-
-  it(
-    'returns false when the input is not sorted',
-    $async(() => {
-      expect($await($isSorted($wrap([2, 1])))).toEqual(false);
-    }),
-  );
-
-  describe('with an explicit comparator', () => {
+  describe('when iterable is empty', () => {
     it(
-      'returns true for a numerically sorted input iterable',
+      'returns true',
       $async(() => {
-        expect($await($isSorted((a, b) => a - b, $wrap([1, 1, 2, 3, 5, 8])))).toEqual(true);
+        expect($await($isSorted($wrap([])))).toEqual(true);
       }),
     );
+  });
 
+  describe('when iterable contains only a single value', () => {
     it(
-      'returns true for reverse sorted input iterable (with reverse comparator)',
+      'returns true',
       $async(() => {
-        expect($await($isSorted((a, b) => b - a, $wrap([8, 5, 3, 2, 1, 1])))).toEqual(true);
+        expect($await($isSorted($wrap([9000])))).toEqual(true);
       }),
     );
+  });
 
+  describe('when the values in iterable are sorted', () => {
     it(
-      'returns false if the comparator returns 1',
+      'returns true',
       $async(() => {
-        expect($await($isSorted(_ => 1, $wrap([1, 2])))).toEqual(false);
+        expect($await($isSorted((a, b) => b - a, $wrap([3, 2, 1])))).toEqual(true);
+      }),
+    );
+  });
+
+  describe('when the values in iterable are not sorted', () => {
+    it(
+      'returns false',
+      $async(() => {
+        expect($await($isSorted((a, b) => b - a, $wrap([1, 2, 3])))).toEqual(false);
+      }),
+    );
+  });
+
+  describe('when some values in iterable are equal to each other', () => {
+    it(
+      'returns true',
+      $async(() => {
+        expect($await($isSorted((a, b) => b - a, $wrap([3, 2, 2, 2, 1])))).toEqual(true);
+      }),
+    );
+  });
+
+  describe('when no comparator is specified', () => {
+    it(
+      'compares the default comparator',
+      $async(() => {
+        expect($await($isSorted('abc'))).toEqual(true);
+        expect($await($isSorted('cba'))).toEqual(false);
+        expect($await($isSorted('bbb'))).toEqual(true);
       }),
     );
   });

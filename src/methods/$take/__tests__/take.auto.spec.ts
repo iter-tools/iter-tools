@@ -8,10 +8,11 @@
 
 /* eslint-disable no-unused-vars,import/no-duplicates,no-constant-condition */
 
-import { take, toArray, wrap } from '../../..';
+import { take } from '../../..';
+import { wrap, unwrap } from '../../../test/helpers';
 
 describe('take', () => {
   it('takes the first n items', () => {
-    expect(toArray(take(2, wrap([1, 2, 3])))).toEqual([1, 2]);
+    expect(unwrap(take(2, wrap([1, 2, 3])))).toEqual([1, 2]);
   });
 });

@@ -8,22 +8,28 @@
 
 /* eslint-disable no-unused-vars,import/no-duplicates,no-constant-condition */
 
-import { asyncIncludes, range } from '../../..';
+import { asyncIncludes } from '../../..';
+import { asyncWrap } from '../../../test/async-helpers';
 
 describe('asyncIncludes', () => {
-  it('returns true if the iterable contains the given value', async () => {
-    expect(await asyncIncludes(1, range(0, 10))).toBe(true);
+  describe('when iterable includes value', () => {
+    it('returns true', async () => {
+      expect(await asyncIncludes(1, asyncWrap([1, 2, 3]))).toBe(true);
+      expect(await asyncIncludes(2, asyncWrap([1, 2, 3]))).toBe(true);
+      expect(await asyncIncludes(3, asyncWrap([1, 2, 3]))).toBe(true);
+    });
   });
 
-  it('returns true if the iterable contains only the given value', async () => {
-    expect(await asyncIncludes(1, [1])).toBe(true);
+  describe('when iterable does not include value', () => {
+    it('returns false', async () => {
+      expect(await asyncIncludes(4, asyncWrap([1, 2, 3]))).toBe(false);
+      expect(await asyncIncludes(null, asyncWrap([1, 2, 3]))).toBe(false);
+    });
   });
 
-  it('returns false if the iterable does not contain the given value', async () => {
-    expect(await asyncIncludes(1, [2])).toBe(false);
-  });
-
-  it('returns false if the iterable is empty', async () => {
-    expect(await asyncIncludes(undefined, [])).toBe(false);
+  describe('when iterable is empty', () => {
+    it('returns false', async () => {
+      expect(await asyncIncludes(undefined, asyncWrap([]))).toBe(false);
+    });
   });
 });

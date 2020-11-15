@@ -8,32 +8,36 @@
 
 /* eslint-disable no-unused-vars,import/no-duplicates,no-constant-condition */
 
-import { batch, range } from '../../..';
-import { unwrapDeep as uw } from '../../../__tests__/helpers';
+import { batch } from '../../..';
+import { wrap, unwrapDeep } from '../../../test/helpers';
 
 describe('batch', () => {
-  it('returns an iterable with batches', () => {
-    const iter = batch(2, [1, 2, 3, 4, 5, 6, 7, 8, 9]);
-    expect(uw(iter)).toEqual([[1, 2], [3, 4], [5, 6], [7, 8], [9]]);
+  describe('when source is empty', () => {
+    it('yields no items', () => {
+      expect(unwrapDeep(batch(2, null))).toEqual([]);
+      expect(unwrapDeep(batch(2, undefined))).toEqual([]);
+      expect(unwrapDeep(batch(2, wrap([])))).toEqual([]);
+    });
   });
 
-  it('returns an iterable with batches when passed an iterable', () => {
-    const iter = batch(2, range({ start: 1, end: 10 }));
-    expect(uw(iter)).toEqual([[1, 2], [3, 4], [5, 6], [7, 8], [9]]);
+  describe('when source has fewer than `size` values', () => {
+    it('yields one incomplete batch', () => {
+      expect(unwrapDeep(batch(2, wrap([1])))).toEqual([[1]]);
+    });
   });
 
-  it('returns an iterable with batches when passed an iterable (2)', () => {
-    const iter = batch(2, range({ start: 1, end: 9 }));
-    expect(uw(iter)).toEqual([[1, 2], [3, 4], [5, 6], [7, 8]]);
-  });
+  describe('when source has more than `size` values', () => {
+    describe('which can be divided evenly into batches', () => {
+      it('yields batches of `size` items', () => {
+        expect(unwrapDeep(batch(2, wrap([1, 2, 3, 4, 5, 6])))).toEqual([[1, 2], [3, 4], [5, 6]]);
+      });
+    });
 
-  it('returns an iterable with batches (curried version)', () => {
-    const iter = batch(2);
-    expect(uw(iter(range({ start: 1, end: 10 })))).toEqual([[1, 2], [3, 4], [5, 6], [7, 8], [9]]);
-  });
-
-  it('returns an empty iterable when passed null', () => {
-    expect(uw(batch(2, null))).toEqual([]);
+    describe('which cannot be divided evenly into batches', () => {
+      it('yields batches of `size` items and one incomplete batch', () => {
+        expect(unwrapDeep(batch(2, wrap([1, 2, 3, 4, 5])))).toEqual([[1, 2], [3, 4], [5]]);
+      });
+    });
   });
 
   it('errors when passed size <= 0', () => {

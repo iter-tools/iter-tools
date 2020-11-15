@@ -8,16 +8,22 @@
 
 /* eslint-disable no-unused-vars,import/no-duplicates,no-constant-condition */
 
-import { asyncCollate, asyncToArray } from '../../..';
+import { asyncCollate } from '../../..';
+import { asyncWrap, asyncUnwrap } from '../../../test/async-helpers';
 
 describe('asyncCollate', () => {
   it('output is sorted if passed a comparator', async () => {
-    const iter = asyncCollate((a, b) => b - a, [1, 8, 9], [4, 6, 7], [2, 3, 5]);
-    expect(await asyncToArray(iter)).toEqual([1, 2, 3, 4, 5, 6, 7, 8, 9]);
+    const iter = asyncCollate(
+      (a, b) => b - a,
+      asyncWrap([1, 8, 9]),
+      asyncWrap([4, 6, 7]),
+      asyncWrap([2, 3, 5]),
+    );
+    expect(await asyncUnwrap(iter)).toEqual([1, 2, 3, 4, 5, 6, 7, 8, 9]);
   });
 
   it('works with input iterables of different lengths', async () => {
-    const iter = asyncCollate((a, b) => b - a, [], [2, 3], [1]);
-    expect(await asyncToArray(iter)).toEqual([1, 2, 3]);
+    const iter = asyncCollate((a, b) => b - a, asyncWrap([]), asyncWrap([2, 3]), asyncWrap([1]));
+    expect(await asyncUnwrap(iter)).toEqual([1, 2, 3]);
   });
 });

@@ -8,11 +8,21 @@
 
 /* eslint-disable no-unused-vars,import/no-duplicates,no-constant-condition */
 
-import { cycle, slice, toArray } from '../../..';
-import { range } from '../../../__tests__/range';
+import { cycle, slice } from '../../..';
+import { wrap, unwrap } from '../../../test/helpers';
 
 describe('cycle', () => {
-  it('cycles iterable infinitely', () => {
-    expect(toArray(slice(0, 7, cycle(range(1, 4))))).toEqual([1, 2, 3, 1, 2, 3, 1]);
+  describe('when source is empty', () => {
+    it('yields no items', () => {
+      expect(unwrap(cycle(null))).toEqual([]);
+      expect(unwrap(cycle(undefined))).toEqual([]);
+      expect(unwrap(cycle([]))).toEqual([]);
+    });
+  });
+
+  describe('when source has values', () => {
+    it('yields those values repeatedly forever', () => {
+      expect(unwrap(slice(0, 7, cycle(wrap([1, 2, 3]))))).toEqual([1, 2, 3, 1, 2, 3, 1]);
+    });
   });
 });

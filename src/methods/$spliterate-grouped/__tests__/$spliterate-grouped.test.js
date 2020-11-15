@@ -1,7 +1,7 @@
 import { $, $async, $await } from '../../../../generate/async.macro';
 
 import { $spliterateGrouped } from '../../..';
-import { $unwrapDeep as $uw } from '../../../__tests__/$helpers';
+import { $unwrapDeep } from '../../../test/$helpers';
 import { split } from '../$spliterate-grouped';
 
 $async;
@@ -16,7 +16,7 @@ describe($`spliterateGrouped`, () => {
     it(
       'yields no groups',
       $async(() => {
-        expect($await($uw($testSpliterator([])))).toEqual([]);
+        expect($await($unwrapDeep($testSpliterator([])))).toEqual([]);
       }),
     );
   });
@@ -25,7 +25,7 @@ describe($`spliterateGrouped`, () => {
     it(
       'yields two empty groups',
       $async(() => {
-        expect($await($uw($testSpliterator([split, 'key'])))).toEqual([['key', []]]);
+        expect($await($unwrapDeep($testSpliterator([split, 'key'])))).toEqual([['key', []]]);
       }),
     );
   });
@@ -34,11 +34,19 @@ describe($`spliterateGrouped`, () => {
     it(
       'yields three empty groups',
       $async(() => {
-        expect($await($uw($testSpliterator([split, 'key1', split, 'key2'])))).toEqual([
+        expect($await($unwrapDeep($testSpliterator([split, 'key1', split, 'key2'])))).toEqual([
           ['key1', []],
           ['key2', []],
         ]);
       }),
     );
   });
+
+  it(
+    'options may be omitted',
+    $async(() => {
+      const $testSpliterator = $spliterateGrouped($identityStrategy);
+      expect($await($unwrapDeep($testSpliterator([])))).toEqual([]);
+    }),
+  );
 });

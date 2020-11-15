@@ -9,11 +9,11 @@
 import { AsyncSourceIterable, AsyncResultIterable } from '../../types/async-iterable';
 
 declare function asyncTakeWhile<T>(
-  func: (item: T, i: number) => boolean | Promise<boolean>,
+  predicate: (item: T, i: number) => boolean | Promise<boolean>,
 ): (source: AsyncSourceIterable<T>) => AsyncResultIterable<T>;
 
 declare function asyncTakeWhile<T>(
-  func: (item: T, i: number) => boolean | Promise<boolean>,
+  predicate: (item: T, i: number) => boolean | Promise<boolean>,
   source: AsyncSourceIterable<T>,
 ): AsyncResultIterable<T>;
 

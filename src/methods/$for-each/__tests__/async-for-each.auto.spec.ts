@@ -9,30 +9,22 @@
 /* eslint-disable no-unused-vars,import/no-duplicates,no-constant-condition */
 
 import { asyncForEach } from '../../..';
+import { asyncWrap } from '../../../test/async-helpers';
 
 describe('asyncForEach', () => {
-  it('iterates over an iterable', async () => {
+  it('calls callback for each value in iterable', async () => {
     const arr: Array<number> = [];
-    await asyncForEach(item => arr.push(item), [1, 2, 3]);
+
+    await asyncForEach(item => arr.push(item), asyncWrap([1, 2, 3]));
+
     expect(arr).toEqual([1, 2, 3]);
   });
 
-  it('iterates over an iterable using a promise', async () => {
+  it('may take an async callback', async () => {
     const arr: Array<number> = [];
-    await asyncForEach(
-      item => {
-        arr.push(item);
-        return Promise.resolve(0);
-      },
-      [1, 2, 3],
-    );
-    expect(arr).toEqual([1, 2, 3]);
-  });
 
-  it('iterates over an iterable (curried)', async () => {
-    const arr: Array<number> = [];
-    const forEachPush = asyncForEach((item: number) => arr.push(item));
-    await forEachPush([1, 2, 3]);
+    await asyncForEach(async item => arr.push(item), asyncWrap([1, 2, 3]));
+
     expect(arr).toEqual([1, 2, 3]);
   });
 });

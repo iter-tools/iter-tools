@@ -9,67 +9,56 @@
 /* eslint-disable no-unused-vars,import/no-duplicates,no-constant-condition */
 
 import { groupBy } from '../../..';
-import { unwrapDeep as uw } from '../../../__tests__/helpers';
+import { wrap, unwrap, unwrapDeep } from '../../../test/helpers';
+
+function identity<T>(value: T): T {
+  return value;
+}
 
 describe('groupBy', () => {
-  it('returns source values grouped by key function', () => {
-    const iter = groupBy(item => item.toLowerCase(), 'AaaBbaACccCD');
-    let next = iter.next();
-    expect(next.value[0]).toBe('a');
-    next = iter.next();
-    expect(next.value[0]).toBe('b');
-    next = iter.next();
-    expect(next.value[0]).toBe('a');
-    next = iter.next();
-    expect(next.value[0]).toBe('c');
-    next = iter.next();
-    expect(next.value[0]).toBe('d');
-    next = iter.next();
-    expect(next.done).toBe(true);
+  describe('when source is empty', () => {
+    it('yields no groups', () => {
+      expect(unwrapDeep(groupBy(identity, null))).toEqual([]);
+      expect(unwrapDeep(groupBy(identity, undefined))).toEqual([]);
+      expect(unwrapDeep(groupBy(identity, wrap([])))).toEqual([]);
+    });
   });
 
-  it('main cursor (curried)', () => {
-    const iter = groupBy(_ => _)('AAABBAACCCCD');
-    let next = iter.next();
-    expect(next.value[0]).toBe('A');
-    next = iter.next();
-    expect(next.value[0]).toBe('B');
-    next = iter.next();
-    expect(next.value[0]).toBe('A');
-    next = iter.next();
-    expect(next.value[0]).toBe('C');
-    next = iter.next();
-    expect(next.value[0]).toBe('D');
-    next = iter.next();
-    expect(next.done).toBe(true);
+  describe('when values from source cannot be grouped', () => {
+    it('yields a group for each value', () => {
+      expect(unwrapDeep(groupBy((_: number, i: number) => i, wrap([0, 0, 0])))).toEqual([
+        [0, [0]],
+        [1, [0]],
+        [2, [0]],
+      ]);
+    });
   });
 
-  it('returns source values grouped by key function', () => {
-    const iter = groupBy(item => item.toLowerCase(), 'AaaBbaACccCD');
-    expect(uw(iter)).toEqual([
-      ['a', ['A', 'a', 'a']],
-      ['b', ['B', 'b']],
-      ['a', ['a', 'A']],
-      ['c', ['C', 'c', 'c', 'C']],
-      ['d', ['D']],
-    ]);
+  describe('when source contains subsequent values belonging to the same group', () => {
+    it('coalesces values into groups', () => {
+      const lowerCase = (item: string) => item.toLowerCase();
+      expect(unwrapDeep(groupBy(lowerCase, 'AaA'))).toEqual([['a', ['A', 'a', 'A']]]);
+      expect(unwrapDeep(groupBy(lowerCase, 'baA'))).toEqual([['b', ['b']], ['a', ['a', 'A']]]);
+    });
   });
 
-  it('returns source values grouped by identity', () => {
-    const iter = groupBy(_ => _)('AAABBAACCCCD');
-    expect(uw(iter)).toEqual([
-      ['A', ['A', 'A', 'A']],
-      ['B', ['B', 'B']],
-      ['A', ['A', 'A']],
-      ['C', ['C', 'C', 'C', 'C']],
-      ['D', ['D']],
-    ]);
-  });
+  describe('when groups are consumed out of order', () => {
+    it('throws', () => {
+      const iter = groupBy(identity, 'AB');
+      const [, As] = iter.next().value;
+      const [, Bs] = iter.next().value;
 
-  it('empty source returns empty iterable', () => {
-    expect(uw(groupBy(_ => _, null))).toEqual([]);
-    expect(uw(groupBy(_ => _)(null))).toEqual([]);
-    expect(uw(groupBy(_ => _, undefined))).toEqual([]);
-    expect(uw(groupBy(_ => _)(undefined))).toEqual([]);
+      unwrap(Bs);
+
+      expect(
+        (() => {
+          try {
+            unwrap(As);
+          } catch (e) {
+            return e;
+          }
+        })(),
+      ).toMatchSnapshot();
+    });
   });
 });

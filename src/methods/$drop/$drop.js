@@ -7,8 +7,7 @@ export function* $drop(iterable, n) {
   let i = 0;
   $await;
   for (const item of iterable) {
-    if (i++ < n) continue;
-    yield item;
+    if (i++ >= n) yield item;
   }
 }
 

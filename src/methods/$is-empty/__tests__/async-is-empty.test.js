@@ -9,7 +9,7 @@
 /* eslint-disable no-unused-vars,import/no-duplicates,no-constant-condition */
 
 import { asyncIsEmpty } from '../../..';
-import { asyncWrap } from '../../../__tests__/__framework__/async-wrap';
+import { asyncWrap } from '../../../test/async-helpers';
 
 describe('asyncIsEmpty', () => {
   describe('when iterable is empty', () => {
@@ -20,9 +20,10 @@ describe('asyncIsEmpty', () => {
     });
   });
 
-  describe('when iterable contains values', () => {
+  describe('when iterable has values', () => {
     it('returns false', async () => {
-      expect(await asyncIsEmpty(asyncWrap([1, 2, 3]))).toBe(false);
+      expect(await asyncIsEmpty(asyncWrap([1]))).toBe(false);
+      expect(await asyncIsEmpty(asyncWrap([1, 2]))).toBe(false);
     });
   });
 });

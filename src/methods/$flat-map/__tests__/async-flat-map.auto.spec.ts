@@ -8,25 +8,22 @@
 
 /* eslint-disable no-unused-vars,import/no-duplicates,no-constant-condition */
 
-import { asyncFlatMap, asyncToArray, range } from '../../..';
+import { asyncFlatMap } from '../../..';
+import { asyncWrap, asyncUnwrap } from '../../../test/async-helpers';
 
 describe('asyncFlatMap', () => {
-  it('returns flatMapped iterable', async () => {
-    const iter = asyncFlatMap(item => [item, item * 2], [1, 2, 3]);
-    expect(await asyncToArray(iter)).toEqual([1, 2, 2, 4, 3, 6]);
+  describe('when source is empty', () => {
+    it('yields no values', async () => {
+      expect(await asyncUnwrap(asyncFlatMap((value: any) => value, null))).toEqual([]);
+      expect(await asyncUnwrap(asyncFlatMap((value: any) => value, undefined))).toEqual([]);
+      expect(await asyncUnwrap(asyncFlatMap((value: any) => value, asyncWrap([])))).toEqual([]);
+    });
   });
 
-  it('returns flatMapped iterable from iterable', async () => {
-    const iter = asyncFlatMap(item => [item, item * 2], range(1, 4));
-    expect(await asyncToArray(iter)).toEqual([1, 2, 2, 4, 3, 6]);
-  });
-
-  it('returns flatMapped iterable (curried version)', async () => {
-    const iter = asyncFlatMap((item: number) => [item, item * 2]);
-    expect(await asyncToArray(iter(range(1, 4)))).toEqual([1, 2, 2, 4, 3, 6]);
-  });
-
-  it('returns empty iterable from null', async () => {
-    expect(await asyncToArray(asyncFlatMap((item: never) => item, null))).toEqual([]);
+  describe('when source has values', () => {
+    it('concatenates result of func(value, i) for each value in source', async () => {
+      const iter = asyncFlatMap((value: number, i: number) => [i, value], asyncWrap([1, 2, 3]));
+      expect(await asyncUnwrap(iter)).toEqual([0, 1, 1, 2, 2, 3]);
+    });
   });
 });

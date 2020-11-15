@@ -8,25 +8,38 @@
 
 /* eslint-disable no-unused-vars,import/no-duplicates,no-constant-condition */
 
-import { dropWhile, toArray, range } from '../../..';
+import { dropWhile } from '../../..';
+import { wrap, unwrap } from '../../../test/helpers';
 
 describe('dropWhile', () => {
-  it('dropWhile on array', () => {
-    const iter = dropWhile(item => item % 2 === 0, [2, 2, 3, 2, 2, 2]);
-    expect(toArray(iter)).toEqual([3, 2, 2, 2]);
+  describe('when source is empty', () => {
+    it('yields no values', () => {
+      expect(unwrap(dropWhile((item: any) => item, null))).toEqual([]);
+      expect(unwrap(dropWhile((item: any) => item, undefined))).toEqual([]);
+      expect(unwrap(dropWhile((item: any) => item, wrap([])))).toEqual([]);
+    });
   });
 
-  it('dropWhile on iterable', () => {
-    const iter = dropWhile(item => item !== 4, range({ start: 1, end: 7 }));
-    expect(toArray(iter)).toEqual([4, 5, 6]);
-  });
+  describe('when source has values', () => {
+    describe('when no values match predicate', () => {
+      it('yields values from source', () => {
+        const iter = dropWhile(i => i !== i, wrap([1, 2, 3, 4, 5, 6]));
+        expect(unwrap(iter)).toEqual([1, 2, 3, 4, 5, 6]);
+      });
+    });
 
-  it('dropWhile on iterable (curried version)', () => {
-    const iter = dropWhile(item => item !== 4);
-    expect(toArray(iter(range({ start: 1, end: 7 })))).toEqual([4, 5, 6]);
-  });
+    describe('when all values match predicate', () => {
+      it('yields no values', () => {
+        const iter = dropWhile(i => i === i, wrap([1, 2, 3, 4, 5, 6]));
+        expect(unwrap(iter)).toEqual([]);
+      });
+    });
 
-  it('dropWhile on null', () => {
-    expect(toArray(dropWhile((item: any) => item, null))).toEqual([]);
+    describe('when a value matches predicate', () => {
+      it('yields the matching value and subsequent values', () => {
+        const iter = dropWhile(i => i !== 4, wrap([1, 2, 3, 4, 5, 6]));
+        expect(unwrap(iter)).toEqual([4, 5, 6]);
+      });
+    });
   });
 });

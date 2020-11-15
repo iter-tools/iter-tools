@@ -1,43 +1,33 @@
 import { $, $isAsync, $async, $await } from '../../../../generate/async.macro';
 
-import { $map, $toArray, range } from '../../..';
+import { $map } from '../../..';
+import { $wrap, $unwrap } from '../../../test/$helpers';
 
 describe($`map`, () => {
-  it(
-    'returns mapped iterable',
-    $async(() => {
-      const iter = $map(item => item * 2, [1, 2, 3]);
-      expect($await($toArray(iter))).toEqual([2, 4, 6]);
-    }),
-  );
+  describe('when source is empty', () => {
+    it(
+      'yields no values',
+      $async(() => {
+        const func = (value: any) => value * 2;
+        expect($await($unwrap($map(func, null)))).toEqual([]);
+        expect($await($unwrap($map(func, undefined)))).toEqual([]);
+        expect($await($unwrap($map(func, $wrap([]))))).toEqual([]);
+      }),
+    );
+  });
 
-  it(
-    'returns mapped iterable from iterable',
-    $async(() => {
-      const iter = $map(item => item * 2, range(1, 4));
-      expect($await($toArray(iter))).toEqual([2, 4, 6]);
-    }),
-  );
-
-  it(
-    'returns mapped iterable (curried version)',
-    $async(() => {
-      const iter = $map((item: number) => item * 2);
-      expect($await($toArray(iter(range(1, 4))))).toEqual([2, 4, 6]);
-    }),
-  );
-
-  it(
-    'returns empty iterable from null',
-    $async(() => {
-      expect($await($toArray($map((item: never) => item * 2, null)))).toEqual([]);
-    }),
-  );
+  describe('when source has values', () => {
+    it(
+      'returns func(value, i) for each value in source',
+      $async(() => {
+        expect($await($unwrap($map((value, i) => value + i, $wrap([1, 2, 3]))))).toEqual([1, 3, 5]);
+      }),
+    );
+  });
 
   if ($isAsync) {
-    it('returns mapped iterable (using a promise)', async () => {
-      const iter = $map(item => Promise.resolve(item * 2), [1, 2, 3]);
-      expect(await $toArray(iter)).toEqual([2, 4, 6]);
+    it('can take an async func', async () => {
+      expect(await $unwrap($map(async value => value * 2, $wrap([1, 2, 3])))).toEqual([2, 4, 6]);
     });
   }
 });

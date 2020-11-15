@@ -9,7 +9,7 @@
 /* eslint-disable no-unused-vars,import/no-duplicates,no-constant-condition */
 
 import { asyncStr } from '../../..';
-import { asyncWrap } from '../../../__tests__/__framework__/async-wrap';
+import { asyncWrap } from '../../../test/async-helpers';
 
 describe('asyncStr', () => {
   it('joins an iterable of strings into a single string', async () => {
@@ -17,7 +17,6 @@ describe('asyncStr', () => {
   });
 
   it('coerces non-strings into strings', async () => {
-    const iterable: any = [1, 2, 3];
-    expect(await asyncStr(asyncWrap(iterable))).toEqual('123');
+    expect(await asyncStr(asyncWrap([1, 2, 3]))).toEqual('123');
   });
 });

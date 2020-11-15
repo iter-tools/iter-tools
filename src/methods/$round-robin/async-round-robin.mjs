@@ -7,8 +7,8 @@
  */
 
 import { asyncIterableCurry } from '../../internal/async-iterable';
-
 import { asyncInterleave } from '../$interleave/async-interleave';
+import { validateArgs } from './internal/validate-args';
 
 async function* asyncByPosition({ start, step }, all, ...peekrs) {
   start = start % peekrs.length;
@@ -29,15 +29,5 @@ export default asyncIterableCurry(asyncRoundRobin, {
   variadic: true,
   minArgs: 0,
   maxArgs: 2,
-  validateArgs(args) {
-    if (args[1] && typeof args[1] === 'object') {
-      const { start, step } = args[1];
-      args[0] = start != null ? start : 0;
-      args[1] = step != null ? start : 1;
-    }
-
-    if (args[1] <= 0) {
-      throw new Error('step argument to roundRobin must be >= 0');
-    }
-  },
+  validateArgs,
 });

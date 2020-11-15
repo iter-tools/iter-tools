@@ -1,33 +1,48 @@
-import { $, $async, $await } from '../../../../generate/async.macro';
+import { $, $isSync, $async, $await } from '../../../../generate/async.macro';
 
-import { $includes, range } from '../../..';
+import { $includes } from '../../..';
+import { $wrap } from '../../../test/$helpers';
 
 describe($`includes`, () => {
-  it(
-    'returns true if the iterable contains the given value',
-    $async(() => {
-      expect($await($includes(1, range(0, 10)))).toBe(true);
-    }),
-  );
+  describe('when iterable includes value', () => {
+    it(
+      'returns true',
+      $async(() => {
+        expect($await($includes(1, $wrap([1, 2, 3])))).toBe(true);
+        expect($await($includes(2, $wrap([1, 2, 3])))).toBe(true);
+        expect($await($includes(3, $wrap([1, 2, 3])))).toBe(true);
+      }),
+    );
+  });
 
-  it(
-    'returns true if the iterable contains only the given value',
-    $async(() => {
-      expect($await($includes(1, [1]))).toBe(true);
-    }),
-  );
+  describe('when iterable does not include value', () => {
+    it(
+      'returns false',
+      $async(() => {
+        expect($await($includes(4, $wrap([1, 2, 3])))).toBe(false);
+        expect($await($includes(null, $wrap([1, 2, 3])))).toBe(false);
+      }),
+    );
+  });
 
-  it(
-    'returns false if the iterable does not contain the given value',
-    $async(() => {
-      expect($await($includes(1, [2]))).toBe(false);
-    }),
-  );
+  describe('when iterable is empty', () => {
+    it(
+      'returns false',
+      $async(() => {
+        expect($await($includes(undefined, $wrap([])))).toBe(false);
+      }),
+    );
+  });
 
-  it(
-    'returns false if the iterable is empty',
-    $async(() => {
-      expect($await($includes(undefined, []))).toBe(false);
-    }),
-  );
+  if ($isSync) {
+    describe('when iterable is a string', () => {
+      it(
+        'warns',
+        $async(() => {
+          $includes([], 'abc');
+          expect(console.warn).callsMatchSnapshot();
+        }),
+      );
+    });
+  }
 });

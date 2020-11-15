@@ -7,7 +7,9 @@ function makeProject(projectConfig) {
         '.*': '<rootDir>/transformers/' + projectConfig.name,
       },
       testMatch: ['**/__tests__/**/!($)*.test.*(m)js'],
+      clearMocks: true,
       testPathIgnorePatterns: ['generate-yo/generators/[^/]+/templates?'],
+      setupFilesAfterEnv: ['<rootDir>/src/test/setup.mjs'],
     },
     projectConfig,
   );
@@ -15,24 +17,24 @@ function makeProject(projectConfig) {
 
 module.exports = {
   testEnvironment: 'node',
-  testMatch: [],
   coverageReporters: ['json-summary', 'text', 'lcov'],
+  collectCoverageFrom: ['src/**/*.mjs', '!src/*.mjs', '!**/$*.js', '!src/(test|types)/**'],
   coverageDirectory: './coverage/',
-  // projects: [
-  //   makeProject({
-  //     name: 'es5',
-  //   }),
-  //   makeProject({
-  //     name: 'es2015',
-  //   }),
-  // ].concat(
-  //   process.env.CI
-  //     ? makeProject({
-  //         name: 'es2018',
-  //       })
-  //     : [],
-  // ),
-  ...makeProject({
-    name: 'es2015',
-  }),
+
+  testMatch: [],
+  projects: [
+    makeProject({
+      name: 'es2015',
+    }),
+    ...(process.env.CI
+      ? [
+          makeProject({
+            name: 'es5',
+          }),
+          makeProject({
+            name: 'es2018',
+          }),
+        ]
+      : []),
+  ],
 };

@@ -76,7 +76,7 @@ generate/                Anything pertaining to code generation
 generate-yo/			 The yeoman generation code and templates. Used by the create:method script.
 
 src/
-├- internal/             Shared code which applies to many methods
+├- internal/             Shared code used by many methods
 ├─ methods/              One folder per method. $some-method means "someMethod and asyncSomeMethod"
 │  └─ $my-method/
 │      ├─ __tests__         Jest tests. *.test.js is copied to *.spec.ts and type checked.
@@ -84,6 +84,7 @@ src/
 │      ├─ $my-method.js     The method implementation. Default export is exported from library
 │      ├─ $my-method.d.ts   The method types. Default export is exported from library
 │      └─ README.md         Method documentation. Will be intergrated into API.md and website
+├─ test/                 Shared code used in tests
 ├- index.d.ts            Typedefs for index
 └─ index.mjs             Main entry point
 ```

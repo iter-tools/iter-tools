@@ -1,0 +1,3 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`asyncInterleave the summary summary.value is a buffer 1`] = `"advance() is not supported on an interleave summary"`;

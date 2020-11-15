@@ -8,16 +8,17 @@
 
 /* eslint-disable no-unused-vars,import/no-duplicates,no-constant-condition */
 
-import { collate, toArray } from '../../..';
+import { collate } from '../../..';
+import { wrap, unwrap } from '../../../test/helpers';
 
 describe('collate', () => {
   it('output is sorted if passed a comparator', () => {
-    const iter = collate((a, b) => b - a, [1, 8, 9], [4, 6, 7], [2, 3, 5]);
-    expect(toArray(iter)).toEqual([1, 2, 3, 4, 5, 6, 7, 8, 9]);
+    const iter = collate((a, b) => b - a, wrap([1, 8, 9]), wrap([4, 6, 7]), wrap([2, 3, 5]));
+    expect(unwrap(iter)).toEqual([1, 2, 3, 4, 5, 6, 7, 8, 9]);
   });
 
   it('works with input iterables of different lengths', () => {
-    const iter = collate((a, b) => b - a, [], [2, 3], [1]);
-    expect(toArray(iter)).toEqual([1, 2, 3]);
+    const iter = collate((a, b) => b - a, wrap([]), wrap([2, 3]), wrap([1]));
+    expect(unwrap(iter)).toEqual([1, 2, 3]);
   });
 });

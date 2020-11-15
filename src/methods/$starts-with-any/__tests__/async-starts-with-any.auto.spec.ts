@@ -8,26 +8,32 @@
 
 /* eslint-disable no-unused-vars,import/no-duplicates,no-constant-condition */
 
-import { asyncStartsWithAny, range } from '../../..';
+import { asyncStartsWithAny } from '../../..';
+import { asyncWrap } from '../../../test/async-helpers';
 
 describe('asyncStartsWithAny', () => {
-  it('returns true if the iterable starts with any of the given values', async () => {
-    expect(await asyncStartsWithAny([0, 1], range(1, 10))).toBe(true);
+  describe('when no values are given', () => {
+    it('returns false', async () => {
+      expect(await asyncStartsWithAny([], asyncWrap([]))).toBe(false);
+    });
   });
 
-  it('returns true if the iterable starts with all of the given values', async () => {
-    expect(await asyncStartsWithAny([1, 1], range(1, 10))).toBe(true);
+  describe('when iterable starts with a given value', () => {
+    it('returns true', async () => {
+      expect(await asyncStartsWithAny([1], asyncWrap([1, 2, 3]))).toBe(true);
+      expect(await asyncStartsWithAny([2, 1], asyncWrap([1, 2, 3]))).toBe(true);
+    });
   });
 
-  it('returns false if the iterable contains but does not start with any of the given values', async () => {
-    expect(await asyncStartsWithAny([1], range(0, 10))).toBe(false);
+  describe('when iterable does not start with with a given value', () => {
+    it('returns false', async () => {
+      expect(await asyncStartsWithAny([2], asyncWrap([1, 2, 3]))).toBe(false);
+    });
   });
 
-  it('returns false if the iterable does not contain any of given values', async () => {
-    expect(await asyncStartsWithAny([1, 3, 4], [2])).toBe(false);
-  });
-
-  it('returns false if the iterable is empty', async () => {
-    expect(await asyncStartsWithAny([undefined], [])).toBe(false);
+  describe('when iterable is empty', () => {
+    it('returns false', async () => {
+      expect(await asyncStartsWithAny([null], asyncWrap([]))).toBe(false);
+    });
   });
 });

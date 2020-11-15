@@ -9,7 +9,7 @@
 /* eslint-disable no-unused-vars,import/no-duplicates,no-constant-condition */
 
 import { asyncSpliterateGrouped } from '../../..';
-import { asyncUnwrapDeep as asyncUw } from '../../../__tests__/async-helpers';
+import { asyncUnwrapDeep } from '../../../test/async-helpers';
 import { split } from '../async-spliterate-grouped';
 
 async function* asyncIdentityStrategy(_split: any, _options: any, source: any) {
@@ -21,22 +21,27 @@ describe('asyncSpliterateGrouped', () => {
 
   describe('when spliterator is empty', () => {
     it('yields no groups', async () => {
-      expect(await asyncUw(asyncTestSpliterator([]))).toEqual([]);
+      expect(await asyncUnwrapDeep(asyncTestSpliterator([]))).toEqual([]);
     });
   });
 
   describe('when spliterator contains only a split', () => {
     it('yields two empty groups', async () => {
-      expect(await asyncUw(asyncTestSpliterator([split, 'key']))).toEqual([['key', []]]);
+      expect(await asyncUnwrapDeep(asyncTestSpliterator([split, 'key']))).toEqual([['key', []]]);
     });
   });
 
   describe('when spliterator contains two splits', () => {
     it('yields three empty groups', async () => {
-      expect(await asyncUw(asyncTestSpliterator([split, 'key1', split, 'key2']))).toEqual([
+      expect(await asyncUnwrapDeep(asyncTestSpliterator([split, 'key1', split, 'key2']))).toEqual([
         ['key1', []],
         ['key2', []],
       ]);
     });
+  });
+
+  it('options may be omitted', async () => {
+    const asyncTestSpliterator = asyncSpliterateGrouped(asyncIdentityStrategy);
+    expect(await asyncUnwrapDeep(asyncTestSpliterator([]))).toEqual([]);
   });
 });

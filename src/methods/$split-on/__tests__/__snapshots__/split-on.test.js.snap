@@ -1,3 +1,11 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`splitOn should throw when splits are consumed out of order 1`] = `[Error: Cannot take from this split part. It is no longer the active part.]`;
+
+exports[`splitOn when source is a string warns 1`] = `
+Array [
+  Array [
+    "For string inputs use splitOnSubseq instead of splitOn",
+  ],
+]
+`;

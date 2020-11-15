@@ -10,19 +10,24 @@ import { pipe } from '../../..';
 
 describe('pipe', () => {
   it('works', () => {
-    const a = (str: string) => `b(${str})`;
-    const b = (str: string) => `a(${str})`;
+    const a = (str: string) => `a(${str})`;
+    const b = (str: string) => `b(${str})`;
 
     expect(
       pipe(
-        b,
         a,
+        b,
       )('input'),
     ).toBe('b(a(input))');
   });
 
   it('works with types', () => {
-    expect(pipe(Boolean)(0)).toBe(false);
+    expect(
+      pipe(
+        (v: string): number => Number(v),
+        (v: number): boolean => Boolean(v),
+      )(''),
+    ).toBe(false);
   });
 
   it('is the identity function when no functions are passed', () => {

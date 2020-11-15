@@ -6,7 +6,7 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { asyncEnsureIterable } from './async-iterable';
+import { asyncEnsureIterable, asyncCallReturn } from './async-iterable';
 
 const _ = Symbol.for('_');
 
@@ -49,8 +49,8 @@ export class AsyncPeekerator {
 
   async return() {
     const this_ = this[_];
-    if ('return' in this_.iterator) {
-      await this_.iterator.return();
+    if (!this.done) {
+      await asyncCallReturn(this_.iterator);
     }
     this_.current = { value: undefined, done: true };
   }

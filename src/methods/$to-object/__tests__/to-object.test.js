@@ -9,14 +9,29 @@
 /* eslint-disable no-unused-vars,import/no-duplicates,no-constant-condition */
 
 import { toObject } from '../../..';
-import { wrap } from '../../../__tests__/__framework__/wrap';
+import { wrap } from '../../../test/helpers';
 
 describe('toObject', () => {
-  it('turns an iterable into an object', () => {
-    expect(toObject(wrap([['foo', 'fox'], ['bar', 'box'], ['baz', 'rox']]))).toEqual({
-      foo: 'fox',
-      bar: 'box',
-      baz: 'rox',
+  describe('when iterable is empty', () => {
+    it('returns an empty object', () => {
+      expect(toObject(null)).toEqual({});
+      expect(toObject(undefined)).toEqual({});
+      expect(toObject(wrap([]))).toEqual({});
     });
+  });
+
+  describe('given an iterable of entries', () => {
+    it('returns the object with those entries', () => {
+      const entries: Array<[string, string]> = [['foo', 'fox'], ['bar', 'box'], ['baz', 'rox']];
+      expect(toObject(wrap(entries))).toEqual({
+        foo: 'fox',
+        bar: 'box',
+        baz: 'rox',
+      });
+    });
+  });
+
+  it('can take a prototype to pass to Object.create', () => {
+    expect(Object.getPrototypeOf(toObject(wrap([]), null))).toEqual(null);
   });
 });

@@ -7,7 +7,7 @@
  */
 
 import { asyncIterableCurry } from '../../internal/async-iterable';
-import defaultCompare from '../../internal/compare';
+import { defaultCompare } from '../../internal/compare';
 import { asyncPeekerate } from '../$peekerate/async-peekerate';
 
 export async function asyncIsSorted(iterable, comparator = defaultCompare) {
@@ -18,6 +18,7 @@ export async function asyncIsSorted(iterable, comparator = defaultCompare) {
     await peekr.advance();
 
     if (!peekr.done && comparator(value, peekr.value) > 0) {
+      await peekr.return();
       return false;
     }
   }

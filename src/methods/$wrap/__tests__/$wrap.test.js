@@ -1,47 +1,36 @@
 import { $, $async, $await } from '../../../../generate/async.macro';
 
-import { $wrap, $toArray } from '../../..';
+import { $wrap } from '../../..';
+import { $wrap as $testWrap, $unwrap } from '../../../test/$helpers';
 
 describe($`wrap`, () => {
-  it(
-    'returns an empty iterable when passed null or undefined',
-    $async(() => {
-      expect($await($toArray($wrap(undefined)))).toEqual([]);
-      expect($await($toArray($wrap(null)))).toEqual([]);
-    }),
-  );
+  describe('when source is empty', () => {
+    it(
+      'yields no values',
+      $async(() => {
+        expect($await($unwrap($wrap(undefined)))).toEqual([]);
+        expect($await($unwrap($wrap(null)))).toEqual([]);
+        expect($await($unwrap($wrap($testWrap([]))))).toEqual([]);
+      }),
+    );
+  });
 
-  it(
-    'yields the same elements as its input iterable',
-    $async(() => {
-      expect($await($toArray($wrap([1, 2, 3])))).toEqual([1, 2, 3]);
-    }),
-  );
-
-  it(
-    'yields the same elements as its input iterable',
-    $async(() => {
-      expect($await($toArray($wrap([1, 2, 3])))).toEqual([1, 2, 3]);
-    }),
-  );
+  describe('when source has values', () => {
+    it(
+      'yields the values from source',
+      $async(() => {
+        expect($await($unwrap($wrap([1, 2, 3])))).toEqual([1, 2, 3]);
+        expect($await($unwrap($wrap($testWrap([1, 2, 3]))))).toEqual([1, 2, 3]);
+      }),
+    );
+  });
 
   it(
     'can be consumed multiple times if its input can',
     $async(() => {
       const wrapped = $wrap([1, 2, 3]);
-      expect($await($toArray(wrapped))).toEqual([1, 2, 3]);
-      expect($await($toArray(wrapped))).toEqual([1, 2, 3]);
-    }),
-  );
-
-  it(
-    'can be consumed as an iterator',
-    $async(() => {
-      const wrapped = $wrap([1, 2, 3]);
-      expect($await(wrapped.next())).toEqual({ value: 1, done: false });
-      expect($await(wrapped.next())).toEqual({ value: 2, done: false });
-      expect($await(wrapped.next())).toEqual({ value: 3, done: false });
-      expect($await(wrapped.next())).toEqual({ value: undefined, done: true });
+      expect($await($unwrap(wrapped))).toEqual([1, 2, 3]);
+      expect($await($unwrap(wrapped))).toEqual([1, 2, 3]);
     }),
   );
 });

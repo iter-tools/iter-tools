@@ -5,29 +5,6 @@ class QueueItem {
   }
 }
 
-class Queue {
-  constructor() {
-    this.head = this.tail = new QueueItem(null);
-  }
-
-  shift() {
-    if (this.isEmpty()) throw new Error('Cannot shift empty queue');
-    const { data } = this.head.next;
-    this.head = this.head.next;
-
-    return data;
-  }
-
-  push(data) {
-    const newItem = new QueueItem(data);
-    this.tail.next = this.tail = newItem;
-  }
-
-  isEmpty() {
-    return !this.head.next;
-  }
-}
-
 class Consumer {
   constructor(head) {
     this.head = head;
@@ -55,9 +32,14 @@ class Consumer {
  * ^                          <-|     ^             ^             ^
  * Root  ...  GC'd when no root |     Head 1        Head 2        Tail
  */
-export class Exchange extends Queue {
-  shift() {
-    throw new Error('Unsupported');
+export class Exchange {
+  constructor() {
+    this.head = this.tail = new QueueItem(null);
+  }
+
+  push(data) {
+    const newItem = new QueueItem(data);
+    this.tail.next = this.tail = newItem;
   }
 
   hasRoot() {
@@ -66,7 +48,7 @@ export class Exchange extends Queue {
 
   spawnConsumerAtRoot() {
     if (!this.head)
-      throw new Error('You cannot spawn a new consumer after setting calling noMoreConsumers');
+      throw new Error('You cannot spawn a new consumer after calling noMoreConsumers');
     return new Consumer(this.head);
   }
 

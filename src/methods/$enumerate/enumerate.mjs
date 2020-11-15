@@ -7,12 +7,10 @@
  */
 
 import { iterableCurry } from '../../internal/iterable';
+import { map } from '../$map/map';
 
-export function* enumerate(source, start = 0) {
-  let i = start;
-  for (const value of source) {
-    yield [i++, value];
-  }
+export function enumerate(source, start = 0) {
+  return map(source, (value, i) => [start + i, value]);
 }
 
 export default iterableCurry(enumerate, {

@@ -8,11 +8,30 @@
 
 /* eslint-disable no-unused-vars,import/no-duplicates,no-constant-condition */
 
-import { asyncConcat, asyncToArray, range } from '../../..';
+import { asyncConcat } from '../../..';
+import { asyncWrap, asyncUnwrap } from '../../../test/async-helpers';
 
 describe('asyncConcat', () => {
-  it('concats iterables', async () => {
-    const iter = asyncConcat(range({ start: 1, end: 3 }), [3, 4]);
-    expect(await asyncToArray(iter)).toEqual([1, 2, 3, 4]);
+  describe('when there are no sources', () => {
+    it('yields no values', async () => {
+      expect(await asyncUnwrap(asyncConcat())).toEqual([]);
+    });
+  });
+
+  describe('when sources are empty', () => {
+    it('yields no values', async () => {
+      expect(await asyncUnwrap(asyncConcat(null, undefined, asyncWrap([])))).toEqual([]);
+    });
+  });
+
+  describe('when sources contain values', () => {
+    it("each source's values are yielded in sequence", async () => {
+      expect(await asyncUnwrap(asyncConcat(asyncWrap([1, 2]), asyncWrap([3, 4])))).toEqual([
+        1,
+        2,
+        3,
+        4,
+      ]);
+    });
   });
 });

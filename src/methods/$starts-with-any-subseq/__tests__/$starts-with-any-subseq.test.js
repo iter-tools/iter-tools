@@ -1,57 +1,78 @@
 import { $, $async, $await } from '../../../../generate/async.macro';
 
-import { $startsWithAnySubseq, range } from '../../..';
+import { $startsWithAnySubseq } from '../../..';
+import { $wrap } from '../../../test/$helpers';
 
 describe($`startsWithAnySubseq`, () => {
-  it(
-    'returns true if the iterable starts with any of the given subsequences',
-    $async(() => {
-      expect($await($startsWithAnySubseq([[0, 1], [1, 2]], range(0, 10)))).toBe(true);
-    }),
-  );
-
-  it(
-    'returns false if the iterable includes but does not start with any of the given subsequences',
-    $async(() => {
-      expect($await($startsWithAnySubseq([[1, 2], [2, 3]], range(0, 10)))).toBe(false);
-    }),
-  );
-
-  it(
-    'returns true if the iterable equals any of the given subsequences',
-    $async(() => {
-      expect($await($startsWithAnySubseq([range(0, 2), range(1, 3)], range(1, 3)))).toBe(true);
-    }),
-  );
-
-  it(
-    'returns false if no subsequences are given',
-    $async(() => {
-      expect($await($startsWithAnySubseq([], range(1, 3)))).toBe(false);
-    }),
-  );
-
-  it(
-    'returns false if the given subsequences are longer than the iterable',
-    $async(() => {
-      expect($await($startsWithAnySubseq([range(0, 3), range(1, 4)], range(1, 3)))).toBe(false);
-    }),
-  );
-
-  describe('when the iterable is empty', () => {
+  describe('when no sequences are given', () => {
     it(
-      'returns true if any subsequence is empty',
+      'returns false',
       $async(() => {
-        expect($await($startsWithAnySubseq([[], [null]], []))).toBe(true);
-        expect($await($startsWithAnySubseq([null], []))).toBe(true);
+        expect($await($startsWithAnySubseq([], $wrap([])))).toBe(false);
       }),
     );
+  });
 
+  describe('when iterable starts with a given sequence', () => {
     it(
-      'returns false if all subsequences are not empty',
+      'returns true',
       $async(() => {
-        expect($await($startsWithAnySubseq([[undefined]], []))).toBe(false);
+        expect($await($startsWithAnySubseq([$wrap([1, 2])], $wrap([1, 2, 3])))).toBe(true);
+        expect(
+          $await($startsWithAnySubseq([$wrap([1, 2]), $wrap([1, 2, 3])], $wrap([1, 2, 3]))),
+        ).toBe(true);
+        expect(
+          $await($startsWithAnySubseq([$wrap([1, 2, 3]), $wrap([1, 2])], $wrap([1, 2, 3]))),
+        ).toBe(true);
       }),
     );
+  });
+
+  describe('when iterable is equal to a given sequence', () => {
+    it(
+      'returns true',
+      $async(() => {
+        expect($await($startsWithAnySubseq([$wrap([1, 2, 3])], $wrap([1, 2, 3])))).toBe(true);
+      }),
+    );
+  });
+
+  describe('when iterable is shorter than a matching sequence', () => {
+    it(
+      'returns false',
+      $async(() => {
+        expect($await($startsWithAnySubseq([$wrap([1, 2, 3])], $wrap([1, 2])))).toBe(false);
+      }),
+    );
+  });
+
+  describe('when iterable includes but does not start with a given sequence', () => {
+    it(
+      'returns false',
+      $async(() => {
+        expect($await($startsWithAnySubseq([$wrap([2, 3])], $wrap([1, 2, 3])))).toBe(false);
+      }),
+    );
+  });
+
+  describe('when iterable is empty', () => {
+    describe('and any sequence is empty', () => {
+      it(
+        'returns true',
+        $async(() => {
+          expect($await($startsWithAnySubseq([$wrap([]), $wrap([null])], $wrap([])))).toBe(true);
+          expect($await($startsWithAnySubseq([null], $wrap([])))).toBe(true);
+        }),
+      );
+    });
+
+    describe('and no sequence is empty', () => {
+      it(
+        'returns false',
+        $async(() => {
+          expect($await($startsWithAnySubseq([$wrap([undefined])], $wrap([])))).toBe(false);
+        }),
+      );
+    });
   });
 });

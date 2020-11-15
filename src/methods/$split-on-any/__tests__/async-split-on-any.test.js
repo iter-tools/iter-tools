@@ -9,21 +9,20 @@
 /* eslint-disable no-unused-vars,import/no-duplicates,no-constant-condition */
 
 import { asyncSplitOnAny } from '../../..';
-import { asyncUnwrapDeep as asyncUw } from '../../../__tests__/async-helpers';
-import { asyncWrap } from '../../../__tests__/__framework__/async-wrap';
+import { asyncWrap, asyncUnwrapDeep } from '../../../test/async-helpers';
 
 describe('asyncSplitOnAny', () => {
   it('should split on an occurance of any value', async () => {
     expect(
-      await asyncUw(asyncSplitOnAny([null, undefined], asyncWrap([1, null, undefined, 3]))),
+      await asyncUnwrapDeep(asyncSplitOnAny([null, undefined], asyncWrap([1, null, undefined, 3]))),
     ).toEqual([[1], [], [3]]);
   });
 
   it('does not split when passed no values', async () => {
-    expect(await asyncUw(asyncSplitOnAny([], asyncWrap([1, 2, 3])))).toEqual([[1, 2, 3]]);
+    expect(await asyncUnwrapDeep(asyncSplitOnAny([], asyncWrap([1, 2, 3])))).toEqual([[1, 2, 3]]);
   });
 
   it('passes through the empty iterable', async () => {
-    expect(await asyncUw(asyncSplitOnAny([], null))).toEqual([]);
+    expect(await asyncUnwrapDeep(asyncSplitOnAny([], null))).toEqual([]);
   });
 });

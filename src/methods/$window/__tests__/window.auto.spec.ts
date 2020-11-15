@@ -8,32 +8,39 @@
 
 /* eslint-disable no-unused-vars,import/no-duplicates,no-constant-condition */
 
-import { unwrapDeep as uw } from '../../../__tests__/helpers';
 import { window } from '../../..';
+import { wrap, unwrapDeep, anyType } from '../../../test/helpers';
 
 describe('window', () => {
-  it('frames iterable', () => {
-    expect(uw(window(3, [1, 2, 3, 4, 5]))).toEqual([[1, 2, 3], [2, 3, 4], [3, 4, 5]]);
-  });
-
-  it('frames iterable (window equal to the sequence)', () => {
-    expect(uw(window(5, [1, 2, 3, 4, 5]))).toEqual([[1, 2, 3, 4, 5]]);
-  });
-
-  describe('when the dinwos is bigger than the sequence', () => {
-    it('frames iterable (window bigger than the sequence)', () => {
-      expect(uw(window(6, [1, 2, 3, 4, 5]))).toEqual([]);
-    });
-
-    it('frames iterable (window bigger than the sequence) with filler', () => {
-      expect(uw(window(6, [1, 2, 3, 4, 5]))).toEqual([]);
+  describe('when source is empty', () => {
+    it('yields no windows', () => {
+      expect(unwrapDeep(window(3, null))).toEqual([]);
+      expect(unwrapDeep(window(3, undefined))).toEqual([]);
+      expect(unwrapDeep(window(3, wrap([])))).toEqual([]);
     });
   });
 
-  describe('invalid inputs', () => {
-    it('throw', () => {
-      const size: any = 'a';
-      expect(() => window(size, [])).toThrowErrorMatchingSnapshot();
+  describe('when size(source) < size', () => {
+    it('yields no windows', () => {
+      expect(unwrapDeep(window(3, wrap([1, 2])))).toEqual([]);
+    });
+  });
+
+  describe('when size(source) === size', () => {
+    it('yields one full window', () => {
+      expect(unwrapDeep(window(3, wrap([1, 2, 3])))).toEqual([[1, 2, 3]]);
+    });
+  });
+
+  describe('when size(source) > size', () => {
+    it('yields partial windows, then size(source)-size full windows', () => {
+      expect(unwrapDeep(window(2, wrap([1, 2, 3])))).toEqual([[1, 2], [2, 3]]);
+    });
+  });
+
+  describe('when size is invalid', () => {
+    it('throws a validation error', () => {
+      expect(() => window(anyType(''), wrap([]))).toThrowErrorMatchingSnapshot();
     });
   });
 });

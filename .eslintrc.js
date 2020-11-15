@@ -20,6 +20,7 @@ module.exports = {
       files: ['*.ts'],
       parser: '@typescript-eslint/parser',
       rules: {
+        '@typescript-eslint/ban-ts-ignore': 'off',
         '@typescript-eslint/no-explicit-any': 'off',
         '@typescript-eslint/no-unused-vars': ['warn', { argsIgnorePattern: '^_' }],
         '@typescript-eslint/class-name-casing': 'off', // can't deal with $PascalCased
@@ -30,7 +31,9 @@ module.exports = {
       files: ['*.auto.spec.ts'],
       rules: {
         '@typescript-eslint/explicit-function-return-type': 'off',
-        'jest/no-identical-title': 'off', // TODO stop suppressing these
+        'no-self-compare': 'off',
+        'jest/no-focused-tests': 'error',
+        'no-empty': ['error', { allowEmptyCatch: true }],
       },
     },
     {
@@ -53,8 +56,9 @@ module.exports = {
         jest: true,
       },
       rules: {
+        'no-self-compare': 'off',
         'jest/no-focused-tests': 'error',
-        'jest/no-identical-title': 'off', // TODO stop suppressing these
+        'no-empty': ['error', { allowEmptyCatch: true }],
       },
     },
   ],

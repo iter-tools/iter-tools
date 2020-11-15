@@ -8,11 +8,46 @@
 
 /* eslint-disable no-unused-vars,import/no-duplicates,no-constant-condition */
 
-import { asyncCompress, asyncToArray, range } from '../../..';
+import { asyncCompress } from '../../..';
+import { asyncWrap, asyncUnwrap } from '../../../test/async-helpers';
 
 describe('asyncCompress', () => {
-  it('compress iterables', async () => {
-    const iter = asyncCompress(range(10), [false, true, false, true, true]);
-    expect(await asyncToArray(iter)).toEqual([1, 3, 4]);
+  describe('when source is empty', () => {
+    it('yields no values', async () => {
+      expect(await asyncUnwrap(asyncCompress(null, null))).toEqual([]);
+      expect(await asyncUnwrap(asyncCompress(undefined, undefined))).toEqual([]);
+      expect(await asyncUnwrap(asyncCompress(asyncWrap([]), asyncWrap([])))).toEqual([]);
+    });
+  });
+
+  describe('when source and included are the same size', () => {
+    it('yields values for which included is truthy', async () => {
+      expect(
+        await asyncUnwrap(asyncCompress(asyncWrap([1, 2, 3]), asyncWrap([true, false, true]))),
+      ).toEqual([1, 3]);
+
+      // prettier-ignore
+      // @ts-ignore
+      expect((await asyncUnwrap(asyncCompress(asyncWrap([1, 2, 3]), asyncWrap([1, 0, 'true']))))).toEqual([
+          1,
+          3,
+        ]);
+    });
+  });
+
+  describe('when source is larger than included', () => {
+    it('yields only as many values as are in included', async () => {
+      const source = asyncWrap([1, 2, 3, 4]);
+      const included = asyncWrap([true, true]);
+      expect(await asyncUnwrap(asyncCompress(source, included))).toEqual([1, 2]);
+    });
+  });
+
+  describe('when included is larger than source', () => {
+    it('yields only as many values as are in source', async () => {
+      const source = asyncWrap([1, 2, 3]);
+      const included = asyncWrap([true, true, true, true, true]);
+      expect(await asyncUnwrap(asyncCompress(source, included))).toEqual([1, 2, 3]);
+    });
   });
 });

@@ -1,6 +1,6 @@
 import { $async, $await, $iteratorSymbol } from '../../../generate/async.macro';
 
-import { $iterableCurry } from '../../internal/$iterable';
+import { $iterableCurry, $callReturn } from '../../internal/$iterable';
 
 $async;
 export function $firstOr(iterable, whenEmpty) {
@@ -9,7 +9,7 @@ export function $firstOr(iterable, whenEmpty) {
 
   if (done) return whenEmpty;
 
-  if (typeof iter.return === 'function') $await(iter.return());
+  $await($callReturn(iter));
 
   return value;
 }

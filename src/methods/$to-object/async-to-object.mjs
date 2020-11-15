@@ -8,9 +8,9 @@
 
 import { asyncEnsureIterable } from '../../internal/async-iterable';
 
-export async function asyncToObject(source) {
-  const obj = {};
-  for await (const [key, value] of asyncEnsureIterable(source)) {
+export async function asyncToObject(iterable, proto = Object.prototype) {
+  const obj = Object.create(proto);
+  for await (const [key, value] of asyncEnsureIterable(iterable)) {
     obj[key] = value;
   }
   return obj;

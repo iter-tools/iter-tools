@@ -8,36 +8,45 @@
 
 /* eslint-disable no-unused-vars,import/no-duplicates,no-constant-condition */
 
-import { startsWithSubseq, range } from '../../..';
+import { startsWithSubseq } from '../../..';
+import { wrap } from '../../../test/helpers';
 
 describe('startsWithSubseq', () => {
-  it('returns true if the iterable starts with the given subsequence', () => {
-    expect(startsWithSubseq([1, 2], range(1, 10))).toBe(true);
+  describe('when iterable starts with the sequence', () => {
+    it('returns true', () => {
+      expect(startsWithSubseq(wrap([1, 2]), wrap([1, 2, 3]))).toBe(true);
+    });
   });
 
-  it('returns false if the iterable contains but does not start with the given subsequence', () => {
-    expect(startsWithSubseq([1, 2], range(0, 10))).toBe(false);
+  describe('when iterable is equal to the sequence', () => {
+    it('returns true', () => {
+      expect(startsWithSubseq(wrap([1, 2, 3]), wrap([1, 2, 3]))).toBe(true);
+    });
   });
 
-  it('returns true if the iterable equals given subsequence', () => {
-    expect(startsWithSubseq(range(1, 3), range(1, 3))).toBe(true);
+  describe('when iterable is shorter than the sequence', () => {
+    it('returns false', () => {
+      expect(startsWithSubseq(wrap([1, 2, 3]), wrap([1, 2]))).toBe(false);
+    });
   });
 
-  it('returns true if the given subsequence is empty', () => {
-    expect(startsWithSubseq(null, range(1, 3))).toBe(true);
+  describe('when iterable includes but does not start with the sequence', () => {
+    it('returns false', () => {
+      expect(startsWithSubseq(wrap([2, 3]), wrap([1, 2, 3]))).toBe(false);
+    });
   });
 
-  it('returns false if subsequence is longer than the iterable', () => {
-    expect(startsWithSubseq(range(1, 4), range(1, 3))).toBe(false);
-  });
-
-  describe('when the iterable is empty', () => {
-    it('returns true if the subsequence is empty', () => {
-      expect(startsWithSubseq([], [])).toBe(true);
+  describe('when iterable is empty', () => {
+    describe('and the sequence is empty', () => {
+      it('returns true', () => {
+        expect(startsWithSubseq(wrap([]), wrap([]))).toBe(true);
+      });
     });
 
-    it('returns false if the subsequence is not empty', () => {
-      expect(startsWithSubseq([undefined], [])).toBe(false);
+    describe('and the sequence is not empty', () => {
+      it('returns false', () => {
+        expect(startsWithSubseq(wrap([undefined]), wrap([]))).toBe(false);
+      });
     });
   });
 });

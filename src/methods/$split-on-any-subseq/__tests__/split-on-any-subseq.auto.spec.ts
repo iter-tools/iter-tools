@@ -8,68 +8,91 @@
 
 /* eslint-disable no-unused-vars,import/no-duplicates,no-constant-condition */
 
-import { splitOnAnySubseq } from '../../..';
-import { unwrapDeep as uw } from '../../../__tests__/helpers';
-import { wrap } from '../../../__tests__/__framework__/wrap';
+import { splitOnAnySubseq, toArray } from '../../..';
+import { wrap, unwrapDeep } from '../../../test/helpers';
 
 describe('splitOnAnySubseq', () => {
-  it('can split on any of many possible subsequences', () => {
-    expect(uw(splitOnAnySubseq([[2, 2], [3, 3]], wrap([1, 2, 2, 3, 3, 4])))).toEqual([
-      [1],
-      [],
-      [4],
-    ]);
+  describe('when there are no sequences', () => {
+    it('yields a single part containing the values from source', () => {
+      expect(unwrapDeep(splitOnAnySubseq([], wrap([1, 2, 3])))).toEqual([[1, 2, 3]]);
+    });
   });
 
-  it('works when the separator is the only thing in the sequence', () => {
-    expect(uw(splitOnAnySubseq([[2, 2], [3, 3]], wrap([2, 2])))).toEqual([[], []]);
+  describe('when source is empty', () => {
+    it('yields no parts', () => {
+      expect(toArray(splitOnAnySubseq([null], null))).toEqual([]);
+      expect(toArray(splitOnAnySubseq([null], undefined))).toEqual([]);
+      expect(toArray(splitOnAnySubseq([null], wrap([])))).toEqual([]);
+    });
   });
 
-  it('splits on the longest subsequence that matches', () => {
-    expect(uw(splitOnAnySubseq([[2, 2, 3], [2, 3]], wrap([1, 2, 2, 3, 3, 4])))).toEqual([
-      [1],
-      [3, 4],
-    ]);
-
-    expect(uw(splitOnAnySubseq([[2, 3], [2, 2, 3]], wrap([1, 2, 2, 3, 3, 4])))).toEqual([
-      [1],
-      [3, 4],
-    ]);
-
-    expect(uw(splitOnAnySubseq([[2, 2, 3], [2, 2]], wrap([1, 2, 2, 3, 3, 4])))).toEqual([
-      [1],
-      [3, 4],
-    ]);
-
-    expect(uw(splitOnAnySubseq([[2, 2], [2, 2, 3]], wrap([1, 2, 2, 3, 3, 4])))).toEqual([
-      [1],
-      [3, 4],
-    ]);
+  describe('when no sequence is not present in source', () => {
+    it('yields a single part containing the values from source', () => {
+      expect(unwrapDeep(splitOnAnySubseq([wrap([undefined])], wrap([1, 2, 3])))).toEqual([
+        [1, 2, 3],
+      ]);
+    });
   });
 
-  it('should only start matching again after a consumed split ends', () => {
-    expect(uw(splitOnAnySubseq([[2, 3], [3, 2]], wrap([1, 2, 3, 2, 2, 3, 2, 3, 4])))).toEqual([
-      [1],
-      [2],
-      [],
-      [4],
-    ]);
-
-    expect(uw(splitOnAnySubseq([[2, 3], [2, 2, 3]], wrap([1, 2, 2, 3, 3, 4])))).toEqual([
-      [1],
-      [3, 4],
-    ]);
+  describe('when a sequence is equal to source', () => {
+    it('yields two empty parts', () => {
+      expect(unwrapDeep(splitOnAnySubseq([wrap([2, 2])], wrap([2, 2])))).toEqual([[], []]);
+    });
   });
 
-  it('does not split on the empty subsequence', () => {
-    expect(uw(splitOnAnySubseq([[], [null]], wrap([1, 2, null, 4])))).toEqual([[1, 2], [4]]);
+  describe('when sequences are present s times in source', () => {
+    it('yields s+1 parts', () => {
+      expect(unwrapDeep(splitOnAnySubseq([wrap([1, -1])], wrap([1, 1, -1, 2, 1, -1, 3])))).toEqual([
+        [1],
+        [2],
+        [3],
+      ]);
+    });
   });
 
-  it('passes through the empty iterable', () => {
-    expect(uw(splitOnAnySubseq([], null))).toEqual([]);
+  describe('when sequences overlap with each other in source', () => {
+    it('should only split once', () => {
+      expect(
+        unwrapDeep(splitOnAnySubseq([[2, 3], [3, 2]], wrap([1, 2, 3, 2, 2, 3, 2, 3, 4]))),
+      ).toEqual([[1], [2], [], [4]]);
+
+      expect(unwrapDeep(splitOnAnySubseq([[2, 3], [2, 2, 3]], wrap([1, 2, 2, 3, 3, 4])))).toEqual([
+        [1],
+        [3, 4],
+      ]);
+    });
   });
 
-  it('the empty string is an empty iterable', () => {
-    expect(uw(splitOnAnySubseq([], ''))).toEqual([]);
+  describe('when more than one sequence matches', () => {
+    it('consume the longest sequence that matches', () => {
+      expect(unwrapDeep(splitOnAnySubseq([[2, 2, 3], [2, 3]], wrap([1, 2, 2, 3, 3, 4])))).toEqual([
+        [1],
+        [3, 4],
+      ]);
+
+      expect(unwrapDeep(splitOnAnySubseq([[2, 3], [2, 2, 3]], wrap([1, 2, 2, 3, 3, 4])))).toEqual([
+        [1],
+        [3, 4],
+      ]);
+
+      expect(unwrapDeep(splitOnAnySubseq([[2, 2, 3], [2, 2]], wrap([1, 2, 2, 3, 3, 4])))).toEqual([
+        [1],
+        [3, 4],
+      ]);
+
+      expect(unwrapDeep(splitOnAnySubseq([[2, 2], [2, 2, 3]], wrap([1, 2, 2, 3, 3, 4])))).toEqual([
+        [1],
+        [3, 4],
+      ]);
+    });
+  });
+
+  describe('when empty sequences are present', () => {
+    it('ignores them', () => {
+      expect(unwrapDeep(splitOnAnySubseq([null], wrap([1, 2, 3])))).toEqual([[1, 2, 3]]);
+      expect(unwrapDeep(splitOnAnySubseq([undefined], wrap([1, 2, 3])))).toEqual([[1, 2, 3]]);
+      expect(unwrapDeep(splitOnAnySubseq([wrap([])], wrap([1, 2, 3])))).toEqual([[1, 2, 3]]);
+      expect(unwrapDeep(splitOnAnySubseq([null, wrap([2])], wrap([1, 2, 3])))).toEqual([[1], [3]]);
+    });
   });
 });

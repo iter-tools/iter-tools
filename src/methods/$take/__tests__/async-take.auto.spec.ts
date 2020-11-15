@@ -8,10 +8,11 @@
 
 /* eslint-disable no-unused-vars,import/no-duplicates,no-constant-condition */
 
-import { asyncTake, asyncToArray, asyncWrap } from '../../..';
+import { asyncTake } from '../../..';
+import { asyncWrap, asyncUnwrap } from '../../../test/async-helpers';
 
 describe('asyncTake', () => {
   it('takes the first n items', async () => {
-    expect(await asyncToArray(asyncTake(2, asyncWrap([1, 2, 3])))).toEqual([1, 2]);
+    expect(await asyncUnwrap(asyncTake(2, asyncWrap([1, 2, 3])))).toEqual([1, 2]);
   });
 });

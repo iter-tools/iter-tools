@@ -9,15 +9,20 @@
 /* eslint-disable no-unused-vars,import/no-duplicates,no-constant-condition */
 
 import { asyncSize } from '../../..';
-import { asyncRange } from '../../../__tests__/async-range';
+import { asyncWrap } from '../../../test/async-helpers';
 
 describe('asyncSize', () => {
-  it('return number of items in iterable', async () => {
-    expect(await asyncSize(asyncRange(1, 7))).toBe(6);
+  describe('when iterable is empty', () => {
+    it('returns 0', async () => {
+      expect(await asyncSize(null)).toBe(0);
+      expect(await asyncSize(undefined)).toBe(0);
+      expect(await asyncSize(asyncWrap([]))).toBe(0);
+    });
   });
 
-  it('returns 0 for null or undefined', async () => {
-    expect(await asyncSize(null)).toBe(0);
-    expect(await asyncSize(undefined)).toBe(0);
+  describe('when iterable contains values', () => {
+    it('return number of items in iterable', async () => {
+      expect(await asyncSize(asyncWrap([1, 2, 3, 4, 5, 6]))).toBe(6);
+    });
   });
 });

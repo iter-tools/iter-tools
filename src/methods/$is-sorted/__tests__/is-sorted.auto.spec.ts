@@ -8,44 +8,45 @@
 
 /* eslint-disable no-unused-vars,import/no-duplicates,no-constant-condition */
 
-import { isSorted, wrap } from '../../..';
+import { isSorted } from '../../..';
+import { wrap } from '../../../test/helpers';
 
 describe('isSorted', () => {
-  it('returns true for a numerically sorted input iterable', () => {
-    expect(isSorted(wrap([1, 2, 3]))).toEqual(true);
-  });
-
-  it('returns true for an alphabetically sorted input string', () => {
-    expect(isSorted('abc')).toEqual(true);
-  });
-
-  it('returns true for a numerically sorted input iterable with duplicates', () => {
-    expect(isSorted(wrap([1, 2, 2, 2, 3]))).toEqual(true);
-  });
-
-  it('returns true when the input contains only one item', () => {
-    expect(isSorted(wrap([9000]))).toEqual(true);
-  });
-
-  it('returns true when the input is empty', () => {
-    expect(isSorted(wrap([]))).toEqual(true);
-  });
-
-  it('returns false when the input is not sorted', () => {
-    expect(isSorted(wrap([2, 1]))).toEqual(false);
-  });
-
-  describe('with an explicit comparator', () => {
-    it('returns true for a numerically sorted input iterable', () => {
-      expect(isSorted((a, b) => a - b, wrap([1, 1, 2, 3, 5, 8]))).toEqual(true);
+  describe('when iterable is empty', () => {
+    it('returns true', () => {
+      expect(isSorted(wrap([]))).toEqual(true);
     });
+  });
 
-    it('returns true for reverse sorted input iterable (with reverse comparator)', () => {
-      expect(isSorted((a, b) => b - a, wrap([8, 5, 3, 2, 1, 1]))).toEqual(true);
+  describe('when iterable contains only a single value', () => {
+    it('returns true', () => {
+      expect(isSorted(wrap([9000]))).toEqual(true);
     });
+  });
 
-    it('returns false if the comparator returns 1', () => {
-      expect(isSorted(_ => 1, wrap([1, 2]))).toEqual(false);
+  describe('when the values in iterable are sorted', () => {
+    it('returns true', () => {
+      expect(isSorted((a, b) => b - a, wrap([3, 2, 1]))).toEqual(true);
+    });
+  });
+
+  describe('when the values in iterable are not sorted', () => {
+    it('returns false', () => {
+      expect(isSorted((a, b) => b - a, wrap([1, 2, 3]))).toEqual(false);
+    });
+  });
+
+  describe('when some values in iterable are equal to each other', () => {
+    it('returns true', () => {
+      expect(isSorted((a, b) => b - a, wrap([3, 2, 2, 2, 1]))).toEqual(true);
+    });
+  });
+
+  describe('when no comparator is specified', () => {
+    it('compares the default comparator', () => {
+      expect(isSorted('abc')).toEqual(true);
+      expect(isSorted('cba')).toEqual(false);
+      expect(isSorted('bbb')).toEqual(true);
     });
   });
 });

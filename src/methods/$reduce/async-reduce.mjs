@@ -6,16 +6,18 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { asyncIterableCurry } from '../../internal/async-iterable';
+import { asyncIterableCurry, asyncCallReturn } from '../../internal/async-iterable';
 
 export async function asyncReduce(iterable, initial, reducer) {
   let c = 0;
   let result = initial;
+  let done = false;
   const iterator = iterable[Symbol.asyncIterator]();
   try {
     if (initial === undefined) {
       const firstResult = await iterator.next();
       if (firstResult.done) {
+        done = true;
         throw new Error('Cannot reduce: no initial value specified and iterable was empty');
       }
       result = firstResult.value;
@@ -25,10 +27,11 @@ export async function asyncReduce(iterable, initial, reducer) {
     while (!(nextItem = await iterator.next()).done) {
       result = await reducer(result, nextItem.value, c++);
     }
+    done = nextItem.done;
     return result;
   } finally {
     // close the iterator in case of exceptions
-    if (typeof iterator.return === 'function') await iterator.return();
+    if (!done) await asyncCallReturn(iterator);
   }
 }
 

@@ -6,26 +6,26 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { asyncThrottle, asyncToArray, range } from '../../..';
+import { asyncThrottle } from '../../..';
+import { asyncWrap, asyncUnwrap, anyType } from '../../../test/async-helpers';
 
 describe('asyncThrottle', () => {
   it('throttle the output', async () => {
-    const iter = asyncThrottle(10, range(6));
+    const iter = asyncThrottle(10, asyncWrap([0, 1, 2, 3, 4, 5]));
     const t0 = Date.now();
-    expect(await asyncToArray(iter)).toEqual([0, 1, 2, 3, 4, 5]);
-    const t1 = Date.now();
-    expect(t1 - t0).toBeGreaterThanOrEqual(40);
-  });
-
-  it('throttle the output (curried)', async () => {
-    const iter = asyncThrottle(10);
-    const t0 = Date.now();
-    expect(await asyncToArray(iter(range(6)))).toEqual([0, 1, 2, 3, 4, 5]);
+    expect(await asyncUnwrap(iter)).toEqual([0, 1, 2, 3, 4, 5]);
     const t1 = Date.now();
     expect(t1 - t0).toBeGreaterThanOrEqual(40);
   });
 
   it('returns empty output when passed null', async () => {
-    expect(await asyncToArray(asyncThrottle(10, null))).toEqual([]);
+    expect(await asyncUnwrap(asyncThrottle(10, null))).toEqual([]);
+  });
+
+  describe('when interval is invalid', () => {
+    it('throws', async () => {
+      expect(() => asyncThrottle(0, null)).toThrowErrorMatchingSnapshot();
+      expect(() => asyncThrottle(anyType(null), null)).toThrowErrorMatchingSnapshot();
+    });
   });
 });

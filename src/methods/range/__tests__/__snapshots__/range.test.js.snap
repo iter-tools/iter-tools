@@ -1,0 +1,7 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`range when options are invalid throws 1`] = `"The specified start was not an integer"`;
+
+exports[`range when options are invalid throws 2`] = `"The specified end was not an integer or infinite"`;
+
+exports[`range when options are invalid throws 3`] = `"The specified step was not a non-zero integer"`;

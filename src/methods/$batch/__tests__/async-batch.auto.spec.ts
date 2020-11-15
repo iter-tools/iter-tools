@@ -8,38 +8,44 @@
 
 /* eslint-disable no-unused-vars,import/no-duplicates,no-constant-condition */
 
-import { asyncBatch, range } from '../../..';
-import { asyncUnwrapDeep as asyncUw } from '../../../__tests__/async-helpers';
+import { asyncBatch } from '../../..';
+import { asyncWrap, asyncUnwrapDeep } from '../../../test/async-helpers';
 
 describe('asyncBatch', () => {
-  it('returns an iterable with batches', async () => {
-    const iter = asyncBatch(2, [1, 2, 3, 4, 5, 6, 7, 8, 9]);
-    expect(await asyncUw(iter)).toEqual([[1, 2], [3, 4], [5, 6], [7, 8], [9]]);
+  describe('when source is empty', () => {
+    it('yields no items', async () => {
+      expect(await asyncUnwrapDeep(asyncBatch(2, null))).toEqual([]);
+      expect(await asyncUnwrapDeep(asyncBatch(2, undefined))).toEqual([]);
+      expect(await asyncUnwrapDeep(asyncBatch(2, asyncWrap([])))).toEqual([]);
+    });
   });
 
-  it('returns an iterable with batches when passed an iterable', async () => {
-    const iter = asyncBatch(2, range({ start: 1, end: 10 }));
-    expect(await asyncUw(iter)).toEqual([[1, 2], [3, 4], [5, 6], [7, 8], [9]]);
+  describe('when source has fewer than `size` values', () => {
+    it('yields one incomplete batch', async () => {
+      expect(await asyncUnwrapDeep(asyncBatch(2, asyncWrap([1])))).toEqual([[1]]);
+    });
   });
 
-  it('returns an iterable with batches when passed an iterable (2)', async () => {
-    const iter = asyncBatch(2, range({ start: 1, end: 9 }));
-    expect(await asyncUw(iter)).toEqual([[1, 2], [3, 4], [5, 6], [7, 8]]);
-  });
+  describe('when source has more than `size` values', () => {
+    describe('which can be divided evenly into batches', () => {
+      it('yields batches of `size` items', async () => {
+        expect(await asyncUnwrapDeep(asyncBatch(2, asyncWrap([1, 2, 3, 4, 5, 6])))).toEqual([
+          [1, 2],
+          [3, 4],
+          [5, 6],
+        ]);
+      });
+    });
 
-  it('returns an iterable with batches (curried version)', async () => {
-    const iter = asyncBatch(2);
-    expect(await asyncUw(iter(range({ start: 1, end: 10 })))).toEqual([
-      [1, 2],
-      [3, 4],
-      [5, 6],
-      [7, 8],
-      [9],
-    ]);
-  });
-
-  it('returns an empty iterable when passed null', async () => {
-    expect(await asyncUw(asyncBatch(2, null))).toEqual([]);
+    describe('which cannot be divided evenly into batches', () => {
+      it('yields batches of `size` items and one incomplete batch', async () => {
+        expect(await asyncUnwrapDeep(asyncBatch(2, asyncWrap([1, 2, 3, 4, 5])))).toEqual([
+          [1, 2],
+          [3, 4],
+          [5],
+        ]);
+      });
+    });
   });
 
   it('errors when passed size <= 0', async () => {

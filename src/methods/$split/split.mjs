@@ -13,12 +13,7 @@ function* iterableOf(item) {
 }
 
 export function split(source) {
-  // String iterators already return an exploded version of the string.
-  if (typeof source === 'string') {
-    return source;
-  } else {
-    return map(source, item => iterableOf(item));
-  }
+  return map(source, item => iterableOf(item));
 }
 
 export default split;

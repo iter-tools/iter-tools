@@ -8,32 +8,40 @@
 
 /* eslint-disable no-unused-vars,import/no-duplicates,no-constant-condition */
 
-import { includesSubseq, range } from '../../..';
+import { includesSubseq } from '../../..';
+import { wrap } from '../../../test/helpers';
 
 describe('includesSubseq', () => {
-  it('returns true if the iterable contains the given subsequence', () => {
-    expect(includesSubseq([1, 2], range(0, 10))).toBe(true);
+  describe('when iterable includes a given sequence', () => {
+    it('returns true', () => {
+      expect(includesSubseq(wrap([1, 2]), wrap([1, 2, 3]))).toBe(true);
+      expect(includesSubseq(wrap([3]), wrap([1, 2, 3]))).toBe(true);
+    });
   });
 
-  it('returns true if the iterable equals given subsequence', () => {
-    expect(includesSubseq(range(1, 3), range(1, 3))).toBe(true);
+  describe('when iterable is equal to a given sequence', () => {
+    it('returns true', () => {
+      expect(includesSubseq(wrap([1, 2, 3]), wrap([1, 2, 3]))).toBe(true);
+    });
   });
 
-  it('returns true if the given subsequence is empty', () => {
-    expect(includesSubseq([], range(1, 3))).toBe(true);
+  describe('when iterable is shorter than a matching sequence', () => {
+    it('returns false', () => {
+      expect(includesSubseq(wrap([1, 2, 3]), wrap([1, 2]))).toBe(false);
+    });
   });
 
-  it('returns false if subsequence is longer than the iterable', () => {
-    expect(includesSubseq(range(1, 4), range(1, 3))).toBe(false);
-  });
-
-  describe('when the iterable is empty', () => {
-    it('returns true if the subsequence is empty', () => {
-      expect(includesSubseq([], [])).toBe(true);
+  describe('when iterable is empty', () => {
+    describe('and sequence is empty', () => {
+      it('returns true', () => {
+        expect(includesSubseq(wrap([]), wrap([]))).toBe(true);
+      });
     });
 
-    it('returns false if the subsequence is not empty', () => {
-      expect(includesSubseq([undefined], [])).toBe(false);
+    describe('and sequence is not empty', () => {
+      it('returns false', () => {
+        expect(includesSubseq(wrap([undefined]), wrap([]))).toBe(false);
+      });
     });
   });
 });

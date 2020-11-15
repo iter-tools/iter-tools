@@ -12,6 +12,6 @@
     "pretty": true,
     "types": ["jest"]
   },
-  "include": ["src/**/__tests__/*.ts"],
+  "include": ["src/**/__tests__/*.ts", "src/test/setup.d.ts"],
   "exclude": ["src/**/__tests__/$*.ts"]
 }

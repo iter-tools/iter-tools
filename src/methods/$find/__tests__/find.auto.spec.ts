@@ -9,14 +9,14 @@
 /* eslint-disable no-unused-vars,import/no-duplicates,no-constant-condition */
 
 import { find } from '../../..';
-import { wrap } from '../../../__tests__/__framework__/wrap';
+import { wrap } from '../../../test/helpers';
 
 describe('find', () => {
   describe('when iterable is empty', () => {
     it('returns undefined', () => {
-      expect(find((item: never) => item, null)).toBe(undefined);
-      expect(find((item: never) => item, undefined)).toBe(undefined);
-      expect(find((item: never) => item, wrap([]))).toBe(undefined);
+      expect(find((item: any) => item, null)).toBe(undefined);
+      expect(find((item: any) => item, undefined)).toBe(undefined);
+      expect(find((item: any) => item, wrap([]))).toBe(undefined);
     });
   });
 

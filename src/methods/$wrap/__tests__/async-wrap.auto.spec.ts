@@ -8,33 +8,28 @@
 
 /* eslint-disable no-unused-vars,import/no-duplicates,no-constant-condition */
 
-import { asyncWrap, asyncToArray } from '../../..';
+import { asyncWrap } from '../../..';
+import { asyncWrap as asyncTestWrap, asyncUnwrap } from '../../../test/async-helpers';
 
 describe('asyncWrap', () => {
-  it('returns an empty iterable when passed null or undefined', async () => {
-    expect(await asyncToArray(asyncWrap(undefined))).toEqual([]);
-    expect(await asyncToArray(asyncWrap(null))).toEqual([]);
+  describe('when source is empty', () => {
+    it('yields no values', async () => {
+      expect(await asyncUnwrap(asyncWrap(undefined))).toEqual([]);
+      expect(await asyncUnwrap(asyncWrap(null))).toEqual([]);
+      expect(await asyncUnwrap(asyncWrap(asyncTestWrap([])))).toEqual([]);
+    });
   });
 
-  it('yields the same elements as its input iterable', async () => {
-    expect(await asyncToArray(asyncWrap([1, 2, 3]))).toEqual([1, 2, 3]);
-  });
-
-  it('yields the same elements as its input iterable', async () => {
-    expect(await asyncToArray(asyncWrap([1, 2, 3]))).toEqual([1, 2, 3]);
+  describe('when source has values', () => {
+    it('yields the values from source', async () => {
+      expect(await asyncUnwrap(asyncWrap([1, 2, 3]))).toEqual([1, 2, 3]);
+      expect(await asyncUnwrap(asyncWrap(asyncTestWrap([1, 2, 3])))).toEqual([1, 2, 3]);
+    });
   });
 
   it('can be consumed multiple times if its input can', async () => {
     const wrapped = asyncWrap([1, 2, 3]);
-    expect(await asyncToArray(wrapped)).toEqual([1, 2, 3]);
-    expect(await asyncToArray(wrapped)).toEqual([1, 2, 3]);
-  });
-
-  it('can be consumed as an iterator', async () => {
-    const wrapped = asyncWrap([1, 2, 3]);
-    expect(await wrapped.next()).toEqual({ value: 1, done: false });
-    expect(await wrapped.next()).toEqual({ value: 2, done: false });
-    expect(await wrapped.next()).toEqual({ value: 3, done: false });
-    expect(await wrapped.next()).toEqual({ value: undefined, done: true });
+    expect(await asyncUnwrap(wrapped)).toEqual([1, 2, 3]);
+    expect(await asyncUnwrap(wrapped)).toEqual([1, 2, 3]);
   });
 });

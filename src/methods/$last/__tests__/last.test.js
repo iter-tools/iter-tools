@@ -9,7 +9,7 @@
 /* eslint-disable no-unused-vars,import/no-duplicates,no-constant-condition */
 
 import { last } from '../../..';
-import { wrap } from '../../../__tests__/__framework__/wrap';
+import { wrap } from '../../../test/helpers';
 
 describe('last', () => {
   describe('when iterable is empty', () => {
@@ -20,7 +20,7 @@ describe('last', () => {
     });
   });
 
-  describe('when iterable contains values', () => {
+  describe('when iterable has values', () => {
     it('returns last value', () => {
       expect(last(wrap([1, 2, 3]))).toBe(3);
     });

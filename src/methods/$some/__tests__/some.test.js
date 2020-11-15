@@ -9,17 +9,32 @@
 /* eslint-disable no-unused-vars,import/no-duplicates,no-constant-condition */
 
 import { some } from '../../..';
+import { wrap } from '../../../test/helpers';
 
 describe('some', () => {
-  it('returns true if at least one item is true', () => {
-    expect(some(n => n % 2 === 0, [1, 2, 3, 4, 5, 6])).toBe(true);
+  describe('when iterable is empty', () => {
+    it('returns false', () => {
+      expect(some(() => true, null)).toEqual(false);
+      expect(some(() => true, undefined)).toEqual(false);
+      expect(some(() => true, wrap([]))).toEqual(false);
+    });
   });
 
-  it('returns false if all items are false', () => {
-    expect(some(n => n % 2 === 0, [1, 3, 3, 7, 5, 1])).toBe(false);
+  describe('when no values match predicate', () => {
+    it('returns false', () => {
+      expect(some(val => val !== val, [1, 2, 3])).toBe(false);
+    });
   });
 
-  it('returns false if there are no items', () => {
-    expect(some((n: never) => n % 2 === 0, null)).toBe(false);
+  describe('when some values match predicate', () => {
+    it('returns true', () => {
+      expect(some(val => val > 2, [1, 2, 3])).toBe(true);
+    });
+  });
+
+  describe('when all values match predicate', () => {
+    it('returns true', () => {
+      expect(some(val => val > 0, [1, 2, 3])).toBe(true);
+    });
   });
 });

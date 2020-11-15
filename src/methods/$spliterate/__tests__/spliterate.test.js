@@ -9,8 +9,7 @@
 /* eslint-disable no-unused-vars,import/no-duplicates,no-constant-condition */
 
 import { spliterate } from '../../..';
-import { unwrapDeep as uw } from '../../../__tests__/helpers';
-import { wrap } from '../../../__tests__/__framework__/wrap';
+import { wrap, unwrapDeep } from '../../../test/helpers';
 import { split } from '../spliterate';
 
 function* identityStrategy(_split: any, _options: any, source: any) {
@@ -22,31 +21,31 @@ describe('spliterate', () => {
 
   describe('when spliterator is empty', () => {
     it('yields no groups', () => {
-      expect(uw(testSpliterator([]))).toEqual([]);
+      expect(unwrapDeep(testSpliterator([]))).toEqual([]);
     });
   });
 
   describe('when spliterator contains only a split', () => {
     it('yields two empty groups', () => {
-      expect(uw(testSpliterator([split]))).toEqual([[], []]);
+      expect(unwrapDeep(testSpliterator([split]))).toEqual([[], []]);
     });
   });
 
   describe('when spliterator contains two splits', () => {
     it('yields three empty groups', () => {
-      expect(uw(testSpliterator([split, split]))).toEqual([[], [], []]);
+      expect(unwrapDeep(testSpliterator([split, split]))).toEqual([[], [], []]);
     });
   });
 
   describe('when spliterator contains a trailing split', () => {
     it('yields three empty groups', () => {
-      expect(uw(testSpliterator([null, split]))).toEqual([[null], []]);
+      expect(unwrapDeep(testSpliterator([null, split]))).toEqual([[null], []]);
     });
   });
 
   describe('when spliterator contains a leading split', () => {
     it('yields three empty groups', () => {
-      expect(uw(testSpliterator([split, null]))).toEqual([[], [null]]);
+      expect(unwrapDeep(testSpliterator([split, null]))).toEqual([[], [null]]);
     });
   });
 
@@ -97,5 +96,10 @@ describe('spliterate', () => {
       parts.next();
       parts.next();
     });
+  });
+
+  it('options may be omitted', () => {
+    const testSpliterator = spliterate(identityStrategy);
+    expect(unwrapDeep(testSpliterator([]))).toEqual([]);
   });
 });

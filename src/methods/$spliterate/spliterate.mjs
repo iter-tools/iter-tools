@@ -19,4 +19,5 @@ export function spliterate(source, strategy, options = {}) {
 export default iterableCurry(spliterate, {
   minArgs: 1,
   maxArgs: 2,
+  optionalArgsAtEnd: true,
 });

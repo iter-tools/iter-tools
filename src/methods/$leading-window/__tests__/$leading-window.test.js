@@ -1,153 +1,76 @@
 import { $, $async, $await } from '../../../../generate/async.macro';
 
-import { $unwrapDeep as $uw } from '../../../__tests__/$helpers';
 import { $leadingWindow } from '../../..';
+import { $wrap, $unwrapDeep } from '../../../test/$helpers';
 
 describe($`leadingWindow`, () => {
   describe('when source is empty', () => {
     it(
       'yields no windows',
       $async(() => {
-        expect($await($uw($leadingWindow(3, { filler: 'x' }, null)))).toEqual([]);
-        expect($await($uw($leadingWindow(3, { filler: 'x' }, undefined)))).toEqual([]);
-        expect($await($uw($leadingWindow(3, { filler: 'x' }, [])))).toEqual([]);
+        expect($await($unwrapDeep($leadingWindow(3, { filler: 0 }, null)))).toEqual([]);
+        expect($await($unwrapDeep($leadingWindow(3, { filler: 0 }, undefined)))).toEqual([]);
+        expect($await($unwrapDeep($leadingWindow(3, { filler: 0 }, $wrap([]))))).toEqual([]);
       }),
     );
   });
 
-  it(
-    'frames iterable',
-    $async(() => {
-      const result = [
-        [1, 2, 3],
-        [2, 3, 4],
-        [3, 4, 5],
-        [4, 5, undefined],
-        [5, undefined, undefined],
-      ];
+  describe('when size(source) < size', () => {
+    it(
+      'yields only partial windows',
+      $async(() => {
+        expect($await($unwrapDeep($leadingWindow(3, { filler: 0 }, $wrap([1, 2]))))).toEqual([
+          [1, 2, 0],
+          [2, 0, 0],
+        ]);
+      }),
+    );
+  });
 
-      expect($await($uw($leadingWindow(3, [1, 2, 3, 4, 5])))).toEqual(result);
-      const opts: any = { size: 3 };
-      opts;
-      expect($await($uw($leadingWindow(opts, [1, 2, 3, 4, 5])))).toEqual(result);
-    }),
-  );
+  describe('when size(source) === size', () => {
+    it(
+      'yields one full window, then partial windows',
+      $async(() => {
+        expect($await($unwrapDeep($leadingWindow(3, { filler: 0 }, $wrap([1, 2, 3]))))).toEqual([
+          [1, 2, 3],
+          [2, 3, 0],
+          [3, 0, 0],
+        ]);
+      }),
+    );
+  });
 
-  it(
-    'frames iterable',
-    $async(() => {
-      const result = [[1, 2, 3], [2, 3, 4], [3, 4, 5], [4, 5, 'x'], [5, 'x', 'x']];
+  describe('when size(source) > size', () => {
+    it(
+      'yields size(source)-size full windows, then partial windows',
+      $async(() => {
+        const result = [[1, 2], [2, 3], [3, 0]];
 
-      expect($await($uw($leadingWindow(3, { filler: 'x' }, [1, 2, 3, 4, 5])))).toEqual(result);
-      const opts: any = { size: 3, filler: 'x' };
-      opts;
-      expect($await($uw($leadingWindow(opts, [1, 2, 3, 4, 5])))).toEqual(result);
-    }),
-  );
-
-  it(
-    'can have separate size and options arguments',
-    $async(() => {
-      expect($await($uw($leadingWindow(3, { filler: 'x' }, [1, 2, 3, 4, 5])))).toEqual([
-        [1, 2, 3],
-        [2, 3, 4],
-        [3, 4, 5],
-        [4, 5, 'x'],
-        [5, 'x', 'x'],
-      ]);
-    }),
-  );
-
-  it(
-    'frames iterable (leadingWindow equal to the sequence)',
-    $async(() => {
-      expect($await($uw($leadingWindow(5, [1, 2, 3, 4, 5])))).toEqual([
-        [1, 2, 3, 4, 5],
-        [2, 3, 4, 5, undefined],
-        [3, 4, 5, undefined, undefined],
-        [4, 5, undefined, undefined, undefined],
-        [5, undefined, undefined, undefined, undefined],
-      ]);
-    }),
-  );
-
-  it(
-    'frames iterable (leadingWindow bigger than the sequence)',
-    $async(() => {
-      expect($await($uw($leadingWindow(6, [1, 2, 3, 4, 5])))).toEqual([
-        [1, 2, 3, 4, 5, undefined],
-        [2, 3, 4, 5, undefined, undefined],
-        [3, 4, 5, undefined, undefined, undefined],
-        [4, 5, undefined, undefined, undefined, undefined],
-        [5, undefined, undefined, undefined, undefined, undefined],
-      ]);
-    }),
-  );
-
-  it(
-    'frames iterable (leadingWindow bigger than the sequence) with filler',
-    $async(() => {
-      expect($await($uw($leadingWindow(6, { filler: 'x' }, [1, 2, 3, 4, 5])))).toEqual([
-        [1, 2, 3, 4, 5, 'x'],
-        [2, 3, 4, 5, 'x', 'x'],
-        [3, 4, 5, 'x', 'x', 'x'],
-        [4, 5, 'x', 'x', 'x', 'x'],
-        [5, 'x', 'x', 'x', 'x', 'x'],
-      ]);
-    }),
-  );
-
-  it(
-    'frames iterable (leadingWindow bigger than the sequence) 2',
-    $async(() => {
-      expect($await($uw($leadingWindow(7, [1, 2, 3, 4, 5])))).toEqual([
-        [1, 2, 3, 4, 5, undefined, undefined],
-        [2, 3, 4, 5, undefined, undefined, undefined],
-        [3, 4, 5, undefined, undefined, undefined, undefined],
-        [4, 5, undefined, undefined, undefined, undefined, undefined],
-        [5, undefined, undefined, undefined, undefined, undefined, undefined],
-      ]);
-    }),
-  );
+        expect($await($unwrapDeep($leadingWindow(2, { filler: 0 }, $wrap([1, 2, 3]))))).toEqual(
+          result,
+        );
+        // prettier-ignore
+        // @ts-ignore
+        expect($await($unwrapDeep($leadingWindow({ size: 2, filler: 0 }, $wrap([1, 2, 3]))))).toEqual(result);
+      }),
+    );
+  });
 
   describe('when useFiller is false', () => {
     it(
-      'frames iterable',
+      'yields shorter windows instead of windows with filler',
       $async(() => {
-        expect($await($uw($leadingWindow(3, { useFiller: false }, [1, 2, 3, 4, 5])))).toEqual([
-          [1, 2, 3],
-          [2, 3, 4],
-          [3, 4, 5],
-          [4, 5],
-          [5],
-        ]);
-      }),
-    );
-
-    it(
-      'frames iterable (leadingWindow equal to the sequence)',
-      $async(() => {
-        expect($await($uw($leadingWindow(5, { useFiller: false }, [1, 2, 3, 4, 5])))).toEqual([
-          [1, 2, 3, 4, 5],
-          [2, 3, 4, 5],
-          [3, 4, 5],
-          [4, 5],
-          [5],
-        ]);
-      }),
-    );
-
-    it(
-      'frames iterable (leadingWindow bigger than the sequence)',
-      $async(() => {
-        expect($await($uw($leadingWindow(6, { useFiller: false }, [1, 2, 3, 4, 5])))).toEqual([
-          [1, 2, 3, 4, 5],
-          [2, 3, 4, 5],
-          [3, 4, 5],
-          [4, 5],
-          [5],
-        ]);
+        expect(
+          $await($unwrapDeep($leadingWindow(3, { useFiller: false }, $wrap([1, 2, 3])))),
+        ).toEqual([[1, 2, 3], [2, 3], [3]]);
       }),
     );
   });
+
+  it(
+    'has a default filler of undefined',
+    $async(() => {
+      expect($await($unwrapDeep($leadingWindow(2, $wrap([1]))))).toEqual([[1, undefined]]);
+    }),
+  );
 });

@@ -7,12 +7,10 @@
  */
 
 import { asyncIterableCurry } from '../../internal/async-iterable';
+import { asyncMap } from '../$map/async-map';
 
-export async function* asyncEnumerate(source, start = 0) {
-  let i = start;
-  for await (const value of source) {
-    yield [i++, value];
-  }
+export function asyncEnumerate(source, start = 0) {
+  return asyncMap(source, (value, i) => [start + i, value]);
 }
 
 export default asyncIterableCurry(asyncEnumerate, {
