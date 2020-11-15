@@ -8,25 +8,29 @@
 
 /* eslint-disable no-unused-vars,import/no-duplicates,no-constant-condition */
 
-import { asyncInterpose, asyncToArray, range } from '../../..';
+import { asyncInterpose } from '../../..';
+import { asyncWrap, asyncUnwrap } from '../../../test/async-helpers';
 
 describe('asyncInterpose', () => {
-  it('interposes items into array', async () => {
-    const iter = asyncInterpose(9, [1, 2, 3]);
-    expect(await asyncToArray(iter)).toEqual([1, 9, 2, 9, 3]);
+  describe('when source is empty', () => {
+    it('yields no values', async () => {
+      expect(await asyncUnwrap(asyncInterpose('', null))).toEqual([]);
+      expect(await asyncUnwrap(asyncInterpose('', undefined))).toEqual([]);
+      expect(await asyncUnwrap(asyncInterpose('', asyncWrap([])))).toEqual([]);
+    });
   });
 
-  it('interposes items into an iterable', async () => {
-    const iter = asyncInterpose(null, range({ start: 1, end: 4 }));
-    expect(await asyncToArray(iter)).toEqual([1, null, 2, null, 3]);
+  describe('when source contains a single value', () => {
+    it('yields that value', async () => {
+      const iter = asyncInterpose(null, asyncWrap([1]));
+      expect(await asyncUnwrap(iter)).toEqual([1]);
+    });
   });
 
-  it('returns mapped iterable (curried version)', async () => {
-    const iter = asyncInterpose([]);
-    expect(await asyncToArray(iter(range({ start: 1, end: 4 })))).toEqual([1, [], 2, [], 3]);
-  });
-
-  it('returns empty iterable from null', async () => {
-    expect(await asyncToArray(asyncInterpose('', null))).toEqual([]);
+  describe('when source contains multiple values', () => {
+    it('yields interposed value between each value from source', async () => {
+      const iter = asyncInterpose(null, asyncWrap([1, 2, 3]));
+      expect(await asyncUnwrap(iter)).toEqual([1, null, 2, null, 3]);
+    });
   });
 });

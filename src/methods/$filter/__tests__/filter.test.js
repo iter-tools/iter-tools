@@ -8,25 +8,26 @@
 
 /* eslint-disable no-unused-vars,import/no-duplicates,no-constant-condition */
 
-import { filter, toArray, range } from '../../..';
+import { filter } from '../../..';
+import { wrap, unwrap } from '../../../test/helpers';
 
 describe('filter', () => {
-  it('returns filtered iterable', () => {
-    const iter = filter(item => item % 2 === 0, [1, 2, 3, 4, 5, 6]);
-    expect(toArray(iter)).toEqual([2, 4, 6]);
+  describe('when source is empty', () => {
+    it('yields no values', () => {
+      const pred = (v: any) => v;
+      expect(unwrap(filter(pred, null))).toEqual([]);
+      expect(unwrap(filter(pred, undefined))).toEqual([]);
+      expect(unwrap(filter(pred, wrap([])))).toEqual([]);
+    });
   });
 
-  it('returns filtered iterable from iterable', () => {
-    const iter = filter(item => item % 2 === 0, range(1, 7));
-    expect(toArray(iter)).toEqual([2, 4, 6]);
-  });
-
-  it('returns filtered iterable (curried version)', () => {
-    const filterEven = filter((item: number) => item % 2 === 0);
-    expect(toArray(filterEven(range(1, 7)))).toEqual([2, 4, 6]);
-  });
-
-  it('returns empty iterable from null', () => {
-    expect(toArray(filter((item: never) => item, null))).toEqual([]);
+  describe('when source has values', () => {
+    it('yields items for which predicate(value, i) returns true', () => {
+      expect(unwrap(filter((value, i) => value === i, wrap([1, 1, 2, 3, 5, 8])))).toEqual([
+        1,
+        2,
+        3,
+      ]);
+    });
   });
 });

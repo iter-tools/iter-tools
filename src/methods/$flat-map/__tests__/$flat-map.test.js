@@ -1,36 +1,27 @@
 import { $, $async, $await } from '../../../../generate/async.macro';
 
-import { $flatMap, $toArray, range } from '../../..';
+import { $flatMap } from '../../..';
+import { $wrap, $unwrap } from '../../../test/$helpers';
 
 describe($`flatMap`, () => {
-  it(
-    'returns flatMapped iterable',
-    $async(() => {
-      const iter = $flatMap(item => [item, item * 2], [1, 2, 3]);
-      expect($await($toArray(iter))).toEqual([1, 2, 2, 4, 3, 6]);
-    }),
-  );
+  describe('when source is empty', () => {
+    it(
+      'yields no values',
+      $async(() => {
+        expect($await($unwrap($flatMap((value: any) => value, null)))).toEqual([]);
+        expect($await($unwrap($flatMap((value: any) => value, undefined)))).toEqual([]);
+        expect($await($unwrap($flatMap((value: any) => value, $wrap([]))))).toEqual([]);
+      }),
+    );
+  });
 
-  it(
-    'returns flatMapped iterable from iterable',
-    $async(() => {
-      const iter = $flatMap(item => [item, item * 2], range(1, 4));
-      expect($await($toArray(iter))).toEqual([1, 2, 2, 4, 3, 6]);
-    }),
-  );
-
-  it(
-    'returns flatMapped iterable (curried version)',
-    $async(() => {
-      const iter = $flatMap((item: number) => [item, item * 2]);
-      expect($await($toArray(iter(range(1, 4))))).toEqual([1, 2, 2, 4, 3, 6]);
-    }),
-  );
-
-  it(
-    'returns empty iterable from null',
-    $async(() => {
-      expect($await($toArray($flatMap((item: never) => item, null)))).toEqual([]);
-    }),
-  );
+  describe('when source has values', () => {
+    it(
+      'concatenates result of func(value, i) for each value in source',
+      $async(() => {
+        const iter = $flatMap((value: number, i: number) => [i, value], $wrap([1, 2, 3]));
+        expect($await($unwrap(iter))).toEqual([0, 1, 1, 2, 2, 3]);
+      }),
+    );
+  });
 });

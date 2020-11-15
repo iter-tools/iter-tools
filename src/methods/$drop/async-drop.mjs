@@ -11,8 +11,7 @@ import { asyncIterableCurry } from '../../internal/async-iterable';
 export async function* asyncDrop(iterable, n) {
   let i = 0;
   for await (const item of iterable) {
-    if (i++ < n) continue;
-    yield item;
+    if (i++ >= n) yield item;
   }
 }
 

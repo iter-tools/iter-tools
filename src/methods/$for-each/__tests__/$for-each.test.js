@@ -1,41 +1,27 @@
-import { $, $async, $await } from '../../../../generate/async.macro';
+import { $, $isAsync, $async, $await } from '../../../../generate/async.macro';
 
 import { $forEach } from '../../..';
+import { $wrap } from '../../../test/$helpers';
 
 describe($`forEach`, () => {
   it(
-    'iterates over an iterable',
+    'calls callback for each value in iterable',
     $async(() => {
       const arr: Array<number> = [];
-      $await($forEach(item => arr.push(item), [1, 2, 3]));
+
+      $await($forEach(item => arr.push(item), $wrap([1, 2, 3])));
+
       expect(arr).toEqual([1, 2, 3]);
     }),
   );
 
-  it(
-    'iterates over an iterable using a promise',
-    $async(() => {
+  if ($isAsync) {
+    it('may take an async callback', async () => {
       const arr: Array<number> = [];
-      $await(
-        $forEach(
-          item => {
-            arr.push(item);
-            return Promise.resolve(0);
-          },
-          [1, 2, 3],
-        ),
-      );
-      expect(arr).toEqual([1, 2, 3]);
-    }),
-  );
 
-  it(
-    'iterates over an iterable (curried)',
-    $async(() => {
-      const arr: Array<number> = [];
-      const forEachPush = $forEach((item: number) => arr.push(item));
-      $await(forEachPush([1, 2, 3]));
+      $await($forEach(async item => arr.push(item), $wrap([1, 2, 3])));
+
       expect(arr).toEqual([1, 2, 3]);
-    }),
-  );
+    });
+  }
 });

@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`consume (deprecated) consumes an iterable with a callback 1`] = `
+Array [
+  Array [
+    "\`consume(callback, iterable)\` is deprecated and will be removed in iter-tools@8. Instead use forEach(callback, iterable)",
+  ],
+]
+`;

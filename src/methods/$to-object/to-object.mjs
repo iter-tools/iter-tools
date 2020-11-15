@@ -8,9 +8,9 @@
 
 import { ensureIterable } from '../../internal/iterable';
 
-export function toObject(source) {
-  const obj = {};
-  for (const [key, value] of ensureIterable(source)) {
+export function toObject(iterable, proto = Object.prototype) {
+  const obj = Object.create(proto);
+  for (const [key, value] of ensureIterable(iterable)) {
     obj[key] = value;
   }
   return obj;

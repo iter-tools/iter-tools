@@ -8,22 +8,32 @@
 
 /* eslint-disable no-unused-vars,import/no-duplicates,no-constant-condition */
 
-import { startsWith, range } from '../../..';
+import { startsWith } from '../../..';
+import { wrap } from '../../../test/helpers';
 
 describe('startsWith', () => {
-  it('returns true if the iterable starts with the given value', () => {
-    expect(startsWith(1, range(1, 10))).toBe(true);
+  describe('when iterable starts with value', () => {
+    it('returns true', () => {
+      expect(startsWith(1, wrap([1, 2, 3]))).toBe(true);
+    });
   });
 
-  it('returns false if the iterable contains but does not start with the given value', () => {
-    expect(startsWith(1, range(0, 10))).toBe(false);
+  describe('when iterable does not start with with value', () => {
+    it('returns false', () => {
+      expect(startsWith(2, wrap([1, 2, 3]))).toBe(false);
+    });
   });
 
-  it('returns true if the iterable contains only the given value', () => {
-    expect(startsWith(1, [1])).toBe(true);
+  describe('when iterable is empty', () => {
+    it('returns false', () => {
+      expect(startsWith(null, wrap([]))).toBe(false);
+    });
   });
 
-  it('returns false if the iterable is empty', () => {
-    expect(startsWith(undefined, [])).toBe(false);
+  describe('when iterable is a string', () => {
+    it('warns', () => {
+      startsWith([], 'abc');
+      expect(console.warn).callsMatchSnapshot();
+    });
   });
 });

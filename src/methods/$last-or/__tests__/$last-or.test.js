@@ -1,7 +1,7 @@
 import { $, $async, $await } from '../../../../generate/async.macro';
 
 import { $lastOr } from '../../..';
-import { $wrap } from '../../../__tests__/__framework__/$wrap';
+import { $wrap } from '../../../test/$helpers';
 
 describe($`lastOr`, () => {
   describe('when iterable is empty', () => {
@@ -15,7 +15,7 @@ describe($`lastOr`, () => {
     );
   });
 
-  describe('when iterable contains values', () => {
+  describe('when iterable has values', () => {
     it(
       'returns last value',
       $async(() => {

@@ -1,5 +1,5 @@
-import { asyncify, asyncIterableCurry } from '../../internal/async-iterable';
 import Queue from '@iter-tools/queue';
+import { asyncify, asyncIterableCurry, asyncCallReturn } from '../../internal/async-iterable';
 
 export async function* generateBuffered(source, n) {
   const iterator = asyncify(source)[Symbol.asyncIterator]();
@@ -20,7 +20,7 @@ export async function* generateBuffered(source, n) {
       yield value;
     }
   } finally {
-    if (typeof iterator.return === 'function') await iterator.return();
+    await asyncCallReturn(iterator);
   }
 }
 

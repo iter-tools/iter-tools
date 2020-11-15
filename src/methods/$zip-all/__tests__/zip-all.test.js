@@ -8,40 +8,30 @@
 
 /* eslint-disable no-unused-vars,import/no-duplicates,no-constant-condition */
 
-import { zipAll, toArray, slice, range } from '../../..';
-import { OneTwoThreeIterable } from '../../../__tests__/__framework__/fixtures';
+import { zipAll, toArray } from '../../..';
+import { wrap } from '../../../test/helpers';
 
 describe('zipAll', () => {
-  it('zips', () => {
-    const iter = zipAll([1, 2, 3], [4, 5, 6], [7, 8, 9]);
-    expect(toArray(iter)).toEqual([[1, 4, 7], [2, 5, 8], [3, 6, 9]]);
+  describe('when sources are of equal length', () => {
+    it('yields all values', () => {
+      const iter = zipAll(wrap([1, 2, 3]), wrap([4, 5, 6]), wrap([7, 8, 9]));
+      expect(toArray(iter)).toEqual([[1, 4, 7], [2, 5, 8], [3, 6, 9]]);
+    });
   });
 
-  it('zips using iterables', () => {
-    const iter = zipAll(range({ start: 1, end: 4 }), range({ start: 4, end: 7 }), [7, 8, 9]);
-    expect(toArray(iter)).toEqual([[1, 4, 7], [2, 5, 8], [3, 6, 9]]);
-  });
+  describe('when some iterables are shorter than others', () => {
+    describe('when filler is specified', () => {
+      it('fills with filler', () => {
+        const iter = zipAll({ filler: null }, wrap([1, 2, 3]), wrap([4, 5]), wrap([7, 8]));
+        expect(toArray(iter)).toEqual([[1, 4, 7], [2, 5, 8], [3, null, null]]);
+      });
+    });
 
-  it('fills with undefined when some iterables are exhausted', () => {
-    const iter = zipAll(range({ start: 1, end: 4 }), range({ start: 4, end: 6 }), [7, 8]);
-    expect(toArray(iter)).toEqual([[1, 4, 7], [2, 5, 8], [3, undefined, undefined]]);
-  });
-
-  it('fills with filler when some iterables are exhausted', () => {
-    const iter = zipAll(
-      { filler: null },
-      range({ start: 1, end: 4 }),
-      range({ start: 4, end: 6 }),
-      [7, 8],
-    );
-    expect(toArray(iter)).toEqual([[1, 4, 7], [2, 5, 8], [3, null, null]]);
-  });
-
-  it('closes when stopping earlier', () => {
-    // broken if transpiled with es5 loose
-    const oneTwoThree = new OneTwoThreeIterable();
-    const iter = slice(0, 2, zipAll(range(2), oneTwoThree));
-    expect(toArray(iter)).toEqual([[0, 1], [1, 2]]);
-    expect(oneTwoThree).toHaveProperty('isCleanedUp', true);
+    describe('when filler is not specified', () => {
+      it('fills with undefined', () => {
+        const iter = zipAll(wrap([1, 2, 3]), wrap([4, 5]), wrap([7, 8]));
+        expect(toArray(iter)).toEqual([[1, 4, 7], [2, 5, 8], [3, undefined, undefined]]);
+      });
+    });
   });
 });

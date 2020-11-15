@@ -8,12 +8,11 @@
 
 /* eslint-disable no-unused-vars,import/no-duplicates,no-constant-condition */
 
-import { asyncSplit, asyncMap, asyncToArray } from '../../..';
+import { asyncSplit } from '../../..';
+import { asyncWrap, asyncUnwrapDeep } from '../../../test/async-helpers';
 
 describe('asyncSplit', () => {
   it('should yield an iterable for every item in the iterable', async () => {
-    expect(
-      await asyncToArray(asyncMap(group => asyncToArray(group), asyncSplit([1, 2, 3]))),
-    ).toEqual([[1], [2], [3]]);
+    expect(await asyncUnwrapDeep(asyncSplit(asyncWrap([1, 2, 3])))).toEqual([[1], [2], [3]]);
   });
 });

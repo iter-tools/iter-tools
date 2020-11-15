@@ -1,6 +1,8 @@
 import { wrapWithResultIterable } from '../../internal/iterable';
+import { isObject, isDef } from '../../internal/shapes';
+import { isInteger, isIntegerOrInfinite } from '../../internal/number';
 
-export function* range(start, end, step = 1) {
+export function* range(start = 0, end = Infinity, step = 1) {
   for (let i = start; step > 0 ? i < end : i > end; i += step) {
     yield i;
   }
@@ -8,29 +10,29 @@ export function* range(start, end, step = 1) {
 
 export default wrapWithResultIterable(range, {
   validateArgs(args) {
-    let [optsOrEndOrStart, end = Infinity, step = 1] = args;
-    let start = 0;
+    let [optsOrEndOrStart, end = Infinity, step] = args;
+    let start;
 
-    if (typeof optsOrEndOrStart === 'number') {
+    if (isObject(optsOrEndOrStart)) {
+      ({ start, end, step } = optsOrEndOrStart);
+    } else {
       if (args.length > 1) {
         start = optsOrEndOrStart;
       } else {
         end = optsOrEndOrStart;
       }
-    } else if (optsOrEndOrStart && typeof optsOrEndOrStart === 'object') {
-      ({ start = 0, end = Infinity, step = 1 } = optsOrEndOrStart);
     }
 
-    if (typeof start !== 'number') {
-      throw new TypeError('The specified start was not a number');
+    if (isDef(start) && !isInteger(start)) {
+      throw new TypeError('The specified start was not an integer');
     }
 
-    if (typeof end !== 'number') {
-      throw new TypeError('The specified end was not a number');
+    if (isDef(end) && !isIntegerOrInfinite(end)) {
+      throw new TypeError('The specified end was not an integer or infinite');
     }
 
-    if (typeof step !== 'number' || step === 0) {
-      throw new TypeError('The specified step was not a number !== 0');
+    if (isDef(step) && !isInteger(step, true)) {
+      throw new TypeError('The specified step was not a non-zero integer');
     }
 
     args[0] = start;

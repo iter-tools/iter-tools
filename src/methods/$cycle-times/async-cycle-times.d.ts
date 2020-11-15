@@ -10,11 +10,11 @@ import { AsyncSourceIterable, AsyncResultIterable } from '../../types/async-iter
 
 declare function asyncCycleTimes<T>(
   n: number,
-  iterable: AsyncSourceIterable<T>,
+  source: AsyncSourceIterable<T>,
 ): AsyncResultIterable<T>;
 
 declare function asyncCycleTimes<T>(
   n: number,
-): (iterable: AsyncSourceIterable<T>) => AsyncResultIterable<T>;
+): (source: AsyncSourceIterable<T>) => AsyncResultIterable<T>;
 
 export default asyncCycleTimes;

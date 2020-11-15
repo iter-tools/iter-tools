@@ -17,8 +17,9 @@ export function $startsWithAnySubseq_(peekr, subseqPeekr) {
     const { value: seqValue } = subseqPeekr;
 
     for (let i = 0; i < seqValue.length; i++) {
+      if (!matches[i]) continue;
       if (seqValue[i] === none) {
-        if (matches[i]) return true;
+        return true;
       } else {
         matches[i] = matches[i] && seqValue[i] === value;
       }

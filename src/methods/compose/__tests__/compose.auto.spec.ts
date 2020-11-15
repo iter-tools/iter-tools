@@ -10,19 +10,24 @@ import { compose } from '../../..';
 
 describe('compose', () => {
   it('works', () => {
-    const a = (str: string) => `b(${str})`;
-    const b = (str: string) => `a(${str})`;
+    const a = (str: string) => `a(${str})`;
+    const b = (str: string) => `b(${str})`;
 
     expect(
       compose(
-        b,
         a,
+        b,
       )('input'),
     ).toBe('a(b(input))');
   });
 
   it('works with types', () => {
-    expect(compose(Boolean)(0)).toBe(false);
+    expect(
+      compose(
+        (v: number): boolean => Boolean(v),
+        (v: string): number => Number(v),
+      )(''),
+    ).toBe(false);
   });
 
   it('is the identity function when no functions are passed', () => {

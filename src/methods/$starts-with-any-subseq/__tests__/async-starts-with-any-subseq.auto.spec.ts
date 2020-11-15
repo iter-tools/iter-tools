@@ -8,37 +8,68 @@
 
 /* eslint-disable no-unused-vars,import/no-duplicates,no-constant-condition */
 
-import { asyncStartsWithAnySubseq, range } from '../../..';
+import { asyncStartsWithAnySubseq } from '../../..';
+import { asyncWrap } from '../../../test/async-helpers';
 
 describe('asyncStartsWithAnySubseq', () => {
-  it('returns true if the iterable starts with any of the given subsequences', async () => {
-    expect(await asyncStartsWithAnySubseq([[0, 1], [1, 2]], range(0, 10))).toBe(true);
+  describe('when no sequences are given', () => {
+    it('returns false', async () => {
+      expect(await asyncStartsWithAnySubseq([], asyncWrap([]))).toBe(false);
+    });
   });
 
-  it('returns false if the iterable includes but does not start with any of the given subsequences', async () => {
-    expect(await asyncStartsWithAnySubseq([[1, 2], [2, 3]], range(0, 10))).toBe(false);
+  describe('when iterable starts with a given sequence', () => {
+    it('returns true', async () => {
+      expect(await asyncStartsWithAnySubseq([asyncWrap([1, 2])], asyncWrap([1, 2, 3]))).toBe(true);
+      expect(
+        await asyncStartsWithAnySubseq(
+          [asyncWrap([1, 2]), asyncWrap([1, 2, 3])],
+          asyncWrap([1, 2, 3]),
+        ),
+      ).toBe(true);
+      expect(
+        await asyncStartsWithAnySubseq(
+          [asyncWrap([1, 2, 3]), asyncWrap([1, 2])],
+          asyncWrap([1, 2, 3]),
+        ),
+      ).toBe(true);
+    });
   });
 
-  it('returns true if the iterable equals any of the given subsequences', async () => {
-    expect(await asyncStartsWithAnySubseq([range(0, 2), range(1, 3)], range(1, 3))).toBe(true);
+  describe('when iterable is equal to a given sequence', () => {
+    it('returns true', async () => {
+      expect(await asyncStartsWithAnySubseq([asyncWrap([1, 2, 3])], asyncWrap([1, 2, 3]))).toBe(
+        true,
+      );
+    });
   });
 
-  it('returns false if no subsequences are given', async () => {
-    expect(await asyncStartsWithAnySubseq([], range(1, 3))).toBe(false);
+  describe('when iterable is shorter than a matching sequence', () => {
+    it('returns false', async () => {
+      expect(await asyncStartsWithAnySubseq([asyncWrap([1, 2, 3])], asyncWrap([1, 2]))).toBe(false);
+    });
   });
 
-  it('returns false if the given subsequences are longer than the iterable', async () => {
-    expect(await asyncStartsWithAnySubseq([range(0, 3), range(1, 4)], range(1, 3))).toBe(false);
+  describe('when iterable includes but does not start with a given sequence', () => {
+    it('returns false', async () => {
+      expect(await asyncStartsWithAnySubseq([asyncWrap([2, 3])], asyncWrap([1, 2, 3]))).toBe(false);
+    });
   });
 
-  describe('when the iterable is empty', () => {
-    it('returns true if any subsequence is empty', async () => {
-      expect(await asyncStartsWithAnySubseq([[], [null]], [])).toBe(true);
-      expect(await asyncStartsWithAnySubseq([null], [])).toBe(true);
+  describe('when iterable is empty', () => {
+    describe('and any sequence is empty', () => {
+      it('returns true', async () => {
+        expect(
+          await asyncStartsWithAnySubseq([asyncWrap([]), asyncWrap([null])], asyncWrap([])),
+        ).toBe(true);
+        expect(await asyncStartsWithAnySubseq([null], asyncWrap([]))).toBe(true);
+      });
     });
 
-    it('returns false if all subsequences are not empty', async () => {
-      expect(await asyncStartsWithAnySubseq([[undefined]], [])).toBe(false);
+    describe('and no sequence is empty', () => {
+      it('returns false', async () => {
+        expect(await asyncStartsWithAnySubseq([asyncWrap([undefined])], asyncWrap([]))).toBe(false);
+      });
     });
   });
 });

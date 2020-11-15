@@ -8,28 +8,50 @@
 
 /* eslint-disable no-unused-vars,import/no-duplicates,no-constant-condition */
 
-import { asyncEqual, asyncWrap } from '../../..';
+import { asyncEqual } from '../../..';
+import { asyncWrap } from '../../../test/async-helpers';
 
 describe('asyncEqual', () => {
-  it('returns true if there is only one iterable', async () => {
-    expect(await asyncEqual(asyncWrap([1, 2, 3]))).toEqual(true);
+  describe('when there is only one iterable', () => {
+    it('returns true', async () => {
+      expect(await asyncEqual(null)).toEqual(true);
+      expect(await asyncEqual(undefined)).toEqual(true);
+      expect(await asyncEqual(asyncWrap([1, 2, 3]))).toEqual(true);
+    });
   });
 
-  it('returns true if all contents are equal', async () => {
-    expect(
-      await asyncEqual(asyncWrap([1, 2, 3]), asyncWrap([1, 2, 3]), asyncWrap([1, 2, 3])),
-    ).toEqual(true);
+  describe('when all values in all iterables are equal', () => {
+    it('returns true if all contents are equal', async () => {
+      expect(await asyncEqual(asyncWrap([]), asyncWrap([]))).toEqual(true);
+      expect(await asyncEqual(asyncWrap([1, 2, 3]), asyncWrap([1, 2, 3]))).toEqual(true);
+      expect(
+        await asyncEqual(asyncWrap([1, 2, 3]), asyncWrap([1, 2, 3]), asyncWrap([1, 2, 3])),
+      ).toEqual(true);
+    });
   });
 
-  it('returns false if any contents are not equal', async () => {
-    expect(
-      await asyncEqual(asyncWrap([1, 2, 3]), asyncWrap([1, 2, 3]), asyncWrap([1, 2, 4])),
-    ).toEqual(false);
+  describe('when all values in some iterables are equal', () => {
+    it('returns false', async () => {
+      expect(
+        await asyncEqual(asyncWrap([1, 2, 3]), asyncWrap([1, 2, 3]), asyncWrap([1, 2, 4])),
+      ).toEqual(false);
+      expect(
+        await asyncEqual(asyncWrap([1, 2, 3]), asyncWrap([1, 2, 4]), asyncWrap([1, 2, 3])),
+      ).toEqual(false);
+      expect(
+        await asyncEqual(asyncWrap([1, 2, 4]), asyncWrap([1, 2, 3]), asyncWrap([1, 2, 3])),
+      ).toEqual(false);
+    });
   });
 
-  it('returns false if any arrays are not the same length', async () => {
-    expect(
-      await asyncEqual(asyncWrap([1, 2, 3]), asyncWrap([1, 2, 3]), asyncWrap([1, 2, 3, 4])),
-    ).toEqual(false);
+  describe('when iterables have the same values but different lengths', () => {
+    it('returns false', async () => {
+      expect(await asyncEqual(asyncWrap([1]), asyncWrap([1]), asyncWrap([1, 2]))).toEqual(false);
+      expect(await asyncEqual(asyncWrap([1]), asyncWrap([1, 2]), asyncWrap([1]))).toEqual(false);
+      expect(await asyncEqual(asyncWrap([1, 2]), asyncWrap([1]), asyncWrap([1]))).toEqual(false);
+      expect(await asyncEqual(asyncWrap([]), asyncWrap([]), asyncWrap([1]))).toEqual(false);
+      expect(await asyncEqual(asyncWrap([]), asyncWrap([1]), asyncWrap([]))).toEqual(false);
+      expect(await asyncEqual(asyncWrap([1]), asyncWrap([]), asyncWrap([]))).toEqual(false);
+    });
   });
 });

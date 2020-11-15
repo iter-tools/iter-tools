@@ -8,16 +8,35 @@
 
 /* eslint-disable no-unused-vars,import/no-duplicates,no-constant-condition */
 
-import { asyncEnumerate, asyncToArray, range } from '../../..';
+import { asyncEnumerate } from '../../..';
+import { asyncWrap, asyncUnwrap } from '../../../test/async-helpers';
 
 describe('asyncEnumerate', () => {
-  it('enumerates iterables', async () => {
-    const iter = asyncEnumerate(range({ start: 1, end: 4 }));
-    expect(await asyncToArray(iter)).toEqual([[0, 1], [1, 2], [2, 3]]);
+  describe('when source is empty', () => {
+    it('yields no values', async () => {
+      expect(await asyncUnwrap(asyncEnumerate(null))).toEqual([]);
+      expect(await asyncUnwrap(asyncEnumerate(undefined))).toEqual([]);
+      expect(await asyncUnwrap(asyncEnumerate(asyncWrap([])))).toEqual([]);
+    });
   });
 
-  it('enumerates iterables with start', async () => {
-    const iter = asyncEnumerate(3, range({ start: 1, end: 4 }));
-    expect(await asyncToArray(iter)).toEqual([[3, 1], [4, 2], [5, 3]]);
+  describe('when source has values', () => {
+    it('yields [i, value] tuples', async () => {
+      expect(await asyncUnwrap(asyncEnumerate(asyncWrap([1, 2, 3])))).toEqual([
+        [0, 1],
+        [1, 2],
+        [2, 3],
+      ]);
+      expect(await asyncUnwrap(asyncEnumerate(3, asyncWrap([1, 2, 3])))).toEqual([
+        [3, 1],
+        [4, 2],
+        [5, 3],
+      ]);
+      expect(await asyncUnwrap(asyncEnumerate(-3, asyncWrap([1, 2, 3])))).toEqual([
+        [-3, 1],
+        [-2, 2],
+        [-1, 3],
+      ]);
+    });
   });
 });

@@ -9,14 +9,14 @@
 /* eslint-disable no-unused-vars,import/no-duplicates,no-constant-condition */
 
 import { findOr } from '../../..';
-import { wrap } from '../../../__tests__/__framework__/wrap';
+import { wrap } from '../../../test/helpers';
 
 describe('findOr', () => {
   describe('when iterable is empty', () => {
     it('returns notFoundValue', () => {
-      expect(findOr(0, (item: never) => item, null)).toBe(0);
-      expect(findOr(0, (item: never) => item, undefined)).toBe(0);
-      expect(findOr(0, (item: never) => item, wrap([]))).toBe(0);
+      expect(findOr(0, (item: any) => item, null)).toBe(0);
+      expect(findOr(0, (item: any) => item, undefined)).toBe(0);
+      expect(findOr(0, (item: any) => item, wrap([]))).toBe(0);
     });
   });
 

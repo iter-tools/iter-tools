@@ -8,113 +8,58 @@
 
 /* eslint-disable no-unused-vars,import/no-duplicates,no-constant-condition */
 
-import { asyncUnwrapDeep as asyncUw } from '../../../__tests__/async-helpers';
 import { asyncLeadingWindow } from '../../..';
+import { asyncWrap, asyncUnwrapDeep } from '../../../test/async-helpers';
 
 describe('asyncLeadingWindow', () => {
   describe('when source is empty', () => {
     it('yields no windows', async () => {
-      expect(await asyncUw(asyncLeadingWindow(3, { filler: 'x' }, null))).toEqual([]);
-      expect(await asyncUw(asyncLeadingWindow(3, { filler: 'x' }, undefined))).toEqual([]);
-      expect(await asyncUw(asyncLeadingWindow(3, { filler: 'x' }, []))).toEqual([]);
+      expect(await asyncUnwrapDeep(asyncLeadingWindow(3, { filler: 0 }, null))).toEqual([]);
+      expect(await asyncUnwrapDeep(asyncLeadingWindow(3, { filler: 0 }, undefined))).toEqual([]);
+      expect(await asyncUnwrapDeep(asyncLeadingWindow(3, { filler: 0 }, asyncWrap([])))).toEqual(
+        [],
+      );
     });
   });
 
-  it('frames iterable', async () => {
-    const result = [[1, 2, 3], [2, 3, 4], [3, 4, 5], [4, 5, undefined], [5, undefined, undefined]];
-
-    expect(await asyncUw(asyncLeadingWindow(3, [1, 2, 3, 4, 5]))).toEqual(result);
-    const opts: any = { size: 3 };
-    expect(await asyncUw(asyncLeadingWindow(opts, [1, 2, 3, 4, 5]))).toEqual(result);
+  describe('when size(source) < size', () => {
+    it('yields only partial windows', async () => {
+      expect(
+        await asyncUnwrapDeep(asyncLeadingWindow(3, { filler: 0 }, asyncWrap([1, 2]))),
+      ).toEqual([[1, 2, 0], [2, 0, 0]]);
+    });
   });
 
-  it('frames iterable', async () => {
-    const result = [[1, 2, 3], [2, 3, 4], [3, 4, 5], [4, 5, 'x'], [5, 'x', 'x']];
-
-    expect(await asyncUw(asyncLeadingWindow(3, { filler: 'x' }, [1, 2, 3, 4, 5]))).toEqual(result);
-    const opts: any = { size: 3, filler: 'x' };
-    expect(await asyncUw(asyncLeadingWindow(opts, [1, 2, 3, 4, 5]))).toEqual(result);
+  describe('when size(source) === size', () => {
+    it('yields one full window, then partial windows', async () => {
+      expect(
+        await asyncUnwrapDeep(asyncLeadingWindow(3, { filler: 0 }, asyncWrap([1, 2, 3]))),
+      ).toEqual([[1, 2, 3], [2, 3, 0], [3, 0, 0]]);
+    });
   });
 
-  it('can have separate size and options arguments', async () => {
-    expect(await asyncUw(asyncLeadingWindow(3, { filler: 'x' }, [1, 2, 3, 4, 5]))).toEqual([
-      [1, 2, 3],
-      [2, 3, 4],
-      [3, 4, 5],
-      [4, 5, 'x'],
-      [5, 'x', 'x'],
-    ]);
-  });
+  describe('when size(source) > size', () => {
+    it('yields size(source)-size full windows, then partial windows', async () => {
+      const result = [[1, 2], [2, 3], [3, 0]];
 
-  it('frames iterable (leadingWindow equal to the sequence)', async () => {
-    expect(await asyncUw(asyncLeadingWindow(5, [1, 2, 3, 4, 5]))).toEqual([
-      [1, 2, 3, 4, 5],
-      [2, 3, 4, 5, undefined],
-      [3, 4, 5, undefined, undefined],
-      [4, 5, undefined, undefined, undefined],
-      [5, undefined, undefined, undefined, undefined],
-    ]);
-  });
-
-  it('frames iterable (leadingWindow bigger than the sequence)', async () => {
-    expect(await asyncUw(asyncLeadingWindow(6, [1, 2, 3, 4, 5]))).toEqual([
-      [1, 2, 3, 4, 5, undefined],
-      [2, 3, 4, 5, undefined, undefined],
-      [3, 4, 5, undefined, undefined, undefined],
-      [4, 5, undefined, undefined, undefined, undefined],
-      [5, undefined, undefined, undefined, undefined, undefined],
-    ]);
-  });
-
-  it('frames iterable (leadingWindow bigger than the sequence) with filler', async () => {
-    expect(await asyncUw(asyncLeadingWindow(6, { filler: 'x' }, [1, 2, 3, 4, 5]))).toEqual([
-      [1, 2, 3, 4, 5, 'x'],
-      [2, 3, 4, 5, 'x', 'x'],
-      [3, 4, 5, 'x', 'x', 'x'],
-      [4, 5, 'x', 'x', 'x', 'x'],
-      [5, 'x', 'x', 'x', 'x', 'x'],
-    ]);
-  });
-
-  it('frames iterable (leadingWindow bigger than the sequence) 2', async () => {
-    expect(await asyncUw(asyncLeadingWindow(7, [1, 2, 3, 4, 5]))).toEqual([
-      [1, 2, 3, 4, 5, undefined, undefined],
-      [2, 3, 4, 5, undefined, undefined, undefined],
-      [3, 4, 5, undefined, undefined, undefined, undefined],
-      [4, 5, undefined, undefined, undefined, undefined, undefined],
-      [5, undefined, undefined, undefined, undefined, undefined, undefined],
-    ]);
+      expect(
+        await asyncUnwrapDeep(asyncLeadingWindow(2, { filler: 0 }, asyncWrap([1, 2, 3]))),
+      ).toEqual(result);
+      // prettier-ignore
+      // @ts-ignore
+      expect((await asyncUnwrapDeep(asyncLeadingWindow({ size: 2, filler: 0 }, asyncWrap([1, 2, 3]))))).toEqual(result);
+    });
   });
 
   describe('when useFiller is false', () => {
-    it('frames iterable', async () => {
-      expect(await asyncUw(asyncLeadingWindow(3, { useFiller: false }, [1, 2, 3, 4, 5]))).toEqual([
-        [1, 2, 3],
-        [2, 3, 4],
-        [3, 4, 5],
-        [4, 5],
-        [5],
-      ]);
+    it('yields shorter windows instead of windows with filler', async () => {
+      expect(
+        await asyncUnwrapDeep(asyncLeadingWindow(3, { useFiller: false }, asyncWrap([1, 2, 3]))),
+      ).toEqual([[1, 2, 3], [2, 3], [3]]);
     });
+  });
 
-    it('frames iterable (leadingWindow equal to the sequence)', async () => {
-      expect(await asyncUw(asyncLeadingWindow(5, { useFiller: false }, [1, 2, 3, 4, 5]))).toEqual([
-        [1, 2, 3, 4, 5],
-        [2, 3, 4, 5],
-        [3, 4, 5],
-        [4, 5],
-        [5],
-      ]);
-    });
-
-    it('frames iterable (leadingWindow bigger than the sequence)', async () => {
-      expect(await asyncUw(asyncLeadingWindow(6, { useFiller: false }, [1, 2, 3, 4, 5]))).toEqual([
-        [1, 2, 3, 4, 5],
-        [2, 3, 4, 5],
-        [3, 4, 5],
-        [4, 5],
-        [5],
-      ]);
-    });
+  it('has a default filler of undefined', async () => {
+    expect(await asyncUnwrapDeep(asyncLeadingWindow(2, asyncWrap([1])))).toEqual([[1, undefined]]);
   });
 });

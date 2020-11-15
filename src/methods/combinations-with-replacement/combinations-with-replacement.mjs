@@ -1,5 +1,5 @@
 import { iterableCurry } from '../../internal/iterable';
-import factorial from '../../internal/factorial';
+import { factorial } from '../../internal/factorial';
 import { map } from '../$map/map';
 import { range } from '../range/range';
 import { product } from '../product/product';
@@ -7,7 +7,7 @@ import { isSorted } from '../$is-sorted/is-sorted';
 
 function combinationsWithReplacementSize(len, n) {
   if (len === 0 || n === 0 || n > len) return 0;
-  return Number(factorial(len + n - 1) / (factorial(n) * factorial(len - 1)));
+  return factorial(len + n - 1, len - 1) / factorial(n);
 }
 
 export function combinationsWithReplacement(iterable, n) {

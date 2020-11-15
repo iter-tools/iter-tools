@@ -10,8 +10,6 @@ import { AsyncSourceIterable } from '../../types/async-iterable';
 
 declare function asyncStr(strings: AsyncSourceIterable<string>): Promise<string>;
 
-declare function asyncStr(
-  strings: AsyncSourceIterable<AsyncSourceIterable<string>>,
-): Promise<string>;
+declare function asyncStr(strings: AsyncSourceIterable<{ toString(): string }>): Promise<string>;
 
 export default asyncStr;

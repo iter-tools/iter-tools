@@ -8,19 +8,20 @@
 
 /* eslint-disable no-unused-vars,import/no-duplicates,no-constant-condition */
 
-import { asyncTakeSorted, asyncToArray } from '../../..';
+import { asyncTakeSorted } from '../../..';
+import { asyncWrap, asyncUnwrap } from '../../../test/async-helpers';
 
 describe('asyncTakeSorted', () => {
   it('yields a sorted iterable if no number is specified', async () => {
-    const smallest3 = asyncTakeSorted([99, 12, 4, 6, 97, 44, 66, 77, 98]);
-    expect(await asyncToArray(smallest3)).toEqual([4, 6, 12, 44, 66, 77, 97, 98, 99]);
+    const smallest3 = asyncTakeSorted(asyncWrap([99, 12, 4, 6, 97, 44, 66, 77, 98]));
+    expect(await asyncUnwrap(smallest3)).toEqual([4, 6, 12, 44, 66, 77, 97, 98, 99]);
   });
 
   it('yields n sorted items from the iterable', async () => {
-    const smallest3 = asyncTakeSorted(3, [99, 12, 4, 6, 97, 44, 66, 77, 98]);
-    expect(await asyncToArray(smallest3)).toEqual([97, 98, 99]);
-    const smallest1 = asyncTakeSorted(1, [99, 12, 4, 6, 97, 44, 66, 77, 98]);
-    expect(await asyncToArray(smallest1)).toEqual([99]);
+    const smallest3 = asyncTakeSorted(3, asyncWrap([99, 12, 4, 6, 97, 44, 66, 77, 98]));
+    expect(await asyncUnwrap(smallest3)).toEqual([97, 98, 99]);
+    const smallest1 = asyncTakeSorted(1, asyncWrap([99, 12, 4, 6, 97, 44, 66, 77, 98]));
+    expect(await asyncUnwrap(smallest1)).toEqual([99]);
   });
 
   it('yields items from the iterable sorted with a comparator', async () => {
@@ -32,6 +33,6 @@ describe('asyncTakeSorted', () => {
       'abcdef',
       'ab',
     ]);
-    expect(await asyncToArray(smallest2)).toEqual(['abcd', 'abcdef']);
+    expect(await asyncUnwrap(smallest2)).toEqual(['abcd', 'abcdef']);
   });
 });

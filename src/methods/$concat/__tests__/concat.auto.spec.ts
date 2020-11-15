@@ -8,11 +8,25 @@
 
 /* eslint-disable no-unused-vars,import/no-duplicates,no-constant-condition */
 
-import { concat, toArray, range } from '../../..';
+import { concat } from '../../..';
+import { wrap, unwrap } from '../../../test/helpers';
 
 describe('concat', () => {
-  it('concats iterables', () => {
-    const iter = concat(range({ start: 1, end: 3 }), [3, 4]);
-    expect(toArray(iter)).toEqual([1, 2, 3, 4]);
+  describe('when there are no sources', () => {
+    it('yields no values', () => {
+      expect(unwrap(concat())).toEqual([]);
+    });
+  });
+
+  describe('when sources are empty', () => {
+    it('yields no values', () => {
+      expect(unwrap(concat(null, undefined, wrap([])))).toEqual([]);
+    });
+  });
+
+  describe('when sources contain values', () => {
+    it("each source's values are yielded in sequence", () => {
+      expect(unwrap(concat(wrap([1, 2]), wrap([3, 4])))).toEqual([1, 2, 3, 4]);
+    });
   });
 });

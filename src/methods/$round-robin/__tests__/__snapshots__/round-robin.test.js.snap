@@ -1,0 +1,3 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`roundRobin when step is invalid throws 1`] = `"step argument to roundRobin must be a non-zero integer"`;

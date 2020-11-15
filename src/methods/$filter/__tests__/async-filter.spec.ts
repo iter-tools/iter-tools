@@ -24,3 +24,10 @@ assert<AsyncResultIterable<number>>(
 assert<AsyncResultIterable<0>>(
   asyncFilter(Ø as (item: string | number) => item is 0, Ø as AsyncIterable<string | number>),
 );
+
+assert<AsyncResultIterable<string | number>>(
+  asyncFilter(
+    Ø as (item: string | number) => boolean,
+    Ø as AsyncIterable<string | number> | null | undefined,
+  ),
+);

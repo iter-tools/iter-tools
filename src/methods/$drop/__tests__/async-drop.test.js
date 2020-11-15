@@ -8,10 +8,27 @@
 
 /* eslint-disable no-unused-vars,import/no-duplicates,no-constant-condition */
 
-import { asyncDrop, asyncToArray, asyncWrap } from '../../..';
+import { asyncDrop } from '../../..';
+import { asyncWrap, asyncUnwrap } from '../../../test/async-helpers';
 
 describe('asyncDrop', () => {
-  it('drops n items', async () => {
-    expect(await asyncToArray(asyncDrop(1, asyncWrap([1, 2, 3])))).toEqual([2, 3]);
+  describe('when source is empty', () => {
+    it('yields no values', async () => {
+      expect(await asyncUnwrap(asyncDrop(0, null))).toEqual([]);
+      expect(await asyncUnwrap(asyncDrop(0, undefined))).toEqual([]);
+      expect(await asyncUnwrap(asyncDrop(0, asyncWrap([])))).toEqual([]);
+    });
+  });
+
+  describe('when n is smaller than size(source)', () => {
+    it('drops the first n values and yields the rest', async () => {
+      expect(await asyncUnwrap(asyncDrop(1, asyncWrap([1, 2, 3])))).toEqual([2, 3]);
+    });
+  });
+
+  describe('when n is larger than size(source)', () => {
+    it('yields no values', async () => {
+      expect(await asyncUnwrap(asyncDrop(4, asyncWrap([1, 2, 3])))).toEqual([]);
+    });
   });
 });

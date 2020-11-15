@@ -8,60 +8,51 @@
 
 /* eslint-disable no-unused-vars,import/no-duplicates,no-constant-condition */
 
-import { flat, toArray } from '../../..';
+import { flat } from '../../..';
+import { wrapDeep, unwrap, unwrapDeep, anyType } from '../../../test/helpers';
 
 describe('flat', () => {
   it('flats iterable', () => {
-    const iter = flat(1, [[1, 2], [3, 4], [5]]);
-    expect(toArray(iter)).toEqual([1, 2, 3, 4, 5]);
+    const iter = flat(1, wrapDeep([[1, 2], [3, 4], [5]]));
+    expect(unwrap(iter)).toEqual([1, 2, 3, 4, 5]);
   });
 
   it('flats iterable (default one level)', () => {
-    const iter = flat([[1, 2], [3, 4], [5]]);
-    expect(toArray(iter)).toEqual([1, 2, 3, 4, 5]);
-  });
-
-  it('flats iterable, curried', () => {
-    const iter = flat(1)([[1, 2], [3, 4], [5]]);
-    expect(toArray(iter)).toEqual([1, 2, 3, 4, 5]);
-  });
-
-  it('flats iterable, curried (default one level)', () => {
-    const iter = flat([[1, 2], [3, 4], [5]]);
-    expect(toArray(iter)).toEqual([1, 2, 3, 4, 5]);
+    const iter = flat(wrapDeep([[1, 2], [3, 4], [5]]));
+    expect(unwrap(iter)).toEqual([1, 2, 3, 4, 5]);
   });
 
   it('flats iterable depth 0', () => {
-    const iter = flat(0, [[1, 2], [3, 4], [5]]);
-    expect(toArray(iter)).toEqual([[1, 2], [3, 4], [5]]);
+    const iter = flat(0, wrapDeep([[1, 2], [3, 4], [5]]));
+    expect(unwrapDeep(iter)).toEqual([[1, 2], [3, 4], [5]]);
   });
 
   it('flats iterable depth 2', () => {
-    const iter = flat(2, [[1, 2], [3, [4, 5]], [[6]]]);
-    expect(toArray(iter)).toEqual([1, 2, 3, 4, 5, 6]);
+    const iter = flat(2, wrapDeep([[1, 2], [3, [4, 5]], [[6]]]));
+    expect(unwrap(iter)).toEqual([1, 2, 3, 4, 5, 6]);
   });
 
   it('flats strings', () => {
-    const iter = flat(2, [['a', 'b'], ['c', ['d', 'e']], [['f']]]);
-    expect(toArray(iter)).toEqual(['a', 'b', 'c', 'd', 'e', 'f']);
+    const iter = flat(2, wrapDeep([['a', 'b'], ['c', ['d', 'e']], [['f']]]));
+    expect(unwrap(iter)).toEqual(['a', 'b', 'c', 'd', 'e', 'f']);
   });
 
   it('does not expand string', () => {
-    const iter = flat(2, ['foo', ['bar', ['baz']]]);
-    expect(toArray(iter)).toEqual(['foo', 'bar', 'baz']);
+    const iter = flat(2, wrapDeep(['foo', ['bar', ['baz']]]));
+    expect(unwrap(iter)).toEqual(['foo', 'bar', 'baz']);
   });
 
   it('does not treat null as an iterable', () => {
-    const iter = flat(2, ['foo', null]);
-    expect(toArray(iter)).toEqual(['foo', null]);
+    const iter = flat(2, wrapDeep(['foo', null]));
+    expect(unwrap(iter)).toEqual(['foo', null]);
   });
 
-  it('flats using custom function', () => {
-    const iter = flat(iter => !(typeof iter === 'string' && iter.length === 1), Infinity, [
-      ['a', 'b'],
-      ['c', ['d', 'e']],
-      [['fghi']],
-    ]);
-    expect(toArray(iter)).toEqual(['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i']);
+  it('flats using custom shouldFlat', () => {
+    const shouldFlat = (iter: any) => !(typeof iter === 'string' && iter.length === 1);
+    const input = [['a', 'b'], ['c', ['d', 'e']], [['fghi']]];
+    const result = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i'];
+
+    expect(unwrap(flat(shouldFlat, Infinity, input))).toEqual(result);
+    expect(unwrap(flat(anyType({ shouldFlat, depth: Infinity }), input))).toEqual(result);
   });
 });

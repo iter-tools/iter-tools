@@ -8,36 +8,39 @@
 
 /* eslint-disable no-unused-vars,import/no-duplicates,no-constant-condition */
 
-import { asyncUnwrapDeep as asyncUw } from '../../../__tests__/async-helpers';
 import { asyncWindow } from '../../..';
+import { asyncWrap, asyncUnwrapDeep, anyType } from '../../../test/async-helpers';
 
 describe('asyncWindow', () => {
-  it('frames iterable', async () => {
-    expect(await asyncUw(asyncWindow(3, [1, 2, 3, 4, 5]))).toEqual([
-      [1, 2, 3],
-      [2, 3, 4],
-      [3, 4, 5],
-    ]);
-  });
-
-  it('frames iterable (window equal to the sequence)', async () => {
-    expect(await asyncUw(asyncWindow(5, [1, 2, 3, 4, 5]))).toEqual([[1, 2, 3, 4, 5]]);
-  });
-
-  describe('when the dinwos is bigger than the sequence', () => {
-    it('frames iterable (window bigger than the sequence)', async () => {
-      expect(await asyncUw(asyncWindow(6, [1, 2, 3, 4, 5]))).toEqual([]);
-    });
-
-    it('frames iterable (window bigger than the sequence) with filler', async () => {
-      expect(await asyncUw(asyncWindow(6, [1, 2, 3, 4, 5]))).toEqual([]);
+  describe('when source is empty', () => {
+    it('yields no windows', async () => {
+      expect(await asyncUnwrapDeep(asyncWindow(3, null))).toEqual([]);
+      expect(await asyncUnwrapDeep(asyncWindow(3, undefined))).toEqual([]);
+      expect(await asyncUnwrapDeep(asyncWindow(3, asyncWrap([])))).toEqual([]);
     });
   });
 
-  describe('invalid inputs', () => {
-    it('throw', () => {
-      const size: any = 'a';
-      expect(() => asyncWindow(size, [])).toThrowErrorMatchingSnapshot();
+  describe('when size(source) < size', () => {
+    it('yields no windows', async () => {
+      expect(await asyncUnwrapDeep(asyncWindow(3, asyncWrap([1, 2])))).toEqual([]);
+    });
+  });
+
+  describe('when size(source) === size', () => {
+    it('yields one full window', async () => {
+      expect(await asyncUnwrapDeep(asyncWindow(3, asyncWrap([1, 2, 3])))).toEqual([[1, 2, 3]]);
+    });
+  });
+
+  describe('when size(source) > size', () => {
+    it('yields partial windows, then size(source)-size full windows', async () => {
+      expect(await asyncUnwrapDeep(asyncWindow(2, asyncWrap([1, 2, 3])))).toEqual([[1, 2], [2, 3]]);
+    });
+  });
+
+  describe('when size is invalid', () => {
+    it('throws a validation error', async () => {
+      expect(() => asyncWindow(anyType(''), asyncWrap([]))).toThrowErrorMatchingSnapshot();
     });
   });
 });

@@ -8,10 +8,27 @@
 
 /* eslint-disable no-unused-vars,import/no-duplicates,no-constant-condition */
 
-import { drop, toArray, wrap } from '../../..';
+import { drop } from '../../..';
+import { wrap, unwrap } from '../../../test/helpers';
 
 describe('drop', () => {
-  it('drops n items', () => {
-    expect(toArray(drop(1, wrap([1, 2, 3])))).toEqual([2, 3]);
+  describe('when source is empty', () => {
+    it('yields no values', () => {
+      expect(unwrap(drop(0, null))).toEqual([]);
+      expect(unwrap(drop(0, undefined))).toEqual([]);
+      expect(unwrap(drop(0, wrap([])))).toEqual([]);
+    });
+  });
+
+  describe('when n is smaller than size(source)', () => {
+    it('drops the first n values and yields the rest', () => {
+      expect(unwrap(drop(1, wrap([1, 2, 3])))).toEqual([2, 3]);
+    });
+  });
+
+  describe('when n is larger than size(source)', () => {
+    it('yields no values', () => {
+      expect(unwrap(drop(4, wrap([1, 2, 3])))).toEqual([]);
+    });
   });
 });

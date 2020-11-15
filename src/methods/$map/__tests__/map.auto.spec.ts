@@ -8,25 +8,22 @@
 
 /* eslint-disable no-unused-vars,import/no-duplicates,no-constant-condition */
 
-import { map, toArray, range } from '../../..';
+import { map } from '../../..';
+import { wrap, unwrap } from '../../../test/helpers';
 
 describe('map', () => {
-  it('returns mapped iterable', () => {
-    const iter = map(item => item * 2, [1, 2, 3]);
-    expect(toArray(iter)).toEqual([2, 4, 6]);
+  describe('when source is empty', () => {
+    it('yields no values', () => {
+      const func = (value: any) => value * 2;
+      expect(unwrap(map(func, null))).toEqual([]);
+      expect(unwrap(map(func, undefined))).toEqual([]);
+      expect(unwrap(map(func, wrap([])))).toEqual([]);
+    });
   });
 
-  it('returns mapped iterable from iterable', () => {
-    const iter = map(item => item * 2, range(1, 4));
-    expect(toArray(iter)).toEqual([2, 4, 6]);
-  });
-
-  it('returns mapped iterable (curried version)', () => {
-    const iter = map((item: number) => item * 2);
-    expect(toArray(iter(range(1, 4)))).toEqual([2, 4, 6]);
-  });
-
-  it('returns empty iterable from null', () => {
-    expect(toArray(map((item: never) => item * 2, null))).toEqual([]);
+  describe('when source has values', () => {
+    it('returns func(value, i) for each value in source', () => {
+      expect(unwrap(map((value, i) => value + i, wrap([1, 2, 3])))).toEqual([1, 3, 5]);
+    });
   });
 });

@@ -9,94 +9,61 @@
 /* eslint-disable no-unused-vars,import/no-duplicates,no-constant-condition */
 
 import { asyncGroupBy } from '../../..';
-import { asyncUnwrapDeep as asyncUw } from '../../../__tests__/async-helpers';
+import { asyncWrap, asyncUnwrap, asyncUnwrapDeep } from '../../../test/async-helpers';
+
+async function identity<T>(value: T): Promise<T> {
+  return value;
+}
 
 describe('asyncGroupBy', () => {
-  it('returns source values grouped by key function', async () => {
-    const iter = asyncGroupBy(item => item.toLowerCase(), 'AaaBbaACccCD');
-    let next = await iter.next();
-    expect(next.value[0]).toBe('a');
-    next = await iter.next();
-    expect(next.value[0]).toBe('b');
-    next = await iter.next();
-    expect(next.value[0]).toBe('a');
-    next = await iter.next();
-    expect(next.value[0]).toBe('c');
-    next = await iter.next();
-    expect(next.value[0]).toBe('d');
-    next = await iter.next();
-    expect(next.done).toBe(true);
+  describe('when source is empty', () => {
+    it('yields no groups', async () => {
+      expect(await asyncUnwrapDeep(asyncGroupBy(identity, null))).toEqual([]);
+      expect(await asyncUnwrapDeep(asyncGroupBy(identity, undefined))).toEqual([]);
+      expect(await asyncUnwrapDeep(asyncGroupBy(identity, asyncWrap([])))).toEqual([]);
+    });
   });
 
-  it('main cursor (curried)', async () => {
-    const iter = asyncGroupBy(_ => _)('AAABBAACCCCD');
-    let next = await iter.next();
-    expect(next.value[0]).toBe('A');
-    next = await iter.next();
-    expect(next.value[0]).toBe('B');
-    next = await iter.next();
-    expect(next.value[0]).toBe('A');
-    next = await iter.next();
-    expect(next.value[0]).toBe('C');
-    next = await iter.next();
-    expect(next.value[0]).toBe('D');
-    next = await iter.next();
-    expect(next.done).toBe(true);
+  describe('when values from source cannot be grouped', () => {
+    it('yields a group for each value', async () => {
+      expect(
+        await asyncUnwrapDeep(
+          asyncGroupBy(async (_: number, i: number) => i, asyncWrap([0, 0, 0])),
+        ),
+      ).toEqual([[0, [0]], [1, [0]], [2, [0]]]);
+    });
   });
 
-  it('returns source values grouped by key function', async () => {
-    const iter = asyncGroupBy(item => item.toLowerCase(), 'AaaBbaACccCD');
-    expect(await asyncUw(iter)).toEqual([
-      ['a', ['A', 'a', 'a']],
-      ['b', ['B', 'b']],
-      ['a', ['a', 'A']],
-      ['c', ['C', 'c', 'c', 'C']],
-      ['d', ['D']],
-    ]);
+  describe('when source contains subsequent values belonging to the same group', () => {
+    it('coalesces values into groups', async () => {
+      const lowerCase = async (item: string) => item.toLowerCase();
+      expect(await asyncUnwrapDeep(asyncGroupBy(lowerCase, 'AaA'))).toEqual([
+        ['a', ['A', 'a', 'A']],
+      ]);
+      expect(await asyncUnwrapDeep(asyncGroupBy(lowerCase, 'baA'))).toEqual([
+        ['b', ['b']],
+        ['a', ['a', 'A']],
+      ]);
+    });
   });
 
-  it('returns source values grouped by identity', async () => {
-    const iter = asyncGroupBy(_ => _)('AAABBAACCCCD');
-    expect(await asyncUw(iter)).toEqual([
-      ['A', ['A', 'A', 'A']],
-      ['B', ['B', 'B']],
-      ['A', ['A', 'A']],
-      ['C', ['C', 'C', 'C', 'C']],
-      ['D', ['D']],
-    ]);
-  });
+  describe('when groups are consumed out of order', () => {
+    it('throws', async () => {
+      const iter = asyncGroupBy(identity, 'AB');
+      const [, As] = (await iter.next()).value;
+      const [, Bs] = (await iter.next()).value;
 
-  it('empty source returns empty iterable', async () => {
-    expect(await asyncUw(asyncGroupBy(_ => _, null))).toEqual([]);
-    expect(await asyncUw(asyncGroupBy(_ => _)(null))).toEqual([]);
-    expect(await asyncUw(asyncGroupBy(_ => _, undefined))).toEqual([]);
-    expect(await asyncUw(asyncGroupBy(_ => _)(undefined))).toEqual([]);
-  });
+      asyncUnwrap(Bs);
 
-  it('uses key function returning a promise', async () => {
-    const iter = asyncGroupBy(async item => item.toLowerCase(), 'AaaBbaACccCD');
-    let next = await iter.next();
-    expect(next.value[0]).toBe('a');
-    next = await iter.next();
-    expect(next.value[0]).toBe('b');
-    next = await iter.next();
-    expect(next.value[0]).toBe('a');
-    next = await iter.next();
-    expect(next.value[0]).toBe('c');
-    next = await iter.next();
-    expect(next.value[0]).toBe('d');
-    next = await iter.next();
-    expect(next.done).toBe(true);
-  });
-
-  it('with key function', async () => {
-    const iter = asyncGroupBy(async item => item.toLowerCase(), 'AaaBbaACccCD');
-    expect(await asyncUw(iter)).toEqual([
-      ['a', ['A', 'a', 'a']],
-      ['b', ['B', 'b']],
-      ['a', ['a', 'A']],
-      ['c', ['C', 'c', 'c', 'C']],
-      ['d', ['D']],
-    ]);
+      expect(
+        await (async () => {
+          try {
+            await asyncUnwrap(As);
+          } catch (e) {
+            return e;
+          }
+        })(),
+      ).toMatchSnapshot();
+    });
   });
 });

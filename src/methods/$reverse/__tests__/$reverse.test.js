@@ -1,21 +1,26 @@
-import { $, $isSync, $async, $await } from '../../../../generate/async.macro';
+import { $, $async, $await } from '../../../../generate/async.macro';
 
-import { $reverse, $toArray, $wrap } from '../../..';
+import { $reverse } from '../../..';
+import { $unwrap, $wrap } from '../../../test/$helpers';
 
 describe($`reverse`, () => {
-  it(
-    'Reverses an iterable',
-    $async(() => {
-      expect($await($toArray($reverse($wrap([1, 2, 3]))))).toEqual([3, 2, 1]);
-    }),
-  );
-
-  if ($isSync) {
+  describe('when source is empty', () => {
     it(
-      'Reverses an array',
+      'yields no values',
       $async(() => {
-        expect($toArray($reverse([1, 2, 3]))).toEqual([3, 2, 1]);
+        expect($await($unwrap($reverse(null)))).toEqual([]);
+        expect($await($unwrap($reverse(undefined)))).toEqual([]);
+        expect($await($unwrap($reverse($wrap([]))))).toEqual([]);
       }),
     );
-  }
+  });
+
+  describe('when source has values', () => {
+    it(
+      'yields values in reverse order',
+      $async(() => {
+        expect($await($unwrap($reverse($wrap([1, 2, 3]))))).toEqual([3, 2, 1]);
+      }),
+    );
+  });
 });

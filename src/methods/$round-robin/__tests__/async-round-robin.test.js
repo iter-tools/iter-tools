@@ -8,31 +8,54 @@
 
 /* eslint-disable no-unused-vars,import/no-duplicates,no-constant-condition */
 
-import { asyncRoundRobin, asyncToArray } from '../../..';
+import { asyncRoundRobin } from '../../..';
+import { asyncWrap, asyncUnwrap } from '../../../test/async-helpers';
 
 describe('asyncRoundRobin', () => {
   it('starts at 0 with step 1 if given no config arguments', async () => {
-    const iter = asyncRoundRobin([1, 4, 7], [2, 5, 8], [3, 6, 9]);
-    expect(await asyncToArray(iter)).toEqual([1, 2, 3, 4, 5, 6, 7, 8, 9]);
+    const iter = asyncRoundRobin(asyncWrap([1, 4, 7]), asyncWrap([2, 5, 8]), asyncWrap([3, 6, 9]));
+    expect(await asyncUnwrap(iter)).toEqual([1, 2, 3, 4, 5, 6, 7, 8, 9]);
   });
 
   it('can have a configurable step', async () => {
-    const iter = asyncRoundRobin(2, [1, 4, 7], [3, 6, 9], [2, 5, 8]);
-    expect(await asyncToArray(iter)).toEqual([1, 2, 3, 4, 5, 6, 7, 8, 9]);
+    const iter = asyncRoundRobin(
+      2,
+      asyncWrap([1, 4, 7]),
+      asyncWrap([3, 6, 9]),
+      asyncWrap([2, 5, 8]),
+    );
+    expect(await asyncUnwrap(iter)).toEqual([1, 2, 3, 4, 5, 6, 7, 8, 9]);
   });
 
   it('can have a configurable start and step', async () => {
-    const iter = asyncRoundRobin(1, 2, [2, 5, 8], [1, 4, 7], [3, 6, 9]);
-    expect(await asyncToArray(iter)).toEqual([1, 2, 3, 4, 5, 6, 7, 8, 9]);
+    const iter = asyncRoundRobin(
+      1,
+      2,
+      asyncWrap([2, 5, 8]),
+      asyncWrap([1, 4, 7]),
+      asyncWrap([3, 6, 9]),
+    );
+    expect(await asyncUnwrap(iter)).toEqual([1, 2, 3, 4, 5, 6, 7, 8, 9]);
   });
 
   it('can have start and step specified in a config object', async () => {
-    const iter = asyncRoundRobin({ start: 1, step: 1 }, [3, 6, 9], [1, 4, 7], [2, 5, 8]);
-    expect(await asyncToArray(iter)).toEqual([1, 2, 3, 4, 5, 6, 7, 8, 9]);
+    const iter = asyncRoundRobin(
+      { start: 1, step: 1 },
+      asyncWrap([3, 6, 9]),
+      asyncWrap([1, 4, 7]),
+      asyncWrap([2, 5, 8]),
+    );
+    expect(await asyncUnwrap(iter)).toEqual([1, 2, 3, 4, 5, 6, 7, 8, 9]);
   });
 
   it('works with input iterables of different lengths', async () => {
-    const iter = asyncRoundRobin([], [1, 3], [2]);
-    expect(await asyncToArray(iter)).toEqual([1, 2, 3]);
+    const iter = asyncRoundRobin(asyncWrap([]), asyncWrap([1, 3]), asyncWrap([2]));
+    expect(await asyncUnwrap(iter)).toEqual([1, 2, 3]);
+  });
+
+  describe('when step is invalid', () => {
+    it('throws', async () => {
+      expect(() => asyncRoundRobin({ step: 0 }, asyncWrap([]))).toThrowErrorMatchingSnapshot();
+    });
   });
 });

@@ -8,80 +8,52 @@
 
 /* eslint-disable no-unused-vars,import/no-duplicates,no-constant-condition */
 
-import { group, toArray } from '../../..';
-import { unwrapDeep as uw } from '../../../__tests__/helpers';
+import { group } from '../../..';
+import { wrap, unwrap, unwrapDeep } from '../../../test/helpers';
 
 describe('group', () => {
-  it('main cursor', () => {
-    const iter = group('AAABBAACCCCD');
-    let next = iter.next();
-    expect(next.value[0]).toBe('A');
-    next = iter.next();
-    expect(next.value[0]).toBe('B');
-    next = iter.next();
-    expect(next.value[0]).toBe('A');
-    next = iter.next();
-    expect(next.value[0]).toBe('C');
-    next = iter.next();
-    expect(next.value[0]).toBe('D');
-    next = iter.next();
-    expect(next.done).toBe(true);
+  describe('when source is empty', () => {
+    it('yields no groups', () => {
+      expect(unwrapDeep(group(null))).toEqual([]);
+      expect(unwrapDeep(group(undefined))).toEqual([]);
+      expect(unwrapDeep(group(wrap([])))).toEqual([]);
+    });
   });
 
-  it('secondary', () => {
-    const iter = group('AAABBAACCCCD');
-    let next = iter.next();
-    expect(next.value[0]).toBe('A');
-    expect(toArray(next.value[1])).toEqual(['A', 'A', 'A']);
-    next = iter.next();
-    expect(next.value[0]).toBe('B');
-    expect(toArray(next.value[1])).toEqual(['B', 'B']);
-    next = iter.next();
-    expect(next.value[0]).toBe('A');
-    expect(toArray(next.value[1])).toEqual(['A', 'A']);
-    next = iter.next();
-    expect(next.value[0]).toBe('C');
-    expect(toArray(next.value[1])).toEqual(['C', 'C', 'C', 'C']);
-    next = iter.next();
-    expect(next.value[0]).toBe('D');
-    expect(toArray(next.value[1])).toEqual(['D']);
-    next = iter.next();
-    expect(next.done).toBe(true);
+  describe('when values from source cannot be grouped', () => {
+    it('yields a group for each value', () => {
+      expect(unwrapDeep(group(wrap([1, 2, 3])))).toEqual([[1, [1]], [2, [2]], [3, [3]]]);
+    });
   });
 
-  it('secondary (consume partially)', () => {
-    const iter = group('AAABBAACCCCD');
-    let next = iter.next();
-    expect(next.value[0]).toBe('A');
-    expect(next.value[1].next().value).toBe('A');
-    expect(next.value[1].next().value).toBe('A');
-    expect(next.value[1].next().value).toBe('A');
-    expect(next.value[1].next().done).toBe(true);
-    next = iter.next();
-    expect(next.value[0]).toBe('B');
-    next = iter.next();
-    expect(next.value[0]).toBe('A');
+  describe('when source contains subsequent values belonging to the same group', () => {
+    it('coalesces values into groups', () => {
+      expect(unwrapDeep(group('aaa'))).toEqual([['a', ['a', 'a', 'a']]]);
+      expect(unwrapDeep(group('bbabb'))).toEqual([
+        ['b', ['b', 'b']],
+        ['a', ['a']],
+        ['b', ['b', 'b']],
+      ]);
+    });
   });
 
-  it('grouping an empty iterable returns empty iterable', () => {
-    expect(toArray(group(null))).toEqual([]);
-    expect(toArray(group(undefined))).toEqual([]);
-  });
+  describe('when groups are consumed out of order', () => {
+    it('throws', () => {
+      const iter = group('AB');
+      const [, As] = iter.next().value;
+      const [, Bs] = iter.next().value;
 
-  it('errors if groups are consumed out of order', () => {
-    const iter = group('AB');
-    const group1 = iter.next().value;
-    const group2 = iter.next().value;
+      unwrap(Bs);
 
-    expect(group1[0]).toBe('A');
-    expect(uw(group2)).toEqual(['B', ['B']]);
-
-    let error;
-    try {
-      uw(group1[1]);
-    } catch (e) {
-      error = e;
-    }
-    expect(error).toMatchSnapshot();
+      expect(
+        (() => {
+          try {
+            unwrap(As);
+          } catch (e) {
+            return e;
+          }
+        })(),
+      ).toMatchSnapshot();
+    });
   });
 });

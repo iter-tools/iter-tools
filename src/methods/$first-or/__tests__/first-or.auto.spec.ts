@@ -9,7 +9,7 @@
 /* eslint-disable no-unused-vars,import/no-duplicates,no-constant-condition */
 
 import { firstOr } from '../../..';
-import { wrap } from '../../../__tests__/__framework__/wrap';
+import { wrap } from '../../../test/helpers';
 
 describe('firstOr', () => {
   describe('when iterable is empty', () => {
@@ -20,7 +20,7 @@ describe('firstOr', () => {
     });
   });
 
-  describe('when iterable contains values', () => {
+  describe('when iterable has values', () => {
     it('returns first value', () => {
       expect(firstOr(null, wrap([1, 2, 3]))).toBe(1);
     });

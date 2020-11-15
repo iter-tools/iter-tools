@@ -1,8 +1,10 @@
 import { iterableCurry } from '../../internal/iterable';
 
-export function* cycleTimes(iterable, n) {
+export function* cycleTimes(source, n) {
+  if (!source.length) return;
+
   while (n--) {
-    yield* iterable;
+    yield* source;
   }
 }
 

@@ -20,6 +20,10 @@ export function ensureIterable(i) {
   return i;
 }
 
+export function callReturn(iterator) {
+  if ('return' in iterator) iterator.return();
+}
+
 export function isValidIterableArgument(i) {
   return i == null || isIterable(i);
 }
@@ -42,18 +46,21 @@ Object.assign(BaseResultIterable.prototype, {
   },
 
   next() {
-    this[_].staticIterator = this[_].staticIterator || this[__iterate]();
-    return this[_].staticIterator.next();
+    const this_ = this[_];
+    this_.staticIterator = this_.staticIterator || this[__iterate]();
+    return this_.staticIterator.next();
   },
 
-  return(...args) {
-    this[_].staticIterator = this[_].staticIterator || this[__iterate]();
-    return this[_].staticIterator.return(...args);
+  return(value) {
+    const this_ = this[_];
+    this_.staticIterator = this_.staticIterator || this[__iterate]();
+    return this_.staticIterator.return(value);
   },
 
-  throw() {
-    this[_].staticIterator = this[_].staticIterator || this[__iterate]();
-    return this[_].staticIterator.throw();
+  throw(error) {
+    const this_ = this[_];
+    this_.staticIterator = this_.staticIterator || this[__iterate]();
+    return this_.staticIterator.throw(error);
   },
 });
 

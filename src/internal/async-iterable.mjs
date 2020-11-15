@@ -16,6 +16,10 @@ export function asyncIsIterable(i) {
   return isAsyncIterable(i) || isIterable(i);
 }
 
+export async function asyncCallReturn(iterator) {
+  if ('return' in iterator) await iterator.return();
+}
+
 export async function* asyncify(iterable) {
   if (isAsyncIterable(iterable)) {
     yield* iterable;

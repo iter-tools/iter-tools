@@ -6,7 +6,11 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { asyncEnsureIterable, asyncIsIterable } from '../../internal/async-iterable';
+import {
+  asyncEnsureIterable,
+  asyncIsIterable,
+  asyncCallReturn,
+} from '../../internal/async-iterable';
 import { Exchange } from './internal/exchange';
 
 function fetch(state) {
@@ -33,7 +37,7 @@ async function returnIterator(state) {
   const { exchange, iterableCounter, iterator } = state;
 
   if (!exchange.hasRoot() && iterableCounter === 0) {
-    if (typeof iterator.return === 'function') await iterator.return();
+    await asyncCallReturn(iterator);
   }
 }
 

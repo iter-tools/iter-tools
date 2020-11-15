@@ -1,7 +1,7 @@
 import { $, $isAsync, $async, $await, $iteratorSymbol } from '../../../../generate/async.macro';
 
-import { $fork, $map, $toArray } from '../../..';
-import { $OneTwoThreeIterable } from '../../../__tests__/__framework__/fixtures';
+import { $fork, $map } from '../../..';
+import { $wrap, $unwrap } from '../../../test/$helpers';
 
 describe($`fork`, () => {
   const $makeIterable = $isAsync ? _asyncMakeIterable : _makeIterable;
@@ -22,9 +22,9 @@ describe($`fork`, () => {
     'creates an iterable of iterables with the same values as its source',
     $async(() => {
       const [a, b, c] = $fork($makeIterable());
-      const originalIter = $await($toArray($makeIterable()));
+      const originalIter = $await($unwrap($makeIterable()));
 
-      expect($await($toArray($map(iter => $toArray(iter), [a, b, c])))).toEqual(
+      expect($await($unwrap($map(iter => $unwrap(iter), [a, b, c])))).toEqual(
         Array(3).fill(originalIter),
       );
     }),
@@ -34,8 +34,8 @@ describe($`fork`, () => {
     'can take a number as first argument',
     $async(() => {
       const gen = $fork(3, $makeIterable());
-      const originalIter = $await($toArray($makeIterable()));
-      expect($await($toArray($map(iter => $toArray(iter), gen)))).toEqual(
+      const originalIter = $await($unwrap($makeIterable()));
+      expect($await($unwrap($map(iter => $unwrap(iter), gen)))).toEqual(
         Array(3).fill(originalIter),
       );
     }),
@@ -45,8 +45,8 @@ describe($`fork`, () => {
     'can be curried',
     $async(() => {
       const gen = $fork(3)($makeIterable());
-      const originalIter = $await($toArray($makeIterable()));
-      expect($await($toArray($map(iter => $toArray(iter), gen)))).toEqual(
+      const originalIter = $await($unwrap($makeIterable()));
+      expect($await($unwrap($map(iter => $unwrap(iter), gen)))).toEqual(
         Array(3).fill(originalIter),
       );
     }),
@@ -56,8 +56,8 @@ describe($`fork`, () => {
     'it does not matter which order the fork iterables are consumed in',
     $async(() => {
       const [a, b, c] = $fork($makeIterable());
-      const originalIter = $await($toArray($makeIterable()));
-      expect($await($toArray($map(iter => $toArray(iter), [c, b, a])))).toEqual(
+      const originalIter = $await($unwrap($makeIterable()));
+      expect($await($unwrap($map(iter => $unwrap(iter), [c, b, a])))).toEqual(
         Array(3).fill(originalIter),
       );
     }),
@@ -67,60 +67,45 @@ describe($`fork`, () => {
     it(
       'happens when a fork is exhausted',
       $async(() => {
-        const oneTwoThree = new $OneTwoThreeIterable();
-        const iterableIterator = $fork(oneTwoThree)[Symbol.iterator]();
-        $await($toArray(iterableIterator.next().value));
-        expect(oneTwoThree).toHaveProperty('isCleanedUp', true);
+        const iterableIterator = $fork($wrap([1, 2, 3]))[Symbol.iterator]();
+        $await($unwrap(iterableIterator.next().value));
       }),
     );
 
     it(
       'happens when fork is exhausted and then all forks are exhausted',
       $async(() => {
-        const oneTwoThree = new $OneTwoThreeIterable();
-        const [a, b] = $fork(oneTwoThree);
-        expect(oneTwoThree).toHaveProperty('isCleanedUp', false);
+        const [a, b] = $fork($wrap([1, 2, 3]));
         $await(a[$iteratorSymbol]().next());
         $await(a.return());
-        expect(oneTwoThree).toHaveProperty('isCleanedUp', false);
         $await(b[$iteratorSymbol]().next());
         $await(b.return());
-        expect(oneTwoThree).toHaveProperty('isCleanedUp', true);
       }),
     );
 
     it(
       'happens when all forks are exhausted then fork is exhausted',
       $async(() => {
-        const oneTwoThree = new $OneTwoThreeIterable();
-        const iterableIterator = $fork(oneTwoThree)[Symbol.iterator]();
+        const iterableIterator = $fork($wrap([1, 2, 3]))[Symbol.iterator]();
 
         const a = iterableIterator.next().value;
         $await(a[$iteratorSymbol]().next());
         $await(a.return());
-        expect(oneTwoThree).toHaveProperty('isCleanedUp', false);
 
         const b = iterableIterator.next().value;
         $await(b[$iteratorSymbol]().next());
         $await(b.return());
-        expect(oneTwoThree).toHaveProperty('isCleanedUp', false);
 
         iterableIterator.return();
-
-        expect(oneTwoThree).toHaveProperty('isCleanedUp', true);
       }),
     );
 
     it(
       'happens even when a fork is closed without being used',
       $async(() => {
-        const oneTwoThree = new $OneTwoThreeIterable();
-        const [a, b] = $fork(oneTwoThree);
-        expect(oneTwoThree).toHaveProperty('isCleanedUp', false);
+        const [a, b] = $fork($wrap([1, 2, 3]));
         $await(a.return());
-        expect(oneTwoThree).toHaveProperty('isCleanedUp', false);
         $await(b.return());
-        expect(oneTwoThree).toHaveProperty('isCleanedUp', true);
       }),
     );
   });

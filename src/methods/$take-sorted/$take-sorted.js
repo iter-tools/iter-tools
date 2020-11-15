@@ -2,7 +2,7 @@ import { $async, $await } from '../../../generate/async.macro';
 
 import Heap from 'little-ds-toolkit/lib/heap';
 import { $iterableCurry } from '../../internal/$iterable';
-import defaultCompare from '../../internal/compare';
+import { defaultCompare } from '../../internal/compare';
 
 $async;
 export function* $takeSorted(source, n = Infinity, comparator = defaultCompare) {

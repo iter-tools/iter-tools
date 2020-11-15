@@ -8,26 +8,43 @@
 
 /* eslint-disable no-unused-vars,import/no-duplicates,no-constant-condition */
 
-import { includesAny, range } from '../../..';
+import { includesAny } from '../../..';
+import { wrap } from '../../../test/helpers';
 
 describe('includesAny', () => {
-  it('returns true if the iterable starts with any of the given values', () => {
-    expect(includesAny([0, 1], range(1, 10))).toBe(true);
+  describe('when no values are given', () => {
+    it('returns false', () => {
+      expect(includesAny([], wrap([]))).toBe(false);
+    });
   });
 
-  it('returns true if the iterable starts with all of the given values', () => {
-    expect(includesAny([1, 1], range(1, 10))).toBe(true);
+  describe('when iterable includes a given value', () => {
+    it('returns true', () => {
+      expect(includesAny([1], wrap([1, 2, 3]))).toBe(true);
+      expect(includesAny([1, 2], wrap([1, 2, 3]))).toBe(true);
+      expect(includesAny([2, 1], wrap([1, 2, 3]))).toBe(true);
+      expect(includesAny([3, 2, 1], wrap([1, 2, 3]))).toBe(true);
+      expect(includesAny([1, 2, 3], wrap([1, 2, 3]))).toBe(true);
+    });
   });
 
-  it('returns true if the iterable contains any of the given values', () => {
-    expect(includesAny([1], range(0, 10))).toBe(true);
+  describe('when iterable does not include a given value', () => {
+    it('returns false', () => {
+      expect(includesAny([-1, 0], wrap([1, 2, 3]))).toBe(false);
+      expect(includesAny([undefined, null], wrap([1, 2, 3]))).toBe(false);
+    });
   });
 
-  it('returns false if the iterable does not contain any of given values', () => {
-    expect(includesAny([1, 3, 4], [2])).toBe(false);
+  describe('when iterable is empty', () => {
+    it('returns false', () => {
+      expect(includesAny([undefined], wrap([]))).toBe(false);
+    });
   });
 
-  it('returns false if the iterable is empty', () => {
-    expect(includesAny([undefined], [])).toBe(false);
+  describe('when iterable is a string', () => {
+    it('warns', () => {
+      includesAny([], 'abc');
+      expect(console.warn).callsMatchSnapshot();
+    });
   });
 });

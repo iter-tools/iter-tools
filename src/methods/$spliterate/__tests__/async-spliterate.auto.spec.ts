@@ -9,8 +9,7 @@
 /* eslint-disable no-unused-vars,import/no-duplicates,no-constant-condition */
 
 import { asyncSpliterate } from '../../..';
-import { asyncUnwrapDeep as asyncUw } from '../../../__tests__/async-helpers';
-import { asyncWrap } from '../../../__tests__/__framework__/async-wrap';
+import { asyncWrap, asyncUnwrapDeep } from '../../../test/async-helpers';
 import { split } from '../async-spliterate';
 
 async function* asyncIdentityStrategy(_split: any, _options: any, source: any) {
@@ -22,31 +21,31 @@ describe('asyncSpliterate', () => {
 
   describe('when spliterator is empty', () => {
     it('yields no groups', async () => {
-      expect(await asyncUw(asyncTestSpliterator([]))).toEqual([]);
+      expect(await asyncUnwrapDeep(asyncTestSpliterator([]))).toEqual([]);
     });
   });
 
   describe('when spliterator contains only a split', () => {
     it('yields two empty groups', async () => {
-      expect(await asyncUw(asyncTestSpliterator([split]))).toEqual([[], []]);
+      expect(await asyncUnwrapDeep(asyncTestSpliterator([split]))).toEqual([[], []]);
     });
   });
 
   describe('when spliterator contains two splits', () => {
     it('yields three empty groups', async () => {
-      expect(await asyncUw(asyncTestSpliterator([split, split]))).toEqual([[], [], []]);
+      expect(await asyncUnwrapDeep(asyncTestSpliterator([split, split]))).toEqual([[], [], []]);
     });
   });
 
   describe('when spliterator contains a trailing split', () => {
     it('yields three empty groups', async () => {
-      expect(await asyncUw(asyncTestSpliterator([null, split]))).toEqual([[null], []]);
+      expect(await asyncUnwrapDeep(asyncTestSpliterator([null, split]))).toEqual([[null], []]);
     });
   });
 
   describe('when spliterator contains a leading split', () => {
     it('yields three empty groups', async () => {
-      expect(await asyncUw(asyncTestSpliterator([split, null]))).toEqual([[], [null]]);
+      expect(await asyncUnwrapDeep(asyncTestSpliterator([split, null]))).toEqual([[], [null]]);
     });
   });
 
@@ -97,5 +96,10 @@ describe('asyncSpliterate', () => {
       await parts.next();
       await parts.next();
     });
+  });
+
+  it('options may be omitted', async () => {
+    const asyncTestSpliterator = asyncSpliterate(asyncIdentityStrategy);
+    expect(await asyncUnwrapDeep(asyncTestSpliterator([]))).toEqual([]);
   });
 });

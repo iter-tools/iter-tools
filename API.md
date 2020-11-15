@@ -219,7 +219,7 @@ Generator helpers
 
 ### cycle
 
-**cycle(iterable)**
+**cycle(source)**
 
 Yields the contents of `iterable` repeated for the longest time (forever).
 
@@ -229,13 +229,13 @@ cycle(range(1, 4)); // Iterable[1, 2, 3, 1, 2, 3, 1, 2, 3, ...]
 
 ### asyncCycle
 
-**asyncCycle(iterable)**
+**asyncCycle(source)**
 
 See [cycle](#cycle)
 
 ### cycleTimes
 
-**cycleTimes(n, [iterable](#sourceiterable))**
+**cycleTimes(n, [source](#sourceiterable))**
 
 Yields the contents of `iterable` repeated `n` times.
 
@@ -245,7 +245,7 @@ cycleTimes(2, range(1, 4)); // Iterable[1, 2, 3, 1, 2, 3]
 
 ### asyncCycleTimes
 
-**asyncCycleTimes(n, [iterable](#asyncsourceiterable))**
+**asyncCycleTimes(n, [source](#asyncsourceiterable))**
 
 See [cycleTimes](#cycletimes)
 
@@ -817,7 +817,7 @@ See [takeSorted](#takesorted)
 
 ### takeWhile
 
-**takeWhile(func, [source](#sourceiterable))**
+**takeWhile(predicate, [source](#sourceiterable))**
 
 Returns values from `source`, starting at the beginning up until the first value for which the result of `predicate(value, idx)` is falsy.
 
@@ -828,7 +828,7 @@ takeWhile(isEven, [1, 2, 3, 4]); // Iterable[]
 
 ### asyncTakeWhile
 
-**asyncTakeWhile(func, [source](#asyncsourceiterable))**
+**asyncTakeWhile(predicate, [source](#asyncsourceiterable))**
 
 See [takeWhile](#takewhile)
 
@@ -2152,13 +2152,13 @@ See [arrayFromAsync](#arrayfromasync)
 
 ### toObject
 
-**toObject(source)**
+**toObject(iterable, proto)**
 
 See [objectFrom](#objectfrom)
 
 ### asyncToObject
 
-**asyncToObject(source)**
+**asyncToObject(iterable, proto)**
 
 See [objectFromAsync](#objectfromasync)
 
@@ -2429,7 +2429,7 @@ while (!peekerator.done) {
 ### spliterate
 
 **spliterate(strategy, options, [source](#sourceiterable))**  
-**spliterate(options, [source](#sourceiterable))**
+**spliterate(strategy, [source](#sourceiterable))**
 
 Facilitates the creation of methods which split a `source` iterable into multiple parts. The `strategy` generator yield a flat output containing values from `source` as well as special `split` sentinel values. `spliterate` decorates the values yielded from `strategy()`. Each instance of the `split` sentinel will yield a new part. Thus for a `strategy` which yields `split` `n` times, `n + 1` parts will be yielded.
 
@@ -2486,14 +2486,14 @@ const mySpliterate = spliterate(myStrategy, {});
 ### asyncSpliterate
 
 **asyncSpliterate(strategy, options, [source](#asyncsourceiterable))**  
-**asyncSpliterate(options, [source](#asyncsourceiterable))**
+**asyncSpliterate(strategy, [source](#asyncsourceiterable))**
 
 See [spliterate](#spliterate)
 
 ### spliterateGrouped
 
 **spliterateGrouped(strategy, options, [source](#sourceiterable))**  
-**spliterateGrouped(options, [source](#sourceiterable))**
+**spliterateGrouped(strategy, [source](#sourceiterable))**
 
 Facilitates the creation of methods which split a `source` iterable into multiple keyed groups. The `strategy` generator yield a flat output containing values from `source` as well as special `split` sentinel values. `spliterate` decorates the values yielded from `strategy()`. Each instance of the `split` sentinel starts a new group. The value immediately following a `split` is the key for the group. This means that a `strategy` which yields `split` `n` times, `n` groups will be yielded.
 
@@ -2560,7 +2560,7 @@ const mySpliterate = spliterate(myStrategy, {});
 ### asyncSpliterateGrouped
 
 **asyncSpliterateGrouped(strategy, options, [source](#asyncsourceiterable))**  
-**asyncSpliterateGrouped(options, [source](#asyncsourceiterable))**
+**asyncSpliterateGrouped(strategy, [source](#asyncsourceiterable))**
 
 See [spliterateGrouped](#spliterategrouped)
 

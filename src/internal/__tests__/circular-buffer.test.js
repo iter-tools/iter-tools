@@ -17,6 +17,8 @@ describe('CircularBuffer', () => {
     b.push(1);
     b.push(2);
     expect(b.shift()).toBe(1);
+    expect(b.shift()).toBe(2);
+    expect(b.shift()).toBe(undefined);
   });
 
   it('mixes write and read', () => {
@@ -99,6 +101,8 @@ describe('ReadOnlyCircularBuffer', () => {
 
     expect(rb.capacity).toBe(2);
     expect(rb.size).toBe(2);
+    expect(rb.get(0)).toBe(1);
+    expect(rb.get(1)).toBe(2);
     expect(rb.isFull()).toBe(true);
     expect(rb.peek()).toBe(1);
     expect(Array.from(rb)).toEqual([1, 2]);

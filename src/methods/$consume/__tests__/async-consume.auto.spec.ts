@@ -9,19 +9,33 @@
 /* eslint-disable no-unused-vars,import/no-duplicates,no-constant-condition */
 
 import { asyncConsume } from '../../..';
+import { asyncWrap } from '../../../test/async-helpers';
 
 describe('asyncConsume', () => {
-  it('consumes an iterable', async () => {
-    const arr: Array<number> = [];
-    await asyncConsume(
-      (function*() {
-        arr.push(1);
-        yield;
-        arr.push(2);
-        yield;
-        arr.push(3);
-      })(),
-    );
-    expect(arr).toEqual([1, 2, 3]);
+  describe('when iterable is empty', () => {
+    it('does not error', async () => {
+      expect(await asyncConsume(null)).toBe(undefined);
+      expect(await asyncConsume(undefined)).toBe(undefined);
+      expect(await asyncConsume(asyncWrap([]))).toBe(undefined);
+    });
+  });
+
+  describe('when consuming an iterable has side effects', () => {
+    it('the effects are triggered', async () => {
+      const arr: Array<number> = [];
+
+      expect(
+        await asyncConsume(
+          (function*() {
+            arr.push(1);
+            yield;
+            arr.push(2);
+            yield;
+            arr.push(3);
+          })(),
+        ),
+      ).toBe(undefined);
+      expect(arr).toEqual([1, 2, 3]);
+    });
   });
 });

@@ -38,9 +38,14 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 **Arguments**
  - `useFiller` option for `leadingWindow` and `asyncLeadingWindow`.
+ - `proto` passed to `Object.create` for `objectFrom` and `objectFromAsync` (also `toObject` and `asyncToObject`).
 
 **Classes**
  - `Peekerator`, `PeekeratorClass`, `AsyncPeekerator`, `AsyncPeekeratorClass`
+
+### Changed
+ - Removed O(1) array optimizations from `last` and `lastOr`
+ - Factorial no attempts to use BigNum internally. Some inputs may now cause `combinations().size` or `combinationsWithReplacement().size` to overflow during computation.
 
 
 

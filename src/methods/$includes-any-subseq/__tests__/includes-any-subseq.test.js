@@ -8,32 +8,48 @@
 
 /* eslint-disable no-unused-vars,import/no-duplicates,no-constant-condition */
 
-import { includesAnySubseq, range } from '../../..';
+import { includesAnySubseq } from '../../..';
+import { wrap } from '../../../test/helpers';
 
 describe('includesAnySubseq', () => {
-  it('returns true if the iterable contains any of the given subsequences', () => {
-    expect(includesAnySubseq([[0, 1], [1, 2]], range(0, 10))).toBe(true);
+  describe('when no sequences are given', () => {
+    it('returns false', () => {
+      expect(includesAnySubseq([], wrap([]))).toBe(false);
+    });
   });
 
-  it('returns true if the iterable equals any of the given subsequences', () => {
-    expect(includesAnySubseq([range(0, 2), range(1, 3)], range(1, 3))).toBe(true);
+  describe('when iterable includes a given sequence', () => {
+    it('returns true', () => {
+      expect(includesAnySubseq([wrap([1, 2])], wrap([1, 2, 3]))).toBe(true);
+      expect(includesAnySubseq([wrap([2, 3]), wrap([1, 2])], wrap([1, 2, 3]))).toBe(true);
+      expect(includesAnySubseq([wrap([3])], wrap([1, 2, 3]))).toBe(true);
+    });
   });
 
-  it('returns false if no subsequences are given', () => {
-    expect(includesAnySubseq([], range(1, 3))).toBe(false);
+  describe('when iterable is equal to a given sequence', () => {
+    it('returns true', () => {
+      expect(includesAnySubseq([wrap([1, 2, 3])], wrap([1, 2, 3]))).toBe(true);
+    });
   });
 
-  it('returns false if the given subsequences are longer than the iterable', () => {
-    expect(includesAnySubseq([range(0, 3), range(1, 4)], range(1, 3))).toBe(false);
+  describe('when iterable is shorter than a matching sequence', () => {
+    it('returns false', () => {
+      expect(includesAnySubseq([wrap([1, 2, 3])], wrap([1, 2]))).toBe(false);
+    });
   });
 
-  describe('when the iterable is empty', () => {
-    it('returns true if any subsequence is empty', () => {
-      expect(includesAnySubseq([[], [null]], [])).toBe(true);
+  describe('when iterable is empty', () => {
+    describe('and any sequence is empty', () => {
+      it('returns true', () => {
+        expect(includesAnySubseq([wrap([]), wrap([null])], wrap([]))).toBe(true);
+        expect(includesAnySubseq([null], wrap([]))).toBe(true);
+      });
     });
 
-    it('returns false if all subsequences are not empty', () => {
-      expect(includesAnySubseq([[undefined]], [])).toBe(false);
+    describe('and no sequence is empty', () => {
+      it('returns false', () => {
+        expect(includesAnySubseq([wrap([undefined])], wrap([]))).toBe(false);
+      });
     });
   });
 });

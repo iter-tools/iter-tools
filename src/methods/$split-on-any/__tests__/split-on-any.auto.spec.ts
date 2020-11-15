@@ -9,12 +9,11 @@
 /* eslint-disable no-unused-vars,import/no-duplicates,no-constant-condition */
 
 import { splitOnAny } from '../../..';
-import { unwrapDeep as uw } from '../../../__tests__/helpers';
-import { wrap } from '../../../__tests__/__framework__/wrap';
+import { wrap, unwrapDeep } from '../../../test/helpers';
 
 describe('splitOnAny', () => {
   it('should split on an occurance of any value', () => {
-    expect(uw(splitOnAny([null, undefined], wrap([1, null, undefined, 3])))).toEqual([
+    expect(unwrapDeep(splitOnAny([null, undefined], wrap([1, null, undefined, 3])))).toEqual([
       [1],
       [],
       [3],
@@ -22,10 +21,17 @@ describe('splitOnAny', () => {
   });
 
   it('does not split when passed no values', () => {
-    expect(uw(splitOnAny([], wrap([1, 2, 3])))).toEqual([[1, 2, 3]]);
+    expect(unwrapDeep(splitOnAny([], wrap([1, 2, 3])))).toEqual([[1, 2, 3]]);
   });
 
   it('passes through the empty iterable', () => {
-    expect(uw(splitOnAny([], null))).toEqual([]);
+    expect(unwrapDeep(splitOnAny([], null))).toEqual([]);
+  });
+
+  describe('when source is a string', () => {
+    it('warns', () => {
+      splitOnAny([], 'abc');
+      expect(console.warn).callsMatchSnapshot();
+    });
   });
 });

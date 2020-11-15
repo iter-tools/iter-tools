@@ -1,6 +1,7 @@
 import { $async, $await } from '../../../generate/async.macro';
 
-import { $iterableCurry } from '../../internal/$iterable';
+import { $iterableCurry, $callReturn } from '../../internal/$iterable';
+import { $parallelEach } from '../../internal/$parallel-each';
 import { $Peekerator } from '../../internal/$peekerator';
 import { $map } from '../$map/$map';
 import { $toArray } from '../$to-array/$to-array';
@@ -29,6 +30,7 @@ class $InputSummaryInternal {
   constructor() {
     this.buffers = [];
     this.notDoneBuffer = null;
+    this.index = 0;
   }
 
   init(buffers) {
@@ -45,6 +47,7 @@ class $InputSummaryInternal {
     const wasDone = buffer.done;
 
     $await(buffer[__advance]());
+    this.index++;
 
     if (!wasDone && buffer.done) {
       this.updateNotDone();
@@ -101,15 +104,23 @@ class $Interleaver {
   }
 
   @$async
+  returnBuffers() {
+    $await($parallelEach(this.buffers, buffer => buffer.return()));
+  }
+
+  @$async
   next() {
     if (!this.initialized) $await(this.init());
 
-    return $await(this.iterator.next());
+    const item = $await(this.iterator.next());
+    if (item.done) $await(this.returnBuffers());
+    return item;
   }
 
   @$async
   return() {
-    for (const buffer of this.buffers) $await(buffer.return());
+    $await($callReturn(this.iterator));
+    $await(this.returnBuffers());
   }
 }
 

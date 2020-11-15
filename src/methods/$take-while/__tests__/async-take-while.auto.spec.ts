@@ -8,30 +8,31 @@
 
 /* eslint-disable no-unused-vars,import/no-duplicates,no-constant-condition */
 
-import { asyncTakeWhile, asyncToArray, range } from '../../..';
+import { asyncTakeWhile } from '../../..';
+import { asyncWrap, asyncUnwrap } from '../../../test/async-helpers';
 
 describe('asyncTakeWhile', () => {
-  it('takeWhile on array', async () => {
-    const iter = asyncTakeWhile(item => item % 2 === 0, [2, 2, 3, 2, 2, 2]);
-    expect(await asyncToArray(iter)).toEqual([2, 2]);
+  describe('when source is empty', () => {
+    it('yields no values', async () => {
+      expect(await asyncUnwrap(asyncTakeWhile((value: any) => value, null))).toEqual([]);
+      expect(await asyncUnwrap(asyncTakeWhile((value: any) => value, undefined))).toEqual([]);
+      expect(await asyncUnwrap(asyncTakeWhile((value: any) => value, asyncWrap([])))).toEqual([]);
+    });
   });
 
-  it('takeWhile on iterable', async () => {
-    const iter = asyncTakeWhile(item => item !== 4, range(1, 7));
-    expect(await asyncToArray(iter)).toEqual([1, 2, 3]);
+  describe('when source has values', () => {
+    it('yields values while the result of predicate(value, i) is truthy', async () => {
+      expect(
+        await asyncUnwrap(asyncTakeWhile(value => value === 2, asyncWrap([2, 2, 3, 2]))),
+      ).toEqual([2, 2]);
+      expect(await asyncUnwrap(asyncTakeWhile((_value, i) => i < 0, asyncWrap([2, 2])))).toEqual(
+        [],
+      );
+    });
   });
 
-  it('takeWhile on iterable (curried version)', async () => {
-    const iter = asyncTakeWhile((item: number) => item !== 4);
-    expect(await asyncToArray(iter(range(1, 7)))).toEqual([1, 2, 3]);
-  });
-
-  it('takeWhile on empty iterable', async () => {
-    expect(await asyncToArray(asyncTakeWhile((item: never) => item, null))).toEqual([]);
-  });
-
-  it('takeWhile on array (using a promise)', async () => {
-    const iter = asyncTakeWhile(item => Promise.resolve(item % 2 === 0), [2, 2, 3, 2, 2, 2]);
-    expect(await asyncToArray(iter)).toEqual([2, 2]);
+  it('can take an async predicate', async () => {
+    const iter = asyncTakeWhile(async value => value % 2 === 0, [2, 2, 3, 2, 2, 2]);
+    expect(await asyncUnwrap(iter)).toEqual([2, 2]);
   });
 });

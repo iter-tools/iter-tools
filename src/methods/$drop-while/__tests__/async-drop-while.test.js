@@ -8,30 +8,43 @@
 
 /* eslint-disable no-unused-vars,import/no-duplicates,no-constant-condition */
 
-import { asyncDropWhile, asyncToArray, range } from '../../..';
+import { asyncDropWhile } from '../../..';
+import { asyncWrap, asyncUnwrap } from '../../../test/async-helpers';
 
 describe('asyncDropWhile', () => {
-  it('dropWhile on array', async () => {
-    const iter = asyncDropWhile(item => item % 2 === 0, [2, 2, 3, 2, 2, 2]);
-    expect(await asyncToArray(iter)).toEqual([3, 2, 2, 2]);
+  describe('when source is empty', () => {
+    it('yields no values', async () => {
+      expect(await asyncUnwrap(asyncDropWhile((item: any) => item, null))).toEqual([]);
+      expect(await asyncUnwrap(asyncDropWhile((item: any) => item, undefined))).toEqual([]);
+      expect(await asyncUnwrap(asyncDropWhile((item: any) => item, asyncWrap([])))).toEqual([]);
+    });
   });
 
-  it('dropWhile on iterable', async () => {
-    const iter = asyncDropWhile(item => item !== 4, range({ start: 1, end: 7 }));
-    expect(await asyncToArray(iter)).toEqual([4, 5, 6]);
+  describe('when source has values', () => {
+    describe('when no values match predicate', () => {
+      it('yields values from source', async () => {
+        const iter = asyncDropWhile(i => i !== i, asyncWrap([1, 2, 3, 4, 5, 6]));
+        expect(await asyncUnwrap(iter)).toEqual([1, 2, 3, 4, 5, 6]);
+      });
+    });
+
+    describe('when all values match predicate', () => {
+      it('yields no values', async () => {
+        const iter = asyncDropWhile(i => i === i, asyncWrap([1, 2, 3, 4, 5, 6]));
+        expect(await asyncUnwrap(iter)).toEqual([]);
+      });
+    });
+
+    describe('when a value matches predicate', () => {
+      it('yields the matching value and subsequent values', async () => {
+        const iter = asyncDropWhile(i => i !== 4, asyncWrap([1, 2, 3, 4, 5, 6]));
+        expect(await asyncUnwrap(iter)).toEqual([4, 5, 6]);
+      });
+    });
   });
 
-  it('dropWhile on iterable (curried version)', async () => {
-    const iter = asyncDropWhile(item => item !== 4);
-    expect(await asyncToArray(iter(range({ start: 1, end: 7 })))).toEqual([4, 5, 6]);
-  });
-
-  it('dropWhile on null', async () => {
-    expect(await asyncToArray(asyncDropWhile((item: any) => item, null))).toEqual([]);
-  });
-
-  it('dropWhile on iterable (using a promise)', async () => {
-    const iter = asyncDropWhile(item => Promise.resolve(item !== 4), range({ start: 1, end: 7 }));
-    expect(await asyncToArray(iter)).toEqual([4, 5, 6]);
+  it('may take an async predicate', async () => {
+    const iter = asyncDropWhile(async i => i !== 4, asyncWrap([1, 2, 3, 4, 5, 6]));
+    expect(await asyncUnwrap(iter)).toEqual([4, 5, 6]);
   });
 });

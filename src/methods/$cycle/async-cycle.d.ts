@@ -8,6 +8,6 @@
 
 import { AsyncSourceIterable, AsyncResultIterable } from '../../types/async-iterable';
 
-declare function asyncCycle<T>(iterable: AsyncSourceIterable<T>): AsyncResultIterable<T>;
+declare function asyncCycle<T>(source: AsyncSourceIterable<T>): AsyncResultIterable<T>;
 
 export default asyncCycle;

@@ -8,19 +8,29 @@
 
 /* eslint-disable no-unused-vars,import/no-duplicates,no-constant-condition */
 
-import { asyncCycle, asyncSlice, asyncToArray } from '../../..';
-import { asyncRange } from '../../../__tests__/async-range';
+import { asyncCycle, asyncSlice } from '../../..';
+import { asyncWrap, asyncUnwrap } from '../../../test/async-helpers';
 
 describe('asyncCycle', () => {
-  it('cycles iterable infinitely', async () => {
-    expect(await asyncToArray(asyncSlice(0, 7, asyncCycle(asyncRange(1, 4))))).toEqual([
-      1,
-      2,
-      3,
-      1,
-      2,
-      3,
-      1,
-    ]);
+  describe('when source is empty', () => {
+    it('yields no items', async () => {
+      expect(await asyncUnwrap(asyncCycle(null))).toEqual([]);
+      expect(await asyncUnwrap(asyncCycle(undefined))).toEqual([]);
+      expect(await asyncUnwrap(asyncCycle([]))).toEqual([]);
+    });
+  });
+
+  describe('when source has values', () => {
+    it('yields those values repeatedly forever', async () => {
+      expect(await asyncUnwrap(asyncSlice(0, 7, asyncCycle(asyncWrap([1, 2, 3]))))).toEqual([
+        1,
+        2,
+        3,
+        1,
+        2,
+        3,
+        1,
+      ]);
+    });
   });
 });

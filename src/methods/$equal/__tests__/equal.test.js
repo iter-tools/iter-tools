@@ -8,22 +8,42 @@
 
 /* eslint-disable no-unused-vars,import/no-duplicates,no-constant-condition */
 
-import { equal, wrap } from '../../..';
+import { equal } from '../../..';
+import { wrap } from '../../../test/helpers';
 
 describe('equal', () => {
-  it('returns true if there is only one iterable', () => {
-    expect(equal(wrap([1, 2, 3]))).toEqual(true);
+  describe('when there is only one iterable', () => {
+    it('returns true', () => {
+      expect(equal(null)).toEqual(true);
+      expect(equal(undefined)).toEqual(true);
+      expect(equal(wrap([1, 2, 3]))).toEqual(true);
+    });
   });
 
-  it('returns true if all contents are equal', () => {
-    expect(equal(wrap([1, 2, 3]), wrap([1, 2, 3]), wrap([1, 2, 3]))).toEqual(true);
+  describe('when all values in all iterables are equal', () => {
+    it('returns true if all contents are equal', () => {
+      expect(equal(wrap([]), wrap([]))).toEqual(true);
+      expect(equal(wrap([1, 2, 3]), wrap([1, 2, 3]))).toEqual(true);
+      expect(equal(wrap([1, 2, 3]), wrap([1, 2, 3]), wrap([1, 2, 3]))).toEqual(true);
+    });
   });
 
-  it('returns false if any contents are not equal', () => {
-    expect(equal(wrap([1, 2, 3]), wrap([1, 2, 3]), wrap([1, 2, 4]))).toEqual(false);
+  describe('when all values in some iterables are equal', () => {
+    it('returns false', () => {
+      expect(equal(wrap([1, 2, 3]), wrap([1, 2, 3]), wrap([1, 2, 4]))).toEqual(false);
+      expect(equal(wrap([1, 2, 3]), wrap([1, 2, 4]), wrap([1, 2, 3]))).toEqual(false);
+      expect(equal(wrap([1, 2, 4]), wrap([1, 2, 3]), wrap([1, 2, 3]))).toEqual(false);
+    });
   });
 
-  it('returns false if any arrays are not the same length', () => {
-    expect(equal(wrap([1, 2, 3]), wrap([1, 2, 3]), wrap([1, 2, 3, 4]))).toEqual(false);
+  describe('when iterables have the same values but different lengths', () => {
+    it('returns false', () => {
+      expect(equal(wrap([1]), wrap([1]), wrap([1, 2]))).toEqual(false);
+      expect(equal(wrap([1]), wrap([1, 2]), wrap([1]))).toEqual(false);
+      expect(equal(wrap([1, 2]), wrap([1]), wrap([1]))).toEqual(false);
+      expect(equal(wrap([]), wrap([]), wrap([1]))).toEqual(false);
+      expect(equal(wrap([]), wrap([1]), wrap([]))).toEqual(false);
+      expect(equal(wrap([1]), wrap([]), wrap([]))).toEqual(false);
+    });
   });
 });

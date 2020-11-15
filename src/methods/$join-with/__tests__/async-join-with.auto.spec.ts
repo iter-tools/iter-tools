@@ -8,22 +8,36 @@
 
 /* eslint-disable no-unused-vars,import/no-duplicates,no-constant-condition */
 
-import { asyncJoinWith, asyncToArray } from '../../..';
+import { asyncJoinWith } from '../../..';
+import { asyncWrapDeep, asyncUnwrap } from '../../../test/async-helpers';
 
 describe('asyncJoinWith', () => {
   it('should join each group with the provided value', async () => {
-    expect(await asyncToArray(asyncJoinWith(null, [[1], [2], [3]]))).toEqual([1, null, 2, null, 3]);
+    expect(await asyncUnwrap(asyncJoinWith(null, asyncWrapDeep([[1], [2], [3]])))).toEqual([
+      1,
+      null,
+      2,
+      null,
+      3,
+    ]);
   });
 
   it('should have two adjacent separators when encountering an empty group', async () => {
-    expect(await asyncToArray(asyncJoinWith(null, [[1], [], [3]]))).toEqual([1, null, null, 3]);
+    expect(await asyncUnwrap(asyncJoinWith(null, asyncWrapDeep([[1], [], [3]])))).toEqual([
+      1,
+      null,
+      null,
+      3,
+    ]);
   });
 
   it('should yield a single separator when joining two empty groups', async () => {
-    expect(await asyncToArray(asyncJoinWith(null, [[], []]))).toEqual([null]);
+    expect(await asyncUnwrap(asyncJoinWith(null, asyncWrapDeep([[], []])))).toEqual([null]);
   });
 
   it('passes through the empty iterable', async () => {
-    expect(await asyncToArray(asyncJoinWith(0, null))).toEqual([]);
+    expect(await asyncUnwrap(asyncJoinWith(0, null))).toEqual([]);
+    expect(await asyncUnwrap(asyncJoinWith(0, undefined))).toEqual([]);
+    expect(await asyncUnwrap(asyncJoinWith(0, asyncWrapDeep([])))).toEqual([]);
   });
 });

@@ -6,7 +6,7 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { ensureIterable, isIterable } from '../../internal/iterable';
+import { ensureIterable, isIterable, callReturn } from '../../internal/iterable';
 import { Exchange } from './internal/exchange';
 
 function fetch(state) {
@@ -27,7 +27,7 @@ function returnIterator(state) {
   const { exchange, iterableCounter, iterator } = state;
 
   if (!exchange.hasRoot() && iterableCounter === 0) {
-    if (typeof iterator.return === 'function') iterator.return();
+    callReturn(iterator);
   }
 }
 

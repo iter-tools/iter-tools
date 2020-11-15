@@ -9,30 +9,14 @@
 /* eslint-disable no-unused-vars,import/no-duplicates,no-constant-condition */
 
 import { consume } from '../../..';
+import { wrap } from '../../../test/helpers';
 
-describe('consume', () => {
+describe('consume (deprecated)', () => {
   it('consumes an iterable with a callback', () => {
     const arr: Array<number> = [];
-    consume(item => arr.push(item), [1, 2, 3]);
-    expect(arr).toEqual([1, 2, 3]);
-  });
-
-  it('consumes an iterable with a callback returning a promise', () => {
-    const arr: Array<number> = [];
-    consume(
-      item => {
-        arr.push(item);
-        return Promise.resolve(0);
-      },
-      [1, 2, 3],
-    );
-    expect(arr).toEqual([1, 2, 3]);
-  });
-
-  it('consumes an iterable (curried)', () => {
-    const arr: Array<number> = [];
-    const consumePush = consume((item: number) => arr.push(item));
-    consumePush([1, 2, 3]);
-    expect(arr).toEqual([1, 2, 3]);
+    consume(item => arr.push(item), wrap([1, 2, 3]));
+    consume(item => arr.push(item), wrap([1, 2, 3]));
+    expect(arr).toEqual([1, 2, 3, 1, 2, 3]);
+    expect(console.warn).callsMatchSnapshot();
   });
 });

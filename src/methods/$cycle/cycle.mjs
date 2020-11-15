@@ -8,8 +8,8 @@
 
 import cycleTimes from '../$cycle-times/cycle-times';
 
-export function cycle(iterable) {
-  return cycleTimes(Infinity, iterable);
+export function cycle(source) {
+  return cycleTimes(Infinity, source);
 }
 
 export default cycle;

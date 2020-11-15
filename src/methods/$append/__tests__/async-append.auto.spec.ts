@@ -8,10 +8,21 @@
 
 /* eslint-disable no-unused-vars,import/no-duplicates,no-constant-condition */
 
-import { asyncAppend, asyncToArray, asyncWrap } from '../../..';
+import { asyncAppend } from '../../..';
+import { asyncWrap, asyncUnwrap } from '../../../test/async-helpers';
 
 describe('asyncAppend', () => {
-  it('appends a value', async () => {
-    expect(await asyncToArray(asyncAppend(3, asyncWrap([1, 2])))).toEqual([1, 2, 3]);
+  describe('when source is empty', () => {
+    it('yields the specified value', async () => {
+      expect(await asyncUnwrap(asyncAppend(1, null))).toEqual([1]);
+      expect(await asyncUnwrap(asyncAppend(1, undefined))).toEqual([1]);
+      expect(await asyncUnwrap(asyncAppend(1, asyncWrap([])))).toEqual([1]);
+    });
+  });
+
+  describe('when source has values', () => {
+    it('yields values from source then the specified value', async () => {
+      expect(await asyncUnwrap(asyncAppend(3, asyncWrap([1, 2])))).toEqual([1, 2, 3]);
+    });
   });
 });

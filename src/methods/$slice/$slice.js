@@ -2,6 +2,7 @@ import { $async, $await } from '../../../generate/async.macro';
 
 import { CircularBuffer } from '../../internal/circular-buffer';
 import { $iterableCurry } from '../../internal/$iterable';
+import { isObject } from '../../internal/shapes';
 
 $async;
 function bufferedSlice(source, start, end, step) {
@@ -72,7 +73,7 @@ export default $iterableCurry($slice, {
   validateArgs(args) {
     let [optsOrStart = 0, end = Infinity, step = 1] = args;
     let start = typeof optsOrStart === 'number' ? optsOrStart : undefined;
-    if (optsOrStart && typeof optsOrStart === 'object') {
+    if (isObject(optsOrStart)) {
       ({ start = 0, end = Infinity, step = 1 } = optsOrStart);
     }
 

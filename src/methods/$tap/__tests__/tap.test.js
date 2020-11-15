@@ -8,21 +8,25 @@
 
 /* eslint-disable no-unused-vars,import/no-duplicates,no-constant-condition */
 
-import { tap, toArray, range } from '../../..';
+import { tap } from '../../..';
+import { wrap, unwrap, anyType } from '../../../test/helpers';
 
 describe('tap', () => {
-  it('return tapped iterable', () => {
-    const iter = tap(item => item * 2, [1, 2, 3]);
-    expect(toArray(iter)).toEqual([1, 2, 3]);
+  describe('when source is empty', () => {
+    it('yields no values', () => {
+      const func = jest.fn((value: any) => value * 2);
+      expect(unwrap(tap(func, null))).toEqual([]);
+      expect(unwrap(tap(func, undefined))).toEqual([]);
+      expect(unwrap(tap(func, wrap([])))).toEqual([]);
+      expect(func.mock.calls).toEqual([]);
+    });
   });
 
-  it('return tapped iterable from iterable', () => {
-    const iter = tap(item => item * 2, range(1, 4));
-    expect(toArray(iter)).toEqual([1, 2, 3]);
-  });
-
-  it('return tapped iterable (curried version)', () => {
-    const iter = tap((item: number) => item * 2);
-    expect(toArray(iter(range(1, 4)))).toEqual([1, 2, 3]);
+  describe('when source has values', () => {
+    it('returns func(value, i) for each value in source', () => {
+      const func: (value: number, i: number) => number = jest.fn((value, i) => value + i);
+      expect(unwrap(tap(func, wrap([1, 2, 3])))).toEqual([1, 2, 3]);
+      expect(anyType(func).mock.calls).toEqual([[1, 0], [2, 1], [3, 2]]);
+    });
   });
 });

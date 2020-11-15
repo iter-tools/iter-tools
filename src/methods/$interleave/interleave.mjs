@@ -6,7 +6,8 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { iterableCurry } from '../../internal/iterable';
+import { iterableCurry, callReturn } from '../../internal/iterable';
+import { parallelEach } from '../../internal/parallel-each';
 import { Peekerator } from '../../internal/peekerator';
 import { map } from '../$map/map';
 import { toArray } from '../$to-array/to-array';
@@ -33,6 +34,7 @@ class InputSummaryInternal {
   constructor() {
     this.buffers = [];
     this.notDoneBuffer = null;
+    this.index = 0;
   }
 
   init(buffers) {
@@ -48,6 +50,7 @@ class InputSummaryInternal {
     const wasDone = buffer.done;
 
     buffer[__advance]();
+    this.index++;
 
     if (!wasDone && buffer.done) {
       this.updateNotDone();
@@ -102,14 +105,21 @@ class Interleaver {
     inputSummary.init(this.buffers);
   }
 
+  returnBuffers() {
+    parallelEach(this.buffers, buffer => buffer.return());
+  }
+
   next() {
     if (!this.initialized) this.init();
 
-    return this.iterator.next();
+    const item = this.iterator.next();
+    if (item.done) this.returnBuffers();
+    return item;
   }
 
   return() {
-    for (const buffer of this.buffers) buffer.return();
+    callReturn(this.iterator);
+    this.returnBuffers();
   }
 }
 

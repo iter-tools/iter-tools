@@ -9,7 +9,7 @@
 /* eslint-disable no-unused-vars,import/no-duplicates,no-constant-condition */
 
 import { spliterateGrouped } from '../../..';
-import { unwrapDeep as uw } from '../../../__tests__/helpers';
+import { unwrapDeep } from '../../../test/helpers';
 import { split } from '../spliterate-grouped';
 
 function* identityStrategy(_split: any, _options: any, source: any) {
@@ -21,22 +21,27 @@ describe('spliterateGrouped', () => {
 
   describe('when spliterator is empty', () => {
     it('yields no groups', () => {
-      expect(uw(testSpliterator([]))).toEqual([]);
+      expect(unwrapDeep(testSpliterator([]))).toEqual([]);
     });
   });
 
   describe('when spliterator contains only a split', () => {
     it('yields two empty groups', () => {
-      expect(uw(testSpliterator([split, 'key']))).toEqual([['key', []]]);
+      expect(unwrapDeep(testSpliterator([split, 'key']))).toEqual([['key', []]]);
     });
   });
 
   describe('when spliterator contains two splits', () => {
     it('yields three empty groups', () => {
-      expect(uw(testSpliterator([split, 'key1', split, 'key2']))).toEqual([
+      expect(unwrapDeep(testSpliterator([split, 'key1', split, 'key2']))).toEqual([
         ['key1', []],
         ['key2', []],
       ]);
     });
+  });
+
+  it('options may be omitted', () => {
+    const testSpliterator = spliterateGrouped(identityStrategy);
+    expect(unwrapDeep(testSpliterator([]))).toEqual([]);
   });
 });

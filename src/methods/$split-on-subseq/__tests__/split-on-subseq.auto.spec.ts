@@ -9,23 +9,50 @@
 /* eslint-disable no-unused-vars,import/no-duplicates,no-constant-condition */
 
 import { splitOnSubseq, toArray } from '../../..';
-import { unwrapDeep as uw } from '../../../__tests__/helpers';
-import { wrap } from '../../../__tests__/__framework__/wrap';
+import { wrap, unwrapDeep } from '../../../test/helpers';
 
 describe('splitOnSubseq', () => {
-  it('can split on subseqences', () => {
-    expect(uw(splitOnSubseq([2, 3], wrap([1, 2, 3, 4])))).toEqual([[1], [4]]);
+  describe('when source is empty', () => {
+    it('yields no parts', () => {
+      expect(toArray(splitOnSubseq(wrap([]), null))).toEqual([]);
+      expect(toArray(splitOnSubseq(wrap([]), undefined))).toEqual([]);
+      expect(toArray(splitOnSubseq(wrap([]), wrap([])))).toEqual([]);
+    });
   });
 
-  it('can split on subseqences', () => {
-    expect(uw(splitOnSubseq([3, 4, undefined], wrap([1, 2, 3, 4])))).toEqual([[1, 2, 3, 4]]);
+  describe('when sequence is empty', () => {
+    it('yields a single part with values from source', () => {
+      expect(unwrapDeep(splitOnSubseq(null, wrap([1, 2, 3])))).toEqual([[1, 2, 3]]);
+      expect(unwrapDeep(splitOnSubseq(undefined, wrap([1, 2, 3])))).toEqual([[1, 2, 3]]);
+      expect(unwrapDeep(splitOnSubseq(wrap([]), wrap([1, 2, 3])))).toEqual([[1, 2, 3]]);
+    });
   });
 
-  it('passes through the empty iterable', () => {
-    expect(toArray(splitOnSubseq([], null))).toEqual([]);
+  describe('when sequence is not present in source', () => {
+    it('yields a single part containing the values from source', () => {
+      expect(unwrapDeep(splitOnSubseq(wrap([undefined]), wrap([1, 2, 3])))).toEqual([[1, 2, 3]]);
+    });
   });
 
-  it('passes through the empty string', () => {
-    expect(toArray(splitOnSubseq(' ', ''))).toEqual([]);
+  describe('when sequence is equal to source', () => {
+    it('yields two empty parts', () => {
+      expect(unwrapDeep(splitOnSubseq(wrap([0, 0]), wrap([0, 0])))).toEqual([[], []]);
+    });
+  });
+
+  describe('when sequence overlaps with itself in source', () => {
+    it('only a single split is created', () => {
+      expect(unwrapDeep(splitOnSubseq(wrap([0, 0]), wrap([1, 0, 0, 0, 2])))).toEqual([[1], [0, 2]]);
+    });
+  });
+
+  describe('when sequence is present s times in source', () => {
+    it('yields s+1 parts', () => {
+      expect(unwrapDeep(splitOnSubseq([1, -1], wrap([1, 1, -1, 2, 1, -1, 3])))).toEqual([
+        [1],
+        [2],
+        [3],
+      ]);
+    });
   });
 });

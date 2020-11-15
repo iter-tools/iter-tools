@@ -9,21 +9,36 @@
 /* eslint-disable no-unused-vars,import/no-duplicates,no-constant-condition */
 
 import { asyncSome } from '../../..';
+import { asyncWrap } from '../../../test/async-helpers';
 
 describe('asyncSome', () => {
-  it('returns true if at least one item is true', async () => {
-    expect(await asyncSome(n => n % 2 === 0, [1, 2, 3, 4, 5, 6])).toBe(true);
+  describe('when iterable is empty', () => {
+    it('returns false', async () => {
+      expect(await asyncSome(() => true, null)).toEqual(false);
+      expect(await asyncSome(() => true, undefined)).toEqual(false);
+      expect(await asyncSome(() => true, asyncWrap([]))).toEqual(false);
+    });
   });
 
-  it('returns false if all items are false', async () => {
-    expect(await asyncSome(n => n % 2 === 0, [1, 3, 3, 7, 5, 1])).toBe(false);
+  describe('when no values match predicate', () => {
+    it('returns false', async () => {
+      expect(await asyncSome(val => val !== val, [1, 2, 3])).toBe(false);
+    });
   });
 
-  it('returns false if there are no items', async () => {
-    expect(await asyncSome((n: never) => n % 2 === 0, null)).toBe(false);
+  describe('when some values match predicate', () => {
+    it('returns true', async () => {
+      expect(await asyncSome(val => val > 2, [1, 2, 3])).toBe(true);
+    });
   });
 
-  it('returns true if at least one item is true (using a promise)', async () => {
-    expect(await asyncSome(n => Promise.resolve(n % 2 === 0), [1, 2, 3, 4, 5, 6])).toBe(true);
+  describe('when all values match predicate', () => {
+    it('returns true', async () => {
+      expect(await asyncSome(val => val > 0, [1, 2, 3])).toBe(true);
+    });
+  });
+
+  it('can be passed an async predicate', async () => {
+    expect(await asyncSome(async n => n % 2 === 0, [1, 2, 3, 4, 5, 6])).toBe(true);
   });
 });

@@ -8,27 +8,34 @@
 
 /* eslint-disable no-unused-vars,import/no-duplicates,no-constant-condition */
 
-import { asyncCycleTimes, asyncToArray } from '../../..';
-import { asyncRange } from '../../../__tests__/async-range';
+import { asyncCycleTimes } from '../../..';
+import { asyncWrap, asyncUnwrap } from '../../../test/async-helpers';
 
 describe('asyncCycleTimes', () => {
-  it('can cycle a limited number of times', async () => {
-    expect(await asyncToArray(asyncCycleTimes(3, asyncRange(1, 4)))).toEqual([
-      1,
-      2,
-      3,
-      1,
-      2,
-      3,
-      1,
-      2,
-      3,
-    ]);
+  describe('when source is empty', () => {
+    it('yields no items', async () => {
+      expect(await asyncUnwrap(asyncCycleTimes(1, null))).toEqual([]);
+      expect(await asyncUnwrap(asyncCycleTimes(1, undefined))).toEqual([]);
+      expect(await asyncUnwrap(asyncCycleTimes(1, []))).toEqual([]);
+    });
   });
 
-  it('can be reused', async () => {
-    const myCycle = asyncCycleTimes(2, asyncRange(1, 4));
-    expect(await asyncToArray(myCycle)).toEqual([1, 2, 3, 1, 2, 3]);
-    expect(await asyncToArray(myCycle)).toEqual([1, 2, 3, 1, 2, 3]);
+  describe('when source has values', () => {
+    it('yields those values repeating n times', async () => {
+      expect(await asyncUnwrap(asyncCycleTimes(2, asyncWrap([1, 2, 3])))).toEqual([
+        1,
+        2,
+        3,
+        1,
+        2,
+        3,
+      ]);
+    });
+  });
+
+  it('can produce multiple iterators', async () => {
+    const myCycle = asyncCycleTimes(2, asyncWrap([1, 2, 3]));
+    expect(await asyncUnwrap(myCycle)).toEqual([1, 2, 3, 1, 2, 3]);
+    expect(await asyncUnwrap(myCycle)).toEqual([1, 2, 3, 1, 2, 3]);
   });
 });

@@ -9,7 +9,7 @@
 /* eslint-disable no-unused-vars,import/no-duplicates,no-constant-condition */
 
 import { str } from '../../..';
-import { wrap } from '../../../__tests__/__framework__/wrap';
+import { wrap } from '../../../test/helpers';
 
 describe('str', () => {
   it('joins an iterable of strings into a single string', () => {
@@ -17,7 +17,6 @@ describe('str', () => {
   });
 
   it('coerces non-strings into strings', () => {
-    const iterable: any = [1, 2, 3];
-    expect(str(wrap(iterable))).toEqual('123');
+    expect(str(wrap([1, 2, 3]))).toEqual('123');
   });
 });

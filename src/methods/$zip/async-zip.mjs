@@ -7,6 +7,7 @@
  */
 
 import { asyncIterableCurry } from '../../internal/async-iterable';
+import { asyncParallelEach } from '../../internal/async-parallel-each';
 import { asyncPeekerate } from '../$peekerate/async-peekerate';
 import { asyncMap } from '../$map/async-map';
 import { map } from '../$map/map';
@@ -16,8 +17,6 @@ import { asyncToArray } from '../$to-array/async-to-array';
 const isDone = peekr => peekr.done;
 
 export async function* asyncZip(sources) {
-  if (!sources.length) return;
-
   const peekrs = await asyncToArray(asyncMap(sources, asyncPeekerate));
   let done = some(peekrs, isDone);
 
@@ -30,7 +29,7 @@ export async function* asyncZip(sources) {
       done = some(peekrs, isDone);
     }
   } finally {
-    for (const peekr of peekrs) await peekr.return();
+    await asyncParallelEach(peekrs, peekr => peekr.return());
   }
 }
 

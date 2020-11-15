@@ -10,6 +10,6 @@ import { SourceIterable } from '../../types/iterable';
 
 declare function str(strings: SourceIterable<string>): string;
 
-declare function str(strings: SourceIterable<SourceIterable<string>>): string;
+declare function str(strings: SourceIterable<{ toString(): string }>): string;
 
 export default str;

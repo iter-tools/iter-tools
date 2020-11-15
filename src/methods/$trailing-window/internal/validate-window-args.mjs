@@ -1,9 +1,11 @@
+import { isObject, isDef } from '../../../internal/shapes';
+
 export const validateWindowArgs = methodName =>
   function validateArgs(args) {
-    if (args[0] && typeof args[0] === 'object') {
+    if (isObject(args[0])) {
       const { filler, size } = args[0];
 
-      if (size !== undefined && args[1] !== undefined) {
+      if (isDef(size) && isDef(args[1])) {
         throw new Error(
           `size cannot be specified as both a positional and named argument to ${methodName}`,
         );

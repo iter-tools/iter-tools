@@ -1,36 +1,49 @@
-import { $, $async, $await } from '../../../../generate/async.macro';
+import { $, $isSync, $async, $await } from '../../../../generate/async.macro';
 
-import { $interpose, $toArray, range } from '../../..';
+import { $interpose } from '../../..';
+import { $wrap, $unwrap } from '../../../test/$helpers';
 
 describe($`interpose`, () => {
-  it(
-    'interposes items into array',
-    $async(() => {
-      const iter = $interpose(9, [1, 2, 3]);
-      expect($await($toArray(iter))).toEqual([1, 9, 2, 9, 3]);
-    }),
-  );
+  describe('when source is empty', () => {
+    it(
+      'yields no values',
+      $async(() => {
+        expect($await($unwrap($interpose('', null)))).toEqual([]);
+        expect($await($unwrap($interpose('', undefined)))).toEqual([]);
+        expect($await($unwrap($interpose('', $wrap([]))))).toEqual([]);
+      }),
+    );
+  });
 
-  it(
-    'interposes items into an iterable',
-    $async(() => {
-      const iter = $interpose(null, range({ start: 1, end: 4 }));
-      expect($await($toArray(iter))).toEqual([1, null, 2, null, 3]);
-    }),
-  );
+  describe('when source contains a single value', () => {
+    it(
+      'yields that value',
+      $async(() => {
+        const iter = $interpose(null, $wrap([1]));
+        expect($await($unwrap(iter))).toEqual([1]);
+      }),
+    );
+  });
 
-  it(
-    'returns mapped iterable (curried version)',
-    $async(() => {
-      const iter = $interpose([]);
-      expect($await($toArray(iter(range({ start: 1, end: 4 }))))).toEqual([1, [], 2, [], 3]);
-    }),
-  );
+  describe('when source contains multiple values', () => {
+    it(
+      'yields interposed value between each value from source',
+      $async(() => {
+        const iter = $interpose(null, $wrap([1, 2, 3]));
+        expect($await($unwrap(iter))).toEqual([1, null, 2, null, 3]);
+      }),
+    );
+  });
 
-  it(
-    'returns empty iterable from null',
-    $async(() => {
-      expect($await($toArray($interpose('', null)))).toEqual([]);
-    }),
-  );
+  if ($isSync) {
+    describe('when source is a string', () => {
+      it(
+        'warns',
+        $async(() => {
+          $interpose(null, 'abc');
+          expect(console.warn).callsMatchSnapshot();
+        }),
+      );
+    });
+  }
 });

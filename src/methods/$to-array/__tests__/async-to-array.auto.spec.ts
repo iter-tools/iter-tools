@@ -9,10 +9,10 @@
 /* eslint-disable no-unused-vars,import/no-duplicates,no-constant-condition */
 
 import { asyncToArray } from '../../..';
-import { asyncRange } from '../../../__tests__/async-range';
+import { asyncWrap } from '../../../test/async-helpers';
 
 describe('asyncToArray', () => {
   it('turns an iterable into an array', async () => {
-    expect(await asyncToArray(asyncRange(0, 3))).toEqual([0, 1, 2]);
+    expect(await asyncToArray(asyncWrap([1, 2, 3]))).toEqual([1, 2, 3]);
   });
 });

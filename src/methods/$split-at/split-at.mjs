@@ -19,7 +19,6 @@ export function* indexSplitStrategy(split, { idx }, source) {
   const buffer = fromEnd ? new CircularBuffer(offset) : null;
   let currentPos = 0;
   let yielded = 0;
-  let sourceDone = false;
 
   try {
     let value;
@@ -58,11 +57,8 @@ export function* indexSplitStrategy(split, { idx }, source) {
         sourcePeekr.advance();
       }
     }
-    sourceDone = true;
   } finally {
-    if (!sourceDone) {
-      sourcePeekr.return();
-    }
+    sourcePeekr.return();
   }
 }
 

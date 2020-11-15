@@ -9,30 +9,14 @@
 /* eslint-disable no-unused-vars,import/no-duplicates,no-constant-condition */
 
 import { asyncConsume } from '../../..';
+import { asyncWrap } from '../../../test/async-helpers';
 
-describe('asyncConsume', () => {
+describe('asyncConsume (deprecated)', () => {
   it('consumes an iterable with a callback', async () => {
     const arr: Array<number> = [];
-    await asyncConsume(item => arr.push(item), [1, 2, 3]);
-    expect(arr).toEqual([1, 2, 3]);
-  });
-
-  it('consumes an iterable with a callback returning a promise', async () => {
-    const arr: Array<number> = [];
-    await asyncConsume(
-      item => {
-        arr.push(item);
-        return Promise.resolve(0);
-      },
-      [1, 2, 3],
-    );
-    expect(arr).toEqual([1, 2, 3]);
-  });
-
-  it('consumes an iterable (curried)', async () => {
-    const arr: Array<number> = [];
-    const consumePush = asyncConsume((item: number) => arr.push(item));
-    await consumePush([1, 2, 3]);
-    expect(arr).toEqual([1, 2, 3]);
+    await asyncConsume(async item => arr.push(item), asyncWrap([1, 2, 3]));
+    await asyncConsume(async item => arr.push(item), asyncWrap([1, 2, 3]));
+    expect(arr).toEqual([1, 2, 3, 1, 2, 3]);
+    expect(console.warn).callsMatchSnapshot();
   });
 });

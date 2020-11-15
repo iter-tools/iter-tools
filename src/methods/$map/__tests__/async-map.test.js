@@ -8,30 +8,34 @@
 
 /* eslint-disable no-unused-vars,import/no-duplicates,no-constant-condition */
 
-import { asyncMap, asyncToArray, range } from '../../..';
+import { asyncMap } from '../../..';
+import { asyncWrap, asyncUnwrap } from '../../../test/async-helpers';
 
 describe('asyncMap', () => {
-  it('returns mapped iterable', async () => {
-    const iter = asyncMap(item => item * 2, [1, 2, 3]);
-    expect(await asyncToArray(iter)).toEqual([2, 4, 6]);
+  describe('when source is empty', () => {
+    it('yields no values', async () => {
+      const func = (value: any) => value * 2;
+      expect(await asyncUnwrap(asyncMap(func, null))).toEqual([]);
+      expect(await asyncUnwrap(asyncMap(func, undefined))).toEqual([]);
+      expect(await asyncUnwrap(asyncMap(func, asyncWrap([])))).toEqual([]);
+    });
   });
 
-  it('returns mapped iterable from iterable', async () => {
-    const iter = asyncMap(item => item * 2, range(1, 4));
-    expect(await asyncToArray(iter)).toEqual([2, 4, 6]);
+  describe('when source has values', () => {
+    it('returns func(value, i) for each value in source', async () => {
+      expect(await asyncUnwrap(asyncMap((value, i) => value + i, asyncWrap([1, 2, 3])))).toEqual([
+        1,
+        3,
+        5,
+      ]);
+    });
   });
 
-  it('returns mapped iterable (curried version)', async () => {
-    const iter = asyncMap((item: number) => item * 2);
-    expect(await asyncToArray(iter(range(1, 4)))).toEqual([2, 4, 6]);
-  });
-
-  it('returns empty iterable from null', async () => {
-    expect(await asyncToArray(asyncMap((item: never) => item * 2, null))).toEqual([]);
-  });
-
-  it('returns mapped iterable (using a promise)', async () => {
-    const iter = asyncMap(item => Promise.resolve(item * 2), [1, 2, 3]);
-    expect(await asyncToArray(iter)).toEqual([2, 4, 6]);
+  it('can take an async func', async () => {
+    expect(await asyncUnwrap(asyncMap(async value => value * 2, asyncWrap([1, 2, 3])))).toEqual([
+      2,
+      4,
+      6,
+    ]);
   });
 });

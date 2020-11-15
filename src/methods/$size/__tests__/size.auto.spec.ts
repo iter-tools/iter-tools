@@ -9,15 +9,20 @@
 /* eslint-disable no-unused-vars,import/no-duplicates,no-constant-condition */
 
 import { size } from '../../..';
-import { range } from '../../../__tests__/range';
+import { wrap } from '../../../test/helpers';
 
 describe('size', () => {
-  it('return number of items in iterable', () => {
-    expect(size(range(1, 7))).toBe(6);
+  describe('when iterable is empty', () => {
+    it('returns 0', () => {
+      expect(size(null)).toBe(0);
+      expect(size(undefined)).toBe(0);
+      expect(size(wrap([]))).toBe(0);
+    });
   });
 
-  it('returns 0 for null or undefined', () => {
-    expect(size(null)).toBe(0);
-    expect(size(undefined)).toBe(0);
+  describe('when iterable contains values', () => {
+    it('return number of items in iterable', () => {
+      expect(size(wrap([1, 2, 3, 4, 5, 6]))).toBe(6);
+    });
   });
 });

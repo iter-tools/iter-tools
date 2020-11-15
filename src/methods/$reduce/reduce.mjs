@@ -6,16 +6,18 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { iterableCurry } from '../../internal/iterable';
+import { iterableCurry, callReturn } from '../../internal/iterable';
 
 export function reduce(iterable, initial, reducer) {
   let c = 0;
   let result = initial;
+  let done = false;
   const iterator = iterable[Symbol.iterator]();
   try {
     if (initial === undefined) {
       const firstResult = iterator.next();
       if (firstResult.done) {
+        done = true;
         throw new Error('Cannot reduce: no initial value specified and iterable was empty');
       }
       result = firstResult.value;
@@ -25,10 +27,11 @@ export function reduce(iterable, initial, reducer) {
     while (!(nextItem = iterator.next()).done) {
       result = reducer(result, nextItem.value, c++);
     }
+    done = nextItem.done;
     return result;
   } finally {
     // close the iterator in case of exceptions
-    if (typeof iterator.return === 'function') iterator.return();
+    if (!done) callReturn(iterator);
   }
 }
 

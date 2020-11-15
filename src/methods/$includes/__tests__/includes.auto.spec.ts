@@ -8,22 +8,35 @@
 
 /* eslint-disable no-unused-vars,import/no-duplicates,no-constant-condition */
 
-import { includes, range } from '../../..';
+import { includes } from '../../..';
+import { wrap } from '../../../test/helpers';
 
 describe('includes', () => {
-  it('returns true if the iterable contains the given value', () => {
-    expect(includes(1, range(0, 10))).toBe(true);
+  describe('when iterable includes value', () => {
+    it('returns true', () => {
+      expect(includes(1, wrap([1, 2, 3]))).toBe(true);
+      expect(includes(2, wrap([1, 2, 3]))).toBe(true);
+      expect(includes(3, wrap([1, 2, 3]))).toBe(true);
+    });
   });
 
-  it('returns true if the iterable contains only the given value', () => {
-    expect(includes(1, [1])).toBe(true);
+  describe('when iterable does not include value', () => {
+    it('returns false', () => {
+      expect(includes(4, wrap([1, 2, 3]))).toBe(false);
+      expect(includes(null, wrap([1, 2, 3]))).toBe(false);
+    });
   });
 
-  it('returns false if the iterable does not contain the given value', () => {
-    expect(includes(1, [2])).toBe(false);
+  describe('when iterable is empty', () => {
+    it('returns false', () => {
+      expect(includes(undefined, wrap([]))).toBe(false);
+    });
   });
 
-  it('returns false if the iterable is empty', () => {
-    expect(includes(undefined, [])).toBe(false);
+  describe('when iterable is a string', () => {
+    it('warns', () => {
+      includes([], 'abc');
+      expect(console.warn).callsMatchSnapshot();
+    });
   });
 });

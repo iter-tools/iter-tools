@@ -8,33 +8,28 @@
 
 /* eslint-disable no-unused-vars,import/no-duplicates,no-constant-condition */
 
-import { wrap, toArray } from '../../..';
+import { wrap } from '../../..';
+import { wrap as testWrap, unwrap } from '../../../test/helpers';
 
 describe('wrap', () => {
-  it('returns an empty iterable when passed null or undefined', () => {
-    expect(toArray(wrap(undefined))).toEqual([]);
-    expect(toArray(wrap(null))).toEqual([]);
+  describe('when source is empty', () => {
+    it('yields no values', () => {
+      expect(unwrap(wrap(undefined))).toEqual([]);
+      expect(unwrap(wrap(null))).toEqual([]);
+      expect(unwrap(wrap(testWrap([])))).toEqual([]);
+    });
   });
 
-  it('yields the same elements as its input iterable', () => {
-    expect(toArray(wrap([1, 2, 3]))).toEqual([1, 2, 3]);
-  });
-
-  it('yields the same elements as its input iterable', () => {
-    expect(toArray(wrap([1, 2, 3]))).toEqual([1, 2, 3]);
+  describe('when source has values', () => {
+    it('yields the values from source', () => {
+      expect(unwrap(wrap([1, 2, 3]))).toEqual([1, 2, 3]);
+      expect(unwrap(wrap(testWrap([1, 2, 3])))).toEqual([1, 2, 3]);
+    });
   });
 
   it('can be consumed multiple times if its input can', () => {
     const wrapped = wrap([1, 2, 3]);
-    expect(toArray(wrapped)).toEqual([1, 2, 3]);
-    expect(toArray(wrapped)).toEqual([1, 2, 3]);
-  });
-
-  it('can be consumed as an iterator', () => {
-    const wrapped = wrap([1, 2, 3]);
-    expect(wrapped.next()).toEqual({ value: 1, done: false });
-    expect(wrapped.next()).toEqual({ value: 2, done: false });
-    expect(wrapped.next()).toEqual({ value: 3, done: false });
-    expect(wrapped.next()).toEqual({ value: undefined, done: true });
+    expect(unwrap(wrapped)).toEqual([1, 2, 3]);
+    expect(unwrap(wrapped)).toEqual([1, 2, 3]);
   });
 });

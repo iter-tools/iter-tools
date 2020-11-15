@@ -8,30 +8,54 @@
 
 /* eslint-disable no-unused-vars,import/no-duplicates,no-constant-condition */
 
-import {
-  asyncify,
-  asyncEnsureIterable,
-  asyncIsIterable,
-  asyncIterableCurry,
-} from '../async-iterable';
-import { range, asyncToArray } from '../..';
+import { asyncEnsureIterable, asyncIsIterable, asyncIterableCurry } from '../async-iterable';
+import { asyncWrap, asyncUnwrap } from '../../test/async-helpers';
 
 describe('asyncEnsureIterable', () => {
-  it('transform sync iter to async', async () => {
-    const iter = asyncEnsureIterable(range({ start: 1, end: 4 }));
-    expect(await iter.next()).toEqual({ value: 1, done: false });
-    expect(await iter.next()).toEqual({ value: 2, done: false });
-    expect(await iter.next()).toEqual({ value: 3, done: false });
-    expect(await iter.next()).toEqual({ value: undefined, done: true });
+  describe('when i is a sync iterable', () => {
+    it('returns i wrapped in an async iterable', async () => {
+      const i = asyncEnsureIterable([1, 2, 3]);
+      expect(typeof i[Symbol.asyncIterator]).toBe('function');
+      expect(await asyncUnwrap(asyncEnsureIterable(i))).toEqual([1, 2, 3]);
+    });
+  });
+
+  describe(`when i is ${'asyncIterable'}`, () => {
+    it('returns i', () => {
+      const i = asyncWrap([1, 2, 3]);
+      expect(i).toBe(asyncEnsureIterable(i));
+    });
+  });
+
+  it('works with iterables', async () => {
+    expect(await asyncUnwrap(asyncEnsureIterable(asyncWrap([1, 2, 3])))).toEqual([1, 2, 3]);
+  });
+
+  describe('when i is null', () => {
+    it('returns the empty iterable', async () => {
+      const i = asyncEnsureIterable(null);
+      expect(await asyncUnwrap(i)).toEqual([]);
+    });
+  });
+
+  describe('when i cannot be coerced to an iterable', () => {
+    it('throws', () => {
+      expect(() => asyncEnsureIterable(false)).toThrowErrorMatchingSnapshot();
+    });
+  });
+
+  describe('when i looks like an iterator', () => {
+    it('throws a more helpful error', () => {
+      expect(() => asyncEnsureIterable({ next() {} })).toThrowErrorMatchingSnapshot();
+    });
   });
 });
 
 describe('asyncIsIterable', () => {
   it('works', () => {
-    expect(asyncIsIterable(range(3))).toBe(true);
+    expect(asyncIsIterable(asyncWrap([]))).toBe(true);
     expect(asyncIsIterable([])).toBe(true);
     expect(asyncIsIterable(null)).toBe(false);
-    expect(asyncIsIterable(asyncify([]))).toBe(true);
   });
 });
 
@@ -79,19 +103,36 @@ describe('asyncIterableCurry', () => {
   /* eslint-enable no-unused-expressions */
 
   it('curries', async () => {
-    expect(await asyncToArray(c2(hello, world, []))).toEqual([hello, world]);
-    expect(await asyncToArray(c2(hello, world)([]))).toEqual([hello, world]);
-    expect(await asyncToArray(c2(hello)(world, []))).toEqual([hello, world]);
-    expect(await asyncToArray(c2(hello)(world)([]))).toEqual([hello, world]);
-    expect(await asyncToArray(c1(hello, []))).toEqual([hello]);
-    expect(await asyncToArray(c1(hello)([]))).toEqual([hello]);
-    expect(await asyncToArray(c0([]))).toEqual([]);
+    expect(await asyncUnwrap(c2(hello, world, []))).toEqual([hello, world]);
+    expect(await asyncUnwrap(c2(hello, world)([]))).toEqual([hello, world]);
+    expect(await asyncUnwrap(c2(hello)(world, []))).toEqual([hello, world]);
+    expect(await asyncUnwrap(c2(hello)(world)([]))).toEqual([hello, world]);
+    expect(await asyncUnwrap(c1(hello, []))).toEqual([hello]);
+    expect(await asyncUnwrap(c1(hello)([]))).toEqual([hello]);
+    expect(await asyncUnwrap(c0([]))).toEqual([]);
   });
 
   it('ignores extra arguments after iterable', async () => {
-    expect(await asyncToArray(c2(hello, world, [], 'foo'))).toEqual([hello, world]);
-    expect(await asyncToArray(c1(hello)([], null))).toEqual([hello]);
-    expect(await asyncToArray(c0([], 4))).toEqual([]);
+    expect(await asyncUnwrap(c2(hello, world, [], 'foo'))).toEqual([hello, world]);
+    expect(await asyncUnwrap(c1(hello)([], null))).toEqual([hello]);
+    expect(await asyncUnwrap(c0([], 4))).toEqual([]);
+  });
+
+  it('creates a static iterator', async () => {
+    const c = asyncIterableCurry(async function* $wrap(i) {
+      yield* i;
+    });
+    expect(await c([1]).next()).toEqual({ value: 1, done: false });
+    expect(await c([]).return()).toEqual({ value: undefined, done: true });
+    expect(
+      await (async () => {
+        try {
+          await c([]).throw(new Error());
+        } catch (e) {
+          return e;
+        }
+      })(),
+    ).toBeInstanceOf(Error);
   });
 
   it('throws with empty invocations', () => {
@@ -133,7 +174,7 @@ describe('asyncIterableCurry', () => {
           args[0] = world;
         },
       });
-      await asyncToArray(hello(null, empty));
+      await asyncUnwrap(hello(null, empty));
       expect(helloImpl).toHaveBeenCalledWith(empty, world);
     });
   });
@@ -146,9 +187,9 @@ describe('asyncIterableCurry', () => {
     /* eslint-enable no-unused-expressions */
 
     it('curries', async () => {
-      expect(await asyncToArray(c(hello)(world)([]))).toEqual([hello, world]);
-      expect(await asyncToArray(c(hello)([]))).toEqual([hello, world]);
-      expect(await asyncToArray(c([]))).toEqual([goodbye, world]);
+      expect(await asyncUnwrap(c(hello)(world)([]))).toEqual([hello, world]);
+      expect(await asyncUnwrap(c(hello)([]))).toEqual([hello, world]);
+      expect(await asyncUnwrap(c([]))).toEqual([goodbye, world]);
     });
 
     it('throws with empty invocations', () => {

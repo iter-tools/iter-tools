@@ -9,7 +9,7 @@
 /* eslint-disable no-unused-vars,import/no-duplicates,no-constant-condition */
 
 import { peekerate, PeekeratorClass } from '../../..';
-import { wrap } from '../../../__tests__/__framework__/wrap';
+import { wrap } from '../../../test/helpers';
 
 describe('peekerate', () => {
   it('creates a peekerator', () => {

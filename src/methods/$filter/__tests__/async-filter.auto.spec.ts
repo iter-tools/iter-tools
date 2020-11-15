@@ -8,30 +8,29 @@
 
 /* eslint-disable no-unused-vars,import/no-duplicates,no-constant-condition */
 
-import { asyncFilter, asyncToArray, range } from '../../..';
+import { asyncFilter } from '../../..';
+import { asyncWrap, asyncUnwrap } from '../../../test/async-helpers';
 
 describe('asyncFilter', () => {
-  it('returns filtered iterable', async () => {
-    const iter = asyncFilter(item => item % 2 === 0, [1, 2, 3, 4, 5, 6]);
-    expect(await asyncToArray(iter)).toEqual([2, 4, 6]);
+  describe('when source is empty', () => {
+    it('yields no values', async () => {
+      const pred = (v: any) => v;
+      expect(await asyncUnwrap(asyncFilter(pred, null))).toEqual([]);
+      expect(await asyncUnwrap(asyncFilter(pred, undefined))).toEqual([]);
+      expect(await asyncUnwrap(asyncFilter(pred, asyncWrap([])))).toEqual([]);
+    });
   });
 
-  it('returns filtered iterable from iterable', async () => {
-    const iter = asyncFilter(item => item % 2 === 0, range(1, 7));
-    expect(await asyncToArray(iter)).toEqual([2, 4, 6]);
+  describe('when source has values', () => {
+    it('yields items for which predicate(value, i) returns true', async () => {
+      expect(
+        await asyncUnwrap(asyncFilter((value, i) => value === i, asyncWrap([1, 1, 2, 3, 5, 8]))),
+      ).toEqual([1, 2, 3]);
+    });
   });
 
-  it('returns filtered iterable (curried version)', async () => {
-    const asyncFilterEven = asyncFilter((item: number) => item % 2 === 0);
-    expect(await asyncToArray(asyncFilterEven(range(1, 7)))).toEqual([2, 4, 6]);
-  });
-
-  it('returns empty iterable from null', async () => {
-    expect(await asyncToArray(asyncFilter((item: never) => item, null))).toEqual([]);
-  });
-
-  it('returns filtered iterable (using a promise)', async () => {
-    const iter = asyncFilter(item => Promise.resolve(item % 2 === 0), [1, 2, 3, 4, 5, 6]);
-    expect(await asyncToArray(iter)).toEqual([2, 4, 6]);
+  it('may take an async predicate', async () => {
+    const iter = asyncFilter(async item => item % 2 === 0, asyncWrap([1, 2, 3, 4, 5, 6]));
+    expect(await asyncUnwrap(iter)).toEqual([2, 4, 6]);
   });
 });

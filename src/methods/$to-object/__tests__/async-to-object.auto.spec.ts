@@ -9,16 +9,29 @@
 /* eslint-disable no-unused-vars,import/no-duplicates,no-constant-condition */
 
 import { asyncToObject } from '../../..';
-import { asyncWrap } from '../../../__tests__/__framework__/async-wrap';
+import { asyncWrap } from '../../../test/async-helpers';
 
 describe('asyncToObject', () => {
-  it('turns an iterable into an object', async () => {
-    expect(
-      await asyncToObject(asyncWrap([['foo', 'fox'], ['bar', 'box'], ['baz', 'rox']])),
-    ).toEqual({
-      foo: 'fox',
-      bar: 'box',
-      baz: 'rox',
+  describe('when iterable is empty', () => {
+    it('returns an empty object', async () => {
+      expect(await asyncToObject(null)).toEqual({});
+      expect(await asyncToObject(undefined)).toEqual({});
+      expect(await asyncToObject(asyncWrap([]))).toEqual({});
     });
+  });
+
+  describe('given an iterable of entries', () => {
+    it('returns the object with those entries', async () => {
+      const entries: Array<[string, string]> = [['foo', 'fox'], ['bar', 'box'], ['baz', 'rox']];
+      expect(await asyncToObject(asyncWrap(entries))).toEqual({
+        foo: 'fox',
+        bar: 'box',
+        baz: 'rox',
+      });
+    });
+  });
+
+  it('can take a prototype to pass to Object.create', async () => {
+    expect(Object.getPrototypeOf(await asyncToObject(asyncWrap([]), null))).toEqual(null);
   });
 });

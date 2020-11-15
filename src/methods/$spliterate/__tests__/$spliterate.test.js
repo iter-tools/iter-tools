@@ -1,8 +1,7 @@
 import { $, $async, $await } from '../../../../generate/async.macro';
 
 import { $spliterate } from '../../..';
-import { $unwrapDeep as $uw } from '../../../__tests__/$helpers';
-import { $wrap } from '../../../__tests__/__framework__/$wrap';
+import { $wrap, $unwrapDeep } from '../../../test/$helpers';
 import { split } from '../$spliterate';
 
 $async;
@@ -17,7 +16,7 @@ describe($`spliterate`, () => {
     it(
       'yields no groups',
       $async(() => {
-        expect($await($uw($testSpliterator([])))).toEqual([]);
+        expect($await($unwrapDeep($testSpliterator([])))).toEqual([]);
       }),
     );
   });
@@ -26,7 +25,7 @@ describe($`spliterate`, () => {
     it(
       'yields two empty groups',
       $async(() => {
-        expect($await($uw($testSpliterator([split])))).toEqual([[], []]);
+        expect($await($unwrapDeep($testSpliterator([split])))).toEqual([[], []]);
       }),
     );
   });
@@ -35,7 +34,7 @@ describe($`spliterate`, () => {
     it(
       'yields three empty groups',
       $async(() => {
-        expect($await($uw($testSpliterator([split, split])))).toEqual([[], [], []]);
+        expect($await($unwrapDeep($testSpliterator([split, split])))).toEqual([[], [], []]);
       }),
     );
   });
@@ -44,7 +43,7 @@ describe($`spliterate`, () => {
     it(
       'yields three empty groups',
       $async(() => {
-        expect($await($uw($testSpliterator([null, split])))).toEqual([[null], []]);
+        expect($await($unwrapDeep($testSpliterator([null, split])))).toEqual([[null], []]);
       }),
     );
   });
@@ -53,7 +52,7 @@ describe($`spliterate`, () => {
     it(
       'yields three empty groups',
       $async(() => {
-        expect($await($uw($testSpliterator([split, null])))).toEqual([[], [null]]);
+        expect($await($unwrapDeep($testSpliterator([split, null])))).toEqual([[], [null]]);
       }),
     );
   });
@@ -124,4 +123,12 @@ describe($`spliterate`, () => {
       }),
     );
   });
+
+  it(
+    'options may be omitted',
+    $async(() => {
+      const $testSpliterator = $spliterate($identityStrategy);
+      expect($await($unwrapDeep($testSpliterator([])))).toEqual([]);
+    }),
+  );
 });

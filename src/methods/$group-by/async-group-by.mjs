@@ -48,6 +48,7 @@ async function* asyncGroupingSpliterator(split, { getKey }, source) {
 export function asyncGroupBy(source, getKey) {
   if (getKey === null) {
     warnNullGetKeyDeprecation();
+    getKey = _ => _;
   }
 
   return asyncSpliterateGrouped(source, asyncGroupingSpliterator, { getKey });

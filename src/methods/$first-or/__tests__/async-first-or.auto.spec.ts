@@ -9,7 +9,7 @@
 /* eslint-disable no-unused-vars,import/no-duplicates,no-constant-condition */
 
 import { asyncFirstOr } from '../../..';
-import { asyncWrap } from '../../../__tests__/__framework__/async-wrap';
+import { asyncWrap } from '../../../test/async-helpers';
 
 describe('asyncFirstOr', () => {
   describe('when iterable is empty', () => {
@@ -20,7 +20,7 @@ describe('asyncFirstOr', () => {
     });
   });
 
-  describe('when iterable contains values', () => {
+  describe('when iterable has values', () => {
     it('returns first value', async () => {
       expect(await asyncFirstOr(null, asyncWrap([1, 2, 3]))).toBe(1);
     });

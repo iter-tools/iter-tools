@@ -1,43 +1,62 @@
 import { $, $isAsync, $async, $await } from '../../../generate/async.macro';
+import { $awaitError } from '../../../generate/test.macro';
 
-import { asyncify } from '../async-iterable';
 import { $ensureIterable, $isIterable, $iterableCurry } from '../$iterable';
-import { range, $toArray } from '../..';
+import { $wrap, $unwrap } from '../../test/$helpers';
 
 describe($`ensureIterable`, () => {
   if ($isAsync) {
-    it('transform sync iter to async', async () => {
-      const iter = $ensureIterable(range({ start: 1, end: 4 }));
-      expect(await iter.next()).toEqual({ value: 1, done: false });
-      expect(await iter.next()).toEqual({ value: 2, done: false });
-      expect(await iter.next()).toEqual({ value: 3, done: false });
-      expect(await iter.next()).toEqual({ value: undefined, done: true });
-    });
-  } else {
-    it('works with iterables', () => {
-      const i = range(3);
-      expect(i).toBe($ensureIterable(i));
-      expect(Array.from($ensureIterable(i))).toEqual([0, 1, 2]);
-    });
-    it('works with Symbol.iterator', () => {
-      const i = $ensureIterable([0, 1, 2]);
-      expect(Array.from(i)).toEqual([0, 1, 2]);
-    });
-    it('works with null', () => {
-      const i = $ensureIterable(null);
-      expect(Array.from(i)).toEqual([]);
+    describe('when i is a sync iterable', () => {
+      it('returns i wrapped in an async iterable', async () => {
+        const i = $ensureIterable([1, 2, 3]);
+        expect(typeof i[Symbol.asyncIterator]).toBe('function');
+        expect(await $unwrap($ensureIterable(i))).toEqual([1, 2, 3]);
+      });
     });
   }
+
+  describe(`when i is ${$`iterable`}`, () => {
+    it('returns i', () => {
+      const i = $wrap([1, 2, 3]);
+      expect(i).toBe($ensureIterable(i));
+    });
+  });
+
+  it(
+    'works with iterables',
+    $async(() => {
+      expect($await($unwrap($ensureIterable($wrap([1, 2, 3]))))).toEqual([1, 2, 3]);
+    }),
+  );
+
+  describe('when i is null', () => {
+    it(
+      'returns the empty iterable',
+      $async(() => {
+        const i = $ensureIterable(null);
+        expect($await($unwrap(i))).toEqual([]);
+      }),
+    );
+  });
+
+  describe('when i cannot be coerced to an iterable', () => {
+    it('throws', () => {
+      expect(() => $ensureIterable(false)).toThrowErrorMatchingSnapshot();
+    });
+  });
+
+  describe('when i looks like an iterator', () => {
+    it('throws a more helpful error', () => {
+      expect(() => $ensureIterable({ next() {} })).toThrowErrorMatchingSnapshot();
+    });
+  });
 });
 
 describe($`isIterable`, () => {
   it('works', () => {
-    expect($isIterable(range(3))).toBe(true);
+    expect($isIterable($wrap([]))).toBe(true);
     expect($isIterable([])).toBe(true);
     expect($isIterable(null)).toBe(false);
-    if ($isAsync) {
-      expect($isIterable(asyncify([]))).toBe(true);
-    }
   });
 });
 
@@ -92,22 +111,36 @@ describe($`iterableCurry`, () => {
   it(
     'curries',
     $async(() => {
-      expect($await($toArray(c2(hello, world, [])))).toEqual([hello, world]);
-      expect($await($toArray(c2(hello, world)([])))).toEqual([hello, world]);
-      expect($await($toArray(c2(hello)(world, [])))).toEqual([hello, world]);
-      expect($await($toArray(c2(hello)(world)([])))).toEqual([hello, world]);
-      expect($await($toArray(c1(hello, [])))).toEqual([hello]);
-      expect($await($toArray(c1(hello)([])))).toEqual([hello]);
-      expect($await($toArray(c0([])))).toEqual([]);
+      expect($await($unwrap(c2(hello, world, [])))).toEqual([hello, world]);
+      expect($await($unwrap(c2(hello, world)([])))).toEqual([hello, world]);
+      expect($await($unwrap(c2(hello)(world, [])))).toEqual([hello, world]);
+      expect($await($unwrap(c2(hello)(world)([])))).toEqual([hello, world]);
+      expect($await($unwrap(c1(hello, [])))).toEqual([hello]);
+      expect($await($unwrap(c1(hello)([])))).toEqual([hello]);
+      expect($await($unwrap(c0([])))).toEqual([]);
     }),
   );
 
   it(
     'ignores extra arguments after iterable',
     $async(() => {
-      expect($await($toArray(c2(hello, world, [], 'foo')))).toEqual([hello, world]);
-      expect($await($toArray(c1(hello)([], null)))).toEqual([hello]);
-      expect($await($toArray(c0([], 4)))).toEqual([]);
+      expect($await($unwrap(c2(hello, world, [], 'foo')))).toEqual([hello, world]);
+      expect($await($unwrap(c1(hello)([], null)))).toEqual([hello]);
+      expect($await($unwrap(c0([], 4)))).toEqual([]);
+    }),
+  );
+
+  it(
+    'creates a static iterator',
+    $async(() => {
+      const c = $iterableCurry(
+        $async(function* $wrap(i) {
+          yield* i;
+        }),
+      );
+      expect($await(c([1]).next())).toEqual({ value: 1, done: false });
+      expect($await(c([]).return())).toEqual({ value: undefined, done: true });
+      expect($awaitError(c([]).throw(new Error()))).toBeInstanceOf(Error);
     }),
   );
 
@@ -152,7 +185,7 @@ describe($`iterableCurry`, () => {
             args[0] = world;
           },
         });
-        $await($toArray(hello(null, empty)));
+        $await($unwrap(hello(null, empty)));
         expect(helloImpl).toHaveBeenCalledWith(empty, world);
       }),
     );
@@ -168,9 +201,9 @@ describe($`iterableCurry`, () => {
     it(
       'curries',
       $async(() => {
-        expect($await($toArray(c(hello)(world)([])))).toEqual([hello, world]);
-        expect($await($toArray(c(hello)([])))).toEqual([hello, world]);
-        expect($await($toArray(c([])))).toEqual([goodbye, world]);
+        expect($await($unwrap(c(hello)(world)([])))).toEqual([hello, world]);
+        expect($await($unwrap(c(hello)([])))).toEqual([hello, world]);
+        expect($await($unwrap(c([])))).toEqual([goodbye, world]);
       }),
     );
 

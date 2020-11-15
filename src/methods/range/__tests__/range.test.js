@@ -1,49 +1,46 @@
 import { range } from '../../..';
+import { anyType, unwrap } from '../../../test/helpers';
 
 describe('range', () => {
-  describe('with positional arguments', () => {
-    it('return simple range', () => {
-      expect(Array.from(range(3))).toEqual([0, 1, 2]);
-    });
+  describe('when no arguments are passed', () => {
+    it('yields incrementing integers starting with 0', () => {
+      const [a, b, c] = range();
+      expect([a, b, c]).toEqual([0, 1, 2]);
 
-    it('return simple range with start/end', () => {
-      expect(Array.from(range(3, 6))).toEqual([3, 4, 5]);
-    });
-
-    it('return simple range with start/end and step', () => {
-      expect(Array.from(range(3, 6, 2))).toEqual([3, 5]);
+      const [d, e, f] = range({});
+      expect([d, e, f]).toEqual([0, 1, 2]);
     });
   });
 
-  describe('with options', () => {
-    it('return simple range', () => {
-      expect(Array.from(range({ end: 3 }))).toEqual([0, 1, 2]);
+  describe('when end is passed', () => {
+    it('yields incrementing integers from 0 to end', () => {
+      expect(unwrap(range(3))).toEqual([0, 1, 2]);
+      expect(unwrap(range({ end: 3 }))).toEqual([0, 1, 2]);
     });
+  });
 
-    it('return simple range with start/end', () => {
-      expect(Array.from(range({ start: 3, end: 6 }))).toEqual([3, 4, 5]);
+  describe('when start and end are passed', () => {
+    it('yields incrementing integers from start to end', () => {
+      expect(unwrap(range(1, 4))).toEqual([1, 2, 3]);
+      expect(unwrap(range({ start: 1, end: 4 }))).toEqual([1, 2, 3]);
     });
+  });
 
-    it('can be reused', () => {
-      const myRange = range({ start: 3, end: 6 });
-      expect(Array.from(myRange)).toEqual([3, 4, 5]);
-      expect(Array.from(myRange)).toEqual([3, 4, 5]);
+  describe('when start, end, and step are passed', () => {
+    it('yields integers from start to end incrementing by step', () => {
+      expect(unwrap(range(1, 7, 2))).toEqual([1, 3, 5]);
+      expect(unwrap(range(1, 6, 2))).toEqual([1, 3, 5]);
+      expect(unwrap(range({ start: 1, end: 6, step: 2 }))).toEqual([1, 3, 5]);
     });
+  });
 
-    it('return simple range with start/end and step', () => {
-      expect(Array.from(range({ start: 3, end: 6, step: 2 }))).toEqual([3, 5]);
-    });
+  describe('when options are invalid', () => {
+    it('throws', () => {
+      expect(() => range({ start: anyType('foo') })).toThrowErrorMatchingSnapshot();
 
-    it('return empty array for negative end', () => {
-      expect(Array.from(range({ end: -2 }))).toEqual([]);
-    });
+      expect(() => range({ end: anyType(null) })).toThrowErrorMatchingSnapshot();
 
-    it('return empty array for negative end', () => {
-      expect(Array.from(range({ start: -2, end: -5 }))).toEqual([]);
-    });
-
-    it('return backward count', () => {
-      expect(Array.from(range({ start: -2, end: -5, step: -1 }))).toEqual([-2, -3, -4]);
+      expect(() => range({ step: anyType(Infinity) })).toThrowErrorMatchingSnapshot();
     });
   });
 });

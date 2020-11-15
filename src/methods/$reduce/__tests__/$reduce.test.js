@@ -1,83 +1,71 @@
-import { $, $async, $await, $Promise } from '../../../../generate/async.macro';
+import { $, $isAsync, $async, $await } from '../../../../generate/async.macro';
+import { $awaitError } from '../../../../generate/test.macro';
 
-import { $SourceIterable } from '../../../types/$iterable';
-import { $reduce, range } from '../../..';
-import { $OneTwoThreeIterable } from '../../../__tests__/__framework__/fixtures';
+import { $reduce } from '../../..';
+import { $wrap } from '../../../test/$helpers';
 
 describe($`reduce`, () => {
-  it(
-    'sums an array',
-    $async(() => {
-      expect($await($reduce((acc = 0, x) => acc + x, [0, 1, 2, 3]))).toBe(6);
-    }),
-  );
+  describe('when iterable is empty', () => {
+    describe('when no initial value specified', () => {
+      it(
+        'throws',
+        $async(() => {
+          const error = $awaitError($reduce((acc: any, x) => acc + x, $wrap([])));
 
-  it(
-    'sums a range',
-    $async(() => {
-      expect($await($reduce((acc = 0, x) => acc + x, range(4)))).toBe(6);
-    }),
-  );
-
-  it(
-    'sums using a specified initial value',
-    $async(() => {
-      expect($await($reduce(1, (acc, x) => acc + x, range(4)))).toBe(7);
-    }),
-  );
-
-  it(
-    'sums using the initial value as the initial value',
-    $async(() => {
-      expect($await($reduce((acc, x) => acc + x, range({ start: 2, end: 4 })))).toBe(5);
-    }),
-  );
-
-  it(
-    'returns specified initial value when iterable is empty',
-    $async(() => {
-      expect($await($reduce(0, (acc, x) => acc + x, []))).toBe(0);
-    }),
-  );
-
-  it(
-    'throws when no initial value specified and iterable is empty',
-    $async(() => {
-      let error;
-      try {
-        $await($reduce((acc: any, x) => acc + x, []));
-      } catch (e) {
-        error = e;
-      }
-
-      expect(error).toBeInstanceOf(Error);
-      expect(error.message).toMatchSnapshot();
-    }),
-  );
-
-  it(
-    'sums a range (using curry)',
-    $async(() => {
-      const sum: (iterable: $SourceIterable<number>) => $Promise<number> = $reduce(
-        (acc = 0, x) => acc + x,
+          expect(error).toBeInstanceOf(Error);
+          expect(error.message).toMatchSnapshot();
+        }),
       );
-      expect($await(sum(range(4)))).toBe(6);
-    }),
-  );
+    });
 
-  it(
-    'cleans up iterable',
-    $async(() => {
-      const oneTwoThree = new $OneTwoThreeIterable();
-      try {
-        $await(
-          $reduce(() => {
-            throw new Error('ops');
-          }, oneTwoThree),
-        );
-      } catch (e) {
-        expect(oneTwoThree).toHaveProperty('isCleanedUp', true);
-      }
-    }),
-  );
+    describe('when an initial value is specified', () => {
+      it(
+        'yields the specified initial value',
+        $async(() => {
+          expect($await($reduce(0, (acc, x) => acc + x, $wrap([])))).toBe(0);
+        }),
+      );
+    });
+  });
+
+  describe('when source has values', () => {
+    describe('when no initial value specified', () => {
+      it(
+        'sums an array',
+        $async(() => {
+          expect($await($reduce((acc, x) => acc + x, $wrap([1, 2, 3])))).toBe(6);
+        }),
+      );
+    });
+
+    describe('when an initial value is specified', () => {
+      it(
+        'sums using a specified initial value',
+        $async(() => {
+          expect($await($reduce(0, (acc, x) => acc + x, $wrap([1, 2, 3])))).toBe(6);
+        }),
+      );
+    });
+  });
+
+  describe('when there is an error while reducing', () => {
+    it(
+      'closes source',
+      $async(() => {
+        try {
+          $await(
+            $reduce(() => {
+              throw new Error('Stop the presses!');
+            }, $wrap([1, 2, 3])),
+          );
+        } catch (e) {}
+      }),
+    );
+  });
+
+  if ($isAsync) {
+    it('can take an async reducer', async () => {
+      expect(await $reduce(async (acc, x) => acc + x, $wrap([1, 2, 3]))).toBe(6);
+    });
+  }
 });

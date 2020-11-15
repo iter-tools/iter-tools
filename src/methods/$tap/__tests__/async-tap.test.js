@@ -8,21 +8,33 @@
 
 /* eslint-disable no-unused-vars,import/no-duplicates,no-constant-condition */
 
-import { asyncTap, asyncToArray, range } from '../../..';
+import { asyncTap } from '../../..';
+import { asyncWrap, asyncUnwrap, anyType } from '../../../test/async-helpers';
 
 describe('asyncTap', () => {
-  it('return tapped iterable', async () => {
-    const iter = asyncTap(item => item * 2, [1, 2, 3]);
-    expect(await asyncToArray(iter)).toEqual([1, 2, 3]);
+  describe('when source is empty', () => {
+    it('yields no values', async () => {
+      const func = jest.fn((value: any) => value * 2);
+      expect(await asyncUnwrap(asyncTap(func, null))).toEqual([]);
+      expect(await asyncUnwrap(asyncTap(func, undefined))).toEqual([]);
+      expect(await asyncUnwrap(asyncTap(func, asyncWrap([])))).toEqual([]);
+      expect(func.mock.calls).toEqual([]);
+    });
   });
 
-  it('return tapped iterable from iterable', async () => {
-    const iter = asyncTap(item => item * 2, range(1, 4));
-    expect(await asyncToArray(iter)).toEqual([1, 2, 3]);
+  describe('when source has values', () => {
+    it('returns func(value, i) for each value in source', async () => {
+      const func: (value: number, i: number) => number = jest.fn((value, i) => value + i);
+      expect(await asyncUnwrap(asyncTap(func, asyncWrap([1, 2, 3])))).toEqual([1, 2, 3]);
+      expect(anyType(func).mock.calls).toEqual([[1, 0], [2, 1], [3, 2]]);
+    });
   });
 
-  it('return tapped iterable (curried version)', async () => {
-    const iter = asyncTap((item: number) => item * 2);
-    expect(await asyncToArray(iter(range(1, 4)))).toEqual([1, 2, 3]);
+  it('can take an async func', async () => {
+    expect(await asyncUnwrap(asyncTap(async value => value * 2, asyncWrap([1, 2, 3])))).toEqual([
+      1,
+      2,
+      3,
+    ]);
   });
 });

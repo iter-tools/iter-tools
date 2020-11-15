@@ -1,16 +1,18 @@
 import { $iteratorSymbol, $async, $await } from '../../../generate/async.macro';
 
-import { $iterableCurry } from '../../internal/$iterable';
+import { $iterableCurry, $callReturn } from '../../internal/$iterable';
 
 $async;
 export function $reduce(iterable, initial, reducer) {
   let c = 0;
   let result = initial;
+  let done = false;
   const iterator = iterable[$iteratorSymbol]();
   try {
     if (initial === undefined) {
       const firstResult = $await(iterator.next());
       if (firstResult.done) {
+        done = true;
         throw new Error('Cannot reduce: no initial value specified and iterable was empty');
       }
       result = firstResult.value;
@@ -20,10 +22,11 @@ export function $reduce(iterable, initial, reducer) {
     while (!(nextItem = $await(iterator.next())).done) {
       result = $await(reducer(result, nextItem.value, c++));
     }
+    done = nextItem.done;
     return result;
   } finally {
     // close the iterator in case of exceptions
-    if (typeof iterator.return === 'function') $await(iterator.return());
+    if (!done) $await($callReturn(iterator));
   }
 }
 

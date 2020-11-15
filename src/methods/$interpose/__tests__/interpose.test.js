@@ -8,25 +8,36 @@
 
 /* eslint-disable no-unused-vars,import/no-duplicates,no-constant-condition */
 
-import { interpose, toArray, range } from '../../..';
+import { interpose } from '../../..';
+import { wrap, unwrap } from '../../../test/helpers';
 
 describe('interpose', () => {
-  it('interposes items into array', () => {
-    const iter = interpose(9, [1, 2, 3]);
-    expect(toArray(iter)).toEqual([1, 9, 2, 9, 3]);
+  describe('when source is empty', () => {
+    it('yields no values', () => {
+      expect(unwrap(interpose('', null))).toEqual([]);
+      expect(unwrap(interpose('', undefined))).toEqual([]);
+      expect(unwrap(interpose('', wrap([])))).toEqual([]);
+    });
   });
 
-  it('interposes items into an iterable', () => {
-    const iter = interpose(null, range({ start: 1, end: 4 }));
-    expect(toArray(iter)).toEqual([1, null, 2, null, 3]);
+  describe('when source contains a single value', () => {
+    it('yields that value', () => {
+      const iter = interpose(null, wrap([1]));
+      expect(unwrap(iter)).toEqual([1]);
+    });
   });
 
-  it('returns mapped iterable (curried version)', () => {
-    const iter = interpose([]);
-    expect(toArray(iter(range({ start: 1, end: 4 })))).toEqual([1, [], 2, [], 3]);
+  describe('when source contains multiple values', () => {
+    it('yields interposed value between each value from source', () => {
+      const iter = interpose(null, wrap([1, 2, 3]));
+      expect(unwrap(iter)).toEqual([1, null, 2, null, 3]);
+    });
   });
 
-  it('returns empty iterable from null', () => {
-    expect(toArray(interpose('', null))).toEqual([]);
+  describe('when source is a string', () => {
+    it('warns', () => {
+      interpose(null, 'abc');
+      expect(console.warn).callsMatchSnapshot();
+    });
   });
 });

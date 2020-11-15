@@ -1,97 +1,60 @@
 import { $, $async, $await } from '../../../../generate/async.macro';
+import { $awaitError } from '../../../../generate/test.macro';
 
-import { $group, $toArray } from '../../..';
-import { $unwrapDeep as $uw } from '../../../__tests__/$helpers';
+import { $group } from '../../..';
+import { $wrap, $unwrap, $unwrapDeep } from '../../../test/$helpers';
 
 describe($`group`, () => {
-  it(
-    'main cursor',
-    $async(() => {
-      const iter = $group('AAABBAACCCCD');
-      let next;
-      next = $await(iter.next());
-      expect(next.value[0]).toBe('A');
-      next = $await(iter.next());
-      expect(next.value[0]).toBe('B');
-      next = $await(iter.next());
-      expect(next.value[0]).toBe('A');
-      next = $await(iter.next());
-      expect(next.value[0]).toBe('C');
-      next = $await(iter.next());
-      expect(next.value[0]).toBe('D');
-      next = $await(iter.next());
-      expect(next.done).toBe(true);
-    }),
-  );
+  describe('when source is empty', () => {
+    it(
+      'yields no groups',
+      $async(() => {
+        expect($await($unwrapDeep($group(null)))).toEqual([]);
+        expect($await($unwrapDeep($group(undefined)))).toEqual([]);
+        expect($await($unwrapDeep($group($wrap([]))))).toEqual([]);
+      }),
+    );
+  });
 
-  it(
-    'secondary',
-    $async(() => {
-      const iter = $group('AAABBAACCCCD');
-      let next;
-      next = $await(iter.next());
-      expect(next.value[0]).toBe('A');
-      expect($await($toArray(next.value[1]))).toEqual(['A', 'A', 'A']);
-      next = $await(iter.next());
-      expect(next.value[0]).toBe('B');
-      expect($await($toArray(next.value[1]))).toEqual(['B', 'B']);
-      next = $await(iter.next());
-      expect(next.value[0]).toBe('A');
-      expect($await($toArray(next.value[1]))).toEqual(['A', 'A']);
-      next = $await(iter.next());
-      expect(next.value[0]).toBe('C');
-      expect($await($toArray(next.value[1]))).toEqual(['C', 'C', 'C', 'C']);
-      next = $await(iter.next());
-      expect(next.value[0]).toBe('D');
-      expect($await($toArray(next.value[1]))).toEqual(['D']);
-      next = $await(iter.next());
-      expect(next.done).toBe(true);
-    }),
-  );
+  describe('when values from source cannot be grouped', () => {
+    it(
+      'yields a group for each value',
+      $async(() => {
+        expect($await($unwrapDeep($group($wrap([1, 2, 3]))))).toEqual([
+          [1, [1]],
+          [2, [2]],
+          [3, [3]],
+        ]);
+      }),
+    );
+  });
 
-  it(
-    'secondary (consume partially)',
-    $async(() => {
-      const iter = $group('AAABBAACCCCD');
-      let next;
-      next = $await(iter.next());
-      expect(next.value[0]).toBe('A');
-      expect($await(next.value[1].next()).value).toBe('A');
-      expect($await(next.value[1].next()).value).toBe('A');
-      expect($await(next.value[1].next()).value).toBe('A');
-      expect($await(next.value[1].next()).done).toBe(true);
-      next = $await(iter.next());
-      expect(next.value[0]).toBe('B');
-      next = $await(iter.next());
-      expect(next.value[0]).toBe('A');
-    }),
-  );
+  describe('when source contains subsequent values belonging to the same group', () => {
+    it(
+      'coalesces values into groups',
+      $async(() => {
+        expect($await($unwrapDeep($group('aaa')))).toEqual([['a', ['a', 'a', 'a']]]);
+        expect($await($unwrapDeep($group('bbabb')))).toEqual([
+          ['b', ['b', 'b']],
+          ['a', ['a']],
+          ['b', ['b', 'b']],
+        ]);
+      }),
+    );
+  });
 
-  it(
-    'grouping an empty iterable returns empty iterable',
-    $async(() => {
-      expect($await($toArray($group(null)))).toEqual([]);
-      expect($await($toArray($group(undefined)))).toEqual([]);
-    }),
-  );
+  describe('when groups are consumed out of order', () => {
+    it(
+      'throws',
+      $async(() => {
+        const iter = $group('AB');
+        const [, As] = $await(iter.next()).value;
+        const [, Bs] = $await(iter.next()).value;
 
-  it(
-    'errors if groups are consumed out of order',
-    $async(() => {
-      const iter = $group('AB');
-      const group1 = $await(iter.next()).value;
-      const group2 = $await(iter.next()).value;
+        $await($unwrap(Bs));
 
-      expect(group1[0]).toBe('A');
-      expect($await($uw(group2))).toEqual(['B', ['B']]);
-
-      let error;
-      try {
-        $uw(group1[1]);
-      } catch (e) {
-        error = e;
-      }
-      expect(error).toMatchSnapshot();
-    }),
-  );
+        expect($awaitError($unwrap(As))).toMatchSnapshot();
+      }),
+    );
+  });
 });

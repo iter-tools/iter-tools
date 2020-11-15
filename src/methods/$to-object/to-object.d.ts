@@ -9,7 +9,8 @@
 import { SourceIterable } from '../../types/iterable';
 
 declare function toObject<V>(
-  source: SourceIterable<[string, V]>,
+  iterable: SourceIterable<[string, V]>,
+  proto?: any,
 ): {
   [key: string]: V;
 };

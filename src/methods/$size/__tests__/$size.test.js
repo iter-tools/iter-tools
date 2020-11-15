@@ -1,21 +1,26 @@
 import { $, $async, $await } from '../../../../generate/async.macro';
 
 import { $size } from '../../..';
-import { $range } from '../../../__tests__/$range';
+import { $wrap } from '../../../test/$helpers';
 
 describe($`size`, () => {
-  it(
-    'return number of items in iterable',
-    $async(() => {
-      expect($await($size($range(1, 7)))).toBe(6);
-    }),
-  );
+  describe('when iterable is empty', () => {
+    it(
+      'returns 0',
+      $async(() => {
+        expect($await($size(null))).toBe(0);
+        expect($await($size(undefined))).toBe(0);
+        expect($await($size($wrap([])))).toBe(0);
+      }),
+    );
+  });
 
-  it(
-    'returns 0 for null or undefined',
-    $async(() => {
-      expect($await($size(null))).toBe(0);
-      expect($await($size(undefined))).toBe(0);
-    }),
-  );
+  describe('when iterable contains values', () => {
+    it(
+      'return number of items in iterable',
+      $async(() => {
+        expect($await($size($wrap([1, 2, 3, 4, 5, 6])))).toBe(6);
+      }),
+    );
+  });
 });

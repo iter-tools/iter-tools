@@ -9,7 +9,7 @@
 /* eslint-disable no-unused-vars,import/no-duplicates,no-constant-condition */
 
 import { asyncPeekerate, AsyncPeekeratorClass } from '../../..';
-import { asyncWrap } from '../../../__tests__/__framework__/async-wrap';
+import { asyncWrap } from '../../../test/async-helpers';
 
 describe('asyncPeekerate', () => {
   it('creates a peekerator', async () => {

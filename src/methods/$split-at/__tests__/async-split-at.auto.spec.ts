@@ -8,71 +8,62 @@
 
 /* eslint-disable no-unused-vars,import/no-duplicates,no-constant-condition */
 
-import { asyncSplitAt, asyncToArray } from '../../..';
-import { asyncRange } from '../../../__tests__/async-range';
+import { asyncSplitAt } from '../../..';
+import { asyncWrap, asyncUnwrap, asyncUnwrapDeep } from '../../../test/async-helpers';
 
 describe('asyncSplitAt', () => {
   describe('with positive index', () => {
     it('works when the halves are consumed in order', async () => {
-      const [first, second] = asyncSplitAt(3, asyncRange(0, 6));
-      expect([await asyncToArray(first), await asyncToArray(second)]).toEqual([
-        [0, 1, 2],
-        [3, 4, 5],
-      ]);
+      const [first, second] = asyncSplitAt(3, asyncWrap([0, 1, 2, 3, 4, 5]));
+      expect(await asyncUnwrapDeep([first, second])).toEqual([[0, 1, 2], [3, 4, 5]]);
     });
 
     it('works when the source is exhuasted while the first half is being consumed', async () => {
-      const [first, second] = asyncSplitAt(3, asyncRange(0, 2));
-      expect([await asyncToArray(first), await asyncToArray(second)]).toEqual([[0, 1], []]);
+      const [first, second] = asyncSplitAt(3, asyncWrap([0, 1]));
+      expect(await asyncUnwrapDeep([first, second])).toEqual([[0, 1], []]);
     });
 
     it('works when the source is exhuasted while the second half is being consumed', async () => {
-      const [first, second] = asyncSplitAt(3, asyncRange(0, 4));
-      expect([await asyncToArray(first), await asyncToArray(second)]).toEqual([[0, 1, 2], [3]]);
+      const [first, second] = asyncSplitAt(3, asyncWrap([0, 1, 2, 3]));
+      expect(await asyncUnwrapDeep([first, second])).toEqual([[0, 1, 2], [3]]);
     });
   });
 
   describe('with negative index', () => {
     it('works when the halves are consumed in order', async () => {
-      const [first, second] = asyncSplitAt(-3, asyncRange(0, 6));
-      expect([await asyncToArray(first), await asyncToArray(second)]).toEqual([
-        [0, 1, 2],
-        [3, 4, 5],
-      ]);
+      const [first, second] = asyncSplitAt(-3, asyncWrap([0, 1, 2, 3, 4, 5]));
+      expect(await asyncUnwrapDeep([first, second])).toEqual([[0, 1, 2], [3, 4, 5]]);
     });
 
     it('all values are in the first part when |index| is larger than source size', async () => {
-      const [first, second] = asyncSplitAt(-3, asyncRange(0, 2));
-      expect([await asyncToArray(first), await asyncToArray(second)]).toEqual([[0, 1], []]);
+      const [first, second] = asyncSplitAt(-3, asyncWrap([0, 1]));
+      expect(await asyncUnwrapDeep([first, second])).toEqual([[0, 1], []]);
     });
   });
 
-  it('allows only the second half to being consumed', async () => {
-    const [, second] = asyncSplitAt(3, asyncRange(0, 6));
-    expect(await asyncToArray(second)).toEqual([3, 4, 5]);
+  it('allows the first half to be skipped', async () => {
+    const [, second] = asyncSplitAt(3, asyncWrap([0, 1, 2, 3, 4, 5]));
+    expect(await asyncUnwrap(second)).toEqual([3, 4, 5]);
   });
 
   it('throws if only the first half is taken', async () => {
-    let error;
-    try {
-      const [first] = asyncSplitAt(3, asyncRange(0, 6));
-      await asyncToArray(first);
-    } catch (e) {
-      error = e;
-    }
-    expect(error).toMatchSnapshot();
+    const splits = asyncSplitAt(3, asyncWrap([0, 1, 2, 3, 4, 5]));
+    splits.next();
+    expect(() => splits.return()).toThrowErrorMatchingSnapshot();
   });
 
   it('throws when the second half is consumed before the first', async () => {
-    const [first, second] = asyncSplitAt(3, asyncRange(0, 6));
-    expect(await asyncToArray(second)).toEqual([3, 4, 5]);
+    const [first, second] = asyncSplitAt(3, asyncWrap([0, 1, 2, 3, 4, 5]));
+    expect(await asyncUnwrap(second)).toEqual([3, 4, 5]);
 
-    let error;
-    try {
-      await asyncToArray(first);
-    } catch (e) {
-      error = e;
-    }
-    expect(error).toMatchSnapshot();
+    expect(
+      await (async () => {
+        try {
+          await asyncUnwrap(first);
+        } catch (e) {
+          return e;
+        }
+      })(),
+    ).toMatchSnapshot();
   });
 });

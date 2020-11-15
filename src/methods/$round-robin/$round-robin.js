@@ -1,8 +1,8 @@
 import { $async, $await } from '../../../generate/async.macro';
 
 import { $iterableCurry } from '../../internal/$iterable';
-
 import { $interleave } from '../$interleave/$interleave';
+import { validateArgs } from './internal/validate-args';
 
 $async;
 function* $byPosition({ start, step }, all, ...peekrs) {
@@ -25,15 +25,5 @@ export default $iterableCurry($roundRobin, {
   variadic: true,
   minArgs: 0,
   maxArgs: 2,
-  validateArgs(args) {
-    if (args[1] && typeof args[1] === 'object') {
-      const { start, step } = args[1];
-      args[0] = start != null ? start : 0;
-      args[1] = step != null ? start : 1;
-    }
-
-    if (args[1] <= 0) {
-      throw new Error('step argument to roundRobin must be >= 0');
-    }
-  },
+  validateArgs,
 });

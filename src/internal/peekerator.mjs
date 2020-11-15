@@ -6,7 +6,7 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { ensureIterable } from './iterable';
+import { ensureIterable, callReturn } from './iterable';
 
 const _ = Symbol.for('_');
 
@@ -49,8 +49,8 @@ export class Peekerator {
 
   return() {
     const this_ = this[_];
-    if ('return' in this_.iterator) {
-      this_.iterator.return();
+    if (!this.done) {
+      callReturn(this_.iterator);
     }
     this_.current = { value: undefined, done: true };
   }

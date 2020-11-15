@@ -7,7 +7,7 @@
  */
 
 import { iterableCurry } from '../../internal/iterable';
-import defaultCompare from '../../internal/compare';
+import { defaultCompare } from '../../internal/compare';
 import { peekerate } from '../$peekerate/peekerate';
 
 export function isSorted(iterable, comparator = defaultCompare) {
@@ -18,6 +18,7 @@ export function isSorted(iterable, comparator = defaultCompare) {
     peekr.advance();
 
     if (!peekr.done && comparator(value, peekr.value) > 0) {
+      peekr.return();
       return false;
     }
   }

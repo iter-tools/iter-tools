@@ -1,16 +1,12 @@
 const { createMacro } = require('babel-plugin-macros');
 const { expression } = require('@babel/template');
 const { rename } = require('./names');
+const { concat, getNextStatement, getOnlyArgument } = require('./macro-utils');
 
 /**
- * This is a babel macro which you can import the following symbols:
- *
- * import { $iteratorSymbol, $isAsync, $async, $await } from "path/to/async.macro"
- *
- * When you import and use these symbols in accordance with the examples below, they are
- * replaced with one of two variants depending on whether the ASYNC environment variable is
- * defined at compile time.
- *
+ * This is a babel macro. Import and use these symbols in accordance with the examples below.
+ * They are replaced with one of two variants depending on whether the ASYNC environment
+ * variable is defined at compile time.
  *
  *           SYNC                    TEMPLATE                    ASYNC
  *
@@ -49,8 +45,12 @@ const { rename } = require('./names');
  *           true                      <--->                       false
  *
  *
- *                             $Promise<typeExpression>
- *       typeExpression                                   Promise<typeExpression>
+ *                               $Promise<typeExpr>
+ *          typeExpr                   <--->                 Promise<typeExpr>
+ *
+ *
+ *                            $MaybePromise<typeExpr>
+ *          typeExpr                   <--->            typeExpr || Promise<typeExpr>
  *
  * Note that conditional expressions with fixed conditions (such as the last two examples)
  * will be further simplified by the dead code elimination babel plugin
@@ -60,10 +60,6 @@ const { rename } = require('./names');
  */
 
 const { ast } = expression;
-
-function* concat(...iterables) {
-  for (const i of iterables) yield* i;
-}
 
 function asyncMacro({ references, babel, state, config: { ASYNC } }) {
   const t = babel.types;
@@ -212,23 +208,6 @@ function asyncMacro({ references, babel, state, config: { ASYNC } }) {
         break;
     }
   }
-}
-
-function getNextStatement(reference) {
-  const { container } = reference.parentPath;
-  const parentNode = reference.parent;
-  const loopIdx = container.indexOf(parentNode) + 1;
-  return container[loopIdx];
-}
-
-function getOnlyArgument(reference, refName) {
-  const { arguments: args } = reference.parent;
-
-  if (args.length !== 1) {
-    throw new Error(`The ${refName}() macro takes exactly one argument`);
-  }
-
-  return args[0];
 }
 
 module.exports = createMacro(asyncMacro, { configName: 'async' });

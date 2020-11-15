@@ -13,12 +13,7 @@ function* iterableOf(item) {
 }
 
 export function asyncSplit(source) {
-  // String iterators already return an exploded version of the string.
-  if (typeof source === 'string') {
-    return source;
-  } else {
-    return asyncMap(source, item => iterableOf(item));
-  }
+  return asyncMap(source, item => iterableOf(item));
 }
 
 export default asyncSplit;

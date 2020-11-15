@@ -8,44 +8,45 @@
 
 /* eslint-disable no-unused-vars,import/no-duplicates,no-constant-condition */
 
-import { asyncIsSorted, asyncWrap } from '../../..';
+import { asyncIsSorted } from '../../..';
+import { asyncWrap } from '../../../test/async-helpers';
 
 describe('asyncIsSorted', () => {
-  it('returns true for a numerically sorted input iterable', async () => {
-    expect(await asyncIsSorted(asyncWrap([1, 2, 3]))).toEqual(true);
-  });
-
-  it('returns true for an alphabetically sorted input string', async () => {
-    expect(await asyncIsSorted('abc')).toEqual(true);
-  });
-
-  it('returns true for a numerically sorted input iterable with duplicates', async () => {
-    expect(await asyncIsSorted(asyncWrap([1, 2, 2, 2, 3]))).toEqual(true);
-  });
-
-  it('returns true when the input contains only one item', async () => {
-    expect(await asyncIsSorted(asyncWrap([9000]))).toEqual(true);
-  });
-
-  it('returns true when the input is empty', async () => {
-    expect(await asyncIsSorted(asyncWrap([]))).toEqual(true);
-  });
-
-  it('returns false when the input is not sorted', async () => {
-    expect(await asyncIsSorted(asyncWrap([2, 1]))).toEqual(false);
-  });
-
-  describe('with an explicit comparator', () => {
-    it('returns true for a numerically sorted input iterable', async () => {
-      expect(await asyncIsSorted((a, b) => a - b, asyncWrap([1, 1, 2, 3, 5, 8]))).toEqual(true);
+  describe('when iterable is empty', () => {
+    it('returns true', async () => {
+      expect(await asyncIsSorted(asyncWrap([]))).toEqual(true);
     });
+  });
 
-    it('returns true for reverse sorted input iterable (with reverse comparator)', async () => {
-      expect(await asyncIsSorted((a, b) => b - a, asyncWrap([8, 5, 3, 2, 1, 1]))).toEqual(true);
+  describe('when iterable contains only a single value', () => {
+    it('returns true', async () => {
+      expect(await asyncIsSorted(asyncWrap([9000]))).toEqual(true);
     });
+  });
 
-    it('returns false if the comparator returns 1', async () => {
-      expect(await asyncIsSorted(_ => 1, asyncWrap([1, 2]))).toEqual(false);
+  describe('when the values in iterable are sorted', () => {
+    it('returns true', async () => {
+      expect(await asyncIsSorted((a, b) => b - a, asyncWrap([3, 2, 1]))).toEqual(true);
+    });
+  });
+
+  describe('when the values in iterable are not sorted', () => {
+    it('returns false', async () => {
+      expect(await asyncIsSorted((a, b) => b - a, asyncWrap([1, 2, 3]))).toEqual(false);
+    });
+  });
+
+  describe('when some values in iterable are equal to each other', () => {
+    it('returns true', async () => {
+      expect(await asyncIsSorted((a, b) => b - a, asyncWrap([3, 2, 2, 2, 1]))).toEqual(true);
+    });
+  });
+
+  describe('when no comparator is specified', () => {
+    it('compares the default comparator', async () => {
+      expect(await asyncIsSorted('abc')).toEqual(true);
+      expect(await asyncIsSorted('cba')).toEqual(false);
+      expect(await asyncIsSorted('bbb')).toEqual(true);
     });
   });
 });

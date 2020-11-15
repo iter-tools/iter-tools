@@ -1,4 +1,5 @@
 import { asyncIterableCurry } from '../../internal/async-iterable';
+import { isInteger } from '../../internal/number';
 import delay from '../../internal/delay';
 
 export async function* asyncThrottle(source, intervalMs) {
@@ -13,7 +14,7 @@ export async function* asyncThrottle(source, intervalMs) {
 
 export default asyncIterableCurry(asyncThrottle, {
   validateArgs([intervalMs]) {
-    if (typeof intervalMs !== 'number' || intervalMs <= 0) {
+    if (!isInteger(intervalMs) || intervalMs <= 0) {
       throw new Error('The first argument (intervalMs) should be a number greater than 0');
     }
   },

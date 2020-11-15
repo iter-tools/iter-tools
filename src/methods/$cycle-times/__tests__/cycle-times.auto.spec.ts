@@ -8,17 +8,27 @@
 
 /* eslint-disable no-unused-vars,import/no-duplicates,no-constant-condition */
 
-import { cycleTimes, toArray } from '../../..';
-import { range } from '../../../__tests__/range';
+import { cycleTimes } from '../../..';
+import { wrap, unwrap } from '../../../test/helpers';
 
 describe('cycleTimes', () => {
-  it('can cycle a limited number of times', () => {
-    expect(toArray(cycleTimes(3, range(1, 4)))).toEqual([1, 2, 3, 1, 2, 3, 1, 2, 3]);
+  describe('when source is empty', () => {
+    it('yields no items', () => {
+      expect(unwrap(cycleTimes(1, null))).toEqual([]);
+      expect(unwrap(cycleTimes(1, undefined))).toEqual([]);
+      expect(unwrap(cycleTimes(1, []))).toEqual([]);
+    });
   });
 
-  it('can be reused', () => {
-    const myCycle = cycleTimes(2, range(1, 4));
-    expect(toArray(myCycle)).toEqual([1, 2, 3, 1, 2, 3]);
-    expect(toArray(myCycle)).toEqual([1, 2, 3, 1, 2, 3]);
+  describe('when source has values', () => {
+    it('yields those values repeating n times', () => {
+      expect(unwrap(cycleTimes(2, wrap([1, 2, 3])))).toEqual([1, 2, 3, 1, 2, 3]);
+    });
+  });
+
+  it('can produce multiple iterators', () => {
+    const myCycle = cycleTimes(2, wrap([1, 2, 3]));
+    expect(unwrap(myCycle)).toEqual([1, 2, 3, 1, 2, 3]);
+    expect(unwrap(myCycle)).toEqual([1, 2, 3, 1, 2, 3]);
   });
 });

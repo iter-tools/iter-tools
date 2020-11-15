@@ -1,7 +1,7 @@
 import { $, $async, $await } from '../../../../generate/async.macro';
 
 import { $peekerate, $PeekeratorClass } from '../../..';
-import { $wrap } from '../../../__tests__/__framework__/$wrap';
+import { $wrap } from '../../../test/$helpers';
 
 describe($`peekerate`, () => {
   it(

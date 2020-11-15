@@ -9,7 +9,7 @@
 /* eslint-disable no-unused-vars,import/no-duplicates,no-constant-condition */
 
 import { isEmpty } from '../../..';
-import { wrap } from '../../../__tests__/__framework__/wrap';
+import { wrap } from '../../../test/helpers';
 
 describe('isEmpty', () => {
   describe('when iterable is empty', () => {
@@ -20,9 +20,10 @@ describe('isEmpty', () => {
     });
   });
 
-  describe('when iterable contains values', () => {
+  describe('when iterable has values', () => {
     it('returns false', () => {
-      expect(isEmpty(wrap([1, 2, 3]))).toBe(false);
+      expect(isEmpty(wrap([1]))).toBe(false);
+      expect(isEmpty(wrap([1, 2]))).toBe(false);
     });
   });
 });

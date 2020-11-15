@@ -8,40 +8,35 @@
 
 /* eslint-disable no-unused-vars,import/no-duplicates,no-constant-condition */
 
-import { asyncZipAll, asyncToArray, asyncSlice, range } from '../../..';
-import { AsyncOneTwoThreeIterable } from '../../../__tests__/__framework__/fixtures';
+import { asyncZipAll, asyncToArray } from '../../..';
+import { asyncWrap } from '../../../test/async-helpers';
 
 describe('asyncZipAll', () => {
-  it('zips', async () => {
-    const iter = asyncZipAll([1, 2, 3], [4, 5, 6], [7, 8, 9]);
-    expect(await asyncToArray(iter)).toEqual([[1, 4, 7], [2, 5, 8], [3, 6, 9]]);
+  describe('when sources are of equal length', () => {
+    it('yields all values', async () => {
+      const iter = asyncZipAll(asyncWrap([1, 2, 3]), asyncWrap([4, 5, 6]), asyncWrap([7, 8, 9]));
+      expect(await asyncToArray(iter)).toEqual([[1, 4, 7], [2, 5, 8], [3, 6, 9]]);
+    });
   });
 
-  it('zips using iterables', async () => {
-    const iter = asyncZipAll(range({ start: 1, end: 4 }), range({ start: 4, end: 7 }), [7, 8, 9]);
-    expect(await asyncToArray(iter)).toEqual([[1, 4, 7], [2, 5, 8], [3, 6, 9]]);
-  });
+  describe('when some iterables are shorter than others', () => {
+    describe('when filler is specified', () => {
+      it('fills with filler', async () => {
+        const iter = asyncZipAll(
+          { filler: null },
+          asyncWrap([1, 2, 3]),
+          asyncWrap([4, 5]),
+          asyncWrap([7, 8]),
+        );
+        expect(await asyncToArray(iter)).toEqual([[1, 4, 7], [2, 5, 8], [3, null, null]]);
+      });
+    });
 
-  it('fills with undefined when some iterables are exhausted', async () => {
-    const iter = asyncZipAll(range({ start: 1, end: 4 }), range({ start: 4, end: 6 }), [7, 8]);
-    expect(await asyncToArray(iter)).toEqual([[1, 4, 7], [2, 5, 8], [3, undefined, undefined]]);
-  });
-
-  it('fills with filler when some iterables are exhausted', async () => {
-    const iter = asyncZipAll(
-      { filler: null },
-      range({ start: 1, end: 4 }),
-      range({ start: 4, end: 6 }),
-      [7, 8],
-    );
-    expect(await asyncToArray(iter)).toEqual([[1, 4, 7], [2, 5, 8], [3, null, null]]);
-  });
-
-  it('closes when stopping earlier', async () => {
-    // broken if transpiled with es5 loose
-    const asyncOneTwoThree = new AsyncOneTwoThreeIterable();
-    const iter = asyncSlice(0, 2, asyncZipAll(range(2), asyncOneTwoThree));
-    expect(await asyncToArray(iter)).toEqual([[0, 1], [1, 2]]);
-    expect(asyncOneTwoThree).toHaveProperty('isCleanedUp', true);
+    describe('when filler is not specified', () => {
+      it('fills with undefined', async () => {
+        const iter = asyncZipAll(asyncWrap([1, 2, 3]), asyncWrap([4, 5]), asyncWrap([7, 8]));
+        expect(await asyncToArray(iter)).toEqual([[1, 4, 7], [2, 5, 8], [3, undefined, undefined]]);
+      });
+    });
   });
 });

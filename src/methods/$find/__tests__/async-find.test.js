@@ -9,14 +9,14 @@
 /* eslint-disable no-unused-vars,import/no-duplicates,no-constant-condition */
 
 import { asyncFind } from '../../..';
-import { asyncWrap } from '../../../__tests__/__framework__/async-wrap';
+import { asyncWrap } from '../../../test/async-helpers';
 
 describe('asyncFind', () => {
   describe('when iterable is empty', () => {
     it('returns undefined', async () => {
-      expect(await asyncFind((item: never) => item, null)).toBe(undefined);
-      expect(await asyncFind((item: never) => item, undefined)).toBe(undefined);
-      expect(await asyncFind((item: never) => item, asyncWrap([]))).toBe(undefined);
+      expect(await asyncFind((item: any) => item, null)).toBe(undefined);
+      expect(await asyncFind((item: any) => item, undefined)).toBe(undefined);
+      expect(await asyncFind((item: any) => item, asyncWrap([]))).toBe(undefined);
     });
   });
 
@@ -30,9 +30,9 @@ describe('asyncFind', () => {
     it('returns the value', async () => {
       expect(await asyncFind(item => item === 5, asyncWrap([1, 2, 3, 4, 5, 6]))).toBe(5);
     });
+  });
 
-    it('the predicate may return a promise', async () => {
-      expect(await asyncFind(async item => item === 5, asyncWrap([1, 2, 3, 4, 5, 6]))).toBe(5);
-    });
+  it('may take an async predicate', async () => {
+    expect(await asyncFind(async item => item === 5, asyncWrap([1, 2, 3, 4, 5, 6]))).toBe(5);
   });
 });

@@ -1,6 +1,6 @@
 import { $iteratorSymbol, $async, $await } from '../../generate/async.macro';
 
-import { $ensureIterable } from './$iterable';
+import { $ensureIterable, $callReturn } from './$iterable';
 
 const _ = Symbol.for('_');
 
@@ -46,8 +46,8 @@ export class $Peekerator {
   @$async
   return() {
     const this_ = this[_];
-    if ('return' in this_.iterator) {
-      $await(this_.iterator.return());
+    if (!this.done) {
+      $await($callReturn(this_.iterator));
     }
     this_.current = { value: undefined, done: true };
   }

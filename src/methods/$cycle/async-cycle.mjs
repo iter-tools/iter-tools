@@ -8,8 +8,8 @@
 
 import asyncCycleTimes from '../$cycle-times/async-cycle-times';
 
-export function asyncCycle(iterable) {
-  return asyncCycleTimes(Infinity, iterable);
+export function asyncCycle(source) {
+  return asyncCycleTimes(Infinity, source);
 }
 
 export default asyncCycle;
