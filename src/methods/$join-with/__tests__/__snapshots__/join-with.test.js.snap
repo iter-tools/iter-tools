@@ -3,7 +3,7 @@
 exports[`joinWith when source is a string warns 1`] = `
 Array [
   Array [
-    "For string inputs use joinWithSubseq instead of joinWith",
+    "For string inputs use joinWithSeq instead of joinWith",
   ],
 ]
 `;

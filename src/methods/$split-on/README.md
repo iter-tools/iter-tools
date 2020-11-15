@@ -4,4 +4,4 @@ Yields a [PartsIterable](#partsiterable) of parts from `source`, where `separato
 splitOn(null, [1, null, 2, null, 3]); // Iterable[[1], [2], [3]]
 ```
 
-Note: If `source` is a string you should instead use [splitOnSubseq](#splitonsubseq). A warning will be emitted if you do not.
+Note: If `source` is a string you should instead use [splitOnSeq](#splitonseq). A warning will be emitted if you do not.

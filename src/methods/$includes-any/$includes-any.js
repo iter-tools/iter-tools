@@ -14,7 +14,7 @@ export default $iterableCurry($includesAny, {
   reduces: true,
   validateArgs(args) {
     if ($isSync && typeof args[1] === 'string') {
-      console.warn(`For string inputs use includesAnySubseq instead of includesAny`);
+      console.warn(`For string inputs use includesAnySeq instead of includesAny`);
     }
   },
 });

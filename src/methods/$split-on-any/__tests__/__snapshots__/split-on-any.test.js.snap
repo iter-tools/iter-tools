@@ -3,7 +3,7 @@
 exports[`splitOnAny when source is a string warns 1`] = `
 Array [
   Array [
-    "For string inputs use splitOnAnySubseq instead of splitOnAny",
+    "For string inputs use splitOnAnySeq instead of splitOnAny",
   ],
 ]
 `;

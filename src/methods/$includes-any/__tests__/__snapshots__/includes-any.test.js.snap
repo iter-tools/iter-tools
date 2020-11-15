@@ -3,7 +3,7 @@
 exports[`includesAny when iterable is a string warns 1`] = `
 Array [
   Array [
-    "For string inputs use includesAnySubseq instead of includesAny",
+    "For string inputs use includesAnySeq instead of includesAny",
   ],
 ]
 `;

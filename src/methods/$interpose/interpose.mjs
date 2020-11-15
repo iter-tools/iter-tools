@@ -7,16 +7,16 @@
  */
 
 import { iterableCurry } from '../../internal/iterable';
-import { interposeSubseq } from '../$interpose-subseq/interpose-subseq';
+import { interposeSeq } from '../$interpose-seq/interpose-seq';
 
 export function interpose(source, value) {
-  return interposeSubseq(source, [value]);
+  return interposeSeq(source, [value]);
 }
 
 export default iterableCurry(interpose, {
   validateArgs(args) {
     if (true && typeof args[1] === 'string') {
-      console.warn(`For string inputs use interposeSubseq instead of interpose`);
+      console.warn(`For string inputs use interposeSeq instead of interpose`);
     }
   },
 });

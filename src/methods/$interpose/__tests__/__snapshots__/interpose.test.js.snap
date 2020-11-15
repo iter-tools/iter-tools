@@ -3,7 +3,7 @@
 exports[`interpose when source is a string warns 1`] = `
 Array [
   Array [
-    "For string inputs use interposeSubseq instead of interpose",
+    "For string inputs use interposeSeq instead of interpose",
   ],
 ]
 `;

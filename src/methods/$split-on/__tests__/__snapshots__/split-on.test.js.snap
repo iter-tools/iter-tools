@@ -5,7 +5,7 @@ exports[`splitOn should throw when splits are consumed out of order 1`] = `[Erro
 exports[`splitOn when source is a string warns 1`] = `
 Array [
   Array [
-    "For string inputs use splitOnSubseq instead of splitOn",
+    "For string inputs use splitOnSeq instead of splitOn",
   ],
 ]
 `;

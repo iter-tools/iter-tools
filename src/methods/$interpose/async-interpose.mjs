@@ -7,10 +7,10 @@
  */
 
 import { asyncIterableCurry } from '../../internal/async-iterable';
-import { asyncInterposeSubseq } from '../$interpose-subseq/async-interpose-subseq';
+import { asyncInterposeSeq } from '../$interpose-seq/async-interpose-seq';
 
 export function asyncInterpose(source, value) {
-  return asyncInterposeSubseq(source, [value]);
+  return asyncInterposeSeq(source, [value]);
 }
 
 export default asyncIterableCurry(asyncInterpose, {

@@ -19,7 +19,7 @@ export default iterableCurry(startsWithAny, {
   reduces: true,
   validateArgs(args) {
     if (true && typeof args[1] === 'string') {
-      console.warn('For string inputs use startsWithAnySubseq instead of startsWithAny');
+      console.warn('For string inputs use startsWithAnySeq instead of startsWithAny');
     }
   },
 });

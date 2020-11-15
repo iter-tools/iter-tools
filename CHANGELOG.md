@@ -14,6 +14,17 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 **Exports**
  - `InterleaveBuffer`, `AsyncInterleaveBuffer`
 
+## Renamed
+ - `*subseq` to `*seq`
+   - `startsWithSubseq`, `asyncStartsWithSubseq` to `startsWithSeq`, `asyncStartsWithSeq`
+   - `startsWithAnySubseq`, `asyncStartsWithAnySubseq` to `startsWithAnySeq`, `asyncStartsWithAnySeq`
+   - `includesSubseq`, `asyncIncludesSubseq` to `includesSeq`, `asyncIncludesSeq`
+   - `includesAnySubseq`, `asyncIncludesAnySubseq` to `includesAnySeq`, `asyncIncludesAnySeq`
+   - `splitOnSubseq`, `asyncSplitOnSubseq` to `splitOnSeq`, `asyncSplitOnSeq`
+   - `splitOnAnySubseq`, `asyncSplitOnAnySubseq` to `splitOnAnySeq`, `asyncSplitOnAnySeq`
+   - `joinWithSubseq`, `asyncJoinWithSubseq` to `joinWithSeq`, `asyncJoinWithSeq`
+   - `interposeSubseq`, `asyncInterposeSubseq` to `interposeSeq`, `asyncInterposeSeq`
+
 ### Changed
  - `interleave` and `asyncInterleave` now wrap sources with `Peekerator` instead of `InterleaveBuffer`. Change `function* (canTakeAny, ...buffers) { while(canTakeAny()) { ... } }` to `function* (all, ...peekrs) { while(!all.done) { ... } }`.
  - `last` and `lastOr` no longer have O(1) optimizations for array inputs. Instead use `arrayLast` or `arrayLastOr`.
