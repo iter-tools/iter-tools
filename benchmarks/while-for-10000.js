@@ -1,4 +1,4 @@
-var range = require('../es2018/range');
+var range = require('../es/range');
 
 const a = range(10000);
 

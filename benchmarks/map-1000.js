@@ -1,5 +1,5 @@
-const range = require('../es2018/range');
-const map = require('../es2018/map');
+const range = require('../es/range');
+const map = require('../es/map');
 
 function power2(x) {
   return x * x;

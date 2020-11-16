@@ -1,4 +1,4 @@
-const regexpExec = require('../es2018/regexp-exec');
+const regexpExec = require('../es/regexp-exec');
 
 function generateCurrentAccount(nlines) {
   const lines = [];

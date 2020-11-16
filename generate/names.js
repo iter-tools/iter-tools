@@ -24,4 +24,13 @@ function compareNames(a, b) {
   return aAsync && !bAsync ? 1 : bAsync && !aAsync ? -1 : a > b ? 1 : b > a ? -1 : 0;
 }
 
-module.exports = { rename, renameDollar, syncName, compareNames };
+function decamelize(str, separator) {
+  separator = typeof separator === 'undefined' ? '_' : separator;
+
+  return str
+    .replace(/([a-z\d])([A-Z])/g, '$1' + separator + '$2')
+    .replace(/([A-Z]+)([A-Z][a-z\d]+)/g, '$1' + separator + '$2')
+    .toLowerCase();
+}
+
+module.exports = { rename, renameDollar, syncName, compareNames, decamelize };

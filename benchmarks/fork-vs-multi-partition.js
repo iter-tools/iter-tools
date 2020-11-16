@@ -1,7 +1,7 @@
-const range = require('../es2018/range');
-const fork = require('../es2018/fork');
-const filter = require('../es2018/filter');
-const multiPartition = require('../es2018/multi-partition');
+const range = require('../es/range');
+const fork = require('../es/fork');
+const filter = require('../es/filter');
+const multiPartition = require('../es/multi-partition');
 
 function pos0(x) {
   return x % 4 === 0;

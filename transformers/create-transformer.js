@@ -7,6 +7,7 @@ module.exports = function(configFile) {
     comments: true,
     // prettier-ignore
     plugins: [
+      ['@babel/plugin-syntax-typescript', false],
       /**
        * This is a little bit of a hack. We need to include a type plugin to
        * enable execution of the test files, which may include some types
@@ -19,7 +20,6 @@ module.exports = function(configFile) {
        * destroys them. We use the flow-strip-types plugin because it doesn't
        * do this.
        */
-      ['@babel/plugin-syntax-typescript', false],
       '@babel/plugin-transform-flow-strip-types',
       'add-module-exports',
       '@babel/plugin-transform-modules-commonjs'
