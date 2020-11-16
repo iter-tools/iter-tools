@@ -24,17 +24,10 @@ module.exports = {
   testMatch: [],
   projects: [
     makeProject({
-      name: 'es2015',
+      name: 'es5',
     }),
-    ...(process.env.CI
-      ? [
-          makeProject({
-            name: 'es5',
-          }),
-          makeProject({
-            name: 'es2018',
-          }),
-        ]
-      : []),
+    makeProject({
+      name: 'es',
+    }),
   ],
 };

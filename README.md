@@ -18,6 +18,8 @@ If you want even more ideas about how and when Iterables and iter-tools can help
 
 Please read our [API docs](https://github.com/iter-tools/iter-tools/blob/v7.0.0-rc.0/API.md)!
 
+Historical docs are markdown files on github. For 6.x docs look at tags on the history of `README.md`. For 7.x versions look at tags on the history of `API.md`.
+
 ## Why iter-tools?
 
 Iter-tools is at present the only fully-featured library of its kind. Here is what it supports:
@@ -38,36 +40,44 @@ Iter-tools is at present the only fully-featured library of its kind. Here is wh
 
 #### Usage
 
-Every module is available in 3 ecmascript editions: ES5, ES2015, ES2018.
+Every module is available in 2 ecmascript editions: es5, and es2018 (shortened to es).
 
-- Use ES5 when you need to support IE11 or when you are authoring a library transpiled to ES5.
-- Use ES2015 for node 8 and below.
-- Use ES2018 when you know all your target environments natively support async iterables. Node 10 and above do.
-- There will soon be a separate pacakge, `iter-tools-es` which will be suitable for use when transpiling `node_modules`, such as if you are developing in `create-react-app`.
-
-Methods can also be required individually. Their file names are dasherized. Using named imports will include the entire library and thus is the preferred approach when bundle weight is not a concern (node) or when using a tree-shaking bundler (with support for `/*#__PURE__ */` comments) such as webpack@3+ or rollup@1.3.0+.
+You should use use the default es5 variant when you need to support es5 and do not plan to transpile `node_modules`. Otherwise it is recommended that you import from `iter-tools/es`. Node v10+ supports async iteration natively and so will will be able to import `/es`. Transpilers also widely support es2018+, so if you are transpiling to es5 (including your `node_modules`, as does `create-react-app`) then everything should work fine.
 
 Here are some examples:
 
 ```js
-const { takeWhile } = require('iter-tools'); // ES5 is default
-const takeWhile = require('iter-tools/take-while'); // ES5
-import { takeWhile } from 'iter-tools'; // ES5
+const { take } = require('iter-tools'); // ES5 is default
+import { take } from 'iter-tools'; // ES5
 
-const { takeWhile } = require('iter-tools/es2015'); // ES2015
-const takeWhile = require('iter-tools/es2015/take-while'); // ES2015
-import { takeWhile } from 'iter-tools/es2015'; // ES2015
+const { take } = require('iter-tools/es'); // ES2018
+import { take } from 'iter-tools/es'; // ES2018
+```
 
-const { takeWhile } = require('iter-tools/es2018'); // ES2018
-const takeWhile = require('iter-tools/es2018/take-while'); // ES2018
-import { takeWhile } from 'iter-tools/es2018'; // ES2018
+It is also possible to import individual files from the library. This will make the resulting program or application faster to initialize, as it avoids the need to parse the whole library, including parts of it which may not be used. Importing a single method looks like this:
+
+```js
+const takeWhile = require('iter-tools/take-while');
+```
+
+If you happen to be transpiling the code and have use of the fantastic `babel-plugin-macros`, you can generate single-method imports effortlessly like so:
+
+```js
+import { take, drop } from 'iter-tools/es/explode.macro';
+
+// transpiles to:
+import take from 'iter-tools/es/take';
+import drop from 'iter-tools/es/drop';
+
+// this also works for es5:
+import { take, drop } from 'iter-tools/explode.macro';
 ```
 
 ## Roadmap
 
 Some major improvements are still to come. They are:
 
-- An `iter-tools-es` package for use in environments which transpile `node_modules`
+- An `@iter-tools/es` package for use in environments which transpile `node_modules`
 - Configurable comparators for instead of forcing `===` comparison
 - Flow types
 - More packages in the iter-tools org, such as `@iter-tools/read-dir` (an iterable of the contents of a directory), and `@iter-tools/read-lines` (an iterable of the lines in a file).

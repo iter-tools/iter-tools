@@ -3,7 +3,7 @@ module.exports = {
   overrides: [
     {
       test: ['**/*.mjs', '**/__tests__/*.js'],
-      plugins: [['@babel/plugin-transform-runtime', { useESModules: true, corejs: 2 }]],
+      plugins: [['@babel/plugin-transform-runtime', { useESModules: true }]],
       presets: [
         [
           '@babel/preset-env',
@@ -14,7 +14,7 @@ module.exports = {
       ],
       env: {
         test: {
-          plugins: [['@babel/plugin-transform-runtime', { corejs: 2 }]],
+          plugins: [['@babel/plugin-transform-runtime']],
         },
         es: {
           plugins: ['./babel-plugin-pure-curry'],
@@ -23,7 +23,7 @@ module.exports = {
           plugins: [
             'add-module-exports',
             '@babel/plugin-transform-modules-commonjs',
-            ['@babel/plugin-transform-runtime', { corejs: 2 }],
+            '@babel/plugin-transform-runtime',
           ],
         },
       },

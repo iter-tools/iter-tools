@@ -1,0 +1,19 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`unknown plugin 1. unknown plugin: 1. unknown plugin 1`] = `
+
+import 'above';
+import { map as snap, dropWhile } from '../../explode.macro';
+import { tap } from '../../explode.macro';
+import 'below';
+
+      ↓ ↓ ↓ ↓ ↓ ↓
+
+import 'above';
+import { map as snap } from 'iter-tools/map';
+import { dropWhile } from 'iter-tools/drop-while';
+import { tap } from 'iter-tools/tap';
+import 'below';
+
+
+`;

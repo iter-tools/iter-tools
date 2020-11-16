@@ -1,6 +1,6 @@
-const range = require('../es2018/range');
-const asyncMap = require('../es2018/async-map');
-const asyncReduce = require('../es2018/async-reduce');
+const range = require('../es/range');
+const asyncMap = require('../es/async-map');
+const asyncReduce = require('../es/async-reduce');
 
 const delay = n => new Promise(resolve => setTimeout(resolve, n));
 

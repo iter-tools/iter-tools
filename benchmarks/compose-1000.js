@@ -1,7 +1,7 @@
-const range = require('../es2018/range');
-const filter = require('../es2018/filter');
-const map = require('../es2018/map');
-const compose = require('../es2018/compose');
+const range = require('../es/range');
+const filter = require('../es/filter');
+const map = require('../es/map');
+const compose = require('../es/compose');
 
 function isEven(x) {
   return x % 2 === 0;
