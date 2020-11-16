@@ -9,7 +9,7 @@
 /* eslint-disable no-unused-vars,import/no-duplicates,no-constant-condition */
 
 import { asyncSplitAt } from '../../..';
-import { asyncWrap, asyncUnwrap, asyncUnwrapDeep } from '../../../test/async-helpers';
+import { asyncWrap, asyncUnwrapDeep } from '../../../test/async-helpers';
 
 describe('asyncSplitAt', () => {
   describe('with positive index', () => {
@@ -39,31 +39,5 @@ describe('asyncSplitAt', () => {
       const [first, second] = asyncSplitAt(-3, asyncWrap([0, 1]));
       expect(await asyncUnwrapDeep([first, second])).toEqual([[0, 1], []]);
     });
-  });
-
-  it('allows the first half to be skipped', async () => {
-    const [, second] = asyncSplitAt(3, asyncWrap([0, 1, 2, 3, 4, 5]));
-    expect(await asyncUnwrap(second)).toEqual([3, 4, 5]);
-  });
-
-  it('throws if only the first half is taken', async () => {
-    const splits = asyncSplitAt(3, asyncWrap([0, 1, 2, 3, 4, 5]));
-    splits.next();
-    expect(() => splits.return()).toThrowErrorMatchingSnapshot();
-  });
-
-  it('throws when the second half is consumed before the first', async () => {
-    const [first, second] = asyncSplitAt(3, asyncWrap([0, 1, 2, 3, 4, 5]));
-    expect(await asyncUnwrap(second)).toEqual([3, 4, 5]);
-
-    expect(
-      await (async () => {
-        try {
-          await asyncUnwrap(first);
-        } catch (e) {
-          return e;
-        }
-      })(),
-    ).toMatchSnapshot();
   });
 });

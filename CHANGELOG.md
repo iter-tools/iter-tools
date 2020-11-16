@@ -43,6 +43,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
  - `spliterateGrouped`, `asyncSpliterateGrouped`
  - `window`, `asyncWindow`
  - `stringFrom`, `stringFromAsync`
+ - `splitWhen`, `asyncSplitWhen`
 
 **Aliases**
  - `str` for `stringFrom`, `asyncStr` for `stringFromAsync`

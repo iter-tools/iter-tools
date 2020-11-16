@@ -1,0 +1,5 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Bisector throws if only the first half is taken 1`] = `"You must take both parts of a bisector or neither."`;
+
+exports[`Bisector throws when the second half is consumed before the first 1`] = `[Error: Cannot take from this split part. It is no longer the active part.]`;
