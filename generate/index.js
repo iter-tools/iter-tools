@@ -42,7 +42,7 @@ Watching options, passed to the sane watcher:
 if (argv.help) {
   console.log(usage);
 } else {
-  const alwaysIgnored = ['es5', 'es2015', 'es2018', 'coverage'];
+  const alwaysIgnored = ['coverage', 'dist'];
   if (argv.clean) {
     require('./generator/clean')('.', { glob: ['src/**'], ignored: alwaysIgnored });
   } else {
