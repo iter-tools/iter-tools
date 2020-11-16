@@ -31,7 +31,10 @@ export class AsyncBisector extends IterableIterator {
   async setupFirst() {
     const { source, strategy, options } = this;
     this.partsIterator = this.partsIterator || new AsyncPartsIterator(source, strategy, options);
-    this.firstPart = this.firstPart || (await this.partsIterator.next()).value;
+    if (!this.firstPart) {
+      const item = await this.partsIterator.next();
+      this.firstPart = item.done ? [] : item.value;
+    }
   }
 
   // never async
@@ -53,7 +56,8 @@ export class AsyncBisector extends IterableIterator {
           value: (async function*() {
             await self.setupFirst();
 
-            self.secondPart = (await self.partsIterator.next()).value;
+            const item = await self.partsIterator.next();
+            self.secondPart = item.done ? [] : item.value;
 
             yield* self.secondPart;
           })(),

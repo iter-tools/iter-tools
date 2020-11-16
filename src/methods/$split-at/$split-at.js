@@ -9,17 +9,16 @@ import { $peekerate } from '../$peekerate/$peekerate';
 $async;
 export function* $indexSplitStrategy(split, { idx }, source) {
   const sourcePeekr = $await($peekerate(source));
-  const fromEnd = idx < 0;
-  const offset = Math.abs(idx);
-  const buffer = fromEnd ? new CircularBuffer(offset) : null;
-  let currentPos = 0;
-  let yielded = 0;
 
   try {
+    const fromEnd = idx < 0;
+    const offset = Math.abs(idx);
+    const buffer = fromEnd ? new CircularBuffer(offset) : null;
+    let currentPos = 0;
+    let yielded = 0;
     let value;
-    /* eslint-disable no-unmodified-loop-condition */
+    /* eslint-disable-next-line no-unmodified-loop-condition */
     while ((fromEnd || currentPos < idx) && !sourcePeekr.done) {
-      /* eslint-enable no-unmodified-loop-condition */
       currentPos++;
       ({ value } = sourcePeekr);
 

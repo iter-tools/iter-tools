@@ -31,7 +31,10 @@ export class Bisector extends IterableIterator {
   setupFirst() {
     const { source, strategy, options } = this;
     this.partsIterator = this.partsIterator || new PartsIterator(source, strategy, options);
-    this.firstPart = this.firstPart || this.partsIterator.next().value;
+    if (!this.firstPart) {
+      const item = this.partsIterator.next();
+      this.firstPart = item.done ? [] : item.value;
+    }
   }
 
   // never async
@@ -53,7 +56,8 @@ export class Bisector extends IterableIterator {
           value: (function*() {
             self.setupFirst();
 
-            self.secondPart = self.partsIterator.next().value;
+            const item = self.partsIterator.next();
+            self.secondPart = item.done ? [] : item.value;
 
             yield* self.secondPart;
           })(),
