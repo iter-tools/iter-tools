@@ -15,6 +15,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
  - `InterleaveBuffer`, `AsyncInterleaveBuffer`
 
 ## Renamed
+ - `last`, `asyncLast` to `takeLast`, `asyncTakeLast`
+ - `lastOr`, `asyncLastOr` to `takeLastOr`, `asyncTakeLastOr`
  - `*subseq` to `*seq`
    - `startsWithSubseq`, `asyncStartsWithSubseq` to `startsWithSeq`, `asyncStartsWithSeq`
    - `startsWithAnySubseq`, `asyncStartsWithAnySubseq` to `startsWithAnySeq`, `asyncStartsWithAnySeq`

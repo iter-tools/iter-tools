@@ -153,8 +153,6 @@ Reduce an iterable to a single value
 [includesSeq](#includesseq) ([async](#asyncincludesseq))  
 [isEmpty](#isempty) ([async](#asyncisempty))  
 [isSorted](#issorted) ([async](#asyncissorted))  
-[last](#last) ([async](#asynclast))  
-[lastOr](#lastor) ([async](#asynclastor))  
 [reduce](#reduce) ([async](#asyncreduce))  
 [size](#size) ([async](#asyncsize))  
 [some](#some) ([async](#asyncsome))  
@@ -163,6 +161,8 @@ Reduce an iterable to a single value
 [startsWithAnySeq](#startswithanyseq) ([async](#asyncstartswithanyseq))  
 [startsWithSeq](#startswithseq) ([async](#asyncstartswithseq))  
 [str](#stringfrom) ([async](#stringfromasync))  
+[takeLast](#takelast) ([async](#asynctakelast))  
+[takeLastOr](#takelastor) ([async](#asynctakelastor))  
 
 Combinatory iterables
 
@@ -1614,44 +1614,6 @@ isSorted((a, b) => b - a, [3, 2, 1]); // true
 
 See [isSorted](#issorted)
 
-### last
-
-**last([iterable](#sourceiterable))**
-
-Returns the last value from `iterable`, or `undefined` when `iterable` is empty.
-
-Performance note: this requires consuming the entire iterable. If `iterable` is an array this method will do a lot of unnecessary work compared to `arrayLast(array)`.
-
-```js
-last([1, 2, 3]); // 3
-last([]); // undefined
-```
-
-### asyncLast
-
-**asyncLast([iterable](#asyncsourceiterable))**
-
-See [last](#last)
-
-### lastOr
-
-**lastOr(whenEmpty, [iterable](#sourceiterable))**
-
-Returns the last value from `iterable`, or `whenEmpty` when `iterable` is empty.
-
-Performance note: this requires consuming the entire iterable. If `iterable` is an array this method will do a lot of unnecessary work compared to `arrayLastOr(array, whenEmpty)`.
-
-```js
-lastOr(0, [1, 2, 3]); // 3
-lastOr(0, []); // 0
-```
-
-### asyncLastOr
-
-**asyncLastOr(whenEmpty, [iterable](#asyncsourceiterable))**
-
-See [lastOr](#lastor)
-
 ### reduce
 
 **reduce(initial, reducer, [iterable](#sourceiterable))**  
@@ -1788,6 +1750,44 @@ See [stingFrom](#stringfrom)
 **asyncStr([chars](#asyncsourceiterable))**
 
 See [stringFromAsync](#stringfromasync)
+
+### takeLast
+
+**takeLast([iterable](#sourceiterable))**
+
+Returns the last value from `iterable`, or `undefined` when `iterable` is empty.
+
+Performance note: this requires consuming the entire iterable. If `iterable` is an array this method will do a lot of unnecessary work compared to `arrayLast(array)`.
+
+```js
+takeLast([1, 2, 3]); // 3
+takeLast([]); // undefined
+```
+
+### asyncTakeLast
+
+**asyncTakeLast([iterable](#asyncsourceiterable))**
+
+See [takeLast](#takelast)
+
+### takeLastOr
+
+**takeLastOr(whenEmpty, [iterable](#sourceiterable))**
+
+Returns the last value from `iterable`, or `whenEmpty` when `iterable` is empty.
+
+Performance note: this requires consuming the entire iterable. If `iterable` is an array this method will do a lot of unnecessary work compared to `arrayLastOr(array, whenEmpty)`.
+
+```js
+takeLastOr(0, [1, 2, 3]); // 3
+takeLastOr(0, []); // 0
+```
+
+### asyncTakeLastOr
+
+**asyncTakeLastOr(whenEmpty, [iterable](#asyncsourceiterable))**
+
+See [takeLastOr](#takelastor)
 
 
 ## Combinatory iterables
