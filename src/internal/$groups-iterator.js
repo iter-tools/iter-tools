@@ -1,8 +1,8 @@
-import { $async, $await } from '../../generate/async.macro';
+import { $async, $await } from '../../generate/async.macro.cjs';
 
-import { $PartsIterator, $PartIterator } from './$parts-iterator';
-import { split } from './symbols';
-import { $wrap } from './$wrap';
+import { $PartsIterator, $PartIterator } from './$parts-iterator.js';
+import { split } from './symbols.js';
+import { $wrap } from './$wrap.js';
 
 export class $GroupsIterator extends $PartsIterator {
   @$async

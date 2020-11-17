@@ -1,9 +1,9 @@
-import { $async, $await } from '../../generate/async.macro';
+import { $async, $await } from '../../generate/async.macro.cjs';
 
-import { split } from './symbols';
-import { $IterableIterator } from './$iterable-iterator';
-import { $Peekerator } from './$peekerator';
-import { $wrap } from './$wrap';
+import { split } from './symbols.js';
+import { $IterableIterator } from './$iterable-iterator.js';
+import { $Peekerator } from './$peekerator.js';
+import { $wrap } from './$wrap.js';
 
 export class $PartIterator extends $IterableIterator {
   constructor(partsIterator) {

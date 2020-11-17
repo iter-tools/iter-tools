@@ -1,3 +1,6 @@
+// eslint-disable-next-line spaced-comment
+/// <reference lib="es2018" />
+
 export type DefinedSourceIterable<T> = Iterable<T>;
 export type SourceIterable<T> = DefinedSourceIterable<T> | null | undefined;
 

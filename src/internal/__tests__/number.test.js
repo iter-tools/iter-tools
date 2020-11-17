@@ -1,4 +1,4 @@
-import { isInteger, isIntegerOrInfinite } from '../number';
+import { isInteger, isIntegerOrInfinite } from '../number.js';
 
 describe('isInteger', () => {
   describe('when value is an integer', () => {

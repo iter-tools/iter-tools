@@ -1,8 +1,8 @@
-import { $, $isAsync, $async, $await } from '../../../generate/async.macro';
-import { $awaitError } from '../../../generate/test.macro';
+import { $, $isAsync, $async, $await } from '../../../generate/async.macro.cjs';
+import { $awaitError } from '../../../generate/test.macro.cjs';
 
-import { $ensureIterable, $isIterable, $iterableCurry } from '../$iterable';
-import { $wrap, $unwrap } from '../../test/$helpers';
+import { $ensureIterable, $isIterable, $iterableCurry } from '../$iterable.js';
+import { $wrap, $unwrap } from '../../test/$helpers.js';
 
 describe($`ensureIterable`, () => {
   if ($isAsync) {

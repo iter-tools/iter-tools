@@ -6,10 +6,8 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-/* eslint-disable no-unused-vars,import/no-duplicates,no-constant-condition */
-
-import { asyncEnsureIterable, asyncIsIterable, asyncIterableCurry } from '../async-iterable';
-import { asyncWrap, asyncUnwrap } from '../../test/async-helpers';
+import { asyncEnsureIterable, asyncIsIterable, asyncIterableCurry } from '../async-iterable.js';
+import { asyncWrap, asyncUnwrap } from '../../test/async-helpers.js';
 
 describe('asyncEnsureIterable', () => {
   describe('when i is a sync iterable', () => {

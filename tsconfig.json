@@ -10,7 +10,11 @@
     "esModuleInterop": true,
     "experimentalDecorators": true,
     "pretty": true,
-    "types": ["jest"]
+    "types": ["jest"],
+    "baseUrl": ".",
+    "paths": {
+      "@iter-tools/es": ["."]
+    }
   },
   "include": ["src/**/__tests__/*.ts", "src/test/setup.d.ts"],
   "exclude": ["src/**/__tests__/$*.ts"]

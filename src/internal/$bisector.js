@@ -1,7 +1,7 @@
-import { $async, $await } from '../../generate/async.macro';
+import { $async, $await } from '../../generate/async.macro.cjs';
 
-import { IterableIterator } from './iterable-iterator';
-import { $PartsIterator } from './$parts-iterator';
+import { IterableIterator } from './iterable-iterator.js';
+import { $PartsIterator } from './$parts-iterator.js';
 
 /**
  * Split an iterable into two parts.

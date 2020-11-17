@@ -2,6 +2,7 @@
 /dist
 /.git
 /coverage
+/src/index.*
 
 CHANGELOG.md
 API.md

@@ -1,3 +1,6 @@
+// eslint-disable-next-line spaced-comment
+/// <reference lib="esnext.asynciterable" />
+
 export type AsyncDefinedSourceIterable<T> = AsyncIterable<T> | Iterable<T>;
 export type AsyncSourceIterable<T> = null | undefined | AsyncDefinedSourceIterable<T>;
 

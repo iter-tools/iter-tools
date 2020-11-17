@@ -1,4 +1,4 @@
-import { CircularBuffer, ReadOnlyCircularBuffer } from '../circular-buffer';
+import { CircularBuffer, ReadOnlyCircularBuffer } from '../circular-buffer.js';
 
 describe('CircularBuffer', () => {
   it('is iterable', () => {
