@@ -1,33 +1,40 @@
-function makeProject(projectConfig) {
-  return Object.assign(
-    {
-      displayName: projectConfig.name,
-      moduleFileExtensions: ['js', 'mjs'],
-      transform: {
-        '.*': '<rootDir>/transformers/' + projectConfig.name,
-      },
-      testMatch: ['**/__tests__/**/!($)*.test.*(m)js'],
-      clearMocks: true,
-      testPathIgnorePatterns: ['generate-yo/generators/[^/]+/templates?'],
-      setupFilesAfterEnv: ['<rootDir>/src/test/setup.mjs'],
-    },
-    projectConfig,
-  );
+function whenCi(arr) {
+  return process.env.CI || process.env.PKGS ? arr : [];
 }
 
-module.exports = {
+function makeProject(projectConfig) {
+  return {
+    displayName: projectConfig.name,
+    moduleFileExtensions: ['js'],
+    transform: {
+      '.*': `<rootDir>/babel/transformers/${projectConfig.name}.cjs`,
+    },
+    testMatch: ['**/__tests__/**/!($)*.test.js'],
+    clearMocks: true,
+    testPathIgnorePatterns: ['generate-yo/generators/[^/]+/templates?'],
+    setupFilesAfterEnv: ['<rootDir>/src/test/setup.js'],
+    ...projectConfig,
+  };
+}
+
+export default {
   testEnvironment: 'node',
   coverageReporters: ['json-summary', 'text', 'lcov'],
-  collectCoverageFrom: ['src/**/*.mjs', '!src/*.mjs', '!**/$*.js', '!src/(test|types)/**'],
+  collectCoverageFrom: ['!src/methods/*', '!**/$*.js', '!src/(test|types)/**'],
   coverageDirectory: './coverage/',
 
   testMatch: [],
   projects: [
     makeProject({
-      name: 'es5',
-    }),
-    makeProject({
       name: 'es',
     }),
+    ...whenCi([
+      makeProject({
+        name: 'es5-pkg',
+      }),
+      makeProject({
+        name: 'es-pkg',
+      }),
+    ]),
   ],
 };

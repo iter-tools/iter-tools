@@ -1,8 +1,8 @@
-import { $, $isSync, $async, $await } from '../../../generate/async.macro';
-import { $awaitError } from '../../../generate/test.macro';
+import { $, $isSync, $async, $await } from '../../../generate/async.macro.cjs';
+import { $awaitError } from '../../../generate/test.macro.cjs';
 
-import { $wrap, $unwrap } from '../../test/$helpers';
-import { $Bisector } from '../$bisector';
+import { $wrap, $unwrap } from '../../test/$helpers.js';
+import { $Bisector } from '../$bisector.js';
 
 $async;
 function* $testStrategy(split, options, source) {

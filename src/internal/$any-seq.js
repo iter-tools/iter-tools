@@ -1,8 +1,8 @@
-import { $async, $await } from '../../generate/async.macro';
+import { $async, $await } from '../../generate/async.macro.cjs';
 
-import { $ensureIterable } from './$iterable';
-import { $toArray } from '../methods/$to-array/$to-array';
-import { $map } from '../methods/$map/$map';
+import { $ensureIterable } from './$iterable.js';
+import { $toArray } from '../impls/$to-array/$to-array.js';
+import { $map } from '../impls/$map/$map.js';
 
 $async;
 export function $seqsToArray(values) {

@@ -1,3 +1,3 @@
-export { $wrap, $wrapDeep } from './$wrap/$wrap';
-export { $unwrap, $unwrapDeep } from './$unwrap/$unwrap';
-export { anyType } from './any-type';
+export { $wrap, $wrapDeep } from './$wrap/$wrap.js';
+export { $unwrap, $unwrapDeep } from './$unwrap/$unwrap.js';
+export { anyType } from './any-type.js';

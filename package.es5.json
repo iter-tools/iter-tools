@@ -1,0 +1,17 @@
+{
+  "name": "iter-tools",
+  "main": "index",
+  "type": "commonjs",
+  "jsnext:main": "index.mjs",
+  "exports": {
+    ".": "./index.mjs",
+    "./methods/*": "./methods/*.mjs",
+    "./explode.macro": "./explode.macro.js",
+    "./package.json": "./package.json"
+  },
+  "typings": "index.d.ts",
+  "scripts": {},
+  "husky": {},
+  "lint-staged": {},
+  "devDependencies": {}
+}

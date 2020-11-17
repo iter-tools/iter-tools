@@ -1,4 +1,4 @@
-import '../../../generate/async.macro';
+import '../../../generate/async.macro.cjs';
 
 import { $Iterable } from '../../types/$iterable';
 

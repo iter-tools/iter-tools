@@ -2,7 +2,7 @@
 
 [![build status](https://travis-ci.org/iter-tools/iter-tools.svg?branch=master)](https://travis-ci.org/iter-tools/iter-tools)
 [![line coverage](https://codecov.io/gh/iter-tools/iter-tools/branch/master/graph/badge.svg)](https://codecov.io/gh/iter-tools/iter-tools)
-[![npm version](https://img.shields.io/npm/v/iter-tools.svg)](https://www.npmjs.com/package/iter-tools)
+[![npm version](https://img.shields.io/npm/v/@iter-tools/es)](https://www.npmjs.com/package/@iter-tools/es)
 [![chat on gitter](https://img.shields.io/gitter/room/iter-tools/iter-tools)](https://gitter.im/iter-tools/community)
 
 iter-tools is designed to be a standard library of utilities for working with iterables. All javascript data types designed for the storage of data (namely Array, Map, and Set) are iterable, and iter-tools also includes some utilities that will help you work with objects. Working with iterables has powerful benefits:
@@ -40,45 +40,36 @@ Iter-tools is at present the only fully-featured library of its kind. Here is wh
 
 #### Usage
 
-Every module is available in 2 ecmascript editions: es5, and es2018 (shortened to es).
-
-You should use use the default es5 variant when you need to support es5 and do not plan to transpile `node_modules`. Otherwise it is recommended that you import from `iter-tools/es`. Node v10+ supports async iteration natively and so will will be able to import `/es`. Transpilers also widely support es2018+, so if you are transpiling to es5 (including your `node_modules`, as does `create-react-app`) then everything should work fine.
-
-Here are some examples:
+Before you install the library you should consider whether you want `iter-tools` (an es5 package), or `@iter-tools/es` an es2018 package. We strongly recommend `@iter-tools/es` if you are able to use it. Iterators are not native to es5 and these tools are likely to run quite slowly (through correctly) in their transpiled form. Both packages are built from the same sources and, transpilation aside, work identically.
 
 ```js
-const { take } = require('iter-tools'); // ES5 is default
-import { take } from 'iter-tools'; // ES5
-
-const { take } = require('iter-tools/es'); // ES2018
-import { take } from 'iter-tools/es'; // ES2018
+const { take } = require('@iter-tools/es');
+import { take } from '@iter-tools/es';
 ```
 
-It is also possible to import individual files from the library. This will make the resulting program or application faster to initialize, as it avoids the need to parse the whole library, including parts of it which may not be used. Importing a single method looks like this:
+It is also possible to import individual files from the library. This will make the resulting program or application faster to initialize as it avoids the need to parse the whole library (including parts of it which may not be used). Note that this will not be nececssary for code which will be bundled prior to shipping, as modern versions of rollup and webpack will remove the unused code. Importing a single method looks like this:
 
 ```js
-const takeWhile = require('iter-tools/take-while');
+const takeWhile = require('@iter-tools/es/methods/take-while');
 ```
 
 If you happen to be transpiling the code and have use of the fantastic `babel-plugin-macros`, you can generate single-method imports effortlessly like so:
 
 ```js
-import { take, drop } from 'iter-tools/es/explode.macro';
+import { take, drop } from '@iter-tools/es/explode.macro';
 
-// transpiles to:
-import take from 'iter-tools/es/take';
-import drop from 'iter-tools/es/drop';
-
-// this also works for es5:
-import { take, drop } from 'iter-tools/explode.macro';
+// which transpiles to:
+import take from '@iter-tools/es/methods/take';
+import drop from '@iter-tools/es/methods/drop';
 ```
 
 ## Roadmap
 
 Some major improvements are still to come. They are:
 
-- An `@iter-tools/es` package for use in environments which transpile `node_modules`
-- Configurable comparators for instead of forcing `===` comparison
+- Configurable equality comparators instead of forcing `===` comparison
+- `@iter-tools/regex` for evaluating regular expressions against iterables
+- `@iter-tools/unicode` for turning strings into iterables of graphemes or extended grapheme clusters
 - Flow types
 - More packages in the iter-tools org, such as `@iter-tools/read-dir` (an iterable of the contents of a directory), and `@iter-tools/read-lines` (an iterable of the lines in a file).
 

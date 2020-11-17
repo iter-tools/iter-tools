@@ -1,4 +1,4 @@
-import { $async, $await, $iteratorSymbol } from '../../../generate/async.macro';
+import { $async, $await, $iteratorSymbol } from '../../../generate/async.macro.cjs';
 
 const wrappedIterables = [];
 

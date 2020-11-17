@@ -6,10 +6,8 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-/* eslint-disable no-unused-vars,import/no-duplicates,no-constant-condition */
-
-import { asyncWrap, asyncUnwrap } from '../../test/async-helpers';
-import { AsyncBisector } from '../async-bisector';
+import { asyncWrap, asyncUnwrap } from '../../test/async-helpers.js';
+import { AsyncBisector } from '../async-bisector.js';
 
 async function* asyncTestStrategy(split, options, source) {
   let i = 0;

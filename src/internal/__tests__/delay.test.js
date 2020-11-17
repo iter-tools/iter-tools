@@ -1,4 +1,4 @@
-import delay from '../delay';
+import { delay } from '../delay.js';
 
 describe('delay', () => {
   it('delay (fulfilled)', async () => {

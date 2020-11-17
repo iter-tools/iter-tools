@@ -1,6 +1,6 @@
-import { $async, $await } from '../../../generate/async.macro';
+import { $async, $await } from '../../../generate/async.macro.cjs';
 
-import { $isIterable } from '../../internal/$iterable';
+import { $isIterable } from '../../internal/$iterable.js';
 
 $async;
 export function $unwrap(iterable) {

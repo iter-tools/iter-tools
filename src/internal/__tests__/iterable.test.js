@@ -6,10 +6,8 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-/* eslint-disable no-unused-vars,import/no-duplicates,no-constant-condition */
-
-import { ensureIterable, isIterable, iterableCurry } from '../iterable';
-import { wrap, unwrap } from '../../test/helpers';
+import { ensureIterable, isIterable, iterableCurry } from '../iterable.js';
+import { wrap, unwrap } from '../../test/helpers.js';
 
 describe('ensureIterable', () => {
   describe(`when i is ${'iterable'}`, () => {

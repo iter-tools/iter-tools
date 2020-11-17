@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ## [7.0.0-rc.1] - UNRELEASED
 ### Removed
 **Folders**
- - `es2015`: It is expected that most users will switch to `import ... from 'iter-tools/es'`.
+ - `es2015`: It is expected that most users will switch to `import ... from '@iter-tools/es'`.
 
 **Methods**
  - `joinAsString`, `asyncJoinAsString` (Instead use `str(join(...))`)
@@ -19,7 +19,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## Renamed
 **Folders**
- - `es2018` to `es`: E.g. now write `import ... from 'iter-tools/es'`.
+ - `es2018` moved to separate package: `@iter-tools/es` (note the `@`).
+   - e.g. `import { map } from 'iter-tools/es2018` is now `import { map } from '@iter-tools/es`
 
 **Methods**
  - `last`, `asyncLast` to `takeLast`, `asyncTakeLast`

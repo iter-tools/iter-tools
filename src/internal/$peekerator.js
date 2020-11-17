@@ -1,6 +1,6 @@
-import { $iteratorSymbol, $async, $await } from '../../generate/async.macro';
+import { $iteratorSymbol, $async, $await } from '../../generate/async.macro.cjs';
 
-import { $ensureIterable, $callReturn } from './$iterable';
+import { $ensureIterable, $callReturn } from './$iterable.js';
 
 const _ = Symbol.for('_');
 
