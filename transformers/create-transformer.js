@@ -1,7 +1,7 @@
 const { join } = require('path');
 const babelJest = require('babel-jest');
 
-module.exports = function(configFile) {
+module.exports = function (configFile) {
   return babelJest.createTransformer({
     configFile: join(__dirname, '..', configFile),
     comments: true,
@@ -23,7 +23,7 @@ module.exports = function(configFile) {
       '@babel/plugin-transform-flow-strip-types',
       'add-module-exports',
       '@babel/plugin-transform-modules-commonjs'
-    ]
+    ],
     // presets: ["jest"] // something else is loading this I guess...
   });
 };

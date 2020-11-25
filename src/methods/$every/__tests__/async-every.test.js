@@ -22,19 +22,19 @@ describe('asyncEvery', () => {
 
   describe('when no values match predicate', () => {
     it('returns false', async () => {
-      expect(await asyncEvery(val => val !== val, [1, 2, 3])).toBe(false);
+      expect(await asyncEvery((val) => val !== val, [1, 2, 3])).toBe(false);
     });
   });
 
   describe('when some values match predicate', () => {
     it('returns false', async () => {
-      expect(await asyncEvery(val => val > 2, [1, 2, 3])).toBe(false);
+      expect(await asyncEvery((val) => val > 2, [1, 2, 3])).toBe(false);
     });
   });
 
   describe('when every value matches predicate', () => {
     it('returns true', async () => {
-      expect(await asyncEvery(val => val > 0, [1, 2, 3])).toBe(true);
+      expect(await asyncEvery((val) => val > 0, [1, 2, 3])).toBe(true);
     });
   });
 

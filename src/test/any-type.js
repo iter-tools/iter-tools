@@ -1,1 +1,1 @@
-export const anyType = _ => _;
+export const anyType = (_) => _;

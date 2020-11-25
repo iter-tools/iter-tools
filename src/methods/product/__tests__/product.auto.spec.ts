@@ -30,13 +30,23 @@ describe('product', () => {
   it('returns double', () => {
     const iter = product([1, 2], [3, 4]);
     expect(iter.size).toEqual(4);
-    expect(Array.from(iter)).toEqual([[1, 3], [1, 4], [2, 3], [2, 4]]);
+    expect(Array.from(iter)).toEqual([
+      [1, 3],
+      [1, 4],
+      [2, 3],
+      [2, 4],
+    ]);
   });
 
   it('returns with repeat', () => {
     const iter = product([1, 2], [1, 2]);
     expect(iter.size).toEqual(4);
-    expect(Array.from(iter)).toEqual([[1, 1], [1, 2], [2, 1], [2, 2]]);
+    expect(Array.from(iter)).toEqual([
+      [1, 1],
+      [1, 2],
+      [2, 1],
+      [2, 2],
+    ]);
   });
 
   it('returns a 4 x 4 product', () => {
@@ -65,7 +75,14 @@ describe('product', () => {
   it('works with different length inputs', () => {
     const iter = product([1, 2], [3, 4, 5]);
     expect(iter.size).toEqual(6);
-    expect(Array.from(iter)).toEqual([[1, 3], [1, 4], [1, 5], [2, 3], [2, 4], [2, 5]]);
+    expect(Array.from(iter)).toEqual([
+      [1, 3],
+      [1, 4],
+      [1, 5],
+      [2, 3],
+      [2, 4],
+      [2, 5],
+    ]);
   });
 
   it('returns triple', () => {

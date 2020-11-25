@@ -22,7 +22,7 @@ describe('asyncFork', () => {
     const [a, b, c] = asyncFork(asyncMakeIterable());
     const originalIter = await asyncUnwrap(asyncMakeIterable());
 
-    expect(await asyncUnwrap(asyncMap(iter => asyncUnwrap(iter), [a, b, c]))).toEqual(
+    expect(await asyncUnwrap(asyncMap((iter) => asyncUnwrap(iter), [a, b, c]))).toEqual(
       Array(3).fill(originalIter),
     );
   });
@@ -30,7 +30,7 @@ describe('asyncFork', () => {
   it('can take a number as first argument', async () => {
     const gen = asyncFork(3, asyncMakeIterable());
     const originalIter = await asyncUnwrap(asyncMakeIterable());
-    expect(await asyncUnwrap(asyncMap(iter => asyncUnwrap(iter), gen))).toEqual(
+    expect(await asyncUnwrap(asyncMap((iter) => asyncUnwrap(iter), gen))).toEqual(
       Array(3).fill(originalIter),
     );
   });
@@ -38,7 +38,7 @@ describe('asyncFork', () => {
   it('can be curried', async () => {
     const gen = asyncFork(3)(asyncMakeIterable());
     const originalIter = await asyncUnwrap(asyncMakeIterable());
-    expect(await asyncUnwrap(asyncMap(iter => asyncUnwrap(iter), gen))).toEqual(
+    expect(await asyncUnwrap(asyncMap((iter) => asyncUnwrap(iter), gen))).toEqual(
       Array(3).fill(originalIter),
     );
   });
@@ -46,7 +46,7 @@ describe('asyncFork', () => {
   it('does not matter which order the fork iterables are consumed in', async () => {
     const [a, b, c] = asyncFork(asyncMakeIterable());
     const originalIter = await asyncUnwrap(asyncMakeIterable());
-    expect(await asyncUnwrap(asyncMap(iter => asyncUnwrap(iter), [c, b, a]))).toEqual(
+    expect(await asyncUnwrap(asyncMap((iter) => asyncUnwrap(iter), [c, b, a]))).toEqual(
       Array(3).fill(originalIter),
     );
   });

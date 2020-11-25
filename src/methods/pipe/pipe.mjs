@@ -1,4 +1,4 @@
-const identity = x => x;
+const identity = (x) => x;
 
 export function pipe(...fns) {
   if (!fns.length) fns = [identity];

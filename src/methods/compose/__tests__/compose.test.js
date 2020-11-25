@@ -5,12 +5,7 @@ describe('compose', () => {
     const a = (str: string) => `a(${str})`;
     const b = (str: string) => `b(${str})`;
 
-    expect(
-      compose(
-        a,
-        b,
-      )('input'),
-    ).toBe('a(b(input))');
+    expect(compose(a, b)('input')).toBe('a(b(input))');
   });
 
   it('works with types', () => {

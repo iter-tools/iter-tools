@@ -19,7 +19,7 @@ export function combinations(iterable, n) {
 
   return {
     *[Symbol.iterator]() {
-      const toIndex = i => arr[i];
+      const toIndex = (i) => arr[i];
 
       for (const indices of permutations(range(0, len), n)) {
         if (isSorted(indices)) {

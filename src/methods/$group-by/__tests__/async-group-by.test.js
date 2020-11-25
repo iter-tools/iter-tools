@@ -30,7 +30,11 @@ describe('asyncGroupBy', () => {
         await asyncUnwrapDeep(
           asyncGroupBy(async (_: number, i: number) => i, asyncWrap([0, 0, 0])),
         ),
-      ).toEqual([[0, [0]], [1, [0]], [2, [0]]]);
+      ).toEqual([
+        [0, [0]],
+        [1, [0]],
+        [2, [0]],
+      ]);
     });
   });
 

@@ -4,12 +4,12 @@ import { asyncWrap, asyncUnwrap } from '../../../test/async-helpers';
 
 describe('asyncMapParallel', () => {
   it('returns mapped iterable', async () => {
-    const iter = asyncMapParallel(item => item * 2, asyncWrap([1, 2, 3]));
+    const iter = asyncMapParallel((item) => item * 2, asyncWrap([1, 2, 3]));
     expect(await asyncUnwrap(iter)).toEqual([2, 4, 6]);
   });
 
   it('maps concurrently', async () => {
-    const iter = asyncMapParallel(2, async item => item * 2, asyncWrap([1, 2, 3]));
+    const iter = asyncMapParallel(2, async (item) => item * 2, asyncWrap([1, 2, 3]));
     expect(await asyncUnwrap(iter)).toEqual([2, 4, 6]);
   });
 

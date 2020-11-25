@@ -10,7 +10,7 @@ function fetch(state) {
     return new Promise((resolve, reject) => {
       iterator
         .next()
-        .then(newItem => {
+        .then((newItem) => {
           if (newItem.done) {
             state.done = true;
             state.doneValue = newItem.value;
@@ -20,7 +20,7 @@ function fetch(state) {
             return resolve();
           }
         })
-        .catch(err => reject(err));
+        .catch((err) => reject(err));
     });
   } else {
     const newItem = iterator.next();
@@ -107,6 +107,6 @@ export default function curriedFork(...args) {
   if ($isIterable(args[0])) {
     return $fork(args[0], undefined);
   } else {
-    return iterable => $fork(iterable, args[0]);
+    return (iterable) => $fork(iterable, args[0]);
   }
 }

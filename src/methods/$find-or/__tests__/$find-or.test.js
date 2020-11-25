@@ -19,7 +19,7 @@ describe($`findOr`, () => {
     it(
       'returns notFoundValue',
       $async(() => {
-        expect($await($findOr(0, _ => false, $wrap([1, 2, 3, 4, 5, 6])))).toBe(0);
+        expect($await($findOr(0, (_) => false, $wrap([1, 2, 3, 4, 5, 6])))).toBe(0);
       }),
     );
   });
@@ -28,14 +28,14 @@ describe($`findOr`, () => {
     it(
       'returns the value',
       $async(() => {
-        expect($await($findOr(0, item => item === 5, $wrap([1, 2, 3, 4, 5, 6])))).toBe(5);
+        expect($await($findOr(0, (item) => item === 5, $wrap([1, 2, 3, 4, 5, 6])))).toBe(5);
       }),
     );
   });
 
   if ($isAsync) {
     it('may take an async predicate', async () => {
-      expect(await $findOr(0, async item => item === 5, $wrap([1, 2, 3, 4, 5, 6]))).toBe(5);
+      expect(await $findOr(0, async (item) => item === 5, $wrap([1, 2, 3, 4, 5, 6]))).toBe(5);
     });
   }
 });

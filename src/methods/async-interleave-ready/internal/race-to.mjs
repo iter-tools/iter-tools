@@ -6,13 +6,13 @@ export function raceTo(predicate, notFoundValue, promises) {
     let rejected = false;
     for (const promise of promises) {
       promise
-        .catch(error => {
+        .catch((error) => {
           if (!rejected && !resolved) {
             reject(error);
             rejected = true;
           }
         })
-        .then(result => {
+        .then((result) => {
           settledPromiseCount++;
           if (!resolved && !rejected) {
             if (predicate(result)) {

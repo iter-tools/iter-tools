@@ -3,7 +3,11 @@ import { AsyncIterable } from '../../../types/async-iterable';
 import delay from '../../../internal/delay';
 
 function intermittent(): AsyncIterable<number> {
-  const sequence = [{ delay: 0, value: 0 }, { delay: 400, value: 1 }, { delay: 0, value: 2 }];
+  const sequence = [
+    { delay: 0, value: 0 },
+    { delay: 400, value: 1 },
+    { delay: 0, value: 2 },
+  ];
 
   return {
     async *[Symbol.asyncIterator]() {

@@ -26,7 +26,10 @@ describe('asyncTrailingWindow', () => {
     it('yields only partial windows', async () => {
       expect(
         await asyncUnwrapDeep(asyncTrailingWindow(3, { filler: 0 }, asyncWrap([1, 2]))),
-      ).toEqual([[0, 0, 1], [0, 1, 2]]);
+      ).toEqual([
+        [0, 0, 1],
+        [0, 1, 2],
+      ]);
     });
   });
 
@@ -34,13 +37,21 @@ describe('asyncTrailingWindow', () => {
     it('yields partial windows, then one full window', async () => {
       expect(
         await asyncUnwrapDeep(asyncTrailingWindow(3, { filler: 0 }, asyncWrap([1, 2, 3]))),
-      ).toEqual([[0, 0, 1], [0, 1, 2], [1, 2, 3]]);
+      ).toEqual([
+        [0, 0, 1],
+        [0, 1, 2],
+        [1, 2, 3],
+      ]);
     });
   });
 
   describe('when size(source) > size', () => {
     it('yields partial windows, then size(source)-size full windows', async () => {
-      const result = [[0, 1], [1, 2], [2, 3]];
+      const result = [
+        [0, 1],
+        [1, 2],
+        [2, 3],
+      ];
 
       expect(
         await asyncUnwrapDeep(asyncTrailingWindow(2, { filler: 0 }, asyncWrap([1, 2, 3]))),

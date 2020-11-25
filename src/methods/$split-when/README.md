@@ -5,7 +5,7 @@ Yields two `part` subsequences of `source`. The first `part` yields the values w
 ```js
 const source = [-2, -1, 0, 1, 2];
 const [negatives, positives] = splitWhen(
-  i => i >= 0,
+  (i) => i >= 0,
   source,
 );
 negatives; // Iterable[-2, -1]

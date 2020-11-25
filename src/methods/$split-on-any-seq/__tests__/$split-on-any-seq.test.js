@@ -28,9 +28,9 @@ describe($`splitOnAnySeq`, () => {
     it(
       'yields a single part containing the values from source',
       $async(() => {
-        expect($await($unwrapDeep($splitOnAnySeq([$wrap([undefined])], $wrap([1, 2, 3]))))).toEqual(
-          [[1, 2, 3]],
-        );
+        expect(
+          $await($unwrapDeep($splitOnAnySeq([$wrap([undefined])], $wrap([1, 2, 3])))),
+        ).toEqual([[1, 2, 3]]);
       }),
     );
   });
@@ -63,11 +63,31 @@ describe($`splitOnAnySeq`, () => {
       'should only split once',
       $async(() => {
         expect(
-          $await($unwrapDeep($splitOnAnySeq([[2, 3], [3, 2]], $wrap([1, 2, 3, 2, 2, 3, 2, 3, 4])))),
+          $await(
+            $unwrapDeep(
+              $splitOnAnySeq(
+                [
+                  [2, 3],
+                  [3, 2],
+                ],
+                $wrap([1, 2, 3, 2, 2, 3, 2, 3, 4]),
+              ),
+            ),
+          ),
         ).toEqual([[1], [2], [], [4]]);
 
         expect(
-          $await($unwrapDeep($splitOnAnySeq([[2, 3], [2, 2, 3]], $wrap([1, 2, 2, 3, 3, 4])))),
+          $await(
+            $unwrapDeep(
+              $splitOnAnySeq(
+                [
+                  [2, 3],
+                  [2, 2, 3],
+                ],
+                $wrap([1, 2, 2, 3, 3, 4]),
+              ),
+            ),
+          ),
         ).toEqual([[1], [3, 4]]);
       }),
     );
@@ -78,19 +98,59 @@ describe($`splitOnAnySeq`, () => {
       'consume the longest sequence that matches',
       $async(() => {
         expect(
-          $await($unwrapDeep($splitOnAnySeq([[2, 2, 3], [2, 3]], $wrap([1, 2, 2, 3, 3, 4])))),
+          $await(
+            $unwrapDeep(
+              $splitOnAnySeq(
+                [
+                  [2, 2, 3],
+                  [2, 3],
+                ],
+                $wrap([1, 2, 2, 3, 3, 4]),
+              ),
+            ),
+          ),
         ).toEqual([[1], [3, 4]]);
 
         expect(
-          $await($unwrapDeep($splitOnAnySeq([[2, 3], [2, 2, 3]], $wrap([1, 2, 2, 3, 3, 4])))),
+          $await(
+            $unwrapDeep(
+              $splitOnAnySeq(
+                [
+                  [2, 3],
+                  [2, 2, 3],
+                ],
+                $wrap([1, 2, 2, 3, 3, 4]),
+              ),
+            ),
+          ),
         ).toEqual([[1], [3, 4]]);
 
         expect(
-          $await($unwrapDeep($splitOnAnySeq([[2, 2, 3], [2, 2]], $wrap([1, 2, 2, 3, 3, 4])))),
+          $await(
+            $unwrapDeep(
+              $splitOnAnySeq(
+                [
+                  [2, 2, 3],
+                  [2, 2],
+                ],
+                $wrap([1, 2, 2, 3, 3, 4]),
+              ),
+            ),
+          ),
         ).toEqual([[1], [3, 4]]);
 
         expect(
-          $await($unwrapDeep($splitOnAnySeq([[2, 2], [2, 2, 3]], $wrap([1, 2, 2, 3, 3, 4])))),
+          $await(
+            $unwrapDeep(
+              $splitOnAnySeq(
+                [
+                  [2, 2],
+                  [2, 2, 3],
+                ],
+                $wrap([1, 2, 2, 3, 3, 4]),
+              ),
+            ),
+          ),
         ).toEqual([[1], [3, 4]]);
       }),
     );

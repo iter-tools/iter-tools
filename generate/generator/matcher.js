@@ -13,7 +13,7 @@ function matcher(glob) {
   else if (Array.isArray(glob)) isMatch = mmMatcher(`(${glob.join('|')})`);
   else throw new Error('glob configuration was not a string, Array, or null');
 
-  return path => isMatch(relative(rootDir, path));
+  return (path) => isMatch(relative(rootDir, path));
 }
 
 module.exports = { matcher };

@@ -19,7 +19,7 @@ describe($`every`, () => {
     it(
       'returns false',
       $async(() => {
-        expect($await($every(val => val !== val, [1, 2, 3]))).toBe(false);
+        expect($await($every((val) => val !== val, [1, 2, 3]))).toBe(false);
       }),
     );
   });
@@ -28,7 +28,7 @@ describe($`every`, () => {
     it(
       'returns false',
       $async(() => {
-        expect($await($every(val => val > 2, [1, 2, 3]))).toBe(false);
+        expect($await($every((val) => val > 2, [1, 2, 3]))).toBe(false);
       }),
     );
   });
@@ -37,7 +37,7 @@ describe($`every`, () => {
     it(
       'returns true',
       $async(() => {
-        expect($await($every(val => val > 0, [1, 2, 3]))).toBe(true);
+        expect($await($every((val) => val > 0, [1, 2, 3]))).toBe(true);
       }),
     );
   });

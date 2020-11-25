@@ -1,6 +1,9 @@
 {
   "type": "combine",
   "signatures": [
-    [{ "name": "source", "isIterable": true }, { "name": "included", "isIterable": true }]
+    [
+      { "name": "source", "isIterable": true },
+      { "name": "included", "isIterable": true }
+    ]
   ]
 }

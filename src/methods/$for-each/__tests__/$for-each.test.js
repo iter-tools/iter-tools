@@ -9,7 +9,7 @@ describe($`forEach`, () => {
     $async(() => {
       const arr: Array<number> = [];
 
-      $await($forEach(item => arr.push(item), $wrap([1, 2, 3])));
+      $await($forEach((item) => arr.push(item), $wrap([1, 2, 3])));
 
       expect(arr).toEqual([1, 2, 3]);
     }),
@@ -19,7 +19,7 @@ describe($`forEach`, () => {
     it('may take an async callback', async () => {
       const arr: Array<number> = [];
 
-      $await($forEach(async item => arr.push(item), $wrap([1, 2, 3])));
+      $await($forEach(async (item) => arr.push(item), $wrap([1, 2, 3])));
 
       expect(arr).toEqual([1, 2, 3]);
     });

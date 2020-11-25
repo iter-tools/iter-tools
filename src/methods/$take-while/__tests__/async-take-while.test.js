@@ -23,7 +23,7 @@ describe('asyncTakeWhile', () => {
   describe('when source has values', () => {
     it('yields values while the result of predicate(value, i) is truthy', async () => {
       expect(
-        await asyncUnwrap(asyncTakeWhile(value => value === 2, asyncWrap([2, 2, 3, 2]))),
+        await asyncUnwrap(asyncTakeWhile((value) => value === 2, asyncWrap([2, 2, 3, 2]))),
       ).toEqual([2, 2]);
       expect(await asyncUnwrap(asyncTakeWhile((_value, i) => i < 0, asyncWrap([2, 2])))).toEqual(
         [],
@@ -32,7 +32,7 @@ describe('asyncTakeWhile', () => {
   });
 
   it('can take an async predicate', async () => {
-    const iter = asyncTakeWhile(async value => value % 2 === 0, [2, 2, 3, 2, 2, 2]);
+    const iter = asyncTakeWhile(async (value) => value % 2 === 0, [2, 2, 3, 2, 2, 2]);
     expect(await asyncUnwrap(iter)).toEqual([2, 2]);
   });
 });

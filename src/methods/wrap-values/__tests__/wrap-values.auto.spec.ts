@@ -10,7 +10,10 @@ import { wrapValues } from '../../..';
 
 describe('wrapValues', () => {
   it('works with Map', () => {
-    const map = new Map([['foo', 'bar'], ['fox', 'far']]);
+    const map = new Map([
+      ['foo', 'bar'],
+      ['fox', 'far'],
+    ]);
     expect(Array.from(wrapValues(map))).toEqual(['bar', 'far']);
   });
 

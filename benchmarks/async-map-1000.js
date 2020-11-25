@@ -66,12 +66,10 @@ const streamReduce = (fn, acc, options = {}) =>
   });
 
 module.exports['stream map 1000 items'] = {
-  fn: async function(deferred) {
-    const stream = fastNumbers()
-      .pipe(streamMap(power2))
-      .pipe(streamReduce(concat, []));
+  fn: async function (deferred) {
+    const stream = fastNumbers().pipe(streamMap(power2)).pipe(streamReduce(concat, []));
 
-    stream.on('data', array => {
+    stream.on('data', (array) => {
       deferred.resolve();
     });
   },
@@ -79,7 +77,7 @@ module.exports['stream map 1000 items'] = {
 };
 
 module.exports['iter-tools async map 1000 items'] = {
-  fn: async function(deferred) {
+  fn: async function (deferred) {
     const iter = asyncMap(power2);
 
     await asyncReduce([], concat, iter(a));

@@ -51,37 +51,80 @@ describe('splitOnAnySeq', () => {
   describe('when sequences overlap with each other in source', () => {
     it('should only split once', () => {
       expect(
-        unwrapDeep(splitOnAnySeq([[2, 3], [3, 2]], wrap([1, 2, 3, 2, 2, 3, 2, 3, 4]))),
+        unwrapDeep(
+          splitOnAnySeq(
+            [
+              [2, 3],
+              [3, 2],
+            ],
+            wrap([1, 2, 3, 2, 2, 3, 2, 3, 4]),
+          ),
+        ),
       ).toEqual([[1], [2], [], [4]]);
 
-      expect(unwrapDeep(splitOnAnySeq([[2, 3], [2, 2, 3]], wrap([1, 2, 2, 3, 3, 4])))).toEqual([
-        [1],
-        [3, 4],
-      ]);
+      expect(
+        unwrapDeep(
+          splitOnAnySeq(
+            [
+              [2, 3],
+              [2, 2, 3],
+            ],
+            wrap([1, 2, 2, 3, 3, 4]),
+          ),
+        ),
+      ).toEqual([[1], [3, 4]]);
     });
   });
 
   describe('when more than one sequence matches', () => {
     it('consume the longest sequence that matches', () => {
-      expect(unwrapDeep(splitOnAnySeq([[2, 2, 3], [2, 3]], wrap([1, 2, 2, 3, 3, 4])))).toEqual([
-        [1],
-        [3, 4],
-      ]);
+      expect(
+        unwrapDeep(
+          splitOnAnySeq(
+            [
+              [2, 2, 3],
+              [2, 3],
+            ],
+            wrap([1, 2, 2, 3, 3, 4]),
+          ),
+        ),
+      ).toEqual([[1], [3, 4]]);
 
-      expect(unwrapDeep(splitOnAnySeq([[2, 3], [2, 2, 3]], wrap([1, 2, 2, 3, 3, 4])))).toEqual([
-        [1],
-        [3, 4],
-      ]);
+      expect(
+        unwrapDeep(
+          splitOnAnySeq(
+            [
+              [2, 3],
+              [2, 2, 3],
+            ],
+            wrap([1, 2, 2, 3, 3, 4]),
+          ),
+        ),
+      ).toEqual([[1], [3, 4]]);
 
-      expect(unwrapDeep(splitOnAnySeq([[2, 2, 3], [2, 2]], wrap([1, 2, 2, 3, 3, 4])))).toEqual([
-        [1],
-        [3, 4],
-      ]);
+      expect(
+        unwrapDeep(
+          splitOnAnySeq(
+            [
+              [2, 2, 3],
+              [2, 2],
+            ],
+            wrap([1, 2, 2, 3, 3, 4]),
+          ),
+        ),
+      ).toEqual([[1], [3, 4]]);
 
-      expect(unwrapDeep(splitOnAnySeq([[2, 2], [2, 2, 3]], wrap([1, 2, 2, 3, 3, 4])))).toEqual([
-        [1],
-        [3, 4],
-      ]);
+      expect(
+        unwrapDeep(
+          splitOnAnySeq(
+            [
+              [2, 2],
+              [2, 2, 3],
+            ],
+            wrap([1, 2, 2, 3, 3, 4]),
+          ),
+        ),
+      ).toEqual([[1], [3, 4]]);
     });
   });
 

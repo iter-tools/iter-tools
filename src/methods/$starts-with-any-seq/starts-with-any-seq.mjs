@@ -52,6 +52,6 @@ export function startsWithAnySeq(iterable, seqs) {
 export default iterableCurry(startsWithAnySeq, {
   reduces: true,
   validateArgs(args) {
-    args[0] = args[0].map(arg => ensureIterable(arg));
+    args[0] = args[0].map((arg) => ensureIterable(arg));
   },
 });

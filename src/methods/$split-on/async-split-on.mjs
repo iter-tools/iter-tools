@@ -10,7 +10,7 @@ import { asyncIterableCurry } from '../../internal/async-iterable';
 import { asyncSplitWith } from '../$split-with/async-split-with';
 
 export function asyncSplitOn(source, separator) {
-  return asyncSplitWith(source, value => value === separator);
+  return asyncSplitWith(source, (value) => value === separator);
 }
 
 export default asyncIterableCurry(asyncSplitOn, {

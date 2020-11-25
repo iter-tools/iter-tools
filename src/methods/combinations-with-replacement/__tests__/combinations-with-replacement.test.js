@@ -10,13 +10,25 @@ describe('combinationsWithReplacement', () => {
   });
 
   it('returns combinationsWithReplacement', () => {
-    expect(Array.from(combinationsWithReplacement([1, 2]))).toEqual([[1, 1], [1, 2], [2, 2]]);
+    expect(Array.from(combinationsWithReplacement([1, 2]))).toEqual([
+      [1, 1],
+      [1, 2],
+      [2, 2],
+    ]);
   });
 
   it('can be reused', () => {
     const iter = combinationsWithReplacement([1, 2]);
-    expect(Array.from(iter)).toEqual([[1, 1], [1, 2], [2, 2]]);
-    expect(Array.from(iter)).toEqual([[1, 1], [1, 2], [2, 2]]);
+    expect(Array.from(iter)).toEqual([
+      [1, 1],
+      [1, 2],
+      [2, 2],
+    ]);
+    expect(Array.from(iter)).toEqual([
+      [1, 1],
+      [1, 2],
+      [2, 2],
+    ]);
   });
 
   it('returns combinationsWithReplacement (max n)', () => {

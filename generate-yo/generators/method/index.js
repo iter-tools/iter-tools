@@ -54,7 +54,7 @@ const asyncPrompt = [
   },
 ];
 
-const makeOtherPrompts = isAsync => [
+const makeOtherPrompts = (isAsync) => [
   {
     type: 'input',
     name: 'name',
@@ -143,7 +143,7 @@ class MethodGenerator extends BaseGenerator {
     }
 
     const prompts = makeOtherPrompts(isAsync);
-    const necessaryPrompts = prompts.filter(prompt => this._arguments[prompt.name] === undefined);
+    const necessaryPrompts = prompts.filter((prompt) => this._arguments[prompt.name] === undefined);
 
     if (necessaryPrompts.length) {
       Object.assign(this._arguments, await this.prompt(necessaryPrompts));
@@ -161,7 +161,7 @@ class MethodGenerator extends BaseGenerator {
 
     const paths = await recursiveRead(template);
 
-    for (const path of paths.map(path => relative(template, path))) {
+    for (const path of paths.map((path) => relative(template, path))) {
       this.fs.write(
         this.destinationPath(
           join(`src/methods/${fileName}`, path.replace(/\bmethod\b/g, dasherizedName)),

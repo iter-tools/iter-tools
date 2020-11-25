@@ -13,7 +13,7 @@ function generateCurrentAccount(nlines) {
 
 const csv = generateCurrentAccount(10000);
 
-module.exports['RegExp vanilla'] = function() {
+module.exports['RegExp vanilla'] = function () {
   const re = /^[0-9]+;[A-Z]{3}[0-9]*;([0-9.]*);([0-9.]*)/gm;
   const transactions = [];
   let match;
@@ -22,7 +22,7 @@ module.exports['RegExp vanilla'] = function() {
   }
 };
 
-module.exports['RegExp iter-tools'] = function() {
+module.exports['RegExp iter-tools'] = function () {
   const regIter = regexpExec(/^[0-9]+;[A-Z]{3}[0-9]*;([0-9.]*);([0-9.]*)/gm);
   const transactions = [];
   for (const [match] of regIter(csv)) {

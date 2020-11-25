@@ -26,7 +26,10 @@ describe('asyncLeadingWindow', () => {
     it('yields only partial windows', async () => {
       expect(
         await asyncUnwrapDeep(asyncLeadingWindow(3, { filler: 0 }, asyncWrap([1, 2]))),
-      ).toEqual([[1, 2, 0], [2, 0, 0]]);
+      ).toEqual([
+        [1, 2, 0],
+        [2, 0, 0],
+      ]);
     });
   });
 
@@ -34,13 +37,21 @@ describe('asyncLeadingWindow', () => {
     it('yields one full window, then partial windows', async () => {
       expect(
         await asyncUnwrapDeep(asyncLeadingWindow(3, { filler: 0 }, asyncWrap([1, 2, 3]))),
-      ).toEqual([[1, 2, 3], [2, 3, 0], [3, 0, 0]]);
+      ).toEqual([
+        [1, 2, 3],
+        [2, 3, 0],
+        [3, 0, 0],
+      ]);
     });
   });
 
   describe('when size(source) > size', () => {
     it('yields size(source)-size full windows, then partial windows', async () => {
-      const result = [[1, 2], [2, 3], [3, 0]];
+      const result = [
+        [1, 2],
+        [2, 3],
+        [3, 0],
+      ];
 
       expect(
         await asyncUnwrapDeep(asyncLeadingWindow(2, { filler: 0 }, asyncWrap([1, 2, 3]))),

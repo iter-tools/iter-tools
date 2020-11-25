@@ -17,9 +17,13 @@ describe('pipe', () => {
   });
 
   it('works with types', () => {
-    expect(execPipe('', (v: string): number => Number(v), (v: number): boolean => Boolean(v))).toBe(
-      false,
-    );
+    expect(
+      execPipe(
+        '',
+        (v: string): number => Number(v),
+        (v: number): boolean => Boolean(v),
+      ),
+    ).toBe(false);
   });
 
   it('is the identity function when no functions are passed', () => {

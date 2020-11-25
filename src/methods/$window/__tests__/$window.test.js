@@ -37,7 +37,10 @@ describe($`window`, () => {
     it(
       'yields partial windows, then size(source)-size full windows',
       $async(() => {
-        const result = [[1, 2], [2, 3]];
+        const result = [
+          [1, 2],
+          [2, 3],
+        ];
 
         expect($await($unwrapDeep($window(2, $wrap([1, 2, 3]))))).toEqual(result);
       }),

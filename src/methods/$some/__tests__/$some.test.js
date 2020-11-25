@@ -19,7 +19,7 @@ describe($`some`, () => {
     it(
       'returns false',
       $async(() => {
-        expect($await($some(val => val !== val, [1, 2, 3]))).toBe(false);
+        expect($await($some((val) => val !== val, [1, 2, 3]))).toBe(false);
       }),
     );
   });
@@ -28,7 +28,7 @@ describe($`some`, () => {
     it(
       'returns true',
       $async(() => {
-        expect($await($some(val => val > 2, [1, 2, 3]))).toBe(true);
+        expect($await($some((val) => val > 2, [1, 2, 3]))).toBe(true);
       }),
     );
   });
@@ -37,14 +37,14 @@ describe($`some`, () => {
     it(
       'returns true',
       $async(() => {
-        expect($await($some(val => val > 0, [1, 2, 3]))).toBe(true);
+        expect($await($some((val) => val > 0, [1, 2, 3]))).toBe(true);
       }),
     );
   });
 
   if ($isAsync) {
     it('can be passed an async predicate', async () => {
-      expect(await $some(async n => n % 2 === 0, [1, 2, 3, 4, 5, 6])).toBe(true);
+      expect(await $some(async (n) => n % 2 === 0, [1, 2, 3, 4, 5, 6])).toBe(true);
     });
   }
 });

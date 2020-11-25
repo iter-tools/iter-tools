@@ -18,7 +18,7 @@ export function asyncPeekerate(source) {
 }
 
 function asyncWrapWithEnsureIterable(fn) {
-  return source => fn(asyncEnsureIterable(source));
+  return (source) => fn(asyncEnsureIterable(source));
 }
 
 export default asyncWrapWithEnsureIterable(asyncPeekerate);

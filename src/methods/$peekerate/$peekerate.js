@@ -10,7 +10,7 @@ export function $peekerate(source) {
 }
 
 function $wrapWithEnsureIterable(fn) {
-  return source => fn($ensureIterable(source));
+  return (source) => fn($ensureIterable(source));
 }
 
 export default $wrapWithEnsureIterable($peekerate);

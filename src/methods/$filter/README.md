@@ -2,7 +2,7 @@ Yields only values from `source` for which the result of `predicate(value, idx)`
 
 ```js
 filter(isEven, range(4)); // Iterable[0, 2]
-filter(animal => animal.kind.slice(1) === 'at', [
+filter((animal) => animal.kind.slice(1) === 'at', [
   { type: 'cat' },
   { type: 'rat' },
   { type: 'dog' },

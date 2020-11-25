@@ -26,7 +26,7 @@ describe('asyncConsume', () => {
 
       expect(
         await asyncConsume(
-          (function*() {
+          (function* () {
             arr.push(1);
             yield;
             arr.push(2);

@@ -95,6 +95,6 @@ export default function curriedFork(...args) {
   if (isIterable(args[0])) {
     return fork(args[0], undefined);
   } else {
-    return iterable => fork(iterable, args[0]);
+    return (iterable) => fork(iterable, args[0]);
   }
 }

@@ -44,7 +44,11 @@ describe($`leadingWindow`, () => {
     it(
       'yields size(source)-size full windows, then partial windows',
       $async(() => {
-        const result = [[1, 2], [2, 3], [3, 0]];
+        const result = [
+          [1, 2],
+          [2, 3],
+          [3, 0],
+        ];
 
         expect($await($unwrapDeep($leadingWindow(2, { filler: 0 }, $wrap([1, 2, 3]))))).toEqual(
           result,

@@ -56,14 +56,14 @@ const sections = new Map(
   ].map(([section, title], idx) => [section, { title, idx }]),
 );
 
-const seeMethodTemplate = name => `See [${name}](#${name.toLowerCase()})\n`;
+const seeMethodTemplate = (name) => `See [${name}](#${name.toLowerCase()})\n`;
 
-const methodAliasesTemplate = doc => {
+const methodAliasesTemplate = (doc) => {
   const {
     docme: { aliases },
   } = doc;
   if (!aliases || !aliases.length) return '';
-  return `Aliases: ${aliases.map(alias => `\`${alias}\``).join(',')}\n\n`;
+  return `Aliases: ${aliases.map((alias) => `\`${alias}\``).join(',')}\n\n`;
 };
 
 const methodTemplate = (doc, aliasMap) => {
@@ -107,12 +107,12 @@ const tocTypeSectionTemplate = (type, body) => `${sections.get(type).title}\n\n$
 function flattenDollars(methodsWithDollars) {
   return [
     ...flat(
-      methodsWithDollars.map(doc => {
+      methodsWithDollars.map((doc) => {
         const originalName = doc.name;
 
         if (originalName[0] === '$') {
           return [false, true]
-            .map(ASYNC => {
+            .map((ASYNC) => {
               const name = renameDollar(originalName, ASYNC);
 
               return {
@@ -145,7 +145,7 @@ function flattenDollars(methodsWithDollars) {
 }
 
 function groupMethods(methods) {
-  return [...groupBy(m => m.docme.type, methods)].sort(([a], [b]) => compareGroups(a, b));
+  return [...groupBy((m) => m.docme.type, methods)].sort(([a], [b]) => compareGroups(a, b));
 }
 
 module.exports = (typesDoc, methodsWithDollars, aliasMap) => {
@@ -154,14 +154,14 @@ module.exports = (typesDoc, methodsWithDollars, aliasMap) => {
   // table of contents
   const toc = groupMethods(methodsWithDollars)
     .map(([type, methods]) =>
-      tocTypeSectionTemplate(type, methods.map(doc => tocMethodTemplate(doc, aliasMap)).join('')),
+      tocTypeSectionTemplate(type, methods.map((doc) => tocMethodTemplate(doc, aliasMap)).join('')),
     )
     .join('');
 
   const methods = flattenDollars(methodsWithDollars);
   const docs = groupMethods(methods)
     .map(([type, methods]) =>
-      typeSectionTemplate(type, methods.map(doc => methodTemplate(doc, aliasMap)).join('')),
+      typeSectionTemplate(type, methods.map((doc) => methodTemplate(doc, aliasMap)).join('')),
     )
     .join('');
 

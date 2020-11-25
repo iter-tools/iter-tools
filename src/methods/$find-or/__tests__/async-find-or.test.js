@@ -22,17 +22,17 @@ describe('asyncFindOr', () => {
 
   describe('when iterable does not contain the desired value', () => {
     it('returns notFoundValue', async () => {
-      expect(await asyncFindOr(0, _ => false, asyncWrap([1, 2, 3, 4, 5, 6]))).toBe(0);
+      expect(await asyncFindOr(0, (_) => false, asyncWrap([1, 2, 3, 4, 5, 6]))).toBe(0);
     });
   });
 
   describe('when iterable contains the desired value', () => {
     it('returns the value', async () => {
-      expect(await asyncFindOr(0, item => item === 5, asyncWrap([1, 2, 3, 4, 5, 6]))).toBe(5);
+      expect(await asyncFindOr(0, (item) => item === 5, asyncWrap([1, 2, 3, 4, 5, 6]))).toBe(5);
     });
   });
 
   it('may take an async predicate', async () => {
-    expect(await asyncFindOr(0, async item => item === 5, asyncWrap([1, 2, 3, 4, 5, 6]))).toBe(5);
+    expect(await asyncFindOr(0, async (item) => item === 5, asyncWrap([1, 2, 3, 4, 5, 6]))).toBe(5);
   });
 });

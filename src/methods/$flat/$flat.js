@@ -3,7 +3,7 @@ import { $async, $await } from '../../../generate/async.macro';
 import { $iterableCurry, $isIterable } from '../../internal/$iterable';
 import { validateArgs } from './internal/validate-args';
 
-const defaultShouldFlat = item => typeof item !== 'string' && $isIterable(item);
+const defaultShouldFlat = (item) => typeof item !== 'string' && $isIterable(item);
 
 $async;
 function* $flatInternal(shouldFlat, depth, currentDepth, source) {

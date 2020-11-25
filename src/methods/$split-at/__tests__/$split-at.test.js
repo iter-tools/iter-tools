@@ -9,7 +9,10 @@ describe($`splitAt`, () => {
       'works when the halves are consumed in order',
       $async(() => {
         const [first, second] = $splitAt(3, $wrap([0, 1, 2, 3, 4, 5]));
-        expect($await($unwrapDeep([first, second]))).toEqual([[0, 1, 2], [3, 4, 5]]);
+        expect($await($unwrapDeep([first, second]))).toEqual([
+          [0, 1, 2],
+          [3, 4, 5],
+        ]);
       }),
     );
 
@@ -35,7 +38,10 @@ describe($`splitAt`, () => {
       'works when the halves are consumed in order',
       $async(() => {
         const [first, second] = $splitAt(-3, $wrap([0, 1, 2, 3, 4, 5]));
-        expect($await($unwrapDeep([first, second]))).toEqual([[0, 1, 2], [3, 4, 5]]);
+        expect($await($unwrapDeep([first, second]))).toEqual([
+          [0, 1, 2],
+          [3, 4, 5],
+        ]);
       }),
     );
 

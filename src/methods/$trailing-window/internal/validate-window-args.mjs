@@ -1,6 +1,6 @@
 import { isObject, isDef } from '../../../internal/shapes';
 
-export const validateWindowArgs = methodName =>
+export const validateWindowArgs = (methodName) =>
   function validateArgs(args) {
     if (isObject(args[0])) {
       const { filler, size } = args[0];

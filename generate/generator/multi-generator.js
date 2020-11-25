@@ -23,7 +23,7 @@ class MultiGenerator {
 
     log.setLevel(options.quiet ? 'error' : 'info');
 
-    this.generators = GeneratorClasses.map(GeneratorClass => new GeneratorClass(this.options));
+    this.generators = GeneratorClasses.map((GeneratorClass) => new GeneratorClass(this.options));
   }
 
   pathsChanged() {
@@ -34,8 +34,8 @@ class MultiGenerator {
 
   generate() {
     return traverse(rootDir)
-      .then(initialPaths => {
-        initialPaths.forEach(path => this.addPath(path));
+      .then((initialPaths) => {
+        initialPaths.forEach((path) => this.addPath(path));
 
         for (const debounced of this.debouncedMethods) {
           debounced.flush();
@@ -48,9 +48,9 @@ class MultiGenerator {
 
           this.inWatchMode = true;
 
-          watcher.on('add', path => this.addPath(path));
-          watcher.on('delete', path => this.removePath(path));
-          watcher.on('change', path => this.updatePath(path));
+          watcher.on('add', (path) => this.addPath(path));
+          watcher.on('delete', (path) => this.removePath(path));
+          watcher.on('change', (path) => this.updatePath(path));
         }
       })
       .catch(handleError);

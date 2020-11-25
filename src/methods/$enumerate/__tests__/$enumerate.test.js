@@ -19,8 +19,16 @@ describe($`enumerate`, () => {
     it(
       'yields [i, value] tuples',
       $async(() => {
-        expect($await($unwrap($enumerate($wrap([1, 2, 3]))))).toEqual([[0, 1], [1, 2], [2, 3]]);
-        expect($await($unwrap($enumerate(3, $wrap([1, 2, 3]))))).toEqual([[3, 1], [4, 2], [5, 3]]);
+        expect($await($unwrap($enumerate($wrap([1, 2, 3]))))).toEqual([
+          [0, 1],
+          [1, 2],
+          [2, 3],
+        ]);
+        expect($await($unwrap($enumerate(3, $wrap([1, 2, 3]))))).toEqual([
+          [3, 1],
+          [4, 2],
+          [5, 3],
+        ]);
         expect($await($unwrap($enumerate(-3, $wrap([1, 2, 3]))))).toEqual([
           [-3, 1],
           [-2, 2],

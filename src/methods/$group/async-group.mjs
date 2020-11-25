@@ -10,7 +10,7 @@ import { asyncWrapWithResultIterable, asyncEnsureIterable } from '../../internal
 import { asyncGroupBy } from '../$group-by/async-group-by';
 
 export function group(iterable) {
-  return asyncGroupBy(asyncEnsureIterable(iterable), _ => _);
+  return asyncGroupBy(asyncEnsureIterable(iterable), (_) => _);
 }
 
 export default asyncWrapWithResultIterable(group);

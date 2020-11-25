@@ -13,7 +13,7 @@ import { map } from '../$map/map';
 import { every } from '../$every/every';
 import { toArray } from '../$to-array/to-array';
 
-const isDone = peekr => peekr.done;
+const isDone = (peekr) => peekr.done;
 
 export function* zipAll(sources, { filler } = {}) {
   const peekrs = toArray(map(sources, peekerate));
@@ -23,12 +23,12 @@ export function* zipAll(sources, { filler } = {}) {
     while (!done) {
       yield peekrs.map(({ value, done }) => (done ? filler : value));
 
-      parallelEach(peekrs, peekr => peekr.advance());
+      parallelEach(peekrs, (peekr) => peekr.advance());
 
       done = every(peekrs, isDone);
     }
   } finally {
-    parallelEach(peekrs, peekr => peekr.return());
+    parallelEach(peekrs, (peekr) => peekr.return());
   }
 }
 

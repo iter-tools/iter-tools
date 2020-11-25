@@ -23,28 +23,28 @@ describe('asyncDropWhile', () => {
   describe('when source has values', () => {
     describe('when no values match predicate', () => {
       it('yields values from source', async () => {
-        const iter = asyncDropWhile(i => i !== i, asyncWrap([1, 2, 3, 4, 5, 6]));
+        const iter = asyncDropWhile((i) => i !== i, asyncWrap([1, 2, 3, 4, 5, 6]));
         expect(await asyncUnwrap(iter)).toEqual([1, 2, 3, 4, 5, 6]);
       });
     });
 
     describe('when all values match predicate', () => {
       it('yields no values', async () => {
-        const iter = asyncDropWhile(i => i === i, asyncWrap([1, 2, 3, 4, 5, 6]));
+        const iter = asyncDropWhile((i) => i === i, asyncWrap([1, 2, 3, 4, 5, 6]));
         expect(await asyncUnwrap(iter)).toEqual([]);
       });
     });
 
     describe('when a value matches predicate', () => {
       it('yields the matching value and subsequent values', async () => {
-        const iter = asyncDropWhile(i => i !== 4, asyncWrap([1, 2, 3, 4, 5, 6]));
+        const iter = asyncDropWhile((i) => i !== 4, asyncWrap([1, 2, 3, 4, 5, 6]));
         expect(await asyncUnwrap(iter)).toEqual([4, 5, 6]);
       });
     });
   });
 
   it('may take an async predicate', async () => {
-    const iter = asyncDropWhile(async i => i !== 4, asyncWrap([1, 2, 3, 4, 5, 6]));
+    const iter = asyncDropWhile(async (i) => i !== 4, asyncWrap([1, 2, 3, 4, 5, 6]));
     expect(await asyncUnwrap(iter)).toEqual([4, 5, 6]);
   });
 });

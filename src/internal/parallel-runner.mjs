@@ -15,7 +15,7 @@ export class ParallelRunner extends AsyncIterableIterator {
 
     const promise = this.iterator
       .next()
-      .then(async item => (item.done ? item : { value: await mapFn(item.value), done: false }));
+      .then(async (item) => (item.done ? item : { value: await mapFn(item.value), done: false }));
 
     const displacedPromise = buffer.push(promise);
 

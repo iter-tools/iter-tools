@@ -43,7 +43,7 @@ class InputSummaryInternal {
   }
 
   updateNotDone() {
-    this.notDoneBuffer = this.buffers.find(buffer => !buffer.done);
+    this.notDoneBuffer = this.buffers.find((buffer) => !buffer.done);
   }
 
   advanceBuffer(buffer) {
@@ -98,7 +98,7 @@ class Interleaver {
     this.initialized = true;
     const { strategy, options, inputSummary } = this;
     this.buffers = toArray(
-      map(this.sources, source => SummarizedPeekerator.from(source, inputSummary)),
+      map(this.sources, (source) => SummarizedPeekerator.from(source, inputSummary)),
     );
     this.iterator = strategy(options, new InputSummary(inputSummary), ...this.buffers);
 
@@ -106,7 +106,7 @@ class Interleaver {
   }
 
   returnBuffers() {
-    parallelEach(this.buffers, buffer => buffer.return());
+    parallelEach(this.buffers, (buffer) => buffer.return());
   }
 
   next() {

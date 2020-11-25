@@ -22,19 +22,19 @@ describe('some', () => {
 
   describe('when no values match predicate', () => {
     it('returns false', () => {
-      expect(some(val => val !== val, [1, 2, 3])).toBe(false);
+      expect(some((val) => val !== val, [1, 2, 3])).toBe(false);
     });
   });
 
   describe('when some values match predicate', () => {
     it('returns true', () => {
-      expect(some(val => val > 2, [1, 2, 3])).toBe(true);
+      expect(some((val) => val > 2, [1, 2, 3])).toBe(true);
     });
   });
 
   describe('when all values match predicate', () => {
     it('returns true', () => {
-      expect(some(val => val > 0, [1, 2, 3])).toBe(true);
+      expect(some((val) => val > 0, [1, 2, 3])).toBe(true);
     });
   });
 });

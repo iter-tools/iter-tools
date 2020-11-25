@@ -16,8 +16,8 @@ module.exports = {
     const matchesGlob = matcher(glob);
 
     return recursiveRead(root, [matcher([...alwaysIgnored, ...asArray(ignored)])]).then(
-      initialPaths => {
-        return initialPaths.filter(matchesGlob).map(path => relative(root, path));
+      (initialPaths) => {
+        return initialPaths.filter(matchesGlob).map((path) => relative(root, path));
       },
     );
   },

@@ -3,8 +3,8 @@ For each value in `source`, executes `callback(value, idx)` and yields the value
 ```js
 pipeExec(
   [0, 1, 2],
-  filter(item => !!item),
-  tap(item => console.log(item)),
-  map(item => item + 1),
+  filter((item) => !!item),
+  tap((item) => console.log(item)),
+  map((item) => item + 1),
 ); // Logs 1, 2 and returns Iterable[2, 3]
 ```

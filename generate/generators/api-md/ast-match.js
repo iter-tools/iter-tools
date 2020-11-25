@@ -10,7 +10,7 @@ class OneOf {
   }
 
   _match(astValue) {
-    return !!this.values.find(value => astMatch(value, astValue));
+    return !!this.values.find((value) => astMatch(value, astValue));
   }
 }
 
@@ -22,17 +22,17 @@ class Includes {
   }
 
   _match(astValue) {
-    return !!astValue.find(astItem => astMatch(this.value, astItem));
+    return !!astValue.find((astItem) => astMatch(this.value, astItem));
   }
 }
 
-const includes = value => new Includes(value);
+const includes = (value) => new Includes(value);
 
 function astMatch(value, astValue) {
   if (typeof value._match === 'function') {
     return value._match(astValue);
   } else if (isObject(value) && isObject(astValue)) {
-    return Object.keys(value).every(key => astMatch(value[key], astValue[key]));
+    return Object.keys(value).every((key) => astMatch(value[key], astValue[key]));
   } else {
     return value === astValue;
   }

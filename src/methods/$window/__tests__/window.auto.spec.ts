@@ -34,7 +34,10 @@ describe('window', () => {
 
   describe('when size(source) > size', () => {
     it('yields partial windows, then size(source)-size full windows', () => {
-      expect(unwrapDeep(window(2, wrap([1, 2, 3])))).toEqual([[1, 2], [2, 3]]);
+      expect(unwrapDeep(window(2, wrap([1, 2, 3])))).toEqual([
+        [1, 2],
+        [2, 3],
+      ]);
     });
   });
 

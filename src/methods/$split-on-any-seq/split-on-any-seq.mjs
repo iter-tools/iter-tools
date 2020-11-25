@@ -44,7 +44,7 @@ function* anySeqspliterator(split, { separatorSeqs }, source) {
 }
 
 export function* splitOnAnySeq(source, separatorSeqs) {
-  const separatorSeqsArr = seqsToArray(separatorSeqs).filter(s => s.length > 0);
+  const separatorSeqsArr = seqsToArray(separatorSeqs).filter((s) => s.length > 0);
 
   yield* spliterate(source, anySeqspliterator, {
     separatorSeqs: separatorSeqsArr.sort((a, b) => b.length - a.length),

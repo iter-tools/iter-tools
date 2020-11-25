@@ -3,7 +3,7 @@ Transforms an `entries` iterable into an object. Each entry should be of the for
 ```js
 objectFrom([
   ['droids', ['R2', '3PO']],
-  ['people': ['Luke', 'Leia', 'Han']]
+  ['people', ['Luke', 'Leia', 'Han']],
 ]); // { droids: ['R2', '3PO'], people: ['Luke', 'Leia', 'Han'] }
 objectFrom(null); // {}
 ```

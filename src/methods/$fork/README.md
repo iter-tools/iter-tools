@@ -5,7 +5,7 @@ Defaults:
 Returns an iterable of `n` forks of `source`. Each fork contains the same values as `source`, and can be consumed independently. This works even if `source` cannot itself be consumed more than once, for example because it is a generator. Values are buffered until they have been consumed by all forks. Each fork can only be consumed once.
 
 ```js
-const [forkA, forkB, forkC] = fork(function*() {
+const [forkA, forkB, forkC] = fork(function* () {
   yield 1;
   yield 2;
   yield 3;

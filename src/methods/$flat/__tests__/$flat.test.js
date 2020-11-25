@@ -76,11 +76,11 @@ describe($`flat`, () => {
 
   if ($isAsync) {
     it('may take an async shouldFlat callback', async () => {
-      const iter = $flat(async iter => !(typeof iter === 'string' && iter.length === 1), Infinity, [
-        ['a', 'b'],
-        ['c', ['d', 'e']],
-        [['fghi']],
-      ]);
+      const iter = $flat(
+        async (iter) => !(typeof iter === 'string' && iter.length === 1),
+        Infinity,
+        [['a', 'b'], ['c', ['d', 'e']], [['fghi']]],
+      );
       expect(await $unwrap(iter)).toEqual(['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i']);
     });
   }

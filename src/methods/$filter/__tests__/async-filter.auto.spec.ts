@@ -30,7 +30,7 @@ describe('asyncFilter', () => {
   });
 
   it('may take an async predicate', async () => {
-    const iter = asyncFilter(async item => item % 2 === 0, asyncWrap([1, 2, 3, 4, 5, 6]));
+    const iter = asyncFilter(async (item) => item % 2 === 0, asyncWrap([1, 2, 3, 4, 5, 6]));
     expect(await asyncUnwrap(iter)).toEqual([2, 4, 6]);
   });
 });

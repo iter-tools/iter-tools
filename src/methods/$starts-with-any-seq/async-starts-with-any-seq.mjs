@@ -51,6 +51,6 @@ export async function asyncStartsWithAnySeq(iterable, seqs) {
 export default asyncIterableCurry(asyncStartsWithAnySeq, {
   reduces: true,
   validateArgs(args) {
-    args[0] = args[0].map(arg => asyncEnsureIterable(arg));
+    args[0] = args[0].map((arg) => asyncEnsureIterable(arg));
   },
 });

@@ -58,13 +58,25 @@ describe('asyncSplitOnAnySeq', () => {
     it('should only split once', async () => {
       expect(
         await asyncUnwrapDeep(
-          asyncSplitOnAnySeq([[2, 3], [3, 2]], asyncWrap([1, 2, 3, 2, 2, 3, 2, 3, 4])),
+          asyncSplitOnAnySeq(
+            [
+              [2, 3],
+              [3, 2],
+            ],
+            asyncWrap([1, 2, 3, 2, 2, 3, 2, 3, 4]),
+          ),
         ),
       ).toEqual([[1], [2], [], [4]]);
 
       expect(
         await asyncUnwrapDeep(
-          asyncSplitOnAnySeq([[2, 3], [2, 2, 3]], asyncWrap([1, 2, 2, 3, 3, 4])),
+          asyncSplitOnAnySeq(
+            [
+              [2, 3],
+              [2, 2, 3],
+            ],
+            asyncWrap([1, 2, 2, 3, 3, 4]),
+          ),
         ),
       ).toEqual([[1], [3, 4]]);
     });
@@ -74,25 +86,49 @@ describe('asyncSplitOnAnySeq', () => {
     it('consume the longest sequence that matches', async () => {
       expect(
         await asyncUnwrapDeep(
-          asyncSplitOnAnySeq([[2, 2, 3], [2, 3]], asyncWrap([1, 2, 2, 3, 3, 4])),
+          asyncSplitOnAnySeq(
+            [
+              [2, 2, 3],
+              [2, 3],
+            ],
+            asyncWrap([1, 2, 2, 3, 3, 4]),
+          ),
         ),
       ).toEqual([[1], [3, 4]]);
 
       expect(
         await asyncUnwrapDeep(
-          asyncSplitOnAnySeq([[2, 3], [2, 2, 3]], asyncWrap([1, 2, 2, 3, 3, 4])),
+          asyncSplitOnAnySeq(
+            [
+              [2, 3],
+              [2, 2, 3],
+            ],
+            asyncWrap([1, 2, 2, 3, 3, 4]),
+          ),
         ),
       ).toEqual([[1], [3, 4]]);
 
       expect(
         await asyncUnwrapDeep(
-          asyncSplitOnAnySeq([[2, 2, 3], [2, 2]], asyncWrap([1, 2, 2, 3, 3, 4])),
+          asyncSplitOnAnySeq(
+            [
+              [2, 2, 3],
+              [2, 2],
+            ],
+            asyncWrap([1, 2, 2, 3, 3, 4]),
+          ),
         ),
       ).toEqual([[1], [3, 4]]);
 
       expect(
         await asyncUnwrapDeep(
-          asyncSplitOnAnySeq([[2, 2], [2, 2, 3]], asyncWrap([1, 2, 2, 3, 3, 4])),
+          asyncSplitOnAnySeq(
+            [
+              [2, 2],
+              [2, 2, 3],
+            ],
+            asyncWrap([1, 2, 2, 3, 3, 4]),
+          ),
         ),
       ).toEqual([[1], [3, 4]]);
     });

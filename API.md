@@ -461,7 +461,7 @@ Yields only values from `source` for which the result of `predicate(value, idx)`
 
 ```js
 filter(isEven, range(4)); // Iterable[0, 2]
-filter(animal => animal.kind.slice(1) === 'at', [
+filter((animal) => animal.kind.slice(1) === 'at', [
   { type: 'cat' },
   { type: 'rat' },
   { type: 'dog' },
@@ -543,7 +543,7 @@ See [flat](#flat)
 For each value in `source`, yields each value in `predicate(value, idx)`. Equivalent to `Array.prototype.flatMap`.
 
 ```js
-flatMap(x => [x - 1, x], [1, 3, 5]); // Iterable[0, 1, 2, 3, 4, 5]
+flatMap((x) => [x - 1, x], [1, 3, 5]); // Iterable[0, 1, 2, 3, 4, 5]
 ```
 
 ### asyncFlatMap
@@ -617,7 +617,7 @@ See [interposeSeq](#interposeseq)
 For each value in `source`, yields the result of `predicate(value, idx)`. Equivalent to `Array.prototype.map`.
 
 ```js
-map(x => x * x, [0, 1, 2, 3]); // Iterable[0, 1, 4, 9]
+map((x) => x * x, [0, 1, 2, 3]); // Iterable[0, 1, 4, 9]
 ```
 
 ### asyncMap
@@ -842,9 +842,9 @@ For each value in `source`, executes `callback(value, idx)` and yields the value
 ```js
 pipeExec(
   [0, 1, 2],
-  filter(item => !!item),
-  tap(item => console.log(item)),
-  map(item => item + 1),
+  filter((item) => !!item),
+  tap((item) => console.log(item)),
+  map((item) => item + 1),
 ); // Logs 1, 2 and returns Iterable[2, 3]
 ```
 
@@ -1184,7 +1184,7 @@ Yields two `part` subsequences of `source`. The first `part` yields the values w
 ```js
 const source = [-2, -1, 0, 1, 2];
 const [negatives, positives] = splitWhen(
-  i => i >= 0,
+  (i) => i >= 0,
   source,
 );
 negatives; // Iterable[-2, -1]
@@ -1440,7 +1440,7 @@ See [every](#every)
 Returns the first item in `iterable` for which `predicate(item, idx)` returns a truthy value. It is the equivalent of `Array.prototype.find`.
 
 ```js
-find(animal => animal.kind === 'dog', [
+find((animal) => animal.kind === 'dog', [
   { type: 'cat' },
   { type: 'dog' },
 ]); // {type: 'dog'}
@@ -1459,7 +1459,7 @@ See [find](#find)
 Returns the first item in `iterable` for which `predicate(item, idx)` returns a truthy value, or `notFoundValue` if no item satisfied the predicate.
 
 ```js
-findOr(0, x => x > 10, [1, 2, 3]); // 0
+findOr(0, (x) => x > 10, [1, 2, 3]); // 0
 ```
 
 ### asyncFindOr
@@ -1547,9 +1547,27 @@ See [includesAny](#includesany)
 Retuns `true` if any of the the `seqs` (subsequences) of values can be found somewhere in `iterable`, or `false` otherwise. Compares values with `===`.
 
 ```js
-includesAnySeq([[1, 2], [2, 3]], [1, 2, 3]); // true
-includesAnySeq([[2, 3], [3, 4]], [1, 2, 3]); // true
-includesAnySeq([[0, 1], [3, 4]], [1, 2, 3]); // false
+includesAnySeq(
+  [
+    [1, 2],
+    [2, 3],
+  ],
+  [1, 2, 3],
+); // true
+includesAnySeq(
+  [
+    [2, 3],
+    [3, 4],
+  ],
+  [1, 2, 3],
+); // true
+includesAnySeq(
+  [
+    [0, 1],
+    [3, 4],
+  ],
+  [1, 2, 3],
+); // false
 ```
 
 ### asyncIncludesAnySeq
@@ -1714,7 +1732,13 @@ See [startsWithAny](#startswithany)
 Returns `true` if the first subsequence of values in `source` match any `valueSeq` in `valueSeqs`, where each value is compared with `===`. Otherwise returns `false`.
 
 ```js
-startsWithAnySeq([[0, 1], [1, 2]], [1, 2, 3]); // true
+startsWithAnySeq(
+  [
+    [0, 1],
+    [1, 2],
+  ],
+  [1, 2, 3],
+); // true
 ```
 
 ### asyncStartsWithAnySeq
@@ -1936,13 +1960,13 @@ Starts fetching the next `n` values of `source` so that the wait for a value sho
 
 ```js
 const source = asyncMap(
-  _ => new Promise(resolve => setTimeout(resolve, 200)),
+  (_) => new Promise((resolve) => setTimeout(resolve, 200)),
   range(),
 );
 
 const buffered = asyncBuffer(6, source); // Items start buffering
 
-await new Promise(resolve => setTimeout(resolve, 800));
+await new Promise((resolve) => setTimeout(resolve, 800));
 
 // Four items are already buffered here
 await buffered.next(); // ~0ms
@@ -1955,7 +1979,7 @@ await buffered.next(); // ~200ms
 await buffered.next(); // ~200ms
 // But if additional delays are incurred in processing items,
 // it has value again!
-await new Promise(resolve => setTimeout(resolve, 300));
+await new Promise((resolve) => setTimeout(resolve, 300));
 await buffered.next(); // ~0ms
 await buffered.next(); // ~100ms
 await buffered.next(); // ~200ms
@@ -1996,7 +2020,7 @@ Defaults:
 Returns an iterable of `n` forks of `source`. Each fork contains the same values as `source`, and can be consumed independently. This works even if `source` cannot itself be consumed more than once, for example because it is a generator. Values are buffered until they have been consumed by all forks. Each fork can only be consumed once.
 
 ```js
-const [forkA, forkB, forkC] = fork(function*() {
+const [forkA, forkB, forkC] = fork(function* () {
   yield 1;
   yield 2;
   yield 3;
@@ -2094,8 +2118,8 @@ See [consume](#consume)
 Calls `callback(value, idx)` for each value in `iterable`. Note that as a consuming method, `forEach` is not lazy. It will trigger evaluation of `iterable`.
 
 ```js
-forEach(value => console.log(value), [1, 2, 3]); // prints 1, 2, 3
-forEach(value => console.log(value), null); //
+forEach((value) => console.log(value), [1, 2, 3]); // prints 1, 2, 3
+forEach((value) => console.log(value), null); //
 ```
 
 ### asyncForEach
@@ -2115,7 +2139,7 @@ Transforms an `entries` iterable into an object. Each entry should be of the for
 ```js
 objectFrom([
   ['droids', ['R2', '3PO']],
-  ['people': ['Luke', 'Leia', 'Han']]
+  ['people', ['Luke', 'Leia', 'Han']],
 ]); // { droids: ['R2', '3PO'], people: ['Luke', 'Leia', 'Han'] }
 objectFrom(null); // {}
 ```
@@ -2129,10 +2153,12 @@ Aliases: `asyncToObject`
 Transform an async `entries` iterable (or a sync one) into an object. Each entry should be of the form `[key, value]`.
 
 ```js
-objectFromAsync(asyncWrap([
-  ['droids', ['R2', '3PO']],
-  ['people': ['Luke', 'Leia', 'Han']]
-])); // { droids: ['R2', '3PO'], people: ['Luke', 'Leia', 'Han'] }
+objectFromAsync(
+  asyncWrap([
+    ['droids', ['R2', '3PO']],
+    [('people': ['Luke', 'Leia', 'Han'])],
+  ]),
+); // { droids: ['R2', '3PO'], people: ['Luke', 'Leia', 'Han'] }
 await objectFromAsync(null); // []
 ```
 
@@ -2246,8 +2272,8 @@ Allows nested calls to be flattened out for improved readability. `compose(a, b,
 
 ```js
 const filterMap = compose(
-  map(x => x + 1),
-  filter(x => x % 2 === 0),
+  map((x) => x + 1),
+  filter((x) => x % 2 === 0),
 );
 
 filterMap([0, 1, 2, 3, 4]); // Iterable[1, 3, 5]
@@ -2289,8 +2315,8 @@ Allows nested calls to be flattened out for improved readability. `pipe(a, b, c)
 
 ```js
 const filterMap = pipe(
-  filter(x => x % 2 === 0),
-  map(x => x + 1),
+  filter((x) => x % 2 === 0),
+  map((x) => x + 1),
 );
 
 filterMap([0, 1, 2, 3, 4]); // Iterable[1, 3, 5]

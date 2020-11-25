@@ -22,7 +22,11 @@ describe('group', () => {
 
   describe('when values from source cannot be grouped', () => {
     it('yields a group for each value', () => {
-      expect(unwrapDeep(group(wrap([1, 2, 3])))).toEqual([[1, [1]], [2, [2]], [3, [3]]]);
+      expect(unwrapDeep(group(wrap([1, 2, 3])))).toEqual([
+        [1, [1]],
+        [2, [2]],
+        [3, [3]],
+      ]);
     });
   });
 

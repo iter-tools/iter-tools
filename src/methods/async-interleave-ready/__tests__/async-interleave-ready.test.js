@@ -4,14 +4,14 @@ import delay from '../../../internal/delay';
 
 describe('asyncInterleaveReady', () => {
   it('can use the return value of canTakeAny to interleave by promise readiness', async () => {
-    const a = (async function*() {
+    const a = (async function* () {
       await delay(10);
       yield 1;
       await delay(30);
       yield 2;
     })();
 
-    const b = (async function*() {
+    const b = (async function* () {
       await delay(20);
       yield 3;
       await delay(10);

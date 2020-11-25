@@ -2,12 +2,12 @@ import { objectKeys } from '../../..';
 
 describe('objectKeys', () => {
   it('works with Objects', () => {
-    const i = objectKeys({ '1': 1, '2': 2 });
+    const i = objectKeys({ 1: 1, 2: 2 });
     expect(Array.from(i)).toEqual(['1', '2']);
   });
 
   it('can be reused', () => {
-    const i = objectKeys({ '1': 1, '2': 2 });
+    const i = objectKeys({ 1: 1, 2: 2 });
     expect(Array.from(i)).toEqual(['1', '2']);
     expect(Array.from(i)).toEqual(['1', '2']);
   });

@@ -28,14 +28,14 @@ describe('splitWhen', () => {
 
   describe('when `predicate(value, i)` is truthy initially', () => {
     it('puts all the values in the second part', () => {
-      const [first, second] = splitWhen(v => v > 0, wrap([1, 2, 3]));
+      const [first, second] = splitWhen((v) => v > 0, wrap([1, 2, 3]));
       expect(unwrapDeep([first, second])).toEqual([[], [1, 2, 3]]);
     });
   });
 
   describe('when `predicate(value, i)` is never truthy', () => {
     it('puts all the values in the first part', () => {
-      const [first, second] = splitWhen(_ => null, wrap([1, 2, 3]));
+      const [first, second] = splitWhen((_) => null, wrap([1, 2, 3]));
       expect(unwrapDeep([first, second])).toEqual([[1, 2, 3], []]);
     });
   });

@@ -25,10 +25,7 @@ class TypeTestsGenerator extends BaseGenerator {
 
       // We will need a more generic way of handling this in the future.
       if (file.startsWith('/**\n * @generated')) {
-        file = file
-          .split('\n')
-          .slice(7)
-          .join('\n');
+        file = file.split('\n').slice(7).join('\n');
       }
 
       const { code: impl } = babel.transformSync(file, {

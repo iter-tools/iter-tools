@@ -2,9 +2,9 @@
 
 const { join } = require('path');
 
-const isAsync = caller => caller && caller.ASYNC;
+const isAsync = (caller) => caller && caller.ASYNC;
 
-module.exports = api => {
+module.exports = (api) => {
   const ASYNC = api.caller(isAsync);
 
   return {

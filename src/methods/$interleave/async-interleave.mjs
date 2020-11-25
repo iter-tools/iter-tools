@@ -43,7 +43,7 @@ class AsyncInputSummaryInternal {
   }
 
   updateNotDone() {
-    this.notDoneBuffer = this.buffers.find(buffer => !buffer.done);
+    this.notDoneBuffer = this.buffers.find((buffer) => !buffer.done);
   }
 
   async advanceBuffer(buffer) {
@@ -98,7 +98,7 @@ class AsyncInterleaver {
     this.initialized = true;
     const { strategy, options, inputSummary } = this;
     this.buffers = await asyncToArray(
-      asyncMap(this.sources, source => AsyncSummarizedPeekerator.from(source, inputSummary)),
+      asyncMap(this.sources, (source) => AsyncSummarizedPeekerator.from(source, inputSummary)),
     );
     this.iterator = strategy(options, new AsyncInputSummary(inputSummary), ...this.buffers);
 
@@ -106,7 +106,7 @@ class AsyncInterleaver {
   }
 
   async returnBuffers() {
-    await asyncParallelEach(this.buffers, buffer => buffer.return());
+    await asyncParallelEach(this.buffers, (buffer) => buffer.return());
   }
 
   async next() {

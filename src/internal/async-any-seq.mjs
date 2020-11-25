@@ -12,7 +12,7 @@ import { asyncMap } from '../methods/$map/async-map';
 
 export async function asyncSeqsToArray(values) {
   return await asyncToArray(
-    asyncMap(values, value => asyncToArray(asyncEnsureIterable(value))),
-    arr => arr.length > 0,
+    asyncMap(values, (value) => asyncToArray(asyncEnsureIterable(value))),
+    (arr) => arr.length > 0,
   );
 }

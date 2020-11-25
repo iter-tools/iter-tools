@@ -23,21 +23,21 @@ describe('dropWhile', () => {
   describe('when source has values', () => {
     describe('when no values match predicate', () => {
       it('yields values from source', () => {
-        const iter = dropWhile(i => i !== i, wrap([1, 2, 3, 4, 5, 6]));
+        const iter = dropWhile((i) => i !== i, wrap([1, 2, 3, 4, 5, 6]));
         expect(unwrap(iter)).toEqual([1, 2, 3, 4, 5, 6]);
       });
     });
 
     describe('when all values match predicate', () => {
       it('yields no values', () => {
-        const iter = dropWhile(i => i === i, wrap([1, 2, 3, 4, 5, 6]));
+        const iter = dropWhile((i) => i === i, wrap([1, 2, 3, 4, 5, 6]));
         expect(unwrap(iter)).toEqual([]);
       });
     });
 
     describe('when a value matches predicate', () => {
       it('yields the matching value and subsequent values', () => {
-        const iter = dropWhile(i => i !== 4, wrap([1, 2, 3, 4, 5, 6]));
+        const iter = dropWhile((i) => i !== 4, wrap([1, 2, 3, 4, 5, 6]));
         expect(unwrap(iter)).toEqual([4, 5, 6]);
       });
     });

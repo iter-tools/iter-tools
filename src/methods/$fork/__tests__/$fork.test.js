@@ -24,7 +24,7 @@ describe($`fork`, () => {
       const [a, b, c] = $fork($makeIterable());
       const originalIter = $await($unwrap($makeIterable()));
 
-      expect($await($unwrap($map(iter => $unwrap(iter), [a, b, c])))).toEqual(
+      expect($await($unwrap($map((iter) => $unwrap(iter), [a, b, c])))).toEqual(
         Array(3).fill(originalIter),
       );
     }),
@@ -35,7 +35,7 @@ describe($`fork`, () => {
     $async(() => {
       const gen = $fork(3, $makeIterable());
       const originalIter = $await($unwrap($makeIterable()));
-      expect($await($unwrap($map(iter => $unwrap(iter), gen)))).toEqual(
+      expect($await($unwrap($map((iter) => $unwrap(iter), gen)))).toEqual(
         Array(3).fill(originalIter),
       );
     }),
@@ -46,7 +46,7 @@ describe($`fork`, () => {
     $async(() => {
       const gen = $fork(3)($makeIterable());
       const originalIter = $await($unwrap($makeIterable()));
-      expect($await($unwrap($map(iter => $unwrap(iter), gen)))).toEqual(
+      expect($await($unwrap($map((iter) => $unwrap(iter), gen)))).toEqual(
         Array(3).fill(originalIter),
       );
     }),
@@ -57,7 +57,7 @@ describe($`fork`, () => {
     $async(() => {
       const [a, b, c] = $fork($makeIterable());
       const originalIter = $await($unwrap($makeIterable()));
-      expect($await($unwrap($map(iter => $unwrap(iter), [c, b, a])))).toEqual(
+      expect($await($unwrap($map((iter) => $unwrap(iter), [c, b, a])))).toEqual(
         Array(3).fill(originalIter),
       );
     }),

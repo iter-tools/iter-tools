@@ -203,7 +203,7 @@ function asyncMacro({ references, babel, state, config: { ASYNC } }) {
           if (ASYNC) {
             parent.async = true;
           }
-          parent.decorators = parent.decorators.filter(dec => dec !== node);
+          parent.decorators = parent.decorators.filter((dec) => dec !== node);
         }
         break;
     }

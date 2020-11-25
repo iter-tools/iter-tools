@@ -14,11 +14,11 @@ import { asyncWrap, asyncUnwrapDeep } from '../../../test/async-helpers';
 describe('asyncSplitWith', () => {
   it('should split between every item which is equal to the on argument', async () => {
     expect(
-      await asyncUnwrapDeep(asyncSplitWith(i => i === null, asyncWrap([1, null, 2, null, 3]))),
+      await asyncUnwrapDeep(asyncSplitWith((i) => i === null, asyncWrap([1, null, 2, null, 3]))),
     ).toEqual([[1], [2], [3]]);
   });
 
   it('should return no parts if source is empty', async () => {
-    expect(await asyncUnwrapDeep(asyncSplitWith(i => i, null))).toEqual([]);
+    expect(await asyncUnwrapDeep(asyncSplitWith((i) => i, null))).toEqual([]);
   });
 });

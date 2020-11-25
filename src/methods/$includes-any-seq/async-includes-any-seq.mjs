@@ -15,7 +15,7 @@ export async function asyncIncludesAnySeq(iterable, seqs) {
   const seqsArr = await asyncSeqsToArray(seqs);
 
   if (!seqsArr.length) return false;
-  if (seqsArr.find(seq => !seq.length)) return true;
+  if (seqsArr.find((seq) => !seq.length)) return true;
 
   const maxMatchLength = seqsArr.reduce((max, { length }) => Math.max(max, length), 1);
 

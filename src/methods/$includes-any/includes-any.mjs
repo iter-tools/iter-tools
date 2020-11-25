@@ -12,7 +12,7 @@ import { findOr } from '../$find-or/find-or';
 const none = Symbol('none');
 
 export function includesAny(iterable, values) {
-  return findOr(iterable, none, value => values.includes(value)) !== none;
+  return findOr(iterable, none, (value) => values.includes(value)) !== none;
 }
 
 export default iterableCurry(includesAny, {

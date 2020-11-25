@@ -60,7 +60,7 @@ describe('asyncFlat', () => {
 
   it('may take an async shouldFlat callback', async () => {
     const iter = asyncFlat(
-      async iter => !(typeof iter === 'string' && iter.length === 1),
+      async (iter) => !(typeof iter === 'string' && iter.length === 1),
       Infinity,
       [['a', 'b'], ['c', ['d', 'e']], [['fghi']]],
     );

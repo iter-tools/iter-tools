@@ -15,7 +15,11 @@ describe('asyncZipAll', () => {
   describe('when sources are of equal length', () => {
     it('yields all values', async () => {
       const iter = asyncZipAll(asyncWrap([1, 2, 3]), asyncWrap([4, 5, 6]), asyncWrap([7, 8, 9]));
-      expect(await asyncToArray(iter)).toEqual([[1, 4, 7], [2, 5, 8], [3, 6, 9]]);
+      expect(await asyncToArray(iter)).toEqual([
+        [1, 4, 7],
+        [2, 5, 8],
+        [3, 6, 9],
+      ]);
     });
   });
 
@@ -28,14 +32,22 @@ describe('asyncZipAll', () => {
           asyncWrap([4, 5]),
           asyncWrap([7, 8]),
         );
-        expect(await asyncToArray(iter)).toEqual([[1, 4, 7], [2, 5, 8], [3, null, null]]);
+        expect(await asyncToArray(iter)).toEqual([
+          [1, 4, 7],
+          [2, 5, 8],
+          [3, null, null],
+        ]);
       });
     });
 
     describe('when filler is not specified', () => {
       it('fills with undefined', async () => {
         const iter = asyncZipAll(asyncWrap([1, 2, 3]), asyncWrap([4, 5]), asyncWrap([7, 8]));
-        expect(await asyncToArray(iter)).toEqual([[1, 4, 7], [2, 5, 8], [3, undefined, undefined]]);
+        expect(await asyncToArray(iter)).toEqual([
+          [1, 4, 7],
+          [2, 5, 8],
+          [3, undefined, undefined],
+        ]);
       });
     });
   });

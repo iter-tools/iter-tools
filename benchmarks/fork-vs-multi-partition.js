@@ -25,7 +25,7 @@ function multiFunc(x) {
 
 const a = Array.from(range(10000));
 
-module.exports['Fork 10000 items'] = function() {
+module.exports['Fork 10000 items'] = function () {
   const [f1, f2, f3, f4] = fork(a);
   Array.from(filter(pos0, f1));
   Array.from(filter(pos1, f2));
@@ -33,7 +33,7 @@ module.exports['Fork 10000 items'] = function() {
   Array.from(filter(pos3, f4));
 };
 
-module.exports['multipartition 10000 items'] = function() {
+module.exports['multipartition 10000 items'] = function () {
   const [by0, by1, by2, by3] = multiPartition(multiFunc, a);
   Array.from(by0);
   Array.from(by1);

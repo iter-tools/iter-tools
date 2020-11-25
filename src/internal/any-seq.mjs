@@ -11,5 +11,8 @@ import { toArray } from '../methods/$to-array/to-array';
 import { map } from '../methods/$map/map';
 
 export function seqsToArray(values) {
-  return toArray(map(values, value => toArray(ensureIterable(value))), arr => arr.length > 0);
+  return toArray(
+    map(values, (value) => toArray(ensureIterable(value))),
+    (arr) => arr.length > 0,
+  );
 }

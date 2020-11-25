@@ -20,7 +20,7 @@ describe($`dropWhile`, () => {
       it(
         'yields values from source',
         $async(() => {
-          const iter = $dropWhile(i => i !== i, $wrap([1, 2, 3, 4, 5, 6]));
+          const iter = $dropWhile((i) => i !== i, $wrap([1, 2, 3, 4, 5, 6]));
           expect($await($unwrap(iter))).toEqual([1, 2, 3, 4, 5, 6]);
         }),
       );
@@ -30,7 +30,7 @@ describe($`dropWhile`, () => {
       it(
         'yields no values',
         $async(() => {
-          const iter = $dropWhile(i => i === i, $wrap([1, 2, 3, 4, 5, 6]));
+          const iter = $dropWhile((i) => i === i, $wrap([1, 2, 3, 4, 5, 6]));
           expect($await($unwrap(iter))).toEqual([]);
         }),
       );
@@ -40,7 +40,7 @@ describe($`dropWhile`, () => {
       it(
         'yields the matching value and subsequent values',
         $async(() => {
-          const iter = $dropWhile(i => i !== 4, $wrap([1, 2, 3, 4, 5, 6]));
+          const iter = $dropWhile((i) => i !== 4, $wrap([1, 2, 3, 4, 5, 6]));
           expect($await($unwrap(iter))).toEqual([4, 5, 6]);
         }),
       );
@@ -49,7 +49,7 @@ describe($`dropWhile`, () => {
 
   if ($isAsync) {
     it('may take an async predicate', async () => {
-      const iter = $dropWhile(async i => i !== 4, $wrap([1, 2, 3, 4, 5, 6]));
+      const iter = $dropWhile(async (i) => i !== 4, $wrap([1, 2, 3, 4, 5, 6]));
       expect(await $unwrap(iter)).toEqual([4, 5, 6]);
     });
   }

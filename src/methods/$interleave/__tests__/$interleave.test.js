@@ -5,7 +5,7 @@ import { $Iterable } from '../../../types/$iterable';
 import { $interleave, $Peekerator } from '../../..';
 import { $wrap, $unwrap, $unwrapDeep, anyType } from '../../../test/$helpers';
 
-const $roundRobinStrategy = $async(function*(
+const $roundRobinStrategy = $async(function* (
   options: Record<string, any>,
   all: $Peekerator<$Peekerator<number>>,
   a: $Peekerator<number>,
@@ -66,7 +66,7 @@ describe($`interleave`, () => {
     it(
       'closes the source iterables',
       $async(() => {
-        const $incompleteInterleave = $interleave($async(function*() {}));
+        const $incompleteInterleave = $interleave($async(function* () {}));
 
         expect($await($unwrap($incompleteInterleave($wrap([1, 2, 3]), $wrap([4, 5, 6]))))).toEqual(
           [],
@@ -102,7 +102,7 @@ describe($`interleave`, () => {
       $await(
         $unwrap(
           $interleave(
-            $async(function*(o: {}): $Iterable<any> {
+            $async(function* (o: {}): $Iterable<any> {
               expect(o).toBe(options);
             }),
             options,
@@ -118,7 +118,7 @@ describe($`interleave`, () => {
       'summary.value is a buffer',
       $async(() => {
         const $concat = $interleave(
-          $async(function*(_: Record<string, any>, all: $Peekerator<$Peekerator<number>>) {
+          $async(function* (_: Record<string, any>, all: $Peekerator<$Peekerator<number>>) {
             let first = true;
             while (!all.done) {
               if (first) {

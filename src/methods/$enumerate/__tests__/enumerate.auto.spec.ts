@@ -22,9 +22,21 @@ describe('enumerate', () => {
 
   describe('when source has values', () => {
     it('yields [i, value] tuples', () => {
-      expect(unwrap(enumerate(wrap([1, 2, 3])))).toEqual([[0, 1], [1, 2], [2, 3]]);
-      expect(unwrap(enumerate(3, wrap([1, 2, 3])))).toEqual([[3, 1], [4, 2], [5, 3]]);
-      expect(unwrap(enumerate(-3, wrap([1, 2, 3])))).toEqual([[-3, 1], [-2, 2], [-1, 3]]);
+      expect(unwrap(enumerate(wrap([1, 2, 3])))).toEqual([
+        [0, 1],
+        [1, 2],
+        [2, 3],
+      ]);
+      expect(unwrap(enumerate(3, wrap([1, 2, 3])))).toEqual([
+        [3, 1],
+        [4, 2],
+        [5, 3],
+      ]);
+      expect(unwrap(enumerate(-3, wrap([1, 2, 3])))).toEqual([
+        [-3, 1],
+        [-2, 2],
+        [-1, 3],
+      ]);
     });
   });
 });

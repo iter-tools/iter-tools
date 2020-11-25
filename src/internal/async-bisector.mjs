@@ -43,7 +43,7 @@ export class AsyncBisector extends IterableIterator {
     switch (this.currentIdx++) {
       case 0:
         return {
-          value: (async function*() {
+          value: (async function* () {
             await self.setupFirst();
 
             yield* self.firstPart;
@@ -53,7 +53,7 @@ export class AsyncBisector extends IterableIterator {
 
       case 1:
         return {
-          value: (async function*() {
+          value: (async function* () {
             await self.setupFirst();
 
             const item = await self.partsIterator.next();

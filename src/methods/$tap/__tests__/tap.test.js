@@ -26,7 +26,11 @@ describe('tap', () => {
     it('returns func(value, i) for each value in source', () => {
       const func: (value: number, i: number) => number = jest.fn((value, i) => value + i);
       expect(unwrap(tap(func, wrap([1, 2, 3])))).toEqual([1, 2, 3]);
-      expect(anyType(func).mock.calls).toEqual([[1, 0], [2, 1], [3, 2]]);
+      expect(anyType(func).mock.calls).toEqual([
+        [1, 0],
+        [2, 1],
+        [3, 2],
+      ]);
     });
   });
 });

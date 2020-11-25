@@ -15,22 +15,22 @@ run([
 ]);
 
 function bench(title, config) {
-  return function(next) {
+  return function (next) {
     const suite = new Benchmark.Suite();
 
     for (const key of Object.keys(config)) {
       suite.add(key, config[key]);
     }
 
-    suite.on('start', function() {
+    suite.on('start', function () {
       console.log('  ' + title);
     });
 
-    suite.on('cycle', function(event) {
+    suite.on('cycle', function (event) {
       console.log('    \x1B[0;32m✓\x1B[0m \x1B[0;37m ' + event.target + '\x1B[0m');
     });
 
-    suite.on('complete', function() {
+    suite.on('complete', function () {
       // const slowest = this.filter('slowest')[0]
       const baselineSuite = this.shift();
       const iterToolsSuite = this.shift();

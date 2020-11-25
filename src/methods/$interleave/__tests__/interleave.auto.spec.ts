@@ -12,7 +12,7 @@ import { Iterable } from '../../../types/iterable';
 import { interleave, Peekerator } from '../../..';
 import { wrap, unwrap, unwrapDeep, anyType } from '../../../test/helpers';
 
-const roundRobinStrategy = function*(
+const roundRobinStrategy = function* (
   options: Record<string, any>,
   all: Peekerator<Peekerator<number>>,
   a: Peekerator<number>,
@@ -60,7 +60,7 @@ describe('interleave', () => {
 
   describe('when the interleave generator does not yield all values', () => {
     it('closes the source iterables', () => {
-      const incompleteInterleave = interleave(function*() {});
+      const incompleteInterleave = interleave(function* () {});
 
       expect(unwrap(incompleteInterleave(wrap([1, 2, 3]), wrap([4, 5, 6])))).toEqual([]);
     });
@@ -87,7 +87,7 @@ describe('interleave', () => {
     expect.assertions(1);
     unwrap(
       interleave(
-        function*(o: {}): Iterable<any> {
+        function* (o: {}): Iterable<any> {
           expect(o).toBe(options);
         },
         options,
@@ -98,7 +98,7 @@ describe('interleave', () => {
 
   describe('the summary', () => {
     it('summary.value is a buffer', () => {
-      const concat = interleave(function*(
+      const concat = interleave(function* (
         _: Record<string, any>,
         all: Peekerator<Peekerator<number>>,
       ) {

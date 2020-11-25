@@ -5,12 +5,7 @@ describe('pipe', () => {
     const a = (str: string) => `a(${str})`;
     const b = (str: string) => `b(${str})`;
 
-    expect(
-      pipe(
-        a,
-        b,
-      )('input'),
-    ).toBe('b(a(input))');
+    expect(pipe(a, b)('input')).toBe('b(a(input))');
   });
 
   it('works with types', () => {

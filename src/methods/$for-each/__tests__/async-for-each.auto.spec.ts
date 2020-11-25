@@ -15,7 +15,7 @@ describe('asyncForEach', () => {
   it('calls callback for each value in iterable', async () => {
     const arr: Array<number> = [];
 
-    await asyncForEach(item => arr.push(item), asyncWrap([1, 2, 3]));
+    await asyncForEach((item) => arr.push(item), asyncWrap([1, 2, 3]));
 
     expect(arr).toEqual([1, 2, 3]);
   });
@@ -23,7 +23,7 @@ describe('asyncForEach', () => {
   it('may take an async callback', async () => {
     const arr: Array<number> = [];
 
-    await asyncForEach(async item => arr.push(item), asyncWrap([1, 2, 3]));
+    await asyncForEach(async (item) => arr.push(item), asyncWrap([1, 2, 3]));
 
     expect(arr).toEqual([1, 2, 3]);
   });

@@ -38,7 +38,10 @@ describe('groupBy', () => {
     it('coalesces values into groups', () => {
       const lowerCase = (item: string) => item.toLowerCase();
       expect(unwrapDeep(groupBy(lowerCase, 'AaA'))).toEqual([['a', ['A', 'a', 'A']]]);
-      expect(unwrapDeep(groupBy(lowerCase, 'baA'))).toEqual([['b', ['b']], ['a', ['a', 'A']]]);
+      expect(unwrapDeep(groupBy(lowerCase, 'baA'))).toEqual([
+        ['b', ['b']],
+        ['a', ['a', 'A']],
+      ]);
     });
   });
 

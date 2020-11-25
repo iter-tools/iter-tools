@@ -22,7 +22,11 @@ describe('toObject', () => {
 
   describe('given an iterable of entries', () => {
     it('returns the object with those entries', () => {
-      const entries: Array<[string, string]> = [['foo', 'fox'], ['bar', 'box'], ['baz', 'rox']];
+      const entries: Array<[string, string]> = [
+        ['foo', 'fox'],
+        ['bar', 'box'],
+        ['baz', 'rox'],
+      ];
       expect(toObject(wrap(entries))).toEqual({
         foo: 'fox',
         bar: 'box',

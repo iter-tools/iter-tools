@@ -6,7 +6,7 @@ import { IsFinite, Prepend, Reverse } from 'typescript-tuple';
  */
 type ProductReturnElement<Args extends Array<Iterable<any>>, Holder extends any[] = []> = {
   empty: Holder;
-  many: ((...a: Reverse<Args>) => any) extends ((a: infer Last, ...b: infer ReversedRest) => any)
+  many: ((...a: Reverse<Args>) => any) extends (a: infer Last, ...b: infer ReversedRest) => any
     ? ProductReturnElement<
         Reverse<ReversedRest>,
         Prepend<Holder, Last extends Iterable<infer T> ? T : never>

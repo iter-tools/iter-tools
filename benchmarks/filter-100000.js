@@ -7,11 +7,11 @@ function isEven(x) {
 
 const a = Array.from(range(100000));
 
-module.exports['Array filter 100000 items'] = function() {
+module.exports['Array filter 100000 items'] = function () {
   return Array.from(a.filter(isEven));
 };
 
-module.exports['iter-tools filter 100000 items'] = function() {
+module.exports['iter-tools filter 100000 items'] = function () {
   const iter = filter(isEven);
   return Array.from(iter(a));
 };

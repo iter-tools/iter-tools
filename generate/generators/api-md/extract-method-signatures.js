@@ -44,8 +44,9 @@ function methodUsesIterableCurry(ast) {
         stmt,
       )
     ) {
-      curryMethod = stmt.specifiers.find(specifier => curryNames.includes(specifier.imported.name))
-        .imported.name;
+      curryMethod = stmt.specifiers.find((specifier) =>
+        curryNames.includes(specifier.imported.name),
+      ).imported.name;
     } else if (
       curryMethod &&
       astMatch(
@@ -95,7 +96,7 @@ function getParams(methodName, ast) {
       )
     ) {
       const methodDeclaration = stmt.declaration;
-      params = methodDeclaration.params.map(param => {
+      params = methodDeclaration.params.map((param) => {
         let paramDecl;
         let isRest = false;
 
@@ -116,8 +117,8 @@ function getParams(methodName, ast) {
             name: null,
             isRest: false,
             properties: paramDecl.properties
-              .filter(prop => prop.shorthand)
-              .map(prop => prop.key.name),
+              .filter((prop) => prop.shorthand)
+              .map((prop) => prop.key.name),
           };
         } else {
           return {
@@ -143,9 +144,9 @@ function uncurryParams(ASYNC, params, { variadic }) {
 }
 
 function getSignatureOverrides(ASYNC, params, docme) {
-  return docme.signatures.map(docParams =>
+  return docme.signatures.map((docParams) =>
     docParams
-      .map(param =>
+      .map((param) =>
         param.isIterable
           ? {
               ...param,
@@ -153,7 +154,7 @@ function getSignatureOverrides(ASYNC, params, docme) {
             }
           : param,
       )
-      .concat(params.filter(param => param.isIterable)),
+      .concat(params.filter((param) => param.isIterable)),
   );
 }
 
@@ -175,7 +176,7 @@ module.exports = function extractMethodSignatures(methodName, ast, docme) {
   } else {
     const { minArgs = params.length, maxArgs = params.length } = iterableCurryOpts;
 
-    return range(0, maxArgs - minArgs + 1).map(configParamsLen =>
+    return range(0, maxArgs - minArgs + 1).map((configParamsLen) =>
       splice(
         params,
         iterableCurryOpts.optionalArgsAtEnd ? maxArgs - configParamsLen : 0,

@@ -77,7 +77,7 @@ function makeFunctionConfig(fn, fnConfig = {}) {
 
   return {
     fn,
-    validateArgs: validateArgs || (_ => {}),
+    validateArgs: validateArgs || ((_) => {}),
     variadic: !!variadic,
     reduces: !!reduces,
     optionalArgsAtEnd: !!optionalArgsAtEnd,
@@ -96,7 +96,7 @@ export async function asyncCache(it) {
   return asyncWrapWithResultIterable(asyncify)(arr);
 }
 
-export function asyncWrapWithResultIterable(fn, { validateArgs = _ => _ } = {}) {
+export function asyncWrapWithResultIterable(fn, { validateArgs = (_) => _ } = {}) {
   return (...args) => {
     validateArgs(args);
     return new AsyncSimpleResultIterable(fn, args);

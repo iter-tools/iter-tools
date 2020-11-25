@@ -11,7 +11,7 @@ import { asyncWrap, asyncUnwrap } from '../../../test/async-helpers';
 
 describe('asyncFilterParallel', () => {
   it('returns filtered iterable', async () => {
-    const iter = asyncFilterParallel(item => item % 2 === 0, asyncWrap([1, 2, 3, 4, 5, 6]));
+    const iter = asyncFilterParallel((item) => item % 2 === 0, asyncWrap([1, 2, 3, 4, 5, 6]));
     expect(await asyncUnwrap(iter)).toEqual([2, 4, 6]);
   });
 

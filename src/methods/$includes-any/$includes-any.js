@@ -7,7 +7,7 @@ const none = Symbol('none');
 
 $async;
 export function $includesAny(iterable, values) {
-  return $await($findOr(iterable, none, value => values.includes(value))) !== none;
+  return $await($findOr(iterable, none, (value) => values.includes(value))) !== none;
 }
 
 export default $iterableCurry($includesAny, {

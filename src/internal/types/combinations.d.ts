@@ -9,7 +9,7 @@ type CombinationsPermutationsByLength<T, R extends number> = Iterable<
 type CombinationsPermutationsByIterable<Iter extends Iterable<any>> = Iter extends Iterable<infer T>
   ? Iter extends T[]
     ? CombinationsPermutationsByLength<T, Iter['length']>
-    : (Iterable<T[]> & { size: number })
+    : Iterable<T[]> & { size: number }
   : never;
 
 /**

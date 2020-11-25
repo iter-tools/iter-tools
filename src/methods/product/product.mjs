@@ -13,7 +13,7 @@ function scanRight(arr, cb, initial) {
 }
 
 function* permuteIndicies(arrs, size) {
-  const lengths = arrs.map(arr => arr.length);
+  const lengths = arrs.map((arr) => arr.length);
 
   // A counter is the number of perutations to yield before changing the index.
   const counterDefaults = scanRight(
@@ -23,7 +23,7 @@ function* permuteIndicies(arrs, size) {
   );
 
   const counters = counterDefaults.slice();
-  const indicies = lengths.map(_ => 0);
+  const indicies = lengths.map((_) => 0);
 
   for (let n = 0; n < size; n++) {
     yield indicies;
@@ -35,7 +35,7 @@ function* permuteIndicies(arrs, size) {
 }
 
 export function product(...iterables) {
-  const arrs = [...map(iterables, i => [...ensureIterable(i)])];
+  const arrs = [...map(iterables, (i) => [...ensureIterable(i)])];
   const size = arrs.reduce((size, arr) => size * arr.length, Math.min(arrs.length, 1));
 
   return {

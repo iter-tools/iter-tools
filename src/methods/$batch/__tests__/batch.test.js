@@ -29,7 +29,11 @@ describe('batch', () => {
   describe('when source has more than `size` values', () => {
     describe('which can be divided evenly into batches', () => {
       it('yields batches of `size` items', () => {
-        expect(unwrapDeep(batch(2, wrap([1, 2, 3, 4, 5, 6])))).toEqual([[1, 2], [3, 4], [5, 6]]);
+        expect(unwrapDeep(batch(2, wrap([1, 2, 3, 4, 5, 6])))).toEqual([
+          [1, 2],
+          [3, 4],
+          [5, 6],
+        ]);
       });
     });
 

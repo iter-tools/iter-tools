@@ -23,14 +23,18 @@ describe($`tap`, () => {
       $async(() => {
         const func: (value: number, i: number) => number = jest.fn((value, i) => value + i);
         expect($await($unwrap($tap(func, $wrap([1, 2, 3]))))).toEqual([1, 2, 3]);
-        expect(anyType(func).mock.calls).toEqual([[1, 0], [2, 1], [3, 2]]);
+        expect(anyType(func).mock.calls).toEqual([
+          [1, 0],
+          [2, 1],
+          [3, 2],
+        ]);
       }),
     );
   });
 
   if ($isAsync) {
     it('can take an async func', async () => {
-      expect(await $unwrap($tap(async value => value * 2, $wrap([1, 2, 3])))).toEqual([1, 2, 3]);
+      expect(await $unwrap($tap(async (value) => value * 2, $wrap([1, 2, 3])))).toEqual([1, 2, 3]);
     });
   }
 });

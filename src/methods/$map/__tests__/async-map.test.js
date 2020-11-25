@@ -32,7 +32,7 @@ describe('asyncMap', () => {
   });
 
   it('can take an async func', async () => {
-    expect(await asyncUnwrap(asyncMap(async value => value * 2, asyncWrap([1, 2, 3])))).toEqual([
+    expect(await asyncUnwrap(asyncMap(async (value) => value * 2, asyncWrap([1, 2, 3])))).toEqual([
       2,
       4,
       6,

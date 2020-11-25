@@ -6,7 +6,7 @@ export async function* asyncFilterParallel(iterable, concurrency = 4, func) {
 
   const mapped = new ParallelRunner(
     iterable,
-    async value => ({ value, result: await func(value, c++) }),
+    async (value) => ({ value, result: await func(value, c++) }),
     concurrency,
   );
 

@@ -41,7 +41,11 @@ describe('leadingWindow', () => {
 
   describe('when size(source) > size', () => {
     it('yields size(source)-size full windows, then partial windows', () => {
-      const result = [[1, 2], [2, 3], [3, 0]];
+      const result = [
+        [1, 2],
+        [2, 3],
+        [3, 0],
+      ];
 
       expect(unwrapDeep(leadingWindow(2, { filler: 0 }, wrap([1, 2, 3])))).toEqual(result);
       // prettier-ignore

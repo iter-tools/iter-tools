@@ -17,5 +17,5 @@ const signature = (methodName, params) => {
 };
 
 module.exports = (methodName, signatures) => {
-  return signatures.map(params => signature(methodName, params)).join('  \n');
+  return signatures.map((params) => signature(methodName, params)).join('  \n');
 };

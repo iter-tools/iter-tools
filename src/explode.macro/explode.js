@@ -7,13 +7,13 @@ function explodeImports({ references, state, source, babel }) {
   const { body } = state.file.ast.program;
 
   const importRefIdx = body.findIndex(
-    node => t.isImportDeclaration(node) && node.source.value === source,
+    (node) => t.isImportDeclaration(node) && node.source.value === source,
   );
   const importRef = body[importRefIdx];
 
-  const specsByRemoteName = new Map(importRef.specifiers.map(spec => [spec.imported.name, spec]));
+  const specsByRemoteName = new Map(importRef.specifiers.map((spec) => [spec.imported.name, spec]));
 
-  const newImports = Object.keys(references).map(remoteName => {
+  const newImports = Object.keys(references).map((remoteName) => {
     const spec = specsByRemoteName.get(remoteName);
     const localName = spec.local.name;
     const localIdent = state.file.path.scope.getBindingIdentifier(localName);

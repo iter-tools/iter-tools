@@ -2,8 +2,8 @@ Allows nested calls to be flattened out for improved readability. `compose(a, b,
 
 ```js
 const filterMap = compose(
-  map(x => x + 1),
-  filter(x => x % 2 === 0),
+  map((x) => x + 1),
+  filter((x) => x % 2 === 0),
 );
 
 filterMap([0, 1, 2, 3, 4]); // Iterable[1, 3, 5]

@@ -26,8 +26,19 @@ describe($`groupBy`, () => {
       'yields a group for each value',
       $async(() => {
         expect(
-          $await($unwrapDeep($groupBy($async((_: number, i: number) => i), $wrap([0, 0, 0])))),
-        ).toEqual([[0, [0]], [1, [0]], [2, [0]]]);
+          $await(
+            $unwrapDeep(
+              $groupBy(
+                $async((_: number, i: number) => i),
+                $wrap([0, 0, 0]),
+              ),
+            ),
+          ),
+        ).toEqual([
+          [0, [0]],
+          [1, [0]],
+          [2, [0]],
+        ]);
       }),
     );
   });

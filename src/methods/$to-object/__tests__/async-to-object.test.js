@@ -22,7 +22,11 @@ describe('asyncToObject', () => {
 
   describe('given an iterable of entries', () => {
     it('returns the object with those entries', async () => {
-      const entries: Array<[string, string]> = [['foo', 'fox'], ['bar', 'box'], ['baz', 'rox']];
+      const entries: Array<[string, string]> = [
+        ['foo', 'fox'],
+        ['bar', 'box'],
+        ['baz', 'rox'],
+      ];
       expect(await asyncToObject(asyncWrap(entries))).toEqual({
         foo: 'fox',
         bar: 'box',

@@ -20,7 +20,7 @@ const activeUserNames = users
   .filter(Boolean) // separate for the purposes of type checking, perhaps
   .filter(([id, user]) => user.status === 'active')
   .map(([id, user]) => [user.first, user.last].join(' '))
-  .filter(name => name.length > 0);
+  .filter((name) => name.length > 0);
 ```
 
 In this (possibly slightly contrived) example, the problem is that each of our four functional operations creates a separate array. If our list of users was large to begin with, we're wasting a lot of memory and making unnecessary work for the garbage collector in order to allocate intermediate arrays which are not part of our output anyway. In this regard our function is four times heavier than it needs to be! Iterators avoid making those intermediate allocations by executing all their specified transformations on an individual item before moving on to the next item.
@@ -34,7 +34,7 @@ import { map, filter, compose, toArray } from 'iter-tools';
 
 const activeUserNames = compose(
   toArray,
-  filter(name => name.length > 0),
+  filter((name) => name.length > 0),
   map(([id, user]) => [user.first, user.last].join(' ')),
   filter(([id, user]) => user.status === 'active'),
   filter(Boolean),
@@ -126,10 +126,10 @@ import last from 'array-last';
 
 let cursor = null;
 const cursorPagedResults = compose(
-  asyncMap(response => response.edges.map(edge => edge.node)),
-  asyncTakeWhile(reponse => response.pageInfo.hasNextPage),
-  asyncTap(response => (cursor = last(response.edges).cursor)),
-  asyncMap(response => res.json()),
+  asyncMap((response) => response.edges.map((edge) => edge.node)),
+  asyncTakeWhile((reponse) => response.pageInfo.hasNextPage),
+  asyncTap((response) => (cursor = last(response.edges).cursor)),
+  asyncMap((response) => res.json()),
   asyncMap(() => fetch(`/feed?pageSize=25${cursor ? `&after=${cursor}` : ''}`)),
 )(range());
 
@@ -218,8 +218,8 @@ A data pipeline is a set of transformations that can be applied to an iterable. 
 
 ```js
 const dataPipeline = pipe(
-  filter(n => n % 2 === 0), // filter even numbers
-  map(n => n * n), // square numbers
+  filter((n) => n % 2 === 0), // filter even numbers
+  map((n) => n * n), // square numbers
 );
 
 for (const n of dataPipeline(iterable)) {
@@ -230,10 +230,11 @@ for (const n of dataPipeline(iterable)) {
 There are cases where you need to process data in parallel and applying different transformations. You can do so, using _fork_ to clone the iterable, applying different transformations to the clones, and joining the iterable back together using for example _zip_ or _merge_.
 
 ```js
-const dataPipeline = pipe(
-  fork,
-  ([iter1, iter2]) =>
-    zip(filter(n => n % 2 === 0, iter1), map(n => n * n, iter2)),
+const dataPipeline = pipe(fork, ([iter1, iter2]) =>
+  zip(
+    filter((n) => n % 2 === 0, iter1),
+    map((n) => n * n, iter2),
+  ),
 );
 
 for (const [n1, n2] of dataPipeline(iterable)) {

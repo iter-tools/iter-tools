@@ -12,7 +12,7 @@ import { AsyncIterable } from '../../../types/async-iterable';
 import { asyncInterleave, AsyncPeekerator } from '../../..';
 import { asyncWrap, asyncUnwrap, asyncUnwrapDeep, anyType } from '../../../test/async-helpers';
 
-const asyncRoundRobinStrategy = async function*(
+const asyncRoundRobinStrategy = async function* (
   options: Record<string, any>,
   all: AsyncPeekerator<AsyncPeekerator<number>>,
   a: AsyncPeekerator<number>,
@@ -60,7 +60,7 @@ describe('asyncInterleave', () => {
 
   describe('when the interleave generator does not yield all values', () => {
     it('closes the source iterables', async () => {
-      const asyncIncompleteInterleave = asyncInterleave(async function*() {});
+      const asyncIncompleteInterleave = asyncInterleave(async function* () {});
 
       expect(
         await asyncUnwrap(asyncIncompleteInterleave(asyncWrap([1, 2, 3]), asyncWrap([4, 5, 6]))),
@@ -89,7 +89,7 @@ describe('asyncInterleave', () => {
     expect.assertions(1);
     await asyncUnwrap(
       asyncInterleave(
-        async function*(o: {}): AsyncIterable<any> {
+        async function* (o: {}): AsyncIterable<any> {
           expect(o).toBe(options);
         },
         options,
@@ -100,7 +100,7 @@ describe('asyncInterleave', () => {
 
   describe('the summary', () => {
     it('summary.value is a buffer', async () => {
-      const asyncConcat = asyncInterleave(async function*(
+      const asyncConcat = asyncInterleave(async function* (
         _: Record<string, any>,
         all: AsyncPeekerator<AsyncPeekerator<number>>,
       ) {

@@ -21,7 +21,7 @@ function* $testStrategy(split, options, source) {
   }
 }
 
-const $testBisector = source => {
+const $testBisector = (source) => {
   return new $Bisector(source, $testStrategy, {});
 };
 

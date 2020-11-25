@@ -19,7 +19,7 @@ describe($`takeWhile`, () => {
     it(
       'yields values while the result of predicate(value, i) is truthy',
       $async(() => {
-        expect($await($unwrap($takeWhile(value => value === 2, $wrap([2, 2, 3, 2]))))).toEqual([
+        expect($await($unwrap($takeWhile((value) => value === 2, $wrap([2, 2, 3, 2]))))).toEqual([
           2,
           2,
         ]);
@@ -30,7 +30,7 @@ describe($`takeWhile`, () => {
 
   if ($isAsync) {
     it('can take an async predicate', async () => {
-      const iter = $takeWhile(async value => value % 2 === 0, [2, 2, 3, 2, 2, 2]);
+      const iter = $takeWhile(async (value) => value % 2 === 0, [2, 2, 3, 2, 2, 2]);
       expect(await $unwrap(iter)).toEqual([2, 2]);
     });
   }

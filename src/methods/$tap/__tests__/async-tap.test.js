@@ -26,12 +26,16 @@ describe('asyncTap', () => {
     it('returns func(value, i) for each value in source', async () => {
       const func: (value: number, i: number) => number = jest.fn((value, i) => value + i);
       expect(await asyncUnwrap(asyncTap(func, asyncWrap([1, 2, 3])))).toEqual([1, 2, 3]);
-      expect(anyType(func).mock.calls).toEqual([[1, 0], [2, 1], [3, 2]]);
+      expect(anyType(func).mock.calls).toEqual([
+        [1, 0],
+        [2, 1],
+        [3, 2],
+      ]);
     });
   });
 
   it('can take an async func', async () => {
-    expect(await asyncUnwrap(asyncTap(async value => value * 2, asyncWrap([1, 2, 3])))).toEqual([
+    expect(await asyncUnwrap(asyncTap(async (value) => value * 2, asyncWrap([1, 2, 3])))).toEqual([
       1,
       2,
       3,

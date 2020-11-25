@@ -22,7 +22,7 @@ describe('takeWhile', () => {
 
   describe('when source has values', () => {
     it('yields values while the result of predicate(value, i) is truthy', () => {
-      expect(unwrap(takeWhile(value => value === 2, wrap([2, 2, 3, 2])))).toEqual([2, 2]);
+      expect(unwrap(takeWhile((value) => value === 2, wrap([2, 2, 3, 2])))).toEqual([2, 2]);
       expect(unwrap(takeWhile((_value, i) => i < 0, wrap([2, 2])))).toEqual([]);
     });
   });

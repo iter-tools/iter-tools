@@ -9,7 +9,7 @@
 import { iterableCurry, isIterable } from '../../internal/iterable';
 import { validateArgs } from './internal/validate-args';
 
-const defaultShouldFlat = item => typeof item !== 'string' && isIterable(item);
+const defaultShouldFlat = (item) => typeof item !== 'string' && isIterable(item);
 
 function* flatInternal(shouldFlat, depth, currentDepth, source) {
   for (const item of source) {

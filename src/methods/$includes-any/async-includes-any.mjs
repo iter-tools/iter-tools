@@ -12,7 +12,7 @@ import { asyncFindOr } from '../$find-or/async-find-or';
 const none = Symbol('none');
 
 export async function asyncIncludesAny(iterable, values) {
-  return (await asyncFindOr(iterable, none, value => values.includes(value))) !== none;
+  return (await asyncFindOr(iterable, none, (value) => values.includes(value))) !== none;
 }
 
 export default asyncIterableCurry(asyncIncludesAny, {

@@ -13,7 +13,7 @@ import { map } from '../$map/map';
 import { some } from '../$some/some';
 import { toArray } from '../$to-array/to-array';
 
-const isDone = peekr => peekr.done;
+const isDone = (peekr) => peekr.done;
 
 export function* zip(sources) {
   const peekrs = toArray(map(sources, peekerate));
@@ -28,7 +28,7 @@ export function* zip(sources) {
       done = some(peekrs, isDone);
     }
   } finally {
-    parallelEach(peekrs, peekr => peekr.return());
+    parallelEach(peekrs, (peekr) => peekr.return());
   }
 }
 

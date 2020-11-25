@@ -34,7 +34,10 @@ describe('asyncWindow', () => {
 
   describe('when size(source) > size', () => {
     it('yields partial windows, then size(source)-size full windows', async () => {
-      expect(await asyncUnwrapDeep(asyncWindow(2, asyncWrap([1, 2, 3])))).toEqual([[1, 2], [2, 3]]);
+      expect(await asyncUnwrapDeep(asyncWindow(2, asyncWrap([1, 2, 3])))).toEqual([
+        [1, 2],
+        [2, 3],
+      ]);
     });
   });
 

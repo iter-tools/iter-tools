@@ -14,7 +14,7 @@ import { map } from '../$map/map';
 import { some } from '../$some/some';
 import { asyncToArray } from '../$to-array/async-to-array';
 
-const isDone = peekr => peekr.done;
+const isDone = (peekr) => peekr.done;
 
 export async function* asyncZip(sources) {
   const peekrs = await asyncToArray(asyncMap(sources, asyncPeekerate));
@@ -24,12 +24,12 @@ export async function* asyncZip(sources) {
     while (!done) {
       yield peekrs.map(({ value }) => value);
 
-      await Promise.all(map(peekrs, peekr => peekr.advance()));
+      await Promise.all(map(peekrs, (peekr) => peekr.advance()));
 
       done = some(peekrs, isDone);
     }
   } finally {
-    await asyncParallelEach(peekrs, peekr => peekr.return());
+    await asyncParallelEach(peekrs, (peekr) => peekr.return());
   }
 }
 

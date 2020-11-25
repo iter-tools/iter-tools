@@ -43,7 +43,7 @@ export class Bisector extends IterableIterator {
     switch (this.currentIdx++) {
       case 0:
         return {
-          value: (function*() {
+          value: (function* () {
             self.setupFirst();
 
             yield* self.firstPart;
@@ -53,7 +53,7 @@ export class Bisector extends IterableIterator {
 
       case 1:
         return {
-          value: (function*() {
+          value: (function* () {
             self.setupFirst();
 
             const item = self.partsIterator.next();

@@ -3,7 +3,7 @@
 const fs = require('fs');
 const ignore = require('ignore');
 
-module.exports = generatedPaths => {
+module.exports = (generatedPaths) => {
   const gitignore = ignore().add(fs.readFileSync('.gitignore', 'utf8'));
 
   return `# @generated
@@ -11,9 +11,9 @@ module.exports = generatedPaths => {
 # The template for this file is: generate/templates/gitattributes-file.js
 
 ${[...generatedPaths]
-  .filter(path => !gitignore.ignores(path))
+  .filter((path) => !gitignore.ignores(path))
   .sort()
-  .map(path => `${path} linguist-generated=true`)
+  .map((path) => `${path} linguist-generated=true`)
   .join('\n')}
 `;
 };

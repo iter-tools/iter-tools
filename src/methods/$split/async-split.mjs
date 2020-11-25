@@ -13,7 +13,7 @@ function* iterableOf(item) {
 }
 
 export function asyncSplit(source) {
-  return asyncMap(source, item => iterableOf(item));
+  return asyncMap(source, (item) => iterableOf(item));
 }
 
 export default asyncSplit;

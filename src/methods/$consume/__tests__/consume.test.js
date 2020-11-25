@@ -26,7 +26,7 @@ describe('consume', () => {
 
       expect(
         consume(
-          (function*() {
+          (function* () {
             arr.push(1);
             yield;
             arr.push(2);

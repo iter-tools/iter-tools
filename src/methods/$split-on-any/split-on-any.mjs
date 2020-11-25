@@ -10,7 +10,7 @@ import { iterableCurry } from '../../internal/iterable';
 import { splitWith } from '../$split-with/split-with';
 
 export function splitOnAny(source, separators) {
-  return splitWith(source, value => separators.includes(value));
+  return splitWith(source, (value) => separators.includes(value));
 }
 
 export default iterableCurry(splitOnAny, {

@@ -19,7 +19,11 @@ describe($`toObject`, () => {
     it(
       'returns the object with those entries',
       $async(() => {
-        const entries: Array<[string, string]> = [['foo', 'fox'], ['bar', 'box'], ['baz', 'rox']];
+        const entries: Array<[string, string]> = [
+          ['foo', 'fox'],
+          ['bar', 'box'],
+          ['baz', 'rox'],
+        ];
         entries;
         expect($await($toObject($wrap(entries)))).toEqual({
           foo: 'fox',

@@ -13,7 +13,7 @@ function* iterableOf(item) {
 }
 
 export function split(source) {
-  return map(source, item => iterableOf(item));
+  return map(source, (item) => iterableOf(item));
 }
 
 export default split;

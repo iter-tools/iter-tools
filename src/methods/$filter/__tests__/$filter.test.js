@@ -29,7 +29,7 @@ describe($`filter`, () => {
 
   if ($isAsync) {
     it('may take an async predicate', async () => {
-      const iter = $filter(async item => item % 2 === 0, $wrap([1, 2, 3, 4, 5, 6]));
+      const iter = $filter(async (item) => item % 2 === 0, $wrap([1, 2, 3, 4, 5, 6]));
       expect(await $unwrap(iter)).toEqual([2, 4, 6]);
     });
   }

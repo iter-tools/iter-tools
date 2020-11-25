@@ -2,14 +2,14 @@ const range = require('../es/range');
 
 const a = range(10000);
 
-module.exports['for loop'] = function() {
+module.exports['for loop'] = function () {
   const arr = [];
   for (const i of a) {
     arr.push(i);
   }
 };
 
-module.exports['while loop'] = function() {
+module.exports['while loop'] = function () {
   const arr = [];
   while (true) {
     const next = a.next();

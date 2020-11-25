@@ -18,7 +18,10 @@ describe('permutations', () => {
   });
 
   it('returns permutations', () => {
-    expect(Array.from(permutations(2, [1, 2]))).toEqual([[1, 2], [2, 1]]);
+    expect(Array.from(permutations(2, [1, 2]))).toEqual([
+      [1, 2],
+      [2, 1],
+    ]);
 
     const iter = permutations(2, [1, 2, 3, 4]);
     expect(iter.size).toEqual(12);
@@ -42,8 +45,14 @@ describe('permutations', () => {
 
   it('can be reused', () => {
     const iter = permutations([1, 2]);
-    expect(Array.from(iter)).toEqual([[1, 2], [2, 1]]);
-    expect(Array.from(iter)).toEqual([[1, 2], [2, 1]]);
+    expect(Array.from(iter)).toEqual([
+      [1, 2],
+      [2, 1],
+    ]);
+    expect(Array.from(iter)).toEqual([
+      [1, 2],
+      [2, 1],
+    ]);
   });
 
   describe('permutations.size', () => {

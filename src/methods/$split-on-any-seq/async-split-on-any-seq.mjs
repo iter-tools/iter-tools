@@ -44,7 +44,7 @@ async function* asyncAnySeqspliterator(split, { separatorSeqs }, source) {
 }
 
 export async function* asyncSplitOnAnySeq(source, separatorSeqs) {
-  const separatorSeqsArr = (await asyncSeqsToArray(separatorSeqs)).filter(s => s.length > 0);
+  const separatorSeqsArr = (await asyncSeqsToArray(separatorSeqs)).filter((s) => s.length > 0);
 
   yield* asyncSpliterate(source, asyncAnySeqspliterator, {
     separatorSeqs: separatorSeqsArr.sort((a, b) => b.length - a.length),

@@ -98,7 +98,7 @@ function addAll(initial, iterables) {
 describe($`iterableCurry`, () => {
   const f2 = (iterable, a, b) => iter(a, b);
   const f1 = (iterable, a) => iter(a);
-  const f0 = iterable => iter();
+  const f0 = (iterable) => iter();
   const c2 = $iterableCurry(f2);
   const c1 = $iterableCurry(f1);
   const c0 = $iterableCurry(f0);
@@ -176,8 +176,8 @@ describe($`iterableCurry`, () => {
     it(
       'can alter arguments',
       $async(() => {
-        const empty = $async(function*() {})();
-        const helloImpl = jest.fn($async(function*() {}));
+        const empty = $async(function* () {})();
+        const helloImpl = jest.fn($async(function* () {}));
         const hello = $iterableCurry(helloImpl, {
           minArgs: 1,
           maxArgs: 1,
@@ -223,7 +223,7 @@ describe($`iterableCurry`, () => {
   describe('works with reducing functions', () => {
     const f2 = (iterable, a, b) => add(a + b, iterable);
     const f1 = (iterable, a) => add(a, iterable);
-    const f0 = iterable => add(0, iterable);
+    const f0 = (iterable) => add(0, iterable);
     const c2 = $iterableCurry(f2, { reduces: true });
     const c1 = $iterableCurry(f1, { reduces: true });
     const c0 = $iterableCurry(f0, { reduces: true });

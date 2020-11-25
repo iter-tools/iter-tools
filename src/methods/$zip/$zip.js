@@ -8,7 +8,7 @@ import { map } from '../$map/map';
 import { some } from '../$some/some';
 import { $toArray } from '../$to-array/$to-array';
 
-const isDone = peekr => peekr.done;
+const isDone = (peekr) => peekr.done;
 
 $async;
 export function* $zip(sources) {
@@ -22,13 +22,13 @@ export function* $zip(sources) {
       if ($isSync) {
         for (const peekr of peekrs) peekr.advance();
       } else {
-        $await(Promise.all(map(peekrs, peekr => peekr.advance())));
+        $await(Promise.all(map(peekrs, (peekr) => peekr.advance())));
       }
 
       done = some(peekrs, isDone);
     }
   } finally {
-    $await($parallelEach(peekrs, peekr => peekr.return()));
+    $await($parallelEach(peekrs, (peekr) => peekr.return()));
   }
 }
 

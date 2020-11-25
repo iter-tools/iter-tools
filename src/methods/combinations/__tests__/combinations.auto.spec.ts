@@ -29,7 +29,14 @@ describe('combinations', () => {
 
   it('returns combinations (max n)', () => {
     const iter = combinations(2, [1, 2, 3, 4]);
-    const expected = [[1, 2], [1, 3], [1, 4], [2, 3], [2, 4], [3, 4]];
+    const expected = [
+      [1, 2],
+      [1, 3],
+      [1, 4],
+      [2, 3],
+      [2, 4],
+      [3, 4],
+    ];
 
     expect(Array.from(iter)).toEqual(expected);
   });

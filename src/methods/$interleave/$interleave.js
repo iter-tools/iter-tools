@@ -39,7 +39,7 @@ class $InputSummaryInternal {
   }
 
   updateNotDone() {
-    this.notDoneBuffer = this.buffers.find(buffer => !buffer.done);
+    this.notDoneBuffer = this.buffers.find((buffer) => !buffer.done);
   }
 
   @$async
@@ -96,7 +96,7 @@ class $Interleaver {
     this.initialized = true;
     const { strategy, options, inputSummary } = this;
     this.buffers = $await(
-      $toArray($map(this.sources, source => $SummarizedPeekerator.from(source, inputSummary))),
+      $toArray($map(this.sources, (source) => $SummarizedPeekerator.from(source, inputSummary))),
     );
     this.iterator = strategy(options, new $InputSummary(inputSummary), ...this.buffers);
 
@@ -105,7 +105,7 @@ class $Interleaver {
 
   @$async
   returnBuffers() {
-    $await($parallelEach(this.buffers, buffer => buffer.return()));
+    $await($parallelEach(this.buffers, (buffer) => buffer.return()));
   }
 
   @$async

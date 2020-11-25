@@ -2,7 +2,10 @@ import { wrapEntries } from '../../..';
 
 describe('wrapEntries', () => {
   it('works with Map', () => {
-    const mapEntries: Array<[string, string]> = [['foo', 'foo'], ['bar', 'bar']];
+    const mapEntries: Array<[string, string]> = [
+      ['foo', 'foo'],
+      ['bar', 'bar'],
+    ];
     expect(Array.from(wrapEntries(new Map(mapEntries)))).toEqual(mapEntries);
   });
 

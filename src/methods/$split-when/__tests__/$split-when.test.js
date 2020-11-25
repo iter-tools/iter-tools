@@ -28,7 +28,7 @@ describe($`splitWhen`, () => {
     it(
       'puts all the values in the second part',
       $async(() => {
-        const [first, second] = $splitWhen(v => v > 0, $wrap([1, 2, 3]));
+        const [first, second] = $splitWhen((v) => v > 0, $wrap([1, 2, 3]));
         expect($await($unwrapDeep([first, second]))).toEqual([[], [1, 2, 3]]);
       }),
     );
@@ -38,7 +38,7 @@ describe($`splitWhen`, () => {
     it(
       'puts all the values in the first part',
       $async(() => {
-        const [first, second] = $splitWhen(_ => null, $wrap([1, 2, 3]));
+        const [first, second] = $splitWhen((_) => null, $wrap([1, 2, 3]));
         expect($await($unwrapDeep([first, second]))).toEqual([[1, 2, 3], []]);
       }),
     );

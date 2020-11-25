@@ -41,7 +41,11 @@ describe('trailingWindow', () => {
 
   describe('when size(source) > size', () => {
     it('yields partial windows, then size(source)-size full windows', () => {
-      const result = [[0, 1], [1, 2], [2, 3]];
+      const result = [
+        [0, 1],
+        [1, 2],
+        [2, 3],
+      ];
 
       expect(unwrapDeep(trailingWindow(2, { filler: 0 }, wrap([1, 2, 3])))).toEqual(result);
       // prettier-ignore

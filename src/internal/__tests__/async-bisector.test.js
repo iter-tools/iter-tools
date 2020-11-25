@@ -26,7 +26,7 @@ async function* asyncTestStrategy(split, options, source) {
   }
 }
 
-const asyncTestBisector = source => {
+const asyncTestBisector = (source) => {
   return new AsyncBisector(source, asyncTestStrategy, {});
 };
 

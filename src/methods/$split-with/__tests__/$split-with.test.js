@@ -8,7 +8,7 @@ describe($`splitWith`, () => {
     'should split between every item which is equal to the on argument',
     $async(() => {
       expect(
-        $await($unwrapDeep($splitWith(i => i === null, $wrap([1, null, 2, null, 3])))),
+        $await($unwrapDeep($splitWith((i) => i === null, $wrap([1, null, 2, null, 3])))),
       ).toEqual([[1], [2], [3]]);
     }),
   );
@@ -16,7 +16,7 @@ describe($`splitWith`, () => {
   it(
     'should return no parts if source is empty',
     $async(() => {
-      expect($await($unwrapDeep($splitWith(i => i, null)))).toEqual([]);
+      expect($await($unwrapDeep($splitWith((i) => i, null)))).toEqual([]);
     }),
   );
 });

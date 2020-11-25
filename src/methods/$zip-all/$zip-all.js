@@ -7,7 +7,7 @@ import { $map } from '../$map/$map';
 import { every } from '../$every/every';
 import { $toArray } from '../$to-array/$to-array';
 
-const isDone = peekr => peekr.done;
+const isDone = (peekr) => peekr.done;
 
 $async;
 export function* $zipAll(sources, { filler } = {}) {
@@ -18,12 +18,12 @@ export function* $zipAll(sources, { filler } = {}) {
     while (!done) {
       yield peekrs.map(({ value, done }) => (done ? filler : value));
 
-      $await($parallelEach(peekrs, peekr => peekr.advance()));
+      $await($parallelEach(peekrs, (peekr) => peekr.advance()));
 
       done = every(peekrs, isDone);
     }
   } finally {
-    $await($parallelEach(peekrs, peekr => peekr.return()));
+    $await($parallelEach(peekrs, (peekr) => peekr.return()));
   }
 }
 

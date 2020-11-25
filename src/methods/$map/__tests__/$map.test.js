@@ -27,7 +27,7 @@ describe($`map`, () => {
 
   if ($isAsync) {
     it('can take an async func', async () => {
-      expect(await $unwrap($map(async value => value * 2, $wrap([1, 2, 3])))).toEqual([2, 4, 6]);
+      expect(await $unwrap($map(async (value) => value * 2, $wrap([1, 2, 3])))).toEqual([2, 4, 6]);
     });
   }
 });

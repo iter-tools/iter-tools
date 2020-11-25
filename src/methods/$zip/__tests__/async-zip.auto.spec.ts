@@ -14,11 +14,18 @@ import { asyncWrap } from '../../../test/async-helpers';
 describe('asyncZip', () => {
   it('zips', async () => {
     const iter = asyncZip(asyncWrap([1, 2, 3]), asyncWrap([4, 5, 6]), asyncWrap([7, 8, 9]));
-    expect(await asyncToArray(iter)).toEqual([[1, 4, 7], [2, 5, 8], [3, 6, 9]]);
+    expect(await asyncToArray(iter)).toEqual([
+      [1, 4, 7],
+      [2, 5, 8],
+      [3, 6, 9],
+    ]);
   });
 
   it('zips stopping early', async () => {
     const iter = asyncZip(asyncWrap([1, 2, 3]), asyncWrap([4, 5, 6]), asyncWrap([7, 8]));
-    expect(await asyncToArray(iter)).toEqual([[1, 4, 7], [2, 5, 8]]);
+    expect(await asyncToArray(iter)).toEqual([
+      [1, 4, 7],
+      [2, 5, 8],
+    ]);
   });
 });
