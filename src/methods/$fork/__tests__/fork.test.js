@@ -37,13 +37,14 @@ describe('fork', () => {
     expect(unwrap(map(iter => unwrap(iter), gen))).toEqual(Array(3).fill(originalIter));
   });
 
-  it('it does not matter which order the fork iterables are consumed in', () => {
+  it('does not matter which order the fork iterables are consumed in', () => {
     const [a, b, c] = fork(makeIterable());
     const originalIter = unwrap(makeIterable());
     expect(unwrap(map(iter => unwrap(iter), [c, b, a]))).toEqual(Array(3).fill(originalIter));
   });
 
   describe('source iterable cleanup', () => {
+    /* eslint-disable jest/expect-expect */
     it('happens when a fork is exhausted', () => {
       const iterableIterator = fork(wrap([1, 2, 3]))[Symbol.iterator]();
       unwrap(iterableIterator.next().value);
@@ -76,5 +77,7 @@ describe('fork', () => {
       a.return();
       b.return();
     });
+
+    /* eslint-enable jest/expect-expect */
   });
 });

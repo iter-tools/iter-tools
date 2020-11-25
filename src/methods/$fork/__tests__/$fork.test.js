@@ -53,7 +53,7 @@ describe($`fork`, () => {
   );
 
   it(
-    'it does not matter which order the fork iterables are consumed in',
+    'does not matter which order the fork iterables are consumed in',
     $async(() => {
       const [a, b, c] = $fork($makeIterable());
       const originalIter = $await($unwrap($makeIterable()));
@@ -64,6 +64,7 @@ describe($`fork`, () => {
   );
 
   describe('source iterable cleanup', () => {
+    /* eslint-disable jest/expect-expect */
     it(
       'happens when a fork is exhausted',
       $async(() => {
@@ -108,5 +109,7 @@ describe($`fork`, () => {
         $await(b.return());
       }),
     );
+
+    /* eslint-enable jest/expect-expect */
   });
 });

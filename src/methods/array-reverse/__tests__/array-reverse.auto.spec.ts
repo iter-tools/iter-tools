@@ -30,7 +30,9 @@ describe('arrayReverse', () => {
   });
 
   describe('when input is invalid', () => {
-    const source: any = 0;
-    expect(() => toArray(arrayReverse(source))).toThrowErrorMatchingSnapshot();
+    it('throws', () => {
+      const source: any = 0;
+      expect(() => toArray(arrayReverse(source))).toThrowErrorMatchingSnapshot();
+    });
   });
 });

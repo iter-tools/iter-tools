@@ -3,7 +3,7 @@ const regexpExec = require('../es/regexp-exec');
 function generateCurrentAccount(nlines) {
   const lines = [];
   lines.push('transaction id;businness code;money in;money out');
-  for (var i = 0; i < nlines; i++) {
+  for (let i = 0; i < nlines; i++) {
     lines.push(
       `${i};AAA123;${(Math.random() * 1000).toFixed(2)};${(Math.random() * 1000).toFixed(2)}`,
     );

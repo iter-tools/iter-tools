@@ -50,6 +50,7 @@ describe('asyncReduce', () => {
   });
 
   describe('when there is an error while reducing', () => {
+    // eslint-disable-next-line jest/expect-expect
     it('closes source', async () => {
       try {
         await asyncReduce(() => {

@@ -6,6 +6,7 @@
  * More information can be found in CONTRIBUTING.md
  */
 
+/* eslint-disable jest/expect-expect */
 import { apply } from '../../..';
 
 describe('apply', () => {
@@ -26,32 +27,36 @@ describe('apply', () => {
   describe('with no arguments', () => {
     let testFn: (...args: any[]) => any;
 
-    beforeEach(() => {
-      testFn = jest.fn();
-    });
-
-    afterEach(() => {
+    const assertNoArgs = () => {
       expect(testFn).toHaveBeenCalledTimes(1);
       expect(testFn).toHaveBeenLastCalledWith();
+    };
+
+    beforeEach(() => {
+      testFn = jest.fn();
     });
 
     describe('(undefined)', () => {
       it('calls the function if given two arguments', () => {
         apply(testFn, undefined);
+        assertNoArgs();
       });
 
       it('can be curried', () => {
         apply(testFn)(undefined);
+        assertNoArgs();
       });
     });
 
     describe('(null)', () => {
       it('calls the function if given two arguments', () => {
         apply(testFn, null);
+        assertNoArgs();
       });
 
       it('can be curried', () => {
         apply(testFn)(null);
+        assertNoArgs();
       });
     });
   });

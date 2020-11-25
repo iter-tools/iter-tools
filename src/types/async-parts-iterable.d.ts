@@ -8,6 +8,6 @@
 
 import { AsyncResultIterable } from './async-iterable';
 
-export type AsyncPartsIterable<T> = AsyncResultIterable<AsyncPartIterable<T>>;
-
 export type AsyncPartIterable<T> = AsyncResultIterable<T>;
+
+export type AsyncPartsIterable<T> = AsyncResultIterable<AsyncPartIterable<T>>;

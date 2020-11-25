@@ -43,7 +43,7 @@ describe('asyncFork', () => {
     );
   });
 
-  it('it does not matter which order the fork iterables are consumed in', async () => {
+  it('does not matter which order the fork iterables are consumed in', async () => {
     const [a, b, c] = asyncFork(asyncMakeIterable());
     const originalIter = await asyncUnwrap(asyncMakeIterable());
     expect(await asyncUnwrap(asyncMap(iter => asyncUnwrap(iter), [c, b, a]))).toEqual(
@@ -52,6 +52,7 @@ describe('asyncFork', () => {
   });
 
   describe('source iterable cleanup', () => {
+    /* eslint-disable jest/expect-expect */
     it('happens when a fork is exhausted', async () => {
       const iterableIterator = asyncFork(asyncWrap([1, 2, 3]))[Symbol.iterator]();
       await asyncUnwrap(iterableIterator.next().value);
@@ -84,5 +85,7 @@ describe('asyncFork', () => {
       await a.return();
       await b.return();
     });
+
+    /* eslint-enable jest/expect-expect */
   });
 });

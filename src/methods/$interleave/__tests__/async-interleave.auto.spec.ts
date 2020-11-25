@@ -69,6 +69,7 @@ describe('asyncInterleave', () => {
   });
 
   describe('when the interleave is terminated abruptly', () => {
+    // eslint-disable-next-line jest/expect-expect
     it('calls return on the strategy', async () => {
       const iter = asyncInterleave(
         (...args: any) => asyncWrap(anyType(asyncRoundRobinStrategy)(...args)),
@@ -106,6 +107,7 @@ describe('asyncInterleave', () => {
         let first = true;
         while (!all.done) {
           if (first) {
+            // eslint-disable-next-line jest/no-conditional-expect
             expect(() => all.advance()).toThrowErrorMatchingSnapshot();
           }
           expect(all.current.done).toBe(all.done);

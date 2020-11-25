@@ -1,10 +1,10 @@
 import { AsyncSourceIterable, AsyncResultIterable, MaybePromise } from '../../types/async-iterable';
 
-declare function asyncFilterParallel<S extends T, T>(
+declare function asyncFilterParallel<T, S extends T>(
   func: (item: T, i: number) => item is S,
 ): (iterable: AsyncSourceIterable<T>) => AsyncResultIterable<S>;
 
-declare function asyncFilterParallel<S extends T, T>(
+declare function asyncFilterParallel<T, S extends T>(
   concurrency: number,
   func: (item: T, i: number) => item is S,
 ): (iterable: AsyncSourceIterable<T>) => AsyncResultIterable<S>;
@@ -18,12 +18,12 @@ declare function asyncFilterParallel<T>(
   func: (item: T, i: number) => MaybePromise<boolean>,
 ): (iterable: AsyncSourceIterable<T>) => AsyncResultIterable<T>;
 
-declare function asyncFilterParallel<S extends T, T>(
+declare function asyncFilterParallel<T, S extends T>(
   func: (item: T, i: number) => item is S,
   iterable: AsyncSourceIterable<T>,
 ): AsyncResultIterable<S>;
 
-declare function asyncFilterParallel<S extends T, T>(
+declare function asyncFilterParallel<T, S extends T>(
   concurrency: number,
   func: (item: T, i: number) => item is S,
   iterable: AsyncSourceIterable<T>,

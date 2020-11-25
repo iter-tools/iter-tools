@@ -8,4 +8,4 @@ assert<ResultIterable<number>>(objectValues(Ø as { foo: number }));
 
 assert<ResultIterable<string | null>>(objectValues(Ø as { foo: string; bar: null }));
 
-assert<ResultIterable<never>>(objectValues(Ø as {}));
+assert<ResultIterable<never>>(objectValues(Ø as Record<string, never>));

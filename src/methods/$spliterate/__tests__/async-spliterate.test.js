@@ -50,8 +50,10 @@ describe('asyncSpliterate', () => {
   });
 
   describe('abrupt termination', () => {
-    // The assertions in these tests are part of the cleanup defined by $wrap
     const source = ['first', split, 'second'];
+
+    // The assertions in these tests are part of the cleanup defined by $wrap
+    /* eslint-disable jest/expect-expect */
 
     it("source is cleaned up if we're done before we started", async () => {
       const parts = asyncTestSpliterator(asyncWrap(source));
@@ -96,6 +98,8 @@ describe('asyncSpliterate', () => {
       await parts.next();
       await parts.next();
     });
+
+    /* eslint-enable jest/expect-expect */
   });
 
   it('options may be omitted', async () => {

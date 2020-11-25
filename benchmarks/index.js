@@ -16,7 +16,7 @@ run([
 
 function bench(title, config) {
   return function(next) {
-    var suite = new Benchmark.Suite();
+    const suite = new Benchmark.Suite();
 
     for (const key of Object.keys(config)) {
       suite.add(key, config[key]);

@@ -1,5 +1,5 @@
 module.exports = {
-  extends: ['standard', 'plugin:prettier/recommended', 'typescript', 'plugin:jest/recommended'],
+  extends: ['standard', 'plugin:prettier/recommended', 'plugin:jest/recommended'],
   plugins: ['jest'],
   parser: 'babel-eslint',
   parserOptions: {
@@ -19,6 +19,7 @@ module.exports = {
     {
       files: ['*.ts'],
       parser: '@typescript-eslint/parser',
+      extends: ['plugin:@typescript-eslint/recommended'],
       rules: {
         '@typescript-eslint/ban-ts-ignore': 'off',
         '@typescript-eslint/no-explicit-any': 'off',
@@ -46,7 +47,13 @@ module.exports = {
       files: ['$*.js'],
       rules: {
         'no-unused-expressions': 'off',
-        'jest/valid-describe': 'off',
+      },
+    },
+    {
+      files: ['**/__tests__/**/$*.test.js'],
+      rules: {
+        'jest/valid-title': 'off',
+        // 'jest/valid-describe': 'off',
       },
     },
     {
