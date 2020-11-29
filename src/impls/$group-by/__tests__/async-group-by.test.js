@@ -38,7 +38,7 @@ describe('asyncGroupBy', () => {
 
   describe('when source contains subsequent values belonging to the same group', () => {
     it('coalesces values into groups', async () => {
-      const lowerCase = async (item: string) => item.toLowerCase();
+      const lowerCase = async (value: string) => value.toLowerCase();
       expect(await asyncUnwrapDeep(asyncGroupBy(lowerCase, 'AaA'))).toEqual([
         ['a', ['A', 'a', 'A']],
       ]);

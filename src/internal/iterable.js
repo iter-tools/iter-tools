@@ -5,12 +5,6 @@ import { nullableWrap as wrap } from './wrap.js';
 import { variadicCurryWithValidation } from './curry.js';
 import { _, __iterate } from './symbols.js';
 
-const emptyArr = [];
-
-export function empty() {
-  return emptyArr[Symbol.iterator]();
-}
-
 export { wrap, isIterable, isLoopable, isWrappable };
 
 export function ensureIterable(value) {

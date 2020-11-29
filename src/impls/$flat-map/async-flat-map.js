@@ -10,8 +10,8 @@ import { asyncIterableCurry } from '../../internal/async-iterable.js';
 import { asyncMap } from '../$map/async-map.js';
 
 export async function* asyncFlatMap(source, func) {
-  for await (const item of asyncMap(source, func)) {
-    yield* item;
+  for await (const value of asyncMap(source, func)) {
+    yield* value;
   }
 }
 

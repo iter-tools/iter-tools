@@ -10,13 +10,13 @@ describe($`consume (deprecated)`, () => {
       const arr: Array<number> = [];
       $await(
         $consume(
-          $async((item) => arr.push(item)),
+          $async((value) => arr.push(value)),
           $wrap([1, 2, 3]),
         ),
       );
       $await(
         $consume(
-          $async((item) => arr.push(item)),
+          $async((value) => arr.push(value)),
           $wrap([1, 2, 3]),
         ),
       );

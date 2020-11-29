@@ -10,18 +10,18 @@ import { asyncIterableCurry } from '../../internal/async-iterable.js';
 import { asyncZipAll } from '../$zip-all/async-zip-all.js';
 import { simpleSlice } from '../$slice/slice.js';
 
-const noItem = {};
-const zipAllConfig = { filler: noItem };
+const none = Symbol('none');
+const zipAllConfig = { filler: none };
 
 export async function asyncEqual(iterables) {
   if (iterables.length <= 1) {
     return true;
   }
 
-  for await (const allItems of asyncZipAll(iterables, zipAllConfig)) {
-    const firstItem = allItems[0];
-    for (const item of simpleSlice(allItems, 1, Infinity)) {
-      if (item !== firstItem) {
+  for await (const stepValues of asyncZipAll(iterables, zipAllConfig)) {
+    const firstValue = stepValues[0];
+    for (const value of simpleSlice(stepValues, 1, Infinity)) {
+      if (value !== firstValue) {
         return false;
       }
     }

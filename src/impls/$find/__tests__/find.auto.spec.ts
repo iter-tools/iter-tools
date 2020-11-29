@@ -12,9 +12,9 @@ import { wrap } from '../../../test/helpers.js';
 describe('find', () => {
   describe('when iterable is empty', () => {
     it('returns undefined', () => {
-      expect(find((item: any) => item, null)).toBe(undefined);
-      expect(find((item: any) => item, undefined)).toBe(undefined);
-      expect(find((item: any) => item, wrap([]))).toBe(undefined);
+      expect(find((value: any) => value, null)).toBe(undefined);
+      expect(find((value: any) => value, undefined)).toBe(undefined);
+      expect(find((value: any) => value, wrap([]))).toBe(undefined);
     });
   });
 
@@ -26,7 +26,7 @@ describe('find', () => {
 
   describe('when iterable contains the desired value', () => {
     it('returns the value', () => {
-      expect(find((item) => item === 5, wrap([1, 2, 3, 4, 5, 6]))).toBe(5);
+      expect(find((value) => value === 5, wrap([1, 2, 3, 4, 5, 6]))).toBe(5);
     });
   });
 });

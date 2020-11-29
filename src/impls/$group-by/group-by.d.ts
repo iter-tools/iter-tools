@@ -9,11 +9,11 @@
 import { SourceIterable, ResultIterable } from '../../types/iterable';
 
 declare function groupBy<K, T>(
-  key: (item: T, i: number) => K,
+  key: (value: T, i: number) => K,
 ): (source: SourceIterable<T>) => ResultIterable<[K, ResultIterable<T>]>;
 
 declare function groupBy<K, T>(
-  key: (item: T, i: number) => K,
+  key: (value: T, i: number) => K,
   source: SourceIterable<T>,
 ): ResultIterable<[K, ResultIterable<T>]>;
 

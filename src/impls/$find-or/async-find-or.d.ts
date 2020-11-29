@@ -10,23 +10,23 @@ import { AsyncSourceIterable } from '../../types/async-iterable';
 
 declare function asyncFindOr<N, T, S extends T>(
   notFoundValue: N,
-  predicate: (item: T, i: number) => item is S,
+  predicate: (value: T, i: number) => value is S,
 ): (iterable: AsyncSourceIterable<T>) => Promise<S | N>;
 
 declare function asyncFindOr<N, T>(
   notFoundValue: N,
-  predicate: (item: T, i: number) => boolean | Promise<boolean>,
+  predicate: (value: T, i: number) => boolean | Promise<boolean>,
 ): (iterable: AsyncSourceIterable<T>) => Promise<T | N>;
 
 declare function asyncFindOr<N, T, S extends T>(
   notFoundValue: N,
-  predicate: (item: T, i: number) => item is S,
+  predicate: (value: T, i: number) => value is S,
   iterable: AsyncSourceIterable<T>,
 ): Promise<S | N>;
 
 declare function asyncFindOr<N, T>(
   notFoundValue: N,
-  predicate: (item: T, i: number) => boolean | Promise<boolean>,
+  predicate: (value: T, i: number) => boolean | Promise<boolean>,
   iterable: AsyncSourceIterable<T>,
 ): Promise<T | N>;
 

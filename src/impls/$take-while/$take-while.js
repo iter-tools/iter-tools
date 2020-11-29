@@ -8,10 +8,10 @@ export function* $takeWhile(source, predicate) {
   let c = 0;
 
   $await;
-  for (const item of source) {
-    take = $await(predicate(item, c++));
+  for (const value of source) {
+    take = $await(predicate(value, c++));
     if (take) {
-      yield item;
+      yield value;
     } else {
       break;
     }

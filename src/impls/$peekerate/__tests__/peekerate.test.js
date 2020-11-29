@@ -10,7 +10,7 @@ import { peekerate } from '@iter-tools/es';
 import { wrap } from '../../../test/helpers.js';
 
 describe('peekerate', () => {
-  it('decorates iterator with the current item in the iterable', () => {
+  it('decorates iterator with the current value in the iterable', () => {
     const peekerator = peekerate(wrap([1, 2, 3]));
     const observed = [];
 

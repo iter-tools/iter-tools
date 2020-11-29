@@ -12,9 +12,9 @@ import { wrap, unwrap } from '../../../test/helpers.js';
 describe('dropWhile', () => {
   describe('when source is empty', () => {
     it('yields no values', () => {
-      expect(unwrap(dropWhile((item: any) => item, null))).toEqual([]);
-      expect(unwrap(dropWhile((item: any) => item, undefined))).toEqual([]);
-      expect(unwrap(dropWhile((item: any) => item, wrap([])))).toEqual([]);
+      expect(unwrap(dropWhile((value: any) => value, null))).toEqual([]);
+      expect(unwrap(dropWhile((value: any) => value, undefined))).toEqual([]);
+      expect(unwrap(dropWhile((value: any) => value, wrap([])))).toEqual([]);
     });
   });
 

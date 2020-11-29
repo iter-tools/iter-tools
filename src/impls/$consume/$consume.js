@@ -18,8 +18,8 @@ $async;
 export function $consume(iterable, callback = () => {}) {
   let c = 0;
   $await;
-  for (const item of iterable) {
-    $await(callback(item, c++));
+  for (const value of iterable) {
+    $await(callback(value, c++));
   }
 }
 

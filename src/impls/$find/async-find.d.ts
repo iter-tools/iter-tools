@@ -9,20 +9,20 @@
 import { AsyncSourceIterable } from '../../types/async-iterable';
 
 declare function asyncFind<T, S extends T>(
-  predicate: (item: T, i: number) => item is S,
+  predicate: (value: T, i: number) => value is S,
 ): (iterable: AsyncSourceIterable<T>) => Promise<S | undefined>;
 
 declare function asyncFind<T>(
-  predicate: (item: T, i: number) => boolean | Promise<boolean>,
+  predicate: (value: T, i: number) => boolean | Promise<boolean>,
 ): (iterable: AsyncSourceIterable<T>) => Promise<T | undefined>;
 
 declare function asyncFind<T, S extends T>(
-  predicate: (item: T, i: number) => item is S,
+  predicate: (value: T, i: number) => value is S,
   iterable: AsyncSourceIterable<T>,
 ): Promise<S | undefined>;
 
 declare function asyncFind<T>(
-  predicate: (item: T, i: number) => boolean | Promise<boolean>,
+  predicate: (value: T, i: number) => boolean | Promise<boolean>,
   iterable: AsyncSourceIterable<T>,
 ): Promise<T | undefined>;
 

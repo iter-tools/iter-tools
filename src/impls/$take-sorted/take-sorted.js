@@ -13,8 +13,8 @@ import { Heap } from './internal/heap.js';
 export function* takeSorted(source, n = Infinity, comparator = defaultCompare) {
   const heap = new Heap(comparator);
 
-  for (const item of source) {
-    heap.push(item);
+  for (const value of source) {
+    heap.push(value);
     if (heap.size > n) {
       heap.pop();
     }

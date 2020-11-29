@@ -33,7 +33,7 @@ describe('join', () => {
   });
 
   describe('given a string', () => {
-    it('should split on every item which is equal to the on argument', () => {
+    it('should split on every value which is equal to the on argument', () => {
       expect(unwrap(join(['11', '22', '33']))).toEqual(['1', '1', '2', '2', '3', '3']);
     });
   });

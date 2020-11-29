@@ -15,14 +15,14 @@ describe('asyncTakeSorted', () => {
     expect(await asyncUnwrap(smallest3)).toEqual([4, 6, 12, 44, 66, 77, 97, 98, 99]);
   });
 
-  it('yields n sorted items from the iterable', async () => {
+  it('yields n sorted values from the iterable', async () => {
     const smallest3 = asyncTakeSorted(3, asyncWrap([99, 12, 4, 6, 97, 44, 66, 77, 98]));
     expect(await asyncUnwrap(smallest3)).toEqual([97, 98, 99]);
     const smallest1 = asyncTakeSorted(1, asyncWrap([99, 12, 4, 6, 97, 44, 66, 77, 98]));
     expect(await asyncUnwrap(smallest1)).toEqual([99]);
   });
 
-  it('yields items from the iterable sorted with a comparator', async () => {
+  it('yields values from the iterable sorted with a comparator', async () => {
     const smallest2 = asyncTakeSorted(2, (a, b) => a.length - b.length, [
       'abc',
       'a',

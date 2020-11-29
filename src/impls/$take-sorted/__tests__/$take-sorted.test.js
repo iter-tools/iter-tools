@@ -13,7 +13,7 @@ describe($`takeSorted`, () => {
   );
 
   it(
-    'yields n sorted items from the iterable',
+    'yields n sorted values from the iterable',
     $async(() => {
       const smallest3 = $takeSorted(3, $wrap([99, 12, 4, 6, 97, 44, 66, 77, 98]));
       expect($await($unwrap(smallest3))).toEqual([97, 98, 99]);
@@ -23,7 +23,7 @@ describe($`takeSorted`, () => {
   );
 
   it(
-    'yields items from the iterable sorted with a comparator',
+    'yields values from the iterable sorted with a comparator',
     $async(() => {
       const smallest2 = $takeSorted(2, (a, b) => a.length - b.length, [
         'abc',

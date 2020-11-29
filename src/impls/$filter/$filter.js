@@ -6,9 +6,9 @@ $async;
 export function* $filter(source, predicate) {
   let c = 0;
   $await;
-  for (const item of source) {
-    if ($await(predicate(item, c++))) {
-      yield item;
+  for (const value of source) {
+    if ($await(predicate(value, c++))) {
+      yield value;
     }
   }
 }

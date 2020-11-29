@@ -13,8 +13,8 @@ export async function* asyncWindow(source, size) {
   const buffer = new CircularBuffer(size);
   const bufferReadProxy = new ReadOnlyCircularBuffer(buffer);
 
-  for await (const item of source) {
-    buffer.push(item);
+  for await (const value of source) {
+    buffer.push(value);
     if (buffer.isFull()) {
       yield bufferReadProxy;
     }

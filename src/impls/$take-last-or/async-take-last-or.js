@@ -9,13 +9,13 @@
 import { asyncIterableCurry } from '../../internal/async-iterable.js';
 
 export async function asyncTakeLastOr(iterable, whenEmpty) {
-  let _item = whenEmpty;
+  let _value = whenEmpty;
 
-  for await (const item of iterable) {
-    _item = item;
+  for await (const value of iterable) {
+    _value = value;
   }
 
-  return _item;
+  return _value;
 }
 
 export default /*#__PURE__*/ asyncIterableCurry(asyncTakeLastOr, {

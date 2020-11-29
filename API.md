@@ -2,8 +2,7 @@
 
 [![Documentation is automatically generated](https://img.shields.io/static/v1?label=docs&message=generated&color=informational)](https://github.com/iter-tools/iter-tools/blob/master/CONTRIBUTING.md#the-code-generator)
 
-[Types](#types)  
-[Methods](#methods)
+The API documentation is split into to main sections: [types](#types) and [methods](#methods).
 
 ## Types
 
@@ -151,12 +150,8 @@ Reduce an iterable to a single value
 [includesAny](#includesany) ([async](#asyncincludesany))  
 [includesAnySeq](#includesanyseq) ([async](#asyncincludesanyseq))  
 [includesSeq](#includesseq) ([async](#asyncincludesseq))  
-[isAsyncLoopable](#isasyncloopable)  
 [isEmpty](#isempty) ([async](#asyncisempty))  
-[isLoopable](#isloopable)  
 [isSorted](#issorted) ([async](#asyncissorted))  
-[notAsyncLoopable](#notasyncloopable)  
-[notLoopable](#notloopable)  
 [reduce](#reduce) ([async](#asyncreduce))  
 [size](#size) ([async](#asyncsize))  
 [some](#some) ([async](#asyncsome))  
@@ -197,18 +192,22 @@ Consume an iterable
 [toArray](#arrayfrom) ([async](#arrayfromasync))  
 [toObject](#objectfrom) ([async](#objectfromasync))  
 
-Test a value
+Predicates (test a value)
 
 [isAsyncIterable](#isasynciterable)  
+[isAsyncLoopable](#isasyncloopable)  
 [isAsyncWrappable](#isasyncwrappable)  
 [isIterable](#isiterable)  
+[isLoopable](#isloopable)  
 [isNil](#isnil)  
 [isNull](#isnull)  
 [isUndefined](#isundefined)  
 [isWrappable](#iswrappable)  
 [notAsyncIterable](#notasynciterable)  
+[notAsyncLoopable](#notasyncloopable)  
 [notAsyncWrappable](#notasyncwrappable)  
 [notIterable](#notiterable)  
+[notLoopable](#notloopable)  
 [notNil](#notnil)  
 [notNull](#notnull)  
 [notUndefined](#notundefined)  
@@ -310,7 +309,7 @@ repeat('x'); // Iterable['x', 'x', 'x', ... 'x', .........]
 
 ### repeatTimes
 
-**repeatTimes(n, item)**
+**repeatTimes(n, value)**
 
 Create an iterable that yields the same `value` `n` times.
 
@@ -361,7 +360,7 @@ objectValues({ foo: 'bar', fox: 'far' }); // Iterable['bar', 'far']
 
 **wrapEntries(entriesable)**
 
-Yields the items yielded by `entriesable.entries()`. When passed `null` or `undefined`, yields nothing.
+Yields the values yielded by `entriesable.entries()`. When passed `null` or `undefined`, yields nothing.
 
 <!-- prettier-ignore -->
 ```js
@@ -375,7 +374,7 @@ wrapEntries(new Map([
 
 **wrapKeys(keysable)**
 
-Yields the items yielded by `keysable.keys()`. When passed `null` or `undefined`, yields nothing.
+Yields the values yielded by `keysable.keys()`. When passed `null` or `undefined`, yields nothing.
 
 <!-- prettier-ignore -->
 ```js
@@ -389,7 +388,7 @@ wrapKeys(new Map([
 
 **wrapValues(valuesable)**
 
-Yields the items yielded by `valuesable.values()`. When passed `null` or `undefined`, yields nothing.
+Yields the values yielded by `valuesable.values()`. When passed `null` or `undefined`, yields nothing.
 
 <!-- prettier-ignore -->
 ```js
@@ -438,7 +437,7 @@ See [drop](#drop)
 
 **dropWhile(predicate, [source](#sourceiterable))**
 
-Returns values from `source`, omitting consecutive values at the beginning of `source` for which the result of `predicate(item, idx)` is truthy.
+Returns values from `source`, omitting consecutive values at the beginning of `source` for which the result of `predicate(value, idx)` is truthy.
 
 ```js
 dropWhile(isEven, range(5)); // 0, 2, 4
@@ -461,7 +460,7 @@ It is a shorthand for zipping an index to an iterable:
 enumerate(repeat('x')); // Iterable[[0, 'x'], [1, 'x'], [2, 'x'], ...]
 ```
 
-You can also specify a **startIdx** which will be the index of the first item.
+You can also specify a **startIdx** which will be the index of the first value.
 
 ```js
 enumerate(1, 'abc'); // Iterable[[1, 'a'], [2, 'b'], [3, 'c']]
@@ -504,7 +503,7 @@ Defaults:
 
 - `concurrency`: `4`
 
-A variant of filter with more complicated logic that can optimize when you have both an async filter predicate and an async souce iterable. It starts fetching the next item in the source iterable while waiting for the async predicate to resolve. The optional concurrency paramater dictates how many items can be read ahead from the source iterable while still waiting for the results of previous async predicates.
+A variant of [filter](#filter) with more complicated logic that can optimize when you have both an async filter predicate and an async souce iterable. It starts fetching the next value in the source iterable while waiting for the async predicate to resolve. The optional concurrency paramater dictates how many values can be read ahead from the source iterable while still waiting for the results of previous async predicates.
 
 ```js
 await asyncFilterParallel(asyncPredicate, asyncIterable);
@@ -527,7 +526,7 @@ Defaults:
 - `depth`: `1`
 - `shouldFlat`: `value => isIterable(value) && !isString(value)`
 
-Yields each nested value from `source` by recursing into values which are iterable -- up to the maximum recursion `depth`. In additon to checking `depth`, `flat` will only recurse if the result of `shouldFlat(item)` is truthy.
+Yields each nested value from `source` by recursing into values which are iterable -- up to the maximum recursion `depth`. In additon to checking `depth`, `flat` will only recurse if the result of `shouldFlat(value)` is truthy.
 
 <!-- prettier-ignore -->
 ```js
@@ -542,8 +541,8 @@ const nested = [
 flat(nested); // Iterable[1, 2, 3, 4, Iterable[5, 6]]
 flat(2, nested); // Iterable[1, 2, 3, 4, 5, 6]
 
-const isString = item =>
-  typeof item === 'string' && item.length > 1;
+const isString = value =>
+  typeof value === 'string' && value.length > 1;
 
 flat(isString, Infinity, ['Hel', ['lo', '!']]); // Iterable['H', 'e', 'l', 'l', 'o', '!]
 ```
@@ -581,20 +580,11 @@ Defaults:
 
 - `concurrency`: `4`
 
-A variant of flatMap with more complicated logic that can optimize when you have both an async mapper callback and an async souce iterable. It starts fetching the next item in the source iterable while waiting for the async callback to resolve. The optional concurrency paramater dictates how many items can be read ahead from the source iterable while still waiting for the results of previous mapper callbacks.
+A variant of flatMap with more complicated logic that can optimize when you have both an async mapper callback and an async souce iterable. It starts fetching the next value in the source iterable while waiting for the async callback to resolve. The optional concurrency paramater dictates how many values can be read ahead from the source iterable while still waiting for the results of previous mapper callbacks.
 
 ```js
 await asyncFlatMapParallel(asyncMapper, asyncIterable);
 await asyncFlatMapParallel(10, asyncMapper, asyncIterable);
-```
-
-Here is an example of using asyncWrap to turn a sync iterable into an async one:
-
-```js
-const item = await asyncWrap([1, 2, 3])
-  [Symbol.asyncIterator]()
-  .next();
-item.value; // 1
 ```
 
 ### interpose
@@ -656,7 +646,7 @@ Defaults:
 
 - `concurrency`: `4`
 
-A variant of map with more complicated logic that can optimize when you have both an async mapper callback and an async souce iterable. It starts fetching the next item in the source iterable while waiting for the async callback to resolve. The optional concurrency paramater dictates how many items can be read ahead from the source iterable while
+A variant of map with more complicated logic that can optimize when you have both an async mapper callback and an async souce iterable. It starts fetching the next value in the source iterable while waiting for the async callback to resolve. The optional concurrency paramater dictates how many values can be read ahead from the source iterable while
 still waiting for the results of previous mapper callbacks.
 
 ```js
@@ -736,7 +726,7 @@ See [prepend](#prepend)
 
 **reverse([source](#sourceiterable))**
 
-Yields the items from `iterable` in reverse order. If `iterable` is not an array, this requires caching all its items in memory.
+Yields the values from `iterable` in reverse order. If `iterable` is not an array, this requires caching all its values in memory.
 
 ```js
 reverse([1, 2, 3]); // Iterable[3, 2, 1]
@@ -762,7 +752,7 @@ Defaults:
 - `end`: `Infinity`
 - `step`: `1`
 
-Yields a subsequence of items from `source`, starting at index `start` then advancing `step` items, until it reaches index `end`. The item at index `end` will not be part of the result.
+Yields a subsequence of values from `source`, starting at index `start` then advancing `step` values, until it reaches index `end`. The value at index `end` will not be part of the result.
 
 ```js
 slice(0, 3, range(10)); // Iterable[0, 1, 2]
@@ -771,7 +761,7 @@ slice(2, 6, range(10)); // Iterable[2, 3, 4, 5]
 slice(2, 6, 2, range(10)); // Iterable[2, 4]
 ```
 
-`start` and `end` can also be negative. When they are, they refer to offsets from the end of `iterable`, as they do in `Array.prototype.slice`. `step` must not be negative.
+`start` and `end` can also be negative. When they are, they refer to offsets from the end of `iterable`, as they do in `Array.prototype.slice`. This will always require consuming the entire iterable to figure out where the end is. `step` must not be negative.
 
 ```js
 slice(0, -3, range(10)); // Iterable[0, 1, 2, 3, 4, 5, 6]
@@ -779,8 +769,6 @@ slice(-3, range(10)); // Iterable[7, 8, 9]
 slice(-6, -2, range(10)); // Iterable[4, 5, 6, 7]
 slice(-6, -2, 2, range(10)); // Iterable[4, 6]
 ```
-
-Note: working with negative indicies does force `slice` to buffer items while it looks for the end of `iterable`. It will do this as efficiently as it can, but for this reason it is not a good idea to use really large negative indexes.
 
 When no arguments are passed to `slice` it is functionally equivalent to `wrap`.
 
@@ -803,6 +791,12 @@ Yields the first `n` values from `source`.
 take(2, ['a', 'b', 'c']); // Iterable['a', 'b']
 ```
 
+You should also consider using destructuring if you want individual named values and not an iterable of values. It is not necessary to use `take` when destructuring. With destructuring the above would become:
+
+```js
+const [first, second] = ['a', 'b', 'c'];
+```
+
 ### asyncTake
 
 **asyncTake(n, [iterable](#asyncsourceiterable))**
@@ -820,7 +814,7 @@ Defaults:
 
 - `comparator`: [default comparator](#the-default-comparator)
 
-Returns `n` items from `source`, sorted in ascending order according to `comparator`. The function is both space efficient (only stores `n` items) and fast (`O(m log n)`), given `m` as the total number of items in `iterable`. It uses a heap internally.
+Returns `n` values from `source`, sorted in ascending order according to `comparator`. The function is both space efficient (only stores `n` values) and fast (`O(m log n)`), given `m` as the total number of values in `iterable`. It uses a heap internally.
 
 ```js
 takeSorted(3, [4, 5, 2, 3, 1]); // Iterable[1, 2, 3]
@@ -863,9 +857,9 @@ For each value in `source`, executes `callback(value, idx)` and yields the value
 ```js
 pipeExec(
   [0, 1, 2],
-  filter((item) => !!item),
-  tap((item) => console.log(item)),
-  map((item) => item + 1),
+  filter((value) => !!value),
+  tap((value) => console.log(value)),
+  map((value) => value + 1),
 ); // Logs 1, 2 and returns Iterable[2, 3]
 ```
 
@@ -879,7 +873,7 @@ See [tap](#tap)
 
 **window(size, [source](#sourceiterable))**
 
-For values in `source`, yields a `window` iterable of size `size` which starts with that value and also contains the next values from `source`. The `window` instance is the same on every iteration. Only emits full windows, which means fewer windows will be emitted than there are items in `source`. If you need a window for every item in `source`, use [leadingWindow](#leadingwindow) or [trailingWindow](#trailingwindow).
+For values in `source`, yields a `window` iterable of size `size` which starts with that value and also contains the next values from `source`. The `window` instance is the same on every iteration. Only emits full windows, which means fewer windows will be emitted than there are values in `source`. If you need a window for every value in `source`, use [leadingWindow](#leadingwindow) or [trailingWindow](#trailingwindow).
 
 ```js
 window(3, [1, 2, 3, 4, 5]);
@@ -989,7 +983,7 @@ See [trailingWindow](#trailingwindow)
 
 **wrap([source](#sourceiterable))**
 
-Yields the items from `source`. Its main purposes include allowing nullable iterables to be treated as non-null iterables, and to give arbitrary iterables the semantics of iter-tools iterables.
+Yields the values from `source`. Its main purposes include allowing nullable iterables to be treated as non-null iterables, and to give arbitrary iterables the semantics of iter-tools iterables.
 
 ```js
 const maybeIterable =
@@ -1005,6 +999,10 @@ const maybeIterable =
 See [wrap](#wrap)
 
 Also turns sync iterables into async iterables and ensures async `next()` queueing semantics.
+
+```js
+await asyncWrap([1, 2, 3])[Symbol.asyncIterator]().next(); // { value: 1, done: false }
+```
 
 
 ## Separate an iterable into multiple iterables
@@ -1070,7 +1068,7 @@ See [groupBy](#groupby)
 
 **split(source)**
 
-Yields each item in `source` as an iterable of one item.
+Yields each value in `source` as an iterable of one value.
 
 ```js
 split([1, 2, 3]); // Iterable[Iterable[1], Iterable[2], Iterable[3]]
@@ -1247,7 +1245,7 @@ See [splitWith](#splitwith)
 
 **collate([comparator](#comparator), ...[sources](#sourceiterable))**
 
-Combines values from each `source` in `sources` into a single iterable, peserving the ordering of values within each `source`. Collate uses `comparator` to establish a partial ordering of items at the head of each `source`. At each step it yields the lowest value in the ordering then recomputes the ordering.
+Combines values from each `source` in `sources` into a single iterable, peserving the ordering of values within each `source`. Collate uses `comparator` to establish a partial ordering of values at the head of each `source`. At each step it yields the lowest value in the ordering then recomputes the ordering.
 
 ```js
 collate([1, 2, 5, 6], [3, 4]); // Iterable[1, 2, 3, 4, 5, 6]
@@ -1300,7 +1298,7 @@ See [concat](#concat)
 Interleaves values from each `source` in `sources`, yielding values in whatever order they resolve (become ready). Note that this means that the results of this interleave will usually not be repeatable.
 
 ```js
-asyncInterleaveReady(aItems, bItems);
+asyncInterleaveReady(aValues, bValues);
 ```
 
 ### join
@@ -1441,7 +1439,7 @@ See [equal](#equal)
 
 **every(predicate, [iterable](#sourceiterable))**
 
-Returns `true` if, for every value in `source`, the result of `predicate(item, idx)` is truthy. Otherwise returns `false`.
+Returns `true` if, for every value in `source`, the result of `predicate(value, idx)` is truthy. Otherwise returns `false`.
 
 ```js
 every(isEven, [1, 2, 3]); // returns false
@@ -1458,7 +1456,7 @@ See [every](#every)
 
 **find(predicate, [iterable](#sourceiterable))**
 
-Returns the first item in `iterable` for which `predicate(item, idx)` returns a truthy value. It is the equivalent of `Array.prototype.find`.
+Returns the first value in `iterable` for which `predicate(value, idx)` returns a truthy value. It is the equivalent of `Array.prototype.find`.
 
 ```js
 find((animal) => animal.kind === 'dog', [
@@ -1477,7 +1475,7 @@ See [find](#find)
 
 **findOr(notFoundValue, func, [iterable](#sourceiterable))**
 
-Returns the first item in `iterable` for which `predicate(item, idx)` returns a truthy value, or `notFoundValue` if no item satisfied the predicate.
+Returns the first value in `iterable` for which `predicate(value, idx)` returns a truthy value, or `notFoundValue` if no value satisfied the predicate.
 
 ```js
 findOr(0, (x) => x > 10, [1, 2, 3]); // 0
@@ -1615,21 +1613,6 @@ includesSeq([2, 3, 4], [1, 2, 3]); // false
 
 See [includesSeq](#includesseq)
 
-### isAsyncLoopable
-
-**isAsyncLoopable(value)**
-
-Returns `true` if `value` has a `Symbol.asyncIterator` or `Symbol.iterator` property and `false` otherwise. If `isAsyncLoopable(value)` then `value` may be used as the subject of a `for await..of` loop. Type-safe in typescript.
-
-```js
-isAsyncLoopable((async function* () {})()); // true
-isAsyncLoopable((function* () {})()); // true
-isAsyncLoopable([]); // true
-isAsyncLoopable({}); // false
-isAsyncLoopable(undefined); // false
-isAsyncLoopable(null); // false
-```
-
 ### isEmpty
 
 **isEmpty([iterable](#sourceiterable))**
@@ -1649,10 +1632,6 @@ isEmpty([undefined]); // false
 
 See [isEmpty](#isempty)
 
-### isLoopable
-
-See [isIterable](#isiterable). For sync iterables these methods share the same implementation.
-
 ### isSorted
 
 **isSorted([comparator](#comparator), [iterable](#sourceiterable))**  
@@ -1671,25 +1650,6 @@ isSorted((a, b) => b - a, [3, 2, 1]); // true
 **asyncIsSorted([iterable](#asyncsourceiterable))**
 
 See [isSorted](#issorted)
-
-### notAsyncLoopable
-
-**notAsyncLoopable(value)**
-
-Returns `false` if `value` has a `Symbol.asyncIterator` or `Symbol.iterator` property and `true` otherwise. When `notAsyncLoopable(value)`, using value as the subject of a `for await..of` loop will throw an error.
-
-```js
-notAsyncLoopable((async function* () {})()); // false
-notAsyncLoopable((function* () {})()); // false
-notAsyncLoopable([]); // false
-notAsyncLoopable(undefined); // true
-notAsyncLoopable(null); // true
-notAsyncLoopable({}); // true
-```
-
-### notLoopable
-
-See [notIterable](#notiterable). For sync iterables these methods share the same implementation.
 
 ### reduce
 
@@ -1735,7 +1695,7 @@ See [size](#size)
 
 **some(func, [iterable](#sourceiterable))**
 
-Returns `true` if the result of `predicate(item, idx)` is truthy for at least one value in `iterable`, and `false` otherwise.
+Returns `true` if the result of `predicate(value, idx)` is truthy for at least one value in `iterable`, and `false` otherwise.
 
 ```js
 some(isEven, [1, 2, 3]); // true
@@ -1899,7 +1859,7 @@ combinations(2, [1, 2, 3, 4]);
 // ]
 ```
 
-The number of items that will be yielded is accessible through a `size` property.
+The number of values that will be yielded is accessible through a `size` property.
 Note that the actual combinations are not computed in the example below
 
 ```js
@@ -1934,7 +1894,7 @@ combinationsWithReplacement(2, [1, 2, 3, 4]);
 // ]
 ```
 
-The number of items that will be yielded is accessible through a `size` property.
+The number of values that will be yielded is accessible through a `size` property.
 Note that the actual combinations are not computed in the example below
 
 ```js
@@ -1950,7 +1910,7 @@ Defaults:
 
 `n`: `size(iterable)`
 
-Yields permutations of length `n` of items from `iterable`.
+Yields permutations of length `n` of values from `iterable`.
 
 ```js
 permutations([0, 1]); // Iterable[[0, 1] [1, 0]]
@@ -1971,7 +1931,7 @@ permutations(2, [1, 2, 3, 4]);
 // ]
 ```
 
-The number of items that will be yielded is accessible through a `size` property.
+The number of values that will be yielded is accessible through a `size` property.
 Note that the actual combinations are not computed in the example below
 
 ```js
@@ -2001,7 +1961,7 @@ product([1, 2], [3, 4], [5, 6]);
 product(...fork(2, [0, 1])); // Iterable[[0, 0], [0, 1], [1, 0], [1, 1]]
 ```
 
-The number of items that will be yielded is accessible through a `size` property.
+The number of values that will be yielded is accessible through a `size` property.
 Note that the actual combinations are not computed in the example below
 
 ```js
@@ -2023,20 +1983,20 @@ const source = asyncMap(
   range(),
 );
 
-const buffered = asyncBuffer(6, source); // Items start buffering
+const buffered = asyncBuffer(6, source); // Values start buffering
 
 await new Promise((resolve) => setTimeout(resolve, 800));
 
-// Four items are already buffered here
+// Four values are already buffered here
 await buffered.next(); // ~0ms
 await buffered.next(); // ~0ms
 await buffered.next(); // ~0ms
 await buffered.next(); // ~0ms
-// After this point items are being requested as fast as they
+// After this point values are being requested as fast as they
 // can possibly be fulfilled, so buffer offers no additional benefits.
 await buffered.next(); // ~200ms
 await buffered.next(); // ~200ms
-// But if additional delays are incurred in processing items,
+// But if additional delays are incurred in processing values,
 // it has value again!
 await new Promise((resolve) => setTimeout(resolve, 300));
 await buffered.next(); // ~0ms
@@ -2259,7 +2219,7 @@ See [objectFrom](#objectfrom)
 See [objectFromAsync](#objectfromasync)
 
 
-## Test a value
+## Predicates (test a value)
 
 ### isAsyncIterable
 
@@ -2274,6 +2234,21 @@ isAsyncIterable([]); // false
 isAsyncIterable({}); // false
 isAsyncIterable(undefined); // false
 isAsyncIterable(null); // false
+```
+
+### isAsyncLoopable
+
+**isAsyncLoopable(value)**
+
+Returns `true` if `value` has a `Symbol.asyncIterator` or `Symbol.iterator` property and `false` otherwise. If `isAsyncLoopable(value)` then `value` may be used as the subject of a `for await..of` loop. Type-safe in typescript.
+
+```js
+isAsyncLoopable((async function* () {})()); // true
+isAsyncLoopable((function* () {})()); // true
+isAsyncLoopable([]); // true
+isAsyncLoopable({}); // false
+isAsyncLoopable(undefined); // false
+isAsyncLoopable(null); // false
 ```
 
 ### isAsyncWrappable
@@ -2357,6 +2332,10 @@ isIterable({}); // false
 
 Note: `isIterable` does not check to make sure that `Symbol.iterator` is a method. Code in which `Symbol.iterator` is not a method is always incorrect, and attempted usage of such an "iterable" will trigger an appropriate error at the language level.
 
+### isLoopable
+
+See [isIterable](#isiterable). For sync iterables these methods share the same implementation.
+
 ### isNil
 
 **isNil(value)**
@@ -2421,6 +2400,21 @@ notAsyncIterable(undefined); // true
 notAsyncIterable(null); // true
 ```
 
+### notAsyncLoopable
+
+**notAsyncLoopable(value)**
+
+Returns `false` if `value` has a `Symbol.asyncIterator` or `Symbol.iterator` property and `true` otherwise. When `notAsyncLoopable(value)`, using value as the subject of a `for await..of` loop will throw an error.
+
+```js
+notAsyncLoopable((async function* () {})()); // false
+notAsyncLoopable((function* () {})()); // false
+notAsyncLoopable([]); // false
+notAsyncLoopable(undefined); // true
+notAsyncLoopable(null); // true
+notAsyncLoopable({}); // true
+```
+
 ### notAsyncWrappable
 
 **notAsyncWrappable(value)**
@@ -2450,6 +2444,10 @@ notIterable(null); // true
 notIterable((function* () {})()); // false
 notIterable([]); // false
 ```
+
+### notLoopable
+
+See [notIterable](#notiterable). For sync iterables these methods share the same implementation.
 
 ### notNil
 
@@ -2657,7 +2655,7 @@ const whenObj = {
 **interleave(strategy, options, ...[sources](#sourceiterable))**  
 **interleave(strategy, ...[sources](#sourceiterable))**
 
-Facilitates the creation of new strategies for interleaving items from multiple iterables. It does this by decorating the `strategy` [generator](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function*), which is to say providing it with arguments and yielding its values. The responsibilities of the wrapping code are to forward any provided `options`, decorate the source iterables with [peekerators](#peekerate), manage the special `all` peekerator, and to call `return()` on any incomplete peekerators. The `all` peekerator provides `all.done` to indicate whether interleaving is complete, and `all.value`: a reference to the first peekerator which is not done. The `all` peekerator cannot be advanced.
+Facilitates the creation of new strategies for interleaving values from multiple iterables. It does this by decorating the `strategy` [generator](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function*), which is to say providing it with arguments and yielding its values. The responsibilities of the wrapping code are to forward any provided `options`, decorate the source iterables with [peekerators](#peekerate), manage the special `all` peekerator, and to call `return()` on any incomplete peekerators. The `all` peekerator provides `all.done` to indicate whether interleaving is complete, and `all.value`: a reference to the first peekerator which is not done. The `all` peekerator cannot be advanced.
 
 Both [collate](#collate) and [roundRobin](#roundrobin) are implemented using `interleave`, and it is expected that most use cases will be served by one or the other. Their implementations also serve as useful examples.
 
@@ -2727,7 +2725,7 @@ See [interleave](#interleave)
 
 **peekerate(source)**
 
-Turns `source` into a peekerator (often shortened to `peekr`), which is conceptually equivalent to an iterator but is often easier to work with. Peekerators always have a `{done, value}` item from the source iterator stored as `peekr.current`. For convenience `peekr.done` and `peekr.value` are also present. To load the next item call `peekr.advance()`. No value is returned.
+Turns `source` into a peekerator (often shortened to `peekr`), which is conceptually equivalent to an iterator but is often easier to work with. Peekerators always have a `{done, value}` step from the source iterator stored as `peekr.current`. For convenience `peekr.done` and `peekr.value` are also present. To load the next step call `peekr.advance()`. No value is returned.
 
 Peekerators allow an iterator to be used as internal state. Normal iterators are of course stateful, but less useful for this purpose as it is not possible to access their state without altering it. Peekerators are also have safer typedefs than iterators.
 
@@ -2752,7 +2750,7 @@ Note that in typescript definitions `Peekerator` is a type not a class, so if yo
 
 See [peekerate](#peekerate)
 
-Note: Returns a promise of a peekerator, which is necessary for the first item to be fetched.
+Note: Returns a promise of a peekerator, which is necessary for the first value to be fetched.
 
 ```js
 const peekerator = await asyncPeekerate([1, 2, 3]);

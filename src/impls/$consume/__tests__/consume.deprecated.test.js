@@ -12,8 +12,8 @@ import { wrap } from '../../../test/helpers.js';
 describe('consume (deprecated)', () => {
   it('consumes an iterable with a callback', () => {
     const arr: Array<number> = [];
-    consume((item) => arr.push(item), wrap([1, 2, 3]));
-    consume((item) => arr.push(item), wrap([1, 2, 3]));
+    consume((value) => arr.push(value), wrap([1, 2, 3]));
+    consume((value) => arr.push(value), wrap([1, 2, 3]));
     expect(arr).toEqual([1, 2, 3, 1, 2, 3]);
     expect(console.warn).callsMatchSnapshot();
   });

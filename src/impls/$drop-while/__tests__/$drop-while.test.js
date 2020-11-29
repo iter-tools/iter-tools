@@ -8,9 +8,9 @@ describe($`dropWhile`, () => {
     it(
       'yields no values',
       $async(() => {
-        expect($await($unwrap($dropWhile((item: any) => item, null)))).toEqual([]);
-        expect($await($unwrap($dropWhile((item: any) => item, undefined)))).toEqual([]);
-        expect($await($unwrap($dropWhile((item: any) => item, $wrap([]))))).toEqual([]);
+        expect($await($unwrap($dropWhile((value: any) => value, null)))).toEqual([]);
+        expect($await($unwrap($dropWhile((value: any) => value, undefined)))).toEqual([]);
+        expect($await($unwrap($dropWhile((value: any) => value, $wrap([]))))).toEqual([]);
       }),
     );
   });

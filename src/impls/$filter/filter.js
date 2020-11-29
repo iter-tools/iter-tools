@@ -10,9 +10,9 @@ import { iterableCurry } from '../../internal/iterable.js';
 
 export function* filter(source, predicate) {
   let c = 0;
-  for (const item of source) {
-    if (predicate(item, c++)) {
-      yield item;
+  for (const value of source) {
+    if (predicate(value, c++)) {
+      yield value;
     }
   }
 }

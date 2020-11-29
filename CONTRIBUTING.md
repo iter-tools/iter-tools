@@ -42,6 +42,19 @@ Now you can run the generator one of the following ways:
 
 We recommend that you run the generator in watch mode whenever you are developing. If you do not, you might discover later that tests have been running against old versions of generated code. For more details on the code generator, take a look at its README.
 
+## $ on the command line
+
+Some paths in this repo have a literal `$` in them. This has special meaning in shells, and you must escape it with a `\` or by putting the whole path inside single quotes. Be especially careful with any destructive command. **The fastest way to lose all your work is to run**:
+
+```
+rm -rf src/impls/$some-method/
+# because it evaluates as
+rm -rf src/impls/
+# Yes, I did it once >_<
+```
+
+Furthermore when running jest and attempting to focus a single test suite you must remember that jest is expecting a regex, so the correct command doubly escapes the `$`, e.g. `npx jest 'src/impls/\$method/'`.
+
 ## Creating a new method
 
 We've made it very easy to get started with creating a new method. Just run:
@@ -90,6 +103,10 @@ src/
 ```
 
 I've omitted the generated files (aside from the indexes) from the above tree, simply because you shouldn't need to modify them. All generated files begin with a leading comment that tell you which file you need to edit in order to alter its contents. If there is no such leading comment, the file is safe to change.
+
+## Testing
+
+Our tests are run with `npx jest`. Some use snapshots which can become out of date. These can be updating with `npx jest -u`, however if you run this command be sure to check that the changes in the snapshots are what you expect them to be. Jest test operate on code that is the output of the code generator, so be sure that that has run. This is easiest the generator is running in watch mode in the background. As long as the generator is watching you should always be testing your latest changes. You can also force testing of built packages by running `PKGS=true npx jest`. Note that this will cause jest to test the content of the `/dist` folder, meaning you must have built the `/dist` folder with `npm run build`. If you have the generator watching already `rm -rf dist && npm run :build` will be sufficient.
 
 ## Code formatting
 

@@ -15,7 +15,7 @@ export class ParallelRunner extends AsyncIterableIterator {
 
     const promise = this.iterator
       .next()
-      .then(async (item) => (item.done ? item : { value: await mapFn(item.value), done: false }));
+      .then(async (step) => (step.done ? step : { value: await mapFn(step.value), done: false }));
 
     const displacedPromise = buffer.push(promise);
 
@@ -30,7 +30,7 @@ export class ParallelRunner extends AsyncIterableIterator {
         // but this should be OK.
         return promise;
       } else {
-        // Recurse, filling the buffer with items from the source
+        // Recurse, filling the buffer with steps from the source
         return this.next();
       }
     }

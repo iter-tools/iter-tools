@@ -6,32 +6,30 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { iterableCurry, callReturn } from '../../internal/iterable.js';
+import { iterableCurry } from '../../internal/iterable.js';
+import { peekerate } from '../$peekerate/peekerate.js';
 
 export function reduce(iterable, initial, reducer) {
   let c = 0;
   let result = initial;
-  let done = false;
-  const iterator = iterable[Symbol.iterator]();
+  const peekr = peekerate(iterable);
   try {
     if (initial === undefined) {
-      const firstResult = iterator.next();
-      if (firstResult.done) {
-        done = true;
+      if (peekr.done) {
         throw new Error('Cannot reduce: no initial value specified and iterable was empty');
       }
-      result = firstResult.value;
+      result = peekr.value;
+      peekr.advance();
       c = 1;
     }
-    let nextItem;
-    while (!(nextItem = iterator.next()).done) {
-      result = reducer(result, nextItem.value, c++);
+    while (!peekr.done) {
+      result = reducer(result, peekr.value, c++);
+      peekr.advance();
     }
-    done = nextItem.done;
     return result;
   } finally {
     // close the iterator in case of exceptions
-    if (!done) callReturn(iterator);
+    peekr.return();
   }
 }
 

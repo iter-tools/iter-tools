@@ -55,7 +55,7 @@ declare function asyncFlat(depth: 6): <U>(source: U) => AsyncResultIterable<Asyn
 declare function asyncFlat(depth: 7): <U>(source: U) => AsyncResultIterable<AsyncFlattened<AsyncFlattened<AsyncFlattened<AsyncFlattened<AsyncFlattened<AsyncFlattened<AsyncFlattened<AsyncFlattened<U>>>>>>>>>;
 
 declare function asyncFlat(
-  shouldFlat: (item: any) => boolean | Promise<boolean>,
+  shouldFlat: (value: any) => boolean | Promise<boolean>,
   depth: number,
   iter: AsyncSourceIterable<any>,
 ): AsyncResultIterable<any>;

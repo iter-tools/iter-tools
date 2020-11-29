@@ -12,9 +12,9 @@ import { wrap } from '../../../test/helpers.js';
 describe('findOr', () => {
   describe('when iterable is empty', () => {
     it('returns notFoundValue', () => {
-      expect(findOr(0, (item: any) => item, null)).toBe(0);
-      expect(findOr(0, (item: any) => item, undefined)).toBe(0);
-      expect(findOr(0, (item: any) => item, wrap([]))).toBe(0);
+      expect(findOr(0, (value: any) => value, null)).toBe(0);
+      expect(findOr(0, (value: any) => value, undefined)).toBe(0);
+      expect(findOr(0, (value: any) => value, wrap([]))).toBe(0);
     });
   });
 
@@ -26,7 +26,7 @@ describe('findOr', () => {
 
   describe('when iterable contains the desired value', () => {
     it('returns the value', () => {
-      expect(findOr(0, (item) => item === 5, wrap([1, 2, 3, 4, 5, 6]))).toBe(5);
+      expect(findOr(0, (value) => value === 5, wrap([1, 2, 3, 4, 5, 6]))).toBe(5);
     });
   });
 });

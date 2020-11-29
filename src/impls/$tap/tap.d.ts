@@ -9,11 +9,11 @@
 import { SourceIterable, ResultIterable } from '../../types/iterable';
 
 declare function tap<T>(
-  callback: (item: T, i: number) => any,
+  callback: (value: T, i: number) => any,
 ): (source: SourceIterable<T>) => ResultIterable<T>;
 
 declare function tap<T>(
-  callback: (item: T, i: number) => any,
+  callback: (value: T, i: number) => any,
   source: SourceIterable<T>,
 ): ResultIterable<T>;
 

@@ -4,16 +4,16 @@ import { delay } from '../../../internal/delay.js';
 
 function intermittent(): AsyncIterable<number> {
   const sequence = [
-    { delay: 0, value: 0 },
-    { delay: 400, value: 1 },
-    { delay: 0, value: 2 },
+    { period: 0, value: 0 },
+    { period: 400, value: 1 },
+    { period: 0, value: 2 },
   ];
 
   return {
     async *[Symbol.asyncIterator]() {
-      for (const item of sequence) {
-        await delay(item.delay);
-        yield item.value;
+      for (const { period, value } of sequence) {
+        await delay(period);
+        yield value;
       }
     },
   };
@@ -62,7 +62,7 @@ describe('asyncBuffer', () => {
     expect(d3 - d2).toBeLessThan(700);
   });
 
-  it('returns all items', async () => {
+  it('returns all values', async () => {
     const iter = asyncBuffer(2, intermittent());
     expect(await asyncToArray(iter)).toEqual([0, 1, 2]);
   });

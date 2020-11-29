@@ -9,14 +9,14 @@
 import { asyncIterableCurry, asyncIsLoopable } from '../../internal/async-iterable.js';
 import { validateArgs } from './internal/validate-args.js';
 
-const defaultShouldFlat = (item) => typeof item !== 'string' && asyncIsLoopable(item);
+const defaultShouldFlat = (value) => typeof value !== 'string' && asyncIsLoopable(value);
 
 async function* asyncFlatInternal(shouldFlat, depth, currentDepth, source) {
-  for await (const item of source) {
-    if (currentDepth < depth && (await shouldFlat(item))) {
-      yield* asyncFlatInternal(shouldFlat, depth, currentDepth + 1, item);
+  for await (const value of source) {
+    if (currentDepth < depth && (await shouldFlat(value))) {
+      yield* asyncFlatInternal(shouldFlat, depth, currentDepth + 1, value);
     } else {
-      yield item;
+      yield value;
     }
   }
 }

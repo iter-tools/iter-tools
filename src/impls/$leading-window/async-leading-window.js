@@ -16,8 +16,8 @@ export async function* asyncLeadingWindow(source, size, { filler, useFiller = tr
   const bufferReadProxy = new ReadOnlyCircularBuffer(buffer);
 
   let len = 0;
-  for await (const item of source) {
-    buffer.push(item);
+  for await (const value of source) {
+    buffer.push(value);
     if (buffer.isFull()) {
       yield bufferReadProxy;
     }

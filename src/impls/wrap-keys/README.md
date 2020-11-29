@@ -1,4 +1,4 @@
-Yields the items yielded by `keysable.keys()`. When passed `null` or `undefined`, yields nothing.
+Yields the values yielded by `keysable.keys()`. When passed `null` or `undefined`, yields nothing.
 
 <!-- prettier-ignore -->
 ```js

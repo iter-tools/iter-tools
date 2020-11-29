@@ -17,8 +17,8 @@ export function* trailingWindow(source, size, { filler } = {}) {
 
   buffer.fill(filler);
 
-  for (const item of source) {
-    buffer.push(item);
+  for (const value of source) {
+    buffer.push(value);
     yield bufferReadProxy;
   }
 }

@@ -1,1 +1,5 @@
-export { default } from '../$to-array/async-to-array';
+import { AsyncSourceIterable } from '../../types/async-iterable';
+
+declare function arrayFromAsync<T>(source: AsyncSourceIterable<T>): Promise<Array<T>>;
+
+export default arrayFromAsync;

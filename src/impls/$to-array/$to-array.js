@@ -5,8 +5,8 @@ $async;
 export function $toArray(source) {
   const out = [];
   $await;
-  for (const item of $ensureIterable(source)) {
-    out.push(item);
+  for (const value of $ensureIterable(source)) {
+    out.push(value);
   }
   return out;
 }

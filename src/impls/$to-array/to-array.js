@@ -10,8 +10,8 @@ import { ensureIterable } from '../../internal/iterable.js';
 
 export function toArray(source) {
   const out = [];
-  for (const item of ensureIterable(source)) {
-    out.push(item);
+  for (const value of ensureIterable(source)) {
+    out.push(value);
   }
   return out;
 }

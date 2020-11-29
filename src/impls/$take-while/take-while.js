@@ -12,10 +12,10 @@ export function* takeWhile(source, predicate) {
   let take = true;
   let c = 0;
 
-  for (const item of source) {
-    take = predicate(item, c++);
+  for (const value of source) {
+    take = predicate(value, c++);
     if (take) {
-      yield item;
+      yield value;
     } else {
       break;
     }

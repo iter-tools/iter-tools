@@ -14,20 +14,26 @@ import { asyncFilter } from '@iter-tools/es';
 declare const Ø: never;
 
 assert<AsyncResultIterable<string>>(
-  asyncFilter(Ø as (item: string | number) => item is string, Ø as AsyncIterable<string | number>),
+  asyncFilter(
+    Ø as (value: string | number) => value is string,
+    Ø as AsyncIterable<string | number>,
+  ),
 );
 
 assert<AsyncResultIterable<number>>(
-  asyncFilter(Ø as (item: string | number) => item is number, Ø as AsyncIterable<string | number>),
+  asyncFilter(
+    Ø as (value: string | number) => value is number,
+    Ø as AsyncIterable<string | number>,
+  ),
 );
 
 assert<AsyncResultIterable<0>>(
-  asyncFilter(Ø as (item: string | number) => item is 0, Ø as AsyncIterable<string | number>),
+  asyncFilter(Ø as (value: string | number) => value is 0, Ø as AsyncIterable<string | number>),
 );
 
 assert<AsyncResultIterable<string | number>>(
   asyncFilter(
-    Ø as (item: string | number) => boolean,
+    Ø as (value: string | number) => boolean,
     Ø as AsyncIterable<string | number> | null | undefined,
   ),
 );

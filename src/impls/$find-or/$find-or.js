@@ -6,9 +6,9 @@ $async;
 export function $findOr(iterable, notFoundValue, func) {
   let c = 0;
   $await;
-  for (const item of iterable) {
-    if ($await(func(item, c++))) {
-      return item;
+  for (const value of iterable) {
+    if ($await(func(value, c++))) {
+      return value;
     }
   }
   return notFoundValue;

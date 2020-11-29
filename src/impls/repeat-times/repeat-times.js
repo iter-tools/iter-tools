@@ -1,9 +1,9 @@
 import { curry } from '../../internal/curry.js';
 import { wrapWithResultIterable } from '../../internal/iterable.js';
 
-export function* repeatTimes(n, item) {
+export function* repeatTimes(n, value) {
   while (n--) {
-    yield item;
+    yield value;
   }
 }
 

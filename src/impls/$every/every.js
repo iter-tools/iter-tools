@@ -10,8 +10,8 @@ import { iterableCurry } from '../../internal/iterable.js';
 
 export function every(iterable, predicate) {
   let c = 0;
-  for (const item of iterable) {
-    if (!predicate(item, c++)) {
+  for (const value of iterable) {
+    if (!predicate(value, c++)) {
       return false;
     }
   }

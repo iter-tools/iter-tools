@@ -37,15 +37,15 @@ export class CircularBuffer {
     this.size = 0;
   }
 
-  push(newItem) {
+  push(value) {
     const array = this._array;
     const head = (this._head = (this._head + 1) % array.length);
 
-    const displacedItem = array[head];
-    array[head] = newItem;
+    const displacedValue = array[head];
+    array[head] = value;
 
     if (this.isFull()) {
-      return displacedItem;
+      return displacedValue;
     } else {
       this.size++;
       return undefined;

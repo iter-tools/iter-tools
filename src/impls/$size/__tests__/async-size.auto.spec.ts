@@ -19,7 +19,7 @@ describe('asyncSize', () => {
   });
 
   describe('when iterable contains values', () => {
-    it('return number of items in iterable', async () => {
+    it('return number of values in iterable', async () => {
       expect(await asyncSize(asyncWrap([1, 2, 3, 4, 5, 6]))).toBe(6);
     });
   });

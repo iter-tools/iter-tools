@@ -10,7 +10,7 @@ import { asyncSplit } from '@iter-tools/es';
 import { asyncWrap, asyncUnwrapDeep } from '../../../test/async-helpers.js';
 
 describe('asyncSplit', () => {
-  it('should yield an iterable for every item in the iterable', async () => {
+  it('should yield an iterable for every value in the iterable', async () => {
     expect(await asyncUnwrapDeep(asyncSplit(asyncWrap([1, 2, 3])))).toEqual([[1], [2], [3]]);
   });
 });

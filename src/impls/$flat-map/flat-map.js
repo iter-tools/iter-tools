@@ -10,8 +10,8 @@ import { iterableCurry } from '../../internal/iterable.js';
 import { map } from '../$map/map.js';
 
 export function* flatMap(source, func) {
-  for (const item of map(source, func)) {
-    yield* item;
+  for (const value of map(source, func)) {
+    yield* value;
   }
 }
 

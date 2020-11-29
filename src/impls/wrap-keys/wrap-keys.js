@@ -1,9 +1,7 @@
-import { empty, wrapWithResultIterable } from '../../internal/iterable.js';
+import { wrapWithResultIterable } from '../../internal/iterable.js';
 
 export function* wrapKeys(keysable) {
-  if (keysable == null) {
-    return empty();
-  } else {
+  if (keysable != null) {
     yield* keysable.keys();
   }
 }

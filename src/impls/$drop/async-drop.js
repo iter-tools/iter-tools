@@ -10,8 +10,8 @@ import { asyncIterableCurry } from '../../internal/async-iterable.js';
 
 export async function* asyncDrop(iterable, n) {
   let i = 0;
-  for await (const item of iterable) {
-    if (i++ >= n) yield item;
+  for await (const value of iterable) {
+    if (i++ >= n) yield value;
   }
 }
 

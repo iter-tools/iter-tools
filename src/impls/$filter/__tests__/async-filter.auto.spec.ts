@@ -20,7 +20,7 @@ describe('asyncFilter', () => {
   });
 
   describe('when source has values', () => {
-    it('yields items for which predicate(value, i) returns true', async () => {
+    it('yields values for which predicate(value, i) returns true', async () => {
       expect(
         await asyncUnwrap(asyncFilter((value, i) => value === i, asyncWrap([1, 1, 2, 3, 5, 8]))),
       ).toEqual([1, 2, 3]);
@@ -28,7 +28,7 @@ describe('asyncFilter', () => {
   });
 
   it('may take an async predicate', async () => {
-    const iter = asyncFilter(async (item) => item % 2 === 0, asyncWrap([1, 2, 3, 4, 5, 6]));
+    const iter = asyncFilter(async (value) => value % 2 === 0, asyncWrap([1, 2, 3, 4, 5, 6]));
     expect(await asyncUnwrap(iter)).toEqual([2, 4, 6]);
   });
 });

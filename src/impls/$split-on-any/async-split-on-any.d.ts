@@ -9,17 +9,8 @@
 import { AsyncSourceIterable, AsyncResultIterable } from '../../types/async-iterable';
 
 declare function asyncSplitOnAny(
-  separatorValues: Array<string>,
-): (source: string) => AsyncResultIterable<string>;
-
-declare function asyncSplitOnAny(
   separatorValues: Array<any>,
 ): <T>(source: AsyncSourceIterable<T>) => AsyncResultIterable<AsyncResultIterable<T>>;
-
-declare function asyncSplitOnAny(
-  separatorValues: Array<string>,
-  source: string,
-): AsyncResultIterable<string>;
 
 declare function asyncSplitOnAny<T>(
   separatorValues: Array<any>,

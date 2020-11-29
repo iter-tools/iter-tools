@@ -10,9 +10,9 @@ import { iterableCurry } from '../../internal/iterable.js';
 
 export function findOr(iterable, notFoundValue, func) {
   let c = 0;
-  for (const item of iterable) {
-    if (func(item, c++)) {
-      return item;
+  for (const value of iterable) {
+    if (func(value, c++)) {
+      return value;
     }
   }
   return notFoundValue;

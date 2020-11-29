@@ -19,7 +19,7 @@ describe('size', () => {
   });
 
   describe('when iterable contains values', () => {
-    it('return number of items in iterable', () => {
+    it('return number of values in iterable', () => {
       expect(size(wrap([1, 2, 3, 4, 5, 6]))).toBe(6);
     });
   });

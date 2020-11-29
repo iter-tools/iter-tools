@@ -11,13 +11,13 @@ import { iterableCurry } from '../../internal/iterable.js';
 export function* dropWhile(source, predicate) {
   let drop = true;
   let c = 0;
-  for (const item of source) {
+  for (const value of source) {
     if (!drop) {
-      yield item;
+      yield value;
     } else {
-      drop = predicate(item, c++);
+      drop = predicate(value, c++);
       if (!drop) {
-        yield item;
+        yield value;
       }
     }
   }

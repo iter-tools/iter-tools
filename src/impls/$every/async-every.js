@@ -10,8 +10,8 @@ import { asyncIterableCurry } from '../../internal/async-iterable.js';
 
 export async function asyncEvery(iterable, predicate) {
   let c = 0;
-  for await (const item of iterable) {
-    if (!(await predicate(item, c++))) {
+  for await (const value of iterable) {
+    if (!(await predicate(value, c++))) {
       return false;
     }
   }

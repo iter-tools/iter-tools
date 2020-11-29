@@ -12,6 +12,6 @@ import { find } from '@iter-tools/es';
 
 declare const Ø: never;
 
-assert<number | undefined>(find(Ø as (item: number) => any, Ø as Iterable<number>));
+assert<number | undefined>(find(Ø as (value: number) => any, Ø as Iterable<number>));
 
-assert<2 | undefined>(find(Ø as (item: number) => item is 2, Ø as Iterable<number>));
+assert<2 | undefined>(find(Ø as (value: number) => value is 2, Ø as Iterable<number>));

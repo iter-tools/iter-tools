@@ -20,7 +20,7 @@ describe('filter', () => {
   });
 
   describe('when source has values', () => {
-    it('yields items for which predicate(value, i) returns true', () => {
+    it('yields values for which predicate(value, i) returns true', () => {
       expect(unwrap(filter((value, i) => value === i, wrap([1, 1, 2, 3, 5, 8])))).toEqual([
         1,
         2,

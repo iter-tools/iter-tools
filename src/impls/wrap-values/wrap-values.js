@@ -1,9 +1,7 @@
-import { empty, wrapWithResultIterable } from '../../internal/iterable.js';
+import { wrapWithResultIterable } from '../../internal/iterable.js';
 
 export function* wrapValues(valuesable) {
-  if (valuesable == null) {
-    return empty();
-  } else {
+  if (valuesable != null) {
     yield* valuesable.values();
   }
 }

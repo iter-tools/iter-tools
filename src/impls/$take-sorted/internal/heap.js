@@ -71,8 +71,8 @@ export class Heap {
     }
   }
 
-  push(item) {
-    this.data.push(item);
+  push(value) {
+    this.data.push(value);
     this._bubbleUp(this.size - 1);
   }
 

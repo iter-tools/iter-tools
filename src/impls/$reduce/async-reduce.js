@@ -6,32 +6,30 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { asyncIterableCurry, asyncCallReturn } from '../../internal/async-iterable.js';
+import { asyncIterableCurry } from '../../internal/async-iterable.js';
+import { asyncPeekerate } from '../$peekerate/async-peekerate.js';
 
 export async function asyncReduce(iterable, initial, reducer) {
   let c = 0;
   let result = initial;
-  let done = false;
-  const iterator = iterable[Symbol.asyncIterator]();
+  const peekr = await asyncPeekerate(iterable);
   try {
     if (initial === undefined) {
-      const firstResult = await iterator.next();
-      if (firstResult.done) {
-        done = true;
+      if (peekr.done) {
         throw new Error('Cannot reduce: no initial value specified and iterable was empty');
       }
-      result = firstResult.value;
+      result = peekr.value;
+      await peekr.advance();
       c = 1;
     }
-    let nextItem;
-    while (!(nextItem = await iterator.next()).done) {
-      result = await reducer(result, nextItem.value, c++);
+    while (!peekr.done) {
+      result = await reducer(result, peekr.value, c++);
+      await peekr.advance();
     }
-    done = nextItem.done;
     return result;
   } finally {
     // close the iterator in case of exceptions
-    if (!done) await asyncCallReturn(iterator);
+    peekr.return();
   }
 }
 
