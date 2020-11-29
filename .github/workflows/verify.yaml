@@ -1,4 +1,4 @@
-name: Verify
+name: verify
 on:
   push:
     branches: main
