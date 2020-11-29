@@ -91,6 +91,10 @@ src/
 
 I've omitted the generated files (aside from the indexes) from the above tree, simply because you shouldn't need to modify them. All generated files begin with a leading comment that tell you which file you need to edit in order to alter its contents. If there is no such leading comment, the file is safe to change.
 
+## Testing
+
+Our tests are run with `npx jest`. Some use snapshots which can become out of date. These can be updating with `npx jest -u`, however if you run this command be sure to check that the changes in the snapshots are what you expect them to be. Jest test operate on code that is the output of the code generator, so be sure that that has run. This is easiest the generator is running in watch mode in the background. As long as the generator is watching you should always be testing your latest changes. You can also force testing of built packages by running `PKGS=true npx jest`. Note that this will cause jest to test the content of the `/dist` folder, meaning you must have built the `/dist` folder with `npm run build`. If you have the generator watching already `rm -rf dist && npm run :build` will be sufficient.
+
 ## Code formatting
 
 The code in this project is autoformatted with Prettier. To format your code, run the command:
