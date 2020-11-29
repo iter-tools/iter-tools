@@ -10,9 +10,9 @@ import { iterableCurry } from '../../internal/iterable.js';
 
 export function* tap(source, callback) {
   let c = 0;
-  for (const item of source) {
-    callback(item, c++);
-    yield item;
+  for (const value of source) {
+    callback(value, c++);
+    yield value;
   }
 }
 

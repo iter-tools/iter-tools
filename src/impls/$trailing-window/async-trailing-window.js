@@ -17,8 +17,8 @@ export async function* asyncTrailingWindow(source, size, { filler } = {}) {
 
   buffer.fill(filler);
 
-  for await (const item of source) {
-    buffer.push(item);
+  for await (const value of source) {
+    buffer.push(value);
     yield bufferReadProxy;
   }
 }

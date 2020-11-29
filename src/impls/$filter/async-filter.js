@@ -10,9 +10,9 @@ import { asyncIterableCurry } from '../../internal/async-iterable.js';
 
 export async function* asyncFilter(source, predicate) {
   let c = 0;
-  for await (const item of source) {
-    if (await predicate(item, c++)) {
-      yield item;
+  for await (const value of source) {
+    if (await predicate(value, c++)) {
+      yield value;
     }
   }
 }

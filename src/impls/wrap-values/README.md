@@ -1,4 +1,4 @@
-Yields the items yielded by `valuesable.values()`. When passed `null` or `undefined`, yields nothing.
+Yields the values yielded by `valuesable.values()`. When passed `null` or `undefined`, yields nothing.
 
 <!-- prettier-ignore -->
 ```js

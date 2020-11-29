@@ -10,18 +10,18 @@ import { iterableCurry } from '../../internal/iterable.js';
 import { zipAll } from '../$zip-all/zip-all.js';
 import { simpleSlice } from '../$slice/slice.js';
 
-const noItem = {};
-const zipAllConfig = { filler: noItem };
+const none = Symbol('none');
+const zipAllConfig = { filler: none };
 
 export function equal(iterables) {
   if (iterables.length <= 1) {
     return true;
   }
 
-  for (const allItems of zipAll(iterables, zipAllConfig)) {
-    const firstItem = allItems[0];
-    for (const item of simpleSlice(allItems, 1, Infinity)) {
-      if (item !== firstItem) {
+  for (const stepValues of zipAll(iterables, zipAllConfig)) {
+    const firstValue = stepValues[0];
+    for (const value of simpleSlice(stepValues, 1, Infinity)) {
+      if (value !== firstValue) {
         return false;
       }
     }

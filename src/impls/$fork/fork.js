@@ -13,12 +13,12 @@ function fetch(state) {
   const { exchange, iterator } = state;
 
   {
-    const newItem = iterator.next();
-    if (newItem.done) {
+    const step = iterator.next();
+    if (step.done) {
       state.done = true;
-      state.doneValue = newItem.value;
+      state.doneValue = step.value;
     } else {
-      exchange.push(newItem.value);
+      exchange.push(step.value);
     }
   }
 }

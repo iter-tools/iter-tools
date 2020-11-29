@@ -15,8 +15,8 @@ function bufferedSlice(source, start, end, step) {
   const buffer = new CircularBuffer(bufferSize);
   let counter = 0;
 
-  for (const item of source) {
-    buffer.push(item);
+  for (const value of source) {
+    buffer.push(value);
     counter++;
   }
 
@@ -41,9 +41,9 @@ export function* simpleSlice(source, start, end, step = 1) {
     buffer = new CircularBuffer(bufferSize);
   }
 
-  for (let item of source) {
+  for (let value of source) {
     if (buffer) {
-      item = buffer.push(item);
+      value = buffer.push(value);
       counter++;
       if (counter <= bufferSize) {
         continue;
@@ -55,7 +55,7 @@ export function* simpleSlice(source, start, end, step = 1) {
     }
 
     if (nextValidPos === currentPos) {
-      yield item;
+      yield value;
       nextValidPos += step;
     }
     currentPos++;

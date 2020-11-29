@@ -1,6 +1,6 @@
 See [peekerate](#peekerate)
 
-Note: Returns a promise of a peekerator, which is necessary for the first item to be fetched.
+Note: Returns a promise of a peekerator, which is necessary for the first value to be fetched.
 
 ```js
 const peekerator = await asyncPeekerate([1, 2, 3]);

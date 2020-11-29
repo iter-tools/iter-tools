@@ -10,8 +10,8 @@ import { iterableCurry } from '../../internal/iterable.js';
 
 export function some(iterable, func) {
   let c = 0;
-  for (const item of iterable) {
-    if (func(item, c++)) {
+  for (const value of iterable) {
+    if (func(value, c++)) {
       return true;
     }
   }

@@ -13,9 +13,9 @@ import { asyncFind } from '@iter-tools/es';
 declare const Ø: never;
 
 assert<Promise<number | undefined>>(
-  asyncFind(Ø as (item: number) => any, Ø as AsyncIterable<number>),
+  asyncFind(Ø as (value: number) => any, Ø as AsyncIterable<number>),
 );
 
 assert<Promise<2 | undefined>>(
-  asyncFind(Ø as (item: number) => item is 2, Ø as AsyncIterable<number>),
+  asyncFind(Ø as (value: number) => value is 2, Ø as AsyncIterable<number>),
 );

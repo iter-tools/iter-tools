@@ -1,4 +1,4 @@
-Yields each item in `source` as an iterable of one item.
+Yields each value in `source` as an iterable of one value.
 
 ```js
 split([1, 2, 3]); // Iterable[Iterable[1], Iterable[2], Iterable[3]]

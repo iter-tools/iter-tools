@@ -6,9 +6,9 @@ $async;
 export function* $tap(source, callback) {
   let c = 0;
   $await;
-  for (const item of source) {
-    callback(item, c++);
-    yield item;
+  for (const value of source) {
+    callback(value, c++);
+    yield value;
   }
 }
 

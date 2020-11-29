@@ -34,7 +34,7 @@ describe('groupBy', () => {
 
   describe('when source contains subsequent values belonging to the same group', () => {
     it('coalesces values into groups', () => {
-      const lowerCase = (item: string) => item.toLowerCase();
+      const lowerCase = (value: string) => value.toLowerCase();
       expect(unwrapDeep(groupBy(lowerCase, 'AaA'))).toEqual([['a', ['A', 'a', 'A']]]);
       expect(unwrapDeep(groupBy(lowerCase, 'baA'))).toEqual([
         ['b', ['b']],

@@ -9,31 +9,31 @@
 import { SourceIterable } from '../../types/iterable';
 
 declare function reduce<T>(
-  reducer: (result: T, item: T, i: number) => T,
+  reducer: (result: T, value: T, i: number) => T,
 ): (iterable: SourceIterable<T>) => T;
 
 declare function reduce<O, T>(
-  reducer: (result: O, item: T, i: number) => O,
+  reducer: (result: O, value: T, i: number) => O,
 ): (iterable: SourceIterable<T>) => O;
 
 declare function reduce<O, T>(
   initial: O,
-  reducer: (result: O, item: T, i: number) => O,
+  reducer: (result: O, value: T, i: number) => O,
 ): (iterable: SourceIterable<T>) => O;
 
 declare function reduce<T>(
-  reducer: (result: T, item: T, i: number) => T,
+  reducer: (result: T, value: T, i: number) => T,
   iterable: SourceIterable<T>,
 ): T;
 
 declare function reduce<O, T>(
-  reducer: (result: O, item: T, i: number) => O,
+  reducer: (result: O, value: T, i: number) => O,
   iterable: SourceIterable<T>,
 ): O;
 
 declare function reduce<O, T>(
   initial: O,
-  reducer: (result: O, item: T, i: number) => O,
+  reducer: (result: O, value: T, i: number) => O,
   iterable: SourceIterable<T>,
 ): O;
 

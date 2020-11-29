@@ -10,9 +10,9 @@ import { asyncIterableCurry } from '../../internal/async-iterable.js';
 
 export async function* asyncTake(iterable, n) {
   let i = 0;
-  for await (const item of iterable) {
+  for await (const value of iterable) {
     if (i++ === n) break;
-    yield item;
+    yield value;
   }
 }
 

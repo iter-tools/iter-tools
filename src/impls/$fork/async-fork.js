@@ -15,13 +15,13 @@ function fetch(state) {
   return new Promise((resolve, reject) => {
     iterator
       .next()
-      .then((newItem) => {
-        if (newItem.done) {
+      .then((step) => {
+        if (step.done) {
           state.done = true;
-          state.doneValue = newItem.value;
+          state.doneValue = step.value;
           return resolve();
         } else {
-          exchange.push(newItem.value);
+          exchange.push(step.value);
           return resolve();
         }
       })

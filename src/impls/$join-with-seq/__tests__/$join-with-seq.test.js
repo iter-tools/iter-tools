@@ -6,7 +6,7 @@ import { $wrapDeep, $unwrap } from '../../../test/$helpers.js';
 describe($`joinWithSeq`, () => {
   describe('joining on the empty seq', () => {
     it(
-      'should include the items from every group',
+      'should include the values from every group',
       $async(() => {
         expect($await($unwrap($joinWithSeq([], $wrapDeep([[1], [2], [3]]))))).toEqual([1, 2, 3]);
       }),

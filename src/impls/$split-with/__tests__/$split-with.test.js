@@ -5,7 +5,7 @@ import { $wrap, $unwrapDeep } from '../../../test/$helpers.js';
 
 describe($`splitWith`, () => {
   it(
-    'should split between every item which is equal to the on argument',
+    'should split between every value which is equal to the on argument',
     $async(() => {
       expect(
         $await($unwrapDeep($splitWith((i) => i === null, $wrap([1, null, 2, null, 3])))),

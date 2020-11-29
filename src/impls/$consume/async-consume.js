@@ -22,8 +22,8 @@ const warnCallbackDeprecation = () => {
 
 export async function asyncConsume(iterable, callback = () => {}) {
   let c = 0;
-  for await (const item of iterable) {
-    await callback(item, c++);
+  for await (const value of iterable) {
+    await callback(value, c++);
   }
 }
 

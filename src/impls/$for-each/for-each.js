@@ -10,8 +10,8 @@ import { iterableCurry } from '../../internal/iterable.js';
 
 export function forEach(iterable, callback) {
   let c = 0;
-  for (const item of iterable) {
-    callback(item, c++);
+  for (const value of iterable) {
+    callback(value, c++);
   }
 }
 

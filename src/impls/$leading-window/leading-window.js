@@ -16,8 +16,8 @@ export function* leadingWindow(source, size, { filler, useFiller = true } = {}) 
   const bufferReadProxy = new ReadOnlyCircularBuffer(buffer);
 
   let len = 0;
-  for (const item of source) {
-    buffer.push(item);
+  for (const value of source) {
+    buffer.push(value);
     if (buffer.isFull()) {
       yield bufferReadProxy;
     }

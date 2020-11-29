@@ -27,8 +27,8 @@ export class $Bisector extends IterableIterator {
     const { source, strategy, options } = this;
     this.partsIterator = this.partsIterator || new $PartsIterator(source, strategy, options);
     if (!this.firstPart) {
-      const item = $await(this.partsIterator.next());
-      this.firstPart = item.done ? [] : item.value;
+      const step = $await(this.partsIterator.next());
+      this.firstPart = step.done ? [] : step.value;
     }
   }
 
@@ -51,8 +51,8 @@ export class $Bisector extends IterableIterator {
           value: $async(function* () {
             $await(self.setupFirst());
 
-            const item = $await(self.partsIterator.next());
-            self.secondPart = item.done ? [] : item.value;
+            const step = $await(self.partsIterator.next());
+            self.secondPart = step.done ? [] : step.value;
 
             yield* self.secondPart;
           })(),

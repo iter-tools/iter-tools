@@ -2,7 +2,7 @@ Defaults:
 
 - `comparator`: [default comparator](#the-default-comparator)
 
-Returns `n` items from `source`, sorted in ascending order according to `comparator`. The function is both space efficient (only stores `n` items) and fast (`O(m log n)`), given `m` as the total number of items in `iterable`. It uses a heap internally.
+Returns `n` values from `source`, sorted in ascending order according to `comparator`. The function is both space efficient (only stores `n` values) and fast (`O(m log n)`), given `m` as the total number of values in `iterable`. It uses a heap internally.
 
 ```js
 takeSorted(3, [4, 5, 2, 3, 1]); // Iterable[1, 2, 3]

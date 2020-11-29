@@ -8,12 +8,12 @@
 
 import { asyncMap } from '../$map/async-map.js';
 
-function* iterableOf(item) {
-  yield item;
+function* iterableOf(value) {
+  yield value;
 }
 
 export function asyncSplit(source) {
-  return asyncMap(source, (item) => iterableOf(item));
+  return asyncMap(source, (value) => iterableOf(value));
 }
 
 export default asyncSplit;

@@ -22,8 +22,8 @@ const warnCallbackDeprecation = () => {
 
 export function consume(iterable, callback = () => {}) {
   let c = 0;
-  for (const item of iterable) {
-    callback(item, c++);
+  for (const value of iterable) {
+    callback(value, c++);
   }
 }
 

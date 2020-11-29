@@ -34,7 +34,7 @@ describe('CircularBuffer', () => {
     expect(b.push(9)).toBe(6);
   });
 
-  it('can get items', () => {
+  it('can get values', () => {
     const b = new CircularBuffer(3);
     b.push(0);
     b.push(1);
@@ -66,7 +66,7 @@ describe('CircularBuffer', () => {
     expect(b.isFull()).toBe(false);
   });
 
-  it('can get the next item to be shifted with peek', () => {
+  it('can get the next value to be shifted with peek', () => {
     const b = new CircularBuffer(2);
     expect(b.peek()).toBe(undefined);
     b.push(1);

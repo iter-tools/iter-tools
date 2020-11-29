@@ -11,8 +11,8 @@ export function* $leadingWindow(source, size, { filler, useFiller = true } = {})
 
   let len = 0;
   $await;
-  for (const item of source) {
-    buffer.push(item);
+  for (const value of source) {
+    buffer.push(value);
     if (buffer.isFull()) {
       yield bufferReadProxy;
     }

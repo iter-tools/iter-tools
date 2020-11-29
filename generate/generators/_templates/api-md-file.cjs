@@ -50,7 +50,7 @@ const sections = new Map(
     ['temporal', 'Control timing inside an async iterable'],
     ['cache', 'Cache an iterable'],
     ['consume', 'Consume an iterable'],
-    ['predicate', 'Test a value'],
+    ['predicate', 'Predicates (test a value)'],
     ['utility', 'Utilities'],
     ['higher-order', 'Generator helpers'],
     [undefined, 'Uncategorized'],
@@ -170,8 +170,7 @@ module.exports = (typesDoc, methodsWithDollars, aliasMap) => {
 
 [![Documentation is automatically generated](https://img.shields.io/static/v1?label=docs&message=generated&color=informational)](https://github.com/iter-tools/iter-tools/blob/master/CONTRIBUTING.md#the-code-generator)
 
-[Types](#types)  
-[Methods](#methods)
+The API documentation is split into to main sections: [types](#types) and [methods](#methods).
 
 ## Types
 

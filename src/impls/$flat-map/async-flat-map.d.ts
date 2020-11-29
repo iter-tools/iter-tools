@@ -9,11 +9,11 @@
 import { AsyncSourceIterable, AsyncResultIterable } from '../../types/async-iterable';
 
 declare function asyncFlatMap<O, T>(
-  func: (item: T, i: number) => AsyncSourceIterable<O> | Promise<AsyncSourceIterable<O>>,
+  func: (value: T, i: number) => AsyncSourceIterable<O> | Promise<AsyncSourceIterable<O>>,
 ): (source: AsyncSourceIterable<T>) => AsyncResultIterable<O>;
 
 declare function asyncFlatMap<O, T>(
-  func: (item: T, i: number) => AsyncSourceIterable<O> | Promise<AsyncSourceIterable<O>>,
+  func: (value: T, i: number) => AsyncSourceIterable<O> | Promise<AsyncSourceIterable<O>>,
   source: AsyncSourceIterable<T>,
 ): AsyncResultIterable<O>;
 

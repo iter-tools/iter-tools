@@ -4,11 +4,11 @@ import { delay } from '../../internal/delay.js';
 
 export async function* asyncThrottle(source, intervalMs) {
   let waitSince = 0;
-  for await (const item of source) {
+  for await (const value of source) {
     const duration = intervalMs - (Date.now() - waitSince);
     await (duration > 0 && delay(duration));
     waitSince = Date.now();
-    yield item;
+    yield value;
   }
 }
 

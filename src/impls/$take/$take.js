@@ -6,9 +6,9 @@ $async;
 export function* $take(iterable, n) {
   let i = 0;
   $await;
-  for (const item of iterable) {
+  for (const value of iterable) {
     if (i++ === n) break;
-    yield item;
+    yield value;
   }
 }
 

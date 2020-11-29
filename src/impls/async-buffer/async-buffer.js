@@ -7,7 +7,7 @@ export async function* generateBuffered(source, n) {
 
   try {
     for (let i = 0; i < n; i++) {
-      // Async generators have an internal item request queue, which this fills up
+      // Async generators have an internal step request queue, which this fills up
       buffer.push(iterator.next());
     }
 

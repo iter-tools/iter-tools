@@ -6,8 +6,8 @@ $async;
 export function $every(iterable, predicate) {
   let c = 0;
   $await;
-  for (const item of iterable) {
-    if (!$await(predicate(item, c++))) {
+  for (const value of iterable) {
+    if (!$await(predicate(value, c++))) {
       return false;
     }
   }

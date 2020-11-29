@@ -11,7 +11,7 @@ import { asyncWrapDeep, asyncUnwrap } from '../../../test/async-helpers.js';
 
 describe('asyncJoinWithSeq', () => {
   describe('joining on the empty seq', () => {
-    it('should include the items from every group', async () => {
+    it('should include the values from every group', async () => {
       expect(await asyncUnwrap(asyncJoinWithSeq([], asyncWrapDeep([[1], [2], [3]])))).toEqual([
         1,
         2,

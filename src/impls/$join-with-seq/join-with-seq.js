@@ -13,9 +13,9 @@ export function* joinWithSeq(source, separatorSeq) {
   const _separatorSeq = toArray(separatorSeq);
   let isFirst = true;
 
-  for (const item of source) {
+  for (const value of source) {
     if (!isFirst) yield* _separatorSeq;
-    yield* item;
+    yield* value;
     isFirst = false;
   }
 }

@@ -6,8 +6,8 @@ import { $map } from '../$map/$map.js';
 $async;
 export function* $flatMap(source, func) {
   $await;
-  for (const item of $map(source, func)) {
-    yield* item;
+  for (const value of $map(source, func)) {
+    yield* value;
   }
 }
 

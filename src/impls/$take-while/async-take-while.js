@@ -12,10 +12,10 @@ export async function* asyncTakeWhile(source, predicate) {
   let take = true;
   let c = 0;
 
-  for await (const item of source) {
-    take = await predicate(item, c++);
+  for await (const value of source) {
+    take = await predicate(value, c++);
     if (take) {
-      yield item;
+      yield value;
     } else {
       break;
     }

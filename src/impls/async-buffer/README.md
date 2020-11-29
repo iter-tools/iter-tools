@@ -6,20 +6,20 @@ const source = asyncMap(
   range(),
 );
 
-const buffered = asyncBuffer(6, source); // Items start buffering
+const buffered = asyncBuffer(6, source); // Values start buffering
 
 await new Promise((resolve) => setTimeout(resolve, 800));
 
-// Four items are already buffered here
+// Four values are already buffered here
 await buffered.next(); // ~0ms
 await buffered.next(); // ~0ms
 await buffered.next(); // ~0ms
 await buffered.next(); // ~0ms
-// After this point items are being requested as fast as they
+// After this point values are being requested as fast as they
 // can possibly be fulfilled, so buffer offers no additional benefits.
 await buffered.next(); // ~200ms
 await buffered.next(); // ~200ms
-// But if additional delays are incurred in processing items,
+// But if additional delays are incurred in processing values,
 // it has value again!
 await new Promise((resolve) => setTimeout(resolve, 300));
 await buffered.next(); // ~0ms

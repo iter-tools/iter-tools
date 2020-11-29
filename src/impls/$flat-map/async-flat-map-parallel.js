@@ -2,8 +2,8 @@ import { asyncMapParallel } from '../$map/async-map-parallel.js';
 import { asyncIterableCurry } from '../../internal/async-iterable.js';
 
 export async function* asyncFlatMapParallel(iterable, concurrency = 4, func) {
-  for await (const item of asyncMapParallel(concurrency, func, iterable)) {
-    yield* item;
+  for await (const value of asyncMapParallel(concurrency, func, iterable)) {
+    yield* value;
   }
 }
 

@@ -51,7 +51,7 @@ declare function flat(depth: 6): <U>(source: U) => ResultIterable<Flattened<Flat
 declare function flat(depth: 7): <U>(source: U) => ResultIterable<Flattened<Flattened<Flattened<Flattened<Flattened<Flattened<Flattened<Flattened<U>>>>>>>>>;
 
 declare function flat(
-  shouldFlat: (item: any) => boolean,
+  shouldFlat: (value: any) => boolean,
   depth: number,
   iter: SourceIterable<any>,
 ): ResultIterable<any>;

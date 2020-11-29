@@ -10,7 +10,7 @@ import { asyncSplitWith } from '@iter-tools/es';
 import { asyncWrap, asyncUnwrapDeep } from '../../../test/async-helpers.js';
 
 describe('asyncSplitWith', () => {
-  it('should split between every item which is equal to the on argument', async () => {
+  it('should split between every value which is equal to the on argument', async () => {
     expect(
       await asyncUnwrapDeep(asyncSplitWith((i) => i === null, asyncWrap([1, null, 2, null, 3]))),
     ).toEqual([[1], [2], [3]]);

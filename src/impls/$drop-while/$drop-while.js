@@ -7,13 +7,13 @@ export function* $dropWhile(source, predicate) {
   let drop = true;
   let c = 0;
   $await;
-  for (const item of source) {
+  for (const value of source) {
     if (!drop) {
-      yield item;
+      yield value;
     } else {
-      drop = $await(predicate(item, c++));
+      drop = $await(predicate(value, c++));
       if (!drop) {
-        yield item;
+        yield value;
       }
     }
   }

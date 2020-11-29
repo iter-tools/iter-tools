@@ -9,13 +9,13 @@
 import { iterableCurry } from '../../internal/iterable.js';
 
 export function takeLastOr(iterable, whenEmpty) {
-  let _item = whenEmpty;
+  let _value = whenEmpty;
 
-  for (const item of iterable) {
-    _item = item;
+  for (const value of iterable) {
+    _value = value;
   }
 
-  return _item;
+  return _value;
 }
 
 export default /*#__PURE__*/ iterableCurry(takeLastOr, {

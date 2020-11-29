@@ -10,9 +10,9 @@ import { asyncIterableCurry } from '../../internal/async-iterable.js';
 
 export async function asyncFindOr(iterable, notFoundValue, func) {
   let c = 0;
-  for await (const item of iterable) {
-    if (await func(item, c++)) {
-      return item;
+  for await (const value of iterable) {
+    if (await func(value, c++)) {
+      return value;
     }
   }
   return notFoundValue;

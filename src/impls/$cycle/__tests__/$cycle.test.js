@@ -6,7 +6,7 @@ import { $wrap, $unwrap } from '../../../test/$helpers.js';
 describe($`cycle`, () => {
   describe('when source is empty', () => {
     it(
-      'yields no items',
+      'yields no values',
       $async(() => {
         expect($await($unwrap($cycle(null)))).toEqual([]);
         expect($await($unwrap($cycle(undefined)))).toEqual([]);

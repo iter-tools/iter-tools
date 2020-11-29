@@ -11,7 +11,7 @@ import { wrap, unwrap } from '../../../test/helpers.js';
 
 describe('cycleTimes', () => {
   describe('when source is empty', () => {
-    it('yields no items', () => {
+    it('yields no values', () => {
       expect(unwrap(cycleTimes(1, null))).toEqual([]);
       expect(unwrap(cycleTimes(1, undefined))).toEqual([]);
       expect(unwrap(cycleTimes(1, []))).toEqual([]);

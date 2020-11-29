@@ -445,7 +445,9 @@ src/impls/$split-with/__tests__/async-split-with.auto.spec.ts linguist-generated
 src/impls/$split-with/__tests__/async-split-with.test.js linguist-generated=true
 src/impls/$split-with/__tests__/split-with.auto.spec.ts linguist-generated=true
 src/impls/$split-with/__tests__/split-with.test.js linguist-generated=true
+src/impls/$split-with/async-split-with.d.ts linguist-generated=true
 src/impls/$split-with/async-split-with.js linguist-generated=true
+src/impls/$split-with/split-with.d.ts linguist-generated=true
 src/impls/$split-with/split-with.js linguist-generated=true
 src/impls/$split/__tests__/async-split.auto.spec.ts linguist-generated=true
 src/impls/$split/__tests__/async-split.test.js linguist-generated=true

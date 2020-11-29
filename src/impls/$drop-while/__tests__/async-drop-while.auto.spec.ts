@@ -12,9 +12,9 @@ import { asyncWrap, asyncUnwrap } from '../../../test/async-helpers.js';
 describe('asyncDropWhile', () => {
   describe('when source is empty', () => {
     it('yields no values', async () => {
-      expect(await asyncUnwrap(asyncDropWhile((item: any) => item, null))).toEqual([]);
-      expect(await asyncUnwrap(asyncDropWhile((item: any) => item, undefined))).toEqual([]);
-      expect(await asyncUnwrap(asyncDropWhile((item: any) => item, asyncWrap([])))).toEqual([]);
+      expect(await asyncUnwrap(asyncDropWhile((value: any) => value, null))).toEqual([]);
+      expect(await asyncUnwrap(asyncDropWhile((value: any) => value, undefined))).toEqual([]);
+      expect(await asyncUnwrap(asyncDropWhile((value: any) => value, asyncWrap([])))).toEqual([]);
     });
   });
 

@@ -9,9 +9,9 @@ export function* $joinWithSeq(source, separatorSeq) {
   let isFirst = true;
 
   $await;
-  for (const item of source) {
+  for (const value of source) {
     if (!isFirst) yield* _separatorSeq;
-    yield* item;
+    yield* value;
     isFirst = false;
   }
 }

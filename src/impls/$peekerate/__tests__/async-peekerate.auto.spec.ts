@@ -10,7 +10,7 @@ import { asyncPeekerate } from '@iter-tools/es';
 import { asyncWrap } from '../../../test/async-helpers.js';
 
 describe('asyncPeekerate', () => {
-  it('decorates iterator with the current item in the iterable', async () => {
+  it('decorates iterator with the current value in the iterable', async () => {
     const peekerator = await asyncPeekerate(asyncWrap([1, 2, 3]));
     const observed = [];
 

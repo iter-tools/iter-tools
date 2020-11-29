@@ -17,7 +17,7 @@ combinations(2, [1, 2, 3, 4]);
 // ]
 ```
 
-The number of items that will be yielded is accessible through a `size` property.
+The number of values that will be yielded is accessible through a `size` property.
 Note that the actual combinations are not computed in the example below
 
 ```js

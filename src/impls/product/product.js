@@ -43,7 +43,7 @@ export function product(...iterables) {
       if (arrs.length === 0) return [];
 
       for (const indicies of permuteIndicies(arrs, size)) {
-        yield indicies.map((itemIndex, i) => arrs[i][itemIndex]);
+        yield indicies.map((valueIndex, i) => arrs[i][valueIndex]);
       }
     },
     size,

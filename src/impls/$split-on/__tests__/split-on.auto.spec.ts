@@ -10,7 +10,7 @@ import { splitOn } from '@iter-tools/es';
 import { wrap, unwrapDeep } from '../../../test/helpers.js';
 
 describe('splitOn', () => {
-  it('should split between every item which is equal to the on argument', () => {
+  it('should split between every value which is equal to the on argument', () => {
     expect(unwrapDeep(splitOn(null, wrap([1, null, 2, null, 3])))).toEqual([[1], [2], [3]]);
   });
 

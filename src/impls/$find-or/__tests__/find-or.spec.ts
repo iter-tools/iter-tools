@@ -12,6 +12,6 @@ import { findOr } from '@iter-tools/es';
 
 declare const Ø: never;
 
-assert<number | 0>(findOr(Ø as 0, Ø as (item: number) => any, Ø as Iterable<number>));
+assert<number | 0>(findOr(Ø as 0, Ø as (value: number) => any, Ø as Iterable<number>));
 
-assert<2 | 0>(findOr(Ø as 0, Ø as (item: number) => item is 2, Ø as Iterable<number>));
+assert<2 | 0>(findOr(Ø as 0, Ø as (value: number) => value is 2, Ø as Iterable<number>));

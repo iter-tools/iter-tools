@@ -8,8 +8,8 @@ export function* $window(source, size) {
   const bufferReadProxy = new ReadOnlyCircularBuffer(buffer);
 
   $await;
-  for (const item of source) {
-    buffer.push(item);
+  for (const value of source) {
+    buffer.push(value);
     if (buffer.isFull()) {
       yield bufferReadProxy;
     }

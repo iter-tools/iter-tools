@@ -3,11 +3,11 @@ import { $MaybePromise } from '../../../generate/async.macro.cjs';
 import { $SourceIterable, $ResultIterable } from '../../types/$iterable';
 
 declare function $tap<T>(
-  callback: (item: T, i: number) => $MaybePromise<any>,
+  callback: (value: T, i: number) => $MaybePromise<any>,
 ): (source: $SourceIterable<T>) => $ResultIterable<T>;
 
 declare function $tap<T>(
-  callback: (item: T, i: number) => $MaybePromise<any>,
+  callback: (value: T, i: number) => $MaybePromise<any>,
   source: $SourceIterable<T>,
 ): $ResultIterable<T>;
 

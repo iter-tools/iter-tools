@@ -73,7 +73,7 @@ export class AsyncPartsIterator extends AsyncIterableIterator {
     this.returned = false;
     this.spliterator = null;
     this.currentPart = null;
-    this.splitItem = null;
+    this.splitStep = null;
   }
 
   async init() {
@@ -97,7 +97,7 @@ export class AsyncPartsIterator extends AsyncIterableIterator {
     }
 
     if (this.currentPart !== null) {
-      if (spliterator.value !== split || spliterator.current === this.splitItem) {
+      if (spliterator.value !== split || spliterator.current === this.splitStep) {
         // this part was not consumed
         this.currentPart.inactive = true;
 
@@ -109,11 +109,11 @@ export class AsyncPartsIterator extends AsyncIterableIterator {
       await spliterator.advance();
     }
 
-    // The spliterator is now at the first item of the next part.
-    // We save the item because an empty part would be represented by
+    // The spliterator is now at the first step of the next part.
+    // We save the step because an empty part would be represented by
     // [split, split] and we need to know if we've advanced from the
     // first split to the second, thus consuming the empty part.
-    this.splitItem = spliterator.current;
+    this.splitStep = spliterator.current;
 
     this.currentPart = new AsyncPartIterator(this);
     return { value: asyncWrap(this.currentPart), done: false };

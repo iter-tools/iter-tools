@@ -13,7 +13,7 @@ describe('forEach', () => {
   it('calls callback for each value in iterable', () => {
     const arr: Array<number> = [];
 
-    forEach((item) => arr.push(item), wrap([1, 2, 3]));
+    forEach((value) => arr.push(value), wrap([1, 2, 3]));
 
     expect(arr).toEqual([1, 2, 3]);
   });

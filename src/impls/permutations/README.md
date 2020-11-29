@@ -2,7 +2,7 @@ Defaults:
 
 `n`: `size(iterable)`
 
-Yields permutations of length `n` of items from `iterable`.
+Yields permutations of length `n` of values from `iterable`.
 
 ```js
 permutations([0, 1]); // Iterable[[0, 1] [1, 0]]
@@ -23,7 +23,7 @@ permutations(2, [1, 2, 3, 4]);
 // ]
 ```
 
-The number of items that will be yielded is accessible through a `size` property.
+The number of values that will be yielded is accessible through a `size` property.
 Note that the actual combinations are not computed in the example below
 
 ```js

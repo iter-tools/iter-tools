@@ -9,20 +9,20 @@
 import { SourceIterable, ResultIterable } from '../../types/iterable';
 
 declare function filter<T, S extends T>(
-  predicate: (item: T, i: number) => item is S,
+  predicate: (value: T, i: number) => value is S,
 ): (source: SourceIterable<T>) => ResultIterable<S>;
 
 declare function filter<T>(
-  predicate: (item: T, i: number) => boolean,
+  predicate: (value: T, i: number) => boolean,
 ): (source: SourceIterable<T>) => ResultIterable<T>;
 
 declare function filter<T, S extends T>(
-  predicate: (item: T, i: number) => item is S,
+  predicate: (value: T, i: number) => value is S,
   source: SourceIterable<T>,
 ): ResultIterable<S>;
 
 declare function filter<T>(
-  predicate: (item: T, i: number) => boolean,
+  predicate: (value: T, i: number) => boolean,
   source: SourceIterable<T>,
 ): ResultIterable<T>;
 

@@ -4,13 +4,13 @@ import { raceTo } from './internal/race-to.js';
 export async function* asyncInterleaveReady(sources) {
   const iterators = sources.map((iterable) => iterable[Symbol.asyncIterator]());
 
-  const itemPromises = iterators.map((iter, idx) => iter.next().then((item) => ({ idx, item })));
+  const stepPromises = iterators.map((iter, idx) => iter.next().then((step) => ({ idx, step })));
 
   let ready;
-  while ((ready = await raceTo(({ item }) => !item.done, null, itemPromises)) !== null) {
-    const { idx, item } = ready;
-    yield item.value;
-    itemPromises[idx] = iterators[idx].next().then((item) => ({ idx, item }));
+  while ((ready = await raceTo(({ step }) => !step.done, null, stepPromises)) !== null) {
+    const { idx, step } = ready;
+    yield step.value;
+    stepPromises[idx] = iterators[idx].next().then((step) => ({ idx, step }));
   }
 }
 

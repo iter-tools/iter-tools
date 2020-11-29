@@ -10,7 +10,7 @@ import { take } from '@iter-tools/es';
 import { wrap, unwrap } from '../../../test/helpers.js';
 
 describe('take', () => {
-  it('takes the first n items', () => {
+  it('takes the first n values', () => {
     expect(unwrap(take(2, wrap([1, 2, 3])))).toEqual([1, 2]);
   });
 });

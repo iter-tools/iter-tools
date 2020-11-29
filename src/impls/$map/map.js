@@ -10,8 +10,8 @@ import { iterableCurry } from '../../internal/iterable.js';
 
 export function* map(source, func) {
   let c = 0;
-  for (const item of source) {
-    yield func(item, c++);
+  for (const value of source) {
+    yield func(value, c++);
   }
 }
 

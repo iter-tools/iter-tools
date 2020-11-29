@@ -10,7 +10,7 @@ import { asyncTake } from '@iter-tools/es';
 import { asyncWrap, asyncUnwrap } from '../../../test/async-helpers.js';
 
 describe('asyncTake', () => {
-  it('takes the first n items', async () => {
+  it('takes the first n values', async () => {
     expect(await asyncUnwrap(asyncTake(2, asyncWrap([1, 2, 3])))).toEqual([1, 2]);
   });
 });

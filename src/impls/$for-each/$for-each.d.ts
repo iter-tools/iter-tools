@@ -2,11 +2,11 @@ import { $Promise } from '../../../generate/async.macro.cjs';
 import { $SourceIterable } from '../../types/$iterable';
 
 declare function $forEach<T>(
-  callback: (item: T, i: number) => void,
+  callback: (value: T, i: number) => void,
 ): (iterable: $SourceIterable<T>) => $Promise<void>;
 
 declare function $forEach<T>(
-  callback: (item: T, i: number) => void,
+  callback: (value: T, i: number) => void,
   iterable: $SourceIterable<T>,
 ): $Promise<void>;
 

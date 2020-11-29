@@ -13,9 +13,9 @@ export async function* asyncJoinWithSeq(source, separatorSeq) {
   const _separatorSeq = await asyncToArray(separatorSeq);
   let isFirst = true;
 
-  for await (const item of source) {
+  for await (const value of source) {
     if (!isFirst) yield* _separatorSeq;
-    yield* item;
+    yield* value;
     isFirst = false;
   }
 }

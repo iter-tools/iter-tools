@@ -112,9 +112,9 @@ class Interleaver {
   next() {
     if (!this.initialized) this.init();
 
-    const item = this.iterator.next();
-    if (item.done) this.returnBuffers();
-    return item;
+    const step = this.iterator.next();
+    if (step.done) this.returnBuffers();
+    return step;
   }
 
   return() {

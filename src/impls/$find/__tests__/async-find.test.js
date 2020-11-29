@@ -12,9 +12,9 @@ import { asyncWrap } from '../../../test/async-helpers.js';
 describe('asyncFind', () => {
   describe('when iterable is empty', () => {
     it('returns undefined', async () => {
-      expect(await asyncFind((item: any) => item, null)).toBe(undefined);
-      expect(await asyncFind((item: any) => item, undefined)).toBe(undefined);
-      expect(await asyncFind((item: any) => item, asyncWrap([]))).toBe(undefined);
+      expect(await asyncFind((value: any) => value, null)).toBe(undefined);
+      expect(await asyncFind((value: any) => value, undefined)).toBe(undefined);
+      expect(await asyncFind((value: any) => value, asyncWrap([]))).toBe(undefined);
     });
   });
 
@@ -26,11 +26,11 @@ describe('asyncFind', () => {
 
   describe('when iterable contains the desired value', () => {
     it('returns the value', async () => {
-      expect(await asyncFind((item) => item === 5, asyncWrap([1, 2, 3, 4, 5, 6]))).toBe(5);
+      expect(await asyncFind((value) => value === 5, asyncWrap([1, 2, 3, 4, 5, 6]))).toBe(5);
     });
   });
 
   it('may take an async predicate', async () => {
-    expect(await asyncFind(async (item) => item === 5, asyncWrap([1, 2, 3, 4, 5, 6]))).toBe(5);
+    expect(await asyncFind(async (value) => value === 5, asyncWrap([1, 2, 3, 4, 5, 6]))).toBe(5);
   });
 });

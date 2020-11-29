@@ -47,7 +47,7 @@ describe($`groupBy`, () => {
     it(
       'coalesces values into groups',
       $async(() => {
-        const lowerCase = $async((item: string) => item.toLowerCase());
+        const lowerCase = $async((value: string) => value.toLowerCase());
         expect($await($unwrapDeep($groupBy(lowerCase, 'AaA')))).toEqual([['a', ['A', 'a', 'A']]]);
         expect($await($unwrapDeep($groupBy(lowerCase, 'baA')))).toEqual([
           ['b', ['b']],

@@ -11,13 +11,13 @@ import { asyncIterableCurry } from '../../internal/async-iterable.js';
 export async function* asyncDropWhile(source, predicate) {
   let drop = true;
   let c = 0;
-  for await (const item of source) {
+  for await (const value of source) {
     if (!drop) {
-      yield item;
+      yield value;
     } else {
-      drop = await predicate(item, c++);
+      drop = await predicate(value, c++);
       if (!drop) {
-        yield item;
+        yield value;
       }
     }
   }

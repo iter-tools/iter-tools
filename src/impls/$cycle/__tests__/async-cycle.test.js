@@ -11,7 +11,7 @@ import { asyncWrap, asyncUnwrap } from '../../../test/async-helpers.js';
 
 describe('asyncCycle', () => {
   describe('when source is empty', () => {
-    it('yields no items', async () => {
+    it('yields no values', async () => {
       expect(await asyncUnwrap(asyncCycle(null))).toEqual([]);
       expect(await asyncUnwrap(asyncCycle(undefined))).toEqual([]);
       expect(await asyncUnwrap(asyncCycle([]))).toEqual([]);

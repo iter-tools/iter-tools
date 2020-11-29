@@ -9,11 +9,11 @@
 import { SourceIterable } from '../../types/iterable';
 
 declare function some<T>(
-  func: (item: T, i: number) => boolean,
+  func: (value: T, i: number) => boolean,
 ): (iterable: SourceIterable<T>) => boolean;
 
 declare function some<T>(
-  func: (item: T, i: number) => boolean,
+  func: (value: T, i: number) => boolean,
   iterable: SourceIterable<T>,
 ): boolean;
 

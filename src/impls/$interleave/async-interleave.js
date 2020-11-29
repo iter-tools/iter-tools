@@ -112,9 +112,9 @@ class AsyncInterleaver {
   async next() {
     if (!this.initialized) await this.init();
 
-    const item = await this.iterator.next();
-    if (item.done) await this.returnBuffers();
-    return item;
+    const step = await this.iterator.next();
+    if (step.done) await this.returnBuffers();
+    return step;
   }
 
   async return() {

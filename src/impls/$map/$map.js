@@ -5,8 +5,8 @@ $async;
 export function* $map(source, func) {
   let c = 0;
   $await;
-  for (const item of source) {
-    yield $await(func(item, c++));
+  for (const value of source) {
+    yield $await(func(value, c++));
   }
 }
 

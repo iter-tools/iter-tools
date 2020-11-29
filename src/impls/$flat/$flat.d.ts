@@ -45,7 +45,7 @@ declare function $flat(depth: 6): <U>(source: U) => $ResultIterable<$Flattened<$
 declare function $flat(depth: 7): <U>(source: U) => $ResultIterable<$Flattened<$Flattened<$Flattened<$Flattened<$Flattened<$Flattened<$Flattened<$Flattened<U>>>>>>>>>;
 
 declare function $flat(
-  shouldFlat: (item: any) => $MaybePromise<boolean>,
+  shouldFlat: (value: any) => $MaybePromise<boolean>,
   depth: number,
   iter: $SourceIterable<any>,
 ): $ResultIterable<any>;

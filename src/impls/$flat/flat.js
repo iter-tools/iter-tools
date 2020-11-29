@@ -9,14 +9,14 @@
 import { iterableCurry, isLoopable } from '../../internal/iterable.js';
 import { validateArgs } from './internal/validate-args.js';
 
-const defaultShouldFlat = (item) => typeof item !== 'string' && isLoopable(item);
+const defaultShouldFlat = (value) => typeof value !== 'string' && isLoopable(value);
 
 function* flatInternal(shouldFlat, depth, currentDepth, source) {
-  for (const item of source) {
-    if (currentDepth < depth && shouldFlat(item)) {
-      yield* flatInternal(shouldFlat, depth, currentDepth + 1, item);
+  for (const value of source) {
+    if (currentDepth < depth && shouldFlat(value)) {
+      yield* flatInternal(shouldFlat, depth, currentDepth + 1, value);
     } else {
-      yield item;
+      yield value;
     }
   }
 }

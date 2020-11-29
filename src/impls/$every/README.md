@@ -1,4 +1,4 @@
-Returns `true` if, for every value in `source`, the result of `predicate(item, idx)` is truthy. Otherwise returns `false`.
+Returns `true` if, for every value in `source`, the result of `predicate(value, idx)` is truthy. Otherwise returns `false`.
 
 ```js
 every(isEven, [1, 2, 3]); // returns false

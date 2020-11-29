@@ -3,16 +3,16 @@ import { $async, $await } from '../../../generate/async.macro.cjs';
 import { $iterableCurry, $isLoopable } from '../../internal/$iterable.js';
 import { validateArgs } from './internal/validate-args.js';
 
-const defaultShouldFlat = (item) => typeof item !== 'string' && $isLoopable(item);
+const defaultShouldFlat = (value) => typeof value !== 'string' && $isLoopable(value);
 
 $async;
 function* $flatInternal(shouldFlat, depth, currentDepth, source) {
   $await;
-  for (const item of source) {
-    if (currentDepth < depth && $await(shouldFlat(item))) {
-      yield* $flatInternal(shouldFlat, depth, currentDepth + 1, item);
+  for (const value of source) {
+    if (currentDepth < depth && $await(shouldFlat(value))) {
+      yield* $flatInternal(shouldFlat, depth, currentDepth + 1, value);
     } else {
-      yield item;
+      yield value;
     }
   }
 }
