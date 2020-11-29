@@ -26,18 +26,18 @@ The project is actively maintained, so your issues and PRs will definitely be se
 
 ## What you need
 
-To contribute you will need at least node version 8. We do test our code against language functionality (async generators) that exists only in node 10+, but our CI environment will handle that for you.
+To contribute you will need `node@>12`. You will also need the [yarn package manager](https://classic.yarnpkg.com/en/docs/install/).
 
 ### The code generator
 
 You'll also need to run our code generator.
-First install its dependencies with `npm install`
+First install its dependencies with `yarn install`
 Now you can run the generator one of the following ways:
 
 ```
-> npm run generate # to build once, OR
-> npm run generate:watch # to continuously update generated files OR
-> npm run generate:watch -- --watchman # more efficient, but expects watchman to be in your PATH
+> yarn generate # to build once, OR
+> yarn generate:watch # to continuously update generated files OR
+> yarn generate:watch -- --watchman # more efficient, but expects watchman to be in your PATH
 ```
 
 We recommend that you run the generator in watch mode whenever you are developing. If you do not, you might discover later that tests have been running against old versions of generated code. For more details on the code generator, take a look at its README.
@@ -47,7 +47,7 @@ We recommend that you run the generator in watch mode whenever you are developin
 We've made it very easy to get started with creating a new method. Just run:
 
 ```
-npm run create:method
+yarn create:method
 ```
 
 An interactive prompt will guide you through the choices you need to make.
@@ -96,7 +96,7 @@ I've omitted the generated files (aside from the indexes) from the above tree, s
 The code in this project is autoformatted with Prettier. To format your code, run the command:
 
 ```
-> npm run format
+> yarn format
 ```
 
 or better yet, configure prettier format-on-save for your editor.
@@ -125,7 +125,7 @@ If you want to publish on npm and you have the credentials, you need to:
 You need to bump the version:
 
 ```
-npm version prerelease --preid=next
+yarn version prerelease --preid=next
 ```
 
 Then push:
@@ -138,7 +138,7 @@ git push --tags
 and then publish:
 
 ```
-npm publish --tag next
+yarn publish --tag next
 ```
 
 ## Publish a new release
@@ -146,7 +146,7 @@ npm publish --tag next
 You need to bump the version according to [SEMVER](https://semver.org/):
 
 ```
-npm version [major | minor | patch]
+yarn version [major | minor | patch]
 ```
 
 Then push:
@@ -159,5 +159,5 @@ git push --tags
 and then publish:
 
 ```
-npm publish
+yarn publish
 ```
