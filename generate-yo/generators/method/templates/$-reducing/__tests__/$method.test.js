@@ -1,6 +1,6 @@
 import { $, $async, $await } from '../../../../generate/async.macro';
 
-import { $__method__ } from '../../..';
+import { $__method__ } from '@iter-tools/es';
 import { $wrap } from '../../../__tests__/__framework__/$wrap';
 
 describe($`__method__`, () => {

@@ -1,4 +1,4 @@
-import { asyncIterableCurry } from '../../internal/async-iterable';
+import { asyncIterableCurry } from '../../internal/async-iterable.js';
 
 export async function __method__(iterable) {
   let _item;

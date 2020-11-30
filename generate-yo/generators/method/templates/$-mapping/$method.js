@@ -1,6 +1,6 @@
 import { $async, $await } from '../../../generate/async.macro';
 
-import { $iterableCurry } from '../../internal/$iterable';
+import { $iterableCurry } from '../../internal/$iterable.js';
 
 $async;
 export function* $__method__(source) {

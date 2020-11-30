@@ -1,4 +1,4 @@
-import { __method__ } from '../../..';
+import { __method__ } from '@iter-tools/es';
 import { asyncWrap } from '../../../__tests__/__framework__/async-wrap';
 
 describe('__method__', () => {

@@ -1,11 +1,11 @@
-import { __method__, toArray } from '../../..';
-import { wrap } from '../../../__tests__/__framework__/wrap';
+import { __method__ } from '@iter-tools/es';
+import { wrap, unwrap } from '../../../__tests__/__framework__/wrap';
 
 describe('__method__', () => {
   it(
     'TODO: replace this test',
     () => {
-      expect(toArray(__method__(wrap([1, 2, 3])))).toEqual([1, 2, 3]);
+      expect(unwrap(__method__(wrap([1, 2, 3])))).toEqual([1, 2, 3]);
     },
   );
 });

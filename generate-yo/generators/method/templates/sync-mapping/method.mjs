@@ -1,4 +1,4 @@
-import { iterableCurry } from '../../internal/iterable';
+import { iterableCurry } from '../../internal/iterable.js';
 
 export function* __method__(source) {
   for (const item of source) {
