@@ -1,4 +1,4 @@
-import { $Promise } from '../../../generate/async.macro';
+import { $Promise } from '../../../generate/async.macro.cjs';
 
 import { $SourceIterable } from '../../types/$iterable';
 

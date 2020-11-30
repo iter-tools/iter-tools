@@ -33,9 +33,7 @@ function validateNameOnly(name) {
 }
 
 function validateNameWithAsync(name, isAsync) {
-  if (isAsync && !/^async[A-Z]/.test(name)) {
-    return 'Method name must begin with async, e.g. asyncMethod';
-  } else if (!isAsync && name.startsWith('async')) {
+  if (!isAsync && name.startsWith('async')) {
     return 'Method name cannot start with async if method type is not async';
   }
   return true;
