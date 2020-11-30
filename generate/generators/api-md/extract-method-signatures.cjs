@@ -38,7 +38,7 @@ function methodUsesIterableCurry(ast) {
             },
           }),
           source: {
-            value: oneOf('../../internal/iterable', '../../internal/async-iterable'),
+            value: oneOf('../../internal/iterable.js', '../../internal/async-iterable.js'),
           },
         },
         stmt,
