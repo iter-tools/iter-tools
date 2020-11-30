@@ -30,7 +30,7 @@
     ":build": "run-s build:*",
     "build:es5": "node ./scripts/dist.cjs es5",
     "build:es": "node ./scripts/dist.cjs es",
-    "create:method": "node ./generate-yo method",
+    "create:method": "node ./generate-yo/index.cjs method",
     "verify": "run-s clean generate verify:* :build lint coverage coverage:upload test:types",
     "verify:git-clean": "node ./scripts/verify-git-clean.cjs",
     "format": "prettier --write '**/*.{js,cjs,ts,json,md}'",
