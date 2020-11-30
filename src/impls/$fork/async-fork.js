@@ -6,11 +6,7 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import {
-  asyncEnsureIterable,
-  asyncIsIterable,
-  asyncCallReturn,
-} from '../../internal/async-iterable.js';
+import { asyncIterableCurry, asyncCallReturn } from '../../internal/async-iterable.js';
 import { Exchange } from './internal/exchange.js';
 
 function fetch(state) {
@@ -60,11 +56,13 @@ async function* generateFork(state, consumer) {
   }
 }
 
-function* generateForks(state, n) {
+function* generateForks(source, state) {
   const { exchange } = state;
 
+  state.iterator = source[Symbol.asyncIterator]();
+
   try {
-    for (let counter = 0; counter < n; counter++) {
+    while (true) {
       const fork = generateFork(state, exchange.spawnConsumerAtRoot());
       // this first call to "next" allows to initiate the function generator
       // this ensures that "iterableCounter" will be always increased and decreased
@@ -80,31 +78,18 @@ function* generateForks(state, n) {
   }
 }
 
-export function asyncFork(source, n = Infinity) {
+export function asyncFork(source) {
   const state = {
-    iterator: asyncEnsureIterable(source)[Symbol.asyncIterator](),
+    iterator: null,
     iterableCounter: 0,
     exchange: new Exchange(),
     done: false,
     doneValue: undefined,
   };
 
-  return generateForks(state, n);
+  return generateForks(source, state);
 }
 
-export default function curriedFork(...args) {
-  if (args.length >= 2) {
-    const [n, iterable] = args;
-    return asyncFork(iterable, n);
-  }
-
-  if (args.length === 0) {
-    return asyncFork;
-  }
-
-  if (asyncIsIterable(args[0])) {
-    return asyncFork(args[0], undefined);
-  } else {
-    return (iterable) => asyncFork(iterable, args[0]);
-  }
-}
+export default asyncIterableCurry(asyncFork, {
+  forceSync: true,
+});

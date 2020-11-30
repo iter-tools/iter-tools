@@ -25,22 +25,6 @@ describe('asyncFork', () => {
     );
   });
 
-  it('can take a number as first argument', async () => {
-    const gen = asyncFork(3, asyncMakeIterable());
-    const originalIter = await asyncUnwrap(asyncMakeIterable());
-    expect(await asyncUnwrap(asyncMap((iter) => asyncUnwrap(iter), gen))).toEqual(
-      Array(3).fill(originalIter),
-    );
-  });
-
-  it('can be curried', async () => {
-    const gen = asyncFork(3)(asyncMakeIterable());
-    const originalIter = await asyncUnwrap(asyncMakeIterable());
-    expect(await asyncUnwrap(asyncMap((iter) => asyncUnwrap(iter), gen))).toEqual(
-      Array(3).fill(originalIter),
-    );
-  });
-
   it('does not matter which order the fork iterables are consumed in', async () => {
     const [a, b, c] = asyncFork(asyncMakeIterable());
     const originalIter = await asyncUnwrap(asyncMakeIterable());

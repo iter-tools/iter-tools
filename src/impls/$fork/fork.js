@@ -6,7 +6,7 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { ensureIterable, isIterable, callReturn } from '../../internal/iterable.js';
+import { iterableCurry, callReturn } from '../../internal/iterable.js';
 import { Exchange } from './internal/exchange.js';
 
 function fetch(state) {
@@ -50,11 +50,13 @@ function* generateFork(state, consumer) {
   }
 }
 
-function* generateForks(state, n) {
+function* generateForks(source, state) {
   const { exchange } = state;
 
+  state.iterator = source[Symbol.iterator]();
+
   try {
-    for (let counter = 0; counter < n; counter++) {
+    while (true) {
       const fork = generateFork(state, exchange.spawnConsumerAtRoot());
       // this first call to "next" allows to initiate the function generator
       // this ensures that "iterableCounter" will be always increased and decreased
@@ -70,31 +72,18 @@ function* generateForks(state, n) {
   }
 }
 
-export function fork(source, n = Infinity) {
+export function fork(source) {
   const state = {
-    iterator: ensureIterable(source)[Symbol.iterator](),
+    iterator: null,
     iterableCounter: 0,
     exchange: new Exchange(),
     done: false,
     doneValue: undefined,
   };
 
-  return generateForks(state, n);
+  return generateForks(source, state);
 }
 
-export default function curriedFork(...args) {
-  if (args.length >= 2) {
-    const [n, iterable] = args;
-    return fork(iterable, n);
-  }
-
-  if (args.length === 0) {
-    return fork;
-  }
-
-  if (isIterable(args[0])) {
-    return fork(args[0], undefined);
-  } else {
-    return (iterable) => fork(iterable, args[0]);
-  }
-}
+export default iterableCurry(fork, {
+  forceSync: true,
+});

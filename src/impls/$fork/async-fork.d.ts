@@ -13,13 +13,4 @@ declare function asyncFork<T>(
   source: AsyncSourceIterable<T>,
 ): SyncResultIterable<AsyncResultIterable<T>>;
 
-declare function asyncFork<T>(
-  n: number,
-): (source: AsyncSourceIterable<T>) => SyncResultIterable<AsyncResultIterable<T>>;
-
-declare function asyncFork<T>(
-  n: number,
-  source: AsyncSourceIterable<T>,
-): SyncResultIterable<AsyncResultIterable<T>>;
-
 export default asyncFork;

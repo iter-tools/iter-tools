@@ -14,6 +14,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
  - `joinAsStringWith`, `asyncJoinAsStringWith` (Instead use `str(joinWith(sep, ...))`)
  - `regexpExec`
 
+**Arguments**
+ - `n` from `fork` and `asyncFork`. Use destructuring or call `return()` on the forks iterable.
+
 **Exports**
  - `InterleaveBuffer`, `AsyncInterleaveBuffer`
 

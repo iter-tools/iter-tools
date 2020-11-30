@@ -31,28 +31,6 @@ describe($`fork`, () => {
   );
 
   it(
-    'can take a number as first argument',
-    $async(() => {
-      const gen = $fork(3, $makeIterable());
-      const originalIter = $await($unwrap($makeIterable()));
-      expect($await($unwrap($map((iter) => $unwrap(iter), gen)))).toEqual(
-        Array(3).fill(originalIter),
-      );
-    }),
-  );
-
-  it(
-    'can be curried',
-    $async(() => {
-      const gen = $fork(3)($makeIterable());
-      const originalIter = $await($unwrap($makeIterable()));
-      expect($await($unwrap($map((iter) => $unwrap(iter), gen)))).toEqual(
-        Array(3).fill(originalIter),
-      );
-    }),
-  );
-
-  it(
     'does not matter which order the fork iterables are consumed in',
     $async(() => {
       const [a, b, c] = $fork($makeIterable());
