@@ -1,7 +1,7 @@
 name: verify
 on:
   push:
-    branches: main
+    branches: trunk
   pull_request:
     branches: '**'
 jobs:

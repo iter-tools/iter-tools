@@ -1,7 +1,7 @@
 # Iter-tools
 
-[![build status](https://img.shields.io/github/workflow/status/iter-tools/iter-tools/verify)](https://github.com/iter-tools/iter-tools/actions?query=workflow%3Averify)
-[![line coverage](https://codecov.io/gh/iter-tools/iter-tools/branch/master/graph/badge.svg)](https://codecov.io/gh/iter-tools/iter-tools)
+[![build status](https://img.shields.io/github/workflow/status/iter-tools/iter-tools/verify)](https://github.com/iter-tools/iter-tools/actions?query=branch%3Atrunk+workflow%3Averify)
+[![line coverage](https://codecov.io/gh/iter-tools/iter-tools/branch/trunk/graph/badge.svg)](https://codecov.io/gh/iter-tools/iter-tools)
 [![npm version](https://img.shields.io/npm/v/@iter-tools/es)](https://www.npmjs.com/package/@iter-tools/es)
 [![chat on gitter](https://img.shields.io/gitter/room/iter-tools/iter-tools)](https://gitter.im/iter-tools/community)
 
@@ -12,7 +12,7 @@ iter-tools is designed to be a standard library of utilities for working with it
 - It helps you create applications whose memory usage can be more highly optimized, helping you avoid costly garbage collections.
 - APIs which accept iterables are immediately compatible with almost any kind of data structure, including custom implementations such as those provided by Immutable.js
 
-If you want even more ideas about how and when Iterables and iter-tools can help you out, take a look at [The Cookbook](https://github.com/iter-tools/iter-tools/blob/master/COOKBOOK.md).
+If you want even more ideas about how and when Iterables and iter-tools can help you out, take a look at [The Cookbook](https://github.com/iter-tools/iter-tools/blob/trunk/COOKBOOK.md).
 
 ## API docs
 
