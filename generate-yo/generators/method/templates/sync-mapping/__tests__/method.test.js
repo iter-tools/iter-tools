@@ -1,5 +1,5 @@
 import { __method__ } from '@iter-tools/es';
-import { wrap, unwrap } from '../../../__tests__/__framework__/wrap';
+import { wrap, unwrap } from '../../../test/helpers.js';
 
 describe('__method__', () => {
   it(
