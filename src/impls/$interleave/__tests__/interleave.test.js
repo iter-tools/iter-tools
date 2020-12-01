@@ -85,7 +85,7 @@ describe('interleave', () => {
     expect.assertions(1);
     unwrap(
       interleave(
-        function* (o: {}): Iterable<any> {
+        function* (o: Record<string, any>): Iterable<any> {
           expect(o).toBe(options);
         },
         options,

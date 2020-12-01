@@ -44,7 +44,7 @@ describe('asyncEnsureIterable', () => {
 
   describe('when i looks like an iterator', () => {
     it('throws a more helpful error', () => {
-      expect(() => asyncEnsureIterable({ next() {} })).toThrowErrorMatchingSnapshot();
+      expect(() => asyncEnsureIterable({ next: () => null })).toThrowErrorMatchingSnapshot();
     });
   });
 });
@@ -80,9 +80,9 @@ async function addAll(initial, iterables) {
 }
 
 describe('asyncIterableCurry', () => {
-  const f2 = (iterable, a, b) => iter(a, b);
-  const f1 = (iterable, a) => iter(a);
-  const f0 = (iterable) => iter();
+  const f2 = (_iterable, a, b) => iter(a, b);
+  const f1 = (_iterable, a) => iter(a);
+  const f0 = (_iterable) => iter();
   const c2 = asyncIterableCurry(f2);
   const c1 = asyncIterableCurry(f1);
   const c0 = asyncIterableCurry(f0);
