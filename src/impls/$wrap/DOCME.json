@@ -1,3 +1,4 @@
 {
-  "type": "transform"
+  "type": "transform",
+  "signatures": [[{ "name": "source", "isIterable": true }]]
 }

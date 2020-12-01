@@ -151,8 +151,12 @@ Reduce an iterable to a single value
 [includesAny](#includesany) ([async](#asyncincludesany))  
 [includesAnySeq](#includesanyseq) ([async](#asyncincludesanyseq))  
 [includesSeq](#includesseq) ([async](#asyncincludesseq))  
+[isAsyncLoopable](#isasyncloopable)  
 [isEmpty](#isempty) ([async](#asyncisempty))  
+[isLoopable](#isloopable)  
 [isSorted](#issorted) ([async](#asyncissorted))  
+[notAsyncLoopable](#notasyncloopable)  
+[notLoopable](#notloopable)  
 [reduce](#reduce) ([async](#asyncreduce))  
 [size](#size) ([async](#asyncsize))  
 [some](#some) ([async](#asyncsome))  
@@ -192,6 +196,23 @@ Consume an iterable
 [stringFromAsync](#stringfromasync)  
 [toArray](#arrayfrom) ([async](#arrayfromasync))  
 [toObject](#objectfrom) ([async](#objectfromasync))  
+
+Test a value
+
+[isAsyncIterable](#isasynciterable)  
+[isAsyncWrappable](#isasyncwrappable)  
+[isIterable](#isiterable)  
+[isNil](#isnil)  
+[isNull](#isnull)  
+[isUndefined](#isundefined)  
+[isWrappable](#iswrappable)  
+[notAsyncIterable](#notasynciterable)  
+[notAsyncWrappable](#notasyncwrappable)  
+[notIterable](#notiterable)  
+[notNil](#notnil)  
+[notNull](#notnull)  
+[notUndefined](#notundefined)  
+[notWrappable](#notwrappable)  
 
 Utilities
 
@@ -966,7 +987,7 @@ See [trailingWindow](#trailingwindow)
 
 ### wrap
 
-**wrap(source)**
+**wrap([source](#sourceiterable))**
 
 Yields the items from `source`. Its main purposes include allowing nullable iterables to be treated as non-null iterables, and to give arbitrary iterables the semantics of iter-tools iterables.
 
@@ -979,7 +1000,7 @@ const maybeIterable =
 
 ### asyncWrap
 
-**asyncWrap(source)**
+**asyncWrap([source](#asyncsourceiterable))**
 
 See [wrap](#wrap)
 
@@ -1594,6 +1615,21 @@ includesSeq([2, 3, 4], [1, 2, 3]); // false
 
 See [includesSeq](#includesseq)
 
+### isAsyncLoopable
+
+**isAsyncLoopable(value)**
+
+Returns `true` if `value` has a `Symbol.asyncIterator` or `Symbol.iterator` property and `false` otherwise. If `isAsyncLoopable(value)` then `value` may be used as the subject of a `for await..of` loop. Type-safe in typescript.
+
+```js
+isAsyncLoopable((async function* () {})()); // true
+isAsyncLoopable((function* () {})()); // true
+isAsyncLoopable([]); // true
+isAsyncLoopable({}); // false
+isAsyncLoopable(undefined); // false
+isAsyncLoopable(null); // false
+```
+
 ### isEmpty
 
 **isEmpty([iterable](#sourceiterable))**
@@ -1613,6 +1649,10 @@ isEmpty([undefined]); // false
 
 See [isEmpty](#isempty)
 
+### isLoopable
+
+See [isIterable](#isiterable). For sync iterables these methods share the same implementation.
+
 ### isSorted
 
 **isSorted([comparator](#comparator), [iterable](#sourceiterable))**  
@@ -1631,6 +1671,25 @@ isSorted((a, b) => b - a, [3, 2, 1]); // true
 **asyncIsSorted([iterable](#asyncsourceiterable))**
 
 See [isSorted](#issorted)
+
+### notAsyncLoopable
+
+**notAsyncLoopable(value)**
+
+Returns `false` if `value` has a `Symbol.asyncIterator` or `Symbol.iterator` property and `true` otherwise. When `notAsyncLoopable(value)`, using value as the subject of a `for await..of` loop will throw an error.
+
+```js
+notAsyncLoopable((async function* () {})()); // false
+notAsyncLoopable((function* () {})()); // false
+notAsyncLoopable([]); // false
+notAsyncLoopable(undefined); // true
+notAsyncLoopable(null); // true
+notAsyncLoopable({}); // true
+```
+
+### notLoopable
+
+See [notIterable](#notiterable). For sync iterables these methods share the same implementation.
 
 ### reduce
 
@@ -2198,6 +2257,247 @@ See [objectFrom](#objectfrom)
 **asyncToObject(iterable, proto)**
 
 See [objectFromAsync](#objectfromasync)
+
+
+## Test a value
+
+### isAsyncIterable
+
+**isAsyncIterable(value)**
+
+Returns `true` if `value` has a `Symbol.asyncIterator` property and `false` otherwise. Type-safe in typescript.
+
+```js
+isAsyncIterable((async function* () {})()); // true
+isAsyncIterable((function* () {})()); // false
+isAsyncIterable([]); // false
+isAsyncIterable({}); // false
+isAsyncIterable(undefined); // false
+isAsyncIterable(null); // false
+```
+
+### isAsyncWrappable
+
+**isAsyncWrappable(value)**
+
+Returns `true` if `value` [isAsyncIterable](#isasynciterable), [isIterable](#isiterable), or [isNil](#isnil) (and `false` otherwise). When `isAsyncWrappable(value)`, it is safe to pass value to [asyncWrap](#asyncwrap) as well as other methods that take an [AsyncSourceIterable](#asyncsourceiterable), which is usually named `iterable` or `source`. Type-safe in typescript.
+
+```js
+isAsyncWrappable((async function* () {})()); // true
+isAsyncWrappable((function* () {})()); // true
+isAsyncWrappable([]); // true
+isAsyncWrappable(undefined); // true
+isAsyncWrappable(null); // true
+isAsyncWrappable({}); // false
+isAsyncWrappable(4); // false
+```
+
+### isIterable
+
+**isIterable(value)**
+
+Returns `true` if `value` is iterable (which is to say it has a `Symbol.iterator` property) and `false` otherwise. Iterables are inputs (often named `source` or `iterable`) to most `iter-tools` methods, so it is useful to know all the ways you can create them:
+
+Javascript's builtin data types are iterable:
+
+```js
+isIterable([]); // true
+isIterable(new Map()); // true
+isIterable(new Set()); // true
+```
+
+Any class can be iterable if it defines a `Symbol.iterator` method. Note that something similar works just as well if you are still constructing your prototype chains without the help of the `class` keyword.
+
+```js
+class MyClass {
+  constructor(data = []) {
+    this.data = data;
+  },
+
+  [Symbol.iterator]() {
+    return this.data[Symbol.iterator]();
+  }
+}
+isIterable(new MyClass())
+```
+
+The result of calling a generator function is an iterable iterator. Generator functions are highly useful implementing any kind of operation. Most `iter-tools` are implemented using them internally.
+
+```js
+function* range() {
+  for (let i = 0; ; i++) yield i;
+}
+isIterable(range()); // true
+```
+
+All iterators _should_ also be iterables. This can be achieved by returning `this` from the `Symbol.iterator` method like so:
+
+```js
+const yesIterator = {
+  next() {
+    return { value: 'yes', done: false }
+  }
+  [Symbol.iterator]() {
+    return this;
+  }
+}
+isIterable(yesIterator); // true
+```
+
+Many iterators use `return this` (as above) to ensure they can be used anywhere an iterable can be. This means you can write confusing things like `[Symbol.iterator]()[Symbol.iterator]()`. Beware however! While this is often safe you must remember that the value returned by `[Symbol.iterator]()` is not required to be an iterable: it must only be an iterator.
+
+Other kinds of values are not iterable, though `iter-tools` chooses to allow `null` and `undefined` in most places an iterable is expected.
+
+```js
+isIterable(undefined); // false
+isIterable(null); // false
+isIterable(42); // false
+isIterable({}); // false
+```
+
+Note: `isIterable` does not check to make sure that `Symbol.iterator` is a method. Code in which `Symbol.iterator` is not a method is always incorrect, and attempted usage of such an "iterable" will trigger an appropriate error at the language level.
+
+### isNil
+
+**isNil(value)**
+
+Returns `true` if `value` is `null` or `undefined` and `false` otherwise. Type-safe in typescript.
+
+```js
+isNil(undefined); // true
+isNil(null); // true
+isNil(0); // false
+isNil({}); // false
+isNil(NaN); // false
+```
+
+### isNull
+
+**isNull(value)**
+
+Returns `true` if `value` is `null` and `false` otherwise. Type-safe in typescript.
+
+```js
+isNull(null); // true
+isNull(undefined); // false
+```
+
+### isUndefined
+
+**isUndefined(value)**
+
+Returns `true` if `value` is `undefined` and `false` otherwise. Implemented using `typeof`. Type-safe in typescript.
+
+```js
+isUndefined(undefined); // true
+isUndefined(null); // false
+```
+
+### isWrappable
+
+**isWrappable(value)**
+
+Returns `true` if `value` [isIterable](#isiterable) or `value` [isNil](#isnil) (and `false` otherwise). When `isWrappable(value)`, it is safe to pass value to [wrap](#wrap) (and any other method which exepects a [SourceIterable](#sourceiterable)). Type-safe in typescript.
+
+```js
+isWrappable([]); // true
+isWrappable(undefined); // true
+isWrappable(null); // true
+isWrappable({}); // false
+```
+
+### notAsyncIterable
+
+**notAsyncIterable(value)**
+
+Returns `false` if `value` has a `Symbol.asyncIterator` property and `true` otherwise. Type-safe in typescript.
+
+```js
+notAsyncIterable((async function* () {})()); // false
+notAsyncIterable((function* () {})()); // true
+notAsyncIterable([]); // true
+notAsyncIterable({}); // true
+notAsyncIterable(undefined); // true
+notAsyncIterable(null); // true
+```
+
+### notAsyncWrappable
+
+**notAsyncWrappable(value)**
+
+Returns `false` if `value` [isAsyncIterable](#isasynciterable), [isIterable](#isiterable), or [isNil](#isnil) (and `true` otherwise). When `notAsyncWrappable(value)`, passing `value` to [asyncWrap](#asyncwrap) (or any other method which expects a [AsyncSourceIterable](#asyncsourceiterable)) will throw an error.
+
+```js
+notAsyncWrappable([]); // false
+notAsyncWrappable(undefined); // false
+notAsyncWrappable(null); // false
+notAsyncWrappable((function* () {})()); // false
+notAsyncWrappable((async function* () {})()); // false
+notAsyncWrappable({}); // true
+notAsyncWrappable(4); // true
+```
+
+### notIterable
+
+**notIterable(value)**
+
+Returns `false` if `value` is iterable (has a `Symbol.iterator` property) and `true` otherwise. For more details see the method's inverse: [isIterable](#isiterable). Type-safe in typescript.
+
+```js
+notIterable({}); // true
+notIterable(undefined); // true
+notIterable(null); // true
+notIterable((function* () {})()); // false
+notIterable([]); // false
+```
+
+### notNil
+
+**notNil(value)**
+
+Returns `false` if `value` is `null` or `undefined` and `true` otherwise. Type-safe in typescript.
+
+```js
+notNil(0); // true
+notNil(undefined); // false
+notNil(null); // false
+```
+
+### notNull
+
+**notNull(value)**
+
+Returns `false` if `value` is `null` and `true` otherwise. Type-safe in typescript.
+
+```js
+notNull(undefined); // true
+notNull(null); // false
+```
+
+### notUndefined
+
+**notUndefined(value)**
+
+Returns `false` if `value` is `undefined` and `true` otherwise. Implemented using `typeof`. Type-safe in typescript.
+
+```js
+notUndefined(null); // true
+notUndefined(undefined); // false
+```
+
+### notWrappable
+
+**notWrappable(value)**
+
+Returns `false` if `value` [isIterable](#isiterable) or `value` [isNil](#isnil) (and `true` otherwise). When `notWrappable(value)`, passing `value` to [wrap](#wrap) (or any other method which expects a [SourceIterable](#sourceiterable)) will throw an error.
+
+```js
+notWrappable([]); // false
+notWrappable(undefined); // false
+notWrappable(null); // false
+notWrappable({}); // true
+notWrappable(4); // true
+```
 
 
 ## Utilities

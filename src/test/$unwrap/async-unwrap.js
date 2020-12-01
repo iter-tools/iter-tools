@@ -6,7 +6,7 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { asyncIsIterable } from '../../internal/async-iterable.js';
+import { asyncIsLoopable } from '../../internal/async-iterable.js';
 
 export async function asyncUnwrap(iterable) {
   const values = [];
@@ -22,7 +22,7 @@ export async function asyncUnwrapDeep(iterable) {
   const values = [];
 
   for await (const value of iterable) {
-    if (typeof value !== 'string' && asyncIsIterable(value)) {
+    if (typeof value !== 'string' && asyncIsLoopable(value)) {
       values.push(await asyncUnwrapDeep(value));
     } else {
       values.push(value);

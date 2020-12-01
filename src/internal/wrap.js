@@ -9,3 +9,9 @@
 export function* wrap(source) {
   yield* source;
 }
+
+export function* nullableWrap(source) {
+  if (source != null) {
+    yield* source;
+  }
+}

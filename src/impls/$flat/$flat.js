@@ -1,9 +1,9 @@
 import { $async, $await } from '../../../generate/async.macro.cjs';
 
-import { $iterableCurry, $isIterable } from '../../internal/$iterable.js';
+import { $iterableCurry, $isLoopable } from '../../internal/$iterable.js';
 import { validateArgs } from './internal/validate-args.js';
 
-const defaultShouldFlat = (item) => typeof item !== 'string' && $isIterable(item);
+const defaultShouldFlat = (item) => typeof item !== 'string' && $isLoopable(item);
 
 $async;
 function* $flatInternal(shouldFlat, depth, currentDepth, source) {

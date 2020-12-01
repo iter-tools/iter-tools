@@ -1,6 +1,6 @@
 import { $async, $await } from '../../../generate/async.macro.cjs';
 
-import { $isIterable } from '../../internal/$iterable.js';
+import { $isLoopable } from '../../internal/$iterable.js';
 
 $async;
 export function $unwrap(iterable) {
@@ -20,7 +20,7 @@ export function $unwrapDeep(iterable) {
 
   $await;
   for (const value of iterable) {
-    if (typeof value !== 'string' && $isIterable(value)) {
+    if (typeof value !== 'string' && $isLoopable(value)) {
       values.push($await($unwrapDeep(value)));
     } else {
       values.push(value);

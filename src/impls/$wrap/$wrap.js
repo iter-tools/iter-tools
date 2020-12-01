@@ -1,9 +1,6 @@
-import { $async } from '../../../generate/async.macro.cjs';
-import { $wrapWithResultIterable, $ensureIterable } from '../../internal/$iterable.js';
+import { $wrapWithResultIterable } from '../../internal/$iterable.js';
+import { $nullableWrap as $wrap } from '../../internal/$wrap.js';
 
-$async;
-export function* $wrap(source) {
-  yield* $ensureIterable(source);
-}
+export { $wrap };
 
 export default $wrapWithResultIterable($wrap);

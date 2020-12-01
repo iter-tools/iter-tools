@@ -6,7 +6,7 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { ensureIterable, isIterable, iterableCurry } from '../iterable.js';
+import { ensureIterable, iterableCurry } from '../iterable.js';
 import { wrap, unwrap } from '../../test/helpers.js';
 
 describe('ensureIterable', () => {
@@ -38,14 +38,6 @@ describe('ensureIterable', () => {
     it('throws a more helpful error', () => {
       expect(() => ensureIterable({ next() {} })).toThrowErrorMatchingSnapshot();
     });
-  });
-});
-
-describe('isIterable', () => {
-  it('works', () => {
-    expect(isIterable(wrap([]))).toBe(true);
-    expect(isIterable([])).toBe(true);
-    expect(isIterable(null)).toBe(false);
   });
 });
 

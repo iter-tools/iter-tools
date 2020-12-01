@@ -6,10 +6,9 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { asyncWrapWithResultIterable, asyncEnsureIterable } from '../../internal/async-iterable.js';
+import { asyncWrapWithResultIterable } from '../../internal/async-iterable.js';
+import { asyncNullableWrap as asyncWrap } from '../../internal/async-wrap.js';
 
-export async function* asyncWrap(source) {
-  yield* asyncEnsureIterable(source);
-}
+export { asyncWrap };
 
 export default asyncWrapWithResultIterable(asyncWrap);

@@ -6,10 +6,10 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { asyncIterableCurry, asyncIsIterable } from '../../internal/async-iterable.js';
+import { asyncIterableCurry, asyncIsLoopable } from '../../internal/async-iterable.js';
 import { validateArgs } from './internal/validate-args.js';
 
-const defaultShouldFlat = (item) => typeof item !== 'string' && asyncIsIterable(item);
+const defaultShouldFlat = (item) => typeof item !== 'string' && asyncIsLoopable(item);
 
 async function* asyncFlatInternal(shouldFlat, depth, currentDepth, source) {
   for await (const item of source) {

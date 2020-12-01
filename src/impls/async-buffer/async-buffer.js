@@ -1,8 +1,8 @@
-import { asyncify, asyncIterableCurry, asyncCallReturn } from '../../internal/async-iterable.js';
+import { asyncWrap, asyncIterableCurry, asyncCallReturn } from '../../internal/async-iterable.js';
 import { CircularBuffer } from '../../internal/circular-buffer.js';
 
 export async function* generateBuffered(source, n) {
-  const iterator = asyncify(source)[Symbol.asyncIterator]();
+  const iterator = asyncWrap(source)[Symbol.asyncIterator]();
   const buffer = new CircularBuffer(n + 1);
 
   try {
