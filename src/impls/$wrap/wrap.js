@@ -6,10 +6,9 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { wrapWithResultIterable, ensureIterable } from '../../internal/iterable.js';
+import { wrapWithResultIterable } from '../../internal/iterable.js';
+import { nullableWrap as wrap } from '../../internal/wrap.js';
 
-export function* wrap(source) {
-  yield* ensureIterable(source);
-}
+export { wrap };
 
 export default wrapWithResultIterable(wrap);

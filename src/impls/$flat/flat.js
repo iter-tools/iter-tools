@@ -6,10 +6,10 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { iterableCurry, isIterable } from '../../internal/iterable.js';
+import { iterableCurry, isLoopable } from '../../internal/iterable.js';
 import { validateArgs } from './internal/validate-args.js';
 
-const defaultShouldFlat = (item) => typeof item !== 'string' && isIterable(item);
+const defaultShouldFlat = (item) => typeof item !== 'string' && isLoopable(item);
 
 function* flatInternal(shouldFlat, depth, currentDepth, source) {
   for (const item of source) {

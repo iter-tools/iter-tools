@@ -9,3 +9,9 @@
 export async function* asyncWrap(source) {
   yield* source;
 }
+
+export async function* asyncNullableWrap(source) {
+  if (source != null) {
+    yield* source;
+  }
+}

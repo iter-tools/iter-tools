@@ -6,7 +6,7 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { isIterable } from '../../internal/iterable.js';
+import { isLoopable } from '../../internal/iterable.js';
 
 export function unwrap(iterable) {
   const values = [];
@@ -22,7 +22,7 @@ export function unwrapDeep(iterable) {
   const values = [];
 
   for (const value of iterable) {
-    if (typeof value !== 'string' && isIterable(value)) {
+    if (typeof value !== 'string' && isLoopable(value)) {
       values.push(unwrapDeep(value));
     } else {
       values.push(value);

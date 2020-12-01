@@ -1,46 +1,34 @@
-import {
-  BaseResultIterable,
-  ResultIterable,
-  ensureIterable,
-  isValidIterableArgument,
-  isIterable,
-} from './iterable.js';
+import { isAsyncIterable } from '../impls/is-async-iterable/is-async-iterable.js';
+import { isAsyncLoopable } from '../impls/is-async-loopable/is-async-loopable.js';
+import { isAsyncWrappable } from '../impls/is-async-wrappable/is-async-wrappable.js';
+import { asyncNullableWrap as asyncWrap } from './async-wrap.js';
+import { BaseResultIterable, ResultIterable } from './iterable.js';
 import { variadicCurryWithValidation } from './curry.js';
 import { _, __iterate } from './symbols.js';
 
-export function isAsyncIterable(i) {
-  return Boolean(i != null && i[Symbol.asyncIterator]);
-}
-
-export function asyncIsIterable(i) {
-  return isAsyncIterable(i) || isIterable(i);
-}
+export {
+  asyncWrap,
+  isAsyncIterable as asyncIsIterable,
+  isAsyncLoopable as asyncIsLoopable,
+  isAsyncWrappable as asyncIsWrappable,
+};
 
 export async function asyncCallReturn(iterator) {
   if ('return' in iterator) await iterator.return();
 }
 
-export async function* asyncify(iterable) {
-  if (isAsyncIterable(iterable)) {
-    yield* iterable;
+export function asyncEnsureIterable(value) {
+  if (!isAsyncWrappable(value)) {
+    if (typeof value.next === 'function') {
+      throw new TypeError(
+        'iter-tools received a value that looked like an iterator but was not async iterable. Get help fixing this: https://github.com/iter-tools/iter-tools/wiki/Making-iterators-iterable#async-iterators',
+      );
+    } else throw new TypeError('Expected an async iterable, sync iterable, null or undefined');
+  } else if (isAsyncIterable(value)) {
+    return value;
   } else {
-    // it should be enough "yield* iterable", but it is broken with es5 version
-    for (const item of iterable) {
-      yield Promise.resolve(item);
-    }
+    return asyncWrap(value);
   }
-}
-
-export function asyncEnsureIterable(i) {
-  if (isAsyncIterable(i)) {
-    return i;
-  } else {
-    return asyncify(ensureIterable(i));
-  }
-}
-
-export function isValidAsyncIterableArgument(i) {
-  return isAsyncIterable(i) || isValidIterableArgument(i);
 }
 
 export function AsyncResultIterable(...args) {
@@ -83,7 +71,7 @@ function makeFunctionConfig(fn, fnConfig = {}) {
     optionalArgsAtEnd: !!optionalArgsAtEnd,
     minArgs: minArgs === undefined ? fn.length - 1 : minArgs,
     maxArgs: maxArgs === undefined ? fn.length - 1 : maxArgs,
-    isIterable: isValidAsyncIterableArgument,
+    isIterable: isAsyncWrappable,
     iterableType: 'asyncIterable',
     applyOnIterableArgs: asyncEnsureIterable,
     IterableClass: forceSync ? ResultIterable : AsyncResultIterable,
@@ -93,7 +81,7 @@ function makeFunctionConfig(fn, fnConfig = {}) {
 export async function asyncCache(it) {
   const arr = [];
   for await (const value of it) arr.push(value);
-  return asyncWrapWithResultIterable(asyncify)(arr);
+  return asyncWrapWithResultIterable(asyncWrap)(arr);
 }
 
 export function asyncWrapWithResultIterable(fn, { validateArgs = (_) => _ } = {}) {

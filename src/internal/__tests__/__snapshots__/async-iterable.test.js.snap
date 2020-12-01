@@ -1,8 +1,8 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`asyncEnsureIterable when i cannot be coerced to an iterable throws 1`] = `"The argument is not an iterable or null"`;
+exports[`asyncEnsureIterable when i cannot be coerced to an iterable throws 1`] = `"Expected an async iterable, sync iterable, null or undefined"`;
 
-exports[`asyncEnsureIterable when i looks like an iterator throws a more helpful error 1`] = `"Iterators are not supported arguments to iter-tools. It must be an iterable. For example: { [Symbol.iterator] : () => currentArgument }"`;
+exports[`asyncEnsureIterable when i looks like an iterator throws a more helpful error 1`] = `"iter-tools received a value that looked like an iterator but was not async iterable. Get help fixing this: https://github.com/iter-tools/iter-tools/wiki/Making-iterators-iterable#async-iterators"`;
 
 exports[`asyncIterableCurry throws with empty invocations 1`] = `"Cannot make a partial application with no arguments"`;
 

@@ -1,31 +1,34 @@
+import { isIterable } from '../impls/is-iterable/is-iterable.js';
+import { isLoopable } from '../impls/is-loopable/is-loopable.js';
+import { isWrappable } from '../impls/is-wrappable/is-wrappable.js';
+import { nullableWrap as wrap } from './wrap.js';
 import { variadicCurryWithValidation } from './curry.js';
 import { _, __iterate } from './symbols.js';
 
-export function* empty() {}
+const emptyArr = [];
 
-export function isIterable(i) {
-  return Boolean(i != null && i[Symbol.iterator]);
+export function empty() {
+  return emptyArr[Symbol.iterator]();
 }
 
-export function ensureIterable(i) {
-  if (i == null) {
-    return empty();
-  } else if (!isIterable(i)) {
-    if (typeof i.next === 'function') {
+export { wrap, isIterable, isLoopable, isWrappable };
+
+export function ensureIterable(value) {
+  if (!isWrappable(value)) {
+    if (typeof value.next === 'function') {
       throw new TypeError(
-        'Iterators are not supported arguments to iter-tools. It must be an iterable. For example: { [Symbol.iterator] : () => currentArgument }',
+        'iter-tools received a value that looked like an iterator but was not iterable. Get help fixing this: https://github.com/iter-tools/iter-tools/wiki/Making-iterators-iterable',
       );
-    } else throw new TypeError('The argument is not an iterable or null');
+    } else throw new TypeError('Expected an iterable, null, or undefined');
+  } else if (isIterable(value)) {
+    return value;
+  } else {
+    return wrap(value);
   }
-  return i;
 }
 
 export function callReturn(iterator) {
   if ('return' in iterator) iterator.return();
-}
-
-export function isValidIterableArgument(i) {
-  return i == null || isIterable(i);
 }
 
 export function BaseResultIterable(fn, args, iterablesArg) {
@@ -97,7 +100,7 @@ function makeFunctionConfig(fn, fnConfig = {}) {
     optionalArgsAtEnd: !!optionalArgsAtEnd,
     minArgs: minArgs === undefined ? fn.length - 1 : minArgs,
     maxArgs: maxArgs === undefined ? fn.length - 1 : maxArgs,
-    isIterable: isValidIterableArgument,
+    isIterable: isWrappable,
     iterableType: 'iterable',
     applyOnIterableArgs: ensureIterable,
     IterableClass: ResultIterable,

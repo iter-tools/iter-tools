@@ -6,7 +6,7 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { asyncEnsureIterable, asyncIsIterable, asyncIterableCurry } from '../async-iterable.js';
+import { asyncEnsureIterable, asyncIterableCurry } from '../async-iterable.js';
 import { asyncWrap, asyncUnwrap } from '../../test/async-helpers.js';
 
 describe('asyncEnsureIterable', () => {
@@ -46,14 +46,6 @@ describe('asyncEnsureIterable', () => {
     it('throws a more helpful error', () => {
       expect(() => asyncEnsureIterable({ next() {} })).toThrowErrorMatchingSnapshot();
     });
-  });
-});
-
-describe('asyncIsIterable', () => {
-  it('works', () => {
-    expect(asyncIsIterable(asyncWrap([]))).toBe(true);
-    expect(asyncIsIterable([])).toBe(true);
-    expect(asyncIsIterable(null)).toBe(false);
   });
 });
 

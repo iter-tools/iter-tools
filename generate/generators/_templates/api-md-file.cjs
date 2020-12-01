@@ -50,6 +50,7 @@ const sections = new Map(
     ['temporal', 'Control timing inside an async iterable'],
     ['cache', 'Cache an iterable'],
     ['consume', 'Consume an iterable'],
+    ['predicate', 'Test a value'],
     ['utility', 'Utilities'],
     ['higher-order', 'Generator helpers'],
     [undefined, 'Uncategorized'],
