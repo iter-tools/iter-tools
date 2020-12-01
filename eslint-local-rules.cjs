@@ -1,1 +1,1 @@
-module.exports = require('./lint/local-rules/index.cjs');
+module.exports = require('./babel/lint-rules/index.cjs');

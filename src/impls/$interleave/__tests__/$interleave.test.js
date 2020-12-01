@@ -102,7 +102,7 @@ describe($`interleave`, () => {
       $await(
         $unwrap(
           $interleave(
-            $async(function* (o: {}): $Iterable<any> {
+            $async(function* (o: Record<string, any>): $Iterable<any> {
               expect(o).toBe(options);
             }),
             options,

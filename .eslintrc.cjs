@@ -1,10 +1,14 @@
 module.exports = {
   extends: ['standard', 'plugin:prettier/recommended', 'plugin:jest/recommended'],
   plugins: ['jest', 'local-rules'],
-  parser: 'babel-eslint',
+  parser: '@babel/eslint-parser',
   parserOptions: {
     ecmaVersion: 2017,
     sourceType: 'module',
+    requireConfigFile: false,
+    babelOptions: {
+      plugins: [['@babel/plugin-syntax-decorators', { decoratorsBeforeExport: true }]],
+    },
   },
   env: { es6: true },
   rules: {
@@ -27,11 +31,12 @@ module.exports = {
       },
     },
     {
-      files: ['*.ts'],
+      files: ['*.ts', '**/*.test.js'],
       parser: '@typescript-eslint/parser',
       extends: ['plugin:@typescript-eslint/recommended'],
       rules: {
-        '@typescript-eslint/ban-ts-ignore': 'off',
+        '@typescript-eslint/no-empty-function': ['error', { allow: ['generatorFunctions'] }],
+        '@typescript-eslint/ban-ts-comment': 'off',
         '@typescript-eslint/no-explicit-any': 'off',
         '@typescript-eslint/no-unused-vars': ['warn', { argsIgnorePattern: '^_' }],
         '@typescript-eslint/class-name-casing': 'off', // can't deal with $PascalCased

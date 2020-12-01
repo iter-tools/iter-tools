@@ -87,7 +87,7 @@ describe('asyncInterleave', () => {
     expect.assertions(1);
     await asyncUnwrap(
       asyncInterleave(
-        async function* (o: {}): AsyncIterable<any> {
+        async function* (o: Record<string, any>): AsyncIterable<any> {
           expect(o).toBe(options);
         },
         options,

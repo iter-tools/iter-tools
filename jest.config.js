@@ -5,11 +5,11 @@ function whenCi(arr) {
 function makeProject(projectConfig) {
   return {
     displayName: projectConfig.name,
-    moduleFileExtensions: ['js'],
+    moduleFileExtensions: ['js', 'cjs'],
     transform: {
       '.*': `<rootDir>/babel/transformers/${projectConfig.name}.cjs`,
     },
-    testMatch: ['**/__tests__/**/!($)*.test.js'],
+    testMatch: ['**/__tests__/**/!($)*.test.{js,cjs}'],
     clearMocks: true,
     testPathIgnorePatterns: ['generate-yo/generators/[^/]+/templates?'],
     setupFilesAfterEnv: ['<rootDir>/src/test/setup.js'],
