@@ -6,7 +6,7 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { asyncSome } from '@iter-tools/es';
+import { asyncSome } from 'iter-tools-es';
 import { asyncWrap } from '../../../test/async-helpers.js';
 
 describe('asyncSome', () => {

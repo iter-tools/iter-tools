@@ -1,6 +1,6 @@
 import { $, $isSync, $async, $await } from '../../../../generate/async.macro.cjs';
 
-import { $interposeSeq } from '@iter-tools/es';
+import { $interposeSeq } from 'iter-tools-es';
 import { $wrap, $unwrap } from '../../../test/$helpers.js';
 
 describe($`interposeSeq`, () => {

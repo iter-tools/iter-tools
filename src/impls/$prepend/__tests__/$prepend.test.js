@@ -1,6 +1,6 @@
 import { $, $async, $await } from '../../../../generate/async.macro.cjs';
 
-import { $prepend, $toArray, $wrap } from '@iter-tools/es';
+import { $prepend, $toArray, $wrap } from 'iter-tools-es';
 
 describe($`prepend`, () => {
   describe('when source is empty', () => {

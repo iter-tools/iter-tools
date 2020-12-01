@@ -6,7 +6,7 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { asyncIsSorted } from '@iter-tools/es';
+import { asyncIsSorted } from 'iter-tools-es';
 import { asyncWrap } from '../../../test/async-helpers.js';
 
 describe('asyncIsSorted', () => {

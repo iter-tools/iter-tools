@@ -1,6 +1,6 @@
 import { $, $isSync, $async, $await } from '../../../../generate/async.macro.cjs';
 
-import { $joinWith } from '@iter-tools/es';
+import { $joinWith } from 'iter-tools-es';
 import { $wrapDeep, $unwrap } from '../../../test/$helpers.js';
 
 describe($`joinWith`, () => {

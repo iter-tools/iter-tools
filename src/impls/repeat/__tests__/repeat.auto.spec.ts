@@ -6,7 +6,7 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { repeat, slice } from '@iter-tools/es';
+import { repeat, slice } from 'iter-tools-es';
 
 describe('repeat', () => {
   it('repeats infinitely', () => {

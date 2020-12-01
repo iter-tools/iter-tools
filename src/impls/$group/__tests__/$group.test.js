@@ -1,7 +1,7 @@
 import { $, $async, $await } from '../../../../generate/async.macro.cjs';
 import { $awaitError } from '../../../../generate/test.macro.cjs';
 
-import { $group } from '@iter-tools/es';
+import { $group } from 'iter-tools-es';
 import { $wrap, $unwrap, $unwrapDeep } from '../../../test/$helpers.js';
 
 describe($`group`, () => {

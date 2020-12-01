@@ -6,7 +6,7 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { asyncToObject } from '@iter-tools/es';
+import { asyncToObject } from 'iter-tools-es';
 import { asyncWrap } from '../../../test/async-helpers.js';
 
 describe('asyncToObject', () => {

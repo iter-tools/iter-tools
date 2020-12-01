@@ -1,4 +1,4 @@
-import { asyncFilterParallel } from '@iter-tools/es';
+import { asyncFilterParallel } from 'iter-tools-es';
 import { asyncWrap, asyncUnwrap } from '../../../test/async-helpers.js';
 
 describe('asyncFilterParallel', () => {

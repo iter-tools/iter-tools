@@ -1,4 +1,4 @@
-import { notUndefined } from '@iter-tools/es';
+import { notUndefined } from 'iter-tools-es';
 
 describe('notUndefined', () => {
   describe('when value is undefined', () => {

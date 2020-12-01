@@ -1,6 +1,6 @@
 import { $, $async, $await } from '../../../../generate/async.macro.cjs';
 
-import { $takeLast } from '@iter-tools/es';
+import { $takeLast } from 'iter-tools-es';
 import { $wrap } from '../../../test/$helpers.js';
 
 describe($`takeLast`, () => {

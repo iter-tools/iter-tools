@@ -1,5 +1,5 @@
 import assert from 'static-type-assert';
-import { arrayFirstOr } from '@iter-tools/es';
+import { arrayFirstOr } from 'iter-tools-es';
 
 declare const Ø: never;
 

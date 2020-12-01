@@ -9,7 +9,7 @@
 import assert from 'static-type-assert';
 
 import { AsyncIterable, AsyncResultIterable } from '../../../types/async-iterable';
-import { asyncFlat } from '@iter-tools/es';
+import { asyncFlat } from 'iter-tools-es';
 
 declare const Ø: never;
 

@@ -7,7 +7,7 @@
  */
 
 import { AsyncIterable } from '../../../types/async-iterable.js';
-import { asyncInterleave, AsyncPeekerator } from '@iter-tools/es';
+import { asyncInterleave, AsyncPeekerator } from 'iter-tools-es';
 import { asyncWrap, asyncUnwrap, asyncUnwrapDeep, anyType } from '../../../test/async-helpers.js';
 
 const asyncRoundRobinStrategy = async function* (

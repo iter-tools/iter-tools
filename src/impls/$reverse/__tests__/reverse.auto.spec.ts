@@ -6,7 +6,7 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { reverse } from '@iter-tools/es';
+import { reverse } from 'iter-tools-es';
 import { unwrap, wrap } from '../../../test/helpers.js';
 
 describe('reverse', () => {

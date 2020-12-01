@@ -1,6 +1,6 @@
 import { $, $async, $await } from '../../../../generate/async.macro.cjs';
 
-import { $reverse } from '@iter-tools/es';
+import { $reverse } from 'iter-tools-es';
 import { $unwrap, $wrap } from '../../../test/$helpers.js';
 
 describe($`reverse`, () => {

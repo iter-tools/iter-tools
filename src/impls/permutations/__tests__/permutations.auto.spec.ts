@@ -6,7 +6,7 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { permutations } from '@iter-tools/es';
+import { permutations } from 'iter-tools-es';
 
 describe('permutations', () => {
   it('returns empty when there are no values to permute', () => {

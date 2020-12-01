@@ -6,7 +6,7 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { splitOnAnySeq, toArray } from '@iter-tools/es';
+import { splitOnAnySeq, toArray } from 'iter-tools-es';
 import { wrap, unwrapDeep } from '../../../test/helpers.js';
 
 describe('splitOnAnySeq', () => {

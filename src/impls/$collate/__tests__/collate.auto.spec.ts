@@ -6,7 +6,7 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { collate } from '@iter-tools/es';
+import { collate } from 'iter-tools-es';
 import { wrap, unwrap } from '../../../test/helpers.js';
 
 describe('collate', () => {

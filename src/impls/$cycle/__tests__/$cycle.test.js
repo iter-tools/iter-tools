@@ -1,6 +1,6 @@
 import { $, $async, $await } from '../../../../generate/async.macro.cjs';
 
-import { $cycle, $slice } from '@iter-tools/es';
+import { $cycle, $slice } from 'iter-tools-es';
 import { $wrap, $unwrap } from '../../../test/$helpers.js';
 
 describe($`cycle`, () => {

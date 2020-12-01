@@ -1,4 +1,4 @@
-import { when } from '@iter-tools/es';
+import { when } from 'iter-tools-es';
 
 const obj = { foo: 'foo' };
 const iterable = ['foo'];

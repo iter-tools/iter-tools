@@ -1,6 +1,6 @@
 import { $, $async, $await } from '../../../../generate/async.macro.cjs';
 
-import { $splitWith } from '@iter-tools/es';
+import { $splitWith } from 'iter-tools-es';
 import { $wrap, $unwrapDeep } from '../../../test/$helpers.js';
 
 describe($`splitWith`, () => {

@@ -6,7 +6,7 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { flat } from '@iter-tools/es';
+import { flat } from 'iter-tools-es';
 import { wrapDeep, unwrap, unwrapDeep, anyType } from '../../../test/helpers.js';
 
 describe('flat', () => {

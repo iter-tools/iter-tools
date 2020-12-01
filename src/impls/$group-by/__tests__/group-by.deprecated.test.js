@@ -6,7 +6,7 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { groupBy } from '@iter-tools/es';
+import { groupBy } from 'iter-tools-es';
 import { unwrapDeep } from '../../../test/helpers.js';
 
 describe('groupBy (deprecated)', () => {

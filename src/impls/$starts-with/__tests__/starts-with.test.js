@@ -6,7 +6,7 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { startsWith } from '@iter-tools/es';
+import { startsWith } from 'iter-tools-es';
 import { wrap } from '../../../test/helpers.js';
 
 describe('startsWith', () => {

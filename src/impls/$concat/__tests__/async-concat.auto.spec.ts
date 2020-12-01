@@ -6,7 +6,7 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { asyncConcat } from '@iter-tools/es';
+import { asyncConcat } from 'iter-tools-es';
 import { asyncWrap, asyncUnwrap } from '../../../test/async-helpers.js';
 
 describe('asyncConcat', () => {

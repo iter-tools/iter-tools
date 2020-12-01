@@ -2,7 +2,7 @@ import { $Promise } from '../../../../generate/async.macro.cjs';
 
 import assert from 'static-type-assert';
 import { $Iterable } from '../../../types/$iterable';
-import { $findOr } from '@iter-tools/es';
+import { $findOr } from 'iter-tools-es';
 
 declare const Ø: never;
 

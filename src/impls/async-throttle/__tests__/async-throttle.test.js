@@ -1,4 +1,4 @@
-import { asyncThrottle } from '@iter-tools/es';
+import { asyncThrottle } from 'iter-tools-es';
 import { asyncWrap, asyncUnwrap, anyType } from '../../../test/async-helpers.js';
 
 describe('asyncThrottle', () => {

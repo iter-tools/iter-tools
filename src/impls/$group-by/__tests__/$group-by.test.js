@@ -1,7 +1,7 @@
 import { $, $async, $await, $Promise } from '../../../../generate/async.macro.cjs';
 import { $awaitError } from '../../../../generate/test.macro.cjs';
 
-import { $groupBy } from '@iter-tools/es';
+import { $groupBy } from 'iter-tools-es';
 import { $wrap, $unwrap, $unwrapDeep } from '../../../test/$helpers.js';
 
 $async;

@@ -6,7 +6,7 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { drop } from '@iter-tools/es';
+import { drop } from 'iter-tools-es';
 import { wrap, unwrap } from '../../../test/helpers.js';
 
 describe('drop', () => {

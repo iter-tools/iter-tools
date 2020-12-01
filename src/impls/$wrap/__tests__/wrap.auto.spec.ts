@@ -6,7 +6,7 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { wrap } from '@iter-tools/es';
+import { wrap } from 'iter-tools-es';
 import { wrap as testWrap, unwrap } from '../../../test/helpers.js';
 
 describe('wrap', () => {

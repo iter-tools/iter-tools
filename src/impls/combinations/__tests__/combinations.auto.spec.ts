@@ -6,7 +6,7 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { combinations } from '@iter-tools/es';
+import { combinations } from 'iter-tools-es';
 
 describe('combinations', () => {
   it('returns empty', () => {

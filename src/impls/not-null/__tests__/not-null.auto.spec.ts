@@ -6,7 +6,7 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { notNull } from '@iter-tools/es';
+import { notNull } from 'iter-tools-es';
 
 describe('notNull', () => {
   describe('when value is null', () => {

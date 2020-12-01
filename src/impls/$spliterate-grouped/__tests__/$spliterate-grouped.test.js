@@ -1,6 +1,6 @@
 import { $, $async, $await } from '../../../../generate/async.macro.cjs';
 
-import { $spliterateGrouped } from '@iter-tools/es';
+import { $spliterateGrouped } from 'iter-tools-es';
 import { $unwrapDeep } from '../../../test/$helpers.js';
 
 $async;

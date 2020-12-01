@@ -6,7 +6,7 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { slice } from '@iter-tools/es';
+import { slice } from 'iter-tools-es';
 import { Iterable } from '../../../types/iterable.js';
 import { wrap, unwrap } from '../../../test/helpers.js';
 

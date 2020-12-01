@@ -6,7 +6,7 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { asyncSpliterateGrouped } from '@iter-tools/es';
+import { asyncSpliterateGrouped } from 'iter-tools-es';
 import { asyncUnwrapDeep } from '../../../test/async-helpers.js';
 
 async function* asyncIdentityStrategy(_split: any, _options: any, source: any) {

@@ -1,4 +1,4 @@
-import { __method__ } from '@iter-tools/es';
+import { __method__ } from 'iter-tools-es';
 import { wrap } from '../../../test/helpers.js';
 
 describe('__method__', () => {

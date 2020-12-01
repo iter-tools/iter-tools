@@ -6,7 +6,7 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { compose } from '@iter-tools/es';
+import { compose } from 'iter-tools-es';
 
 describe('compose', () => {
   it('works', () => {

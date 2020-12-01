@@ -13,7 +13,7 @@ import {
   Iterable,
   ResultIterable,
 } from '../../../types/iterable';
-import { splitAt } from '@iter-tools/es';
+import { splitAt } from 'iter-tools-es';
 
 declare const Ø: never;
 

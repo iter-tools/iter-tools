@@ -1,4 +1,4 @@
-import { wrapKeys } from '@iter-tools/es';
+import { wrapKeys } from 'iter-tools-es';
 
 describe('wrapKeys', () => {
   it('works with Map', () => {

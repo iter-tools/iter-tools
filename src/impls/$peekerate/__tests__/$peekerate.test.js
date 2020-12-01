@@ -1,6 +1,6 @@
 import { $, $async, $await } from '../../../../generate/async.macro.cjs';
 
-import { $peekerate } from '@iter-tools/es';
+import { $peekerate } from 'iter-tools-es';
 import { $wrap } from '../../../test/$helpers.js';
 
 describe($`peekerate`, () => {

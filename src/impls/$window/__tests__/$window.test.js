@@ -1,6 +1,6 @@
 import { $, $async, $await } from '../../../../generate/async.macro.cjs';
 
-import { $window } from '@iter-tools/es';
+import { $window } from 'iter-tools-es';
 import { $wrap, $unwrapDeep, anyType } from '../../../test/$helpers.js';
 
 describe($`window`, () => {

@@ -1,6 +1,6 @@
 import assert from 'static-type-assert';
 import { ResultIterable } from '../../../types/iterable';
-import { objectValues } from '@iter-tools/es';
+import { objectValues } from 'iter-tools-es';
 
 declare const Ø: never;
 

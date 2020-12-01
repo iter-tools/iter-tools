@@ -6,7 +6,7 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { product } from '@iter-tools/es';
+import { product } from 'iter-tools-es';
 
 describe('product', () => {
   it('returns empty', () => {

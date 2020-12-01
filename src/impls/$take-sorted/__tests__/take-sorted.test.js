@@ -6,7 +6,7 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { takeSorted } from '@iter-tools/es';
+import { takeSorted } from 'iter-tools-es';
 import { wrap, unwrap } from '../../../test/helpers.js';
 
 describe('takeSorted', () => {

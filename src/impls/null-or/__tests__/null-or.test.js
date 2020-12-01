@@ -1,4 +1,4 @@
-import { nullOr, arrayFrom } from '@iter-tools/es';
+import { nullOr, arrayFrom } from 'iter-tools-es';
 
 describe('nullOr', () => {
   it('empty array returns null', () => {

@@ -1,4 +1,4 @@
-import { wrapValues } from '@iter-tools/es';
+import { wrapValues } from 'iter-tools-es';
 
 describe('wrapValues', () => {
   it('works with Map', () => {

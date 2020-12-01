@@ -1,4 +1,4 @@
-import { arrayLast } from '@iter-tools/es';
+import { arrayLast } from 'iter-tools-es';
 
 describe('arrayLast', () => {
   describe('when there is no array', () => {

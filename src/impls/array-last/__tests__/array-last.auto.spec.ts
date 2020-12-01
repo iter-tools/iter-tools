@@ -6,7 +6,7 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { arrayLast } from '@iter-tools/es';
+import { arrayLast } from 'iter-tools-es';
 
 describe('arrayLast', () => {
   describe('when there is no array', () => {

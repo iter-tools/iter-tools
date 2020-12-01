@@ -6,7 +6,7 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { asyncInterposeSeq } from '@iter-tools/es';
+import { asyncInterposeSeq } from 'iter-tools-es';
 import { asyncWrap, asyncUnwrap } from '../../../test/async-helpers.js';
 
 describe('asyncInterposeSeq', () => {

@@ -1,4 +1,4 @@
-import { nullOrAsync, arrayFromAsync } from '@iter-tools/es';
+import { nullOrAsync, arrayFromAsync } from 'iter-tools-es';
 
 describe('nullOrAsync', () => {
   it('empty array returns null', async () => {

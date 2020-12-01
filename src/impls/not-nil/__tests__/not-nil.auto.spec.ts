@@ -6,7 +6,7 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { notNil } from '@iter-tools/es';
+import { notNil } from 'iter-tools-es';
 
 describe('notNil', () => {
   describe('when value is null or undefined', () => {

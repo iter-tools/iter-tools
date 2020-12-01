@@ -6,7 +6,7 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { isUndefined } from '@iter-tools/es';
+import { isUndefined } from 'iter-tools-es';
 
 describe('isUndefined', () => {
   describe('when value is undefined', () => {

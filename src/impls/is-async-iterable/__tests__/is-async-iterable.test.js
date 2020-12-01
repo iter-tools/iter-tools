@@ -1,4 +1,4 @@
-import { isAsyncIterable } from '@iter-tools/es';
+import { isAsyncIterable } from 'iter-tools-es';
 
 describe('isAsyncIterable', () => {
   describe('when value is an async iterable', () => {

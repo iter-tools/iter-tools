@@ -7,7 +7,7 @@
  */
 
 import assert from 'static-type-assert';
-import { asyncSize } from '@iter-tools/es';
+import { asyncSize } from 'iter-tools-es';
 
 declare const Ø: never;
 

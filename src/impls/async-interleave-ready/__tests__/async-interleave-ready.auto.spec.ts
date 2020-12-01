@@ -6,7 +6,7 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { asyncInterleaveReady, asyncToArray } from '@iter-tools/es';
+import { asyncInterleaveReady, asyncToArray } from 'iter-tools-es';
 
 import { delay } from '../../../internal/delay.js';
 

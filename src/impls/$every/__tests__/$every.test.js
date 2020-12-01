@@ -1,6 +1,6 @@
 import { $, $isAsync, $async, $await } from '../../../../generate/async.macro.cjs';
 
-import { $every } from '@iter-tools/es';
+import { $every } from 'iter-tools-es';
 import { $wrap } from '../../../test/$helpers.js';
 
 describe($`every`, () => {

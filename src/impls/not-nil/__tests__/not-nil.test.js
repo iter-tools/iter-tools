@@ -1,4 +1,4 @@
-import { notNil } from '@iter-tools/es';
+import { notNil } from 'iter-tools-es';
 
 describe('notNil', () => {
   describe('when value is null or undefined', () => {

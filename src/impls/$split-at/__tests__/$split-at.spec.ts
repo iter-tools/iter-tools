@@ -2,7 +2,7 @@ import assert from 'static-type-assert';
 
 import { ResultIterable as SyncResultIterable } from '../../../types/iterable';
 import { $Iterable, $ResultIterable } from '../../../types/$iterable';
-import { $splitAt } from '@iter-tools/es';
+import { $splitAt } from 'iter-tools-es';
 
 declare const Ø: never;
 

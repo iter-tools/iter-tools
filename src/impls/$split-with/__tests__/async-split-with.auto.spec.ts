@@ -6,7 +6,7 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { asyncSplitWith } from '@iter-tools/es';
+import { asyncSplitWith } from 'iter-tools-es';
 import { asyncWrap, asyncUnwrapDeep } from '../../../test/async-helpers.js';
 
 describe('asyncSplitWith', () => {

@@ -6,7 +6,7 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { asyncPrepend, asyncToArray, asyncWrap } from '@iter-tools/es';
+import { asyncPrepend, asyncToArray, asyncWrap } from 'iter-tools-es';
 
 describe('asyncPrepend', () => {
   describe('when source is empty', () => {

@@ -6,7 +6,7 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { asyncReverse } from '@iter-tools/es';
+import { asyncReverse } from 'iter-tools-es';
 import { asyncUnwrap, asyncWrap } from '../../../test/async-helpers.js';
 
 describe('asyncReverse', () => {

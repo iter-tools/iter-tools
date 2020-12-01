@@ -6,7 +6,7 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { spliterateGrouped } from '@iter-tools/es';
+import { spliterateGrouped } from 'iter-tools-es';
 import { unwrapDeep } from '../../../test/helpers.js';
 
 function* identityStrategy(_split: any, _options: any, source: any) {

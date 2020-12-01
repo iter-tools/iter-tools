@@ -6,7 +6,7 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { asyncGroupBy } from '@iter-tools/es';
+import { asyncGroupBy } from 'iter-tools-es';
 import { asyncUnwrapDeep } from '../../../test/async-helpers.js';
 
 describe('asyncGroupBy (deprecated)', () => {

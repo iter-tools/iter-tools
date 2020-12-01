@@ -6,7 +6,7 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { take } from '@iter-tools/es';
+import { take } from 'iter-tools-es';
 import { wrap, unwrap } from '../../../test/helpers.js';
 
 describe('take', () => {

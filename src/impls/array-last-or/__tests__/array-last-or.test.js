@@ -1,4 +1,4 @@
-import { arrayLastOr } from '@iter-tools/es';
+import { arrayLastOr } from 'iter-tools-es';
 
 describe('arrayLastOr', () => {
   describe('when there is no array', () => {

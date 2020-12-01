@@ -6,7 +6,7 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { batch } from '@iter-tools/es';
+import { batch } from 'iter-tools-es';
 import { wrap, unwrapDeep } from '../../../test/helpers.js';
 
 describe('batch', () => {

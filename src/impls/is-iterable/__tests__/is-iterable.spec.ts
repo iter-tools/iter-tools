@@ -1,4 +1,4 @@
-import { isIterable } from '@iter-tools/es';
+import { isIterable } from 'iter-tools-es';
 
 declare const value: unknown;
 

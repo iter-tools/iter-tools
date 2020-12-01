@@ -1,4 +1,4 @@
-import { repeatTimes } from '@iter-tools/es';
+import { repeatTimes } from 'iter-tools-es';
 
 describe('repeatTimes', () => {
   it('repeats a value n times', () => {

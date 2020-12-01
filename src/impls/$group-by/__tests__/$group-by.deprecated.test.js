@@ -1,6 +1,6 @@
 import { $, $async, $await } from '../../../../generate/async.macro.cjs';
 
-import { $groupBy } from '@iter-tools/es';
+import { $groupBy } from 'iter-tools-es';
 import { $unwrapDeep } from '../../../test/$helpers.js';
 
 describe($`groupBy (deprecated)`, () => {

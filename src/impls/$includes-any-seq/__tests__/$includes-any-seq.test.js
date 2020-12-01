@@ -1,6 +1,6 @@
 import { $, $async, $await } from '../../../../generate/async.macro.cjs';
 
-import { $includesAnySeq } from '@iter-tools/es';
+import { $includesAnySeq } from 'iter-tools-es';
 import { $wrap } from '../../../test/$helpers.js';
 
 describe($`includesAnySeq`, () => {

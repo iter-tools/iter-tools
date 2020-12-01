@@ -10,7 +10,7 @@ import assert from 'static-type-assert';
 
 import { ResultIterable as SyncResultIterable } from '../../../types/iterable';
 import { AsyncIterable, AsyncResultIterable } from '../../../types/async-iterable';
-import { asyncSplitAt } from '@iter-tools/es';
+import { asyncSplitAt } from 'iter-tools-es';
 
 declare const Ø: never;
 

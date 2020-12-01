@@ -1,4 +1,4 @@
-import { notLoopable } from '@iter-tools/es';
+import { notLoopable } from 'iter-tools-es';
 
 describe('notLoopable', () => {
   describe('when value has Symbol.iterator', () => {

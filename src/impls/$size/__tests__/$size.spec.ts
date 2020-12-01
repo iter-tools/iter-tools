@@ -1,6 +1,6 @@
 import { $Promise } from '../../../../generate/async.macro.cjs';
 import assert from 'static-type-assert';
-import { $size } from '@iter-tools/es';
+import { $size } from 'iter-tools-es';
 
 declare const Ø: never;
 

@@ -6,7 +6,7 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { asyncFlat } from '@iter-tools/es';
+import { asyncFlat } from 'iter-tools-es';
 import {
   asyncWrapDeep,
   asyncUnwrap,
