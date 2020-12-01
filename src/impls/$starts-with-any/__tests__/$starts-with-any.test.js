@@ -1,6 +1,6 @@
 import { $, $isSync, $async, $await } from '../../../../generate/async.macro.cjs';
 
-import { $startsWithAny } from '@iter-tools/es';
+import { $startsWithAny } from 'iter-tools-es';
 import { $wrap } from '../../../test/$helpers.js';
 
 describe($`startsWithAny`, () => {

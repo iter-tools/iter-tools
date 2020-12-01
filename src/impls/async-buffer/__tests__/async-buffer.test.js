@@ -1,4 +1,4 @@
-import { asyncBuffer, asyncToArray } from '@iter-tools/es';
+import { asyncBuffer, asyncToArray } from 'iter-tools-es';
 import { AsyncIterable } from '../../../types/async-iterable.js';
 import { delay } from '../../../internal/delay.js';
 

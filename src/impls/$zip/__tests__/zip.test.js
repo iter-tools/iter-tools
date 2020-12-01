@@ -6,7 +6,7 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { zip, toArray } from '@iter-tools/es';
+import { zip, toArray } from 'iter-tools-es';
 import { wrap } from '../../../test/helpers.js';
 
 describe('zip', () => {

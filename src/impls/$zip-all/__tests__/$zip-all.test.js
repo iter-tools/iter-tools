@@ -1,6 +1,6 @@
 import { $, $async, $await } from '../../../../generate/async.macro.cjs';
 
-import { $zipAll, $toArray } from '@iter-tools/es';
+import { $zipAll, $toArray } from 'iter-tools-es';
 import { $wrap } from '../../../test/$helpers.js';
 
 describe($`zipAll`, () => {

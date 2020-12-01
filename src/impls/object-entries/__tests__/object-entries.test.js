@@ -1,4 +1,4 @@
-import { objectEntries } from '@iter-tools/es';
+import { objectEntries } from 'iter-tools-es';
 
 describe('objectEntries', () => {
   it('works with Objects', () => {

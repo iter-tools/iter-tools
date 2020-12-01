@@ -6,7 +6,7 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { range } from '@iter-tools/es';
+import { range } from 'iter-tools-es';
 import { anyType, unwrap } from '../../../test/helpers.js';
 
 describe('range', () => {

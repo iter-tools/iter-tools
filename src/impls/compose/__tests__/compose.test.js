@@ -1,4 +1,4 @@
-import { compose } from '@iter-tools/es';
+import { compose } from 'iter-tools-es';
 
 describe('compose', () => {
   it('works', () => {

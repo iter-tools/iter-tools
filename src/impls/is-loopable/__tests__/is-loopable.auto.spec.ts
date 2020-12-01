@@ -6,7 +6,7 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { isLoopable } from '@iter-tools/es';
+import { isLoopable } from 'iter-tools-es';
 
 describe('isLoopable', () => {
   describe('when value has Symbol.iterator', () => {

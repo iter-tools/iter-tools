@@ -7,7 +7,7 @@
  */
 
 /* eslint-disable jest/expect-expect */
-import { apply } from '@iter-tools/es';
+import { apply } from 'iter-tools-es';
 
 describe('apply', () => {
   it('passes the function the iterable of arguments provided to it', () => {

@@ -1,4 +1,4 @@
-import { arrayReverse, toArray } from '@iter-tools/es';
+import { arrayReverse, toArray } from 'iter-tools-es';
 
 describe('arrayReverse', () => {
   describe('when source is empty', () => {

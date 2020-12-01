@@ -6,7 +6,7 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { asyncSplitOnSeq, asyncToArray } from '@iter-tools/es';
+import { asyncSplitOnSeq, asyncToArray } from 'iter-tools-es';
 import { asyncWrap, asyncUnwrapDeep } from '../../../test/async-helpers.js';
 
 describe('asyncSplitOnSeq', () => {

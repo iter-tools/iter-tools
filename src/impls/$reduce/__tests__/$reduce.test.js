@@ -1,7 +1,7 @@
 import { $, $isAsync, $async, $await } from '../../../../generate/async.macro.cjs';
 import { $awaitError } from '../../../../generate/test.macro.cjs';
 
-import { $reduce } from '@iter-tools/es';
+import { $reduce } from 'iter-tools-es';
 import { $wrap } from '../../../test/$helpers.js';
 
 describe($`reduce`, () => {

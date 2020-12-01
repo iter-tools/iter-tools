@@ -2,7 +2,7 @@
 import { $, $async, $await } from '../../../../generate/async.macro.cjs';
 
 import { $Iterable } from '../../../types/$iterable.js';
-import { $interleave, $Peekerator } from '@iter-tools/es';
+import { $interleave, $Peekerator } from 'iter-tools-es';
 import { $wrap, $unwrap, $unwrapDeep, anyType } from '../../../test/$helpers.js';
 
 const $roundRobinStrategy = $async(function* (

@@ -6,7 +6,7 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { when } from '@iter-tools/es';
+import { when } from 'iter-tools-es';
 
 const obj = { foo: 'foo' };
 const iterable = ['foo'];

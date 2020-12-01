@@ -6,7 +6,7 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { peekerate } from '@iter-tools/es';
+import { peekerate } from 'iter-tools-es';
 import { wrap } from '../../../test/helpers.js';
 
 describe('peekerate', () => {

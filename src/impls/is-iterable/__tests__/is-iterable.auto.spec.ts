@@ -6,7 +6,7 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { isIterable } from '@iter-tools/es';
+import { isIterable } from 'iter-tools-es';
 
 describe('isIterable', () => {
   describe('when value has Symbol.iterator', () => {

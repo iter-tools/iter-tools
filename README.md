@@ -2,7 +2,7 @@
 
 [![build status](https://img.shields.io/github/workflow/status/iter-tools/iter-tools/verify)](https://github.com/iter-tools/iter-tools/actions?query=branch%3Atrunk+workflow%3Averify)
 [![line coverage](https://codecov.io/gh/iter-tools/iter-tools/branch/trunk/graph/badge.svg)](https://codecov.io/gh/iter-tools/iter-tools)
-[![npm version](https://img.shields.io/npm/v/@iter-tools/es)](https://www.npmjs.com/package/@iter-tools/es)
+[![npm version](https://img.shields.io/npm/v/iter-tools-es)](https://www.npmjs.com/package/iter-tools-es)
 [![chat on gitter](https://img.shields.io/gitter/room/iter-tools/iter-tools)](https://gitter.im/iter-tools/community)
 
 `iter-tools` provides a comprehensive suite of utility methods for working with javascript iterables and async iterables. Iterables offer an abstraction for describing sequences of values. It you're not sure if `iter-tools` is the right library for you, check out our [features](#features).
@@ -11,8 +11,8 @@
 
 ```js
 // If your environment supports es2018:
-import { filter } from '@iter-tools/es';
-const { filter } = require('@iter-tools/es');
+import { filter } from 'iter-tools-es';
+const { filter } = require('iter-tools-es');
 
 // Otherwise you can use es5:
 import { filter } from 'iter-tools';
@@ -48,7 +48,7 @@ Iterables are usually consumed with the [for..of loop syntax](https://developer.
 Some iterables are also iterators, earning them the name `IterableIterator`. Any iterables returned by `iter-tools` methods (e.g. [filter](https://github.com/iter-tools/iter-tools/blob/trunk/API.md#filter)) are iterable iterators because they are implemented using [generator functions](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function*). This means they can be used in one of two ways:
 
 ```js
-import { filter, notUndefined } from '@iter-tools/es';
+import { filter, notUndefined } from 'iter-tools-es';
 // as an iterable:
 for (const value of filter(notUndefined, iterable)) {
   /* ... */
@@ -72,14 +72,14 @@ class SparseArray extends Array {
 - It has type definitions checked in for Typescript (`>3.6.4`). These are validated on every PR.
 - It is [semver](https://semver.org/) compliant, keeps a [changelog](https://github.com/iter-tools/iter-tools/blob/trunk/CHANGELOG.md), and has no runtime dependencies.
 - `iter-tools` supports [tree-shaking](https://developer.mozilla.org/en-US/docs/Glossary/Tree_shaking), and is a [commonjs/esmodule dual package](https://nodejs.org/api/packages.html#packages_dual_commonjs_es_module_packages), meaning it can be loaded using `require()` as well as `import`.
-- The library's sources are valid es module code. Node versions `>12.17.0` can execute them and web build systems that transpile code in `node_modules` can consume them as well. This makes it possible to use a github branch as a package, e.g. by putting `"dependencies": { "@iter-tools/es": "gh-username/iter-tools" }` in your `package.json`. Correctly configured bundlers can use a `browserslist` to avoid shipping code that is slower, more cryptic, and harder to debug than it needs to be.
+- The library's sources are valid es module code. Node versions `>12.17.0` can execute them and web build systems that transpile code in `node_modules` can consume them as well. This makes it possible to use a github branch as a package, e.g. by putting `"dependencies": { "iter-tools-es": "gh-username/iter-tools" }` in your `package.json`. Correctly configured bundlers can use a `browserslist` to avoid shipping code that is slower, more cryptic, and harder to debug than it needs to be.
 
 ### Individual Methods
 
 It is possible to import individual methods from the library. This will make the resulting program or application faster to initialize as it avoids the need to parse the whole library (including parts of it which may not be used). Note that this will not be nececssary for code which will be bundled prior to shipping, as modern versions of rollup and webpack will remove the unused code. Importing a single method looks like this:
 
 ```js
-const notUndefined = require('@iter-tools/es/methods/not-undefined');
+const notUndefined = require('iter-tools-es/methods/not-undefined');
 ```
 
 ### explode.macro
@@ -87,11 +87,11 @@ const notUndefined = require('@iter-tools/es/methods/not-undefined');
 If you happen to be transpiling the code and have use of the fantastic `babel-plugin-macros`, you can generate single-method imports effortlessly like so:
 
 ```js
-import { filter, map } from '@iter-tools/es/explode.macro';
+import { filter, map } from 'iter-tools-es/explode.macro';
 
 // which transpiles to:
-import filter from '@iter-tools/es/methods/filter';
-import map from '@iter-tools/es/methods/map';
+import filter from 'iter-tools-es/methods/filter';
+import map from 'iter-tools-es/methods/map';
 ```
 
 ## Roadmap

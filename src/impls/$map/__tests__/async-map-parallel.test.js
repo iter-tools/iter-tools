@@ -1,5 +1,5 @@
 import { delay } from '../../../internal/delay.js';
-import { asyncMapParallel } from '@iter-tools/es';
+import { asyncMapParallel } from 'iter-tools-es';
 import { asyncWrap, asyncUnwrap } from '../../../test/async-helpers.js';
 
 describe('asyncMapParallel', () => {

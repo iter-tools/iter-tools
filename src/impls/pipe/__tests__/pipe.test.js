@@ -1,4 +1,4 @@
-import { pipe } from '@iter-tools/es';
+import { pipe } from 'iter-tools-es';
 
 describe('pipe', () => {
   it('works', () => {

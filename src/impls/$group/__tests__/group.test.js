@@ -6,7 +6,7 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { group } from '@iter-tools/es';
+import { group } from 'iter-tools-es';
 import { wrap, unwrap, unwrapDeep } from '../../../test/helpers.js';
 
 describe('group', () => {

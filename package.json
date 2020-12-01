@@ -1,5 +1,5 @@
 {
-  "name": "@iter-tools/es",
+  "name": "iter-tools-es",
   "version": "7.0.0-rc.0",
   "description": "The iterable toolbox",
   "type": "module",

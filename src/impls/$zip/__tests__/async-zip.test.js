@@ -6,7 +6,7 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { asyncZip, asyncToArray } from '@iter-tools/es';
+import { asyncZip, asyncToArray } from 'iter-tools-es';
 import { asyncWrap } from '../../../test/async-helpers.js';
 
 describe('asyncZip', () => {

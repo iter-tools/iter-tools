@@ -6,7 +6,7 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { asyncJoinWithSeq } from '@iter-tools/es';
+import { asyncJoinWithSeq } from 'iter-tools-es';
 import { asyncWrapDeep, asyncUnwrap } from '../../../test/async-helpers.js';
 
 describe('asyncJoinWithSeq', () => {

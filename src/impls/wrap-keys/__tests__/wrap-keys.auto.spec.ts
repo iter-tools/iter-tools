@@ -6,7 +6,7 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { wrapKeys } from '@iter-tools/es';
+import { wrapKeys } from 'iter-tools-es';
 
 describe('wrapKeys', () => {
   it('works with Map', () => {

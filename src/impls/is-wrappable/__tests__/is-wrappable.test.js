@@ -1,4 +1,4 @@
-import { isWrappable } from '@iter-tools/es';
+import { isWrappable } from 'iter-tools-es';
 
 describe('isWrappable', () => {
   describe('when value can be an input to wrap', () => {

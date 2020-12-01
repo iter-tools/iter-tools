@@ -1,4 +1,4 @@
-import { wrapEntries } from '@iter-tools/es';
+import { wrapEntries } from 'iter-tools-es';
 
 describe('wrapEntries', () => {
   it('works with Map', () => {

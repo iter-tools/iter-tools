@@ -10,7 +10,7 @@ const target = argv._[0];
 const mungeReadme = (content) => {
   const lines = content.split('\n');
   const npmBadgeIdx = lines.findIndex((line) =>
-    line.includes('https://www.npmjs.com/package/@iter-tools/es'),
+    line.includes('https://www.npmjs.com/package/iter-tools-es'),
   );
   if (npmBadgeIdx >= 0) {
     lines.splice(npmBadgeIdx, 1);

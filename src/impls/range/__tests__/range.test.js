@@ -1,4 +1,4 @@
-import { range } from '@iter-tools/es';
+import { range } from 'iter-tools-es';
 import { anyType, unwrap } from '../../../test/helpers.js';
 
 describe('range', () => {

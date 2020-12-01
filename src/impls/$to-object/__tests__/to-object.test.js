@@ -6,7 +6,7 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { toObject } from '@iter-tools/es';
+import { toObject } from 'iter-tools-es';
 import { wrap } from '../../../test/helpers.js';
 
 describe('toObject', () => {

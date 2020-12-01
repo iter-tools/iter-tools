@@ -1,4 +1,4 @@
-import { notNull } from '@iter-tools/es';
+import { notNull } from 'iter-tools-es';
 
 describe('notNull', () => {
   describe('when value is null', () => {

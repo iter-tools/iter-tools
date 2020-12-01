@@ -6,7 +6,7 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { asyncStartsWithAny } from '@iter-tools/es';
+import { asyncStartsWithAny } from 'iter-tools-es';
 import { asyncWrap } from '../../../test/async-helpers.js';
 
 describe('asyncStartsWithAny', () => {

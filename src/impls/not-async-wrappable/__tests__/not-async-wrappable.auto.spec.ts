@@ -6,7 +6,7 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { notAsyncWrappable } from '@iter-tools/es';
+import { notAsyncWrappable } from 'iter-tools-es';
 
 describe('notAsyncWrappable', () => {
   describe('when value can be used with asyncWrap', () => {

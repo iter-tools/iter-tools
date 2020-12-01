@@ -8,7 +8,7 @@
 
 import assert from 'static-type-assert';
 import { Iterable, ResultIterable } from '../../../types/iterable';
-import { group } from '@iter-tools/es';
+import { group } from 'iter-tools-es';
 
 declare const Ø: never;
 

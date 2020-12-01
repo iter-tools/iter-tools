@@ -6,7 +6,7 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { prepend, toArray, wrap } from '@iter-tools/es';
+import { prepend, toArray, wrap } from 'iter-tools-es';
 
 describe('prepend', () => {
   describe('when source is empty', () => {

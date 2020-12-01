@@ -13,7 +13,7 @@
     "types": ["jest"],
     "baseUrl": ".",
     "paths": {
-      "@iter-tools/es": ["."]
+      "iter-tools-es": ["."]
     }
   },
   "include": ["src/**/__tests__/*.ts", "src/test/setup.d.ts"],

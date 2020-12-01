@@ -6,7 +6,7 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { pipe } from '@iter-tools/es';
+import { pipe } from 'iter-tools-es';
 
 describe('pipe', () => {
   it('works', () => {

@@ -8,7 +8,7 @@
 
 import assert from 'static-type-assert';
 import { AsyncIterable, AsyncResultIterable } from '../../../types/async-iterable';
-import { asyncGroup } from '@iter-tools/es';
+import { asyncGroup } from 'iter-tools-es';
 
 declare const Ø: never;
 

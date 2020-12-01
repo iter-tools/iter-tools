@@ -6,7 +6,7 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { window } from '@iter-tools/es';
+import { window } from 'iter-tools-es';
 import { wrap, unwrapDeep, anyType } from '../../../test/helpers.js';
 
 describe('window', () => {

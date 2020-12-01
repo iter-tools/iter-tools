@@ -1,6 +1,6 @@
 import { $, $isAsync, $async, $await } from '../../../../generate/async.macro.cjs';
 
-import { $takeWhile } from '@iter-tools/es';
+import { $takeWhile } from 'iter-tools-es';
 import { $wrap, $unwrap } from '../../../test/$helpers.js';
 
 describe($`takeWhile`, () => {

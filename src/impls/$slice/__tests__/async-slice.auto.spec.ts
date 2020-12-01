@@ -6,7 +6,7 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { asyncSlice } from '@iter-tools/es';
+import { asyncSlice } from 'iter-tools-es';
 import { AsyncIterable } from '../../../types/async-iterable.js';
 import { asyncWrap, asyncUnwrap } from '../../../test/async-helpers.js';
 

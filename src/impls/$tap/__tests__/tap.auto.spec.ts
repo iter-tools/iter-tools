@@ -6,7 +6,7 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { tap } from '@iter-tools/es';
+import { tap } from 'iter-tools-es';
 import { wrap, unwrap, anyType } from '../../../test/helpers.js';
 
 describe('tap', () => {

@@ -1,7 +1,7 @@
 import { $, $isSync, $async, $await } from '../../../../generate/async.macro.cjs';
 import { $awaitError } from '../../../../generate/test.macro.cjs';
 
-import { $splitOn } from '@iter-tools/es';
+import { $splitOn } from 'iter-tools-es';
 import { $wrap, $unwrapDeep } from '../../../test/$helpers.js';
 
 describe($`splitOn`, () => {

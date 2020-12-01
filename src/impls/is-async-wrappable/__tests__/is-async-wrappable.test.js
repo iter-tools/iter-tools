@@ -1,4 +1,4 @@
-import { isAsyncWrappable } from '@iter-tools/es';
+import { isAsyncWrappable } from 'iter-tools-es';
 
 describe('isAsyncWrappable', () => {
   describe('when value can be used with asyncWrap', () => {

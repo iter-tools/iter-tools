@@ -6,7 +6,7 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { isAsyncLoopable } from '@iter-tools/es';
+import { isAsyncLoopable } from 'iter-tools-es';
 
 describe('isAsyncLoopable', () => {
   describe('when value can be used with a `for await..of` loop', () => {

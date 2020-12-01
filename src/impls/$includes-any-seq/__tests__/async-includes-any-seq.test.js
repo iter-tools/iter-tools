@@ -6,7 +6,7 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { asyncIncludesAnySeq } from '@iter-tools/es';
+import { asyncIncludesAnySeq } from 'iter-tools-es';
 import { asyncWrap } from '../../../test/async-helpers.js';
 
 describe('asyncIncludesAnySeq', () => {

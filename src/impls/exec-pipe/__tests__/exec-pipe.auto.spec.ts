@@ -6,7 +6,7 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { execPipe } from '@iter-tools/es';
+import { execPipe } from 'iter-tools-es';
 
 describe('pipe', () => {
   it('works', () => {

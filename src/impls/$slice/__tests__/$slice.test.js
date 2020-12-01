@@ -1,6 +1,6 @@
 import { $, $async, $await } from '../../../../generate/async.macro.cjs';
 
-import { $slice } from '@iter-tools/es';
+import { $slice } from 'iter-tools-es';
 import { $Iterable } from '../../../types/$iterable.js';
 import { $wrap, $unwrap } from '../../../test/$helpers.js';
 

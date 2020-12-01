@@ -1,4 +1,4 @@
-import { getSize } from '@iter-tools/es';
+import { getSize } from 'iter-tools-es';
 
 describe('getSize', () => {
   it('can get the size of a nullish value', () => {

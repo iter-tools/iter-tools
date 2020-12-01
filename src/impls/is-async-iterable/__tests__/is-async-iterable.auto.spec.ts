@@ -6,7 +6,7 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { isAsyncIterable } from '@iter-tools/es';
+import { isAsyncIterable } from 'iter-tools-es';
 
 describe('isAsyncIterable', () => {
   describe('when value is an async iterable', () => {

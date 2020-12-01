@@ -6,7 +6,7 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { joinWith } from '@iter-tools/es';
+import { joinWith } from 'iter-tools-es';
 import { wrapDeep, unwrap } from '../../../test/helpers.js';
 
 describe('joinWith', () => {

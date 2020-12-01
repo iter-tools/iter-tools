@@ -1,5 +1,5 @@
 import assert from 'static-type-assert';
-import { call } from '@iter-tools/es';
+import { call } from 'iter-tools-es';
 
 declare const Ø: never;
 

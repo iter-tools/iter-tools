@@ -1,4 +1,4 @@
-import { isIterable } from '@iter-tools/es';
+import { isIterable } from 'iter-tools-es';
 
 describe('isIterable', () => {
   describe('when value has Symbol.iterator', () => {

@@ -6,7 +6,7 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { asyncWindow } from '@iter-tools/es';
+import { asyncWindow } from 'iter-tools-es';
 import { asyncWrap, asyncUnwrapDeep, anyType } from '../../../test/async-helpers.js';
 
 describe('asyncWindow', () => {

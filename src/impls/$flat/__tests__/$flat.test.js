@@ -1,6 +1,6 @@
 import { $, $isAsync, $async, $await } from '../../../../generate/async.macro.cjs';
 
-import { $flat } from '@iter-tools/es';
+import { $flat } from 'iter-tools-es';
 import { $wrapDeep, $unwrap, $unwrapDeep, anyType } from '../../../test/$helpers.js';
 
 describe($`flat`, () => {

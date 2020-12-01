@@ -1,4 +1,4 @@
-import { objectKeys } from '@iter-tools/es';
+import { objectKeys } from 'iter-tools-es';
 
 describe('objectKeys', () => {
   it('works with Objects', () => {

@@ -9,7 +9,7 @@
 import assert from 'static-type-assert';
 
 import { Iterable, ResultIterable } from '../../../types/iterable';
-import { flat } from '@iter-tools/es';
+import { flat } from 'iter-tools-es';
 
 declare const Ø: never;
 

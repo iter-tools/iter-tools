@@ -1,4 +1,4 @@
-import { combinations } from '@iter-tools/es';
+import { combinations } from 'iter-tools-es';
 
 describe('combinations', () => {
   it('returns empty', () => {

@@ -6,7 +6,7 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { objectEntries } from '@iter-tools/es';
+import { objectEntries } from 'iter-tools-es';
 
 describe('objectEntries', () => {
   it('works with Objects', () => {

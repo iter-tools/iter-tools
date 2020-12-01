@@ -1,4 +1,4 @@
-import { isAsyncIterable } from '@iter-tools/es';
+import { isAsyncIterable } from 'iter-tools-es';
 
 declare const value: unknown;
 

@@ -6,7 +6,7 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { isSorted } from '@iter-tools/es';
+import { isSorted } from 'iter-tools-es';
 import { wrap } from '../../../test/helpers.js';
 
 describe('isSorted', () => {

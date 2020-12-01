@@ -1,4 +1,4 @@
-import { isAsyncWrappable, asyncWrap } from '@iter-tools/es';
+import { isAsyncWrappable, asyncWrap } from 'iter-tools-es';
 
 declare const value: unknown;
 

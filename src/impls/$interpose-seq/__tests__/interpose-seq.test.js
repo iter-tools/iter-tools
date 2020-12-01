@@ -6,7 +6,7 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { interposeSeq } from '@iter-tools/es';
+import { interposeSeq } from 'iter-tools-es';
 import { wrap, unwrap } from '../../../test/helpers.js';
 
 describe('interposeSeq', () => {

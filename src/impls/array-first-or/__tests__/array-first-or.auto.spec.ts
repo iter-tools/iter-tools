@@ -6,7 +6,7 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { arrayFirstOr } from '@iter-tools/es';
+import { arrayFirstOr } from 'iter-tools-es';
 
 describe('arrayFirstOr', () => {
   describe('when there is no array', () => {

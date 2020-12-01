@@ -1,5 +1,5 @@
 import assert from 'static-type-assert';
-import { permutations } from '@iter-tools/es';
+import { permutations } from 'iter-tools-es';
 
 declare const Ø: never;
 

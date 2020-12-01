@@ -1,4 +1,4 @@
-import { repeat, slice } from '@iter-tools/es';
+import { repeat, slice } from 'iter-tools-es';
 
 describe('repeat', () => {
   it('repeats infinitely', () => {

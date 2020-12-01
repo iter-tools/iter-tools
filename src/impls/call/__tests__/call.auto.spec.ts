@@ -6,7 +6,7 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { call } from '@iter-tools/es';
+import { call } from 'iter-tools-es';
 
 describe('call', () => {
   it('calls the passed function', () => {
