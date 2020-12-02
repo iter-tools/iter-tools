@@ -14,8 +14,6 @@ module.exports = {
   rules: {
     // I think this is wrong. Let the transpiler dig it out for perf, but it belongs in the sources.
     'no-return-await': 'off',
-    // Requires /*#__PURE__*/ comments
-    'local-rules/pure-curry': 'error',
     // Pure comments are usually inserted by transpilers, so bundlers expect an exact match.
     'spaced-comment': ['error', 'always', { exceptions: ['#__PURE__'] }],
   },
@@ -28,6 +26,13 @@ module.exports = {
       files: ['*.js'],
       rules: {
         'node/file-extension-in-import': ['error', 'always'],
+      },
+    },
+    {
+      files: ['src/**.js', '!src/test', '**/__tests__/**'],
+      rules: {
+        // Requires /*#__PURE__*/ comments
+        'local-rules/no-impure-calls': 'error',
       },
     },
     {

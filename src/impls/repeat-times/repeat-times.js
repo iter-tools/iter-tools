@@ -7,4 +7,7 @@ export function* repeatTimes(n, value) {
   }
 }
 
-export default /*#__PURE__*/ curry(wrapWithResultIterable(repeatTimes), repeatTimes.length);
+export default /*#__PURE__*/ curry(
+  /*#__PURE__*/ wrapWithResultIterable(repeatTimes),
+  repeatTimes.length,
+);

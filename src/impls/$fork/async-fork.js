@@ -90,6 +90,6 @@ export function asyncFork(source) {
   return generateForks(source, state);
 }
 
-export default asyncIterableCurry(asyncFork, {
+export default /*#__PURE__*/ asyncIterableCurry(asyncFork, {
   forceSync: true,
 });

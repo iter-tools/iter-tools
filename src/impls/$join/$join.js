@@ -7,4 +7,4 @@ export function $join(source) {
   return $joinWithSeq($ensureIterable(source), emptySeq);
 }
 
-export default $wrapWithResultIterable($join);
+export default /*#__PURE__*/ $wrapWithResultIterable($join);

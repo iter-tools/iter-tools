@@ -14,7 +14,7 @@ export function* objectKeys(obj) {
   }
 }
 
-export default wrapWithResultIterable(objectKeys, {
+export default /*#__PURE__*/ wrapWithResultIterable(objectKeys, {
   validateArgs(args) {
     if (!(args[0] == null || typeof args[0] === 'object')) {
       throw new Error('the argument to objectKeys was not an object, null, or undefined');

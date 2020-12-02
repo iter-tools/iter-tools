@@ -14,4 +14,4 @@ export function arrayReverse(source) {
   return _arrayReverse(source);
 }
 
-export default wrapWithResultIterable(arrayReverse);
+export default /*#__PURE__*/ wrapWithResultIterable(arrayReverse);

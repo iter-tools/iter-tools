@@ -14,4 +14,4 @@ export async function* asyncConcat(...sources) {
   }
 }
 
-export default asyncWrapWithResultIterable(asyncConcat);
+export default /*#__PURE__*/ asyncWrapWithResultIterable(asyncConcat);

@@ -96,6 +96,6 @@ export function $fork(source) {
   return generateForks(source, state);
 }
 
-export default $iterableCurry($fork, {
+export default /*#__PURE__*/ $iterableCurry($fork, {
   forceSync: true,
 });

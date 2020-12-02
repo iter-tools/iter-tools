@@ -13,4 +13,4 @@ export function group(iterable) {
   return asyncGroupBy(asyncEnsureIterable(iterable), (_) => _);
 }
 
-export default asyncWrapWithResultIterable(group);
+export default /*#__PURE__*/ asyncWrapWithResultIterable(group);

@@ -14,4 +14,4 @@ export function* concat(...sources) {
   }
 }
 
-export default wrapWithResultIterable(concat);
+export default /*#__PURE__*/ wrapWithResultIterable(concat);

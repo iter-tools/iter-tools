@@ -11,4 +11,4 @@ import { nullableWrap as wrap } from '../../internal/wrap.js';
 
 export { wrap };
 
-export default wrapWithResultIterable(wrap);
+export default /*#__PURE__*/ wrapWithResultIterable(wrap);
