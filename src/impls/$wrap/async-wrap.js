@@ -11,4 +11,4 @@ import { asyncNullableWrap as asyncWrap } from '../../internal/async-wrap.js';
 
 export { asyncWrap };
 
-export default asyncWrapWithResultIterable(asyncWrap);
+export default /*#__PURE__*/ asyncWrapWithResultIterable(asyncWrap);

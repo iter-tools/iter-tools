@@ -6,4 +6,4 @@ export function* wrapKeys(keysable) {
   }
 }
 
-export default wrapWithResultIterable(wrapKeys);
+export default /*#__PURE__*/ wrapWithResultIterable(wrapKeys);

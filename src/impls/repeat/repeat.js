@@ -6,4 +6,4 @@ export function* repeat(value) {
   }
 }
 
-export default wrapWithResultIterable(repeat);
+export default /*#__PURE__*/ wrapWithResultIterable(repeat);

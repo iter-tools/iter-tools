@@ -45,5 +45,5 @@ export default /*#__PURE__*/ asyncIterableCurry(asyncLeadingWindow, {
   minArgs: 1,
   maxArgs: 2,
   optionalArgsAtEnd: true,
-  validateArgs: validateWindowArgs('asyncLeadingWindow'),
+  validateArgs: /*#__PURE__*/ validateWindowArgs('asyncLeadingWindow'),
 });

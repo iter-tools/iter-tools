@@ -1,3 +1,3 @@
 module.exports = {
-  'pure-curry': require('./pure-curry.cjs'),
+  'no-impure-calls': require('./no-impure-calls.cjs'),
 };

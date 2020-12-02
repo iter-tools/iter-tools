@@ -5,4 +5,4 @@ export function group(iterable) {
   return $groupBy($ensureIterable(iterable), (_) => _);
 }
 
-export default $wrapWithResultIterable(group);
+export default /*#__PURE__*/ $wrapWithResultIterable(group);

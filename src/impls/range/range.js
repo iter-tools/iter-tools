@@ -8,7 +8,7 @@ export function* range(start = 0, end = Infinity, step = 1) {
   }
 }
 
-export default wrapWithResultIterable(range, {
+export default /*#__PURE__*/ wrapWithResultIterable(range, {
   validateArgs(args) {
     let [optsOrEndOrStart, end = Infinity, step] = args;
     let start;

@@ -45,5 +45,5 @@ export default /*#__PURE__*/ iterableCurry(leadingWindow, {
   minArgs: 1,
   maxArgs: 2,
   optionalArgsAtEnd: true,
-  validateArgs: validateWindowArgs('leadingWindow'),
+  validateArgs: /*#__PURE__*/ validateWindowArgs('leadingWindow'),
 });

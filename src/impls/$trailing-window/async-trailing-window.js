@@ -27,5 +27,5 @@ export default /*#__PURE__*/ asyncIterableCurry(asyncTrailingWindow, {
   minArgs: 1,
   maxArgs: 2,
   optionalArgsAtEnd: true,
-  validateArgs: validateWindowArgs('asyncTrailingWindow'),
+  validateArgs: /*#__PURE__*/ validateWindowArgs('asyncTrailingWindow'),
 });

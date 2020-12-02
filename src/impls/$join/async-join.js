@@ -15,4 +15,4 @@ export function asyncJoin(source) {
   return asyncJoinWithSeq(asyncEnsureIterable(source), emptySeq);
 }
 
-export default asyncWrapWithResultIterable(asyncJoin);
+export default /*#__PURE__*/ asyncWrapWithResultIterable(asyncJoin);

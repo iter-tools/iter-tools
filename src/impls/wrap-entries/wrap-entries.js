@@ -6,4 +6,4 @@ export function* wrapEntries(entriesable) {
   }
 }
 
-export default wrapWithResultIterable(wrapEntries);
+export default /*#__PURE__*/ wrapWithResultIterable(wrapEntries);

@@ -14,7 +14,7 @@ export function* objectEntries(obj) {
   }
 }
 
-export default wrapWithResultIterable(objectEntries, {
+export default /*#__PURE__*/ wrapWithResultIterable(objectEntries, {
   validateArgs(args) {
     if (!(args[0] == null || typeof args[0] === 'object')) {
       throw new Error('the argument to objectEntries was not an object, null, or undefined');

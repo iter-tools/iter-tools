@@ -22,5 +22,5 @@ export default /*#__PURE__*/ $iterableCurry($trailingWindow, {
   minArgs: 1,
   maxArgs: 2,
   optionalArgsAtEnd: true,
-  validateArgs: validateWindowArgs($`trailingWindow`),
+  validateArgs: /*#__PURE__*/ validateWindowArgs($`trailingWindow`),
 });
