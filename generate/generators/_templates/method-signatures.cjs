@@ -1,8 +1,9 @@
 'use strict';
 
-const param = ({ name, isRest, isOptional, isIterable, isAsync, properties }) => {
+const param = (methodName, { name, isRest, isOptional, isIterable, isAsync, properties }) => {
   if (isIterable) {
-    name = `[${name}](#${isAsync ? 'async' : ''}sourceiterable)`;
+    const iterableType = methodName.startsWith('__') ? 'iterable' : 'sourceiterable';
+    name = `[${name}](#${isAsync ? 'async' : ''}${iterableType})`;
   } else if (name === 'comparator') {
     name = `[${name}](#comparator)`;
   }
@@ -12,10 +13,10 @@ const param = ({ name, isRest, isOptional, isIterable, isAsync, properties }) =>
   return result;
 };
 
-const signature = (methodName, params) => {
-  return `**${methodName}(${params.map(param).join(', ')})**`;
+const signature = ({ name, params }) => {
+  return `**${name}(${params.map((p) => param(name, p)).join(', ')})**  `;
 };
 
-module.exports = (methodName, signatures) => {
-  return signatures.map((params) => signature(methodName, params)).join('  \n');
+module.exports = (signatures) => {
+  return signatures.map(signature).join('\n');
 };

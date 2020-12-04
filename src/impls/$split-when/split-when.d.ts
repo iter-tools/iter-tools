@@ -21,4 +21,4 @@ declare function splitWhen<T>(
   source: SourceIterable<T>,
 ): SyncResultIterable<ResultIterable<T>>;
 
-export default splitWhen;
+export { splitWhen };

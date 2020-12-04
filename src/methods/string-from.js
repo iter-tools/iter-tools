@@ -6,4 +6,4 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-export { default } from '../impls/string-from/string-from.js';
+export { stringFrom as default } from '../impls/string-from/string-from.js';

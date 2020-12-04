@@ -1,12 +1,12 @@
 import { $iterableCurry, $ensureIterable } from '../../internal/$iterable.js';
-import { $splitOnAnySeq } from '../$split-on-any-seq/$split-on-any-seq.js';
+import { $__splitOnAnySeq } from '../$split-on-any-seq/$split-on-any-seq.js';
 
-export function $splitOnSeq(source, separatorSeq) {
-  return $splitOnAnySeq(source, [separatorSeq]);
+export function $__splitOnSeq(source, separatorSeq) {
+  return $__splitOnAnySeq(source, [separatorSeq]);
 }
 
-export default /*#__PURE__*/ $iterableCurry($splitOnSeq, {
+export const $splitOnSeq = /*#__PURE__*/ $iterableCurry($__splitOnSeq, {
   validateArgs(args) {
-    args[0] = $ensureIterable(args[0]);
+    args[1] = $ensureIterable(args[1]);
   },
 });

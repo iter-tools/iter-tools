@@ -12,6 +12,12 @@ function range(start, end) {
   return idxs;
 }
 
+function* arrayReverse(arr) {
+  for (let i = arr.length - 1; i >= 0; i--) {
+    yield arr[i];
+  }
+}
+
 const splice = (arr, start, count) => {
   arr = [...arr];
   arr.splice(start, count);
@@ -51,19 +57,27 @@ function methodUsesIterableCurry(ast) {
       curryMethod &&
       astMatch(
         {
-          type: 'ExportDefaultDeclaration',
+          type: 'ExportNamedDeclaration',
           declaration: {
-            type: 'CallExpression',
-            callee: {
-              name: curryMethod,
-            },
+            type: 'VariableDeclaration',
+            declarations: [
+              {
+                type: 'VariableDeclarator',
+                init: {
+                  type: 'CallExpression',
+                  callee: {
+                    name: curryMethod,
+                  },
+                },
+              },
+            ],
           },
         },
         stmt,
       )
     ) {
       usesIterableCurry = true;
-      const [, optsAst] = stmt.declaration.arguments;
+      const [, optsAst] = stmt.declaration.declarations[0].init.arguments;
 
       if (optsAst && optsAst.type === 'ObjectExpression') {
         for (const propertyAst of optsAst.properties) {
@@ -77,7 +91,8 @@ function methodUsesIterableCurry(ast) {
   return { usesIterableCurry, iterableCurryOpts };
 }
 
-function getParams(methodName, ast) {
+function getSignature(methodName, ast) {
+  let name;
   let params;
 
   for (const stmt of ast.program.body) {
@@ -88,13 +103,15 @@ function getParams(methodName, ast) {
           declaration: {
             type: 'FunctionDeclaration',
             id: {
-              name: methodName,
+              name: oneOf(methodName, `__${methodName}`),
             },
           },
         },
         stmt,
       )
     ) {
+      name = stmt.declaration.id.name;
+
       const methodDeclaration = stmt.declaration;
       params = methodDeclaration.params.map((param) => {
         let paramDecl;
@@ -127,25 +144,26 @@ function getParams(methodName, ast) {
           };
         }
       });
+      break;
     }
   }
 
-  return params;
+  return name && { name, params };
 }
 
 // Reverse any munging that iterableCurry does to params
-function uncurryParams(ASYNC, params, { variadic }) {
-  params[0].isIterable = true;
-  params[0].isAsync = ASYNC;
-
-  if (variadic) params[0].isRest = true;
-
-  params.push(params.shift());
+function uncurryParams(params, { variadic, growRight }) {
+  let [itParam, ...cfgParams] = params;
+  if (variadic) itParam = { ...itParam, isRest: true };
+  return [...(growRight ? cfgParams : arrayReverse(cfgParams)), itParam];
 }
 
-function getSignatureOverrides(ASYNC, params, docme) {
-  return docme.signatures.map((docParams) =>
-    docParams
+function getSignatureOverrides(ASYNC, signature, docme) {
+  const { name, params } = signature;
+  const __ = name.startsWith('__');
+  const configOverloads = docme.signatures.map((docParams) => ({
+    name: __ ? name.slice(2) : name,
+    params: docParams
       .map((param) =>
         param.isIterable
           ? {
@@ -155,33 +173,53 @@ function getSignatureOverrides(ASYNC, params, docme) {
           : param,
       )
       .concat(params.filter((param) => param.isIterable)),
-  );
+  }));
+
+  if (name.startsWith('__')) {
+    configOverloads.push(signature);
+  }
+  return configOverloads;
 }
 
 module.exports = function extractMethodSignatures(methodName, ast, docme) {
   const ASYNC = methodName.startsWith('async');
   const { usesIterableCurry, iterableCurryOpts } = methodUsesIterableCurry(ast);
-  const params = getParams(methodName, ast);
+  const signature = getSignature(methodName, ast);
 
-  if (params && usesIterableCurry) {
-    uncurryParams(ASYNC, params, iterableCurryOpts);
+  if (signature && usesIterableCurry) {
+    signature.params[0].isIterable = true;
+    signature.params[0].isAsync = ASYNC;
   }
 
+  let result;
   if (docme.signatures) {
-    return getSignatureOverrides(ASYNC, params || [], docme);
-  } else if (!params) {
-    return null;
-  } else if (!usesIterableCurry) {
-    return [params];
-  } else {
-    const { minArgs = params.length, maxArgs = params.length } = iterableCurryOpts;
+    result = getSignatureOverrides(ASYNC, signature || { name: methodName, params: [] }, docme);
+  } else if (signature) {
+    const { params } = signature;
+    if (!usesIterableCurry) {
+      result = [{ name: methodName, params }];
+    } else {
+      const { minArgs = params.length, maxArgs = params.length } = iterableCurryOpts;
 
-    return range(0, maxArgs - minArgs + 1).map((configParamsLen) =>
-      splice(
-        params,
-        iterableCurryOpts.optionalArgsAtEnd ? maxArgs - configParamsLen : 0,
-        configParamsLen,
-      ),
-    );
+      const uncurried = uncurryParams(params, iterableCurryOpts);
+      result = range(0, maxArgs - minArgs + 1).map((configParamsLen) => ({
+        name: methodName,
+        params: splice(
+          uncurried,
+          iterableCurryOpts.growRight ? maxArgs - configParamsLen : 0,
+          configParamsLen,
+        ),
+      }));
+    }
   }
+
+  if (signature && signature.name.startsWith('__')) {
+    let { name, params } = signature;
+    if (usesIterableCurry) {
+      const { minArgs = params.length } = iterableCurryOpts;
+      params = params.map((param, i) => (i <= minArgs ? param : { ...param, isOptional: true }));
+    }
+    result.push({ name, params });
+  }
+  return result;
 };

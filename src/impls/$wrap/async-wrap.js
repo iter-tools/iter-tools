@@ -7,8 +7,8 @@
  */
 
 import { asyncWrapWithResultIterable } from '../../internal/async-iterable.js';
-import { asyncNullableWrap as asyncWrap } from '../../internal/async-wrap.js';
+import { asyncNullableWrap as __asyncWrap } from '../../internal/async-wrap.js';
 
-export { asyncWrap };
+export { __asyncWrap };
 
-export default /*#__PURE__*/ asyncWrapWithResultIterable(asyncWrap);
+export const asyncWrap = /*#__PURE__*/ asyncWrapWithResultIterable(__asyncWrap);

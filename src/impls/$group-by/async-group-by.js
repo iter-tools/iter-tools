@@ -7,8 +7,8 @@
  */
 
 import { asyncIterableCurry } from '../../internal/async-iterable.js';
-import { asyncSpliterateGrouped } from '../$spliterate-grouped/async-spliterate-grouped.js';
-import { asyncPeekerate } from '../$peekerate/async-peekerate.js';
+import { __asyncSpliterateGrouped } from '../$spliterate-grouped/async-spliterate-grouped.js';
+import { __asyncPeekerate } from '../$peekerate/async-peekerate.js';
 
 const initialKey = Symbol('initial group key');
 
@@ -25,7 +25,7 @@ const warnNullGetKeyDeprecation = () => {
 };
 
 async function* asyncGroupingSpliterator(split, { getKey }, source) {
-  const peekr = await asyncPeekerate(source);
+  const peekr = await __asyncPeekerate(source);
   let key = initialKey;
   let idx = 0;
 
@@ -45,13 +45,13 @@ async function* asyncGroupingSpliterator(split, { getKey }, source) {
   }
 }
 
-export function asyncGroupBy(source, getKey) {
+export function __asyncGroupBy(source, getKey) {
   if (getKey === null) {
     warnNullGetKeyDeprecation();
     getKey = (_) => _;
   }
 
-  return asyncSpliterateGrouped(source, asyncGroupingSpliterator, { getKey });
+  return __asyncSpliterateGrouped(source, asyncGroupingSpliterator, { getKey });
 }
 
-export default /*#__PURE__*/ asyncIterableCurry(asyncGroupBy);
+export const asyncGroupBy = /*#__PURE__*/ asyncIterableCurry(__asyncGroupBy);

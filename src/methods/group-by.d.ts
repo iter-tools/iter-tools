@@ -6,4 +6,4 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-export { default } from '../impls/$group-by/group-by.js';
+export { groupBy as default } from '../impls/$group-by/group-by';

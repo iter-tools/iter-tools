@@ -20,4 +20,4 @@ declare function $find<T>(
   iterable: $SourceIterable<T>,
 ): $Promise<T | undefined>;
 
-export default $find;
+export { $find };

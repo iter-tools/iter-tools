@@ -21,11 +21,11 @@ async function* asyncFlatInternal(shouldFlat, depth, currentDepth, source) {
   }
 }
 
-export function asyncFlat(source, shouldFlat = defaultShouldFlat, depth = 1) {
+export function __asyncFlat(source, depth = 1, shouldFlat = defaultShouldFlat) {
   return asyncFlatInternal(shouldFlat, depth, 0, source);
 }
 
-export default /*#__PURE__*/ asyncIterableCurry(asyncFlat, {
+export const asyncFlat = /*#__PURE__*/ asyncIterableCurry(__asyncFlat, {
   minArgs: 0,
   maxArgs: 2,
   validateArgs,

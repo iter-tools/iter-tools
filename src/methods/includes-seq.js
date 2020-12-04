@@ -6,4 +6,4 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-export { default } from '../impls/$includes-seq/includes-seq.js';
+export { includesSeq as default } from '../impls/$includes-seq/includes-seq.js';

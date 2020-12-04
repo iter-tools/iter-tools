@@ -36,4 +36,4 @@ declare function $slice<T>(
   source: $SourceIterable<T>,
 ): $ResultIterable<T>;
 
-export default $slice;
+export { $slice };

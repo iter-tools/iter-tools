@@ -17,4 +17,4 @@ declare function asyncZipAll<T>(
   ...sources: Array<AsyncSourceIterable<T>>
 ): AsyncResultIterable<Array<T | undefined>>;
 
-export default asyncZipAll;
+export { asyncZipAll };

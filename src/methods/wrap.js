@@ -6,4 +6,4 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-export { default } from '../impls/$wrap/wrap.js';
+export { wrap as default } from '../impls/$wrap/wrap.js';

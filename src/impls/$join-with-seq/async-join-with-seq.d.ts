@@ -18,4 +18,4 @@ declare function asyncJoinWithSeq<W>(
   seq: SyncSourceIterable<W>,
 ): <T>(source: AsyncSourceIterable<AsyncSourceIterable<T>>) => AsyncResultIterable<T | W>;
 
-export default asyncJoinWithSeq;
+export { asyncJoinWithSeq };

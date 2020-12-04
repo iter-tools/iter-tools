@@ -1,9 +1,9 @@
 import { wrapWithResultIterable } from '../../internal/iterable.js';
 
-export function* wrapKeys(keysable) {
+export function* __wrapKeys(keysable) {
   if (keysable != null) {
     yield* keysable.keys();
   }
 }
 
-export default /*#__PURE__*/ wrapWithResultIterable(wrapKeys);
+export const wrapKeys = /*#__PURE__*/ wrapWithResultIterable(__wrapKeys);

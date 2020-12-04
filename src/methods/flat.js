@@ -6,4 +6,4 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-export { default } from '../impls/$flat/flat.js';
+export { flat as default } from '../impls/$flat/flat.js';

@@ -17,4 +17,4 @@ declare function asyncDropWhile<T>(
   source: AsyncSourceIterable<T>,
 ): AsyncResultIterable<T>;
 
-export default asyncDropWhile;
+export { asyncDropWhile };

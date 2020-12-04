@@ -6,4 +6,4 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-export { default } from '../impls/$take/async-take.js';
+export { asyncTake as default } from '../impls/$take/async-take';

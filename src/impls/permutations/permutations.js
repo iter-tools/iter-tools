@@ -21,7 +21,7 @@ function permutationsSize(len, r) {
   return Number(factorial(len, len - r));
 }
 
-export function permutations(iterable, k) {
+export function __permutations(iterable, k) {
   const arr = [...iterable];
 
   k = k === undefined ? arr.length : k;
@@ -61,7 +61,7 @@ export function permutations(iterable, k) {
   };
 }
 
-export default /*#__PURE__*/ iterableCurry(permutations, {
+export const permutations = /*#__PURE__*/ iterableCurry(__permutations, {
   reduces: true,
   minArgs: 0,
   maxArgs: 1,

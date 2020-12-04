@@ -7,12 +7,12 @@
  */
 
 import { asyncIterableCurry } from '../../internal/async-iterable.js';
-import { asyncInterposeSeq } from '../$interpose-seq/async-interpose-seq.js';
+import { __asyncInterposeSeq } from '../$interpose-seq/async-interpose-seq.js';
 
-export function asyncInterpose(source, value) {
-  return asyncInterposeSeq(source, [value]);
+export function __asyncInterpose(source, value) {
+  return __asyncInterposeSeq(source, [value]);
 }
 
-export default /*#__PURE__*/ asyncIterableCurry(asyncInterpose, {
+export const asyncInterpose = /*#__PURE__*/ asyncIterableCurry(__asyncInterpose, {
   validateArgs(args) {},
 });

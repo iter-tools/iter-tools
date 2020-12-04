@@ -11,4 +11,4 @@ declare function $map<O, T>(
   source: $SourceIterable<T>,
 ): $ResultIterable<O>;
 
-export default $map;
+export { $map };

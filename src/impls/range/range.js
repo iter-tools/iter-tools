@@ -2,13 +2,14 @@ import { wrapWithResultIterable } from '../../internal/iterable.js';
 import { isObject, isDef } from '../../internal/shapes.js';
 import { isInteger, isIntegerOrInfinite } from '../../internal/number.js';
 
-export function* range(start = 0, end = Infinity, step = 1) {
+export function* __range(start = 0, end = Infinity, step = 1) {
   for (let i = start; step > 0 ? i < end : i > end; i += step) {
     yield i;
   }
 }
 
-export default /*#__PURE__*/ wrapWithResultIterable(range, {
+export const range = /*#__PURE__*/ wrapWithResultIterable(__range, {
+  growRight: true,
   validateArgs(args) {
     let [optsOrEndOrStart, end = Infinity, step] = args;
     let start;

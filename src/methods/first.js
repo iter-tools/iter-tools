@@ -6,4 +6,4 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-export { default } from '../impls/$first/first.js';
+export { first as default } from '../impls/$first/first.js';

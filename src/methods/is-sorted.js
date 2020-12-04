@@ -6,4 +6,4 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-export { default } from '../impls/$is-sorted/is-sorted.js';
+export { isSorted as default } from '../impls/$is-sorted/is-sorted.js';

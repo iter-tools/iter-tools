@@ -6,4 +6,4 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-export { default } from '../impls/array-from/array-from.js';
+export { arrayFrom as default } from '../impls/array-from/array-from';

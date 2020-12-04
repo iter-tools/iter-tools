@@ -7,12 +7,12 @@
  */
 
 import { iterableCurry } from '../../internal/iterable.js';
-import { findOr } from '../$find-or/find-or.js';
+import { __findOr } from '../$find-or/find-or.js';
 
-export function find(iterable, predicate) {
-  return findOr(iterable, undefined, predicate);
+export function __find(iterable, predicate) {
+  return __findOr(iterable, undefined, predicate);
 }
 
-export default /*#__PURE__*/ iterableCurry(find, {
+export const find = /*#__PURE__*/ iterableCurry(__find, {
   reduces: true,
 });

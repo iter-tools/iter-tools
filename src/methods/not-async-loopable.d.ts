@@ -6,4 +6,4 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-export { default } from '../impls/not-async-loopable/not-async-loopable.js';
+export { notAsyncLoopable as default } from '../impls/not-async-loopable/not-async-loopable';

@@ -6,4 +6,4 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-export { default } from '../impls/combinations/combinations.js';
+export { combinations as default } from '../impls/combinations/combinations.js';

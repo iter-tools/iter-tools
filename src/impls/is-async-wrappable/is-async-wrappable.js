@@ -7,5 +7,3 @@ export function isAsyncWrappable(value) {
     notUndefined(value[Symbol.iterator])
   );
 }
-
-export default isAsyncWrappable;

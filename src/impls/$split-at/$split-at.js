@@ -3,12 +3,12 @@ import { $async, $await } from '../../../generate/async.macro.cjs';
 import { CircularBuffer } from '../../internal/circular-buffer.js';
 import { $iterableCurry } from '../../internal/$iterable.js';
 import { $Bisector } from '../../internal/$bisector.js';
-import { wrap } from '../../internal/wrap.js';
-import { $peekerate } from '../$peekerate/$peekerate.js';
+import { __wrap } from '../$wrap/wrap.js';
+import { $__peekerate } from '../$peekerate/$peekerate.js';
 
 $async;
 export function* $indexSplitStrategy(split, { idx }, source) {
-  const sourcePeekr = $await($peekerate(source));
+  const sourcePeekr = $await($__peekerate(source));
 
   try {
     const fromEnd = idx < 0;
@@ -56,10 +56,15 @@ export function* $indexSplitStrategy(split, { idx }, source) {
   }
 }
 
-export function $splitAt(source, idx) {
-  return wrap(new $Bisector(source, $indexSplitStrategy, { idx }));
+export function $__splitAt(source, idx) {
+  return new $Bisector(source, $indexSplitStrategy, { idx });
 }
 
-export default /*#__PURE__*/ $iterableCurry($splitAt, {
-  forceSync: true,
-});
+export const $splitAt = /*#__PURE__*/ $iterableCurry(
+  function $splitAt(source, idx) {
+    return __wrap($__splitAt(source, idx));
+  },
+  {
+    forceSync: true,
+  },
+);

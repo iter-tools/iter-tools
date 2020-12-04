@@ -6,4 +6,4 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-export { default } from '../impls/wrap-keys/wrap-keys.js';
+export { wrapKeys as default } from '../impls/wrap-keys/wrap-keys';

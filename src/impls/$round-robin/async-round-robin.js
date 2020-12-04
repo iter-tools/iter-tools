@@ -7,8 +7,8 @@
  */
 
 import { asyncIterableCurry } from '../../internal/async-iterable.js';
-import { asyncInterleave } from '../$interleave/async-interleave.js';
-import { validateArgs } from './internal/validate-args.js';
+import { __asyncInterleave } from '../$interleave/async-interleave.js';
+import { makeValidateArgs } from './internal/validate-args.js';
 
 async function* asyncByPosition({ start, step }, all, ...peekrs) {
   start = start % peekrs.length;
@@ -21,13 +21,13 @@ async function* asyncByPosition({ start, step }, all, ...peekrs) {
   }
 }
 
-export function asyncRoundRobin(sources, start = 0, step = 1) {
-  return asyncInterleave(sources, asyncByPosition, { start, step });
+export function __asyncRoundRobin(sources, step = 1, start = 0) {
+  return __asyncInterleave(sources, asyncByPosition, { start, step });
 }
 
-export default /*#__PURE__*/ asyncIterableCurry(asyncRoundRobin, {
+export const asyncRoundRobin = /*#__PURE__*/ asyncIterableCurry(__asyncRoundRobin, {
   variadic: true,
   minArgs: 0,
   maxArgs: 2,
-  validateArgs,
+  validateArgs: /*#__PURE__*/ makeValidateArgs('asyncRoundRobin'),
 });

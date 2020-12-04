@@ -10,7 +10,7 @@ import { iterableCurry } from '../../internal/iterable.js';
 import { defaultCompare } from '../../internal/compare.js';
 import { Heap } from './internal/heap.js';
 
-export function* takeSorted(source, n = Infinity, comparator = defaultCompare) {
+export function* __takeSorted(source, n = Infinity, comparator = defaultCompare) {
   const heap = new Heap(comparator);
 
   for (const value of source) {
@@ -25,13 +25,13 @@ export function* takeSorted(source, n = Infinity, comparator = defaultCompare) {
   }
 }
 
-export default /*#__PURE__*/ iterableCurry(takeSorted, {
+export const takeSorted = /*#__PURE__*/ iterableCurry(__takeSorted, {
   minArgs: 0,
   maxArgs: 2,
   validateArgs(args) {
-    if (typeof args[1] === 'number') {
-      args[0] = args[1];
-      args[1] = undefined;
+    if (typeof args[2] === 'number') {
+      args[1] = args[2];
+      args[2] = undefined;
     }
   },
 });

@@ -6,4 +6,4 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-export { default } from '../impls/$interpose-seq/async-interpose-seq.js';
+export { asyncInterposeSeq as default } from '../impls/$interpose-seq/async-interpose-seq';

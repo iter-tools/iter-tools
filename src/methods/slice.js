@@ -6,4 +6,4 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-export { default } from '../impls/$slice/slice.js';
+export { slice as default } from '../impls/$slice/slice.js';

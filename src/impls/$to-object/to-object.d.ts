@@ -15,4 +15,4 @@ declare function toObject<V>(
   [key: string]: V;
 };
 
-export default toObject;
+export { toObject };

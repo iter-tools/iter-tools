@@ -8,7 +8,7 @@
 
 import { iterableCurry } from '../../internal/iterable.js';
 
-export function* take(iterable, n) {
+export function* __take(iterable, n) {
   let i = 0;
   for (const value of iterable) {
     if (i++ === n) break;
@@ -16,4 +16,4 @@ export function* take(iterable, n) {
   }
 }
 
-export default /*#__PURE__*/ iterableCurry(take);
+export const take = /*#__PURE__*/ iterableCurry(__take);

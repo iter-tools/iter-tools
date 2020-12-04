@@ -3,7 +3,7 @@ import { $async, $await } from '../../../generate/async.macro.cjs';
 import { $iterableCurry, $cache } from '../../internal/$iterable.js';
 
 $async;
-export function* $interposeSeq(source, seq) {
+export function* $__interposeSeq(source, seq) {
   const subseq_ = $await($cache(seq));
 
   let first = true;
@@ -15,4 +15,4 @@ export function* $interposeSeq(source, seq) {
   }
 }
 
-export default /*#__PURE__*/ $iterableCurry($interposeSeq);
+export const $interposeSeq = /*#__PURE__*/ $iterableCurry($__interposeSeq);

@@ -11,4 +11,4 @@ declare function $every<T>(
   iterable: $SourceIterable<T>,
 ): $Promise<boolean>;
 
-export default $every;
+export { $every };

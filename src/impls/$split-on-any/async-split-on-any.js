@@ -7,12 +7,12 @@
  */
 
 import { asyncIterableCurry } from '../../internal/async-iterable.js';
-import { asyncSplitWith } from '../$split-with/async-split-with.js';
+import { __asyncSplitWith } from '../$split-with/async-split-with.js';
 
-export function asyncSplitOnAny(source, separators) {
-  return asyncSplitWith(source, (value) => separators.includes(value));
+export function __asyncSplitOnAny(source, separators) {
+  return __asyncSplitWith(source, (value) => separators.includes(value));
 }
 
-export default /*#__PURE__*/ asyncIterableCurry(asyncSplitOnAny, {
+export const asyncSplitOnAny = /*#__PURE__*/ asyncIterableCurry(__asyncSplitOnAny, {
   validateArgs(args) {},
 });

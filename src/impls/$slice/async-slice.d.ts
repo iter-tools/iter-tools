@@ -47,4 +47,4 @@ declare function asyncSlice<T>(
   source: AsyncSourceIterable<T>,
 ): AsyncResultIterable<T>;
 
-export default asyncSlice;
+export { asyncSlice };

@@ -7,10 +7,10 @@
  */
 
 import { asyncIterableCurry } from '../../internal/async-iterable.js';
-import { asyncToArray } from '../$to-array/async-to-array.js';
+import { __asyncToArray } from '../$to-array/async-to-array.js';
 
-export async function* asyncReverse(source) {
-  yield* (await asyncToArray(source)).reverse();
+export async function* __asyncReverse(source) {
+  yield* (await __asyncToArray(source)).reverse();
 }
 
-export default /*#__PURE__*/ asyncIterableCurry(asyncReverse);
+export const asyncReverse = /*#__PURE__*/ asyncIterableCurry(__asyncReverse);

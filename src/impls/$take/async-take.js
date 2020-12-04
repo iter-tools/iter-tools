@@ -8,7 +8,7 @@
 
 import { asyncIterableCurry } from '../../internal/async-iterable.js';
 
-export async function* asyncTake(iterable, n) {
+export async function* __asyncTake(iterable, n) {
   let i = 0;
   for await (const value of iterable) {
     if (i++ === n) break;
@@ -16,4 +16,4 @@ export async function* asyncTake(iterable, n) {
   }
 }
 
-export default /*#__PURE__*/ asyncIterableCurry(asyncTake);
+export const asyncTake = /*#__PURE__*/ asyncIterableCurry(__asyncTake);

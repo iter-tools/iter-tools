@@ -12,4 +12,4 @@ declare function apply<Return>(
   fn: (...args: Array<any>) => Return,
 ): (args: Array<any> | null | undefined) => Return;
 
-export default apply;
+export { apply };

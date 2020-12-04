@@ -4,4 +4,4 @@ declare const split: symbol;
 
 export { split };
 
-export default $spliterateGrouped;
+export { $spliterateGrouped };

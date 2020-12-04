@@ -17,4 +17,4 @@ declare function interposeSeq<V, T>(
   source: SourceIterable<T>,
 ): ResultIterable<T | V>;
 
-export default interposeSeq;
+export { interposeSeq };

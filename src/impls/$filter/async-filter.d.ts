@@ -26,4 +26,4 @@ declare function asyncFilter<T>(
   source: AsyncSourceIterable<T>,
 ): AsyncResultIterable<T>;
 
-export default asyncFilter;
+export { asyncFilter };

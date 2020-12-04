@@ -15,4 +15,4 @@ declare function asyncIsSorted<T>(
   iterable: AsyncSourceIterable<T>,
 ): Promise<boolean>;
 
-export default asyncIsSorted;
+export { asyncIsSorted };

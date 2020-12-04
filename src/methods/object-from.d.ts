@@ -6,4 +6,4 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-export { default } from '../impls/object-from/object-from.js';
+export { objectFrom as default } from '../impls/object-from/object-from';

@@ -26,4 +26,4 @@ declare function asyncFind<T>(
   iterable: AsyncSourceIterable<T>,
 ): Promise<T | undefined>;
 
-export default asyncFind;
+export { asyncFind };

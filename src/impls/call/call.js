@@ -1,5 +1,5 @@
-export function call(fn, ...args) {
+export function __call(fn, ...args) {
   return fn(...args);
 }
 
-export default call;
+export const call = __call;

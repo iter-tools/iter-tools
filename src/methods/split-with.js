@@ -6,4 +6,4 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-export { default } from '../impls/$split-with/split-with.js';
+export { splitWith as default } from '../impls/$split-with/split-with.js';

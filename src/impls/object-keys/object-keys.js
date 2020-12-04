@@ -2,7 +2,7 @@ import { wrapWithResultIterable } from '../../internal/iterable.js';
 
 const { hasOwnProperty } = Object.prototype;
 
-export function* objectKeys(obj) {
+export function* __objectKeys(obj) {
   if (obj == null) {
     return;
   }
@@ -14,10 +14,10 @@ export function* objectKeys(obj) {
   }
 }
 
-export default /*#__PURE__*/ wrapWithResultIterable(objectKeys, {
+export const objectKeys = /*#__PURE__*/ wrapWithResultIterable(__objectKeys, {
   validateArgs(args) {
     if (!(args[0] == null || typeof args[0] === 'object')) {
-      throw new Error('the argument to objectKeys was not an object, null, or undefined');
+      throw new Error('obj argument to objectKeys must be an object, null, or undefined');
     }
   },
 });

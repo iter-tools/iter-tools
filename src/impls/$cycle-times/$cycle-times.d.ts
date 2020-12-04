@@ -4,4 +4,4 @@ declare function $cycleTimes<T>(n: number, source: $SourceIterable<T>): $ResultI
 
 declare function $cycleTimes<T>(n: number): (source: $SourceIterable<T>) => $ResultIterable<T>;
 
-export default $cycleTimes;
+export { $cycleTimes };

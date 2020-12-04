@@ -17,4 +17,4 @@ declare function asyncSplitOnSeq<T>(
   source: AsyncSourceIterable<T>,
 ): AsyncResultIterable<AsyncResultIterable<T>>;
 
-export default asyncSplitOnSeq;
+export { asyncSplitOnSeq };

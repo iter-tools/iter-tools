@@ -1,1 +1,1 @@
-export { default, asyncStr as stringFromAsync } from '../$str/async-str.js';
+export { __asyncStr as __stringFromAsync, asyncStr as stringFromAsync } from '../$str/async-str.js';

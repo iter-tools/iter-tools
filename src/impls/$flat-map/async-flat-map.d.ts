@@ -17,4 +17,4 @@ declare function asyncFlatMap<O, T>(
   source: AsyncSourceIterable<T>,
 ): AsyncResultIterable<O>;
 
-export default asyncFlatMap;
+export { asyncFlatMap };

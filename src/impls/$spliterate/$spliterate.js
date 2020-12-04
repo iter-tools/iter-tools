@@ -1,15 +1,19 @@
 import { $iterableCurry } from '../../internal/$iterable.js';
 import { $PartsIterator } from '../../internal/$parts-iterator.js';
-import { $wrap } from '../../internal/$wrap.js';
+import { $__map } from '../$map/$map.js';
+import { $__wrap } from '../$wrap/$wrap.js';
 
-export { split } from '../../internal/symbols.js';
-
-export function $spliterate(source, strategy, options = {}) {
-  return $wrap(new $PartsIterator(source, strategy, options));
+export function $__spliterate(source, strategy, options = {}) {
+  return new $PartsIterator(source, strategy, options);
 }
 
-export default /*#__PURE__*/ $iterableCurry($spliterate, {
-  minArgs: 1,
-  maxArgs: 2,
-  optionalArgsAtEnd: true,
-});
+export const $spliterate = /*#__PURE__*/ $iterableCurry(
+  function $spliterate(...args) {
+    return $__map($__spliterate(...args), $__wrap);
+  },
+  {
+    minArgs: 1,
+    maxArgs: 2,
+    growRight: true,
+  },
+);

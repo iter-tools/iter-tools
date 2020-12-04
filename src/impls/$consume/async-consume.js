@@ -20,19 +20,19 @@ const warnCallbackDeprecation = () => {
   }
 };
 
-export async function asyncConsume(iterable, callback = () => {}) {
+export async function __asyncConsume(iterable, callback = () => {}) {
   let c = 0;
   for await (const value of iterable) {
     await callback(value, c++);
   }
 }
 
-export default /*#__PURE__*/ asyncIterableCurry(asyncConsume, {
+export const asyncConsume = /*#__PURE__*/ asyncIterableCurry(__asyncConsume, {
   reduces: true,
   minArgs: 0,
   maxArgs: 1,
   validateArgs(args) {
-    if (typeof args[0] === 'function') {
+    if (typeof args[1] === 'function') {
       warnCallbackDeprecation();
     }
   },

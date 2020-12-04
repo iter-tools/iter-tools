@@ -1,6 +1,7 @@
-import { ensureIterable } from '../../internal/iterable.js';
+import { iterableCurry } from '../../internal/iterable.js';
 
-import { map } from '../$map/map.js';
+import { __map } from '../$map/map.js';
+import { __toArray } from '../$to-array/to-array.js';
 
 function scanRight(arr, cb, initial) {
   const out = new Array(arr.length);
@@ -34,8 +35,8 @@ function* permuteIndicies(arrs, size) {
   }
 }
 
-export function product(...iterables) {
-  const arrs = [...map(iterables, (i) => [...ensureIterable(i)])];
+export function __product(iterables) {
+  const arrs = __toArray(__map(iterables, __toArray));
   const size = arrs.reduce((size, arr) => size * arr.length, Math.min(arrs.length, 1));
 
   return {
@@ -50,4 +51,7 @@ export function product(...iterables) {
   };
 }
 
-export default product;
+export const product = /*#__PURE__*/ iterableCurry(__product, {
+  variadic: true,
+  reduces: true,
+});

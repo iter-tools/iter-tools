@@ -6,4 +6,4 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-export { default } from '../impls/$split-at/async-split-at.js';
+export { asyncSplitAt as default } from '../impls/$split-at/async-split-at.js';

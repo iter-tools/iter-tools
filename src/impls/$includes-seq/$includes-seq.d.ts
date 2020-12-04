@@ -11,4 +11,4 @@ declare function $includesSeq(
   iterable: $SourceIterable<any>,
 ): $Promise<boolean>;
 
-export default $includesSeq;
+export { $includesSeq };

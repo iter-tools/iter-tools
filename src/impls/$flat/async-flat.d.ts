@@ -69,4 +69,4 @@ declare function asyncFlat(
   depth?: number,
 ): (source: AsyncSourceIterable<any>) => AsyncResultIterable<any>;
 
-export default asyncFlat;
+export { asyncFlat };

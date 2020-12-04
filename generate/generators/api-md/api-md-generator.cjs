@@ -2,12 +2,11 @@
 
 const { basename, dirname, join } = require('path');
 const fs = require('fs');
-const camelcase = require('camelcase');
 const babylon = require('@babel/parser');
 const fullExtname = require('path-complete-extname');
 const Generator = require('../../generator/index.cjs');
 const apiMdFile = require('../_templates/api-md-file.cjs');
-const { renameDollar } = require('../../names.cjs');
+const { camelize, renameDollar } = require('../../names.cjs');
 const extractMethodSignatures = require('./extract-method-signatures.cjs');
 
 const { REMOVE } = Generator;
@@ -50,7 +49,7 @@ class MonoliticGenerator extends Generator {
   }
 
   getNameForDir(path) {
-    return camelcase(basename(path));
+    return camelize(basename(path));
   }
 
   recordOperation(path, operation) {

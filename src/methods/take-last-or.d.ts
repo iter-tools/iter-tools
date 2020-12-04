@@ -6,4 +6,4 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-export { default } from '../impls/$take-last-or/take-last-or.js';
+export { takeLastOr as default } from '../impls/$take-last-or/take-last-or';

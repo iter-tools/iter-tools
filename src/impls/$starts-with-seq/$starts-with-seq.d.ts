@@ -11,4 +11,4 @@ declare function $startsWithSeq(
   iterable: $SourceIterable<any>,
 ): $Promise<boolean>;
 
-export default $startsWithSeq;
+export { $startsWithSeq };

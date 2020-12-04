@@ -6,4 +6,4 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-export { default } from '../impls/exec-pipe/exec-pipe.js';
+export { execPipe as default } from '../impls/exec-pipe/exec-pipe';

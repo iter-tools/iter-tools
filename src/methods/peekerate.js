@@ -6,4 +6,4 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-export { default } from '../impls/$peekerate/peekerate.js';
+export { peekerate as default } from '../impls/$peekerate/peekerate.js';

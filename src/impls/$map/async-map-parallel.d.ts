@@ -20,4 +20,4 @@ declare function asyncMapParallel<O, T>(
   iterable: AsyncSourceIterable<T>,
 ): AsyncResultIterable<O>;
 
-export default asyncMapParallel;
+export { asyncMapParallel };

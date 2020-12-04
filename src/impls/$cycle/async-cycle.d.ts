@@ -10,4 +10,4 @@ import { AsyncSourceIterable, AsyncResultIterable } from '../../types/async-iter
 
 declare function asyncCycle<T>(source: AsyncSourceIterable<T>): AsyncResultIterable<T>;
 
-export default asyncCycle;
+export { asyncCycle };

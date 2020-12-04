@@ -12,4 +12,4 @@ declare function includesAny(values: Array<any>): (iterable: SourceIterable<any>
 
 declare function includesAny(values: Array<any>, iterable: SourceIterable<any>): boolean;
 
-export default includesAny;
+export { includesAny };

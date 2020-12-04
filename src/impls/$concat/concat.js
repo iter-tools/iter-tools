@@ -8,10 +8,10 @@
 
 import { wrapWithResultIterable, ensureIterable } from '../../internal/iterable.js';
 
-export function* concat(...sources) {
+export function* __concat(...sources) {
   for (const iterable of sources) {
     yield* ensureIterable(iterable);
   }
 }
 
-export default /*#__PURE__*/ wrapWithResultIterable(concat);
+export const concat = /*#__PURE__*/ wrapWithResultIterable(__concat);

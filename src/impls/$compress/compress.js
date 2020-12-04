@@ -6,15 +6,15 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import zip from '../$zip/zip.js';
-import { filter } from '../$filter/filter.js';
-import { map } from '../$map/map.js';
+import { zip } from '../$zip/zip.js';
+import { __filter } from '../$filter/filter.js';
+import { __map } from '../$map/map.js';
 
-export function compress(source, included) {
-  return map(
-    filter(zip(source, included), (entry) => entry[1]),
+export function __compress(source, included) {
+  return __map(
+    __filter(zip(source, included), (entry) => entry[1]),
     (entry) => entry[0],
   );
 }
 
-export default compress;
+export const compress = __compress;

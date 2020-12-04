@@ -17,4 +17,4 @@ declare function splitWith<T>(
   source: SourceIterable<T>,
 ): ResultIterable<ResultIterable<T>>;
 
-export default splitWith;
+export { splitWith };

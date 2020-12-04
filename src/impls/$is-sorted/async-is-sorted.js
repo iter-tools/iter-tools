@@ -8,10 +8,10 @@
 
 import { asyncIterableCurry } from '../../internal/async-iterable.js';
 import { defaultCompare } from '../../internal/compare.js';
-import { asyncPeekerate } from '../$peekerate/async-peekerate.js';
+import { __asyncPeekerate } from '../$peekerate/async-peekerate.js';
 
-export async function asyncIsSorted(iterable, comparator = defaultCompare) {
-  const peekr = await asyncPeekerate(iterable);
+export async function __asyncIsSorted(iterable, comparator = defaultCompare) {
+  const peekr = await __asyncPeekerate(iterable);
 
   while (!peekr.done) {
     const { value } = peekr;
@@ -25,7 +25,7 @@ export async function asyncIsSorted(iterable, comparator = defaultCompare) {
   return true;
 }
 
-export default /*#__PURE__*/ asyncIterableCurry(asyncIsSorted, {
+export const asyncIsSorted = /*#__PURE__*/ asyncIterableCurry(__asyncIsSorted, {
   reduces: true,
   minArgs: 0,
   maxArgs: 1,

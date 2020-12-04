@@ -6,4 +6,4 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-export { default } from '../impls/$first/async-first.js';
+export { asyncFirst as default } from '../impls/$first/async-first';

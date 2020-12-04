@@ -8,11 +8,11 @@
 
 import { iterableCurry } from '../../internal/iterable.js';
 
-export function* drop(iterable, n) {
+export function* __drop(iterable, n) {
   let i = 0;
   for (const value of iterable) {
     if (i++ >= n) yield value;
   }
 }
 
-export default /*#__PURE__*/ iterableCurry(drop);
+export const drop = /*#__PURE__*/ iterableCurry(__drop);

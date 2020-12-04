@@ -7,15 +7,15 @@
  */
 
 import { iterableCurry } from '../../internal/iterable.js';
-import { joinWithSeq } from '../$join-with-seq/join-with-seq.js';
+import { __joinWithSeq } from '../$join-with-seq/join-with-seq.js';
 
-export function joinWith(source, separator) {
-  return joinWithSeq(source, [separator]);
+export function __joinWith(source, separator) {
+  return __joinWithSeq(source, [separator]);
 }
 
-export default /*#__PURE__*/ iterableCurry(joinWith, {
+export const joinWith = /*#__PURE__*/ iterableCurry(__joinWith, {
   validateArgs(args) {
-    if (true && typeof args[1] === 'string') {
+    if (true && typeof args[0] === 'string') {
       console.warn(`For string inputs use joinWithSeq instead of joinWith`);
     }
   },

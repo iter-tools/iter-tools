@@ -6,4 +6,4 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-export { default } from '../impls/$round-robin/round-robin.js';
+export { roundRobin as default } from '../impls/$round-robin/round-robin.js';

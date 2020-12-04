@@ -8,31 +8,31 @@
 
 import { asyncIterableCurry } from '../../internal/async-iterable.js';
 import { asyncParallelEach } from '../../internal/async-parallel-each.js';
-import { asyncPeekerate } from '../$peekerate/async-peekerate.js';
-import { asyncMap } from '../$map/async-map.js';
-import { map } from '../$map/map.js';
-import { some } from '../$some/some.js';
-import { asyncToArray } from '../$to-array/async-to-array.js';
+import { __asyncPeekerate } from '../$peekerate/async-peekerate.js';
+import { __asyncMap } from '../$map/async-map.js';
+import { __map } from '../$map/map.js';
+import { __some } from '../$some/some.js';
+import { __asyncToArray } from '../$to-array/async-to-array.js';
 
 const isDone = (peekr) => peekr.done;
 
-export async function* asyncZip(sources) {
-  const peekrs = await asyncToArray(asyncMap(sources, asyncPeekerate));
-  let done = some(peekrs, isDone);
+export async function* __asyncZip(sources) {
+  const peekrs = await __asyncToArray(__asyncMap(sources, __asyncPeekerate));
+  let done = __some(peekrs, isDone);
 
   try {
     while (!done) {
       yield peekrs.map(({ value }) => value);
 
-      await Promise.all(map(peekrs, (peekr) => peekr.advance()));
+      await Promise.all(__map(peekrs, (peekr) => peekr.advance()));
 
-      done = some(peekrs, isDone);
+      done = __some(peekrs, isDone);
     }
   } finally {
     await asyncParallelEach(peekrs, (peekr) => peekr.return());
   }
 }
 
-export default /*#__PURE__*/ asyncIterableCurry(asyncZip, {
+export const asyncZip = /*#__PURE__*/ asyncIterableCurry(__asyncZip, {
   variadic: true,
 });

@@ -6,4 +6,4 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-export { default } from '../impls/$includes-seq/async-includes-seq.js';
+export { asyncIncludesSeq as default } from '../impls/$includes-seq/async-includes-seq';

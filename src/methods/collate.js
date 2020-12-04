@@ -6,4 +6,4 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-export { default } from '../impls/$collate/collate.js';
+export { collate as default } from '../impls/$collate/collate.js';

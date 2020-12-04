@@ -29,8 +29,7 @@ const mungeReadme = (content) => {
 const ignored = [
   '**/__tests__',
   'src/test',
-  'src/methods/*.js',
-  'src/index.js',
+  // 'src/index.js',
   // https://github.com/babel/babel/issues/12008
   'src/index-static.js',
   'src/index-static.d.ts',
@@ -50,12 +49,9 @@ run(
   )} src -d dist/${target}`,
 );
 run(
-  `babel --plugins=./babel/plugins/method-links-commonjs.cjs src/methods -d dist/${target}/methods`,
+  `babel --config-file ./babel/no-comments.config.cjs --out-file-extension .mjs src/methods -d dist/${target}/methods`,
 );
-run(
-  `babel --plugins=./babel/plugins/method-links-es.cjs --out-file-extension .mjs src/methods -d dist/${target}/methods`,
-);
-run(`babel --plugins=./babel/plugins/index-commonjs.cjs src/index.js -o dist/${target}/index.js`);
+// run(`babel --plugins=./babel/plugins/index-commonjs.cjs src/index.js -o dist/${target}/index.js`);
 
 /**
  * Weirdly this file does not require transpilation though the way it works changes.
@@ -63,7 +59,9 @@ run(`babel --plugins=./babel/plugins/index-commonjs.cjs src/index.js -o dist/${t
  * Files in the method links folder contain `module.exports = method;`, so when treated as es modules
  * they also do the correct thing, i.e. the method is the default export (as it was before).
  */
-run(`cp src/index.js dist/${target}/index.mjs`);
+run(
+  `babel --config-file ./babel/no-comments.config.cjs --out-file-extension .mjs src/index.js -o dist/${target}/index.mjs`,
+);
 
 run(`cp src/explode.macro.cjs dist/${target}/explode.macro.js`);
 

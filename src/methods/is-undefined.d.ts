@@ -6,4 +6,4 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-export { default } from '../impls/is-undefined/is-undefined.js';
+export { isUndefined as default } from '../impls/is-undefined/is-undefined';

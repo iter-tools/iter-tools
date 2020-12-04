@@ -8,13 +8,13 @@
 
 import { AsyncSourceIterable, AsyncResultIterable } from '../../types/async-iterable';
 
-declare function asyncSplit(
+declare function asyncSplitOnAnySeq(
   separatorSeqs: Array<AsyncSourceIterable<any>>,
 ): <T>(source: AsyncSourceIterable<T>) => AsyncResultIterable<AsyncResultIterable<T>>;
 
-declare function asyncSplit<T>(
+declare function asyncSplitOnAnySeq<T>(
   separatorSeqs: Array<AsyncSourceIterable<any>>,
   source: AsyncSourceIterable<T>,
 ): AsyncResultIterable<AsyncResultIterable<T>>;
 
-export default asyncSplit;
+export { asyncSplitOnAnySeq };

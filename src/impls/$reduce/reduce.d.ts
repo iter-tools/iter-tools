@@ -37,4 +37,4 @@ declare function reduce<O, T>(
   iterable: SourceIterable<T>,
 ): O;
 
-export default reduce;
+export { reduce };

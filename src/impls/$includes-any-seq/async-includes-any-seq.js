@@ -8,10 +8,10 @@
 
 import { asyncIterableCurry } from '../../internal/async-iterable.js';
 import { asyncSeqsToArray } from '../../internal/async-any-seq.js';
-import { asyncLeadingWindow } from '../$leading-window/async-leading-window.js';
-import { startsWithAnySeq } from '../$starts-with-any-seq/starts-with-any-seq.js';
+import { __asyncLeadingWindow } from '../$leading-window/async-leading-window.js';
+import { __startsWithAnySeq } from '../$starts-with-any-seq/starts-with-any-seq.js';
 
-export async function asyncIncludesAnySeq(iterable, seqs) {
+export async function __asyncIncludesAnySeq(iterable, seqs) {
   const seqsArr = await asyncSeqsToArray(seqs);
 
   if (!seqsArr.length) return false;
@@ -19,14 +19,14 @@ export async function asyncIncludesAnySeq(iterable, seqs) {
 
   const maxMatchLength = seqsArr.reduce((max, { length }) => Math.max(max, length), 1);
 
-  for await (const buffer of asyncLeadingWindow(iterable, maxMatchLength)) {
-    if (startsWithAnySeq(buffer, seqsArr)) {
+  for await (const buffer of __asyncLeadingWindow(iterable, maxMatchLength)) {
+    if (__startsWithAnySeq(buffer, seqsArr)) {
       return true;
     }
   }
   return false;
 }
 
-export default /*#__PURE__*/ asyncIterableCurry(asyncIncludesAnySeq, {
+export const asyncIncludesAnySeq = /*#__PURE__*/ asyncIterableCurry(__asyncIncludesAnySeq, {
   reduces: true,
 });

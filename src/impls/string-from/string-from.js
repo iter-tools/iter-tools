@@ -1,1 +1,1 @@
-export { default, str as stringFrom } from '../$str/str.js';
+export { __str as __stringFrom, str as stringFrom } from '../$str/str.js';

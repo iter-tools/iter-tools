@@ -6,4 +6,4 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-export { default } from '../impls/when/when.js';
+export { when as default } from '../impls/when/when';

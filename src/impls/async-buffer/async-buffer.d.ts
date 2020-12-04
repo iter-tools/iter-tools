@@ -6,4 +6,4 @@ declare function asyncBuffer<T>(
 
 declare function asyncBuffer<T>(n: number, source: AsyncSourceIterable<T>): AsyncResultIterable<T>;
 
-export default asyncBuffer;
+export { asyncBuffer };

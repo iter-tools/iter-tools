@@ -6,14 +6,13 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { asyncFirstOr } from '../$first-or/async-first-or.js';
-
 import { asyncIterableCurry } from '../../internal/async-iterable.js';
+import { __asyncFirstOr } from '../$first-or/async-first-or.js';
 
-export function asyncFirst(iterable) {
-  return asyncFirstOr(iterable, undefined);
+export function __asyncFirst(iterable) {
+  return __asyncFirstOr(iterable, undefined);
 }
 
-export default /*#__PURE__*/ asyncIterableCurry(asyncFirst, {
+export const asyncFirst = /*#__PURE__*/ asyncIterableCurry(__asyncFirst, {
   reduces: true,
 });

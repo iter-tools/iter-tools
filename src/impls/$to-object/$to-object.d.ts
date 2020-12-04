@@ -7,4 +7,4 @@ declare function $toObject<V>(
   proto?: any,
 ): $Promise<{ [key: string]: V }>;
 
-export default $toObject;
+export { $toObject };

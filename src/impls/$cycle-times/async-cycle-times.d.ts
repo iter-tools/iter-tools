@@ -17,4 +17,4 @@ declare function asyncCycleTimes<T>(
   n: number,
 ): (source: AsyncSourceIterable<T>) => AsyncResultIterable<T>;
 
-export default asyncCycleTimes;
+export { asyncCycleTimes };

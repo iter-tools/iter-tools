@@ -8,7 +8,7 @@
 
 import { asyncIterableCurry, asyncCallReturn } from '../../internal/async-iterable.js';
 
-export async function asyncFirstOr(iterable, whenEmpty) {
+export async function __asyncFirstOr(iterable, whenEmpty) {
   const iter = iterable[Symbol.asyncIterator]();
   const { value, done } = await iter.next();
 
@@ -19,6 +19,6 @@ export async function asyncFirstOr(iterable, whenEmpty) {
   return value;
 }
 
-export default /*#__PURE__*/ asyncIterableCurry(asyncFirstOr, {
+export const asyncFirstOr = /*#__PURE__*/ asyncIterableCurry(__asyncFirstOr, {
   reduces: true,
 });

@@ -6,4 +6,4 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-export { default } from '../impls/$zip-all/async-zip-all.js';
+export { asyncZipAll as default } from '../impls/$zip-all/async-zip-all.js';

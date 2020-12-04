@@ -1,4 +1,4 @@
-Transforms an `entries` iterable into an object. Each entry should be of the form `[key, value]`. Roughly equivalent to `Object.fromEntries`, except that it turns `null` and `undefined` into `{}`.
+Transforms an `entries` iterable into an object. Each entry should be of the form `[key, value]`. Roughly equivalent to `Object.fromEntries`, except that it turns `null` and `undefined` into `{}`. An optional `prototype` will be passed to `Object.create` if specified.
 
 ```js
 objectFrom([

@@ -11,4 +11,4 @@ declare function $some<T>(
   iterable: $SourceIterable<T>,
 ): $Promise<boolean>;
 
-export default $some;
+export { $some };

@@ -7,7 +7,7 @@
  */
 
 import { asyncIterableCurry } from '../../internal/async-iterable.js';
-import { asyncSpliterate } from '../$spliterate/async-spliterate.js';
+import { __asyncSpliterate } from '../$spliterate/async-spliterate.js';
 
 async function* asyncBatchSpliterator(split, { size }, source) {
   let i = 0;
@@ -21,13 +21,13 @@ async function* asyncBatchSpliterator(split, { size }, source) {
   }
 }
 
-export function asyncBatch(source, size) {
-  return asyncSpliterate(source, asyncBatchSpliterator, { size });
+export function __asyncBatch(source, size) {
+  return __asyncSpliterate(source, asyncBatchSpliterator, { size });
 }
 
-export default /*#__PURE__*/ asyncIterableCurry(asyncBatch, {
-  validateArgs([size]) {
-    if (typeof size !== 'number' || size < 1) {
+export const asyncBatch = /*#__PURE__*/ asyncIterableCurry(__asyncBatch, {
+  validateArgs(args) {
+    if (typeof args[1] !== 'number' || args[1] < 1) {
       throw new TypeError('batch size should be a number greater than zero');
     }
   },

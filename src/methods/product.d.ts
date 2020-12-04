@@ -6,4 +6,4 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-export { default } from '../impls/product/product.js';
+export { product as default } from '../impls/product/product';

@@ -2,11 +2,11 @@ import { isObject } from '../../../internal/shapes.js';
 
 export function validateArgs(args) {
   const depthOrOptions = args[1];
-  let shouldFlat = args[0];
+  let shouldFlat = args[2];
   let depth = depthOrOptions;
   if (isObject(depthOrOptions)) {
     ({ shouldFlat, depth } = depthOrOptions);
   }
-  args[0] = shouldFlat;
+  args[2] = shouldFlat;
   args[1] = depth;
 }

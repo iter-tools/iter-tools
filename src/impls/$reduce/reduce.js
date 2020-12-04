@@ -7,12 +7,12 @@
  */
 
 import { iterableCurry } from '../../internal/iterable.js';
-import { peekerate } from '../$peekerate/peekerate.js';
+import { __peekerate } from '../$peekerate/peekerate.js';
 
-export function reduce(iterable, initial, reducer) {
+export function __reduce(iterable, reducer, initial = undefined) {
   let c = 0;
   let result = initial;
-  const peekr = peekerate(iterable);
+  const peekr = __peekerate(iterable);
   try {
     if (initial === undefined) {
       if (peekr.done) {
@@ -33,7 +33,7 @@ export function reduce(iterable, initial, reducer) {
   }
 }
 
-export default /*#__PURE__*/ iterableCurry(reduce, {
+export const reduce = /*#__PURE__*/ iterableCurry(__reduce, {
   reduces: true,
   minArgs: 1,
   maxArgs: 2,

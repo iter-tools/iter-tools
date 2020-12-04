@@ -6,4 +6,4 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-export { default } from '../impls/$trailing-window/async-trailing-window.js';
+export { asyncTrailingWindow as default } from '../impls/$trailing-window/async-trailing-window.js';

@@ -8,16 +8,20 @@
 
 import { iterableCurry } from '../../internal/iterable.js';
 import { GroupsIterator } from '../../internal/groups-iterator.js';
-import { wrap } from '../../internal/wrap.js';
+import { __map } from '../$map/map.js';
+import { __wrap } from '../$wrap/wrap.js';
 
-export { split } from '../../internal/symbols.js';
-
-export function spliterateGrouped(source, strategy, options = {}) {
-  return wrap(new GroupsIterator(source, strategy, options));
+export function __spliterateGrouped(source, strategy, options = {}) {
+  return new GroupsIterator(source, strategy, options);
 }
 
-export default /*#__PURE__*/ iterableCurry(spliterateGrouped, {
-  minArgs: 1,
-  maxArgs: 2,
-  optionalArgsAtEnd: true,
-});
+export const spliterateGrouped = /*#__PURE__*/ iterableCurry(
+  function $spliterateGrouped(...args) {
+    return __map(__spliterateGrouped(...args), __wrap);
+  },
+  {
+    minArgs: 1,
+    maxArgs: 2,
+    growRight: true,
+  },
+);

@@ -31,4 +31,4 @@ declare function $reduce<O, T>(
   iterable: $SourceIterable<T>,
 ): $Promise<O>;
 
-export default $reduce;
+export { $reduce };

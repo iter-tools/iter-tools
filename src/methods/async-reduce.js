@@ -6,4 +6,4 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-export { default } from '../impls/$reduce/async-reduce.js';
+export { asyncReduce as default } from '../impls/$reduce/async-reduce.js';

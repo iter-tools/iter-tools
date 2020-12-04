@@ -7,12 +7,12 @@
  */
 
 import { asyncEnsureIterable } from './async-iterable.js';
-import { asyncToArray } from '../impls/$to-array/async-to-array.js';
-import { asyncMap } from '../impls/$map/async-map.js';
+import { __asyncToArray } from '../impls/$to-array/async-to-array.js';
+import { __asyncMap } from '../impls/$map/async-map.js';
 
 export async function asyncSeqsToArray(values) {
-  return await asyncToArray(
-    asyncMap(values, (value) => asyncToArray(asyncEnsureIterable(value))),
+  return await __asyncToArray(
+    __asyncMap(values, (value) => __asyncToArray(asyncEnsureIterable(value))),
     (arr) => arr.length > 0,
   );
 }

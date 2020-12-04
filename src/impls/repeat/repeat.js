@@ -1,9 +1,9 @@
 import { wrapWithResultIterable } from '../../internal/iterable.js';
 
-export function* repeat(value) {
+export function* __repeat(value) {
   while (true) {
     yield value;
   }
 }
 
-export default /*#__PURE__*/ wrapWithResultIterable(repeat);
+export const repeat = /*#__PURE__*/ wrapWithResultIterable(__repeat);

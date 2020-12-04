@@ -9,8 +9,8 @@
 import { asyncIterableCurry, asyncCallReturn } from '../../internal/async-iterable.js';
 import { asyncParallelEach } from '../../internal/async-parallel-each.js';
 import { AsyncPeekerator } from '../../internal/async-peekerator.js';
-import { asyncMap } from '../$map/async-map.js';
-import { asyncToArray } from '../$to-array/async-to-array.js';
+import { __asyncMap } from '../$map/async-map.js';
+import { __asyncToArray } from '../$to-array/async-to-array.js';
 
 const _ = Symbol.for('_');
 const __advance = Symbol.for('__advance');
@@ -97,8 +97,8 @@ class AsyncInterleaver {
   async init() {
     this.initialized = true;
     const { strategy, options, inputSummary } = this;
-    this.buffers = await asyncToArray(
-      asyncMap(this.sources, (source) => AsyncSummarizedPeekerator.from(source, inputSummary)),
+    this.buffers = await __asyncToArray(
+      __asyncMap(this.sources, (source) => AsyncSummarizedPeekerator.from(source, inputSummary)),
     );
     this.iterator = strategy(options, new AsyncInputSummary(inputSummary), ...this.buffers);
 
@@ -123,13 +123,13 @@ class AsyncInterleaver {
   }
 }
 
-export function asyncInterleave(sources, strategy, options = {}) {
+export function __asyncInterleave(sources, strategy, options = {}) {
   return new AsyncInterleaver(sources, strategy, options);
 }
 
-export default /*#__PURE__*/ asyncIterableCurry(asyncInterleave, {
+export const asyncInterleave = /*#__PURE__*/ asyncIterableCurry(__asyncInterleave, {
   variadic: true,
-  optionalArgsAtEnd: true,
+  growRight: true,
   minArgs: 1,
   maxArgs: 2,
 });

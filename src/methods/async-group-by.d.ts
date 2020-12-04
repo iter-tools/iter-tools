@@ -6,4 +6,4 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-export { default } from '../impls/$group-by/async-group-by.js';
+export { asyncGroupBy as default } from '../impls/$group-by/async-group-by';

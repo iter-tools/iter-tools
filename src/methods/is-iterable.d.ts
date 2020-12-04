@@ -6,4 +6,4 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-export { default } from '../impls/is-iterable/is-iterable.js';
+export { isIterable as default } from '../impls/is-iterable/is-iterable';

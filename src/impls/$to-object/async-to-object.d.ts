@@ -13,4 +13,4 @@ declare function asyncToObject<V>(
   proto?: any,
 ): Promise<{ [key: string]: V }>;
 
-export default asyncToObject;
+export { asyncToObject };

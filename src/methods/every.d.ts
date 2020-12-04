@@ -6,4 +6,4 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-export { default } from '../impls/$every/every.js';
+export { every as default } from '../impls/$every/every';

@@ -17,4 +17,4 @@ declare function asyncForEach<T>(
   iterable: AsyncSourceIterable<T>,
 ): Promise<void>;
 
-export default asyncForEach;
+export { asyncForEach };

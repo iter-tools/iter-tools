@@ -1,17 +1,13 @@
 import { iterableCurry } from '../../internal/iterable.js';
+import { __toArray } from '../$to-array/to-array.js';
 
-export function* cycleTimes(source, n) {
-  if (!source.length) return;
+export function* __cycleTimes(source, n) {
+  const arr = Array.isArray(source) ? source : __toArray(source);
+  if (!arr.length) return;
 
   while (n--) {
-    yield* source;
+    yield* arr;
   }
 }
 
-export default /*#__PURE__*/ iterableCurry(cycleTimes, {
-  validateArgs(args) {
-    if (!Array.isArray(args[1])) {
-      args[1] = [...args[1]];
-    }
-  },
-});
+export const cycleTimes = /*#__PURE__*/ iterableCurry(__cycleTimes);

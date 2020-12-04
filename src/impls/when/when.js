@@ -19,5 +19,3 @@ export function when(condition, value) {
 
   return condition && value != null ? value : emptySpreadable;
 }
-
-export default when;

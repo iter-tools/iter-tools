@@ -7,14 +7,14 @@
  */
 
 import { asyncIterableCurry } from '../../internal/async-iterable.js';
-import { asyncFirstOr } from '../$first-or/async-first-or.js';
+import { __asyncFirstOr } from '../$first-or/async-first-or.js';
 
 const none = Symbol('none');
 
-export async function asyncIsEmpty(iterable) {
-  return (await asyncFirstOr(iterable, none)) === none;
+export async function __asyncIsEmpty(iterable) {
+  return (await __asyncFirstOr(iterable, none)) === none;
 }
 
-export default /*#__PURE__*/ asyncIterableCurry(asyncIsEmpty, {
+export const asyncIsEmpty = /*#__PURE__*/ asyncIterableCurry(__asyncIsEmpty, {
   reduces: true,
 });

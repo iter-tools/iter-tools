@@ -6,4 +6,4 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-export { default } from '../impls/array-first/array-first.js';
+export { arrayFirst as default } from '../impls/array-first/array-first';

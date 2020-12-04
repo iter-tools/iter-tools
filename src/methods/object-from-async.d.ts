@@ -6,4 +6,4 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-export { default } from '../impls/object-from-async/object-from-async.js';
+export { objectFromAsync as default } from '../impls/object-from-async/object-from-async';

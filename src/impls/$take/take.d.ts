@@ -12,4 +12,4 @@ declare function take<T>(n: number, iterable: SourceIterable<T>): ResultIterable
 
 declare function take<T>(n: number): (iterable: SourceIterable<T>) => ResultIterable<T>;
 
-export default take;
+export { take };

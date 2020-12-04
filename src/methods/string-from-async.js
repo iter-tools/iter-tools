@@ -6,4 +6,4 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-export { default } from '../impls/string-from-async/string-from-async.js';
+export { stringFromAsync as default } from '../impls/string-from-async/string-from-async.js';

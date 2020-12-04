@@ -12,4 +12,4 @@ declare function startsWith(value: any): (iterable: SourceIterable<any>) => bool
 
 declare function startsWith(value: any, iterable: SourceIterable<any>): boolean;
 
-export default startsWith;
+export { startsWith };

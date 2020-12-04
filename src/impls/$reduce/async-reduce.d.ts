@@ -37,4 +37,4 @@ declare function asyncReduce<O, T>(
   iterable: AsyncSourceIterable<T>,
 ): Promise<O>;
 
-export default asyncReduce;
+export { asyncReduce };

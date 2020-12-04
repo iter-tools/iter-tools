@@ -8,7 +8,7 @@
 
 import { asyncIterableCurry } from '../../internal/async-iterable.js';
 
-export async function asyncStr(chars) {
+export async function __asyncStr(chars) {
   let result = '';
 
   for await (const char of chars) {
@@ -18,6 +18,6 @@ export async function asyncStr(chars) {
   return result;
 }
 
-export default /*#__PURE__*/ asyncIterableCurry(asyncStr, {
+export const asyncStr = /*#__PURE__*/ asyncIterableCurry(__asyncStr, {
   reduces: true,
 });

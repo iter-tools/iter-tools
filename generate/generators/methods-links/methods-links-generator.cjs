@@ -6,6 +6,7 @@ const completeExtname = require('path-complete-extname');
 const BaseGenerator = require('../base-generator.cjs');
 const generatedFunctionFile = require('../_templates/generated-function-file.cjs');
 const generationErrorFile = require('../_templates/generation-error-file.cjs');
+const { camelize } = require('../../names.cjs');
 
 class MethodsLinksGenerator extends BaseGenerator {
   constructor(options) {
@@ -28,7 +29,11 @@ class MethodsLinksGenerator extends BaseGenerator {
     const moduleName = basename(implPath, extName);
     const methodDirName = basename(dirname(implPath));
 
-    const impl = `export { default } from '../impls/${methodDirName}/${moduleName}.js';`;
+    const impl = `export { ${camelize(
+      moduleName,
+    )} as default } from '../impls/${methodDirName}/${moduleName}${
+      extName === '.js' ? '.js' : ''
+    }';`;
 
     try {
       content = generatedFunctionFile(impl, generatedFrom);

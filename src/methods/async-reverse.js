@@ -6,4 +6,4 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-export { default } from '../impls/$reverse/async-reverse.js';
+export { asyncReverse as default } from '../impls/$reverse/async-reverse.js';

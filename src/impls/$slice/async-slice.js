@@ -8,29 +8,9 @@
 
 import { CircularBuffer } from '../../internal/circular-buffer.js';
 import { asyncIterableCurry } from '../../internal/async-iterable.js';
-import { isObject } from '../../internal/shapes.js';
+import { makeValidateArgs } from './internal/validate-args.js';
 
-async function bufferedSlice(source, start, end, step) {
-  const bufferSize = Math.abs(start);
-  const buffer = new CircularBuffer(bufferSize);
-  let counter = 0;
-
-  for await (const value of source) {
-    buffer.push(value);
-    counter++;
-  }
-
-  let newEnd;
-  if (isFinite(end) && end > 0) {
-    newEnd = end - (counter - buffer.size);
-    if (newEnd < 0) return [];
-  } else {
-    newEnd = end;
-  }
-  return asyncSimpleSlice(buffer, 0, newEnd, step);
-}
-
-export async function* asyncSimpleSlice(source, start, end, step = 1) {
+export async function* __asyncSliceFromStart(source, start, end, step = 1) {
   let currentPos = 0;
   let nextValidPos = start;
   const bufferSize = Math.abs(end);
@@ -62,39 +42,37 @@ export async function* asyncSimpleSlice(source, start, end, step = 1) {
   }
 }
 
-export async function* asyncSlice(source, start, end, step = 1) {
-  if (start >= 0) {
-    yield* asyncSimpleSlice(source, start, end, step);
+async function asyncBufferedSlice(source, start, end, step) {
+  const bufferSize = Math.abs(start);
+  const buffer = new CircularBuffer(bufferSize);
+  let counter = 0;
+
+  for await (const value of source) {
+    buffer.push(value);
+    counter++;
+  }
+
+  let newEnd;
+  if (isFinite(end) && end > 0) {
+    newEnd = end - (counter - buffer.size);
+    if (newEnd < 0) return [];
   } else {
-    yield* await bufferedSlice(source, start, end, step);
+    newEnd = end;
+  }
+  return __asyncSliceFromStart(buffer, 0, newEnd, step);
+}
+
+export async function* __asyncSlice(source, start, end, step = 1) {
+  if (start >= 0) {
+    yield* __asyncSliceFromStart(source, start, end, step);
+  } else {
+    yield* await asyncBufferedSlice(source, start, end, step);
   }
 }
 
-export default /*#__PURE__*/ asyncIterableCurry(asyncSlice, {
-  validateArgs(args) {
-    let [optsOrStart = 0, end = Infinity, step = 1] = args;
-    let start = typeof optsOrStart === 'number' ? optsOrStart : undefined;
-    if (isObject(optsOrStart)) {
-      ({ start = 0, end = Infinity, step = 1 } = optsOrStart);
-    }
-
-    if (typeof start !== 'number') {
-      throw new TypeError('The specified start was not a number');
-    }
-
-    if (typeof end !== 'number') {
-      throw new TypeError('The specified end was not a number');
-    }
-
-    if (typeof step !== 'number' || step <= 0) {
-      throw new TypeError('The specified step was not a number > 0');
-    }
-
-    args[0] = start;
-    args[1] = end;
-    args[2] = step;
-  },
-  optionalArgsAtEnd: true,
+export const asyncSlice = /*#__PURE__*/ asyncIterableCurry(__asyncSlice, {
+  validateArgs: /*#__PURE__*/ makeValidateArgs('asyncSlice'),
+  growRight: true,
   minArgs: 0,
   maxArgs: 3,
 });

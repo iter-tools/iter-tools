@@ -10,4 +10,4 @@ import { AsyncSourceIterable, AsyncResultIterable } from '../../types/async-iter
 
 declare function asyncZip<T>(...sources: Array<AsyncSourceIterable<T>>): AsyncResultIterable<T[]>;
 
-export default asyncZip;
+export { asyncZip };

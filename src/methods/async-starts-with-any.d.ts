@@ -6,4 +6,4 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-export { default } from '../impls/$starts-with-any/async-starts-with-any.js';
+export { asyncStartsWithAny as default } from '../impls/$starts-with-any/async-starts-with-any';

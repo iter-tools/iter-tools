@@ -6,4 +6,4 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-export { default } from '../impls/$drop-while/drop-while.js';
+export { dropWhile as default } from '../impls/$drop-while/drop-while.js';

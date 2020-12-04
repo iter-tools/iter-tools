@@ -17,4 +17,4 @@ declare function startsWithSeq(
   iterable: SourceIterable<any>,
 ): boolean;
 
-export default startsWithSeq;
+export { startsWithSeq };

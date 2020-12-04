@@ -6,6 +6,7 @@ const camelize = require('camelize');
 
 const MultiGenerator = require('./generator/multi-generator.cjs');
 const ImplsGenerator = require('./generators/impls/index.cjs');
+const __MethodsLinksGenerator = require('./generators/__methods-links/index.cjs');
 const MethodsLinksGenerator = require('./generators/methods-links/index.cjs');
 const TypesGenerator = require('./generators/types/index.cjs');
 const TypeTestsGenerator = require('./generators/type-tests/index.cjs');
@@ -48,6 +49,7 @@ if (argv.help) {
     const generator = new MultiGenerator(
       [
         ImplsGenerator,
+        __MethodsLinksGenerator,
         MethodsLinksGenerator,
         TypesGenerator,
         TypeTestsGenerator,

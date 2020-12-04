@@ -1,1 +1,1 @@
-export { default } from '../$to-object/to-object';
+export { toObject as objectFrom } from '../$to-object/to-object';

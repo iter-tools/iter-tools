@@ -11,7 +11,7 @@ import { CircularBuffer, ReadOnlyCircularBuffer } from '../../internal/circular-
 
 import { validateWindowArgs } from './internal/validate-window-args.js';
 
-export async function* asyncTrailingWindow(source, size, { filler } = {}) {
+export async function* __asyncTrailingWindow(source, size, { filler } = {}) {
   const buffer = new CircularBuffer(size);
   const bufferReadProxy = new ReadOnlyCircularBuffer(buffer);
 
@@ -23,9 +23,9 @@ export async function* asyncTrailingWindow(source, size, { filler } = {}) {
   }
 }
 
-export default /*#__PURE__*/ asyncIterableCurry(asyncTrailingWindow, {
+export const asyncTrailingWindow = /*#__PURE__*/ asyncIterableCurry(__asyncTrailingWindow, {
   minArgs: 1,
   maxArgs: 2,
-  optionalArgsAtEnd: true,
+  growRight: true,
   validateArgs: /*#__PURE__*/ validateWindowArgs('asyncTrailingWindow'),
 });

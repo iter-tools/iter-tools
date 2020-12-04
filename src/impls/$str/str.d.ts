@@ -12,4 +12,4 @@ declare function str(strings: SourceIterable<string>): string;
 
 declare function str(strings: SourceIterable<{ toString(): string }>): string;
 
-export default str;
+export { str };

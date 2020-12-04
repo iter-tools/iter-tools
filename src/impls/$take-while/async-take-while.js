@@ -8,7 +8,7 @@
 
 import { asyncIterableCurry } from '../../internal/async-iterable.js';
 
-export async function* asyncTakeWhile(source, predicate) {
+export async function* __asyncTakeWhile(source, predicate) {
   let take = true;
   let c = 0;
 
@@ -22,4 +22,4 @@ export async function* asyncTakeWhile(source, predicate) {
   }
 }
 
-export default /*#__PURE__*/ asyncIterableCurry(asyncTakeWhile);
+export const asyncTakeWhile = /*#__PURE__*/ asyncIterableCurry(__asyncTakeWhile);

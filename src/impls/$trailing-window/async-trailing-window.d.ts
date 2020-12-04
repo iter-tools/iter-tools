@@ -33,4 +33,4 @@ declare function asyncTrailingWindow(
   size: number,
 ): <T>(source: AsyncSourceIterable<T>) => AsyncResultIterable<SyncResultIterable<T | undefined>>;
 
-export default asyncTrailingWindow;
+export { asyncTrailingWindow };

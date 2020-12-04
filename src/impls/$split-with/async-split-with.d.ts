@@ -8,13 +8,13 @@
 
 import { AsyncSourceIterable, AsyncResultIterable } from '../../types/async-iterable';
 
-declare function splitWith<T>(
+declare function asyncSplitWith<T>(
   predicate: (value: T, i: number) => any,
 ): (source: AsyncSourceIterable<T>) => AsyncResultIterable<AsyncResultIterable<T>>;
 
-declare function splitWith<T>(
+declare function asyncSplitWith<T>(
   predicate: (value: T, i: number) => any,
   source: AsyncSourceIterable<T>,
 ): AsyncResultIterable<AsyncResultIterable<T>>;
 
-export default splitWith;
+export { asyncSplitWith };

@@ -10,4 +10,4 @@ declare function $window(
   size: number,
 ): <T>(source: $SourceIterable<T>) => $ResultIterable<SyncResultIterable<T>>;
 
-export default $window;
+export { $window };

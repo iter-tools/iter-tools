@@ -7,16 +7,16 @@
  */
 
 import { iterableCurry } from '../../internal/iterable.js';
-import { includesAny } from '../$includes-any/includes-any.js';
+import { __includesAny } from '../$includes-any/includes-any.js';
 
-export function includes(iterable, value) {
-  return includesAny(iterable, [value]);
+export function __includes(iterable, value) {
+  return __includesAny(iterable, [value]);
 }
 
-export default /*#__PURE__*/ iterableCurry(includes, {
+export const includes = /*#__PURE__*/ iterableCurry(__includes, {
   reduces: true,
   validateArgs(args) {
-    if (true && typeof args[1] === 'string') {
+    if (true && typeof args[0] === 'string') {
       console.warn(`For string inputs use includesSeq instead of includes`);
     }
   },

@@ -1,1 +1,1 @@
-export { default, toObject as objectFrom } from '../$to-object/to-object.js';
+export { __toObject as __objectFrom, toObject as objectFrom } from '../$to-object/to-object.js';

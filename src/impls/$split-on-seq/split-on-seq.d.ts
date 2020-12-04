@@ -17,4 +17,4 @@ declare function splitOnSeq<T>(
   source: SourceIterable<T>,
 ): ResultIterable<ResultIterable<T>>;
 
-export default splitOnSeq;
+export { splitOnSeq };

@@ -6,4 +6,4 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-export { default } from '../impls/$cycle/async-cycle.js';
+export { asyncCycle as default } from '../impls/$cycle/async-cycle.js';

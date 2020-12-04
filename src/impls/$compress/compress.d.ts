@@ -13,4 +13,4 @@ declare function compress<T>(
   included: SourceIterable<boolean>,
 ): ResultIterable<T>;
 
-export default compress;
+export { compress };

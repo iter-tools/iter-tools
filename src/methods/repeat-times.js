@@ -6,4 +6,4 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-export { default } from '../impls/repeat-times/repeat-times.js';
+export { repeatTimes as default } from '../impls/repeat-times/repeat-times.js';

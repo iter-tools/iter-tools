@@ -7,12 +7,12 @@
  */
 
 import { asyncIterableCurry } from '../../internal/async-iterable.js';
-import { asyncJoinWithSeq } from '../$join-with-seq/async-join-with-seq.js';
+import { __asyncJoinWithSeq } from '../$join-with-seq/async-join-with-seq.js';
 
-export function asyncJoinWith(source, separator) {
-  return asyncJoinWithSeq(source, [separator]);
+export function __asyncJoinWith(source, separator) {
+  return __asyncJoinWithSeq(source, [separator]);
 }
 
-export default /*#__PURE__*/ asyncIterableCurry(asyncJoinWith, {
+export const asyncJoinWith = /*#__PURE__*/ asyncIterableCurry(__asyncJoinWith, {
   validateArgs(args) {},
 });

@@ -30,4 +30,4 @@ declare function asyncFindOr<N, T>(
   iterable: AsyncSourceIterable<T>,
 ): Promise<T | N>;
 
-export default asyncFindOr;
+export { asyncFindOr };

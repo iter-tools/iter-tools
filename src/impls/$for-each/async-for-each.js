@@ -8,13 +8,13 @@
 
 import { asyncIterableCurry } from '../../internal/async-iterable.js';
 
-export async function asyncForEach(iterable, callback) {
+export async function __asyncForEach(iterable, callback) {
   let c = 0;
   for await (const value of iterable) {
     await callback(value, c++);
   }
 }
 
-export default /*#__PURE__*/ asyncIterableCurry(asyncForEach, {
+export const asyncForEach = /*#__PURE__*/ asyncIterableCurry(__asyncForEach, {
   reduces: true,
 });

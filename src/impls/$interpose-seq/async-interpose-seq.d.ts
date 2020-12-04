@@ -17,4 +17,4 @@ declare function asyncInterposeSeq<V, T>(
   source: AsyncSourceIterable<T>,
 ): AsyncResultIterable<T | V>;
 
-export default asyncInterposeSeq;
+export { asyncInterposeSeq };

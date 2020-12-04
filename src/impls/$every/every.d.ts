@@ -14,4 +14,4 @@ declare function every<T>(
 
 declare function every<T>(predicate: (value: T) => boolean, iterable: SourceIterable<T>): boolean;
 
-export default every;
+export { every };

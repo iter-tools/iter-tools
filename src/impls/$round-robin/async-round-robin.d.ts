@@ -43,4 +43,4 @@ declare function asyncRoundRobin(options: {
   step?: number;
 }): <T>(...sources: Array<AsyncSourceIterable<T>>) => AsyncResultIterable<T>;
 
-export default asyncRoundRobin;
+export { asyncRoundRobin };

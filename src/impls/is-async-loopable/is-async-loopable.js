@@ -6,5 +6,3 @@ export function isAsyncLoopable(value) {
     (notUndefined(value[Symbol.asyncIterator]) || notUndefined(value[Symbol.iterator]))
   );
 }
-
-export default isAsyncLoopable;

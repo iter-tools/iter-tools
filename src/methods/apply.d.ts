@@ -6,4 +6,4 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-export { default } from '../impls/apply/apply.js';
+export { apply as default } from '../impls/apply/apply';

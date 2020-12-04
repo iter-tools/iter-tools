@@ -10,4 +10,4 @@ import { AsyncSourceIterable, AsyncResultIterable } from '../../types/async-iter
 
 declare function asyncWrap<T>(source: AsyncSourceIterable<T>): AsyncResultIterable<T>;
 
-export default asyncWrap;
+export { asyncWrap };

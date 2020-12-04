@@ -6,4 +6,4 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-export { default } from '../impls/$includes/async-includes.js';
+export { asyncIncludes as default } from '../impls/$includes/async-includes';

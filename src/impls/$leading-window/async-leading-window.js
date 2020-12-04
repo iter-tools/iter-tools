@@ -8,10 +8,9 @@
 
 import { asyncIterableCurry } from '../../internal/async-iterable.js';
 import { CircularBuffer, ReadOnlyCircularBuffer } from '../../internal/circular-buffer.js';
-
 import { validateWindowArgs } from '../$trailing-window/internal/validate-window-args.js';
 
-export async function* asyncLeadingWindow(source, size, { filler, useFiller = true } = {}) {
+export async function* __asyncLeadingWindow(source, size, { filler, useFiller = true } = {}) {
   const buffer = new CircularBuffer(size);
   const bufferReadProxy = new ReadOnlyCircularBuffer(buffer);
 
@@ -41,9 +40,9 @@ export async function* asyncLeadingWindow(source, size, { filler, useFiller = tr
   }
 }
 
-export default /*#__PURE__*/ asyncIterableCurry(asyncLeadingWindow, {
+export const asyncLeadingWindow = /*#__PURE__*/ asyncIterableCurry(__asyncLeadingWindow, {
   minArgs: 1,
   maxArgs: 2,
-  optionalArgsAtEnd: true,
+  growRight: true,
   validateArgs: /*#__PURE__*/ validateWindowArgs('asyncLeadingWindow'),
 });

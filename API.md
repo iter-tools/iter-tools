@@ -240,7 +240,8 @@ Generator helpers
 
 ### cycle
 
-**cycle(source)**
+**cycle([source](#sourceiterable))**  
+**__cycle([source](#iterable))**  
 
 Yields the contents of `iterable` repeated for the longest time (forever).
 
@@ -250,13 +251,15 @@ cycle(range(1, 4)); // Iterable[1, 2, 3, 1, 2, 3, 1, 2, 3, ...]
 
 ### asyncCycle
 
-**asyncCycle(source)**
+**asyncCycle([source](#asyncsourceiterable))**  
+**__asyncCycle([source](#asynciterable))**  
 
 See [cycle](#cycle)
 
 ### cycleTimes
 
-**cycleTimes(n, [source](#sourceiterable))**
+**cycleTimes(n, [source](#sourceiterable))**  
+**__cycleTimes([source](#iterable), n)**  
 
 Yields the contents of `iterable` repeated `n` times.
 
@@ -266,7 +269,8 @@ cycleTimes(2, range(1, 4)); // Iterable[1, 2, 3, 1, 2, 3]
 
 ### asyncCycleTimes
 
-**asyncCycleTimes(n, [source](#asyncsourceiterable))**
+**asyncCycleTimes(n, [source](#asyncsourceiterable))**  
+**__asyncCycleTimes([source](#asynciterable), n)**  
 
 See [cycleTimes](#cycletimes)
 
@@ -274,7 +278,9 @@ See [cycleTimes](#cycletimes)
 
 **range(start, end, ?step)**  
 **range(?end)**  
-**range({ start, end, step })**
+**range({ start, end, step })**  
+**__range(start, end, step)**  
+**__range(start, end, step)**  
 
 Defaults:
 
@@ -299,7 +305,8 @@ range({ start: 3, end: 10, step: 3 }); // 3, 6, 9
 
 ### repeat
 
-**repeat(value)**
+**repeat(value)**  
+**__repeat(value)**  
 
 Create an iterable that yields the same `value` ad infintum.
 
@@ -309,7 +316,8 @@ repeat('x'); // Iterable['x', 'x', 'x', ... 'x', .........]
 
 ### repeatTimes
 
-**repeatTimes(n, value)**
+**repeatTimes(n, value)**  
+**__repeatTimes(n, value)**  
 
 Create an iterable that yields the same `value` `n` times.
 
@@ -322,7 +330,8 @@ repeatTimes(4, 'x'); // Iterable['x', 'x', 'x', 'x']
 
 ### objectEntries
 
-**objectEntries(obj)**
+**objectEntries(obj)**  
+**__objectEntries(obj)**  
 
 Yields the `[key, value]` entries of own, iterable (in the object sense) properties of `obj`. When `obj` is `null` or `undefined` it yields nothing, but it is otherwise equivalent to `Object.keys`.
 
@@ -335,7 +344,8 @@ new Map(objectEntries(obj)); // Map{foo => 'bar', fox => 'far'}
 
 ### objectKeys
 
-**objectKeys(obj)**
+**objectKeys(obj)**  
+**__objectKeys(obj)**  
 
 Yields the string names of the own, iterable (in the object sense) properties of `obj`. When `obj` is `null` or `undefined` it yields nothing, but it is otherwise equivalent to `Object.keys`.
 
@@ -345,7 +355,8 @@ objectKeys({ foo: 'bar', fox: 'far' }); // Iterable['foo', 'fox'];
 
 ### objectValues
 
-**objectValues(obj)**
+**objectValues(obj)**  
+**__objectValues(obj)**  
 
 Yields the values of own, iterable (in the object sense) properies of `obj`. When `obj` is `null` or `undefined` it yields nothing, but it is otherwise equivalent to `Object.values`.
 
@@ -358,7 +369,8 @@ objectValues({ foo: 'bar', fox: 'far' }); // Iterable['bar', 'far']
 
 ### wrapEntries
 
-**wrapEntries(entriesable)**
+**wrapEntries(entriesable)**  
+**__wrapEntries(entriesable)**  
 
 Yields the values yielded by `entriesable.entries()`. When passed `null` or `undefined`, yields nothing.
 
@@ -372,7 +384,8 @@ wrapEntries(new Map([
 
 ### wrapKeys
 
-**wrapKeys(keysable)**
+**wrapKeys(keysable)**  
+**__wrapKeys(keysable)**  
 
 Yields the values yielded by `keysable.keys()`. When passed `null` or `undefined`, yields nothing.
 
@@ -386,7 +399,8 @@ wrapKeys(new Map([
 
 ### wrapValues
 
-**wrapValues(valuesable)**
+**wrapValues(valuesable)**  
+**__wrapValues(valuesable)**  
 
 Yields the values yielded by `valuesable.values()`. When passed `null` or `undefined`, yields nothing.
 
@@ -403,7 +417,8 @@ wrapValues(new Map([
 
 ### append
 
-**append(value, [source](#sourceiterable))**
+**append(value, [source](#sourceiterable))**  
+**__append([source](#iterable), value)**  
 
 Yields values from `source` with `value` appended.
 
@@ -413,13 +428,15 @@ append(4, [1, 2, 3]); // Iterable[1, 2, 3, 4]
 
 ### asyncAppend
 
-**asyncAppend(value, [source](#asyncsourceiterable))**
+**asyncAppend(value, [source](#asyncsourceiterable))**  
+**__asyncAppend([source](#asynciterable), value)**  
 
 See [append](#append)
 
 ### drop
 
-**drop(n, [iterable](#sourceiterable))**
+**drop(n, [iterable](#sourceiterable))**  
+**__drop([iterable](#iterable), n)**  
 
 Yields values from `source`, omitting the first `n` values.
 
@@ -429,13 +446,15 @@ drop(1, ['a', 'b', 'c']); // Iterable['b', 'c']
 
 ### asyncDrop
 
-**asyncDrop(n, [iterable](#asyncsourceiterable))**
+**asyncDrop(n, [iterable](#asyncsourceiterable))**  
+**__asyncDrop([iterable](#asynciterable), n)**  
 
 See [drop](#drop)
 
 ### dropWhile
 
-**dropWhile(predicate, [source](#sourceiterable))**
+**dropWhile(predicate, [source](#sourceiterable))**  
+**__dropWhile([source](#iterable), predicate)**  
 
 Returns values from `source`, omitting consecutive values at the beginning of `source` for which the result of `predicate(value, idx)` is truthy.
 
@@ -445,14 +464,16 @@ dropWhile(isEven, range(5)); // 0, 2, 4
 
 ### asyncDropWhile
 
-**asyncDropWhile(predicate, [source](#asyncsourceiterable))**
+**asyncDropWhile(predicate, [source](#asyncsourceiterable))**  
+**__asyncDropWhile([source](#asynciterable), predicate)**  
 
 See [dropWhile](#dropwhile)
 
 ### enumerate
 
 **enumerate(start, [source](#sourceiterable))**  
-**enumerate([source](#sourceiterable))**
+**enumerate([source](#sourceiterable))**  
+**__enumerate([source](#iterable), ?start)**  
 
 It is a shorthand for zipping an index to an iterable:
 
@@ -469,13 +490,15 @@ enumerate(1, 'abc'); // Iterable[[1, 'a'], [2, 'b'], [3, 'c']]
 ### asyncEnumerate
 
 **asyncEnumerate(start, [source](#asyncsourceiterable))**  
-**asyncEnumerate([source](#asyncsourceiterable))**
+**asyncEnumerate([source](#asyncsourceiterable))**  
+**__asyncEnumerate([source](#asynciterable), ?start)**  
 
 See [enumerate](#enumerate)
 
 ### filter
 
-**filter(predicate, [source](#sourceiterable))**
+**filter(predicate, [source](#sourceiterable))**  
+**__filter([source](#iterable), predicate)**  
 
 Yields only values from `source` for which the result of `predicate(value, idx)` is truthy. Equivalent to `Array.prototype.filter`.
 
@@ -490,14 +513,16 @@ filter((animal) => animal.kind.slice(1) === 'at', [
 
 ### asyncFilter
 
-**asyncFilter(predicate, [source](#asyncsourceiterable))**
+**asyncFilter(predicate, [source](#asyncsourceiterable))**  
+**__asyncFilter([source](#asynciterable), predicate)**  
 
 See [filter](#filter)
 
 ### asyncFilterParallel
 
 **asyncFilterParallel(concurrency, func, [iterable](#asyncsourceiterable))**  
-**asyncFilterParallel(func, [iterable](#asyncsourceiterable))**
+**asyncFilterParallel(func, [iterable](#asyncsourceiterable))**  
+**__asyncFilterParallel([iterable](#asynciterable), func, ?concurrency)**  
 
 Defaults:
 
@@ -519,7 +544,9 @@ await asyncFilterParallel(
 **flat(shouldFlat, depth, [source](#sourceiterable))**  
 **flat({ shouldFlat, depth }, [source](#sourceiterable))**  
 **flat(depth, [source](#sourceiterable))**  
-**flat([source](#sourceiterable))**
+**flat([source](#sourceiterable))**  
+**__flat([source](#iterable), depth, shouldFlat)**  
+**__flat([source](#iterable), ?depth, ?shouldFlat)**  
 
 Defaults:
 
@@ -552,13 +579,16 @@ flat(isString, Infinity, ['Hel', ['lo', '!']]); // Iterable['H', 'e', 'l', 'l', 
 **asyncFlat(shouldFlat, depth, [source](#asyncsourceiterable))**  
 **asyncFlat({ shouldFlat, depth }, [source](#asyncsourceiterable))**  
 **asyncFlat(depth, [source](#asyncsourceiterable))**  
-**asyncFlat([source](#asyncsourceiterable))**
+**asyncFlat([source](#asyncsourceiterable))**  
+**__asyncFlat([source](#asynciterable), depth, shouldFlat)**  
+**__asyncFlat([source](#asynciterable), ?depth, ?shouldFlat)**  
 
 See [flat](#flat)
 
 ### flatMap
 
-**flatMap(func, [source](#sourceiterable))**
+**flatMap(func, [source](#sourceiterable))**  
+**__flatMap([source](#iterable), func)**  
 
 For each value in `source`, yields each value in `predicate(value, idx)`. Equivalent to `Array.prototype.flatMap`.
 
@@ -568,13 +598,16 @@ flatMap((x) => [x - 1, x], [1, 3, 5]); // Iterable[0, 1, 2, 3, 4, 5]
 
 ### asyncFlatMap
 
-**asyncFlatMap(func, [source](#asyncsourceiterable))**
+**asyncFlatMap(func, [source](#asyncsourceiterable))**  
+**__asyncFlatMap([source](#asynciterable), func)**  
 
 See [flatMap](#flatmap)
 
 ### asyncFlatMapParallel
 
-**asyncFlatMapParallel(concurrency, func, [iterable](#asyncsourceiterable))**
+**asyncFlatMapParallel(concurrency, func, [iterable](#asyncsourceiterable))**  
+**asyncFlatMapParallel(func, [iterable](#asyncsourceiterable))**  
+**__asyncFlatMapParallel([iterable](#asynciterable), func, ?concurrency)**  
 
 Defaults:
 
@@ -589,7 +622,8 @@ await asyncFlatMapParallel(10, asyncMapper, asyncIterable);
 
 ### interpose
 
-**interpose(value, [source](#sourceiterable))**
+**interpose(value, [source](#sourceiterable))**  
+**__interpose([source](#iterable), value)**  
 
 Yields `value` between each of the values in `source`.
 
@@ -601,13 +635,15 @@ Note: If `source` is a string you should instead use [interposeSeq](#interposese
 
 ### asyncInterpose
 
-**asyncInterpose(value, [source](#asyncsourceiterable))**
+**asyncInterpose(value, [source](#asyncsourceiterable))**  
+**__asyncInterpose([source](#asynciterable), value)**  
 
 See [interpose](#interpose)
 
 ### interposeSeq
 
-**interposeSeq(seq, [source](#sourceiterable))**
+**interposeSeq(seq, [source](#sourceiterable))**  
+**__interposeSeq([source](#iterable), seq)**  
 
 Yields values from `seq` between each of the values in `source`.
 
@@ -617,13 +653,15 @@ interposeSeq([0, 0], [1, 2, 3]); // Iterable[1, 0, 0, 2, 0, 0, 3]
 
 ### asyncInterposeSeq
 
-**asyncInterposeSeq(seq, [source](#asyncsourceiterable))**
+**asyncInterposeSeq(seq, [source](#asyncsourceiterable))**  
+**__asyncInterposeSeq([source](#asynciterable), seq)**  
 
 See [interposeSeq](#interposeseq)
 
 ### map
 
-**map(func, [source](#sourceiterable))**
+**map(func, [source](#sourceiterable))**  
+**__map([source](#iterable), func)**  
 
 For each value in `source`, yields the result of `predicate(value, idx)`. Equivalent to `Array.prototype.map`.
 
@@ -633,14 +671,16 @@ map((x) => x * x, [0, 1, 2, 3]); // Iterable[0, 1, 4, 9]
 
 ### asyncMap
 
-**asyncMap(func, [source](#asyncsourceiterable))**
+**asyncMap(func, [source](#asyncsourceiterable))**  
+**__asyncMap([source](#asynciterable), func)**  
 
 See [map](#map)
 
 ### asyncMapParallel
 
 **asyncMapParallel(concurrency, func, [iterable](#asyncsourceiterable))**  
-**asyncMapParallel(func, [iterable](#asyncsourceiterable))**
+**asyncMapParallel(func, [iterable](#asyncsourceiterable))**  
+**__asyncMapParallel([iterable](#asynciterable), func, ?concurrency)**  
 
 Defaults:
 
@@ -656,7 +696,7 @@ await asyncMapParallel(10, asyncMapper, asyncIterable);
 
 ### nullOr
 
-**nullOr(source)**
+**nullOr(source)**  
 
 When `source` is empty, returns `null`, else yields the values from `source`. This is useful given that some iterables can be consumed only once, and even more cannot be relied on to repeat the same values on multiple iterations.
 
@@ -685,7 +725,7 @@ Note that `null` cannot be used with for loops. You can either use [forEach](#fo
 
 ### nullOrAsync
 
-**nullOrAsync(source)**
+**nullOrAsync(source)**  
 
 `nullOrAsync` has a different call pattern than any other method in the library. It returns a Promise resolving to either `null` (if `source` is empty) or an [AsyncIterable](#asyncresultiterable) containing the values from `source`.
 
@@ -708,7 +748,8 @@ Note that `null` cannot be used with for loops. You can either use [asyncForEach
 
 ### prepend
 
-**prepend(value, [source](#sourceiterable))**
+**prepend(value, [source](#sourceiterable))**  
+**__prepend([source](#iterable), value)**  
 
 Yields `value` followed by values from `source`.
 
@@ -718,13 +759,15 @@ prepend(0, [1, 2, 3]); // Iterable[0, 1, 2, 3]
 
 ### asyncPrepend
 
-**asyncPrepend(value, [source](#asyncsourceiterable))**
+**asyncPrepend(value, [source](#asyncsourceiterable))**  
+**__asyncPrepend([source](#asynciterable), value)**  
 
 See [prepend](#prepend)
 
 ### reverse
 
-**reverse([source](#sourceiterable))**
+**reverse([source](#sourceiterable))**  
+**__reverse([source](#iterable))**  
 
 Yields the values from `iterable` in reverse order. If `iterable` is not an array, this requires caching all its values in memory.
 
@@ -734,7 +777,8 @@ reverse([1, 2, 3]); // Iterable[3, 2, 1]
 
 ### asyncReverse
 
-**asyncReverse([source](#asyncsourceiterable))**
+**asyncReverse([source](#asyncsourceiterable))**  
+**__asyncReverse([source](#asynciterable))**  
 
 See [reverse](#reverse)
 
@@ -745,7 +789,9 @@ Note: Unlike `reverse`, `asyncReverse` will always make a cache of the entire in
 **slice(start, end, step, [source](#sourceiterable))**  
 **slice(start, end, [source](#sourceiterable))**  
 **slice(start, [source](#sourceiterable))**  
-**slice({ start, end, step }, [source](#sourceiterable))**
+**slice({ start, end, step }, [source](#sourceiterable))**  
+**__slice([source](#iterable), start, end, step)**  
+**__slice([source](#iterable), ?start, ?end, ?step)**  
 
 Defaults:
 
@@ -777,13 +823,16 @@ When no arguments are passed to `slice` it is functionally equivalent to `wrap`.
 **asyncSlice(start, end, step, [source](#asyncsourceiterable))**  
 **asyncSlice(start, end, [source](#asyncsourceiterable))**  
 **asyncSlice(start, [source](#asyncsourceiterable))**  
-**asyncSlice({ start, end, step }, [source](#asyncsourceiterable))**
+**asyncSlice({ start, end, step }, [source](#asyncsourceiterable))**  
+**__asyncSlice([source](#asynciterable), start, end, step)**  
+**__asyncSlice([source](#asynciterable), ?start, ?end, ?step)**  
 
 See [slice](#slice)
 
 ### take
 
-**take(n, [iterable](#sourceiterable))**
+**take(n, [iterable](#sourceiterable))**  
+**__take([iterable](#iterable), n)**  
 
 Yields the first `n` values from `source`.
 
@@ -799,7 +848,8 @@ const [first, second] = ['a', 'b', 'c'];
 
 ### asyncTake
 
-**asyncTake(n, [iterable](#asyncsourceiterable))**
+**asyncTake(n, [iterable](#asyncsourceiterable))**  
+**__asyncTake([iterable](#asynciterable), n)**  
 
 See [take](#take)
 
@@ -808,7 +858,9 @@ See [take](#take)
 **takeSorted(n, [comparator](#comparator), [source](#sourceiterable))**  
 **takeSorted(n, [source](#sourceiterable))**  
 **takeSorted([comparator](#comparator), [source](#sourceiterable))**  
-**takeSorted([source](#sourceiterable))**
+**takeSorted([source](#sourceiterable))**  
+**__takeSorted([source](#iterable), n, [comparator](#comparator))**  
+**__takeSorted([source](#iterable), ?n, ?[comparator](#comparator))**  
 
 Defaults:
 
@@ -827,13 +879,16 @@ takeSorted(3, (a, b) => b - a, [4, 5, 2, 3, 1]); // Iterable[5, 4, 3]
 **asyncTakeSorted(n, [comparator](#comparator), [source](#asyncsourceiterable))**  
 **asyncTakeSorted(n, [source](#asyncsourceiterable))**  
 **asyncTakeSorted([comparator](#comparator), [source](#asyncsourceiterable))**  
-**asyncTakeSorted([source](#asyncsourceiterable))**
+**asyncTakeSorted([source](#asyncsourceiterable))**  
+**__asyncTakeSorted([source](#asynciterable), n, [comparator](#comparator))**  
+**__asyncTakeSorted([source](#asynciterable), ?n, ?[comparator](#comparator))**  
 
 See [takeSorted](#takesorted)
 
 ### takeWhile
 
-**takeWhile(predicate, [source](#sourceiterable))**
+**takeWhile(predicate, [source](#sourceiterable))**  
+**__takeWhile([source](#iterable), predicate)**  
 
 Returns values from `source`, starting at the beginning up until the first value for which the result of `predicate(value, idx)` is falsy.
 
@@ -844,13 +899,15 @@ takeWhile(isEven, [1, 2, 3, 4]); // Iterable[]
 
 ### asyncTakeWhile
 
-**asyncTakeWhile(predicate, [source](#asyncsourceiterable))**
+**asyncTakeWhile(predicate, [source](#asyncsourceiterable))**  
+**__asyncTakeWhile([source](#asynciterable), predicate)**  
 
 See [takeWhile](#takewhile)
 
 ### tap
 
-**tap(callback, [source](#sourceiterable))**
+**tap(callback, [source](#sourceiterable))**  
+**__tap([source](#iterable), callback)**  
 
 For each value in `source`, executes `callback(value, idx)` and yields the value (unmodified). Note that while this looks similar to what a `for..of` loop or `forEach` method might do, the key difference is that `tap` does not force evaluation of the iterable.
 
@@ -865,13 +922,15 @@ pipeExec(
 
 ### asyncTap
 
-**asyncTap(callback, [source](#asyncsourceiterable))**
+**asyncTap(callback, [source](#asyncsourceiterable))**  
+**__asyncTap([source](#asynciterable), callback)**  
 
 See [tap](#tap)
 
 ### window
 
-**window(size, [source](#sourceiterable))**
+**window(size, [source](#sourceiterable))**  
+**__window([source](#iterable), size)**  
 
 For values in `source`, yields a `window` iterable of size `size` which starts with that value and also contains the next values from `source`. The `window` instance is the same on every iteration. Only emits full windows, which means fewer windows will be emitted than there are values in `source`. If you need a window for every value in `source`, use [leadingWindow](#leadingwindow) or [trailingWindow](#trailingwindow).
 
@@ -889,14 +948,16 @@ window(5, [1, 2, 3]);
 
 ### asyncWindow
 
-**asyncWindow(size, [source](#asyncsourceiterable))**
+**asyncWindow(size, [source](#asyncsourceiterable))**  
+**__asyncWindow([source](#asynciterable), size)**  
 
 See [window](#window)
 
 ### leadingWindow
 
 **leadingWindow(size, { filler, useFiller }, [source](#sourceiterable))**  
-**leadingWindow(size, [source](#sourceiterable))**
+**leadingWindow(size, [source](#sourceiterable))**  
+**__leadingWindow([source](#iterable), size, ?{ filler, useFiller })**  
 
 Defaults:
 
@@ -937,14 +998,16 @@ leadingWindow(3, { useFiller: false }, [1, 2, 3, 4, 5]);
 ### asyncLeadingWindow
 
 **asyncLeadingWindow(size, { filler, useFiller }, [source](#asyncsourceiterable))**  
-**asyncLeadingWindow(size, [source](#asyncsourceiterable))**
+**asyncLeadingWindow(size, [source](#asyncsourceiterable))**  
+**__asyncLeadingWindow([source](#asynciterable), size, ?{ filler, useFiller })**  
 
 See [leadingWindow](#leadingwindow)
 
 ### trailingWindow
 
 **trailingWindow(size, { filler }, [source](#sourceiterable))**  
-**trailingWindow(size, [source](#sourceiterable))**
+**trailingWindow(size, [source](#sourceiterable))**  
+**__trailingWindow([source](#iterable), size, ?{ filler })**  
 
 Defaults:
 
@@ -975,13 +1038,14 @@ trailingWindow(3, { filler: 0 }, [1, 2, 3, 4, 5]);
 ### asyncTrailingWindow
 
 **asyncTrailingWindow(size, { filler }, [source](#asyncsourceiterable))**  
-**asyncTrailingWindow(size, [source](#asyncsourceiterable))**
+**asyncTrailingWindow(size, [source](#asyncsourceiterable))**  
+**__asyncTrailingWindow([source](#asynciterable), size, ?{ filler })**  
 
 See [trailingWindow](#trailingwindow)
 
 ### wrap
 
-**wrap([source](#sourceiterable))**
+**wrap([source](#sourceiterable))**  
 
 Yields the values from `source`. Its main purposes include allowing nullable iterables to be treated as non-null iterables, and to give arbitrary iterables the semantics of iter-tools iterables.
 
@@ -994,7 +1058,7 @@ const maybeIterable =
 
 ### asyncWrap
 
-**asyncWrap([source](#asyncsourceiterable))**
+**asyncWrap([source](#asyncsourceiterable))**  
 
 See [wrap](#wrap)
 
@@ -1009,7 +1073,8 @@ await asyncWrap([1, 2, 3])[Symbol.asyncIterator]().next(); // { value: 1, done: 
 
 ### batch
 
-**batch(size, [source](#sourceiterable))**
+**batch(size, [source](#sourceiterable))**  
+**__batch([source](#iterable), size)**  
 
 Yields non-overlapping subsequences each containing `size` values from `source`.
 
@@ -1019,13 +1084,15 @@ batch(2, range(5)); // [0, 1], [2, 3], [4]
 
 ### asyncBatch
 
-**asyncBatch(size, [source](#asyncsourceiterable))**
+**asyncBatch(size, [source](#asyncsourceiterable))**  
+**__asyncBatch([source](#asynciterable), size)**  
 
 See [batch](#batch)
 
 ### group
 
-**group(iterable)**
+**group([iterable](#sourceiterable))**  
+**__group([iterable](#iterable))**  
 
 Eqivalent to `groupBy(_ => _, source)`. For more information see [groupBy](#groupby).
 
@@ -1041,11 +1108,15 @@ group([1, 1, -1, -1, -1, 4, -1]);
 
 ### asyncGroup
 
+**asyncGroup([iterable](#asyncsourceiterable))**  
+**__asyncGroup([iterable](#asynciterable))**  
+
 See [group](#group)
 
 ### groupBy
 
-**groupBy(getKey, [source](#sourceiterable))**
+**groupBy(getKey, [source](#sourceiterable))**  
+**__groupBy([source](#iterable), getKey)**  
 
 Yields a [PartsIterable](#partsiterable) of [`key`, `group`] pairs from `source`, where `group` is a subsequence of `values` from `source` for which every `value` has the same `key` as returned by `getKey(value, idx)` (as compared with `===`).
 
@@ -1060,13 +1131,15 @@ groupBy(Math.abs, [1, 1, -1, -1, 4, -1]);
 
 ### asyncGroupBy
 
-**asyncGroupBy(getKey, [source](#asyncsourceiterable))**
+**asyncGroupBy(getKey, [source](#asyncsourceiterable))**  
+**__asyncGroupBy([source](#asynciterable), getKey)**  
 
 See [groupBy](#groupby)
 
 ### split
 
-**split(source)**
+**split([source](#sourceiterable))**  
+**__split([source](#iterable))**  
 
 Yields each value in `source` as an iterable of one value.
 
@@ -1076,13 +1149,15 @@ split([1, 2, 3]); // Iterable[Iterable[1], Iterable[2], Iterable[3]]
 
 ### asyncSplit
 
-**asyncSplit(source)**
+**asyncSplit([source](#asyncsourceiterable))**  
+**__asyncSplit([source](#asynciterable))**  
 
 See [split](#split)
 
 ### splitAt
 
-**splitAt(idx, [source](#sourceiterable))**
+**splitAt(idx, [source](#sourceiterable))**  
+**__splitAt([source](#iterable), idx)**  
 
 Yields two `part` subsequences of `source`. The first `part` yields the values occurring before index `idx` in `source`, the second `part` yields all the values at or after index `idx`. `idx` can also be negative, in which case it refers to an offset from the end of `source`.
 
@@ -1100,7 +1175,8 @@ lastThree; // Iterable[7, 8, 9]
 
 ### asyncSplitAt
 
-**asyncSplitAt(idx, [source](#asyncsourceiterable))**
+**asyncSplitAt(idx, [source](#asyncsourceiterable))**  
+**__asyncSplitAt([source](#asynciterable), idx)**  
 
 Synchronously yields two async `part` subsequences of `source`. The first `part` yields the values occurring before index `idx` in `source`, the second `part` yields all the values at or after index `idx`. `idx` can also be negative, in which case it refers to an offset from the end of `source`.
 
@@ -1120,7 +1196,8 @@ lastThree; // AsyncIterable[7, 8, 9]
 
 ### splitOn
 
-**splitOn(separator, [source](#sourceiterable))**
+**splitOn(separator, [source](#sourceiterable))**  
+**__splitOn([source](#iterable), separator)**  
 
 Yields a [PartsIterable](#partsiterable) of parts from `source`, where `separatorValue` is used to mark the boundary between parts in `source`. `separatorValue` will not occur in the output. `separatorValue` is compared using `===`.
 
@@ -1132,13 +1209,15 @@ Note: If `source` is a string you should instead use [splitOnSeq](#splitonseq). 
 
 ### asyncSplitOn
 
-**asyncSplitOn(separator, [source](#asyncsourceiterable))**
+**asyncSplitOn(separator, [source](#asyncsourceiterable))**  
+**__asyncSplitOn([source](#asynciterable), separator)**  
 
 See [splitOn](#spliton)
 
 ### splitOnAny
 
-**splitOnAny(separators, [source](#sourceiterable))**
+**splitOnAny(separators, [source](#sourceiterable))**  
+**__splitOnAny([source](#iterable), separators)**  
 
 Yields a [PartsIterable](#partsiterable) of parts from `source`, where `separatorValues` are used to mark the boundary between parts in `source`. None of the `separatorValues` will not occur in the output. `separatorValues` are compared using `===`.
 
@@ -1150,13 +1229,15 @@ Note: If `source` is a string you should instead use [splitOnAnySeq](#splitonany
 
 ### asyncSplitOnAny
 
-**asyncSplitOnAny(separators, [source](#asyncsourceiterable))**
+**asyncSplitOnAny(separators, [source](#asyncsourceiterable))**  
+**__asyncSplitOnAny([source](#asynciterable), separators)**  
 
 See [splitOnAny](#splitonany)
 
 ### splitOnAnySeq
 
-**splitOnAnySeq(separatorSeqs, [source](#sourceiterable))**
+**splitOnAnySeq(separatorSeqs, [source](#sourceiterable))**  
+**__splitOnAnySeq([source](#iterable), separatorSeqs)**  
 
 Yields a [PartsIterable](#partsiterable) of parts from `source`, where `separatorSeqs` are used to mark the boundary between parts in `source`. When any `separatorSeq` in `separatorSeqs` is matched, all matched values are consumed from `source` and will not appear in any `part`, nor may they be part of any other `separatorSeq` match. Matches greedily, which is to say the longest possible separator match will be prioritized. Each value in a `separatorSeq` is compared using `===`.
 
@@ -1169,13 +1250,15 @@ splitOnAnySeq(
 
 ### asyncSplitOnAnySeq
 
-**asyncSplitOnAnySeq(separatorSeqs, [source](#asyncsourceiterable))**
+**asyncSplitOnAnySeq(separatorSeqs, [source](#asyncsourceiterable))**  
+**__asyncSplitOnAnySeq([source](#asynciterable), separatorSeqs)**  
 
 See [splitOnAnySeq](#splitonanyseq)
 
 ### splitOnSeq
 
-**splitOnSeq(separatorSeq, [source](#sourceiterable))**
+**splitOnSeq(separatorSeq, [source](#sourceiterable))**  
+**__splitOnSeq([source](#iterable), separatorSeq)**  
 
 Yields a [PartsIterable](#partsiterable) of parts from `source`, where `separatorSeq` is used to mark the boundary between parts in `source`. When `separatorSeq` is matched, all matched values are consumed from `source`. They will not appear in any `part`, nor may they be part of any other `separatorSeq` match. Each value in `separatorSeq` is compared using `===`.
 
@@ -1188,13 +1271,15 @@ splitOnSeq([0, 0], [0, 0, 0, 1, 2]); // Iterable[[], [0, 1, 2]]
 
 ### asyncSplitOnSeq
 
-**asyncSplitOnSeq(separatorSeq, [source](#asyncsourceiterable))**
+**asyncSplitOnSeq(separatorSeq, [source](#asyncsourceiterable))**  
+**__asyncSplitOnSeq([source](#asynciterable), separatorSeq)**  
 
 See [splitOnSeq](#splitonseq)
 
 ### splitWhen
 
-**splitWhen(predicate, [source](#sourceiterable))**
+**splitWhen(predicate, [source](#sourceiterable))**  
+**__splitWhen([source](#iterable), predicate)**  
 
 Yields two `part` subsequences of `source`. The first `part` yields the values where `predicate(value, i)` is falsy. The second `part` yields all the values including and after the first value for which `predicate(value, i)` is truthy.
 
@@ -1212,13 +1297,15 @@ positives; // Iterable[0, 1, 2]
 
 ### asyncSplitWhen
 
-**asyncSplitWhen(predicate, [source](#asyncsourceiterable))**
+**asyncSplitWhen(predicate, [source](#asyncsourceiterable))**  
+**__asyncSplitWhen([source](#asynciterable), predicate)**  
 
 See [splitWhen](#splitwhen)
 
 ### splitWith
 
-**splitWith(predicate, [source](#sourceiterable))**
+**splitWith(predicate, [source](#sourceiterable))**  
+**__splitWith([source](#iterable), predicate)**  
 
 Yields a [PartsIterable](#partsiterable) of parts from `source`, a `value` from `source` for which the result of `predicate(value, idx)` is truthy is considered a separator, and will not occur in the output. If `source` is a string you may also specify a regex predicate, in which case the behavior will match `str.split(RegExp)`. This is the only situation in which you will be able to match more than one value from `source` at a time.
 
@@ -1234,7 +1321,8 @@ splitWith(/, /, 'foo, bar, baz'); // Iterable['foo', 'bar', 'baz']
 
 ### asyncSplitWith
 
-**asyncSplitWith(predicate, [source](#asyncsourceiterable))**
+**asyncSplitWith(predicate, [source](#asyncsourceiterable))**  
+**__asyncSplitWith([source](#asynciterable), predicate)**  
 
 See [splitWith](#splitwith)
 
@@ -1243,7 +1331,8 @@ See [splitWith](#splitwith)
 
 ### collate
 
-**collate([comparator](#comparator), ...[sources](#sourceiterable))**
+**collate([comparator](#comparator), ...[sources](#sourceiterable))**  
+**__collate([sources](#iterable), [comparator](#comparator))**  
 
 Combines values from each `source` in `sources` into a single iterable, peserving the ordering of values within each `source`. Collate uses `comparator` to establish a partial ordering of values at the head of each `source`. At each step it yields the lowest value in the ordering then recomputes the ordering.
 
@@ -1254,13 +1343,16 @@ collate((a, b) => b - a, [6, 5, 2, 1], [4, 3]); // Iterable[6, 5, 4, 3, 2, 1]
 
 ### asyncCollate
 
-**asyncCollate([comparator](#comparator), ...[sources](#asyncsourceiterable))**
+**asyncCollate([comparator](#comparator), ...[sources](#asyncsourceiterable))**  
+**__asyncCollate([sources](#asynciterable), [comparator](#comparator))**  
 
 See [collate](#collate)
 
 ### compress
 
-**compress([source](#sourceiterable), [included](#sourceiterable))**
+**compress([source](#sourceiterable), [included](#sourceiterable))**  
+**__compress(source, included)**  
+**__compress(source, included)**  
 
 Consumes values from `source` and `included` iterables in parallel, at each step yielding the `source` value if the `included` value is truthy.
 
@@ -1271,13 +1363,16 @@ compress([0, 1, 2, 3, 4], cycle([true, false])); // 0, 2, 4
 
 ### asyncCompress
 
-**asyncCompress([source](#asyncsourceiterable), [included](#asyncsourceiterable))**
+**asyncCompress([source](#asyncsourceiterable), [included](#asyncsourceiterable))**  
+**__asyncCompress(source, included)**  
+**__asyncCompress(source, included)**  
 
 See [compress](#compress)
 
 ### concat
 
-**concat(...sources)**
+**concat(...sources)**  
+**__concat(...sources)**  
 
 Yields each value from each `source` in `sources`. First all values from the first `source` are yielded, then then from the second, etc.
 
@@ -1287,13 +1382,15 @@ concat([3, 5, 6], [1, 1], [10]); // 3, 5, 6, 1, 1, 10
 
 ### asyncConcat
 
-**asyncConcat(...sources)**
+**asyncConcat(...sources)**  
+**__asyncConcat(...sources)**  
 
 See [concat](#concat)
 
 ### asyncInterleaveReady
 
-**asyncInterleaveReady(...[sources](#asyncsourceiterable))**
+**asyncInterleaveReady(...[sources](#asyncsourceiterable))**  
+**__asyncInterleaveReady([sources](#asynciterable))**  
 
 Interleaves values from each `source` in `sources`, yielding values in whatever order they resolve (become ready). Note that this means that the results of this interleave will usually not be repeatable.
 
@@ -1303,7 +1400,8 @@ asyncInterleaveReady(aValues, bValues);
 
 ### join
 
-**join(source)**
+**join(source)**  
+**__join(source)**  
 
 Given `source`, an iterable of iterables, yields all values from each iterable. It is the inverse of `split`.
 
@@ -1313,13 +1411,15 @@ join([[1], [2], [3]]); // Iterable[1, 2, 3]
 
 ### asyncJoin
 
-**asyncJoin(source)**
+**asyncJoin(source)**  
+**__asyncJoin(source)**  
 
 See [join](#join)
 
 ### joinWith
 
-**joinWith(separator, [source](#sourceiterable))**
+**joinWith(separator, [source](#sourceiterable))**  
+**__joinWith([source](#iterable), separator)**  
 
 Given `source`, an iterable of iterables, yields all values from each iterable with `separator` in between. It is the inverse of `splitOn`.
 
@@ -1329,13 +1429,15 @@ joinWith(null, [[1], [2], [3]]); // Iterable[1, null, 2, null, 3]
 
 ### asyncJoinWith
 
-**asyncJoinWith(separator, [source](#asyncsourceiterable))**
+**asyncJoinWith(separator, [source](#asyncsourceiterable))**  
+**__asyncJoinWith([source](#asynciterable), separator)**  
 
 See [joinWith](#joinwith)
 
 ### joinWithSeq
 
-**joinWithSeq(separatorSeq, [source](#sourceiterable))**
+**joinWithSeq(separatorSeq, [source](#sourceiterable))**  
+**__joinWithSeq([source](#iterable), separatorSeq)**  
 
 Given `source`, an iterable of iterables, yields all values from each iterable with the `separatorSeq` values in between. It is the inverse of `splitOnSeq`.
 
@@ -1345,7 +1447,8 @@ joinWithSeq([null, null], [[1], [2], [3]]); // Iterable[1, null, null, 2, null, 
 
 ### asyncJoinWithSeq
 
-**asyncJoinWithSeq(separatorSeq, [source](#asyncsourceiterable))**
+**asyncJoinWithSeq(separatorSeq, [source](#asyncsourceiterable))**  
+**__asyncJoinWithSeq([source](#asynciterable), separatorSeq)**  
 
 See [joinWithSeq](#joinwithseq)
 
@@ -1353,7 +1456,8 @@ See [joinWithSeq](#joinwithseq)
 
 **roundRobin(start, step, ...[sources](#sourceiterable))**  
 **roundRobin(step, ...[sources](#sourceiterable))**  
-**roundRobin(...[sources](#sourceiterable))**
+**roundRobin(...[sources](#sourceiterable))**  
+**__roundRobin([sources](#iterable), ?step, ?start)**  
 
 Defaults:
 
@@ -1372,13 +1476,15 @@ roundRobin({ start: 1, step: 1 }, [2, 4, 6], [1, 3, 5]); // Iterable[1, 2, 3, 4,
 
 **asyncRoundRobin(start, step, ...[sources](#asyncsourceiterable))**  
 **asyncRoundRobin(step, ...[sources](#asyncsourceiterable))**  
-**asyncRoundRobin(...[sources](#asyncsourceiterable))**
+**asyncRoundRobin(...[sources](#asyncsourceiterable))**  
+**__asyncRoundRobin([sources](#asynciterable), ?step, ?start)**  
 
 See [roundRobin](#roundrobin)
 
 ### zip
 
-**zip(...[sources](#sourceiterable))**
+**zip(...[sources](#sourceiterable))**  
+**__zip([sources](#iterable))**  
 
 Consumes each `source` in `sources` in parallel, at each step yielding an array with one value from every `source`. Stops when the shortest source iterable is exausted.
 
@@ -1388,14 +1494,16 @@ zip([1, 2], [3, 4], [5, 6, 7]); // [1, 3, 5], [2, 4, 6]
 
 ### asyncZip
 
-**asyncZip(...[sources](#asyncsourceiterable))**
+**asyncZip(...[sources](#asyncsourceiterable))**  
+**__asyncZip([sources](#asynciterable))**  
 
 See [zip](#zip)
 
 ### zipAll
 
 **zipAll({ filler }, ...[sources](#sourceiterable))**  
-**zipAll(...[sources](#sourceiterable))**
+**zipAll(...[sources](#sourceiterable))**  
+**__zipAll([sources](#iterable), ?{ filler })**  
 
 Defaults:
 
@@ -1411,7 +1519,8 @@ zipAll({ filler: null }, [1, 2], []); // [1, null], [2, null]
 ### asyncZipAll
 
 **asyncZipAll({ filler }, ...[sources](#asyncsourceiterable))**  
-**asyncZipAll(...[sources](#asyncsourceiterable))**
+**asyncZipAll(...[sources](#asyncsourceiterable))**  
+**__asyncZipAll([sources](#asynciterable), ?{ filler })**  
 
 See [zipAll](#zipall)
 
@@ -1420,7 +1529,8 @@ See [zipAll](#zipall)
 
 ### equal
 
-**equal(...[iterables](#sourceiterable))**
+**equal(...[iterables](#sourceiterable))**  
+**__equal([iterables](#iterable))**  
 
 Returns `true` if all `iterables` are equal to each other, and `false` otherwise. Only considers the values yielded by the iterables, which it compares with `===`.
 
@@ -1431,13 +1541,15 @@ equals([1, 2, 3], [3, 2, 1]); // false
 
 ### asyncEqual
 
-**asyncEqual(...[iterables](#asyncsourceiterable))**
+**asyncEqual(...[iterables](#asyncsourceiterable))**  
+**__asyncEqual([iterables](#asynciterable))**  
 
 See [equal](#equal)
 
 ### every
 
-**every(predicate, [iterable](#sourceiterable))**
+**every(predicate, [iterable](#sourceiterable))**  
+**__every([iterable](#iterable), predicate)**  
 
 Returns `true` if, for every value in `source`, the result of `predicate(value, idx)` is truthy. Otherwise returns `false`.
 
@@ -1448,13 +1560,15 @@ every(isEven, [2, 4, 6]); // returns true
 
 ### asyncEvery
 
-**asyncEvery(predicate, [iterable](#asyncsourceiterable))**
+**asyncEvery(predicate, [iterable](#asyncsourceiterable))**  
+**__asyncEvery([iterable](#asynciterable), predicate)**  
 
 See [every](#every)
 
 ### find
 
-**find(predicate, [iterable](#sourceiterable))**
+**find(predicate, [iterable](#sourceiterable))**  
+**__find([iterable](#iterable), predicate)**  
 
 Returns the first value in `iterable` for which `predicate(value, idx)` returns a truthy value. It is the equivalent of `Array.prototype.find`.
 
@@ -1467,13 +1581,15 @@ find((animal) => animal.kind === 'dog', [
 
 ### asyncFind
 
-**asyncFind(predicate, [iterable](#asyncsourceiterable))**
+**asyncFind(predicate, [iterable](#asyncsourceiterable))**  
+**__asyncFind([iterable](#asynciterable), predicate)**  
 
 See [find](#find)
 
 ### findOr
 
-**findOr(notFoundValue, func, [iterable](#sourceiterable))**
+**findOr(notFoundValue, func, [iterable](#sourceiterable))**  
+**__findOr([iterable](#iterable), notFoundValue, func)**  
 
 Returns the first value in `iterable` for which `predicate(value, idx)` returns a truthy value, or `notFoundValue` if no value satisfied the predicate.
 
@@ -1483,13 +1599,15 @@ findOr(0, (x) => x > 10, [1, 2, 3]); // 0
 
 ### asyncFindOr
 
-**asyncFindOr(notFoundValue, func, [iterable](#asyncsourceiterable))**
+**asyncFindOr(notFoundValue, func, [iterable](#asyncsourceiterable))**  
+**__asyncFindOr([iterable](#asynciterable), notFoundValue, func)**  
 
 See [findOr](#findor)
 
 ### first
 
-**first([iterable](#sourceiterable))**
+**first([iterable](#sourceiterable))**  
+**__first([iterable](#iterable))**  
 
 Returns the first value from `iterable`, or `undefined` when `iterable` is empty.
 
@@ -1500,13 +1618,15 @@ first([]); // undefined
 
 ### asyncFirst
 
-**asyncFirst([iterable](#asyncsourceiterable))**
+**asyncFirst([iterable](#asyncsourceiterable))**  
+**__asyncFirst([iterable](#asynciterable))**  
 
 See [first](#first)
 
 ### firstOr
 
-**firstOr(whenEmpty, [iterable](#sourceiterable))**
+**firstOr(whenEmpty, [iterable](#sourceiterable))**  
+**__firstOr([iterable](#iterable), whenEmpty)**  
 
 Returns the first value from `iterable`, or `whenEmpty` when `iterable` is empty.
 
@@ -1517,13 +1637,15 @@ firstOr(0, []); // 0
 
 ### asyncFirstOr
 
-**asyncFirstOr(whenEmpty, [iterable](#asyncsourceiterable))**
+**asyncFirstOr(whenEmpty, [iterable](#asyncsourceiterable))**  
+**__asyncFirstOr([iterable](#asynciterable), whenEmpty)**  
 
 See [firstOr](#firstor)
 
 ### includes
 
-**includes(value, [iterable](#sourceiterable))**
+**includes(value, [iterable](#sourceiterable))**  
+**__includes([iterable](#iterable), value)**  
 
 Retuns `true` if `iterable` includes the specified `value`, or `false` otherwise. Compares values with `===`.
 
@@ -1536,13 +1658,15 @@ Note: If `source` is a string you should instead use [includesSeq](#includesseq)
 
 ### asyncIncludes
 
-**asyncIncludes(value, [iterable](#asyncsourceiterable))**
+**asyncIncludes(value, [iterable](#asyncsourceiterable))**  
+**__asyncIncludes([iterable](#asynciterable), value)**  
 
 See [includes](#includes)
 
 ### includesAny
 
-**includesAny(values, [iterable](#sourceiterable))**
+**includesAny(values, [iterable](#sourceiterable))**  
+**__includesAny([iterable](#iterable), values)**  
 
 Retuns `true` if `iterable` includes any of the specified `values`, or `false` otherwise. Compares values with `===`.
 
@@ -1555,13 +1679,15 @@ Note: If `source` is a string you should instead use [includesAnySeq](#includesa
 
 ### asyncIncludesAny
 
-**asyncIncludesAny(values, [iterable](#asyncsourceiterable))**
+**asyncIncludesAny(values, [iterable](#asyncsourceiterable))**  
+**__asyncIncludesAny([iterable](#asynciterable), values)**  
 
 See [includesAny](#includesany)
 
 ### includesAnySeq
 
-**includesAnySeq(seqs, [iterable](#sourceiterable))**
+**includesAnySeq(seqs, [iterable](#sourceiterable))**  
+**__includesAnySeq([iterable](#iterable), seqs)**  
 
 Retuns `true` if any of the the `seqs` (subsequences) of values can be found somewhere in `iterable`, or `false` otherwise. Compares values with `===`.
 
@@ -1591,13 +1717,15 @@ includesAnySeq(
 
 ### asyncIncludesAnySeq
 
-**asyncIncludesAnySeq(seqs, [iterable](#asyncsourceiterable))**
+**asyncIncludesAnySeq(seqs, [iterable](#asyncsourceiterable))**  
+**__asyncIncludesAnySeq([iterable](#asynciterable), seqs)**  
 
 See [includesAnySeq](#includesanyseq)
 
 ### includesSeq
 
-**includesSeq(seq, [iterable](#sourceiterable))**
+**includesSeq(seq, [iterable](#sourceiterable))**  
+**__includesSeq([iterable](#iterable), seq)**  
 
 Retuns `true` if the `seq` (subsequence) of values can be found somewhere in `iterable`, or `false` otherwise. Compares values with `===`.
 
@@ -1609,13 +1737,15 @@ includesSeq([2, 3, 4], [1, 2, 3]); // false
 
 ### asyncIncludesSeq
 
-**asyncIncludesSeq(seq, [iterable](#asyncsourceiterable))**
+**asyncIncludesSeq(seq, [iterable](#asyncsourceiterable))**  
+**__asyncIncludesSeq([iterable](#asynciterable), seq)**  
 
 See [includesSeq](#includesseq)
 
 ### isEmpty
 
-**isEmpty([iterable](#sourceiterable))**
+**isEmpty([iterable](#sourceiterable))**  
+**__isEmpty([iterable](#iterable))**  
 
 Returns `true` if `iterable` contains no values, and `false` otherwise.
 
@@ -1628,14 +1758,16 @@ isEmpty([undefined]); // false
 
 ### asyncIsEmpty
 
-**asyncIsEmpty([iterable](#asyncsourceiterable))**
+**asyncIsEmpty([iterable](#asyncsourceiterable))**  
+**__asyncIsEmpty([iterable](#asynciterable))**  
 
 See [isEmpty](#isempty)
 
 ### isSorted
 
 **isSorted([comparator](#comparator), [iterable](#sourceiterable))**  
-**isSorted([iterable](#sourceiterable))**
+**isSorted([iterable](#sourceiterable))**  
+**__isSorted([iterable](#iterable), ?[comparator](#comparator))**  
 
 Returns `true` if the values in `iterable` are sorted in ascending order according to `comparator`, and `false` otherwise.
 
@@ -1647,14 +1779,16 @@ isSorted((a, b) => b - a, [3, 2, 1]); // true
 ### asyncIsSorted
 
 **asyncIsSorted([comparator](#comparator), [iterable](#asyncsourceiterable))**  
-**asyncIsSorted([iterable](#asyncsourceiterable))**
+**asyncIsSorted([iterable](#asyncsourceiterable))**  
+**__asyncIsSorted([iterable](#asynciterable), ?[comparator](#comparator))**  
 
 See [isSorted](#issorted)
 
 ### reduce
 
 **reduce(initial, reducer, [iterable](#sourceiterable))**  
-**reduce(reducer, [iterable](#sourceiterable))**
+**reduce(reducer, [iterable](#sourceiterable))**  
+**__reduce([iterable](#iterable), reducer, ?initial)**  
 
 Defaults:
 
@@ -1671,13 +1805,15 @@ reduce((result, v) => result + v, [1, 2, 3]); // 6
 ### asyncReduce
 
 **asyncReduce(initial, reducer, [iterable](#asyncsourceiterable))**  
-**asyncReduce(reducer, [iterable](#asyncsourceiterable))**
+**asyncReduce(reducer, [iterable](#asyncsourceiterable))**  
+**__asyncReduce([iterable](#asynciterable), reducer, ?initial)**  
 
 See [reduce](#reduce)
 
 ### size
 
-**size(iterable)**
+**size(iterable)**  
+**__size(iterable)**  
 
 Returns the number of values in `iterable` **by iterating over it**. This is more work than is neccessary for any concrete type like `Array`, `Map`, or `Set`. If you know your data is one of those types, use [getSize](#getsize) instead.
 
@@ -1687,13 +1823,15 @@ size([1, 2, 3]); // 3
 
 ### asyncSize
 
-**asyncSize(iterable)**
+**asyncSize(iterable)**  
+**__asyncSize(iterable)**  
 
 See [size](#size)
 
 ### some
 
-**some(func, [iterable](#sourceiterable))**
+**some(func, [iterable](#sourceiterable))**  
+**__some([iterable](#iterable), func)**  
 
 Returns `true` if the result of `predicate(value, idx)` is truthy for at least one value in `iterable`, and `false` otherwise.
 
@@ -1704,13 +1842,15 @@ some(isEven, [1, 3, 7]); // false
 
 ### asyncSome
 
-**asyncSome(func, [iterable](#asyncsourceiterable))**
+**asyncSome(func, [iterable](#asyncsourceiterable))**  
+**__asyncSome([iterable](#asynciterable), func)**  
 
 See [some](#some)
 
 ### startsWith
 
-**startsWith(values, [iterable](#sourceiterable))**
+**startsWith(values, [iterable](#sourceiterable))**  
+**__startsWith([iterable](#iterable), values)**  
 
 Returns `true` if the first value in `source` is `value`, as compared with `===`. Otherwise returns `false`.
 
@@ -1722,13 +1862,15 @@ Note: If `source` is a string you should instead use [startsWithSeq](#startswith
 
 ### asyncStartsWith
 
-**asyncStartsWith(values, [iterable](#asyncsourceiterable))**
+**asyncStartsWith(values, [iterable](#asyncsourceiterable))**  
+**__asyncStartsWith([iterable](#asynciterable), values)**  
 
 See [startsWith](#startswith)
 
 ### startsWithAny
 
-**startsWithAny(values, [iterable](#sourceiterable))**
+**startsWithAny(values, [iterable](#sourceiterable))**  
+**__startsWithAny([iterable](#iterable), values)**  
 
 Returns `true` if the first value in `source` is any `value` in `values`, as compared with `===`. Otherwise returns `false`.
 
@@ -1740,13 +1882,15 @@ Note: If `source` is a string you should instead use [startsWithAnySeq](#startsw
 
 ### asyncStartsWithAny
 
-**asyncStartsWithAny(values, [iterable](#asyncsourceiterable))**
+**asyncStartsWithAny(values, [iterable](#asyncsourceiterable))**  
+**__asyncStartsWithAny([iterable](#asynciterable), values)**  
 
 See [startsWithAny](#startswithany)
 
 ### startsWithAnySeq
 
-**startsWithAnySeq(seqs, [iterable](#sourceiterable))**
+**startsWithAnySeq(seqs, [iterable](#sourceiterable))**  
+**__startsWithAnySeq([iterable](#iterable), seqs)**  
 
 Returns `true` if the first subsequence of values in `source` match any `valueSeq` in `valueSeqs`, where each value is compared with `===`. Otherwise returns `false`.
 
@@ -1762,13 +1906,15 @@ startsWithAnySeq(
 
 ### asyncStartsWithAnySeq
 
-**asyncStartsWithAnySeq(seqs, [iterable](#asyncsourceiterable))**
+**asyncStartsWithAnySeq(seqs, [iterable](#asyncsourceiterable))**  
+**__asyncStartsWithAnySeq([iterable](#asynciterable), seqs)**  
 
 See [startsWithAnySeq](#startswithanyseq)
 
 ### startsWithSeq
 
-**startsWithSeq(seq, [iterable](#sourceiterable))**
+**startsWithSeq(seq, [iterable](#sourceiterable))**  
+**__startsWithSeq([iterable](#iterable), seq)**  
 
 Returns `true` if the first subsequence of values in `source` matches `valueSeq`, where each value is compared with `===`. Otherwise returns `false`.
 
@@ -1778,25 +1924,29 @@ startsWithSeq([1, 2], [1, 2, 3]); // true
 
 ### asyncStartsWithSeq
 
-**asyncStartsWithSeq(seq, [iterable](#asyncsourceiterable))**
+**asyncStartsWithSeq(seq, [iterable](#asyncsourceiterable))**  
+**__asyncStartsWithSeq([iterable](#asynciterable), seq)**  
 
 See [startsWithSeq](#startswithseq)
 
 ### str
 
-**str([chars](#sourceiterable))**
+**str([chars](#sourceiterable))**  
+**__str([chars](#iterable))**  
 
 See [stingFrom](#stringfrom)
 
 ### asyncStr
 
-**asyncStr([chars](#asyncsourceiterable))**
+**asyncStr([chars](#asyncsourceiterable))**  
+**__asyncStr([chars](#asynciterable))**  
 
 See [stringFromAsync](#stringfromasync)
 
 ### takeLast
 
-**takeLast([iterable](#sourceiterable))**
+**takeLast([iterable](#sourceiterable))**  
+**__takeLast([iterable](#iterable))**  
 
 Returns the last value from `iterable`, or `undefined` when `iterable` is empty.
 
@@ -1809,13 +1959,15 @@ takeLast([]); // undefined
 
 ### asyncTakeLast
 
-**asyncTakeLast([iterable](#asyncsourceiterable))**
+**asyncTakeLast([iterable](#asyncsourceiterable))**  
+**__asyncTakeLast([iterable](#asynciterable))**  
 
 See [takeLast](#takelast)
 
 ### takeLastOr
 
-**takeLastOr(whenEmpty, [iterable](#sourceiterable))**
+**takeLastOr(whenEmpty, [iterable](#sourceiterable))**  
+**__takeLastOr([iterable](#iterable), whenEmpty)**  
 
 Returns the last value from `iterable`, or `whenEmpty` when `iterable` is empty.
 
@@ -1828,7 +1980,8 @@ takeLastOr(0, []); // 0
 
 ### asyncTakeLastOr
 
-**asyncTakeLastOr(whenEmpty, [iterable](#asyncsourceiterable))**
+**asyncTakeLastOr(whenEmpty, [iterable](#asyncsourceiterable))**  
+**__asyncTakeLastOr([iterable](#asynciterable), whenEmpty)**  
 
 See [takeLastOr](#takelastor)
 
@@ -1838,7 +1991,8 @@ See [takeLastOr](#takelastor)
 ### combinations
 
 **combinations(n, [iterable](#sourceiterable))**  
-**combinations([iterable](#sourceiterable))**
+**combinations([iterable](#sourceiterable))**  
+**__combinations([iterable](#iterable), ?n)**  
 
 Defaults:
 
@@ -1869,7 +2023,8 @@ combinations(2, [1, 2, 3, 4]).size === 6;
 ### combinationsWithReplacement
 
 **combinationsWithReplacement(n, [iterable](#sourceiterable))**  
-**combinationsWithReplacement([iterable](#sourceiterable))**
+**combinationsWithReplacement([iterable](#sourceiterable))**  
+**__combinationsWithReplacement([iterable](#iterable), ?n)**  
 
 Defaults:
 
@@ -1904,7 +2059,8 @@ combinationsWithReplacement(2, [1, 2, 3, 4]).size === 10;
 ### permutations
 
 **permutations(k, [iterable](#sourceiterable))**  
-**permutations([iterable](#sourceiterable))**
+**permutations([iterable](#sourceiterable))**  
+**__permutations([iterable](#iterable), ?k)**  
 
 Defaults:
 
@@ -1940,7 +2096,8 @@ permutations([0, 1]).size === 2;
 
 ### product
 
-**product(...iterables)**
+**product(...[iterables](#sourceiterable))**  
+**__product([iterables](#iterable))**  
 
 This returns the [cartesian product](https://en.wikipedia.org/wiki/Cartesian_product) of two or more `iterables`.
 
@@ -1973,7 +2130,8 @@ product([1, 2], [3, 4], [5, 6]).size === 8;
 
 ### asyncBuffer
 
-**asyncBuffer(n, [source](#asyncsourceiterable))**
+**asyncBuffer(n, [source](#asyncsourceiterable))**  
+**__asyncBuffer([source](#asynciterable), n)**  
 
 Starts fetching the next `n` values of `source` so that the wait for a value should be minimal by the time it is needed. Yields the same values in the same order as `source`.
 
@@ -2007,7 +2165,8 @@ await buffered.next(); // ~200ms
 
 ### asyncThrottle
 
-**asyncThrottle(intervalMs, [source](#asyncsourceiterable))**
+**asyncThrottle(intervalMs, [source](#asyncsourceiterable))**  
+**__asyncThrottle([source](#asynciterable), intervalMs)**  
 
 Rate-limits `source`, ensuring that requests for the next value in `source` are made at intervals of no less than `intervalMs` milliseconds. Yields the same values in the same order as `source`.
 
@@ -2029,7 +2188,8 @@ for (const response of asyncThrottle(100, pollHealth)) {
 
 ### fork
 
-**fork([source](#sourceiterable))**
+**fork([source](#sourceiterable))**  
+**__fork([source](#iterable))**  
 
 Returns an iterable of `forks` of `source`. Each fork contains the same values as `source`, and can be consumed independently. This works even if `source` cannot itself be consumed more than once, for example because it is a generator. Values are buffered until they have been consumed by all forks. Each fork can only be consumed once. Note that fork caches values, and these cached values can never be released until `forks.return()` is called on the iterable of forks. If you are consuming `forks` using destructuring syntax (as in this example) or a `for..of` loop, this is done for you.
 
@@ -2059,7 +2219,8 @@ There is a really good chance that you'd be better off using `toArray` to cache 
 
 ### asyncFork
 
-**asyncFork([source](#asyncsourceiterable))**
+**asyncFork([source](#asyncsourceiterable))**  
+**__asyncFork([source](#asynciterable))**  
 
 See [fork](#fork)
 
@@ -2070,7 +2231,7 @@ Note: Returns an iterable (sync) of async iterables.
 
 ### arrayFrom
 
-**arrayFrom([strings](#sourceiterable))**
+**arrayFrom([strings](#sourceiterable))**  
 
 Aliases: `toArray`
 
@@ -2083,7 +2244,7 @@ arrayFrom(null); // []
 
 ### arrayFromAsync
 
-**arrayFromAsync([source](#asyncsourceiterable))**
+**arrayFromAsync([source](#asyncsourceiterable))**  
 
 Aliases: `asyncToArray`
 
@@ -2097,7 +2258,8 @@ await arrayFromAsync(null); // []
 ### consume
 
 **consume(callback, [iterable](#sourceiterable))**  
-**consume([iterable](#sourceiterable))**
+**consume([iterable](#sourceiterable))**  
+**__consume([iterable](#iterable), ?callback)**  
 
 Consumes `iterable`.
 
@@ -2118,13 +2280,15 @@ consume(log123); // prints 1 2 3
 ### asyncConsume
 
 **asyncConsume(callback, [iterable](#asyncsourceiterable))**  
-**asyncConsume([iterable](#asyncsourceiterable))**
+**asyncConsume([iterable](#asyncsourceiterable))**  
+**__asyncConsume([iterable](#asynciterable), ?callback)**  
 
 See [consume](#consume)
 
 ### forEach
 
-**forEach(callback, [iterable](#sourceiterable))**
+**forEach(callback, [iterable](#sourceiterable))**  
+**__forEach([iterable](#iterable), callback)**  
 
 Calls `callback(value, idx)` for each value in `iterable`. Note that as a consuming method, `forEach` is not lazy. It will trigger evaluation of `iterable`.
 
@@ -2135,17 +2299,18 @@ forEach((value) => console.log(value), null); //
 
 ### asyncForEach
 
-**asyncForEach(callback, [iterable](#asyncsourceiterable))**
+**asyncForEach(callback, [iterable](#asyncsourceiterable))**  
+**__asyncForEach([iterable](#asynciterable), callback)**  
 
 See [forEach](#foreach)
 
 ### objectFrom
 
-**objectFrom([entries](#sourceiterable))**
+**objectFrom([entries](#sourceiterable), ?prototype)**  
 
 Aliases: `toObject`
 
-Transforms an `entries` iterable into an object. Each entry should be of the form `[key, value]`. Roughly equivalent to `Object.fromEntries`, except that it turns `null` and `undefined` into `{}`.
+Transforms an `entries` iterable into an object. Each entry should be of the form `[key, value]`. Roughly equivalent to `Object.fromEntries`, except that it turns `null` and `undefined` into `{}`. An optional `prototype` will be passed to `Object.create` if specified.
 
 ```js
 objectFrom([
@@ -2157,11 +2322,11 @@ objectFrom(null); // {}
 
 ### objectFromAsync
 
-**objectFromAsync([entries](#asyncsourceiterable))**
+**objectFromAsync([entries](#asyncsourceiterable), ?prototype)**  
 
 Aliases: `asyncToObject`
 
-Transform an async `entries` iterable (or a sync one) into an object. Each entry should be of the form `[key, value]`.
+Transform an async `entries` iterable (or a sync one) into an object. Each entry should be of the form `[key, value]`. An optional `prototype` will be passed to `Object.create` if specified.
 
 ```js
 objectFromAsync(
@@ -2175,7 +2340,7 @@ await objectFromAsync(null); // []
 
 ### stringFrom
 
-**stringFrom([source](#sourceiterable))**
+**stringFrom([source](#sourceiterable))**  
 
 Aliases: `str`
 
@@ -2188,7 +2353,7 @@ stringFrom(null); // ''
 
 ### stringFromAsync
 
-**stringFromAsync([strings](#sourceiterable))**
+**stringFromAsync([strings](#sourceiterable))**  
 
 Aliases: `asyncStr`
 
@@ -2196,25 +2361,29 @@ See [stringFrom](#string-from).
 
 ### toArray
 
-**toArray(source)**
+**toArray(source)**  
+**__toArray(source)**  
 
 See [arrayFrom](#arrayfrom)
 
 ### asyncToArray
 
-**asyncToArray(source)**
+**asyncToArray(source)**  
+**__asyncToArray(source)**  
 
 See [arrayFromAsync](#arrayfromasync)
 
 ### toObject
 
-**toObject(iterable, proto)**
+**toObject(iterable, proto)**  
+**__toObject(iterable, proto)**  
 
 See [objectFrom](#objectfrom)
 
 ### asyncToObject
 
-**asyncToObject(iterable, proto)**
+**asyncToObject(iterable, proto)**  
+**__asyncToObject(iterable, proto)**  
 
 See [objectFromAsync](#objectfromasync)
 
@@ -2223,7 +2392,7 @@ See [objectFromAsync](#objectfromasync)
 
 ### isAsyncIterable
 
-**isAsyncIterable(value)**
+**isAsyncIterable(value)**  
 
 Returns `true` if `value` has a `Symbol.asyncIterator` property and `false` otherwise. Type-safe in typescript.
 
@@ -2238,7 +2407,7 @@ isAsyncIterable(null); // false
 
 ### isAsyncLoopable
 
-**isAsyncLoopable(value)**
+**isAsyncLoopable(value)**  
 
 Returns `true` if `value` has a `Symbol.asyncIterator` or `Symbol.iterator` property and `false` otherwise. If `isAsyncLoopable(value)` then `value` may be used as the subject of a `for await..of` loop. Type-safe in typescript.
 
@@ -2253,7 +2422,7 @@ isAsyncLoopable(null); // false
 
 ### isAsyncWrappable
 
-**isAsyncWrappable(value)**
+**isAsyncWrappable(value)**  
 
 Returns `true` if `value` [isAsyncIterable](#isasynciterable), [isIterable](#isiterable), or [isNil](#isnil) (and `false` otherwise). When `isAsyncWrappable(value)`, it is safe to pass value to [asyncWrap](#asyncwrap) as well as other methods that take an [AsyncSourceIterable](#asyncsourceiterable), which is usually named `iterable` or `source`. Type-safe in typescript.
 
@@ -2269,7 +2438,7 @@ isAsyncWrappable(4); // false
 
 ### isIterable
 
-**isIterable(value)**
+**isIterable(value)**  
 
 Returns `true` if `value` is iterable (which is to say it has a `Symbol.iterator` property) and `false` otherwise. Iterables are inputs (often named `source` or `iterable`) to most `iter-tools` methods, so it is useful to know all the ways you can create them:
 
@@ -2338,7 +2507,7 @@ See [isIterable](#isiterable). For sync iterables these methods share the same i
 
 ### isNil
 
-**isNil(value)**
+**isNil(value)**  
 
 Returns `true` if `value` is `null` or `undefined` and `false` otherwise. Type-safe in typescript.
 
@@ -2352,7 +2521,7 @@ isNil(NaN); // false
 
 ### isNull
 
-**isNull(value)**
+**isNull(value)**  
 
 Returns `true` if `value` is `null` and `false` otherwise. Type-safe in typescript.
 
@@ -2363,7 +2532,7 @@ isNull(undefined); // false
 
 ### isUndefined
 
-**isUndefined(value)**
+**isUndefined(value)**  
 
 Returns `true` if `value` is `undefined` and `false` otherwise. Implemented using `typeof`. Type-safe in typescript.
 
@@ -2374,7 +2543,7 @@ isUndefined(null); // false
 
 ### isWrappable
 
-**isWrappable(value)**
+**isWrappable(value)**  
 
 Returns `true` if `value` [isIterable](#isiterable) or `value` [isNil](#isnil) (and `false` otherwise). When `isWrappable(value)`, it is safe to pass value to [wrap](#wrap) (and any other method which exepects a [SourceIterable](#sourceiterable)). Type-safe in typescript.
 
@@ -2387,7 +2556,7 @@ isWrappable({}); // false
 
 ### notAsyncIterable
 
-**notAsyncIterable(value)**
+**notAsyncIterable(value)**  
 
 Returns `false` if `value` has a `Symbol.asyncIterator` property and `true` otherwise. Type-safe in typescript.
 
@@ -2402,7 +2571,7 @@ notAsyncIterable(null); // true
 
 ### notAsyncLoopable
 
-**notAsyncLoopable(value)**
+**notAsyncLoopable(value)**  
 
 Returns `false` if `value` has a `Symbol.asyncIterator` or `Symbol.iterator` property and `true` otherwise. When `notAsyncLoopable(value)`, using value as the subject of a `for await..of` loop will throw an error.
 
@@ -2417,7 +2586,7 @@ notAsyncLoopable({}); // true
 
 ### notAsyncWrappable
 
-**notAsyncWrappable(value)**
+**notAsyncWrappable(value)**  
 
 Returns `false` if `value` [isAsyncIterable](#isasynciterable), [isIterable](#isiterable), or [isNil](#isnil) (and `true` otherwise). When `notAsyncWrappable(value)`, passing `value` to [asyncWrap](#asyncwrap) (or any other method which expects a [AsyncSourceIterable](#asyncsourceiterable)) will throw an error.
 
@@ -2433,7 +2602,7 @@ notAsyncWrappable(4); // true
 
 ### notIterable
 
-**notIterable(value)**
+**notIterable(value)**  
 
 Returns `false` if `value` is iterable (has a `Symbol.iterator` property) and `true` otherwise. For more details see the method's inverse: [isIterable](#isiterable). Type-safe in typescript.
 
@@ -2451,7 +2620,7 @@ See [notIterable](#notiterable). For sync iterables these methods share the same
 
 ### notNil
 
-**notNil(value)**
+**notNil(value)**  
 
 Returns `false` if `value` is `null` or `undefined` and `true` otherwise. Type-safe in typescript.
 
@@ -2463,7 +2632,7 @@ notNil(null); // false
 
 ### notNull
 
-**notNull(value)**
+**notNull(value)**  
 
 Returns `false` if `value` is `null` and `true` otherwise. Type-safe in typescript.
 
@@ -2474,7 +2643,7 @@ notNull(null); // false
 
 ### notUndefined
 
-**notUndefined(value)**
+**notUndefined(value)**  
 
 Returns `false` if `value` is `undefined` and `true` otherwise. Implemented using `typeof`. Type-safe in typescript.
 
@@ -2485,7 +2654,7 @@ notUndefined(undefined); // false
 
 ### notWrappable
 
-**notWrappable(value)**
+**notWrappable(value)**  
 
 Returns `false` if `value` [isIterable](#isiterable) or `value` [isNil](#isnil) (and `true` otherwise). When `notWrappable(value)`, passing `value` to [wrap](#wrap) (or any other method which expects a [SourceIterable](#sourceiterable)) will throw an error.
 
@@ -2502,7 +2671,8 @@ notWrappable(4); // true
 
 ### apply
 
-**apply(fn, args)**
+**apply(fn, args)**  
+**__apply(fn, args)**  
 
 `apply` is a convenience method. Its implementation is:
 
@@ -2514,37 +2684,39 @@ notWrappable(4); // true
 
 ### arrayFirst
 
-**arrayFirst(array)**
+**arrayFirst(array)**  
 
 `return array ? array[0] : undefined`
 
 ### arrayFirstOr
 
-**arrayFirstOr(whenEmpty, array)**
+**arrayFirstOr(whenEmpty, array)**  
 
 `return array && array.length ? array[0] : whenEmpty`
 
 ### arrayLast
 
-**arrayLast(array)**
+**arrayLast(array)**  
 
 `return array ? array[array.length - 1] : undefined`
 
 ### arrayLastOr
 
-**arrayLastOr(whenEmpty, array)**
+**arrayLastOr(whenEmpty, array)**  
 
 `return array && array.length ? array[array.length - 1] : whenEmpty`
 
 ### arrayReverse
 
-**arrayReverse(source)**
+**arrayReverse(source)**  
+**__arrayReverse(source)**  
 
 Yields the elements from `source` in reverse order. `source` must be an array, string, `null`, or `undefined`.
 
 ### call
 
-**call(fn, ...args)**
+**call(fn, ...args)**  
+**__call(fn, ...args)**  
 
 `call` is a convenience method. Its implementation is:
 
@@ -2556,7 +2728,7 @@ Yields the elements from `source` in reverse order. `source` must be an array, s
 
 ### compose
 
-**compose(...fns)**
+**compose(...fns)**  
 
 Allows nested calls to be flattened out for improved readability. `compose(a, b, c)` is equivalent to `a(b(c))`, where `a`, `b`, and `c`, are functions. `compose` is usually combined with curryied forms of other methods so that the `source` (or `iterable`) argument is passed between the composed methods.
 
@@ -2573,7 +2745,7 @@ Note: If seems backwards to you that `filter` appears below `map` yet runs first
 
 ### execPipe
 
-**execPipe(initial, ...fns)**
+**execPipe(initial, ...fns)**  
 
 `execPipe(inital, ...fns)` is sugar for `pipe(...fns)(initial)`. See [pipe](#pipe)
 
@@ -2587,7 +2759,7 @@ execPipe(
 
 ### getSize
 
-**getSize(sequence)**
+**getSize(sequence)**  
 
 Returns the size of `sequence` as determined by accessing `length` if `Array.isArray(sequence)`, or `sequence.size` otherwise. The size of `null` or `undefined` is `0`. Throws an error if a numeric size cannot be found in this way. If you have an iterable with no cached size you should instead use [size](#size).
 
@@ -2599,7 +2771,7 @@ getSize(null); // 0
 
 ### pipe
 
-**pipe(...fns)**
+**pipe(...fns)**  
 
 Allows nested calls to be flattened out for improved readability. `pipe(a, b, c)` is equivalent to `c(b(a))`, where `a`, `b`, and `c`, are functions. `pipe` is usually combined with curryied forms of other methods so that the `source` (or `iterable`) argument is passed between the composed methods.
 
@@ -2616,7 +2788,7 @@ Note: `pipe` is equivalent to [compose](#compose) but with inverted order of ope
 
 ### when
 
-**when(condition, value)**
+**when(condition, value)**  
 
 `when` is a helper for use with the es6 spread syntax (the `...` operator). When `condition` is truthy its result is `value`. When condition is falsy its result is an empty iterable object. This is useful to avoid an unnecessarily difficult to read pattern that often causes code formatters (prettier, specifically) to emit an undesireable number of lines:
 
@@ -2653,7 +2825,8 @@ const whenObj = {
 ### interleave
 
 **interleave(strategy, options, ...[sources](#sourceiterable))**  
-**interleave(strategy, ...[sources](#sourceiterable))**
+**interleave(strategy, ...[sources](#sourceiterable))**  
+**__interleave([sources](#iterable), strategy, ?options)**  
 
 Facilitates the creation of new strategies for interleaving values from multiple iterables. It does this by decorating the `strategy` [generator](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function*), which is to say providing it with arguments and yielding its values. The responsibilities of the wrapping code are to forward any provided `options`, decorate the source iterables with [peekerators](#peekerate), manage the special `all` peekerator, and to call `return()` on any incomplete peekerators. The `all` peekerator provides `all.done` to indicate whether interleaving is complete, and `all.value`: a reference to the first peekerator which is not done. The `all` peekerator cannot be advanced.
 
@@ -2717,13 +2890,15 @@ const myInterleave = interleave(myStrategy, {});
 ### asyncInterleave
 
 **asyncInterleave(strategy, options, ...[sources](#asyncsourceiterable))**  
-**asyncInterleave(strategy, ...[sources](#asyncsourceiterable))**
+**asyncInterleave(strategy, ...[sources](#asyncsourceiterable))**  
+**__asyncInterleave([sources](#asynciterable), strategy, ?options)**  
 
 See [interleave](#interleave)
 
 ### peekerate
 
-**peekerate(source)**
+**peekerate(source)**  
+**__peekerate(source)**  
 
 Turns `source` into a peekerator (often shortened to `peekr`), which is conceptually equivalent to an iterator but is often easier to work with. Peekerators always have a `{done, value}` step from the source iterator stored as `peekr.current`. For convenience `peekr.done` and `peekr.value` are also present. To load the next step call `peekr.advance()`. No value is returned.
 
@@ -2746,7 +2921,8 @@ Note that in typescript definitions `Peekerator` is a type not a class, so if yo
 
 ### asyncPeekerate
 
-**asyncPeekerate(source)**
+**asyncPeekerate(source)**  
+**__asyncPeekerate(source)**  
 
 See [peekerate](#peekerate)
 
@@ -2764,7 +2940,8 @@ while (!peekerator.done) {
 ### spliterate
 
 **spliterate(strategy, options, [source](#sourceiterable))**  
-**spliterate(strategy, [source](#sourceiterable))**
+**spliterate(strategy, [source](#sourceiterable))**  
+**__spliterate([source](#iterable), strategy, ?options)**  
 
 Facilitates the creation of methods which split a `source` iterable into multiple parts. The `strategy` generator yield a flat output containing values from `source` as well as special `split` sentinel values. `spliterate` decorates the values yielded from `strategy()`. Each instance of the `split` sentinel will yield a new part. Thus for a `strategy` which yields `split` `n` times, `n + 1` parts will be yielded.
 
@@ -2821,14 +2998,16 @@ const mySpliterate = spliterate(myStrategy, {});
 ### asyncSpliterate
 
 **asyncSpliterate(strategy, options, [source](#asyncsourceiterable))**  
-**asyncSpliterate(strategy, [source](#asyncsourceiterable))**
+**asyncSpliterate(strategy, [source](#asyncsourceiterable))**  
+**__asyncSpliterate([source](#asynciterable), strategy, ?options)**  
 
 See [spliterate](#spliterate)
 
 ### spliterateGrouped
 
 **spliterateGrouped(strategy, options, [source](#sourceiterable))**  
-**spliterateGrouped(strategy, [source](#sourceiterable))**
+**spliterateGrouped(strategy, [source](#sourceiterable))**  
+**__spliterateGrouped([source](#iterable), strategy, ?options)**  
 
 Facilitates the creation of methods which split a `source` iterable into multiple keyed groups. The `strategy` generator yield a flat output containing values from `source` as well as special `split` sentinel values. `spliterate` decorates the values yielded from `strategy()`. Each instance of the `split` sentinel starts a new group. The value immediately following a `split` is the key for the group. This means that a `strategy` which yields `split` `n` times, `n` groups will be yielded.
 
@@ -2895,7 +3074,8 @@ const mySpliterate = spliterate(myStrategy, {});
 ### asyncSpliterateGrouped
 
 **asyncSpliterateGrouped(strategy, options, [source](#asyncsourceiterable))**  
-**asyncSpliterateGrouped(strategy, [source](#asyncsourceiterable))**
+**asyncSpliterateGrouped(strategy, [source](#asyncsourceiterable))**  
+**__asyncSpliterateGrouped([source](#asynciterable), strategy, ?options)**  
 
 See [spliterateGrouped](#spliterategrouped)
 

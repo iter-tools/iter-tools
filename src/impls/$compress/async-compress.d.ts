@@ -13,4 +13,4 @@ declare function asyncCompress<T>(
   included: AsyncSourceIterable<boolean>,
 ): AsyncResultIterable<T>;
 
-export default asyncCompress;
+export { asyncCompress };

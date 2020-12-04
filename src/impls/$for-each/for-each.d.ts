@@ -17,4 +17,4 @@ declare function forEach<T>(
   iterable: SourceIterable<T>,
 ): void;
 
-export default forEach;
+export { forEach };

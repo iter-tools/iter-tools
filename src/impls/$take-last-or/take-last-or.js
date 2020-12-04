@@ -8,7 +8,7 @@
 
 import { iterableCurry } from '../../internal/iterable.js';
 
-export function takeLastOr(iterable, whenEmpty) {
+export function __takeLastOr(iterable, whenEmpty) {
   let _value = whenEmpty;
 
   for (const value of iterable) {
@@ -18,6 +18,6 @@ export function takeLastOr(iterable, whenEmpty) {
   return _value;
 }
 
-export default /*#__PURE__*/ iterableCurry(takeLastOr, {
+export const takeLastOr = /*#__PURE__*/ iterableCurry(__takeLastOr, {
   reduces: true,
 });

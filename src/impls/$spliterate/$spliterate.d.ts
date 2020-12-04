@@ -4,4 +4,4 @@ declare const split: symbol;
 
 export { split };
 
-export default $spliterate;
+export { $spliterate };

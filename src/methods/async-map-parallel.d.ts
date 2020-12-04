@@ -6,4 +6,4 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-export { default } from '../impls/$map/async-map-parallel.js';
+export { asyncMapParallel as default } from '../impls/$map/async-map-parallel';

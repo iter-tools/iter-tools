@@ -1,7 +1,7 @@
 import { $async, $await } from '../../../generate/async.macro.cjs';
 
 import { $iterableCurry } from '../../internal/$iterable.js';
-import { $spliterate } from '../$spliterate/$spliterate.js';
+import { $__spliterate } from '../$spliterate/$spliterate.js';
 
 $async;
 function* $predicateSpliterator(split, { predicate }, source) {
@@ -12,8 +12,8 @@ function* $predicateSpliterator(split, { predicate }, source) {
   }
 }
 
-export function $splitWith(source, predicate) {
-  return $spliterate(source, $predicateSpliterator, { predicate });
+export function $__splitWith(source, predicate) {
+  return $__spliterate(source, $predicateSpliterator, { predicate });
 }
 
-export default /*#__PURE__*/ $iterableCurry($splitWith);
+export const $splitWith = /*#__PURE__*/ $iterableCurry($__splitWith);

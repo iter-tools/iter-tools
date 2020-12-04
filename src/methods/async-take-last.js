@@ -6,4 +6,4 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-export { default } from '../impls/$take-last/async-take-last.js';
+export { asyncTakeLast as default } from '../impls/$take-last/async-take-last.js';

@@ -6,4 +6,4 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-export { default } from '../impls/$round-robin/async-round-robin.js';
+export { asyncRoundRobin as default } from '../impls/$round-robin/async-round-robin';

@@ -53,22 +53,14 @@ AsyncSimpleResultIterable.prototype = Object.assign(Object.create(AsyncResultIte
 });
 
 function makeFunctionConfig(fn, fnConfig = {}) {
-  const {
-    validateArgs,
-    variadic,
-    reduces,
-    optionalArgsAtEnd,
-    minArgs,
-    maxArgs,
-    forceSync,
-  } = fnConfig;
+  const { validateArgs, variadic, reduces, growRight, minArgs, maxArgs, forceSync } = fnConfig;
 
   return {
     fn,
     validateArgs: validateArgs || ((_) => {}),
     variadic: !!variadic,
     reduces: !!reduces,
-    optionalArgsAtEnd: !!optionalArgsAtEnd,
+    growRight: !!growRight,
     minArgs: minArgs === undefined ? fn.length - 1 : minArgs,
     maxArgs: maxArgs === undefined ? fn.length - 1 : maxArgs,
     isIterable: isAsyncWrappable,

@@ -6,4 +6,4 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-export { default } from '../impls/$spliterate-grouped/spliterate-grouped.js';
+export { spliterateGrouped as default } from '../impls/$spliterate-grouped/spliterate-grouped';

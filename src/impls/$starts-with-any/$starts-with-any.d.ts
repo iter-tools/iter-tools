@@ -11,4 +11,4 @@ declare function $startsWithAny(
   iterable: $SourceIterable<any>,
 ): $Promise<boolean>;
 
-export default $startsWithAny;
+export { $startsWithAny };

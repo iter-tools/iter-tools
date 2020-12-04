@@ -15,7 +15,7 @@ const warnCallbackDeprecation = () => {
 };
 
 $async;
-export function $consume(iterable, callback = () => {}) {
+export function $__consume(iterable, callback = () => {}) {
   let c = 0;
   $await;
   for (const value of iterable) {
@@ -23,12 +23,12 @@ export function $consume(iterable, callback = () => {}) {
   }
 }
 
-export default /*#__PURE__*/ $iterableCurry($consume, {
+export const $consume = /*#__PURE__*/ $iterableCurry($__consume, {
   reduces: true,
   minArgs: 0,
   maxArgs: 1,
   validateArgs(args) {
-    if (typeof args[0] === 'function') {
+    if (typeof args[1] === 'function') {
       warnCallbackDeprecation();
     }
   },

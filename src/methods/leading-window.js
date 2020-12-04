@@ -6,4 +6,4 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-export { default } from '../impls/$leading-window/leading-window.js';
+export { leadingWindow as default } from '../impls/$leading-window/leading-window.js';

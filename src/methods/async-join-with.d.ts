@@ -6,4 +6,4 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-export { default } from '../impls/$join-with/async-join-with.js';
+export { asyncJoinWith as default } from '../impls/$join-with/async-join-with';

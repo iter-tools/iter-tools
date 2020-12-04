@@ -10,4 +10,4 @@ import { SourceIterable } from '../../types/iterable';
 
 declare function consume<T>(iterable: SourceIterable<T>): void;
 
-export default consume;
+export { consume };

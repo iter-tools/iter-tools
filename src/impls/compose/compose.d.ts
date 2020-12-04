@@ -41,4 +41,4 @@ declare function compose<A, R1, R2, R3, R4, R5, R6> (
 
 declare function compose<T>(...fns: Array<(x: T) => T>): (x: T) => T;
 
-export default compose;
+export { compose };

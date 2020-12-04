@@ -7,15 +7,15 @@
  */
 
 import { asyncIterableCurry } from '../../internal/async-iterable.js';
-import { asyncFirstOr } from '../$first-or/async-first-or.js';
+import { __asyncFirstOr } from '../$first-or/async-first-or.js';
 
 const none = Symbol('none');
 
-export async function asyncStartsWithAny(iterable, values) {
-  return values.includes(await asyncFirstOr(iterable, none));
+export async function __asyncStartsWithAny(iterable, values) {
+  return values.includes(await __asyncFirstOr(iterable, none));
 }
 
-export default /*#__PURE__*/ asyncIterableCurry(asyncStartsWithAny, {
+export const asyncStartsWithAny = /*#__PURE__*/ asyncIterableCurry(__asyncStartsWithAny, {
   reduces: true,
   validateArgs(args) {},
 });

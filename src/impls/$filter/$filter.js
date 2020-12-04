@@ -3,7 +3,7 @@ import { $async, $await } from '../../../generate/async.macro.cjs';
 import { $iterableCurry } from '../../internal/$iterable.js';
 
 $async;
-export function* $filter(source, predicate) {
+export function* $__filter(source, predicate) {
   let c = 0;
   $await;
   for (const value of source) {
@@ -13,4 +13,4 @@ export function* $filter(source, predicate) {
   }
 }
 
-export default /*#__PURE__*/ $iterableCurry($filter);
+export const $filter = /*#__PURE__*/ $iterableCurry($__filter);

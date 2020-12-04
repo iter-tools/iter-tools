@@ -6,4 +6,4 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-export { default } from '../impls/$consume/async-consume.js';
+export { asyncConsume as default } from '../impls/$consume/async-consume.js';

@@ -4,4 +4,4 @@ declare function asyncInterleaveReady<T>(
   ...sources: Array<AsyncSourceIterable<T>>
 ): AsyncResultIterable<T>;
 
-export default asyncInterleaveReady;
+export { asyncInterleaveReady };

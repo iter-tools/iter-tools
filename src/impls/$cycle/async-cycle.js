@@ -6,10 +6,11 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import asyncCycleTimes from '../$cycle-times/async-cycle-times.js';
+import { asyncIterableCurry } from '../../internal/async-iterable.js';
+import { __asyncCycleTimes } from '../$cycle-times/async-cycle-times.js';
 
-export function asyncCycle(source) {
-  return asyncCycleTimes(Infinity, source);
+export function __asyncCycle(source) {
+  return __asyncCycleTimes(source, Infinity);
 }
 
-export default asyncCycle;
+export const asyncCycle = /*#__PURE__*/ asyncIterableCurry(__asyncCycle);

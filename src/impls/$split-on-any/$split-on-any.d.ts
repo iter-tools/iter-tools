@@ -9,4 +9,4 @@ declare function $splitOnAny<T>(
   source: $SourceIterable<T>,
 ): $ResultIterable<$ResultIterable<T>>;
 
-export default $splitOnAny;
+export { $splitOnAny };

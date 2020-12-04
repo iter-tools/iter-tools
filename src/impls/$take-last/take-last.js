@@ -7,12 +7,12 @@
  */
 
 import { iterableCurry } from '../../internal/iterable.js';
-import { takeLastOr } from '../$take-last-or/take-last-or.js';
+import { __takeLastOr } from '../$take-last-or/take-last-or.js';
 
-export function takeLast(iterable) {
-  return takeLastOr(iterable, undefined);
+export function __takeLast(iterable) {
+  return __takeLastOr(iterable, undefined);
 }
 
-export default /*#__PURE__*/ iterableCurry(takeLast, {
+export const takeLast = /*#__PURE__*/ iterableCurry(__takeLast, {
   reduces: true,
 });

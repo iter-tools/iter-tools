@@ -3,7 +3,7 @@ import { $iterableCurry } from '../../internal/$iterable.js';
 import { CircularBuffer, ReadOnlyCircularBuffer } from '../../internal/circular-buffer.js';
 
 $async;
-export function* $window(source, size) {
+export function* $__window(source, size) {
   const buffer = new CircularBuffer(size);
   const bufferReadProxy = new ReadOnlyCircularBuffer(buffer);
 
@@ -16,9 +16,9 @@ export function* $window(source, size) {
   }
 }
 
-export default /*#__PURE__*/ $iterableCurry($window, {
+export const $window = /*#__PURE__*/ $iterableCurry($__window, {
   validateArgs(args) {
-    if (typeof args[0] !== 'number') {
+    if (typeof args[1] !== 'number') {
       throw new Error(`${$`window`} must be passed a numeric size`);
     }
   },

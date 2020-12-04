@@ -30,4 +30,4 @@ export type AsyncPeekerator<T> = AsyncDonePeekerator | AsyncValuePeekerator<T>;
 
 declare function asyncPeekerate<T>(source: AsyncSourceIterable<T>): AsyncPeekerator<T>;
 
-export default asyncPeekerate;
+export { asyncPeekerate };

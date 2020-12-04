@@ -5,7 +5,7 @@ import { CircularBuffer, ReadOnlyCircularBuffer } from '../../internal/circular-
 import { validateWindowArgs } from './internal/validate-window-args.js';
 
 $async;
-export function* $trailingWindow(source, size, { filler } = {}) {
+export function* $__trailingWindow(source, size, { filler } = {}) {
   const buffer = new CircularBuffer(size);
   const bufferReadProxy = new ReadOnlyCircularBuffer(buffer);
 
@@ -18,9 +18,9 @@ export function* $trailingWindow(source, size, { filler } = {}) {
   }
 }
 
-export default /*#__PURE__*/ $iterableCurry($trailingWindow, {
+export const $trailingWindow = /*#__PURE__*/ $iterableCurry($__trailingWindow, {
   minArgs: 1,
   maxArgs: 2,
-  optionalArgsAtEnd: true,
+  growRight: true,
   validateArgs: /*#__PURE__*/ validateWindowArgs($`trailingWindow`),
 });

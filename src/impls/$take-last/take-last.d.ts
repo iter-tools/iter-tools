@@ -10,4 +10,4 @@ import { SourceIterable } from '../../types/iterable';
 
 declare function takeLast<T>(iterable: SourceIterable<T>): T | undefined;
 
-export default takeLast;
+export { takeLast };

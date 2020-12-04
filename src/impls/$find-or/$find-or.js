@@ -3,7 +3,7 @@ import { $async, $await } from '../../../generate/async.macro.cjs';
 import { $iterableCurry } from '../../internal/$iterable.js';
 
 $async;
-export function $findOr(iterable, notFoundValue, func) {
+export function $__findOr(iterable, notFoundValue, func) {
   let c = 0;
   $await;
   for (const value of iterable) {
@@ -14,6 +14,7 @@ export function $findOr(iterable, notFoundValue, func) {
   return notFoundValue;
 }
 
-export default /*#__PURE__*/ $iterableCurry($findOr, {
+export const $findOr = /*#__PURE__*/ $iterableCurry($__findOr, {
+  growRight: true,
   reduces: true,
 });

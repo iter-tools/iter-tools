@@ -3,7 +3,7 @@ import { $async, $await, $iteratorSymbol } from '../../../generate/async.macro.c
 import { $iterableCurry, $callReturn } from '../../internal/$iterable.js';
 
 $async;
-export function $firstOr(iterable, whenEmpty) {
+export function $__firstOr(iterable, whenEmpty) {
   const iter = iterable[$iteratorSymbol]();
   const { value, done } = $await(iter.next());
 
@@ -14,6 +14,6 @@ export function $firstOr(iterable, whenEmpty) {
   return value;
 }
 
-export default /*#__PURE__*/ $iterableCurry($firstOr, {
+export const $firstOr = /*#__PURE__*/ $iterableCurry($__firstOr, {
   reduces: true,
 });

@@ -6,15 +6,15 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import asyncZip from '../$zip/async-zip.js';
-import { asyncFilter } from '../$filter/async-filter.js';
-import { asyncMap } from '../$map/async-map.js';
+import { asyncZip } from '../$zip/async-zip.js';
+import { __asyncFilter } from '../$filter/async-filter.js';
+import { __asyncMap } from '../$map/async-map.js';
 
-export function asyncCompress(source, included) {
-  return asyncMap(
-    asyncFilter(asyncZip(source, included), (entry) => entry[1]),
+export function __asyncCompress(source, included) {
+  return __asyncMap(
+    __asyncFilter(asyncZip(source, included), (entry) => entry[1]),
     (entry) => entry[0],
   );
 }
 
-export default asyncCompress;
+export const asyncCompress = __asyncCompress;

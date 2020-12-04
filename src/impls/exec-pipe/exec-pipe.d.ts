@@ -51,4 +51,4 @@ declare function execPipe<T> (
   ...fns: Array<(value: T) => T>
 ): T;
 
-export default execPipe;
+export { execPipe };

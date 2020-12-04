@@ -14,4 +14,4 @@ declare function asyncTake<T>(
   n: number,
 ): (iterable: AsyncSourceIterable<T>) => AsyncResultIterable<T>;
 
-export default asyncTake;
+export { asyncTake };

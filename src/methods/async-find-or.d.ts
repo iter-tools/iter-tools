@@ -6,4 +6,4 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-export { default } from '../impls/$find-or/async-find-or.js';
+export { asyncFindOr as default } from '../impls/$find-or/async-find-or';

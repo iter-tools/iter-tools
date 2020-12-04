@@ -12,4 +12,4 @@ declare function asyncJoin<T>(
   source: AsyncSourceIterable<AsyncSourceIterable<T>>,
 ): AsyncResultIterable<T>;
 
-export default asyncJoin;
+export { asyncJoin };

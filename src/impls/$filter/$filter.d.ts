@@ -20,4 +20,4 @@ declare function $filter<T>(
   source: $SourceIterable<T>,
 ): $ResultIterable<T>;
 
-export default $filter;
+export { $filter };

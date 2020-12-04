@@ -1,13 +1,13 @@
 import { curry } from '../../internal/curry.js';
 import { wrapWithResultIterable } from '../../internal/iterable.js';
 
-export function* repeatTimes(n, value) {
+export function* __repeatTimes(n, value) {
   while (n--) {
     yield value;
   }
 }
 
-export default /*#__PURE__*/ curry(
-  /*#__PURE__*/ wrapWithResultIterable(repeatTimes),
-  repeatTimes.length,
+export const repeatTimes = /*#__PURE__*/ curry(
+  /*#__PURE__*/ wrapWithResultIterable(__repeatTimes),
+  __repeatTimes.length,
 );

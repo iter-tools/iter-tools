@@ -8,7 +8,7 @@
 
 import { iterableCurry } from '../../internal/iterable.js';
 
-export function str(chars) {
+export function __str(chars) {
   let result = '';
 
   for (const char of chars) {
@@ -18,6 +18,6 @@ export function str(chars) {
   return result;
 }
 
-export default /*#__PURE__*/ iterableCurry(str, {
+export const str = /*#__PURE__*/ iterableCurry(__str, {
   reduces: true,
 });

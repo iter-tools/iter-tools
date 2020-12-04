@@ -43,4 +43,4 @@ declare function roundRobin(options: {
   step?: number;
 }): <T>(...sources: Array<SourceIterable<T>>) => ResultIterable<T>;
 
-export default roundRobin;
+export { roundRobin };

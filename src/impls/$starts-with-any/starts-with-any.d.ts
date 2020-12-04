@@ -12,4 +12,4 @@ declare function startsWithAny(values: Array<any>): (iterable: SourceIterable<an
 
 declare function startsWithAny(values: Array<any>, iterable: SourceIterable<any>): boolean;
 
-export default startsWithAny;
+export { startsWithAny };

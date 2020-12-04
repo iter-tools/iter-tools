@@ -51,4 +51,4 @@ declare function leadingWindow<Filler = undefined>(
   },
 ): <T>(source: SourceIterable<T>) => ResultIterable<SyncResultIterable<T | Filler>>;
 
-export default leadingWindow;
+export { leadingWindow };

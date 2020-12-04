@@ -30,4 +30,4 @@ export type Peekerator<T> = DonePeekerator | ValuePeekerator<T>;
 
 declare function peekerate<T>(source: SourceIterable<T>): Peekerator<T>;
 
-export default peekerate;
+export { peekerate };

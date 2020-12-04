@@ -4,4 +4,4 @@ declare function $batch(size: number): <T>(source: $SourceIterable<T>) => $Resul
 
 declare function $batch<T>(size: number, source: $SourceIterable<T>): $ResultIterable<T[]>;
 
-export default $batch;
+export { $batch };

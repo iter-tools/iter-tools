@@ -30,4 +30,4 @@ declare function findOr<N, T>(
   iterable: SourceIterable<T>,
 ): T | N;
 
-export default findOr;
+export { findOr };

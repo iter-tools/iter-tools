@@ -7,12 +7,12 @@
  */
 
 import { asyncIterableCurry } from '../../internal/async-iterable.js';
-import { asyncPeekerate } from '../$peekerate/async-peekerate.js';
+import { __asyncPeekerate } from '../$peekerate/async-peekerate.js';
 
-export async function asyncReduce(iterable, initial, reducer) {
+export async function __asyncReduce(iterable, reducer, initial = undefined) {
   let c = 0;
   let result = initial;
-  const peekr = await asyncPeekerate(iterable);
+  const peekr = await __asyncPeekerate(iterable);
   try {
     if (initial === undefined) {
       if (peekr.done) {
@@ -33,7 +33,7 @@ export async function asyncReduce(iterable, initial, reducer) {
   }
 }
 
-export default /*#__PURE__*/ asyncIterableCurry(asyncReduce, {
+export const asyncReduce = /*#__PURE__*/ asyncIterableCurry(__asyncReduce, {
   reduces: true,
   minArgs: 1,
   maxArgs: 2,

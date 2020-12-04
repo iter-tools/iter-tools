@@ -12,4 +12,4 @@ declare function includes(value: any): (iterable: SourceIterable<any>) => boolea
 
 declare function includes(value: any, iterable: SourceIterable<any>): boolean;
 
-export default includes;
+export { includes };

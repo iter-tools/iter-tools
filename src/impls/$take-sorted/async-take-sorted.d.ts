@@ -39,4 +39,4 @@ declare function asyncTakeSorted<T>(
   source: AsyncSourceIterable<T>,
 ): AsyncResultIterable<T>;
 
-export default asyncTakeSorted;
+export { asyncTakeSorted };

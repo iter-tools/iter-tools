@@ -11,4 +11,4 @@ declare function $flatMap<O, T>(
   source: $SourceIterable<T>,
 ): $ResultIterable<O>;
 
-export default $flatMap;
+export { $flatMap };

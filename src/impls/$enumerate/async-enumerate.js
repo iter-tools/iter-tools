@@ -7,13 +7,13 @@
  */
 
 import { asyncIterableCurry } from '../../internal/async-iterable.js';
-import { asyncMap } from '../$map/async-map.js';
+import { __asyncMap } from '../$map/async-map.js';
 
-export function asyncEnumerate(source, start = 0) {
-  return asyncMap(source, (value, i) => [start + i, value]);
+export function __asyncEnumerate(source, start = 0) {
+  return __asyncMap(source, (value, i) => [start + i, value]);
 }
 
-export default /*#__PURE__*/ asyncIterableCurry(asyncEnumerate, {
+export const asyncEnumerate = /*#__PURE__*/ asyncIterableCurry(__asyncEnumerate, {
   minArgs: 0,
   maxArgs: 1,
 });

@@ -10,7 +10,7 @@ import { asyncIterableCurry } from '../../internal/async-iterable.js';
 import { defaultCompare } from '../../internal/compare.js';
 import { Heap } from './internal/heap.js';
 
-export async function* asyncTakeSorted(source, n = Infinity, comparator = defaultCompare) {
+export async function* __asyncTakeSorted(source, n = Infinity, comparator = defaultCompare) {
   const heap = new Heap(comparator);
 
   for await (const value of source) {
@@ -25,13 +25,13 @@ export async function* asyncTakeSorted(source, n = Infinity, comparator = defaul
   }
 }
 
-export default /*#__PURE__*/ asyncIterableCurry(asyncTakeSorted, {
+export const asyncTakeSorted = /*#__PURE__*/ asyncIterableCurry(__asyncTakeSorted, {
   minArgs: 0,
   maxArgs: 2,
   validateArgs(args) {
-    if (typeof args[1] === 'number') {
-      args[0] = args[1];
-      args[1] = undefined;
+    if (typeof args[2] === 'number') {
+      args[1] = args[2];
+      args[2] = undefined;
     }
   },
 });

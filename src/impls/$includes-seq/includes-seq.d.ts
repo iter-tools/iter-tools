@@ -12,4 +12,4 @@ declare function includesSeq(seq: SourceIterable<any>): (iterable: SourceIterabl
 
 declare function includesSeq(seq: SourceIterable<any>, iterable: SourceIterable<any>): boolean;
 
-export default includesSeq;
+export { includesSeq };

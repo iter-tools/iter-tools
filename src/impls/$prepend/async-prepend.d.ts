@@ -17,4 +17,4 @@ declare function asyncPrepend<V>(
   value: V,
 ): <T>(source: AsyncSourceIterable<T>) => AsyncResultIterable<V | T>;
 
-export default asyncPrepend;
+export { asyncPrepend };

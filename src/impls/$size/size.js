@@ -8,7 +8,7 @@
 
 import { ensureIterable } from '../../internal/iterable.js';
 
-export function size(iterable) {
+export function __size(iterable) {
   const iter = ensureIterable(iterable);
   let size = 0;
   /* eslint-disable no-unused-vars */
@@ -19,4 +19,4 @@ export function size(iterable) {
   return size;
 }
 
-export default size;
+export const size = __size;

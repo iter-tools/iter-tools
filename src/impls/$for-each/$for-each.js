@@ -3,7 +3,7 @@ import { $async, $await } from '../../../generate/async.macro.cjs';
 import { $iterableCurry } from '../../internal/$iterable.js';
 
 $async;
-export function $forEach(iterable, callback) {
+export function $__forEach(iterable, callback) {
   let c = 0;
   $await;
   for (const value of iterable) {
@@ -11,6 +11,6 @@ export function $forEach(iterable, callback) {
   }
 }
 
-export default /*#__PURE__*/ $iterableCurry($forEach, {
+export const $forEach = /*#__PURE__*/ $iterableCurry($__forEach, {
   reduces: true,
 });

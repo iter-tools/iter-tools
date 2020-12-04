@@ -17,4 +17,4 @@ declare function groupBy<K, T>(
   source: SourceIterable<T>,
 ): ResultIterable<[K, ResultIterable<T>]>;
 
-export default groupBy;
+export { groupBy };

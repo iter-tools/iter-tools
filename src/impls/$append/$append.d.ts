@@ -4,4 +4,4 @@ declare function $append<T, V>(value: V, source: $SourceIterable<T>): $ResultIte
 
 declare function $append<V>(value: V): <T>(source: $SourceIterable<T>) => $ResultIterable<V | T>;
 
-export default $append;
+export { $append };

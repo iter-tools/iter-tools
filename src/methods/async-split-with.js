@@ -6,4 +6,4 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-export { default } from '../impls/$split-with/async-split-with.js';
+export { asyncSplitWith as default } from '../impls/$split-with/async-split-with.js';

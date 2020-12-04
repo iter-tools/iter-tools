@@ -1,7 +1,7 @@
 import { curry } from '../../internal/curry.js';
 
-export function apply(fn, args = []) {
+export function __apply(fn, args = []) {
   return fn(...(args === null ? [] : args));
 }
 
-export default /*#__PURE__*/ curry(apply, 2);
+export const apply = /*#__PURE__*/ curry(__apply, 2);

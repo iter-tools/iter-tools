@@ -24,7 +24,7 @@ export async function* generateBuffered(source, n) {
   }
 }
 
-export async function* asyncBuffer(source, n) {
+export async function* __asyncBuffer(source, n) {
   const bufferGen = generateBuffered(source, n)[Symbol.asyncIterator]();
 
   await bufferGen.next(); // primed
@@ -32,10 +32,10 @@ export async function* asyncBuffer(source, n) {
   yield* bufferGen;
 }
 
-export default /*#__PURE__*/ asyncIterableCurry(asyncBuffer, {
-  validateArgs([n]) {
-    if (typeof n !== 'number' || n <= 0) {
-      throw new Error('The first argument (bufferSize) should be a number greater than 0');
+export const asyncBuffer = /*#__PURE__*/ asyncIterableCurry(__asyncBuffer, {
+  validateArgs(args) {
+    if (typeof args[1] !== 'number' || args[1] <= 0) {
+      throw new Error('n argument to asyncBuffer must be a number > 0');
     }
   },
 });

@@ -1,14 +1,14 @@
 import { $iterableCurry, $ensureIterable } from '../../internal/$iterable.js';
 
-import { $startsWithAnySeq } from '../$starts-with-any-seq/$starts-with-any-seq.js';
+import { $__startsWithAnySeq } from '../$starts-with-any-seq/$starts-with-any-seq.js';
 
-export function $startsWithSeq(iterable, seq) {
-  return $startsWithAnySeq(iterable, [seq]);
+export function $__startsWithSeq(iterable, seq) {
+  return $__startsWithAnySeq(iterable, [seq]);
 }
 
-export default /*#__PURE__*/ $iterableCurry($startsWithSeq, {
+export const $startsWithSeq = /*#__PURE__*/ $iterableCurry($__startsWithSeq, {
   reduces: true,
   validateArgs(args) {
-    args[0] = $ensureIterable(args[0]);
+    args[1] = $ensureIterable(args[1]);
   },
 });

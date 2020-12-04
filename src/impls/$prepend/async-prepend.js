@@ -8,9 +8,9 @@
 
 import { asyncIterableCurry } from '../../internal/async-iterable.js';
 
-export async function* asyncPrepend(source, value) {
+export async function* __asyncPrepend(source, value) {
   yield value;
   yield* source;
 }
 
-export default /*#__PURE__*/ asyncIterableCurry(asyncPrepend);
+export const asyncPrepend = /*#__PURE__*/ asyncIterableCurry(__asyncPrepend);

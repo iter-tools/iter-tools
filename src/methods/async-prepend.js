@@ -6,4 +6,4 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-export { default } from '../impls/$prepend/async-prepend.js';
+export { asyncPrepend as default } from '../impls/$prepend/async-prepend.js';

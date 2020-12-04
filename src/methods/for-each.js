@@ -6,4 +6,4 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-export { default } from '../impls/$for-each/for-each.js';
+export { forEach as default } from '../impls/$for-each/for-each.js';

@@ -17,4 +17,4 @@ declare function asyncSome<T>(
   iterable: AsyncSourceIterable<T>,
 ): Promise<boolean>;
 
-export default asyncSome;
+export { asyncSome };

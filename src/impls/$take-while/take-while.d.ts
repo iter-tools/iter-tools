@@ -17,4 +17,4 @@ declare function takeWhile<T>(
   source: SourceIterable<T>,
 ): ResultIterable<T>;
 
-export default takeWhile;
+export { takeWhile };

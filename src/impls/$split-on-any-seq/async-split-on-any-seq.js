@@ -8,13 +8,13 @@
 
 import { asyncIterableCurry } from '../../internal/async-iterable.js';
 import { asyncSeqsToArray } from '../../internal/async-any-seq.js';
-import { startsWithSeq } from '../$starts-with-seq/starts-with-seq.js';
-import { asyncLeadingWindow } from '../$leading-window/async-leading-window.js';
-import { asyncSpliterate } from '../$spliterate/async-spliterate.js';
+import { __startsWithSeq } from '../$starts-with-seq/starts-with-seq.js';
+import { __asyncLeadingWindow } from '../$leading-window/async-leading-window.js';
+import { __asyncSpliterate } from '../$spliterate/async-spliterate.js';
 
 function getMatchingLength(buffer, separatorSeqs) {
   for (const subsequence of separatorSeqs) {
-    if (startsWithSeq(buffer, subsequence)) {
+    if (__startsWithSeq(buffer, subsequence)) {
       return subsequence.length;
     }
   }
@@ -27,7 +27,7 @@ async function* asyncAnySeqspliterator(split, { separatorSeqs }, source) {
 
   let skip = 0;
 
-  for await (const buffer of asyncLeadingWindow(source, maxMatchLength, { useFiller: false })) {
+  for await (const buffer of __asyncLeadingWindow(source, maxMatchLength, { useFiller: false })) {
     if (skip > 0) {
       skip--;
       continue;
@@ -43,12 +43,12 @@ async function* asyncAnySeqspliterator(split, { separatorSeqs }, source) {
   }
 }
 
-export async function* asyncSplitOnAnySeq(source, separatorSeqs) {
+export async function* __asyncSplitOnAnySeq(source, separatorSeqs) {
   const separatorSeqsArr = (await asyncSeqsToArray(separatorSeqs)).filter((s) => s.length > 0);
 
-  yield* asyncSpliterate(source, asyncAnySeqspliterator, {
+  yield* __asyncSpliterate(source, asyncAnySeqspliterator, {
     separatorSeqs: separatorSeqsArr.sort((a, b) => b.length - a.length),
   });
 }
 
-export default /*#__PURE__*/ asyncIterableCurry(asyncSplitOnAnySeq);
+export const asyncSplitOnAnySeq = /*#__PURE__*/ asyncIterableCurry(__asyncSplitOnAnySeq);

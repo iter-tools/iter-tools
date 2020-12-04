@@ -17,4 +17,4 @@ declare function asyncTap<T>(
   source: AsyncSourceIterable<T>,
 ): AsyncResultIterable<T>;
 
-export default asyncTap;
+export { asyncTap };

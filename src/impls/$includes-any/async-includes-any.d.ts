@@ -17,4 +17,4 @@ declare function asyncIncludesAny(
   iterable: AsyncSourceIterable<any>,
 ): Promise<boolean>;
 
-export default asyncIncludesAny;
+export { asyncIncludesAny };

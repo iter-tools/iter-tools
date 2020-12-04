@@ -8,16 +8,20 @@
 
 import { asyncIterableCurry } from '../../internal/async-iterable.js';
 import { AsyncGroupsIterator } from '../../internal/async-groups-iterator.js';
-import { asyncWrap } from '../../internal/async-wrap.js';
+import { __asyncMap } from '../$map/async-map.js';
+import { __asyncWrap } from '../$wrap/async-wrap.js';
 
-export { split } from '../../internal/symbols.js';
-
-export function asyncSpliterateGrouped(source, strategy, options = {}) {
-  return asyncWrap(new AsyncGroupsIterator(source, strategy, options));
+export function __asyncSpliterateGrouped(source, strategy, options = {}) {
+  return new AsyncGroupsIterator(source, strategy, options);
 }
 
-export default /*#__PURE__*/ asyncIterableCurry(asyncSpliterateGrouped, {
-  minArgs: 1,
-  maxArgs: 2,
-  optionalArgsAtEnd: true,
-});
+export const asyncSpliterateGrouped = /*#__PURE__*/ asyncIterableCurry(
+  function $spliterateGrouped(...args) {
+    return __asyncMap(__asyncSpliterateGrouped(...args), __asyncWrap);
+  },
+  {
+    minArgs: 1,
+    maxArgs: 2,
+    growRight: true,
+  },
+);

@@ -1,5 +1,5 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`asyncThrottle when interval is invalid throws 1`] = `"The first argument (intervalMs) should be a number greater than 0"`;
+exports[`asyncThrottle when interval is invalid throws 1`] = `"intervalMs argument to asyncThrottle must be a number > 0"`;
 
-exports[`asyncThrottle when interval is invalid throws 2`] = `"The first argument (intervalMs) should be a number greater than 0"`;
+exports[`asyncThrottle when interval is invalid throws 2`] = `"intervalMs argument to asyncThrottle must be a number > 0"`;
