@@ -15,4 +15,4 @@ declare function isSorted<T>(
   iterable: SourceIterable<T>,
 ): boolean;
 
-export default isSorted;
+export { isSorted };

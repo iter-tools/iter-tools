@@ -8,7 +8,7 @@
 
 import { iterableCurry } from '../../internal/iterable.js';
 
-export function* tap(source, callback) {
+export function* __tap(source, callback) {
   let c = 0;
   for (const value of source) {
     callback(value, c++);
@@ -16,4 +16,4 @@ export function* tap(source, callback) {
   }
 }
 
-export default /*#__PURE__*/ iterableCurry(tap);
+export const tap = /*#__PURE__*/ iterableCurry(__tap);

@@ -8,13 +8,13 @@
 
 import { iterableCurry } from '../../internal/iterable.js';
 
-export function forEach(iterable, callback) {
+export function __forEach(iterable, callback) {
   let c = 0;
   for (const value of iterable) {
     callback(value, c++);
   }
 }
 
-export default /*#__PURE__*/ iterableCurry(forEach, {
+export const forEach = /*#__PURE__*/ iterableCurry(__forEach, {
   reduces: true,
 });

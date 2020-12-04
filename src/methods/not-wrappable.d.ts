@@ -6,4 +6,4 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-export { default } from '../impls/not-wrappable/not-wrappable.js';
+export { notWrappable as default } from '../impls/not-wrappable/not-wrappable';

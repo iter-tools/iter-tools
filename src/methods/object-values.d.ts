@@ -6,4 +6,4 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-export { default } from '../impls/object-values/object-values.js';
+export { objectValues as default } from '../impls/object-values/object-values';

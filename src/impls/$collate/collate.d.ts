@@ -19,4 +19,4 @@ declare function collate<T>(
   comparator: (a: T, b: T) => number,
 ): (...sources: Array<SourceIterable<T>>) => ResultIterable<T>;
 
-export default collate;
+export { collate };

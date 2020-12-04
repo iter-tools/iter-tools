@@ -4,4 +4,4 @@ declare function arrayReverse<T>(source: Array<T> | null | undefined): ResultIte
 
 declare function arrayReverse(source: string): ResultIterable<string>;
 
-export default arrayReverse;
+export { arrayReverse };

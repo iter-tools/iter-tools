@@ -13,5 +13,3 @@ export function getSize(sequence) {
   }
   throw new Error('The argument passed to getSize did not have a size');
 }
-
-export default getSize;

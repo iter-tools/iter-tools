@@ -8,15 +8,15 @@
 
 import { asyncIterableCurry, asyncEnsureIterable } from '../../internal/async-iterable.js';
 
-import { asyncStartsWithAnySeq } from '../$starts-with-any-seq/async-starts-with-any-seq.js';
+import { __asyncStartsWithAnySeq } from '../$starts-with-any-seq/async-starts-with-any-seq.js';
 
-export function asyncStartsWithSeq(iterable, seq) {
-  return asyncStartsWithAnySeq(iterable, [seq]);
+export function __asyncStartsWithSeq(iterable, seq) {
+  return __asyncStartsWithAnySeq(iterable, [seq]);
 }
 
-export default /*#__PURE__*/ asyncIterableCurry(asyncStartsWithSeq, {
+export const asyncStartsWithSeq = /*#__PURE__*/ asyncIterableCurry(__asyncStartsWithSeq, {
   reduces: true,
   validateArgs(args) {
-    args[0] = asyncEnsureIterable(args[0]);
+    args[1] = asyncEnsureIterable(args[1]);
   },
 });

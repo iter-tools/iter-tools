@@ -8,7 +8,7 @@
 
 import { asyncEnsureIterable } from '../../internal/async-iterable.js';
 
-export async function asyncSize(iterable) {
+export async function __asyncSize(iterable) {
   const iter = asyncEnsureIterable(iterable);
   let size = 0;
   /* eslint-disable no-unused-vars */
@@ -19,4 +19,4 @@ export async function asyncSize(iterable) {
   return size;
 }
 
-export default asyncSize;
+export const asyncSize = __asyncSize;

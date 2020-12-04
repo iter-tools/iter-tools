@@ -6,4 +6,4 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-export { default } from '../impls/$cycle-times/cycle-times.js';
+export { cycleTimes as default } from '../impls/$cycle-times/cycle-times';

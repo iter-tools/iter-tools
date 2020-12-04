@@ -10,4 +10,4 @@ import { SourceIterable } from '../../types/iterable';
 
 declare function equal(...iterables: Array<SourceIterable<any>>): boolean;
 
-export default equal;
+export { equal };

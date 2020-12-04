@@ -6,4 +6,4 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-export { default } from '../impls/null-or/null-or.js';
+export { nullOr as default } from '../impls/null-or/null-or.js';

@@ -8,7 +8,7 @@
 
 import { asyncIterableCurry, asyncCache } from '../../internal/async-iterable.js';
 
-export async function* asyncInterposeSeq(source, seq) {
+export async function* __asyncInterposeSeq(source, seq) {
   const subseq_ = await asyncCache(seq);
 
   let first = true;
@@ -19,4 +19,4 @@ export async function* asyncInterposeSeq(source, seq) {
   }
 }
 
-export default /*#__PURE__*/ asyncIterableCurry(asyncInterposeSeq);
+export const asyncInterposeSeq = /*#__PURE__*/ asyncIterableCurry(__asyncInterposeSeq);

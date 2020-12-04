@@ -54,4 +54,4 @@ declare function $flat(source: $SourceIterable<any>): $ResultIterable<any>;
 declare function $flat(depth: number, source: $SourceIterable<any>): $ResultIterable<any>;
 declare function $flat(depth?: number): (source: $SourceIterable<any>) => $ResultIterable<any>;
 
-export default $flat;
+export { $flat };

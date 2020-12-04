@@ -9,11 +9,11 @@
 import { CircularBuffer } from '../../internal/circular-buffer.js';
 import { asyncIterableCurry } from '../../internal/async-iterable.js';
 import { AsyncBisector } from '../../internal/async-bisector.js';
-import { wrap } from '../../internal/wrap.js';
-import { asyncPeekerate } from '../$peekerate/async-peekerate.js';
+import { __wrap } from '../$wrap/wrap.js';
+import { __asyncPeekerate } from '../$peekerate/async-peekerate.js';
 
 export async function* asyncIndexSplitStrategy(split, { idx }, source) {
-  const sourcePeekr = await asyncPeekerate(source);
+  const sourcePeekr = await __asyncPeekerate(source);
 
   try {
     const fromEnd = idx < 0;
@@ -61,10 +61,15 @@ export async function* asyncIndexSplitStrategy(split, { idx }, source) {
   }
 }
 
-export function asyncSplitAt(source, idx) {
-  return wrap(new AsyncBisector(source, asyncIndexSplitStrategy, { idx }));
+export function __asyncSplitAt(source, idx) {
+  return new AsyncBisector(source, asyncIndexSplitStrategy, { idx });
 }
 
-export default /*#__PURE__*/ asyncIterableCurry(asyncSplitAt, {
-  forceSync: true,
-});
+export const asyncSplitAt = /*#__PURE__*/ asyncIterableCurry(
+  function $splitAt(source, idx) {
+    return __wrap(__asyncSplitAt(source, idx));
+  },
+  {
+    forceSync: true,
+  },
+);

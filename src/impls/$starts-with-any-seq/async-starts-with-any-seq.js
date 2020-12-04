@@ -7,12 +7,12 @@
  */
 
 import { asyncIterableCurry, asyncEnsureIterable } from '../../internal/async-iterable.js';
-import { asyncZipAll } from '../$zip-all/async-zip-all.js';
-import { asyncPeekerate } from '../$peekerate/async-peekerate.js';
+import { __asyncZipAll } from '../$zip-all/async-zip-all.js';
+import { __asyncPeekerate } from '../$peekerate/async-peekerate.js';
 
 const none = Symbol('none');
 
-export async function asyncStartsWithAnySubseq_(peekr, subseqPeekr) {
+export async function __asyncStartsWithAnySubseq_(peekr, subseqPeekr) {
   if (subseqPeekr.done || subseqPeekr.value.includes(none)) return true;
 
   const matches = subseqPeekr.value.map(() => true);
@@ -35,12 +35,12 @@ export async function asyncStartsWithAnySubseq_(peekr, subseqPeekr) {
   return subseqPeekr.done && matches.includes(true);
 }
 
-export async function asyncStartsWithAnySeq(iterable, seqs) {
+export async function __asyncStartsWithAnySeq(iterable, seqs) {
   if (!seqs.length) return false;
-  const peekr = await asyncPeekerate(iterable);
-  const subseqPeekr = await asyncPeekerate(asyncZipAll(seqs, { filler: none }));
+  const peekr = await __asyncPeekerate(iterable);
+  const subseqPeekr = await __asyncPeekerate(__asyncZipAll(seqs, { filler: none }));
 
-  const seqFound = await asyncStartsWithAnySubseq_(peekr, subseqPeekr);
+  const seqFound = await __asyncStartsWithAnySubseq_(peekr, subseqPeekr);
 
   await subseqPeekr.return();
   await peekr.return();
@@ -48,9 +48,9 @@ export async function asyncStartsWithAnySeq(iterable, seqs) {
   return seqFound;
 }
 
-export default /*#__PURE__*/ asyncIterableCurry(asyncStartsWithAnySeq, {
+export const asyncStartsWithAnySeq = /*#__PURE__*/ asyncIterableCurry(__asyncStartsWithAnySeq, {
   reduces: true,
   validateArgs(args) {
-    args[0] = args[0].map((arg) => asyncEnsureIterable(arg));
+    args[1] = args[1].map((arg) => asyncEnsureIterable(arg));
   },
 });

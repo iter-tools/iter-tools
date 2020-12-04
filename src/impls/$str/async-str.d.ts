@@ -12,4 +12,4 @@ declare function asyncStr(strings: AsyncSourceIterable<string>): Promise<string>
 
 declare function asyncStr(strings: AsyncSourceIterable<{ toString(): string }>): Promise<string>;
 
-export default asyncStr;
+export { asyncStr };

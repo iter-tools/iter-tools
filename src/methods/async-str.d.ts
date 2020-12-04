@@ -6,4 +6,4 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-export { default } from '../impls/$str/async-str.js';
+export { asyncStr as default } from '../impls/$str/async-str';

@@ -6,4 +6,4 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-export { default } from '../impls/$drop-while/async-drop-while.js';
+export { asyncDropWhile as default } from '../impls/$drop-while/async-drop-while';

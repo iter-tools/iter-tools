@@ -6,4 +6,4 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-export { default } from '../impls/repeat/repeat.js';
+export { repeat as default } from '../impls/repeat/repeat.js';

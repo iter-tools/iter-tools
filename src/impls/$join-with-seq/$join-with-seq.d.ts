@@ -10,4 +10,4 @@ declare function $joinWithSeq<W>(
   seq: SyncSourceIterable<W>,
 ): <T>(source: $SourceIterable<$SourceIterable<T>>) => $ResultIterable<T | W>;
 
-export default $joinWithSeq;
+export { $joinWithSeq };

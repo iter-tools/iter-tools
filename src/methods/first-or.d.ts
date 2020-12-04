@@ -6,4 +6,4 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-export { default } from '../impls/$first-or/first-or.js';
+export { firstOr as default } from '../impls/$first-or/first-or';

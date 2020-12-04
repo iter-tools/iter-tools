@@ -6,4 +6,4 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-export { default } from '../impls/$is-sorted/async-is-sorted.js';
+export { asyncIsSorted as default } from '../impls/$is-sorted/async-is-sorted.js';

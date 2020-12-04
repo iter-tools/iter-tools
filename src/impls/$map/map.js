@@ -8,11 +8,11 @@
 
 import { iterableCurry } from '../../internal/iterable.js';
 
-export function* map(source, func) {
+export function* __map(source, func) {
   let c = 0;
   for (const value of source) {
     yield func(value, c++);
   }
 }
 
-export default /*#__PURE__*/ iterableCurry(map);
+export const map = /*#__PURE__*/ iterableCurry(__map);

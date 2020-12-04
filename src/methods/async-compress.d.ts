@@ -6,4 +6,4 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-export { default } from '../impls/$compress/async-compress.js';
+export { asyncCompress as default } from '../impls/$compress/async-compress';

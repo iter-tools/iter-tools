@@ -24,4 +24,4 @@ declare function $findOr<N, T>(
   iterable: $SourceIterable<T>,
 ): $Promise<T | N>;
 
-export default $findOr;
+export { $findOr };

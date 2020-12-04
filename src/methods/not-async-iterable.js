@@ -6,4 +6,4 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-export { default } from '../impls/not-async-iterable/not-async-iterable.js';
+export { notAsyncIterable as default } from '../impls/not-async-iterable/not-async-iterable.js';

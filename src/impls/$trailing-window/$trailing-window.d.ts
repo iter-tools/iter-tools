@@ -25,4 +25,4 @@ declare function $trailingWindow(
   size: number,
 ): <T>(source: $SourceIterable<T>) => $ResultIterable<SyncResultIterable<T | undefined>>;
 
-export default $trailingWindow;
+export { $trailingWindow };

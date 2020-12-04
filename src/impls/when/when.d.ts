@@ -10,4 +10,4 @@ declare function when<T extends Record<string, any>>(
   value: T,
 ): T | Record<string, never>;
 
-export default when;
+export { when };

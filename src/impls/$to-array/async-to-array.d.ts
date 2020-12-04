@@ -10,4 +10,4 @@ import { AsyncSourceIterable } from '../../types/async-iterable';
 
 declare function asyncToArray<T>(source: AsyncSourceIterable<T>): Promise<Array<T>>;
 
-export default asyncToArray;
+export { asyncToArray };

@@ -6,4 +6,4 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-export { default } from '../impls/object-entries/object-entries.js';
+export { objectEntries as default } from '../impls/object-entries/object-entries.js';

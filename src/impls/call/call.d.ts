@@ -3,4 +3,4 @@ declare function call<Args extends Array<any>, Return>(
   ...args: Args
 ): Return;
 
-export default call;
+export { call };

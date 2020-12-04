@@ -6,4 +6,4 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-export { default } from '../impls/$compress/compress.js';
+export { compress as default } from '../impls/$compress/compress';

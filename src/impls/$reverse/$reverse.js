@@ -1,10 +1,11 @@
 import { $async, $await } from '../../../generate/async.macro.cjs';
+
 import { $iterableCurry } from '../../internal/$iterable.js';
-import { $toArray } from '../$to-array/$to-array.js';
+import { $__toArray } from '../$to-array/$to-array.js';
 
 $async;
-export function* $reverse(source) {
-  yield* $await($toArray(source)).reverse();
+export function* $__reverse(source) {
+  yield* $await($__toArray(source)).reverse();
 }
 
-export default /*#__PURE__*/ $iterableCurry($reverse);
+export const $reverse = /*#__PURE__*/ $iterableCurry($__reverse);

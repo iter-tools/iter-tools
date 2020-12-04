@@ -6,4 +6,4 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-export { default } from '../impls/call/call.js';
+export { call as default } from '../impls/call/call.js';

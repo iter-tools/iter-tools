@@ -1,5 +1,5 @@
 import { ensureIterable } from '../../internal/iterable.js';
-import prepend from '../$prepend/prepend.js';
+import { prepend } from '../$prepend/prepend.js';
 
 export function nullOr(source) {
   const iter = ensureIterable(source)[Symbol.iterator]();
@@ -7,5 +7,3 @@ export function nullOr(source) {
 
   return done ? null : prepend(first, iter);
 }
-
-export default nullOr;

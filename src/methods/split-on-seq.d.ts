@@ -6,4 +6,4 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-export { default } from '../impls/$split-on-seq/split-on-seq.js';
+export { splitOnSeq as default } from '../impls/$split-on-seq/split-on-seq';

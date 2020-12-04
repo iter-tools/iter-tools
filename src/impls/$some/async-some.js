@@ -8,7 +8,7 @@
 
 import { asyncIterableCurry } from '../../internal/async-iterable.js';
 
-export async function asyncSome(iterable, func) {
+export async function __asyncSome(iterable, func) {
   let c = 0;
   for await (const value of iterable) {
     if (await func(value, c++)) {
@@ -18,4 +18,4 @@ export async function asyncSome(iterable, func) {
   return false;
 }
 
-export default /*#__PURE__*/ asyncIterableCurry(asyncSome, { reduces: true });
+export const asyncSome = /*#__PURE__*/ asyncIterableCurry(__asyncSome, { reduces: true });

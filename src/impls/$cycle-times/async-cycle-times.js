@@ -1,14 +1,10 @@
 import { asyncIterableCurry } from '../../internal/async-iterable.js';
 
-import { asyncToArray } from '../$to-array/async-to-array.js';
-import { cycleTimes } from './cycle-times.js';
+import { __asyncToArray } from '../$to-array/async-to-array.js';
+import { __cycleTimes } from './cycle-times.js';
 
-export async function* asyncCycleTimes(source, n) {
-  yield* cycleTimes(await source, n);
+export async function* __asyncCycleTimes(source, n) {
+  yield* __cycleTimes(await __asyncToArray(source), n);
 }
 
-export default /*#__PURE__*/ asyncIterableCurry(asyncCycleTimes, {
-  validateArgs(args) {
-    args[1] = asyncToArray(args[1]);
-  },
-});
+export const asyncCycleTimes = /*#__PURE__*/ asyncIterableCurry(__asyncCycleTimes);

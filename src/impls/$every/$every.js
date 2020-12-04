@@ -3,7 +3,7 @@ import { $async, $await } from '../../../generate/async.macro.cjs';
 import { $iterableCurry } from '../../internal/$iterable.js';
 
 $async;
-export function $every(iterable, predicate) {
+export function $__every(iterable, predicate) {
   let c = 0;
   $await;
   for (const value of iterable) {
@@ -14,4 +14,4 @@ export function $every(iterable, predicate) {
   return true;
 }
 
-export default /*#__PURE__*/ $iterableCurry($every, { reduces: true });
+export const $every = /*#__PURE__*/ $iterableCurry($__every, { reduces: true });

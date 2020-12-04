@@ -48,4 +48,4 @@ declare function asyncLeadingWindow<Filler = undefined>(
   },
 ): <T>(source: AsyncSourceIterable<T>) => AsyncResultIterable<SyncResultIterable<T | Filler>>;
 
-export default asyncLeadingWindow;
+export { asyncLeadingWindow };

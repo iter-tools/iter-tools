@@ -13,4 +13,4 @@ declare function asyncSplit<T>(
   source: AsyncSourceIterable<T>,
 ): AsyncResultIterable<SyncResultIterable<T>>;
 
-export default asyncSplit;
+export { asyncSplit };

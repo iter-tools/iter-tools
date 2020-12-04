@@ -6,4 +6,4 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-export { default } from '../impls/$reverse/reverse.js';
+export { reverse as default } from '../impls/$reverse/reverse';

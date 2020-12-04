@@ -12,4 +12,4 @@ declare const split: symbol;
 
 export { split };
 
-export default asyncSpliterateGrouped;
+export { asyncSpliterateGrouped };

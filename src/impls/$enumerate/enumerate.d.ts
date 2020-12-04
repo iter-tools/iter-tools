@@ -19,4 +19,4 @@ declare function enumerate(
   firstIdx: number,
 ): <T>(source: SourceIterable<T>) => ResultIterable<[number, T]>;
 
-export default enumerate;
+export { enumerate };

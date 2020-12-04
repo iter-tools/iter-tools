@@ -17,4 +17,4 @@ declare function asyncIncludesAnySeq(
   iterable: AsyncSourceIterable<any>,
 ): Promise<boolean>;
 
-export default asyncIncludesAnySeq;
+export { asyncIncludesAnySeq };

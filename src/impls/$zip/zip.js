@@ -8,16 +8,16 @@
 
 import { iterableCurry } from '../../internal/iterable.js';
 import { parallelEach } from '../../internal/parallel-each.js';
-import { peekerate } from '../$peekerate/peekerate.js';
-import { map } from '../$map/map.js';
-import { some } from '../$some/some.js';
-import { toArray } from '../$to-array/to-array.js';
+import { __peekerate } from '../$peekerate/peekerate.js';
+import { __map } from '../$map/map.js';
+import { __some } from '../$some/some.js';
+import { __toArray } from '../$to-array/to-array.js';
 
 const isDone = (peekr) => peekr.done;
 
-export function* zip(sources) {
-  const peekrs = toArray(map(sources, peekerate));
-  let done = some(peekrs, isDone);
+export function* __zip(sources) {
+  const peekrs = __toArray(__map(sources, __peekerate));
+  let done = __some(peekrs, isDone);
 
   try {
     while (!done) {
@@ -25,13 +25,13 @@ export function* zip(sources) {
 
       for (const peekr of peekrs) peekr.advance();
 
-      done = some(peekrs, isDone);
+      done = __some(peekrs, isDone);
     }
   } finally {
     parallelEach(peekrs, (peekr) => peekr.return());
   }
 }
 
-export default /*#__PURE__*/ iterableCurry(zip, {
+export const zip = /*#__PURE__*/ iterableCurry(__zip, {
   variadic: true,
 });

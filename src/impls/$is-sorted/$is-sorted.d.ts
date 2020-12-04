@@ -9,4 +9,4 @@ declare function $isSorted<T>(
   iterable: $SourceIterable<T>,
 ): $Promise<boolean>;
 
-export default $isSorted;
+export { $isSorted };

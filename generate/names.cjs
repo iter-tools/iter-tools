@@ -2,6 +2,10 @@
 
 const upper = /[A-Z]/;
 
+function camelize(name) {
+  return name.replace(/-(\w)/g, (_, char) => char.toUpperCase());
+}
+
 function rename(name, ASYNC) {
   const a = upper.test(name[0]) ? 'A' : 'a';
 
@@ -9,7 +13,11 @@ function rename(name, ASYNC) {
 }
 
 function renameDollar(name, ASYNC) {
-  return name[0] === '$' ? rename(name.slice(1), ASYNC) : name;
+  const match = /\$(__)?(.*)/.exec(name);
+  if (!match) return name;
+  const [, __ = '', name_] = match;
+
+  return __ + rename(name_, ASYNC);
 }
 
 function syncName(name) {
@@ -24,4 +32,4 @@ function compareNames(a, b) {
   return aAsync && !bAsync ? 1 : bAsync && !aAsync ? -1 : a > b ? 1 : b > a ? -1 : 0;
 }
 
-module.exports = { rename, renameDollar, syncName, compareNames };
+module.exports = { camelize, rename, renameDollar, syncName, compareNames };

@@ -6,4 +6,4 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-export { default } from '../impls/$reduce/reduce.js';
+export { reduce as default } from '../impls/$reduce/reduce';

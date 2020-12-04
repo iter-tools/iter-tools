@@ -6,4 +6,4 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-export { default } from '../impls/$to-object/to-object.js';
+export { toObject as default } from '../impls/$to-object/to-object.js';

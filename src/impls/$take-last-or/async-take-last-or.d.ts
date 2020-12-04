@@ -13,4 +13,4 @@ declare function asyncTakeLastOr<E, T>(
   iterable: AsyncSourceIterable<T>,
 ): Promise<T | E>;
 
-export default asyncTakeLastOr;
+export { asyncTakeLastOr };

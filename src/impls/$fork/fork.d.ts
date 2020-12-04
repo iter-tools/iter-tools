@@ -14,4 +14,4 @@ import {
 
 declare function fork<T>(source: SourceIterable<T>): SyncResultIterable<ResultIterable<T>>;
 
-export default fork;
+export { fork };

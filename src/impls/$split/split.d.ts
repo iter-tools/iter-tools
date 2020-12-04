@@ -14,4 +14,4 @@ import {
 
 declare function split<T>(source: SourceIterable<T>): ResultIterable<SyncResultIterable<T>>;
 
-export default split;
+export { split };

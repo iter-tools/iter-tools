@@ -7,20 +7,20 @@
  */
 
 import { asyncIterableCurry } from '../../internal/async-iterable.js';
-import { asyncZipAll } from '../$zip-all/async-zip-all.js';
-import { simpleSlice } from '../$slice/slice.js';
+import { __asyncZipAll } from '../$zip-all/async-zip-all.js';
+import { __sliceFromStart } from '../$slice/slice.js';
 
 const none = Symbol('none');
 const zipAllConfig = { filler: none };
 
-export async function asyncEqual(iterables) {
+export async function __asyncEqual(iterables) {
   if (iterables.length <= 1) {
     return true;
   }
 
-  for await (const stepValues of asyncZipAll(iterables, zipAllConfig)) {
+  for await (const stepValues of __asyncZipAll(iterables, zipAllConfig)) {
     const firstValue = stepValues[0];
-    for (const value of simpleSlice(stepValues, 1, Infinity)) {
+    for (const value of __sliceFromStart(stepValues, 1, Infinity)) {
       if (value !== firstValue) {
         return false;
       }
@@ -30,7 +30,7 @@ export async function asyncEqual(iterables) {
   return true;
 }
 
-export default /*#__PURE__*/ asyncIterableCurry(asyncEqual, {
+export const asyncEqual = /*#__PURE__*/ asyncIterableCurry(__asyncEqual, {
   reduces: true,
   variadic: true,
 });

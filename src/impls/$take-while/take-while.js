@@ -8,7 +8,7 @@
 
 import { iterableCurry } from '../../internal/iterable.js';
 
-export function* takeWhile(source, predicate) {
+export function* __takeWhile(source, predicate) {
   let take = true;
   let c = 0;
 
@@ -22,4 +22,4 @@ export function* takeWhile(source, predicate) {
   }
 }
 
-export default /*#__PURE__*/ iterableCurry(takeWhile);
+export const takeWhile = /*#__PURE__*/ iterableCurry(__takeWhile);

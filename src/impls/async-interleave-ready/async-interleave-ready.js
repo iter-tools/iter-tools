@@ -1,7 +1,7 @@
 import { asyncIterableCurry } from '../../internal/async-iterable.js';
 import { raceTo } from './internal/race-to.js';
 
-export async function* asyncInterleaveReady(sources) {
+export async function* __asyncInterleaveReady(sources) {
   const iterators = sources.map((iterable) => iterable[Symbol.asyncIterator]());
 
   const stepPromises = iterators.map((iter, idx) => iter.next().then((step) => ({ idx, step })));
@@ -14,6 +14,6 @@ export async function* asyncInterleaveReady(sources) {
   }
 }
 
-export default /*#__PURE__*/ asyncIterableCurry(asyncInterleaveReady, {
+export const asyncInterleaveReady = /*#__PURE__*/ asyncIterableCurry(__asyncInterleaveReady, {
   variadic: true,
 });

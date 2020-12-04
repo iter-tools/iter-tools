@@ -17,4 +17,4 @@ declare function asyncBatch<T>(
   source: AsyncSourceIterable<T>,
 ): AsyncResultIterable<T[]>;
 
-export default asyncBatch;
+export { asyncBatch };

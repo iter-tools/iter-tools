@@ -7,12 +7,12 @@
  */
 
 import { asyncIterableCurry } from '../../internal/async-iterable.js';
-import { asyncFindOr } from '../$find-or/async-find-or.js';
+import { __asyncFindOr } from '../$find-or/async-find-or.js';
 
-export function asyncFind(iterable, predicate) {
-  return asyncFindOr(iterable, undefined, predicate);
+export function __asyncFind(iterable, predicate) {
+  return __asyncFindOr(iterable, undefined, predicate);
 }
 
-export default /*#__PURE__*/ asyncIterableCurry(asyncFind, {
+export const asyncFind = /*#__PURE__*/ asyncIterableCurry(__asyncFind, {
   reduces: true,
 });

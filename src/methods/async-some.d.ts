@@ -6,4 +6,4 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-export { default } from '../impls/$some/async-some.js';
+export { asyncSome as default } from '../impls/$some/async-some';

@@ -17,4 +17,4 @@ declare function asyncStartsWithAnySeq(
   iterable: AsyncSourceIterable<any>,
 ): Promise<boolean>;
 
-export default asyncStartsWithAnySeq;
+export { asyncStartsWithAnySeq };

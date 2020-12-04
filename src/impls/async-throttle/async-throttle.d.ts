@@ -9,4 +9,4 @@ declare function asyncThrottle<T>(
   source: AsyncSourceIterable<T>,
 ): AsyncResultIterable<T>;
 
-export default asyncThrottle;
+export { asyncThrottle };

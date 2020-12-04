@@ -6,4 +6,4 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-export { default } from '../impls/$join/join.js';
+export { join as default } from '../impls/$join/join';

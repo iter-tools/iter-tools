@@ -7,8 +7,8 @@
  */
 
 import { wrapWithResultIterable } from '../../internal/iterable.js';
-import { nullableWrap as wrap } from '../../internal/wrap.js';
+import { nullableWrap as __wrap } from '../../internal/wrap.js';
 
-export { wrap };
+export { __wrap };
 
-export default /*#__PURE__*/ wrapWithResultIterable(wrap);
+export const wrap = /*#__PURE__*/ wrapWithResultIterable(__wrap);

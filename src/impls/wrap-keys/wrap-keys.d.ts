@@ -4,4 +4,4 @@ declare function wrapKeys<K>(
   keysable: { keys(): Iterable<K> } | null | undefined,
 ): ResultIterable<K>;
 
-export default wrapKeys;
+export { wrapKeys };

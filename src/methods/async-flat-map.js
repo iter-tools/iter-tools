@@ -6,4 +6,4 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-export { default } from '../impls/$flat-map/async-flat-map.js';
+export { asyncFlatMap as default } from '../impls/$flat-map/async-flat-map.js';

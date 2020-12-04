@@ -10,4 +10,4 @@ import { AsyncSourceIterable } from '../../types/async-iterable';
 
 declare function asyncEqual(...iterables: Array<AsyncSourceIterable<any>>): Promise<boolean>;
 
-export default asyncEqual;
+export { asyncEqual };

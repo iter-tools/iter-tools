@@ -8,7 +8,7 @@
 
 import { iterableCurry } from '../../internal/iterable.js';
 
-export function* dropWhile(source, predicate) {
+export function* __dropWhile(source, predicate) {
   let drop = true;
   let c = 0;
   for (const value of source) {
@@ -23,4 +23,4 @@ export function* dropWhile(source, predicate) {
   }
 }
 
-export default /*#__PURE__*/ iterableCurry(dropWhile);
+export const dropWhile = /*#__PURE__*/ iterableCurry(__dropWhile);

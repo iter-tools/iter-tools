@@ -7,12 +7,12 @@
  */
 
 import { ensureIterable } from './iterable.js';
-import { toArray } from '../impls/$to-array/to-array.js';
-import { map } from '../impls/$map/map.js';
+import { __toArray } from '../impls/$to-array/to-array.js';
+import { __map } from '../impls/$map/map.js';
 
 export function seqsToArray(values) {
-  return toArray(
-    map(values, (value) => toArray(ensureIterable(value))),
+  return __toArray(
+    __map(values, (value) => __toArray(ensureIterable(value))),
     (arr) => arr.length > 0,
   );
 }

@@ -7,10 +7,10 @@
  */
 
 import { iterableCurry } from '../../internal/iterable.js';
-import { toArray } from '../$to-array/to-array.js';
+import { __toArray } from '../$to-array/to-array.js';
 
-export function* joinWithSeq(source, separatorSeq) {
-  const _separatorSeq = toArray(separatorSeq);
+export function* __joinWithSeq(source, separatorSeq) {
+  const _separatorSeq = __toArray(separatorSeq);
   let isFirst = true;
 
   for (const value of source) {
@@ -20,4 +20,4 @@ export function* joinWithSeq(source, separatorSeq) {
   }
 }
 
-export default /*#__PURE__*/ iterableCurry(joinWithSeq);
+export const joinWithSeq = /*#__PURE__*/ iterableCurry(__joinWithSeq);

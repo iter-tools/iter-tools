@@ -3,8 +3,8 @@ import { $async, $await } from '../../../generate/async.macro.cjs';
 import { $iterableCurry, $callReturn } from '../../internal/$iterable.js';
 import { $parallelEach } from '../../internal/$parallel-each.js';
 import { $Peekerator } from '../../internal/$peekerator.js';
-import { $map } from '../$map/$map.js';
-import { $toArray } from '../$to-array/$to-array.js';
+import { $__map } from '../$map/$map.js';
+import { $__toArray } from '../$to-array/$to-array.js';
 
 const _ = Symbol.for('_');
 const __advance = Symbol.for('__advance');
@@ -96,7 +96,9 @@ class $Interleaver {
     this.initialized = true;
     const { strategy, options, inputSummary } = this;
     this.buffers = $await(
-      $toArray($map(this.sources, (source) => $SummarizedPeekerator.from(source, inputSummary))),
+      $__toArray(
+        $__map(this.sources, (source) => $SummarizedPeekerator.from(source, inputSummary)),
+      ),
     );
     this.iterator = strategy(options, new $InputSummary(inputSummary), ...this.buffers);
 
@@ -124,13 +126,13 @@ class $Interleaver {
   }
 }
 
-export function $interleave(sources, strategy, options = {}) {
+export function $__interleave(sources, strategy, options = {}) {
   return new $Interleaver(sources, strategy, options);
 }
 
-export default /*#__PURE__*/ $iterableCurry($interleave, {
+export const $interleave = /*#__PURE__*/ $iterableCurry($__interleave, {
   variadic: true,
-  optionalArgsAtEnd: true,
+  growRight: true,
   minArgs: 1,
   maxArgs: 2,
 });

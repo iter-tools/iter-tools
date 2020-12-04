@@ -1,7 +1,7 @@
 import { $async, $await } from '../../../generate/async.macro.cjs';
 
 import { $iterableCurry } from '../../internal/$iterable.js';
-import { $spliterate } from '../$spliterate/$spliterate.js';
+import { $__spliterate } from '../$spliterate/$spliterate.js';
 
 $async;
 function* $batchSpliterator(split, { size }, source) {
@@ -17,13 +17,13 @@ function* $batchSpliterator(split, { size }, source) {
   }
 }
 
-export function $batch(source, size) {
-  return $spliterate(source, $batchSpliterator, { size });
+export function $__batch(source, size) {
+  return $__spliterate(source, $batchSpliterator, { size });
 }
 
-export default /*#__PURE__*/ $iterableCurry($batch, {
-  validateArgs([size]) {
-    if (typeof size !== 'number' || size < 1) {
+export const $batch = /*#__PURE__*/ $iterableCurry($__batch, {
+  validateArgs(args) {
+    if (typeof args[1] !== 'number' || args[1] < 1) {
       throw new TypeError('batch size should be a number greater than zero');
     }
   },

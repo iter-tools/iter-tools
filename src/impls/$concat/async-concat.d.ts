@@ -10,4 +10,4 @@ import { AsyncSourceIterable, AsyncResultIterable } from '../../types/async-iter
 
 declare function asyncConcat<T>(...sources: Array<AsyncSourceIterable<T>>): AsyncResultIterable<T>;
 
-export default asyncConcat;
+export { asyncConcat };

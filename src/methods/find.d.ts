@@ -6,4 +6,4 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-export { default } from '../impls/$find/find.js';
+export { find as default } from '../impls/$find/find';

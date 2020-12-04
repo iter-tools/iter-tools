@@ -6,4 +6,4 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-export { default } from '../impls/$interpose/interpose.js';
+export { interpose as default } from '../impls/$interpose/interpose';

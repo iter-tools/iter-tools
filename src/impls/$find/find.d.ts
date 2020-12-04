@@ -26,4 +26,4 @@ declare function find<T>(
   iterable: SourceIterable<T>,
 ): T | undefined;
 
-export default find;
+export { find };

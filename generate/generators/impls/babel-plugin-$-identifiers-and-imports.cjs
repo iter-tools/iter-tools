@@ -111,8 +111,16 @@ module.exports = function resolveDollarIdentifiersAndImports({ types: t }, { ASY
         if (isTs) continue;
 
         if (declaration) {
-          const { id } = declaration;
-          forceRename(path, id.name, renameDollar(id.name, ASYNC));
+          if (declaration.declaration) {
+            const { id } = declaration;
+            forceRename(path, id.name, renameDollar(id.name, ASYNC));
+          } else if (declaration.declarations) {
+            const { declarations } = declaration;
+            for (const declaration of declarations) {
+              const { id } = declaration;
+              forceRename(path, id.name, renameDollar(id.name, ASYNC));
+            }
+          }
         }
 
         if (specifiers) {

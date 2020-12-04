@@ -7,12 +7,12 @@
  */
 
 import { asyncIterableCurry } from '../../internal/async-iterable.js';
-import { asyncTakeLastOr } from '../$take-last-or/async-take-last-or.js';
+import { __asyncTakeLastOr } from '../$take-last-or/async-take-last-or.js';
 
-export function asyncTakeLast(iterable) {
-  return asyncTakeLastOr(iterable, undefined);
+export function __asyncTakeLast(iterable) {
+  return __asyncTakeLastOr(iterable, undefined);
 }
 
-export default /*#__PURE__*/ asyncIterableCurry(asyncTakeLast, {
+export const asyncTakeLast = /*#__PURE__*/ asyncIterableCurry(__asyncTakeLast, {
   reduces: true,
 });

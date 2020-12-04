@@ -21,4 +21,4 @@ declare function splitAt<T>(
   source: SourceIterable<T>,
 ): SyncResultIterable<ResultIterable<T>>;
 
-export default splitAt;
+export { splitAt };

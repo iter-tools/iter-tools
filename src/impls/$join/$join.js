@@ -1,10 +1,10 @@
 import { $wrapWithResultIterable, $ensureIterable } from '../../internal/$iterable.js';
-import { $joinWithSeq } from '../$join-with-seq/$join-with-seq.js';
+import { $__joinWithSeq } from '../$join-with-seq/$join-with-seq.js';
 
 const emptySeq = [];
 
-export function $join(source) {
-  return $joinWithSeq($ensureIterable(source), emptySeq);
+export function $__join(source) {
+  return $__joinWithSeq($ensureIterable(source), emptySeq);
 }
 
-export default /*#__PURE__*/ $wrapWithResultIterable($join);
+export const $join = /*#__PURE__*/ $wrapWithResultIterable($__join);

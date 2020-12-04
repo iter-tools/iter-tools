@@ -7,14 +7,14 @@
  */
 
 import { iterableCurry } from '../../internal/iterable.js';
-import { firstOr } from '../$first-or/first-or.js';
+import { __firstOr } from '../$first-or/first-or.js';
 
 const none = Symbol('none');
 
-export function isEmpty(iterable) {
-  return firstOr(iterable, none) === none;
+export function __isEmpty(iterable) {
+  return __firstOr(iterable, none) === none;
 }
 
-export default /*#__PURE__*/ iterableCurry(isEmpty, {
+export const isEmpty = /*#__PURE__*/ iterableCurry(__isEmpty, {
   reduces: true,
 });

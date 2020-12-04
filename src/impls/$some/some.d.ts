@@ -17,4 +17,4 @@ declare function some<T>(
   iterable: SourceIterable<T>,
 ): boolean;
 
-export default some;
+export { some };

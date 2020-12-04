@@ -8,12 +8,14 @@
 
 import { asyncEnsureIterable } from '../../internal/async-iterable.js';
 
-export async function asyncToArray(source) {
+export async function __asyncToArray(source) {
   const out = [];
-  for await (const value of asyncEnsureIterable(source)) {
+  for await (const value of source) {
     out.push(value);
   }
   return out;
 }
 
-export default asyncToArray;
+export function asyncToArray(source) {
+  return __asyncToArray(asyncEnsureIterable(source));
+}

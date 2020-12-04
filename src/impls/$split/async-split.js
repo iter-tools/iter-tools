@@ -6,14 +6,15 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { asyncMap } from '../$map/async-map.js';
+import { asyncIterableCurry } from '../../internal/async-iterable.js';
+import { __asyncMap } from '../$map/async-map.js';
 
 function* iterableOf(value) {
   yield value;
 }
 
-export function asyncSplit(source) {
-  return asyncMap(source, (value) => iterableOf(value));
+export function __asyncSplit(source) {
+  return __asyncMap(source, (value) => iterableOf(value));
 }
 
-export default asyncSplit;
+export const asyncSplit = /*#__PURE__*/ asyncIterableCurry(__asyncSplit);

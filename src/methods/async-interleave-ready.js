@@ -6,4 +6,4 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-export { default } from '../impls/async-interleave-ready/async-interleave-ready.js';
+export { asyncInterleaveReady as default } from '../impls/async-interleave-ready/async-interleave-ready.js';

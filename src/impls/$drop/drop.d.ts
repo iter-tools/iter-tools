@@ -12,4 +12,4 @@ declare function drop<T>(n: number, iterable: SourceIterable<T>): ResultIterable
 
 declare function drop<T>(n: number): (iterable: SourceIterable<T>) => ResultIterable<T>;
 
-export default drop;
+export { drop };

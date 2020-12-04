@@ -7,13 +7,13 @@
  */
 
 import { asyncIterableCurry } from '../../internal/async-iterable.js';
-import { asyncStartsWithAny } from '../$starts-with-any/async-starts-with-any.js';
+import { __asyncStartsWithAny } from '../$starts-with-any/async-starts-with-any.js';
 
-export function asyncStartsWith(iterable, values) {
-  return asyncStartsWithAny(iterable, [values]);
+export function __asyncStartsWith(iterable, values) {
+  return __asyncStartsWithAny(iterable, [values]);
 }
 
-export default /*#__PURE__*/ asyncIterableCurry(asyncStartsWith, {
+export const asyncStartsWith = /*#__PURE__*/ asyncIterableCurry(__asyncStartsWith, {
   reduces: true,
   validateArgs(args) {},
 });

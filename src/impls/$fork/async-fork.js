@@ -78,7 +78,7 @@ function* generateForks(source, state) {
   }
 }
 
-export function asyncFork(source) {
+export function __asyncFork(source) {
   const state = {
     iterator: null,
     iterableCounter: 0,
@@ -90,6 +90,6 @@ export function asyncFork(source) {
   return generateForks(source, state);
 }
 
-export default /*#__PURE__*/ asyncIterableCurry(asyncFork, {
+export const asyncFork = /*#__PURE__*/ asyncIterableCurry(__asyncFork, {
   forceSync: true,
 });

@@ -18,4 +18,4 @@ declare function asyncSplitWhen<T>(
   source: AsyncSourceIterable<T>,
 ): SyncResultIterable<AsyncResultIterable<T>>;
 
-export default asyncSplitWhen;
+export { asyncSplitWhen };

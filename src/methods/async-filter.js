@@ -6,4 +6,4 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-export { default } from '../impls/$filter/async-filter.js';
+export { asyncFilter as default } from '../impls/$filter/async-filter.js';

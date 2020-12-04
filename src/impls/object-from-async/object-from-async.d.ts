@@ -1,1 +1,1 @@
-export { default } from '../$to-object/async-to-object';
+export { asyncToObject as objectFromAsync } from '../$to-object/async-to-object';

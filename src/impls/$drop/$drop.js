@@ -3,7 +3,7 @@ import { $async, $await } from '../../../generate/async.macro.cjs';
 import { $iterableCurry } from '../../internal/$iterable.js';
 
 $async;
-export function* $drop(iterable, n) {
+export function* $__drop(iterable, n) {
   let i = 0;
   $await;
   for (const value of iterable) {
@@ -11,4 +11,4 @@ export function* $drop(iterable, n) {
   }
 }
 
-export default /*#__PURE__*/ $iterableCurry($drop);
+export const $drop = /*#__PURE__*/ $iterableCurry($__drop);

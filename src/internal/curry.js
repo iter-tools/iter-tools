@@ -7,23 +7,13 @@ export function curry(fn, expectedArgsLength = fn.length, appliedArgs = []) {
   };
 }
 
-function insertUndefineds(args, at, count) {
-  if (count > 0) {
-    const argsLength = args.length;
-    for (let i = argsLength - 1; i >= at; i--) {
-      args[i + count] = args[i];
-      args[i] = undefined;
-    }
-  }
-}
-
 function variadicCurryWithValidationInner(config, args) {
   const {
     fn,
     validateArgs,
     variadic,
     reduces,
-    optionalArgsAtEnd,
+    growRight,
     minArgs,
     maxArgs,
     isIterable,
@@ -68,19 +58,17 @@ function variadicCurryWithValidationInner(config, args) {
         args[i] = applyOnIterableArgs(args[i]);
       }
 
-      insertUndefineds(
-        args,
-        optionalArgsAtEnd ? iterableArgsStart : 0,
-        maxArgs - iterableArgsStart,
-      );
+      const iterablesArg = variadic ? args.slice(iterableArgsStart) : args[iterableArgsStart];
+      args.splice(iterableArgsStart);
+
+      if (!growRight) {
+        args.reverse();
+      }
+      args.unshift(iterablesArg);
 
       validateArgs(args);
 
-      const iterablesArg = variadic ? args.slice(maxArgs) : args[maxArgs];
-
-      args.splice(maxArgs);
-
-      return reduces ? fn(iterablesArg, ...args) : new IterableClass(fn, args, iterablesArg);
+      return reduces ? fn(...args) : new IterableClass(fn, args);
     } else {
       // We have not received any iterables, but we must be fully configured
     }

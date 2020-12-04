@@ -17,11 +17,11 @@ function* $flatInternal(shouldFlat, depth, currentDepth, source) {
   }
 }
 
-export function $flat(source, shouldFlat = defaultShouldFlat, depth = 1) {
+export function $__flat(source, depth = 1, shouldFlat = defaultShouldFlat) {
   return $flatInternal(shouldFlat, depth, 0, source);
 }
 
-export default /*#__PURE__*/ $iterableCurry($flat, {
+export const $flat = /*#__PURE__*/ $iterableCurry($__flat, {
   minArgs: 0,
   maxArgs: 2,
   validateArgs,

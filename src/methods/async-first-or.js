@@ -6,4 +6,4 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-export { default } from '../impls/$first-or/async-first-or.js';
+export { asyncFirstOr as default } from '../impls/$first-or/async-first-or.js';

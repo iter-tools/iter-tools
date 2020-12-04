@@ -3,7 +3,6 @@ import { $async, $await } from '../../generate/async.macro.cjs';
 import { split } from './symbols.js';
 import { $IterableIterator } from './$iterable-iterator.js';
 import { $Peekerator } from './$peekerator.js';
-import { $wrap } from './$wrap.js';
 
 export class $PartIterator extends $IterableIterator {
   constructor(partsIterator) {
@@ -116,7 +115,7 @@ export class $PartsIterator extends $IterableIterator {
     this.splitStep = spliterator.current;
 
     this.currentPart = new $PartIterator(this);
-    return { value: $wrap(this.currentPart), done: false };
+    return { value: this.currentPart, done: false };
   }
 
   @$async

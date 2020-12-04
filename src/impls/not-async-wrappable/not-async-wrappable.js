@@ -5,5 +5,3 @@ export function notAsyncWrappable(value) {
     value != null && isUndefined(value[Symbol.asyncIterator]) && isUndefined(value[Symbol.iterator])
   );
 }
-
-export default notAsyncWrappable;

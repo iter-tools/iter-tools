@@ -13,4 +13,4 @@ declare function asyncFork<T>(
   source: AsyncSourceIterable<T>,
 ): SyncResultIterable<AsyncResultIterable<T>>;
 
-export default asyncFork;
+export { asyncFork };

@@ -6,4 +6,4 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-export { default } from '../impls/$flat-map/flat-map.js';
+export { flatMap as default } from '../impls/$flat-map/flat-map';

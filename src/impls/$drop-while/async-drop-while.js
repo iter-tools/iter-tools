@@ -8,7 +8,7 @@
 
 import { asyncIterableCurry } from '../../internal/async-iterable.js';
 
-export async function* asyncDropWhile(source, predicate) {
+export async function* __asyncDropWhile(source, predicate) {
   let drop = true;
   let c = 0;
   for await (const value of source) {
@@ -23,4 +23,4 @@ export async function* asyncDropWhile(source, predicate) {
   }
 }
 
-export default /*#__PURE__*/ asyncIterableCurry(asyncDropWhile);
+export const asyncDropWhile = /*#__PURE__*/ asyncIterableCurry(__asyncDropWhile);

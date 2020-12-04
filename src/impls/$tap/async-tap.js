@@ -8,7 +8,7 @@
 
 import { asyncIterableCurry } from '../../internal/async-iterable.js';
 
-export async function* asyncTap(source, callback) {
+export async function* __asyncTap(source, callback) {
   let c = 0;
   for await (const value of source) {
     callback(value, c++);
@@ -16,4 +16,4 @@ export async function* asyncTap(source, callback) {
   }
 }
 
-export default /*#__PURE__*/ asyncIterableCurry(asyncTap);
+export const asyncTap = /*#__PURE__*/ asyncIterableCurry(__asyncTap);

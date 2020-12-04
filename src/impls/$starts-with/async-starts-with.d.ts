@@ -14,4 +14,4 @@ declare function asyncStartsWith(
 
 declare function asyncStartsWith(value: any, iterable: AsyncSourceIterable<any>): Promise<boolean>;
 
-export default asyncStartsWith;
+export { asyncStartsWith };

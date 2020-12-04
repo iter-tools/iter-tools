@@ -17,4 +17,4 @@ declare function asyncGroupBy<K, T>(
   source: AsyncSourceIterable<T>,
 ): AsyncResultIterable<[K, AsyncResultIterable<T>]>;
 
-export default asyncGroupBy;
+export { asyncGroupBy };

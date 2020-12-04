@@ -7,15 +7,15 @@
  */
 
 import { iterableCurry } from '../../internal/iterable.js';
-import { interposeSeq } from '../$interpose-seq/interpose-seq.js';
+import { __interposeSeq } from '../$interpose-seq/interpose-seq.js';
 
-export function interpose(source, value) {
-  return interposeSeq(source, [value]);
+export function __interpose(source, value) {
+  return __interposeSeq(source, [value]);
 }
 
-export default /*#__PURE__*/ iterableCurry(interpose, {
+export const interpose = /*#__PURE__*/ iterableCurry(__interpose, {
   validateArgs(args) {
-    if (true && typeof args[1] === 'string') {
+    if (true && typeof args[0] === 'string') {
       console.warn(`For string inputs use interposeSeq instead of interpose`);
     }
   },

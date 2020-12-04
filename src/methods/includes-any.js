@@ -6,4 +6,4 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-export { default } from '../impls/$includes-any/includes-any.js';
+export { includesAny as default } from '../impls/$includes-any/includes-any.js';

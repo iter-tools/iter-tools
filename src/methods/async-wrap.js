@@ -6,4 +6,4 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-export { default } from '../impls/$wrap/async-wrap.js';
+export { asyncWrap as default } from '../impls/$wrap/async-wrap.js';

@@ -7,7 +7,7 @@
  */
 
 import { asyncIterableCurry } from '../../internal/async-iterable.js';
-import { asyncInterleave } from '../$interleave/async-interleave.js';
+import { __asyncInterleave } from '../$interleave/async-interleave.js';
 
 async function* asyncByComparison({ comparator }, all, ...peekrs) {
   let candidate;
@@ -24,10 +24,10 @@ async function* asyncByComparison({ comparator }, all, ...peekrs) {
   }
 }
 
-export function asyncCollate(sources, comparator) {
-  return asyncInterleave(sources, asyncByComparison, { comparator });
+export function __asyncCollate(sources, comparator) {
+  return __asyncInterleave(sources, asyncByComparison, { comparator });
 }
 
-export default /*#__PURE__*/ asyncIterableCurry(asyncCollate, {
+export const asyncCollate = /*#__PURE__*/ asyncIterableCurry(__asyncCollate, {
   variadic: true,
 });

@@ -6,4 +6,4 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-export { default } from '../impls/async-throttle/async-throttle.js';
+export { asyncThrottle as default } from '../impls/async-throttle/async-throttle';

@@ -30,10 +30,4 @@ describe('asyncCycleTimes', () => {
       ]);
     });
   });
-
-  it('can produce multiple iterators', async () => {
-    const myCycle = asyncCycleTimes(2, asyncWrap([1, 2, 3]));
-    expect(await asyncUnwrap(myCycle)).toEqual([1, 2, 3, 1, 2, 3]);
-    expect(await asyncUnwrap(myCycle)).toEqual([1, 2, 3, 1, 2, 3]);
-  });
 });

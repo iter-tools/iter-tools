@@ -10,4 +10,4 @@ import { AsyncSourceIterable, AsyncResultIterable } from '../../types/async-iter
 
 declare function asyncReverse<T>(source: AsyncSourceIterable<T>): AsyncResultIterable<T>;
 
-export default asyncReverse;
+export { asyncReverse };

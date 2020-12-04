@@ -9,4 +9,4 @@ declare function range(opts: {
 }): ResultIterable<number>;
 declare function range(_?: undefined): ResultIterable<number>;
 
-export default range;
+export { range };

@@ -6,4 +6,4 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-export { default } from '../impls/array-last-or/array-last-or.js';
+export { arrayLastOr as default } from '../impls/array-last-or/array-last-or';

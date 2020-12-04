@@ -8,7 +8,7 @@
 
 import { iterableCurry, callReturn } from '../../internal/iterable.js';
 
-export function firstOr(iterable, whenEmpty) {
+export function __firstOr(iterable, whenEmpty) {
   const iter = iterable[Symbol.iterator]();
   const { value, done } = iter.next();
 
@@ -19,6 +19,6 @@ export function firstOr(iterable, whenEmpty) {
   return value;
 }
 
-export default /*#__PURE__*/ iterableCurry(firstOr, {
+export const firstOr = /*#__PURE__*/ iterableCurry(__firstOr, {
   reduces: true,
 });

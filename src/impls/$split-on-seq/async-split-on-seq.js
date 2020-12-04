@@ -7,14 +7,14 @@
  */
 
 import { asyncIterableCurry, asyncEnsureIterable } from '../../internal/async-iterable.js';
-import { asyncSplitOnAnySeq } from '../$split-on-any-seq/async-split-on-any-seq.js';
+import { __asyncSplitOnAnySeq } from '../$split-on-any-seq/async-split-on-any-seq.js';
 
-export function asyncSplitOnSeq(source, separatorSeq) {
-  return asyncSplitOnAnySeq(source, [separatorSeq]);
+export function __asyncSplitOnSeq(source, separatorSeq) {
+  return __asyncSplitOnAnySeq(source, [separatorSeq]);
 }
 
-export default /*#__PURE__*/ asyncIterableCurry(asyncSplitOnSeq, {
+export const asyncSplitOnSeq = /*#__PURE__*/ asyncIterableCurry(__asyncSplitOnSeq, {
   validateArgs(args) {
-    args[0] = asyncEnsureIterable(args[0]);
+    args[1] = asyncEnsureIterable(args[1]);
   },
 });

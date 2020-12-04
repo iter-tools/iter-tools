@@ -6,4 +6,4 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-export { default } from '../impls/get-size/get-size.js';
+export { getSize as default } from '../impls/get-size/get-size';

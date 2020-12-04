@@ -7,10 +7,10 @@
  */
 
 import { asyncIterableCurry } from '../../internal/async-iterable.js';
-import { asyncToArray } from '../$to-array/async-to-array.js';
+import { __asyncToArray } from '../$to-array/async-to-array.js';
 
-export async function* asyncJoinWithSeq(source, separatorSeq) {
-  const _separatorSeq = await asyncToArray(separatorSeq);
+export async function* __asyncJoinWithSeq(source, separatorSeq) {
+  const _separatorSeq = await __asyncToArray(separatorSeq);
   let isFirst = true;
 
   for await (const value of source) {
@@ -20,4 +20,4 @@ export async function* asyncJoinWithSeq(source, separatorSeq) {
   }
 }
 
-export default /*#__PURE__*/ asyncIterableCurry(asyncJoinWithSeq);
+export const asyncJoinWithSeq = /*#__PURE__*/ asyncIterableCurry(__asyncJoinWithSeq);

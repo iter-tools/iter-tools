@@ -14,4 +14,4 @@ declare function asyncDrop<T>(
   n: number,
 ): (iterable: AsyncSourceIterable<T>) => AsyncResultIterable<T>;
 
-export default asyncDrop;
+export { asyncDrop };

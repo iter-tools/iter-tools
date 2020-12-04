@@ -8,7 +8,7 @@
 
 import { asyncIterableCurry } from '../../internal/async-iterable.js';
 
-export async function asyncFindOr(iterable, notFoundValue, func) {
+export async function __asyncFindOr(iterable, notFoundValue, func) {
   let c = 0;
   for await (const value of iterable) {
     if (await func(value, c++)) {
@@ -18,6 +18,7 @@ export async function asyncFindOr(iterable, notFoundValue, func) {
   return notFoundValue;
 }
 
-export default /*#__PURE__*/ asyncIterableCurry(asyncFindOr, {
+export const asyncFindOr = /*#__PURE__*/ asyncIterableCurry(__asyncFindOr, {
+  growRight: true,
   reduces: true,
 });

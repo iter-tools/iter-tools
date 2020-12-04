@@ -6,4 +6,4 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-export { default } from '../impls/$take-sorted/async-take-sorted.js';
+export { asyncTakeSorted as default } from '../impls/$take-sorted/async-take-sorted.js';

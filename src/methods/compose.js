@@ -6,4 +6,4 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-export { default } from '../impls/compose/compose.js';
+export { compose as default } from '../impls/compose/compose.js';

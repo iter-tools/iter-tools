@@ -6,4 +6,4 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-export { default } from '../impls/$take/take.js';
+export { take as default } from '../impls/$take/take.js';

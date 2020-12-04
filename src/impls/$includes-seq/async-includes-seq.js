@@ -7,15 +7,15 @@
  */
 
 import { asyncIterableCurry, asyncEnsureIterable } from '../../internal/async-iterable.js';
-import { asyncIncludesAnySeq } from '../$includes-any-seq/async-includes-any-seq.js';
+import { __asyncIncludesAnySeq } from '../$includes-any-seq/async-includes-any-seq.js';
 
-export function asyncIncludesSeq(iterable, seq) {
-  return asyncIncludesAnySeq(iterable, [seq]);
+export function __asyncIncludesSeq(iterable, seq) {
+  return __asyncIncludesAnySeq(iterable, [seq]);
 }
 
-export default /*#__PURE__*/ asyncIterableCurry(asyncIncludesSeq, {
+export const asyncIncludesSeq = /*#__PURE__*/ asyncIterableCurry(__asyncIncludesSeq, {
   reduces: true,
   validateArgs(args) {
-    args[0] = asyncEnsureIterable(args[0]);
+    args[1] = asyncEnsureIterable(args[1]);
   },
 });

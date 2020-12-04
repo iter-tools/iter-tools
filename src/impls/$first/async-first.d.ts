@@ -10,4 +10,4 @@ import { AsyncSourceIterable } from '../../types/async-iterable';
 
 declare function asyncFirst<T>(iterable: AsyncSourceIterable<T>): Promise<T | undefined>;
 
-export default asyncFirst;
+export { asyncFirst };

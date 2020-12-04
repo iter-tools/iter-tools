@@ -6,4 +6,4 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-export { default } from '../impls/$starts-with-seq/async-starts-with-seq.js';
+export { asyncStartsWithSeq as default } from '../impls/$starts-with-seq/async-starts-with-seq';

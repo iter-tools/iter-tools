@@ -6,11 +6,11 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { wrapWithResultIterable, ensureIterable } from '../../internal/iterable.js';
-import { groupBy } from '../$group-by/group-by.js';
+import { iterableCurry } from '../../internal/iterable.js';
+import { __groupBy } from '../$group-by/group-by.js';
 
-export function group(iterable) {
-  return groupBy(ensureIterable(iterable), (_) => _);
+export function __group(iterable) {
+  return __groupBy(iterable, (_) => _);
 }
 
-export default /*#__PURE__*/ wrapWithResultIterable(group);
+export const group = /*#__PURE__*/ iterableCurry(__group);

@@ -17,4 +17,4 @@ declare function includesAnySeq(
   iterable: SourceIterable<any>,
 ): boolean;
 
-export default includesAnySeq;
+export { includesAnySeq };

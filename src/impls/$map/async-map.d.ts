@@ -17,4 +17,4 @@ declare function asyncMap<O, T>(
   source: AsyncSourceIterable<T>,
 ): AsyncResultIterable<O>;
 
-export default asyncMap;
+export { asyncMap };

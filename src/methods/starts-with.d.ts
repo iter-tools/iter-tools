@@ -6,4 +6,4 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-export { default } from '../impls/$starts-with/starts-with.js';
+export { startsWith as default } from '../impls/$starts-with/starts-with';

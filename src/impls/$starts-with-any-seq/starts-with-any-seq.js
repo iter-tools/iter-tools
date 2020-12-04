@@ -7,12 +7,12 @@
  */
 
 import { iterableCurry, ensureIterable } from '../../internal/iterable.js';
-import { zipAll } from '../$zip-all/zip-all.js';
-import { peekerate } from '../$peekerate/peekerate.js';
+import { __zipAll } from '../$zip-all/zip-all.js';
+import { __peekerate } from '../$peekerate/peekerate.js';
 
 const none = Symbol('none');
 
-export function startsWithAnySubseq_(peekr, subseqPeekr) {
+export function __startsWithAnySubseq_(peekr, subseqPeekr) {
   if (subseqPeekr.done || subseqPeekr.value.includes(none)) return true;
 
   const matches = subseqPeekr.value.map(() => true);
@@ -36,12 +36,12 @@ export function startsWithAnySubseq_(peekr, subseqPeekr) {
   return subseqPeekr.done && matches.includes(true);
 }
 
-export function startsWithAnySeq(iterable, seqs) {
+export function __startsWithAnySeq(iterable, seqs) {
   if (!seqs.length) return false;
-  const peekr = peekerate(iterable);
-  const subseqPeekr = peekerate(zipAll(seqs, { filler: none }));
+  const peekr = __peekerate(iterable);
+  const subseqPeekr = __peekerate(__zipAll(seqs, { filler: none }));
 
-  const seqFound = startsWithAnySubseq_(peekr, subseqPeekr);
+  const seqFound = __startsWithAnySubseq_(peekr, subseqPeekr);
 
   subseqPeekr.return();
   peekr.return();
@@ -49,9 +49,9 @@ export function startsWithAnySeq(iterable, seqs) {
   return seqFound;
 }
 
-export default /*#__PURE__*/ iterableCurry(startsWithAnySeq, {
+export const startsWithAnySeq = /*#__PURE__*/ iterableCurry(__startsWithAnySeq, {
   reduces: true,
   validateArgs(args) {
-    args[0] = args[0].map((arg) => ensureIterable(arg));
+    args[1] = args[1].map((arg) => ensureIterable(arg));
   },
 });

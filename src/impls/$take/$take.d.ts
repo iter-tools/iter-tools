@@ -4,4 +4,4 @@ declare function $take<T>(n: number, iterable: $SourceIterable<T>): $ResultItera
 
 declare function $take<T>(n: number): (iterable: $SourceIterable<T>) => $ResultIterable<T>;
 
-export default $take;
+export { $take };

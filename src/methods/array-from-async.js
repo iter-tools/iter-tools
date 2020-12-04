@@ -6,4 +6,4 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-export { default } from '../impls/array-from-async/array-from-async.js';
+export { arrayFromAsync as default } from '../impls/array-from-async/array-from-async.js';

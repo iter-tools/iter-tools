@@ -6,4 +6,4 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-export { default } from '../impls/wrap-entries/wrap-entries.js';
+export { wrapEntries as default } from '../impls/wrap-entries/wrap-entries.js';

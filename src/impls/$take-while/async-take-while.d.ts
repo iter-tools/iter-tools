@@ -17,4 +17,4 @@ declare function asyncTakeWhile<T>(
   source: AsyncSourceIterable<T>,
 ): AsyncResultIterable<T>;
 
-export default asyncTakeWhile;
+export { asyncTakeWhile };

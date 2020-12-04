@@ -7,8 +7,8 @@
  */
 
 import { iterableCurry } from '../../internal/iterable.js';
-import { spliterateGrouped } from '../$spliterate-grouped/spliterate-grouped.js';
-import { peekerate } from '../$peekerate/peekerate.js';
+import { __spliterateGrouped } from '../$spliterate-grouped/spliterate-grouped.js';
+import { __peekerate } from '../$peekerate/peekerate.js';
 
 const initialKey = Symbol('initial group key');
 
@@ -25,7 +25,7 @@ const warnNullGetKeyDeprecation = () => {
 };
 
 function* groupingSpliterator(split, { getKey }, source) {
-  const peekr = peekerate(source);
+  const peekr = __peekerate(source);
   let key = initialKey;
   let idx = 0;
 
@@ -45,13 +45,13 @@ function* groupingSpliterator(split, { getKey }, source) {
   }
 }
 
-export function groupBy(source, getKey) {
+export function __groupBy(source, getKey) {
   if (getKey === null) {
     warnNullGetKeyDeprecation();
     getKey = (_) => _;
   }
 
-  return spliterateGrouped(source, groupingSpliterator, { getKey });
+  return __spliterateGrouped(source, groupingSpliterator, { getKey });
 }
 
-export default /*#__PURE__*/ iterableCurry(groupBy);
+export const groupBy = /*#__PURE__*/ iterableCurry(__groupBy);

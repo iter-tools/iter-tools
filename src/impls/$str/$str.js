@@ -3,7 +3,7 @@ import { $async, $await } from '../../../generate/async.macro.cjs';
 import { $iterableCurry } from '../../internal/$iterable.js';
 
 $async;
-export function $str(chars) {
+export function $__str(chars) {
   let result = '';
 
   $await;
@@ -14,6 +14,6 @@ export function $str(chars) {
   return result;
 }
 
-export default /*#__PURE__*/ $iterableCurry($str, {
+export const $str = /*#__PURE__*/ $iterableCurry($__str, {
   reduces: true,
 });

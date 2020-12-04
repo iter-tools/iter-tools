@@ -6,4 +6,4 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-export { default } from '../impls/$enumerate/async-enumerate.js';
+export { asyncEnumerate as default } from '../impls/$enumerate/async-enumerate.js';

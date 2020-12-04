@@ -23,13 +23,4 @@ describe($`cycleTimes`, () => {
       }),
     );
   });
-
-  it(
-    'can produce multiple iterators',
-    $async(() => {
-      const myCycle = $cycleTimes(2, $wrap([1, 2, 3]));
-      expect($await($unwrap(myCycle))).toEqual([1, 2, 3, 1, 2, 3]);
-      expect($await($unwrap(myCycle))).toEqual([1, 2, 3, 1, 2, 3]);
-    }),
-  );
 });

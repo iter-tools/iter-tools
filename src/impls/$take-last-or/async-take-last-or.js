@@ -8,7 +8,7 @@
 
 import { asyncIterableCurry } from '../../internal/async-iterable.js';
 
-export async function asyncTakeLastOr(iterable, whenEmpty) {
+export async function __asyncTakeLastOr(iterable, whenEmpty) {
   let _value = whenEmpty;
 
   for await (const value of iterable) {
@@ -18,6 +18,6 @@ export async function asyncTakeLastOr(iterable, whenEmpty) {
   return _value;
 }
 
-export default /*#__PURE__*/ asyncIterableCurry(asyncTakeLastOr, {
+export const asyncTakeLastOr = /*#__PURE__*/ asyncIterableCurry(__asyncTakeLastOr, {
   reduces: true,
 });

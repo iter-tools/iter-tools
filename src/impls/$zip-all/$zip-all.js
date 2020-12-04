@@ -2,17 +2,17 @@ import { $async, $await } from '../../../generate/async.macro.cjs';
 
 import { $iterableCurry } from '../../internal/$iterable.js';
 import { $parallelEach } from '../../internal/$parallel-each.js';
-import { $peekerate } from '../$peekerate/$peekerate.js';
-import { $map } from '../$map/$map.js';
-import { every } from '../$every/every.js';
-import { $toArray } from '../$to-array/$to-array.js';
+import { $__peekerate } from '../$peekerate/$peekerate.js';
+import { $__map } from '../$map/$map.js';
+import { __every } from '../$every/every.js';
+import { $__toArray } from '../$to-array/$to-array.js';
 
 const isDone = (peekr) => peekr.done;
 
 $async;
-export function* $zipAll(sources, { filler } = {}) {
-  const peekrs = $await($toArray($map(sources, $peekerate)));
-  let done = every(peekrs, isDone);
+export function* $__zipAll(sources, { filler } = {}) {
+  const peekrs = $await($__toArray($__map(sources, $__peekerate)));
+  let done = __every(peekrs, isDone);
 
   try {
     while (!done) {
@@ -20,14 +20,14 @@ export function* $zipAll(sources, { filler } = {}) {
 
       $await($parallelEach(peekrs, (peekr) => peekr.advance()));
 
-      done = every(peekrs, isDone);
+      done = __every(peekrs, isDone);
     }
   } finally {
     $await($parallelEach(peekrs, (peekr) => peekr.return()));
   }
 }
 
-export default /*#__PURE__*/ $iterableCurry($zipAll, {
+export const $zipAll = /*#__PURE__*/ $iterableCurry($__zipAll, {
   variadic: true,
   minArgs: 0,
   maxArgs: 1,

@@ -1,2 +1,3 @@
 ignore:
   - '!src/**'
+  - 'src/explode.macro.cjs'

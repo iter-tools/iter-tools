@@ -7,7 +7,7 @@
  */
 
 import { iterableCurry } from '../../internal/iterable.js';
-import { interleave } from '../$interleave/interleave.js';
+import { __interleave } from '../$interleave/interleave.js';
 
 function* byComparison({ comparator }, all, ...peekrs) {
   let candidate;
@@ -24,10 +24,10 @@ function* byComparison({ comparator }, all, ...peekrs) {
   }
 }
 
-export function collate(sources, comparator) {
-  return interleave(sources, byComparison, { comparator });
+export function __collate(sources, comparator) {
+  return __interleave(sources, byComparison, { comparator });
 }
 
-export default /*#__PURE__*/ iterableCurry(collate, {
+export const collate = /*#__PURE__*/ iterableCurry(__collate, {
   variadic: true,
 });

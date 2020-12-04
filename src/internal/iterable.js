@@ -38,8 +38,8 @@ Object.assign(BaseResultIterable.prototype, {
   constructor: BaseResultIterable,
 
   [__iterate]() {
-    const { fn, iterablesArg, args } = this[_];
-    return fn(iterablesArg, ...args);
+    const { fn, args } = this[_];
+    return fn(...args);
   },
 
   next() {
@@ -72,26 +72,15 @@ ResultIterable.prototype = Object.assign(Object.create(BaseResultIterable.protot
   },
 });
 
-function SimpleResultIterable(...args) {
-  ResultIterable.apply(this, args);
-}
-
-SimpleResultIterable.prototype = Object.assign(Object.create(ResultIterable.prototype), {
-  constructor: SimpleResultIterable,
-  [__iterate]() {
-    return this[_].fn(...this[_].args);
-  },
-});
-
 function makeFunctionConfig(fn, fnConfig = {}) {
-  const { validateArgs, variadic, reduces, optionalArgsAtEnd, minArgs, maxArgs } = fnConfig;
+  const { validateArgs, variadic, reduces, growRight, minArgs, maxArgs } = fnConfig;
 
   return {
     fn,
     validateArgs: validateArgs || ((_) => {}),
     variadic: !!variadic,
     reduces: !!reduces,
-    optionalArgsAtEnd: !!optionalArgsAtEnd,
+    growRight: !!growRight,
     minArgs: minArgs === undefined ? fn.length - 1 : minArgs,
     maxArgs: maxArgs === undefined ? fn.length - 1 : maxArgs,
     isIterable: isWrappable,
@@ -108,7 +97,7 @@ export function cache(it) {
 export function wrapWithResultIterable(fn, { validateArgs = (_) => _ } = {}) {
   return (...args) => {
     validateArgs(args);
-    return new SimpleResultIterable(fn, args);
+    return new ResultIterable(fn, args);
   };
 }
 

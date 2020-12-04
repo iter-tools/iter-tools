@@ -6,10 +6,11 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import cycleTimes from '../$cycle-times/cycle-times.js';
+import { iterableCurry } from '../../internal/iterable.js';
+import { __cycleTimes } from '../$cycle-times/cycle-times.js';
 
-export function cycle(source) {
-  return cycleTimes(Infinity, source);
+export function __cycle(source) {
+  return __cycleTimes(source, Infinity);
 }
 
-export default cycle;
+export const cycle = /*#__PURE__*/ iterableCurry(__cycle);

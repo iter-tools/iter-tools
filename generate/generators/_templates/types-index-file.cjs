@@ -2,9 +2,8 @@
 
 const fs = require('fs');
 const { join } = require('path');
-const camelcase = require('camelcase');
 const { makeRe } = require('picomatch');
-const { compareNames } = require('../../names.cjs');
+const { camelize, compareNames } = require('../../names.cjs');
 
 const methodNameMatcher = makeRe('src/methods/*.d.ts', { capture: true });
 const getMethodName = (path) => {
@@ -23,7 +22,12 @@ ${[...generatedPaths]
   .map(getMethodName)
   .filter((name) => name && name !== 'index')
   .sort(compareNames)
-  .map((name) => `export { default as ${camelcase(name)} } from './methods/${name}';`)
+  .map(
+    (name) =>
+      `export { default as ${camelize(name)} } from './methods/${
+        name.startsWith('__') ? name.slice(2) : name
+      }';`,
+  )
   .join('\n')}
 ${fs.readFileSync(join(__dirname, '../../../src/index-static.d.ts'))}
 `;

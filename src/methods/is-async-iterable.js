@@ -6,4 +6,4 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-export { default } from '../impls/is-async-iterable/is-async-iterable.js';
+export { isAsyncIterable as default } from '../impls/is-async-iterable/is-async-iterable.js';

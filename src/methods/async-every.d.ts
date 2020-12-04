@@ -6,4 +6,4 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-export { default } from '../impls/$every/async-every.js';
+export { asyncEvery as default } from '../impls/$every/async-every';

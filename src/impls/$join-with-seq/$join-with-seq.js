@@ -1,11 +1,11 @@
 import { $async, $await } from '../../../generate/async.macro.cjs';
 
 import { $iterableCurry } from '../../internal/$iterable.js';
-import { $toArray } from '../$to-array/$to-array.js';
+import { $__toArray } from '../$to-array/$to-array.js';
 
 $async;
-export function* $joinWithSeq(source, separatorSeq) {
-  const _separatorSeq = $await($toArray(separatorSeq));
+export function* $__joinWithSeq(source, separatorSeq) {
+  const _separatorSeq = $await($__toArray(separatorSeq));
   let isFirst = true;
 
   $await;
@@ -16,4 +16,4 @@ export function* $joinWithSeq(source, separatorSeq) {
   }
 }
 
-export default /*#__PURE__*/ $iterableCurry($joinWithSeq);
+export const $joinWithSeq = /*#__PURE__*/ $iterableCurry($__joinWithSeq);

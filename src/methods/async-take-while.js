@@ -6,4 +6,4 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-export { default } from '../impls/$take-while/async-take-while.js';
+export { asyncTakeWhile as default } from '../impls/$take-while/async-take-while.js';

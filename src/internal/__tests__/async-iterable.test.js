@@ -161,7 +161,7 @@ describe('asyncIterableCurry', () => {
         minArgs: 1,
         maxArgs: 1,
         validateArgs(args) {
-          args[0] = world;
+          args[1] = world;
         },
       });
       await asyncUnwrap(hello(null, empty));

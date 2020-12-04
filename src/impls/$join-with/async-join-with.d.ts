@@ -17,4 +17,4 @@ declare function asyncJoinWith<W>(
   separator: W,
 ): <T>(source: AsyncSourceIterable<AsyncSourceIterable<T>>) => AsyncResultIterable<T | W>;
 
-export default asyncJoinWith;
+export { asyncJoinWith };

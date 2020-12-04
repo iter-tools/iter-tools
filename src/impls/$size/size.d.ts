@@ -12,4 +12,4 @@ declare function size<Iter extends SourceIterable<any>>(
   iterable: Iter,
 ): Iter extends any[] ? Iter['length'] : number;
 
-export default size;
+export { size };

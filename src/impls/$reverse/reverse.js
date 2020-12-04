@@ -7,10 +7,10 @@
  */
 
 import { iterableCurry } from '../../internal/iterable.js';
-import { toArray } from '../$to-array/to-array.js';
+import { __toArray } from '../$to-array/to-array.js';
 
-export function* reverse(source) {
-  yield* toArray(source).reverse();
+export function* __reverse(source) {
+  yield* __toArray(source).reverse();
 }
 
-export default /*#__PURE__*/ iterableCurry(reverse);
+export const reverse = /*#__PURE__*/ iterableCurry(__reverse);

@@ -6,4 +6,4 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-export { default } from '../impls/$fork/async-fork.js';
+export { asyncFork as default } from '../impls/$fork/async-fork.js';

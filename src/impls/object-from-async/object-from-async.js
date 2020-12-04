@@ -1,1 +1,4 @@
-export { default, asyncToObject as objectFromAsync } from '../$to-object/async-to-object.js';
+export {
+  __asyncToObject as __objectFromAsync,
+  asyncToObject as objectFromAsync,
+} from '../$to-object/async-to-object.js';

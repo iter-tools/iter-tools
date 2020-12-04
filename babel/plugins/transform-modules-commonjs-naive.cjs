@@ -15,7 +15,9 @@ module.exports = function (babel) {
     return t.expressionStatement(
       t.assignmentExpression(
         '=',
-        t.memberExpression(t.identifier('exports'), t.identifier(name)),
+        name === 'default'
+          ? t.memberExpression(t.identifier('module'), t.identifier('exports'))
+          : t.memberExpression(t.identifier('exports'), t.identifier(name)),
         expr,
       ),
     );
@@ -34,9 +36,51 @@ module.exports = function (babel) {
     return t.objectProperty(shorthand ? spec.local : spec.imported, spec.local, false, shorthand);
   }
 
+  class SpecifierTracker {
+    constructor() {
+      this.foundDefault = false;
+      this.foundNamed = false;
+    }
+
+    __found(isDefault) {
+      if (isDefault) {
+        this.foundDefault = true;
+      } else {
+        this.foundNamed = true;
+      }
+      if (this.foundDefault && this.foundNamed) {
+        throw new Error(
+          'Naive transpilation of es to commonjs is impossible if module has named and default exports',
+        );
+      }
+    }
+
+    registerDeclaration() {
+      this.__found(false);
+    }
+
+    registerDefault() {
+      this.__found(true);
+    }
+
+    isDefault() {
+      return this.foundDefault;
+    }
+
+    registerSpecifiers(specifiers) {
+      for (const spec of specifiers) {
+        this.__found(spec.exported.name === 'default');
+      }
+    }
+  }
+
   return {
     name: 'naive-import-to-require',
     visitor: {
+      Program(path, state) {
+        state.naiveExportSpecTracker = new SpecifierTracker();
+      },
+
       ImportDeclaration(path, state) {
         const { sourceType } = state.file.path.node;
         const { source, specifiers } = path.node;
@@ -74,10 +118,11 @@ module.exports = function (babel) {
         throw new Error(`naive transpilation of export * to commonjs is not implemented`);
       },
 
-      ExportNamedDeclaration(path) {
+      ExportNamedDeclaration(path, state) {
         const { node } = path;
         if (!node.source) {
           if (node.declaration) {
+            state.naiveExportSpecTracker.registerDeclaration(node.declaration);
             if (t.isVariableDeclaration(node.declaration)) {
               const { kind } = node.declaration;
               if (kind !== 'const') {
@@ -91,6 +136,7 @@ module.exports = function (babel) {
               path.replaceWithMultiple([node.declaration, exportFactory(id.name, id)]);
             }
           } else {
+            state.naiveExportSpecTracker.registerSpecifiers(node.specifiers);
             path.replaceWithMultiple(
               node.specifiers.map((spec) => {
                 return exportFactory(spec.exported.name, t.identifier(spec.local.name));
@@ -98,18 +144,30 @@ module.exports = function (babel) {
             );
           }
         } else {
+          state.naiveExportSpecTracker.registerSpecifiers(node.specifiers);
+          const defaultSpecifiers = node.specifiers.filter((spec) => spec.local.name === 'default');
+          const namedSpecifiers = node.specifiers.filter((spec) => spec.local.name !== 'default');
+          if (defaultSpecifiers.length && namedSpecifiers.length) {
+            throw new Error(
+              `export { default, named } from '...' cannot be transpiled naievely to commonjs`,
+            );
+          }
+          const isDefault = defaultSpecifiers.length > 0;
           path.replaceWithMultiple(
             node.specifiers.map((spec) => {
               return exportFactory(
                 spec.exported.name,
-                t.memberExpression(requireFactory(node.source), t.identifier(spec.local.name)),
+                isDefault
+                  ? requireFactory(node.source)
+                  : t.memberExpression(requireFactory(node.source), t.identifier(spec.local.name)),
               );
             }),
           );
         }
       },
 
-      ExportDefaultDeclaration(path) {
+      ExportDefaultDeclaration(path, state) {
+        state.naiveExportSpecTracker.registerDefault();
         path.replaceWith(exportFactory('default', declarationToExpression(path.node.declaration)));
       },
     },

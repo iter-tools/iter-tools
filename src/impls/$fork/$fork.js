@@ -84,7 +84,7 @@ function* generateForks(source, state) {
   }
 }
 
-export function $fork(source) {
+export function $__fork(source) {
   const state = {
     iterator: null,
     iterableCounter: 0,
@@ -96,6 +96,6 @@ export function $fork(source) {
   return generateForks(source, state);
 }
 
-export default /*#__PURE__*/ $iterableCurry($fork, {
+export const $fork = /*#__PURE__*/ $iterableCurry($__fork, {
   forceSync: true,
 });

@@ -6,4 +6,4 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-export { default } from '../impls/$find-or/find-or.js';
+export { findOr as default } from '../impls/$find-or/find-or';

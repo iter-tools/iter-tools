@@ -17,4 +17,4 @@ declare function asyncSplitOnAny<T>(
   source: AsyncSourceIterable<T>,
 ): AsyncResultIterable<AsyncResultIterable<T>>;
 
-export default asyncSplitOnAny;
+export { asyncSplitOnAny };

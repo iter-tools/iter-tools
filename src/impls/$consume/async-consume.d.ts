@@ -10,4 +10,4 @@ import { AsyncSourceIterable } from '../../types/async-iterable';
 
 declare function asyncConsume<T>(iterable: AsyncSourceIterable<T>): Promise<void>;
 
-export default asyncConsume;
+export { asyncConsume };

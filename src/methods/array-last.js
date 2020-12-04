@@ -6,4 +6,4 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-export { default } from '../impls/array-last/array-last.js';
+export { arrayLast as default } from '../impls/array-last/array-last.js';

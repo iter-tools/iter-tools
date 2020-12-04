@@ -6,4 +6,4 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-export { default } from '../impls/not-null/not-null.js';
+export { notNull as default } from '../impls/not-null/not-null.js';

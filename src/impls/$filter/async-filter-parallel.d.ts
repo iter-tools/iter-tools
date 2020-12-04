@@ -40,4 +40,4 @@ declare function asyncFilterParallel<T>(
   iterable: AsyncSourceIterable<T>,
 ): AsyncResultIterable<T>;
 
-export default asyncFilterParallel;
+export { asyncFilterParallel };

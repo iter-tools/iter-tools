@@ -8,10 +8,9 @@
 
 import { iterableCurry } from '../../internal/iterable.js';
 import { CircularBuffer, ReadOnlyCircularBuffer } from '../../internal/circular-buffer.js';
-
 import { validateWindowArgs } from '../$trailing-window/internal/validate-window-args.js';
 
-export function* leadingWindow(source, size, { filler, useFiller = true } = {}) {
+export function* __leadingWindow(source, size, { filler, useFiller = true } = {}) {
   const buffer = new CircularBuffer(size);
   const bufferReadProxy = new ReadOnlyCircularBuffer(buffer);
 
@@ -41,9 +40,9 @@ export function* leadingWindow(source, size, { filler, useFiller = true } = {}) 
   }
 }
 
-export default /*#__PURE__*/ iterableCurry(leadingWindow, {
+export const leadingWindow = /*#__PURE__*/ iterableCurry(__leadingWindow, {
   minArgs: 1,
   maxArgs: 2,
-  optionalArgsAtEnd: true,
+  growRight: true,
   validateArgs: /*#__PURE__*/ validateWindowArgs('leadingWindow'),
 });

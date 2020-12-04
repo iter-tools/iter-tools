@@ -1,13 +1,12 @@
 'use strict';
 
-const camelcase = require('camelcase');
 const { makeRe } = require('picomatch');
-const { compareNames } = require('../../names.cjs');
+const { camelize, compareNames } = require('../../names.cjs');
 
-const methodNameMatcher = makeRe('src/methods/*.js', { capture: true });
+const methodNameMatcher = makeRe('src/?(__)methods/*.js', { capture: true });
 const getMethodName = (path) => {
   const match = methodNameMatcher.exec(path);
-  return match && match[1];
+  return match && `${match[1] || ''}${match[2]}`;
 };
 
 module.exports = (generatedPaths) =>
@@ -19,8 +18,11 @@ module.exports = (generatedPaths) =>
 
 ${[...generatedPaths]
   .map(getMethodName)
-  .filter((name) => name && name !== 'index')
+  .filter((name) => name)
   .sort(compareNames)
-  .map((name) => `export { default as ${camelcase(name)} } from './methods/${name}.js';`)
+  .map((name) => {
+    const source = name.startsWith('__') ? `./__methods/${name.slice(2)}` : `./methods/${name}`;
+    return `export { default as ${camelize(name)} } from '${source}.js';`;
+  })
   .join('\n')}
 `;

@@ -1,15 +1,15 @@
 import { $isSync } from '../../../generate/async.macro.cjs';
 
 import { $iterableCurry } from '../../internal/$iterable.js';
-import { $splitWith } from '../$split-with/$split-with.js';
+import { $__splitWith } from '../$split-with/$split-with.js';
 
-export function $splitOnAny(source, separators) {
-  return $splitWith(source, (value) => separators.includes(value));
+export function $__splitOnAny(source, separators) {
+  return $__splitWith(source, (value) => separators.includes(value));
 }
 
-export default /*#__PURE__*/ $iterableCurry($splitOnAny, {
+export const $splitOnAny = /*#__PURE__*/ $iterableCurry($__splitOnAny, {
   validateArgs(args) {
-    if ($isSync && typeof args[1] === 'string') {
+    if ($isSync && typeof args[0] === 'string') {
       console.warn(`For string inputs use splitOnAnySeq instead of splitOnAny`);
     }
   },

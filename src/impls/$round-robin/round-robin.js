@@ -7,8 +7,8 @@
  */
 
 import { iterableCurry } from '../../internal/iterable.js';
-import { interleave } from '../$interleave/interleave.js';
-import { validateArgs } from './internal/validate-args.js';
+import { __interleave } from '../$interleave/interleave.js';
+import { makeValidateArgs } from './internal/validate-args.js';
 
 function* byPosition({ start, step }, all, ...peekrs) {
   start = start % peekrs.length;
@@ -21,13 +21,13 @@ function* byPosition({ start, step }, all, ...peekrs) {
   }
 }
 
-export function roundRobin(sources, start = 0, step = 1) {
-  return interleave(sources, byPosition, { start, step });
+export function __roundRobin(sources, step = 1, start = 0) {
+  return __interleave(sources, byPosition, { start, step });
 }
 
-export default /*#__PURE__*/ iterableCurry(roundRobin, {
+export const roundRobin = /*#__PURE__*/ iterableCurry(__roundRobin, {
   variadic: true,
   minArgs: 0,
   maxArgs: 2,
-  validateArgs,
+  validateArgs: /*#__PURE__*/ makeValidateArgs('roundRobin'),
 });

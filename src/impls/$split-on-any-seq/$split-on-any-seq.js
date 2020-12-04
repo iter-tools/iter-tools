@@ -2,13 +2,13 @@ import { $async, $await } from '../../../generate/async.macro.cjs';
 
 import { $iterableCurry } from '../../internal/$iterable.js';
 import { $seqsToArray } from '../../internal/$any-seq.js';
-import { startsWithSeq } from '../$starts-with-seq/starts-with-seq.js';
-import { $leadingWindow } from '../$leading-window/$leading-window.js';
-import { $spliterate } from '../$spliterate/$spliterate.js';
+import { __startsWithSeq } from '../$starts-with-seq/starts-with-seq.js';
+import { $__leadingWindow } from '../$leading-window/$leading-window.js';
+import { $__spliterate } from '../$spliterate/$spliterate.js';
 
 function getMatchingLength(buffer, separatorSeqs) {
   for (const subsequence of separatorSeqs) {
-    if (startsWithSeq(buffer, subsequence)) {
+    if (__startsWithSeq(buffer, subsequence)) {
       return subsequence.length;
     }
   }
@@ -23,7 +23,7 @@ function* $anySeqspliterator(split, { separatorSeqs }, source) {
   let skip = 0;
 
   $await;
-  for (const buffer of $leadingWindow(source, maxMatchLength, { useFiller: false })) {
+  for (const buffer of $__leadingWindow(source, maxMatchLength, { useFiller: false })) {
     if (skip > 0) {
       skip--;
       continue;
@@ -40,12 +40,12 @@ function* $anySeqspliterator(split, { separatorSeqs }, source) {
 }
 
 $async;
-export function* $splitOnAnySeq(source, separatorSeqs) {
+export function* $__splitOnAnySeq(source, separatorSeqs) {
   const separatorSeqsArr = $await($seqsToArray(separatorSeqs)).filter((s) => s.length > 0);
 
-  yield* $spliterate(source, $anySeqspliterator, {
+  yield* $__spliterate(source, $anySeqspliterator, {
     separatorSeqs: separatorSeqsArr.sort((a, b) => b.length - a.length),
   });
 }
 
-export default /*#__PURE__*/ $iterableCurry($splitOnAnySeq);
+export const $splitOnAnySeq = /*#__PURE__*/ $iterableCurry($__splitOnAnySeq);

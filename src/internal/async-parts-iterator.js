@@ -9,7 +9,6 @@
 import { split } from './symbols.js';
 import { AsyncIterableIterator } from './async-iterable-iterator.js';
 import { AsyncPeekerator } from './async-peekerator.js';
-import { asyncWrap } from './async-wrap.js';
 
 export class AsyncPartIterator extends AsyncIterableIterator {
   constructor(partsIterator) {
@@ -116,7 +115,7 @@ export class AsyncPartsIterator extends AsyncIterableIterator {
     this.splitStep = spliterator.current;
 
     this.currentPart = new AsyncPartIterator(this);
-    return { value: asyncWrap(this.currentPart), done: false };
+    return { value: this.currentPart, done: false };
   }
 
   async return(value) {

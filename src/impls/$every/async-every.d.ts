@@ -17,4 +17,4 @@ declare function asyncEvery<T>(
   iterable: AsyncSourceIterable<T>,
 ): Promise<boolean>;
 
-export default asyncEvery;
+export { asyncEvery };

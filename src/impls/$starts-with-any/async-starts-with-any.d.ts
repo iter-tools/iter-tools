@@ -17,4 +17,4 @@ declare function asyncStartsWithAny(
   iterable: AsyncSourceIterable<any>,
 ): Promise<boolean>;
 
-export default asyncStartsWithAny;
+export { asyncStartsWithAny };

@@ -19,4 +19,4 @@ declare function asyncCollate<T>(
   comparator: (a: T, b: T) => number,
 ): (...sources: Array<AsyncSourceIterable<T>>) => AsyncResultIterable<T>;
 
-export default asyncCollate;
+export { asyncCollate };

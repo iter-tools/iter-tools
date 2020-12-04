@@ -6,4 +6,4 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-export { default } from '../impls/$to-array/to-array.js';
+export { toArray as default } from '../impls/$to-array/to-array.js';

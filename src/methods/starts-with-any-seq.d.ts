@@ -6,4 +6,4 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-export { default } from '../impls/$starts-with-any-seq/starts-with-any-seq.js';
+export { startsWithAnySeq as default } from '../impls/$starts-with-any-seq/starts-with-any-seq';

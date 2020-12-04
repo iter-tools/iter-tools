@@ -1,11 +1,12 @@
 import { $async, $await } from '../../../generate/async.macro.cjs';
+
 import { $iterableCurry } from '../../internal/$iterable.js';
 import { defaultCompare } from '../../internal/compare.js';
-import { $peekerate } from '../$peekerate/$peekerate.js';
+import { $__peekerate } from '../$peekerate/$peekerate.js';
 
 $async;
-export function $isSorted(iterable, comparator = defaultCompare) {
-  const peekr = $await($peekerate(iterable));
+export function $__isSorted(iterable, comparator = defaultCompare) {
+  const peekr = $await($__peekerate(iterable));
 
   while (!peekr.done) {
     const { value } = peekr;
@@ -19,7 +20,7 @@ export function $isSorted(iterable, comparator = defaultCompare) {
   return true;
 }
 
-export default /*#__PURE__*/ $iterableCurry($isSorted, {
+export const $isSorted = /*#__PURE__*/ $iterableCurry($__isSorted, {
   reduces: true,
   minArgs: 0,
   maxArgs: 1,

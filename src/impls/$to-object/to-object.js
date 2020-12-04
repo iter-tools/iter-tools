@@ -8,12 +8,14 @@
 
 import { ensureIterable } from '../../internal/iterable.js';
 
-export function toObject(iterable, proto = Object.prototype) {
+export function __toObject(iterable, proto = Object.prototype) {
   const obj = Object.create(proto);
-  for (const [key, value] of ensureIterable(iterable)) {
+  for (const [key, value] of iterable) {
     obj[key] = value;
   }
   return obj;
 }
 
-export default toObject;
+export function toObject(iterable, proto) {
+  return __toObject(ensureIterable(iterable), proto);
+}

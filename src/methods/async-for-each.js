@@ -6,4 +6,4 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-export { default } from '../impls/$for-each/async-for-each.js';
+export { asyncForEach as default } from '../impls/$for-each/async-for-each.js';

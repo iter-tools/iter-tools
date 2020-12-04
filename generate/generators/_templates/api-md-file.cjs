@@ -72,7 +72,7 @@ const methodTemplate = (doc, aliasMap) => {
   const seeName = aliasMap.get(name) || (isAsyncClone ? syncName(name) : null);
   const see = seeName && seeMethodTemplate(seeName);
   const aliases = methodAliasesTemplate(doc);
-  const signatures = doc.signatures ? `${methodSignaturesTemplate(name, doc.signatures)}\n\n` : '';
+  const signatures = doc.signatures ? `${methodSignaturesTemplate(doc.signatures)}\n\n` : '';
   return `### ${name}\n\n${signatures}${aliases}${readme || see || 'Undocumented.'}\n`;
 };
 

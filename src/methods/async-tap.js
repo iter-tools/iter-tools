@@ -6,4 +6,4 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-export { default } from '../impls/$tap/async-tap.js';
+export { asyncTap as default } from '../impls/$tap/async-tap.js';

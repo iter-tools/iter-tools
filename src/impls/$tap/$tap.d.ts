@@ -11,4 +11,4 @@ declare function $tap<T>(
   source: $SourceIterable<T>,
 ): $ResultIterable<T>;
 
-export default $tap;
+export { $tap };

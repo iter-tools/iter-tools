@@ -6,4 +6,4 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-export { default } from '../impls/$group/group.js';
+export { group as default } from '../impls/$group/group';

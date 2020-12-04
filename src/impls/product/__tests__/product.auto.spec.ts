@@ -10,7 +10,7 @@ import { product } from 'iter-tools-es';
 
 describe('product', () => {
   it('returns empty', () => {
-    const iter = product();
+    const iter = product(null);
     expect(iter.size).toEqual(0);
     expect(Array.from(iter)).toEqual([]);
   });

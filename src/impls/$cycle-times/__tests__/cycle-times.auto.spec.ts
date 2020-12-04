@@ -23,10 +23,4 @@ describe('cycleTimes', () => {
       expect(unwrap(cycleTimes(2, wrap([1, 2, 3])))).toEqual([1, 2, 3, 1, 2, 3]);
     });
   });
-
-  it('can produce multiple iterators', () => {
-    const myCycle = cycleTimes(2, wrap([1, 2, 3]));
-    expect(unwrap(myCycle)).toEqual([1, 2, 3, 1, 2, 3]);
-    expect(unwrap(myCycle)).toEqual([1, 2, 3, 1, 2, 3]);
-  });
 });

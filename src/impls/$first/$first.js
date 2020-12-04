@@ -1,11 +1,10 @@
-import { $firstOr } from '../$first-or/$first-or.js';
-
 import { $iterableCurry } from '../../internal/$iterable.js';
+import { $__firstOr } from '../$first-or/$first-or.js';
 
-export function $first(iterable) {
-  return $firstOr(iterable, undefined);
+export function $__first(iterable) {
+  return $__firstOr(iterable, undefined);
 }
 
-export default /*#__PURE__*/ $iterableCurry($first, {
+export const $first = /*#__PURE__*/ $iterableCurry($__first, {
   reduces: true,
 });

@@ -6,4 +6,4 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-export { default } from '../impls/$interleave/async-interleave.js';
+export { asyncInterleave as default } from '../impls/$interleave/async-interleave';

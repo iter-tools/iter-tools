@@ -6,4 +6,4 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-export { default } from '../impls/$drop/drop.js';
+export { drop as default } from '../impls/$drop/drop';

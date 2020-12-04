@@ -7,7 +7,7 @@
  */
 
 import { asyncIterableCurry } from '../../internal/async-iterable.js';
-import { asyncSpliterate } from '../$spliterate/async-spliterate.js';
+import { __asyncSpliterate } from '../$spliterate/async-spliterate.js';
 
 async function* asyncPredicateSpliterator(split, { predicate }, source) {
   let i = 0;
@@ -16,8 +16,8 @@ async function* asyncPredicateSpliterator(split, { predicate }, source) {
   }
 }
 
-export function asyncSplitWith(source, predicate) {
-  return asyncSpliterate(source, asyncPredicateSpliterator, { predicate });
+export function __asyncSplitWith(source, predicate) {
+  return __asyncSpliterate(source, asyncPredicateSpliterator, { predicate });
 }
 
-export default /*#__PURE__*/ asyncIterableCurry(asyncSplitWith);
+export const asyncSplitWith = /*#__PURE__*/ asyncIterableCurry(__asyncSplitWith);

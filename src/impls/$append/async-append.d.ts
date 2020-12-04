@@ -17,4 +17,4 @@ declare function asyncAppend<V>(
   value: V,
 ): <T>(source: AsyncSourceIterable<T>) => AsyncResultIterable<V | T>;
 
-export default asyncAppend;
+export { asyncAppend };

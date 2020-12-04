@@ -6,4 +6,4 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-export { default } from '../impls/$split-at/split-at.js';
+export { splitAt as default } from '../impls/$split-at/split-at';

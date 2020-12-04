@@ -6,4 +6,4 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-export { default } from '../impls/$spliterate-grouped/async-spliterate-grouped.js';
+export { asyncSpliterateGrouped as default } from '../impls/$spliterate-grouped/async-spliterate-grouped';

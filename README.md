@@ -68,6 +68,7 @@ class SparseArray extends Array {
 - It can eliminate a whole class of null pointer errors by treating `null` and `undefined` as empty iterables.
 - Any `Iterable` returned is an `IterableIterator`.
 - Methods support currying, making them ideal for usage with provided methods like [pipe](https://github.com/iter-tools/iter-tools/blob/trunk/API.md#pipe) or [compose](https://github.com/iter-tools/iter-tools/blob/trunk/API.md#compose), or [in a variety of other situations](https://hughfdjackson.com/javascript/why-curry-helps/).
+- It provides a low-level `__` API for when speed is paramount.
 - It provides a full API over both sync and [async](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Symbol/asyncIterator) iterables. These are implemented separately (for performance), but parity is guaranteed through the use of a custom build.
 - It has type definitions checked in for Typescript (`>3.6.4`). These are validated on every PR.
 - It is [semver](https://semver.org/) compliant, keeps a [changelog](https://github.com/iter-tools/iter-tools/blob/trunk/CHANGELOG.md), and has no runtime dependencies.
@@ -93,6 +94,19 @@ import { filter, map } from 'iter-tools-es/explode.macro';
 import filter from 'iter-tools-es/methods/filter';
 import map from 'iter-tools-es/methods/map';
 ```
+
+### \_\_methods
+
+Methods whose names begin with `__` are safe to use -- they are part of the library's public API. They are intended for use by extenders of the library, and in tight loops where performance is critical.
+
+There are some differences in the order in which arguments are passed, but these are documented along with the method's other overloads. Other less visible differences are:
+
+`__` methods are not curried. You must pass all their arguments in a single call
+`__` methods do not treat `null` and `undefined` as iterables.
+`__` methods do not permit sync iterables to be used in place of async iterables (this could change in the future).
+`__` methods return stateful iterators. You can only loop over the results once.
+`__` methods may expose implementation internals which are not part of the documented public API. Code using undocumented APIs is subject to breakage in **any** release, in accordance with the [semver specification](https://semver.org/).
+`__` methods do not have type definitions.
 
 ## Roadmap
 

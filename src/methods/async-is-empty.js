@@ -6,4 +6,4 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-export { default } from '../impls/$is-empty/async-is-empty.js';
+export { asyncIsEmpty as default } from '../impls/$is-empty/async-is-empty.js';

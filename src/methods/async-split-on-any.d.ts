@@ -6,4 +6,4 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-export { default } from '../impls/$split-on-any/async-split-on-any.js';
+export { asyncSplitOnAny as default } from '../impls/$split-on-any/async-split-on-any';

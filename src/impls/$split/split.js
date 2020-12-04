@@ -6,14 +6,15 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { map } from '../$map/map.js';
+import { iterableCurry } from '../../internal/iterable.js';
+import { __map } from '../$map/map.js';
 
 function* iterableOf(value) {
   yield value;
 }
 
-export function split(source) {
-  return map(source, (value) => iterableOf(value));
+export function __split(source) {
+  return __map(source, (value) => iterableOf(value));
 }
 
-export default split;
+export const split = /*#__PURE__*/ iterableCurry(__split);

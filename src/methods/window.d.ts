@@ -6,4 +6,4 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-export { default } from '../impls/$window/window.js';
+export { window as default } from '../impls/$window/window';

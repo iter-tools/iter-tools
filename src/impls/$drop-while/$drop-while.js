@@ -3,7 +3,7 @@ import { $async, $await } from '../../../generate/async.macro.cjs';
 import { $iterableCurry } from '../../internal/$iterable.js';
 
 $async;
-export function* $dropWhile(source, predicate) {
+export function* $__dropWhile(source, predicate) {
   let drop = true;
   let c = 0;
   $await;
@@ -19,4 +19,4 @@ export function* $dropWhile(source, predicate) {
   }
 }
 
-export default /*#__PURE__*/ $iterableCurry($dropWhile);
+export const $dropWhile = /*#__PURE__*/ $iterableCurry($__dropWhile);

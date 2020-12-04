@@ -3,4 +3,4 @@ import { $SourceIterable, $ResultIterable } from '../../types/$iterable';
 
 declare function $split<T>(source: $SourceIterable<T>): $ResultIterable<SyncResultIterable<T>>;
 
-export default $split;
+export { $split };

@@ -6,4 +6,4 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-export { default } from '../impls/$spliterate/spliterate.js';
+export { spliterate as default } from '../impls/$spliterate/spliterate.js';

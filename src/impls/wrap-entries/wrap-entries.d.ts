@@ -9,4 +9,4 @@ declare function wrapEntries<K, V>(
     | undefined,
 ): ResultIterable<[K, V]>;
 
-export default wrapEntries;
+export { wrapEntries };

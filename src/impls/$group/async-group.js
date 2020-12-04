@@ -6,11 +6,11 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { asyncWrapWithResultIterable, asyncEnsureIterable } from '../../internal/async-iterable.js';
-import { asyncGroupBy } from '../$group-by/async-group-by.js';
+import { asyncIterableCurry } from '../../internal/async-iterable.js';
+import { __asyncGroupBy } from '../$group-by/async-group-by.js';
 
-export function group(iterable) {
-  return asyncGroupBy(asyncEnsureIterable(iterable), (_) => _);
+export function __asyncGroup(iterable) {
+  return __asyncGroupBy(iterable, (_) => _);
 }
 
-export default /*#__PURE__*/ asyncWrapWithResultIterable(group);
+export const asyncGroup = /*#__PURE__*/ asyncIterableCurry(__asyncGroup);

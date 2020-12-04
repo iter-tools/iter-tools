@@ -6,4 +6,4 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-export { default } from '../impls/$concat/concat.js';
+export { concat as default } from '../impls/$concat/concat';

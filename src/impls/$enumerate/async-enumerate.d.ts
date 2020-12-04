@@ -21,4 +21,4 @@ declare function asyncEnumerate(
   firstIdx: number,
 ): <T>(source: AsyncSourceIterable<T>) => AsyncResultIterable<[number, T]>;
 
-export default asyncEnumerate;
+export { asyncEnumerate };

@@ -18,4 +18,4 @@ declare function asyncWindow(
   size: number,
 ): <T>(source: AsyncSourceIterable<T>) => AsyncResultIterable<SyncResultIterable<T>>;
 
-export default asyncWindow;
+export { asyncWindow };

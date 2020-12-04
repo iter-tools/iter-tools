@@ -12,4 +12,4 @@ declare function cycleTimes<T>(n: number, source: SourceIterable<T>): ResultIter
 
 declare function cycleTimes<T>(n: number): (source: SourceIterable<T>) => ResultIterable<T>;
 
-export default cycleTimes;
+export { cycleTimes };

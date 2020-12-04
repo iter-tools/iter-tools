@@ -9,7 +9,7 @@
 import { asyncIterableCurry } from '../../internal/async-iterable.js';
 import { CircularBuffer, ReadOnlyCircularBuffer } from '../../internal/circular-buffer.js';
 
-export async function* asyncWindow(source, size) {
+export async function* __asyncWindow(source, size) {
   const buffer = new CircularBuffer(size);
   const bufferReadProxy = new ReadOnlyCircularBuffer(buffer);
 
@@ -21,9 +21,9 @@ export async function* asyncWindow(source, size) {
   }
 }
 
-export default /*#__PURE__*/ asyncIterableCurry(asyncWindow, {
+export const asyncWindow = /*#__PURE__*/ asyncIterableCurry(__asyncWindow, {
   validateArgs(args) {
-    if (typeof args[0] !== 'number') {
+    if (typeof args[1] !== 'number') {
       throw new Error(`${'asyncWindow'} must be passed a numeric size`);
     }
   },

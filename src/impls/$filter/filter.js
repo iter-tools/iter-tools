@@ -8,7 +8,7 @@
 
 import { iterableCurry } from '../../internal/iterable.js';
 
-export function* filter(source, predicate) {
+export function* __filter(source, predicate) {
   let c = 0;
   for (const value of source) {
     if (predicate(value, c++)) {
@@ -17,4 +17,4 @@ export function* filter(source, predicate) {
   }
 }
 
-export default /*#__PURE__*/ iterableCurry(filter);
+export const filter = /*#__PURE__*/ iterableCurry(__filter);

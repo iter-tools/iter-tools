@@ -6,4 +6,4 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-export { default } from '../impls/$to-array/async-to-array.js';
+export { asyncToArray as default } from '../impls/$to-array/async-to-array';

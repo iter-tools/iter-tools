@@ -8,7 +8,7 @@
 
 import { iterableCurry } from '../../internal/iterable.js';
 
-export function some(iterable, func) {
+export function __some(iterable, func) {
   let c = 0;
   for (const value of iterable) {
     if (func(value, c++)) {
@@ -18,4 +18,4 @@ export function some(iterable, func) {
   return false;
 }
 
-export default /*#__PURE__*/ iterableCurry(some, { reduces: true });
+export const some = /*#__PURE__*/ iterableCurry(__some, { reduces: true });

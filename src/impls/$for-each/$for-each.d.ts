@@ -10,4 +10,4 @@ declare function $forEach<T>(
   iterable: $SourceIterable<T>,
 ): $Promise<void>;
 
-export default $forEach;
+export { $forEach };

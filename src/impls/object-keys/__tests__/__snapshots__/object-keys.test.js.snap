@@ -1,3 +1,3 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`objectKeys throws with non-object 1`] = `"the argument to objectKeys was not an object, null, or undefined"`;
+exports[`objectKeys throws with non-object 1`] = `"obj argument to objectKeys must be an object, null, or undefined"`;

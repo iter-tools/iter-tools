@@ -6,4 +6,4 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-export { default } from '../impls/$append/async-append.js';
+export { asyncAppend as default } from '../impls/$append/async-append';

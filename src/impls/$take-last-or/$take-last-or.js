@@ -3,7 +3,7 @@ import { $async, $await } from '../../../generate/async.macro.cjs';
 import { $iterableCurry } from '../../internal/$iterable.js';
 
 $async;
-export function $takeLastOr(iterable, whenEmpty) {
+export function $__takeLastOr(iterable, whenEmpty) {
   let _value = whenEmpty;
 
   $await;
@@ -14,6 +14,6 @@ export function $takeLastOr(iterable, whenEmpty) {
   return _value;
 }
 
-export default /*#__PURE__*/ $iterableCurry($takeLastOr, {
+export const $takeLastOr = /*#__PURE__*/ $iterableCurry($__takeLastOr, {
   reduces: true,
 });

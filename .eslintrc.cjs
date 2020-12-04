@@ -12,6 +12,8 @@ module.exports = {
   },
   env: { es6: true },
   rules: {
+    // We have some weird naming conventions. TODO write a rule to enforce them.
+    camelcase: 'off',
     // I think this is wrong. Let the transpiler dig it out for perf, but it belongs in the sources.
     'no-return-await': 'off',
     // Pure comments are usually inserted by transpilers, so bundlers expect an exact match.
@@ -23,15 +25,20 @@ module.exports = {
   },
   overrides: [
     {
+      files: ['src/!(?(__)methods)/**'],
+      rules: {
+        'import/no-default-export': 'error',
+      },
+    },
+    {
       files: ['*.js'],
       rules: {
         'node/file-extension-in-import': ['error', 'always'],
       },
     },
     {
-      files: ['src/**.js', '!src/test', '**/__tests__/**'],
+      files: ['src/**.js', '!src/test', '!**/__tests__/**'],
       rules: {
-        // Requires /*#__PURE__*/ comments
         'local-rules/no-impure-calls': 'error',
       },
     },

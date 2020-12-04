@@ -6,4 +6,4 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-export { default } from '../impls/$join-with-seq/join-with-seq.js';
+export { joinWithSeq as default } from '../impls/$join-with-seq/join-with-seq';

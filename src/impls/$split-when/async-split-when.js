@@ -8,7 +8,7 @@
 
 import { asyncIterableCurry } from '../../internal/async-iterable.js';
 import { AsyncBisector } from '../../internal/async-bisector.js';
-import { wrap } from '../../internal/wrap.js';
+import { __wrap } from '../$wrap/wrap.js';
 
 export async function* asyncConditionStrategy(split, { predicate }, source) {
   let i = 0;
@@ -22,10 +22,15 @@ export async function* asyncConditionStrategy(split, { predicate }, source) {
   }
 }
 
-export function asyncSplitWhen(source, predicate) {
-  return wrap(new AsyncBisector(source, asyncConditionStrategy, { predicate }));
+export function __asyncSplitWhen(source, predicate) {
+  return new AsyncBisector(source, asyncConditionStrategy, { predicate });
 }
 
-export default /*#__PURE__*/ asyncIterableCurry(asyncSplitWhen, {
-  forceSync: true,
-});
+export const asyncSplitWhen = /*#__PURE__*/ asyncIterableCurry(
+  function $splitWhen(source, predicate) {
+    return __wrap(__asyncSplitWhen(source, predicate));
+  },
+  {
+    forceSync: true,
+  },
+);

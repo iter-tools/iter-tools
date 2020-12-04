@@ -6,4 +6,4 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-export { default } from '../impls/$take-sorted/take-sorted.js';
+export { takeSorted as default } from '../impls/$take-sorted/take-sorted.js';

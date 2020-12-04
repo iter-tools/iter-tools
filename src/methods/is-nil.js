@@ -6,4 +6,4 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-export { default } from '../impls/is-nil/is-nil.js';
+export { isNil as default } from '../impls/is-nil/is-nil.js';

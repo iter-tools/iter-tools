@@ -95,7 +95,6 @@
     "babel-plugin-recast": "^0.1.2",
     "babel-plugin-tester": "^10.0.0",
     "benchmark": "^2.1.4",
-    "camelcase": "^5.3.1",
     "camelize": "^1.0.0",
     "codecov": "^3.7.2",
     "cross-env": "^5.1.6",

@@ -6,4 +6,4 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-export { default } from '../impls/$to-object/async-to-object.js';
+export { asyncToObject as default } from '../impls/$to-object/async-to-object.js';

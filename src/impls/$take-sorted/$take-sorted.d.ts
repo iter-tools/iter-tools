@@ -26,4 +26,4 @@ declare function $takeSorted<T>(
   source: $SourceIterable<T>,
 ): $ResultIterable<T>;
 
-export default $takeSorted;
+export { $takeSorted };

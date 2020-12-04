@@ -8,10 +8,10 @@
 
 import { asyncWrapWithResultIterable, asyncEnsureIterable } from '../../internal/async-iterable.js';
 
-export async function* asyncConcat(...sources) {
+export async function* __asyncConcat(...sources) {
   for (const iterable of sources) {
     yield* asyncEnsureIterable(iterable);
   }
 }
 
-export default /*#__PURE__*/ asyncWrapWithResultIterable(asyncConcat);
+export const asyncConcat = /*#__PURE__*/ asyncWrapWithResultIterable(__asyncConcat);

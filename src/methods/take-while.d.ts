@@ -6,4 +6,4 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-export { default } from '../impls/$take-while/take-while.js';
+export { takeWhile as default } from '../impls/$take-while/take-while';
