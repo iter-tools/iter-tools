@@ -74,8 +74,6 @@ export { default as notNil } from './methods/not-nil';
 export { default as notNull } from './methods/not-null';
 export { default as notUndefined } from './methods/not-undefined';
 export { default as notWrappable } from './methods/not-wrappable';
-export { default as nullOr } from './methods/null-or';
-export { default as nullOrAsync } from './methods/null-or-async';
 export { default as objectEntries } from './methods/object-entries';
 export { default as objectFrom } from './methods/object-from';
 export { default as objectFromAsync } from './methods/object-from-async';

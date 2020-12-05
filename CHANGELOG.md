@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
  - `joinAsString`, `asyncJoinAsString` (Instead use `str(join(...))`)
  - `joinAsStringWith`, `asyncJoinAsStringWith` (Instead use `str(joinWith(sep, ...))`)
  - `regexpExec`
+ - `nullOr`, `nullOrAsync`
 
 **Arguments**
  - `n` from `fork` and `asyncFork`. Use destructuring or call `return()` on the forks iterable.
