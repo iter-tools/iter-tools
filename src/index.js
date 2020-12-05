@@ -242,8 +242,6 @@ export { default as notNil } from './methods/not-nil.js';
 export { default as notNull } from './methods/not-null.js';
 export { default as notUndefined } from './methods/not-undefined.js';
 export { default as notWrappable } from './methods/not-wrappable.js';
-export { default as nullOr } from './methods/null-or.js';
-export { default as nullOrAsync } from './methods/null-or-async.js';
 export { default as objectEntries } from './methods/object-entries.js';
 export { default as objectFrom } from './methods/object-from.js';
 export { default as objectFromAsync } from './methods/object-from-async.js';
