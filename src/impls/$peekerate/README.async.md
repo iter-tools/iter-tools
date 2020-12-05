@@ -3,10 +3,16 @@ See [peekerate](#peekerate)
 Note: Returns a promise of a peekerator, which is necessary for the first value to be fetched.
 
 ```js
-const peekerator = await asyncPeekerate([1, 2, 3]);
+function asyncPrintValues(values) {
+  const peekr = await asyncPeekerate(values);
 
-while (!peekerator.done) {
-  log(peekerator.value + 1);
-  await peekerator.advance();
+  return peekr.done
+    ? 'none'
+    : stringFromAsync(
+        asyncInterposeSeq(', ', peekr.asIterator()),
+      );
 }
+
+asyncPrintValues(asyncWrap([])); // 'none'
+asyncPrintValues(asyncWrap([1, 2, 3])); // '1, 2, 3'
 ```

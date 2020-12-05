@@ -6,27 +6,37 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { AsyncSourceIterable } from '../../types/async-iterable';
+import { AsyncSourceIterable, AsyncIteratorResult } from '../../types/async-iterable';
 
-interface AsyncPeekeratorBase {
-  advance(): Promise<void>;
-  return(): Promise<void>;
-  readonly index: number;
+export interface AsyncPeekeratorIterator<T> {
+  next(): AsyncIteratorResult<T>;
+  return(): AsyncIteratorResult<T>;
+  [Symbol.asyncIterator](): this;
 }
 
-interface AsyncDonePeekerator extends AsyncPeekeratorBase {
+interface AsyncPeekeratorBase<T> {
+  readonly index: number;
+
+  /* eslint-disable no-use-before-define */
+  advance(): Promise<AsyncPeekerator<T>>;
+  return(): Promise<AsyncPeekerator<T>>;
+  /* eslint-enaable no-use-before-define */
+  asIterator(): AsyncPeekeratorIterator<T>;
+}
+
+interface AsyncDonePeekerator<T> extends AsyncPeekeratorBase<T> {
   readonly current: { done: true; value: undefined };
   readonly done: true;
   readonly value: undefined;
 }
 
-interface AsyncValuePeekerator<T> extends AsyncPeekeratorBase {
+interface AsyncValuePeekerator<T> extends AsyncPeekeratorBase<T> {
   readonly current: { done: false; value: T };
   readonly done: false;
   readonly value: T;
 }
 
-export type AsyncPeekerator<T> = AsyncDonePeekerator | AsyncValuePeekerator<T>;
+export type AsyncPeekerator<T> = AsyncDonePeekerator<T> | AsyncValuePeekerator<T>;
 
 declare function asyncPeekerate<T>(source: AsyncSourceIterable<T>): AsyncPeekerator<T>;
 

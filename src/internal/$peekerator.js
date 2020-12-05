@@ -4,6 +4,29 @@ import { $ensureIterable, $callReturn } from './$iterable.js';
 
 const _ = Symbol.for('_');
 
+class $PeekeratorIterator {
+  constructor(peekr) {
+    this.peekr = peekr;
+  }
+
+  @$async
+  next() {
+    const { peekr } = this;
+    const { current } = peekr;
+    $await(peekr.advance());
+    return current;
+  }
+
+  @$async
+  return() {
+    $await(this.peekr.return());
+  }
+
+  [$iteratorSymbol]() {
+    return this;
+  }
+}
+
 export class $Peekerator {
   @$async
   static from(iterable, ...args) {
@@ -33,14 +56,19 @@ export class $Peekerator {
   }
 
   get index() {
-    return this[_].current.index;
+    return this[_].index;
   }
 
   @$async
   advance() {
     const this_ = this[_];
+    const { current, iterator } = this_;
+
+    if (current.done) return;
+
     this_.index++;
-    this_.current = $await(this_.iterator.next());
+    this_.current = $await(iterator.next());
+    return this;
   }
 
   @$async
@@ -50,5 +78,10 @@ export class $Peekerator {
       $await($callReturn(this_.iterator));
     }
     this_.current = { value: undefined, done: true };
+    return this;
+  }
+
+  asIterator() {
+    return new $PeekeratorIterator(this);
   }
 }

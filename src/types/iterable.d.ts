@@ -7,6 +7,9 @@ export type SourceIterable<T> = DefinedSourceIterable<T> | null | undefined;
 type _Iterable<T> = Iterable<T>;
 export { _Iterable as Iterable };
 
+type _IteratorResult<T> = IteratorResult<T>;
+export { _IteratorResult as IteratorResult };
+
 export interface ResultIterable<T> {
   next(value?: any): IteratorResult<T>;
   return(value?: any): IteratorResult<T>;

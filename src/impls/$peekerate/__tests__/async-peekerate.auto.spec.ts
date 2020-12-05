@@ -6,8 +6,9 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { asyncPeekerate } from 'iter-tools-es';
-import { asyncWrap } from '../../../test/async-helpers.js';
+import { asyncPeekerate, asyncStr, asyncInterposeSeq } from 'iter-tools-es';
+import { asyncWrap, anyType } from '../../../test/async-helpers.js';
+import { AsyncIterable } from '../../../types/async-iterable.js';
 
 describe('asyncPeekerate', () => {
   it('decorates iterator with the current value in the iterable', async () => {
@@ -46,5 +47,61 @@ describe('asyncPeekerate', () => {
         value: 3,
       },
     ]);
+  });
+
+  describe('asIterator', () => {
+    // eslint-disable-next-line jest/expect-expect
+    it('cleans up source iterable', async () => {
+      (await asyncPeekerate(asyncWrap([1, 2, 3]))).asIterator().return();
+    });
+  });
+
+  describe('documentation examples', () => {
+    it('README example works', async () => {
+      const printValues = async (values: AsyncIterable<number>) => {
+        const peekr = await asyncPeekerate(values);
+
+        return peekr.done ? 'none' : await asyncStr(asyncInterposeSeq(', ', peekr.asIterator()));
+      };
+
+      expect(await printValues(asyncWrap([]))).toBe('none');
+      expect(await printValues(asyncWrap([1, 2, 3]))).toBe('1, 2, 3');
+    });
+
+    it('cookbook example works', async () => {
+      const printListEN = async (values: AsyncIterable<number>, oxfordComma = true) => {
+        let peekr = await asyncPeekerate(values);
+        let result = '';
+        let last = peekr.current;
+
+        if (peekr.done) return 'none';
+
+        while (!peekr.done) {
+          last = peekr.current;
+          peekr = await peekr.advance();
+          if (!peekr.done) {
+            if (peekr.index > 1) result += ', ';
+            result += last.value.toString();
+          }
+        }
+
+        if (peekr.index > 2) {
+          if (oxfordComma) {
+            result += ', ';
+          }
+          result += 'and ';
+        } else if (peekr.index > 1) {
+          result += ' and ';
+        }
+
+        result += anyType(last.value).toString();
+        return result;
+      };
+
+      expect(await printListEN(asyncWrap([]))).toBe('none');
+      expect(await printListEN(asyncWrap([1]))).toBe('1');
+      expect(await printListEN(asyncWrap([1, 2]))).toBe('1 and 2');
+      expect(await printListEN(asyncWrap([1, 2, 3]))).toBe('1, 2, and 3');
+    });
   });
 });

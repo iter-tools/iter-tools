@@ -13,7 +13,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
  - `joinAsString`, `asyncJoinAsString` (Instead use `str(join(...))`)
  - `joinAsStringWith`, `asyncJoinAsStringWith` (Instead use `str(joinWith(sep, ...))`)
  - `regexpExec`
- - `nullOr`, `nullOrAsync`
+ - `nullOr`, `nullOrAsync` (Instead use `peekerate`)
 
 **Arguments**
  - `n` from `fork` and `asyncFork`. Use destructuring or call `return()` on the forks iterable.
@@ -72,13 +72,15 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
  - `useFiller` option for `leadingWindow` and `asyncLeadingWindow`.
  - `proto` passed to `Object.create` for `objectFrom` and `objectFromAsync` (also `toObject` and `asyncToObject`).
 
-**Classes**
- - `Peekerator`, `PeekeratorClass`, `AsyncPeekerator`, `AsyncPeekeratorClass`
+**Instance Methods**
+ - Peekerator: `asIterator` method
 
 ### Changed
  - Removed O(1) array optimizations from `last` and `lastOr`
  - Factorial no attempts to use BigNum internally. Some inputs may now cause `combinations().size` or `combinationsWithReplacement().size` to overflow during computation.
 
+**Instance Methods**
+ - Peekerator: `advance` and `return` methods now return `this` (was `undefined`).
 
 
 ## [7.0.0-rc.0] - 2019-12-13
