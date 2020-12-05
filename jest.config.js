@@ -26,14 +26,14 @@ export default {
   testMatch: [],
   projects: [
     makeProject({
-      name: 'es',
+      name: 'src',
     }),
     ...whenCi([
       makeProject({
-        name: 'es5-pkg',
+        name: 'iter-tools',
       }),
       makeProject({
-        name: 'es-pkg',
+        name: 'iter-tools-es',
       }),
     ]),
   ],
