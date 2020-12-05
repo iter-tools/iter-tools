@@ -2846,24 +2846,65 @@ See [interleave](#interleave)
 **peekerate(source)**  
 **__peekerate(source)**  
 
-Turns `source` into a peekerator (often shortened to `peekr`), which is conceptually equivalent to an iterator but is often easier to work with. Peekerators always have a `{done, value}` step from the source iterator stored as `peekr.current`. For convenience `peekr.done` and `peekr.value` are also present. To load the next step call `peekr.advance()`. No value is returned.
-
-Peekerators allow an iterator to be used as internal state. Normal iterators are of course stateful, but less useful for this purpose as it is not possible to access their state without altering it. Peekerators are also have safer typedefs than iterators.
+Turns `source` into a peekerator (often shortened to `peekr`), which is conceptually equivalent to an iterator but is often easier to work with. Peekerators always have a `current` step (of the shape `{ done, value }`) from the source iterator stored as `peekr.current`. This stateful API is useful since it allows you to see the current step without consuming it. This way you can choose to do nothing so that another part of your code will have the chance to act on the value instead. This is highly value in a number of common scenarios. A simple and common one is reacting when an iterable is empty:
 
 ```js
-const peekerator = peekerate([0, 1, 2]);
+function printValues(values) {
+  const peekr = peekerate(values);
 
-while (!peekerator.done) {
-  log(peekerator.value + 1);
-  peekerator.advance();
+  return peekr.done
+    ? 'none'
+    : stringFrom(interposeSeq(', ', peekr.asIterator()));
 }
 
-// logs 1, 2, 3
+printValues([]); // 'none'
+printValues([1, 2, 3]); // '1, 2, 3'
 ```
 
-Also exported is the `Peekerator` base class. Instances should be made using `Peekerator.from(iteratable)`.
+Here is the full interface that the `peekr` object conforms to:
 
-Note that in typescript definitions `Peekerator` is a type not a class, so if you need the class e.g. for `extends` or `instanceof` I have included an alias for `Peekerator` named `PeekeratorClass`. The alias has different typedefs that are less safe but also will not throw errors on value usages.
+```ts
+interface Peekerator<T> {
+  /**
+   * Calls `next()` on the underlying iterator and stores the value in `current`.
+   * Returns `this` for chaining.
+   */
+  advance(): this;
+  /**
+   * Calls `return()` on the underlying iterator.
+   * Returns `this` for chaining.
+   */
+  return(): this;
+  /**
+   * Returns an iterable iterator which starts at the `current` step.
+   * This means that equal(source, peekerate(source).asIterator()) is true
+   */
+  asIterator(): $IterableIterator<T>;
+
+  /**
+   * Returns the step object that was return by `next()`.
+   * The actual typedefs define a tagged union for safety.
+   */
+  readonly current: { done: boolean; value: T | undefined };
+
+  /**
+   * A convenince getter for `current.done`
+   */
+  readonly done: boolean;
+
+  /**
+   * A convenince getter for `current.value`
+   */
+  readonly value: T;
+
+  /**
+   * The index of the step stored in `current`
+   */
+  readonly index: number;
+}
+```
+
+Typescript note: The type of `peekr` (and `peekr.current`) will be refined when you use the value of `peekr.done` as a condition. This helps you avoid spurious errors about `peekr.value` potentially being `undefined`, but it gives rise to another problem: Tyescript doesn't understand that `peekr.advance()` makes its previous refinements invalid. Therefore you must help typescript understand this by writing `peekr = peekr.advance()`. If you do not do this you may discover that Typescript fails to catch some errors, or you may just give strange-looking errors about the type of `peekr` being `never`. This happens because typescript has refined the type of `peekr.done` twice, once to `true` and once to `false`. The type of `true & false` is `never` in Typescript.
 
 ### asyncPeekerate
 
@@ -2875,12 +2916,18 @@ See [peekerate](#peekerate)
 Note: Returns a promise of a peekerator, which is necessary for the first value to be fetched.
 
 ```js
-const peekerator = await asyncPeekerate([1, 2, 3]);
+function asyncPrintValues(values) {
+  const peekr = await asyncPeekerate(values);
 
-while (!peekerator.done) {
-  log(peekerator.value + 1);
-  await peekerator.advance();
+  return peekr.done
+    ? 'none'
+    : stringFromAsync(
+        asyncInterposeSeq(', ', peekr.asIterator()),
+      );
 }
+
+asyncPrintValues(asyncWrap([])); // 'none'
+asyncPrintValues(asyncWrap([1, 2, 3])); // '1, 2, 3'
 ```
 
 ### spliterate

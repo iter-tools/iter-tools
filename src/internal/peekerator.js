@@ -10,6 +10,27 @@ import { ensureIterable, callReturn } from './iterable.js';
 
 const _ = Symbol.for('_');
 
+class PeekeratorIterator {
+  constructor(peekr) {
+    this.peekr = peekr;
+  }
+
+  next() {
+    const { peekr } = this;
+    const { current } = peekr;
+    peekr.advance();
+    return current;
+  }
+
+  return() {
+    this.peekr.return();
+  }
+
+  [Symbol.iterator]() {
+    return this;
+  }
+}
+
 export class Peekerator {
   static from(iterable, ...args) {
     const iterator = ensureIterable(iterable)[Symbol.iterator]();
@@ -38,13 +59,18 @@ export class Peekerator {
   }
 
   get index() {
-    return this[_].current.index;
+    return this[_].index;
   }
 
   advance() {
     const this_ = this[_];
+    const { current, iterator } = this_;
+
+    if (current.done) return;
+
     this_.index++;
-    this_.current = this_.iterator.next();
+    this_.current = iterator.next();
+    return this;
   }
 
   return() {
@@ -53,5 +79,10 @@ export class Peekerator {
       callReturn(this_.iterator);
     }
     this_.current = { value: undefined, done: true };
+    return this;
+  }
+
+  asIterator() {
+    return new PeekeratorIterator(this);
   }
 }
