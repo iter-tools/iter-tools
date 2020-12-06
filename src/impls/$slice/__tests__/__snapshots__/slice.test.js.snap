@@ -2,6 +2,6 @@
 
 exports[`slice when given invalid parameters 1`] = `"start argument to slice must be a number"`;
 
-exports[`slice when given invalid parameters 2`] = `"end argument to slice must be a number"`;
+exports[`slice when given invalid parameters 2`] = `"end argument to slice must be an integer or infinte"`;
 
-exports[`slice when given invalid parameters 3`] = `"step argument to slice must be a number > 0"`;
+exports[`slice when given invalid parameters 3`] = `"step argument to slice must be a integer > 0"`;

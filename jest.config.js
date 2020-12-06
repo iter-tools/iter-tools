@@ -20,7 +20,7 @@ function makeProject(projectConfig) {
 export default {
   testEnvironment: 'node',
   coverageReporters: ['json-summary', 'text', 'lcov'],
-  collectCoverageFrom: ['src/**', '!src/methods/*', '!**/$*.js', '!src/(test|types)/**'],
+  collectCoverageFrom: ['src/**', '!src/?(__)methods/*', '!**/$*.js', '!src/(test|types)/**'],
   coverageDirectory: './coverage/',
 
   testMatch: [],

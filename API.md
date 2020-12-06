@@ -91,12 +91,12 @@ Transform a single iterable
 [drop](#drop) ([async](#asyncdrop))  
 [dropWhile](#dropwhile) ([async](#asyncdropwhile))  
 [enumerate](#enumerate) ([async](#asyncenumerate))  
-[filter](#filter) ([async](#asyncfilter)) ([parallel-async](#asyncfilterparallel))  
+[filter](#filter) ([async](#asyncfilter))  
 [flat](#flat) ([async](#asyncflat))  
-[flatMap](#flatmap) ([async](#asyncflatmap)) ([parallel-async](#asyncflatmapparallel))  
+[flatMap](#flatmap) ([async](#asyncflatmap))  
 [interpose](#interpose) ([async](#asyncinterpose))  
 [interposeSeq](#interposeseq) ([async](#asyncinterposeseq))  
-[map](#map) ([async](#asyncmap)) ([parallel-async](#asyncmapparallel))  
+[map](#map) ([async](#asyncmap))  
 [prepend](#prepend) ([async](#asyncprepend))  
 [reverse](#reverse) ([async](#asyncreverse))  
 [slice](#slice) ([async](#asyncslice))  
@@ -516,27 +516,6 @@ filter((animal) => animal.kind.slice(1) === 'at', [
 
 See [filter](#filter)
 
-### asyncFilterParallel
-
-**asyncFilterParallel(concurrency, func, [iterable](#asyncsourceiterable))**  
-**asyncFilterParallel(func, [iterable](#asyncsourceiterable))**  
-**__asyncFilterParallel([iterable](#asynciterable), func, ?concurrency)**  
-
-Defaults:
-
-- `concurrency`: `4`
-
-A variant of [filter](#filter) with more complicated logic that can optimize when you have both an async filter predicate and an async souce iterable. It starts fetching the next value in the source iterable while waiting for the async predicate to resolve. The optional concurrency paramater dictates how many values can be read ahead from the source iterable while still waiting for the results of previous async predicates.
-
-```js
-await asyncFilterParallel(asyncPredicate, asyncIterable);
-await asyncFilterParallel(
-  10,
-  asyncPredicate,
-  asyncIterable,
-);
-```
-
 ### flat
 
 **flat(shouldFlat, depth, [source](#sourceiterable))**  
@@ -601,23 +580,6 @@ flatMap((x) => [x - 1, x], [1, 3, 5]); // Iterable[0, 1, 2, 3, 4, 5]
 
 See [flatMap](#flatmap)
 
-### asyncFlatMapParallel
-
-**asyncFlatMapParallel(concurrency, func, [iterable](#asyncsourceiterable))**  
-**asyncFlatMapParallel(func, [iterable](#asyncsourceiterable))**  
-**__asyncFlatMapParallel([iterable](#asynciterable), func, ?concurrency)**  
-
-Defaults:
-
-- `concurrency`: `4`
-
-A variant of flatMap with more complicated logic that can optimize when you have both an async mapper callback and an async souce iterable. It starts fetching the next value in the source iterable while waiting for the async callback to resolve. The optional concurrency paramater dictates how many values can be read ahead from the source iterable while still waiting for the results of previous mapper callbacks.
-
-```js
-await asyncFlatMapParallel(asyncMapper, asyncIterable);
-await asyncFlatMapParallel(10, asyncMapper, asyncIterable);
-```
-
 ### interpose
 
 **interpose(value, [source](#sourceiterable))**  
@@ -673,24 +635,6 @@ map((x) => x * x, [0, 1, 2, 3]); // Iterable[0, 1, 4, 9]
 **__asyncMap([source](#asynciterable), func)**  
 
 See [map](#map)
-
-### asyncMapParallel
-
-**asyncMapParallel(concurrency, func, [iterable](#asyncsourceiterable))**  
-**asyncMapParallel(func, [iterable](#asyncsourceiterable))**  
-**__asyncMapParallel([iterable](#asynciterable), func, ?concurrency)**  
-
-Defaults:
-
-- `concurrency`: `4`
-
-A variant of map with more complicated logic that can optimize when you have both an async mapper callback and an async souce iterable. It starts fetching the next value in the source iterable while waiting for the async callback to resolve. The optional concurrency paramater dictates how many values can be read ahead from the source iterable while
-still waiting for the results of previous mapper callbacks.
-
-```js
-await asyncMapParallel(asyncMapper, asyncIterable);
-await asyncMapParallel(10, asyncMapper, asyncIterable);
-```
 
 ### prepend
 
@@ -2076,12 +2020,33 @@ product([1, 2], [3, 4], [5, 6]).size === 8;
 
 ### asyncBuffer
 
-**asyncBuffer(n, [source](#asyncsourceiterable))**  
-**__asyncBuffer([source](#asynciterable), n)**  
+**asyncBuffer(source, n)**  
+**__asyncBuffer(source, n)**  
 
-Starts fetching the next `n` values of `source` so that the wait for a value should be minimal by the time it is needed. Yields the same values in the same order as `source`.
+Returns a [stateful iterable](https://github.com/iter-tools/iter-tools/wiki/stateful-and-stateless-iterables) which yields the same values as `source`. For every value the next `n` values also start their computation in parallel. It may or may not be possible for useful work to be done in parallel depending on the nature of `source`.
+
+An example of a situation in which it is possible to parallelize is when you have a series of expensive requests to make and you know in advance what they will be:
 
 ```js
+pipe(
+  range,
+  asyncMap(i => fetch(`/page/${i}`).then(res => res.json()),
+  asyncSlice(0, 50),
+  asyncBuffer(4),
+  toArray
+);
+```
+
+The above code could fetch four pages at once, potentially greatly speeding up the process when compared code that did not use `asyncBuffer`.
+
+It is important to note that the method will always try to buffer past the end of your iterable. This is a design limitation of async iterators. This is usually fine, but makes it unwise to specify extremely high values for `n`. `asyncBuffer(Infinity, source)` for example would simply be an infinite loop. For this reason all values of `n >= 1024` are forbidden. This is expected to be a very permissive limit. In practice `n` should probably be in the range of `2` to `16`. You must recall that Javascript is fundamentally single threaded, so having more CPU cores will not help you execute such "parallelized" code any faster.
+
+Here is a fuller example demonstrating the mechanics of `asyncBuffer`:
+
+```js
+const delay = (ms) =>
+  new Promise((resolve) => setTimeout(resolve, ms));
+
 const source = asyncMap(
   (_) => new Promise((resolve) => setTimeout(resolve, 200)),
   range(),
@@ -2089,20 +2054,23 @@ const source = asyncMap(
 
 const buffered = asyncBuffer(6, source); // Values start buffering
 
-await new Promise((resolve) => setTimeout(resolve, 800));
+await delay(800));
 
 // Four values are already buffered here
 await buffered.next(); // ~0ms
 await buffered.next(); // ~0ms
 await buffered.next(); // ~0ms
 await buffered.next(); // ~0ms
+
 // After this point values are being requested as fast as they
 // can possibly be fulfilled, so buffer offers no additional benefits.
 await buffered.next(); // ~200ms
 await buffered.next(); // ~200ms
+
 // But if additional delays are incurred in processing values,
 // it has value again!
-await new Promise((resolve) => setTimeout(resolve, 300));
+await delay(300);
+
 await buffered.next(); // ~0ms
 await buffered.next(); // ~100ms
 await buffered.next(); // ~200ms

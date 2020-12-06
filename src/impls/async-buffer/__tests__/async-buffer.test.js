@@ -1,88 +1,88 @@
-import { asyncBuffer, asyncToArray } from 'iter-tools-es';
-import { AsyncIterable } from '../../../types/async-iterable.js';
+import { asyncBuffer, asyncMap } from 'iter-tools-es';
 import { delay } from '../../../internal/delay.js';
-
-function intermittent(): AsyncIterable<number> {
-  const sequence = [
-    { period: 0, value: 0 },
-    { period: 400, value: 1 },
-    { period: 0, value: 2 },
-  ];
-
-  return {
-    async *[Symbol.asyncIterator]() {
-      for (const { period, value } of sequence) {
-        await delay(period);
-        yield value;
-      }
-    },
-  };
-}
+import { wrap } from '../../../test/helpers.js';
+import { asyncWrap, asyncUnwrap, anyType } from '../../../test/async-helpers.js';
 
 describe('asyncBuffer', () => {
-  it('sanity checks', async () => {
-    const iter = intermittent()[Symbol.asyncIterator]();
-    const d0 = Date.now();
-    await iter.next(); // 0
-    await delay(400);
-
-    const d1 = Date.now();
-    await iter.next(); // 1
-    await delay(400);
-
-    const d2 = Date.now();
-    await iter.next(); // 2
-    await delay(400);
-
-    const d3 = Date.now();
-
-    expect(d1 - d0).toBeLessThan(700);
-    expect(d2 - d1).toBeGreaterThan(700);
-    expect(d3 - d2).toBeLessThan(700);
-  });
-
-  it('buffers', async () => {
-    const iter = asyncBuffer(2, intermittent());
-    const d0 = Date.now();
-    await iter.next(); // 0
-    await delay(400);
-
-    const d1 = Date.now();
-    await iter.next(); // 1
-    await delay(400);
-
-    const d2 = Date.now();
-    await iter.next(); // 2
-    await delay(400);
-
-    const d3 = Date.now();
-
-    expect(d1 - d0).toBeLessThan(700);
-    expect(d2 - d1).toBeLessThan(700);
-    expect(d3 - d2).toBeLessThan(700);
+  describe('when source is empty', () => {
+    it('yields no values', async () => {
+      expect(await asyncUnwrap(asyncBuffer(2, null))).toEqual([]);
+      expect(await asyncUnwrap(asyncBuffer(2, undefined))).toEqual([]);
+      expect(await asyncUnwrap(asyncBuffer(2, asyncWrap([])))).toEqual([]);
+    });
   });
 
   it('returns all values', async () => {
-    const iter = asyncBuffer(2, intermittent());
-    expect(await asyncToArray(iter)).toEqual([0, 1, 2]);
+    expect(await asyncUnwrap(asyncBuffer(2, asyncWrap([1, 2, 3])))).toEqual([1, 2, 3]);
+    expect(await asyncUnwrap(asyncBuffer(10, asyncWrap([1, 2, 3])))).toEqual([1, 2, 3]);
   });
 
-  it('buffer using curry', async () => {
-    const iter = asyncBuffer(2)(intermittent());
-    expect(await asyncToArray(iter)).toEqual([0, 1, 2]);
+  it('works on sync iterables', async () => {
+    expect(await asyncUnwrap(asyncBuffer(2, wrap([1, 2, 3])))).toEqual([1, 2, 3]);
   });
 
-  it('buffer (bigger then iterable)', async () => {
-    const iter = asyncBuffer(10, intermittent());
-    expect(await asyncToArray(iter)).toEqual([0, 1, 2]);
+  it('works the way the docs say it does', async () => {
+    const source = asyncMap(() => delay(200), asyncWrap([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]));
+
+    const buffered = asyncBuffer(6, source);
+
+    const nextTimed = async () => {
+      const timeStart = Date.now();
+      await buffered.next();
+      const timeEnd = Date.now();
+      return timeEnd - timeStart;
+    };
+
+    await delay(800);
+
+    // Four values are already buffered here
+    expect(await nextTimed()).toBeLessThan(20); // theretically 0
+    expect(await nextTimed()).toBeLessThan(20);
+    expect(await nextTimed()).toBeLessThan(20);
+    expect(await nextTimed()).toBeLessThan(20);
+
+    // After this point values are being requeste20as fast as they
+    // can possibly be fulfilled, so buffer offers no additional benefits.
+    expect(await nextTimed()).toBeLessThan(220); // theretically 200
+    expect(await nextTimed()).toBeLessThan(220);
+
+    // But if additional delays are incurred in processing values,
+    // it has value again!
+    await delay(300);
+
+    expect(await nextTimed()).toBeLessThan(20);
+    expect(await nextTimed()).toBeLessThan(120);
+    expect(await nextTimed()).toBeLessThan(220);
+
+    await buffered.return();
   });
 
-  it('throws when buffer size is < 0', () => {
-    expect(() => asyncBuffer(-1, intermittent())).toThrowErrorMatchingSnapshot();
+  describe('when n is valid', () => {
+    it('does not throw', async () => {
+      expect(() => asyncBuffer(anyType(undefined), null)).not.toThrow();
+      expect(() => asyncBuffer(0, null)).not.toThrow();
+      expect(() => asyncBuffer(1024, null)).not.toThrow();
+    });
   });
 
-  it('throws when buffer size is not a number', () => {
-    const n: any = '';
-    expect(() => asyncBuffer(n, intermittent())).toThrowErrorMatchingSnapshot();
+  describe('when n is unusable', () => {
+    it('throws', async () => {
+      expect(() => asyncBuffer(anyType('foo'), null)).toThrowErrorMatchingSnapshot();
+      expect(() => asyncBuffer(anyType(-1), null)).toThrowErrorMatchingSnapshot();
+      expect(() => asyncBuffer(anyType(-Infinity), null)).toThrowErrorMatchingSnapshot();
+    });
+  });
+
+  describe('when n is too large', () => {
+    it('throws', async () => {
+      expect(() => asyncBuffer(1025, null)).toThrowErrorMatchingSnapshot();
+      expect(() => asyncBuffer(Infinity, null)).toThrowErrorMatchingSnapshot();
+    });
+  });
+
+  describe('when iterable is not', () => {
+    it('throws', async () => {
+      expect(() => asyncBuffer(2, anyType(4))).toThrowErrorMatchingSnapshot();
+    });
   });
 });

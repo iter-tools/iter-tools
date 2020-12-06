@@ -17,10 +17,7 @@ class MonoliticGenerator extends Generator {
 
     this.docsChanged = this.debounce(this.docsChanged);
 
-    this.glob = [
-      'src/impls/*/{README.md,README.async.md,README.parallel.md,DOCME.json}',
-      'src/impls/*/*.js',
-    ];
+    this.glob = ['src/impls/*/{README.md,README.async.md,DOCME.json}', 'src/impls/*/*.js'];
     this.ignored = ['src/impls/*/$*.js'];
 
     this.files = new Map();
@@ -29,9 +26,8 @@ class MonoliticGenerator extends Generator {
 
   getImplPath(dir, type = null) {
     const asyncPrefix = type ? 'async-' : '';
-    const parallelSuffix = type === 'parallel' ? '-parallel' : '';
     const implName = renameDollar(basename(dir), false);
-    return join(dir, `${asyncPrefix}${implName}${parallelSuffix}.js`);
+    return join(dir, `${asyncPrefix}${implName}.js`);
   }
 
   parse(path, content) {
@@ -70,8 +66,7 @@ class MonoliticGenerator extends Generator {
 
   extractMethodSignatures(dir, docme, type) {
     const path = this.getImplPath(dir, type);
-    const methodName_ = renameDollar(this.getNameForDir(dir), !!type);
-    const methodName = type === 'parallel' ? `${methodName_}Parallel` : methodName_;
+    const methodName = renameDollar(this.getNameForDir(dir), !!type);
 
     const file = this.files.get(path);
 
@@ -92,10 +87,8 @@ class MonoliticGenerator extends Generator {
           docme,
           readme: this.files.get(join(dir, 'README.md')),
           asyncReadme: this.files.get(join(dir, 'README.async.md')),
-          parallelReadme: this.files.get(join(dir, 'README.parallel.md')),
           signatures: this.extractMethodSignatures(dir, docme),
           asyncSignatures: this.extractMethodSignatures(dir, docme, 'async'),
-          parallelSignatures: this.extractMethodSignatures(dir, docme, 'parallel'),
         };
       });
   }

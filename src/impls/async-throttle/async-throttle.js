@@ -1,5 +1,5 @@
 import { asyncIterableCurry } from '../../internal/async-iterable.js';
-import { isInteger } from '../../internal/number.js';
+import { isPositiveInteger } from '../../internal/number.js';
 import { delay } from '../../internal/delay.js';
 
 export async function* __asyncThrottle(source, intervalMs) {
@@ -14,7 +14,7 @@ export async function* __asyncThrottle(source, intervalMs) {
 
 export const asyncThrottle = /*#__PURE__*/ asyncIterableCurry(__asyncThrottle, {
   validateArgs(args) {
-    if (!isInteger(args[1]) || args[1] <= 0) {
+    if (!isPositiveInteger(args[1], true)) {
       throw new Error('intervalMs argument to asyncThrottle must be a number > 0');
     }
   },

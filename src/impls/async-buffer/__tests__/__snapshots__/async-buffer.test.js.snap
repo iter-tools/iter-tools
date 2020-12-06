@@ -1,5 +1,13 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`asyncBuffer throws when buffer size is < 0 1`] = `"n argument to asyncBuffer must be a number > 0"`;
+exports[`asyncBuffer when iterable is not throws 1`] = `"asyncBuffer expected an iterable but received 4."`;
 
-exports[`asyncBuffer throws when buffer size is not a number 1`] = `"n argument to asyncBuffer must be a number > 0"`;
+exports[`asyncBuffer when n is too large throws 1`] = `"Concurrency argument to asyncBuffer must be <= 1024"`;
+
+exports[`asyncBuffer when n is too large throws 2`] = `"Concurrency argument to asyncBuffer must be <= 1024"`;
+
+exports[`asyncBuffer when n is unusable throws 1`] = `"Concurrency must be an integer > 0"`;
+
+exports[`asyncBuffer when n is unusable throws 2`] = `"Concurrency must be an integer > 0"`;
+
+exports[`asyncBuffer when n is unusable throws 3`] = `"Concurrency must be an integer > 0"`;

@@ -1,3 +1,4 @@
+import { isInteger, isPositiveInteger, isIntegerOrInfinite } from '../../../internal/number.js';
 import { isObject } from '../../../internal/shapes.js';
 
 export const makeValidateArgs = (methodName) =>
@@ -8,16 +9,16 @@ export const makeValidateArgs = (methodName) =>
       ({ start = 0, end = Infinity, step = 1 } = optsOrStart);
     }
 
-    if (typeof start !== 'number') {
+    if (!isInteger(start)) {
       throw new TypeError(`start argument to ${methodName} must be a number`);
     }
 
-    if (typeof end !== 'number') {
-      throw new TypeError(`end argument to ${methodName} must be a number`);
+    if (!isIntegerOrInfinite(end)) {
+      throw new TypeError(`end argument to ${methodName} must be an integer or infinte`);
     }
 
-    if (typeof step !== 'number' || step <= 0) {
-      throw new TypeError(`step argument to ${methodName} must be a number > 0`);
+    if (!isPositiveInteger(step)) {
+      throw new TypeError(`step argument to ${methodName} must be a integer > 0`);
     }
 
     args[1] = start;

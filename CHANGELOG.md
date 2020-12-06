@@ -14,6 +14,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
  - `joinAsStringWith`, `asyncJoinAsStringWith` (Instead use `str(joinWith(sep, ...))`)
  - `regexpExec`
  - `nullOr`, `nullOrAsync` (Instead use `peekerate`)
+ - `asyncFlatMapParallel`
+ - `asyncMapParallel` (Instead use `asyncBuffer(n, asyncMap(fn, iterable))`)
+ - `asyncFilterParallel` (Instead use `asyncBuffer(n, asyncFilter(fn, iterable))`)
 
 **Arguments**
  - `n` from `fork` and `asyncFork`. Use destructuring or call `return()` on the forks iterable.
@@ -26,7 +29,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## Renamed
 **Folders**
- - `es2018` moved to separate package: `iter-tools-es` (note the `@`).
+ - `es2018` moved to separate package: `iter-tools-es`.
    - e.g. `import { map } from 'iter-tools/es2018` is now `import { map } from 'iter-tools-es`
 
 **Methods**
