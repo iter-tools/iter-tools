@@ -14,7 +14,7 @@ module.exports = {
     type: 'problem',
 
     docs: {
-      description: 'require calls to curry to be marked pure',
+      description: 'Ensure no impure calls are made',
     },
     fixable: 'code',
     schema: [], // no options
@@ -24,7 +24,7 @@ module.exports = {
     const calls = [];
 
     return {
-      CallExpression(node, path) {
+      CallExpression(node) {
         if (!nearestFunctionScope(context.getScope())) {
           calls.push(node);
         }

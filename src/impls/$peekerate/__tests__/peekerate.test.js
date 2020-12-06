@@ -16,35 +16,35 @@ describe('peekerate', () => {
     const observed = [];
 
     while (!peekerator.done) {
-      const { current, done, value } = peekerator;
-      observed.push({ current, done, value });
+      const { value, done, current } = peekerator;
+      observed.push({ value, done, current });
       peekerator.advance();
     }
 
     expect(observed).toEqual([
       {
-        current: {
-          done: false,
-          value: 1,
-        },
-        done: false,
         value: 1,
+        done: false,
+        current: {
+          value: 1,
+          done: false,
+        },
       },
       {
-        current: {
-          done: false,
-          value: 2,
-        },
-        done: false,
         value: 2,
+        done: false,
+        current: {
+          value: 2,
+          done: false,
+        },
       },
       {
-        current: {
-          done: false,
-          value: 3,
-        },
-        done: false,
         value: 3,
+        done: false,
+        current: {
+          value: 3,
+          done: false,
+        },
       },
     ]);
   });

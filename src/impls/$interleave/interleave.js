@@ -68,7 +68,7 @@ export class InputSummary {
   }
 
   get current() {
-    return { done: this.done, value: this.value };
+    return { value: this.value, done: this.done };
   }
 
   get value() {
