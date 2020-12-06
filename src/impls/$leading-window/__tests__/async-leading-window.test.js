@@ -7,7 +7,7 @@
  */
 
 import { asyncLeadingWindow } from 'iter-tools-es';
-import { asyncWrap, asyncUnwrapDeep } from '../../../test/async-helpers.js';
+import { asyncWrap, asyncUnwrapDeep, anyType } from '../../../test/async-helpers.js';
 
 describe('asyncLeadingWindow', () => {
   describe('when source is empty', () => {
@@ -45,18 +45,13 @@ describe('asyncLeadingWindow', () => {
 
   describe('when size(source) > size', () => {
     it('yields size(source)-size full windows, then partial windows', async () => {
-      const result = [
+      expect(
+        await asyncUnwrapDeep(asyncLeadingWindow(2, { filler: 0 }, asyncWrap([1, 2, 3]))),
+      ).toEqual([
         [1, 2],
         [2, 3],
         [3, 0],
-      ];
-
-      expect(
-        await asyncUnwrapDeep(asyncLeadingWindow(2, { filler: 0 }, asyncWrap([1, 2, 3]))),
-      ).toEqual(result);
-      // prettier-ignore
-      // @ts-ignore
-      expect((await asyncUnwrapDeep(asyncLeadingWindow({ size: 2, filler: 0 }, asyncWrap([1, 2, 3]))))).toEqual(result);
+      ]);
     });
   });
 
@@ -70,5 +65,13 @@ describe('asyncLeadingWindow', () => {
 
   it('has a default filler of undefined', async () => {
     expect(await asyncUnwrapDeep(asyncLeadingWindow(2, asyncWrap([1])))).toEqual([[1, undefined]]);
+  });
+
+  describe('when arguments are invalid', () => {
+    it('throws', async () => {
+      expect(() =>
+        asyncLeadingWindow(anyType('foo'), asyncWrap([1, 2, 3])),
+      ).toThrowErrorMatchingSnapshot();
+    });
   });
 });

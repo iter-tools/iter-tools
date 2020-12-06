@@ -1,7 +1,7 @@
 import { $, $async, $await } from '../../../../generate/async.macro.cjs';
 
 import { $trailingWindow } from 'iter-tools-es';
-import { $wrap, $unwrapDeep } from '../../../test/$helpers.js';
+import { $wrap, $unwrapDeep, anyType } from '../../../test/$helpers.js';
 
 describe($`trailingWindow`, () => {
   describe('when source is empty', () => {
@@ -53,9 +53,6 @@ describe($`trailingWindow`, () => {
         expect($await($unwrapDeep($trailingWindow(2, { filler: 0 }, $wrap([1, 2, 3]))))).toEqual(
           result,
         );
-        // prettier-ignore
-        // @ts-ignore
-        expect($await($unwrapDeep($trailingWindow({ size: 2, filler: 0 }, $wrap([1, 2, 3]))))).toEqual(result);
       }),
     );
   });
@@ -66,4 +63,15 @@ describe($`trailingWindow`, () => {
       expect($await($unwrapDeep($trailingWindow(2, $wrap([1]))))).toEqual([[undefined, 1]]);
     }),
   );
+
+  describe('when arguments are invalid', () => {
+    it(
+      'throws',
+      $async(() => {
+        expect(() =>
+          $trailingWindow(anyType('foo'), $wrap([1, 2, 3])),
+        ).toThrowErrorMatchingSnapshot();
+      }),
+    );
+  });
 });
