@@ -18,6 +18,7 @@ module.exports = {
     'no-return-await': 'off',
     // Pure comments are usually inserted by transpilers, so bundlers expect an exact match.
     'spaced-comment': ['error', 'always', { exceptions: ['#__PURE__'] }],
+    'local-rules/no-done-value': 'error',
   },
   globals: {
     never: 'readonly',
