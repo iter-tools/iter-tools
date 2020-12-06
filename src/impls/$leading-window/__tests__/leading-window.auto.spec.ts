@@ -7,7 +7,7 @@
  */
 
 import { leadingWindow } from 'iter-tools-es';
-import { wrap, unwrapDeep } from '../../../test/helpers.js';
+import { wrap, unwrapDeep, anyType } from '../../../test/helpers.js';
 
 describe('leadingWindow', () => {
   describe('when source is empty', () => {
@@ -39,16 +39,11 @@ describe('leadingWindow', () => {
 
   describe('when size(source) > size', () => {
     it('yields size(source)-size full windows, then partial windows', () => {
-      const result = [
+      expect(unwrapDeep(leadingWindow(2, { filler: 0 }, wrap([1, 2, 3])))).toEqual([
         [1, 2],
         [2, 3],
         [3, 0],
-      ];
-
-      expect(unwrapDeep(leadingWindow(2, { filler: 0 }, wrap([1, 2, 3])))).toEqual(result);
-      // prettier-ignore
-      // @ts-ignore
-      expect((unwrapDeep(leadingWindow({ size: 2, filler: 0 }, wrap([1, 2, 3]))))).toEqual(result);
+      ]);
     });
   });
 
@@ -64,5 +59,11 @@ describe('leadingWindow', () => {
 
   it('has a default filler of undefined', () => {
     expect(unwrapDeep(leadingWindow(2, wrap([1])))).toEqual([[1, undefined]]);
+  });
+
+  describe('when arguments are invalid', () => {
+    it('throws', () => {
+      expect(() => leadingWindow(anyType('foo'), wrap([1, 2, 3]))).toThrowErrorMatchingSnapshot();
+    });
   });
 });

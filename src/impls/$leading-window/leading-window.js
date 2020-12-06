@@ -8,7 +8,6 @@
 
 import { iterableCurry } from '../../internal/iterable.js';
 import { CircularBuffer, ReadOnlyCircularBuffer } from '../../internal/circular-buffer.js';
-import { validateWindowArgs } from '../$trailing-window/internal/validate-window-args.js';
 
 export function* __leadingWindow(source, size, { filler, useFiller = true } = {}) {
   const buffer = new CircularBuffer(size);
@@ -44,5 +43,9 @@ export const leadingWindow = /*#__PURE__*/ iterableCurry(__leadingWindow, {
   minArgs: 1,
   maxArgs: 2,
   growRight: true,
-  validateArgs: /*#__PURE__*/ validateWindowArgs('leadingWindow'),
+  validateArgs(args) {
+    if (typeof args[1] !== 'number') {
+      throw new Error(`${'leadingWindow'} must be passed a numeric size`);
+    }
+  },
 });

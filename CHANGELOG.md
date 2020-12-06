@@ -21,6 +21,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 **Exports**
  - `InterleaveBuffer`, `AsyncInterleaveBuffer`
 
+**Overloads**
+ - `{ size, filler }` from `leadingWindow`, `asyncLeadingWindow`, `trailingWindow`, `asyncTrailingWindow`. Instead use e.g. `leadingWindow(size, { filler })`.
+
 ## Renamed
 **Folders**
  - `es2018` moved to separate package: `iter-tools-es` (note the `@`).

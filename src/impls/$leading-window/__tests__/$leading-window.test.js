@@ -1,7 +1,7 @@
 import { $, $async, $await } from '../../../../generate/async.macro.cjs';
 
 import { $leadingWindow } from 'iter-tools-es';
-import { $wrap, $unwrapDeep } from '../../../test/$helpers.js';
+import { $wrap, $unwrapDeep, anyType } from '../../../test/$helpers.js';
 
 describe($`leadingWindow`, () => {
   describe('when source is empty', () => {
@@ -53,9 +53,6 @@ describe($`leadingWindow`, () => {
         expect($await($unwrapDeep($leadingWindow(2, { filler: 0 }, $wrap([1, 2, 3]))))).toEqual(
           result,
         );
-        // prettier-ignore
-        // @ts-ignore
-        expect($await($unwrapDeep($leadingWindow({ size: 2, filler: 0 }, $wrap([1, 2, 3]))))).toEqual(result);
       }),
     );
   });
@@ -77,4 +74,15 @@ describe($`leadingWindow`, () => {
       expect($await($unwrapDeep($leadingWindow(2, $wrap([1]))))).toEqual([[1, undefined]]);
     }),
   );
+
+  describe('when arguments are invalid', () => {
+    it(
+      'throws',
+      $async(() => {
+        expect(() =>
+          $leadingWindow(anyType('foo'), $wrap([1, 2, 3])),
+        ).toThrowErrorMatchingSnapshot();
+      }),
+    );
+  });
 });

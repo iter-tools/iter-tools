@@ -7,7 +7,7 @@
  */
 
 import { trailingWindow } from 'iter-tools-es';
-import { wrap, unwrapDeep } from '../../../test/helpers.js';
+import { wrap, unwrapDeep, anyType } from '../../../test/helpers.js';
 
 describe('trailingWindow', () => {
   describe('when source is empty', () => {
@@ -39,20 +39,21 @@ describe('trailingWindow', () => {
 
   describe('when size(source) > size', () => {
     it('yields partial windows, then size(source)-size full windows', () => {
-      const result = [
+      expect(unwrapDeep(trailingWindow(2, { filler: 0 }, wrap([1, 2, 3])))).toEqual([
         [0, 1],
         [1, 2],
         [2, 3],
-      ];
-
-      expect(unwrapDeep(trailingWindow(2, { filler: 0 }, wrap([1, 2, 3])))).toEqual(result);
-      // prettier-ignore
-      // @ts-ignore
-      expect((unwrapDeep(trailingWindow({ size: 2, filler: 0 }, wrap([1, 2, 3]))))).toEqual(result);
+      ]);
     });
   });
 
   it('has a default filler of undefined', () => {
     expect(unwrapDeep(trailingWindow(2, wrap([1])))).toEqual([[undefined, 1]]);
+  });
+
+  describe('when arguments are invalid', () => {
+    it('throws', () => {
+      expect(() => trailingWindow(anyType('foo'), wrap([1, 2, 3]))).toThrowErrorMatchingSnapshot();
+    });
   });
 });

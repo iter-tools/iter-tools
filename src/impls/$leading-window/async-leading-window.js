@@ -8,7 +8,6 @@
 
 import { asyncIterableCurry } from '../../internal/async-iterable.js';
 import { CircularBuffer, ReadOnlyCircularBuffer } from '../../internal/circular-buffer.js';
-import { validateWindowArgs } from '../$trailing-window/internal/validate-window-args.js';
 
 export async function* __asyncLeadingWindow(source, size, { filler, useFiller = true } = {}) {
   const buffer = new CircularBuffer(size);
@@ -44,5 +43,9 @@ export const asyncLeadingWindow = /*#__PURE__*/ asyncIterableCurry(__asyncLeadin
   minArgs: 1,
   maxArgs: 2,
   growRight: true,
-  validateArgs: /*#__PURE__*/ validateWindowArgs('asyncLeadingWindow'),
+  validateArgs(args) {
+    if (typeof args[1] !== 'number') {
+      throw new Error(`${'asyncLeadingWindow'} must be passed a numeric size`);
+    }
+  },
 });

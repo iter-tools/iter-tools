@@ -7,7 +7,7 @@
  */
 
 import { asyncTrailingWindow } from 'iter-tools-es';
-import { asyncWrap, asyncUnwrapDeep } from '../../../test/async-helpers.js';
+import { asyncWrap, asyncUnwrapDeep, anyType } from '../../../test/async-helpers.js';
 
 describe('asyncTrailingWindow', () => {
   describe('when source is empty', () => {
@@ -45,22 +45,25 @@ describe('asyncTrailingWindow', () => {
 
   describe('when size(source) > size', () => {
     it('yields partial windows, then size(source)-size full windows', async () => {
-      const result = [
+      expect(
+        await asyncUnwrapDeep(asyncTrailingWindow(2, { filler: 0 }, asyncWrap([1, 2, 3]))),
+      ).toEqual([
         [0, 1],
         [1, 2],
         [2, 3],
-      ];
-
-      expect(
-        await asyncUnwrapDeep(asyncTrailingWindow(2, { filler: 0 }, asyncWrap([1, 2, 3]))),
-      ).toEqual(result);
-      // prettier-ignore
-      // @ts-ignore
-      expect((await asyncUnwrapDeep(asyncTrailingWindow({ size: 2, filler: 0 }, asyncWrap([1, 2, 3]))))).toEqual(result);
+      ]);
     });
   });
 
   it('has a default filler of undefined', async () => {
     expect(await asyncUnwrapDeep(asyncTrailingWindow(2, asyncWrap([1])))).toEqual([[undefined, 1]]);
+  });
+
+  describe('when arguments are invalid', () => {
+    it('throws', async () => {
+      expect(() =>
+        asyncTrailingWindow(anyType('foo'), asyncWrap([1, 2, 3])),
+      ).toThrowErrorMatchingSnapshot();
+    });
   });
 });

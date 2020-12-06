@@ -1,0 +1,3 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`asyncTrailingWindow when arguments are invalid throws 1`] = `"asyncTrailingWindow must be passed a numeric size"`;
