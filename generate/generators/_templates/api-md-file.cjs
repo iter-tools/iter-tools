@@ -81,10 +81,7 @@ const typeSectionTemplate = (type, body) => `## ${sections.get(type).title}\n\n$
 const linkTarget = (name, aliasMap) => (aliasMap.get(name) || name).toLowerCase();
 
 const tocMethodTemplate = (doc, aliasMap) => {
-  const {
-    name,
-    docme: { hasParallel },
-  } = doc;
+  const { name } = doc;
 
   const normalName = renameDollar(name, false);
   const asyncName = renameDollar(name, true);
@@ -93,11 +90,6 @@ const tocMethodTemplate = (doc, aliasMap) => {
 
   if (normalName !== asyncName) {
     parts.push(`([async](#${linkTarget(asyncName, aliasMap)}))`);
-  }
-
-  if (hasParallel) {
-    const parallelName = `${asyncName}Parallel`;
-    parts.push(`([parallel-async](#${linkTarget(parallelName, aliasMap)}))`);
   }
 
   return `${parts.join(' ')}  \n`;
@@ -112,31 +104,17 @@ function flattenDollars(methodsWithDollars) {
         const originalName = doc.name;
 
         if (originalName[0] === '$') {
-          return [false, true]
-            .map((ASYNC) => {
-              const name = renameDollar(originalName, ASYNC);
+          return [false, true].map((ASYNC) => {
+            const name = renameDollar(originalName, ASYNC);
 
-              return {
-                name,
-                docme: doc.docme,
-                readme: ASYNC ? doc.asyncReadme : doc.readme,
-                signatures: ASYNC ? doc.asyncSignatures : doc.signatures,
-                isAsyncClone: ASYNC,
-              };
-            })
-            .concat(
-              doc.docme.hasParallel
-                ? [
-                    {
-                      name: `${renameDollar(originalName, true)}Parallel`,
-                      docme: doc.docme,
-                      readme: doc.parallelReadme,
-                      signatures: doc.parallelSignatures,
-                      isAsyncClone: false,
-                    },
-                  ]
-                : [],
-            );
+            return {
+              name,
+              docme: doc.docme,
+              readme: ASYNC ? doc.asyncReadme : doc.readme,
+              signatures: ASYNC ? doc.asyncSignatures : doc.signatures,
+              isAsyncClone: ASYNC,
+            };
+          });
         } else {
           return [doc];
         }

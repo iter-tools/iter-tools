@@ -73,19 +73,27 @@ ResultIterable.prototype = Object.assign(Object.create(BaseResultIterable.protot
 });
 
 function makeFunctionConfig(fn, fnConfig = {}) {
-  const { validateArgs, variadic, reduces, growRight, minArgs, maxArgs } = fnConfig;
+  const {
+    validateArgs = (_) => {},
+    variadic = false,
+    reduces = false,
+    growRight = false,
+    minArgs = fn.length - 1,
+    maxArgs = fn.length - 1,
+    applyOnIterableArgs = ensureIterable,
+  } = fnConfig;
 
   return {
     fn,
-    validateArgs: validateArgs || ((_) => {}),
-    variadic: !!variadic,
-    reduces: !!reduces,
-    growRight: !!growRight,
-    minArgs: minArgs === undefined ? fn.length - 1 : minArgs,
-    maxArgs: maxArgs === undefined ? fn.length - 1 : maxArgs,
+    validateArgs,
+    variadic,
+    reduces,
+    growRight,
+    minArgs,
+    maxArgs,
     isIterable: isWrappable,
     iterableType: 'iterable',
-    applyOnIterableArgs: ensureIterable,
+    applyOnIterableArgs,
     IterableClass: ResultIterable,
   };
 }
