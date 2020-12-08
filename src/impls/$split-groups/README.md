@@ -1,11 +1,14 @@
-Eqivalent to `splitGroupsBy(_ => _, source)`. For more information see [splitGroupsBy](#splitgroupsby).
+Defaults:
+
+- `getKey`: `(value) => value`
+
+Yields a [PartsIterable](#partsiterable) of [`key`, `group`] pairs from `source`, where `group` is a subsequence of `values` from `source` for which every `value` has the same `key` as returned by `getKey(value, idx)` (as compared with `===`).
 
 ```js
-splitGroups([1, 1, -1, -1, -1, 4, -1]);
-// Iterable[
-//   [1, Iterable[1, 1]]
-//   [-1, Iterable[-1, -1, -1]]
+splitGroups(Math.abs, [1, 1, -1, -1, 4, -1]);
+// Iterable [
+//   [1, Iterable[1, 1, -1, -1]]
 //   [4, Iterable[4]]
-//   [-1, Iterable[-1]]
+//   [1, Iterable[-1]]
 // ]
 ```

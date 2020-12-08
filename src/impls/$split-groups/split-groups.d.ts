@@ -10,4 +10,13 @@ import { SourceIterable, ResultIterable } from '../../types/iterable';
 
 declare function splitGroups<T>(source: SourceIterable<T>): ResultIterable<[T, ResultIterable<T>]>;
 
+declare function splitGroups<K, T>(
+  key: (value: T, i: number) => K,
+): (source: SourceIterable<T>) => ResultIterable<[K, ResultIterable<T>]>;
+
+declare function splitGroups<K, T>(
+  key: (value: T, i: number) => K,
+  source: SourceIterable<T>,
+): ResultIterable<[K, ResultIterable<T>]>;
+
 export { splitGroups };

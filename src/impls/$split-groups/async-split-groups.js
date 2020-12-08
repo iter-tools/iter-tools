@@ -7,10 +7,37 @@
  */
 
 import { asyncIterableCurry } from '../../internal/async-iterable.js';
-import { __asyncSplitGroupsBy } from '../$split-groups-by/async-split-groups-by.js';
+import { __asyncSpliterateGrouped } from '../$spliterate-grouped/async-spliterate-grouped.js';
+import { __asyncPeekerate } from '../$peekerate/async-peekerate.js';
 
-export function __asyncSplitGroups(iterable) {
-  return __asyncSplitGroupsBy(iterable, (_) => _);
+const initialKey = Symbol('initial group key');
+
+async function* asyncGroupingSpliterator(split, { getKey }, source) {
+  const peekr = await __asyncPeekerate(source);
+  let key = initialKey;
+  let idx = 0;
+
+  while (!peekr.done) {
+    const lastKey = key;
+
+    key = await getKey(peekr.value, idx++);
+
+    if (lastKey !== key) {
+      yield split;
+      yield key;
+    }
+
+    yield peekr.value;
+
+    await peekr.advance();
+  }
 }
 
-export const asyncSplitGroups = /*#__PURE__*/ asyncIterableCurry(__asyncSplitGroups);
+export function __asyncSplitGroups(source, getKey = (value) => value) {
+  return __asyncSpliterateGrouped(source, asyncGroupingSpliterator, { getKey });
+}
+
+export const asyncSplitGroups = /*#__PURE__*/ asyncIterableCurry(__asyncSplitGroups, {
+  minArgs: 0,
+  maxArgs: 1,
+});

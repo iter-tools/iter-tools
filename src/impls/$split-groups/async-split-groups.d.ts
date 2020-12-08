@@ -12,4 +12,13 @@ declare function asyncSplitGroups<T>(
   source: AsyncSourceIterable<T>,
 ): AsyncResultIterable<[T, AsyncResultIterable<T>]>;
 
+declare function asyncSplitGroups<K, T>(
+  key: (value: T, i: number) => K | Promise<K>,
+): (source: AsyncSourceIterable<T>) => AsyncResultIterable<[K, AsyncResultIterable<T>]>;
+
+declare function asyncSplitGroups<K, T>(
+  key: (value: T, i: number) => K | Promise<K>,
+  source: AsyncSourceIterable<T>,
+): AsyncResultIterable<[K, AsyncResultIterable<T>]>;
+
 export { asyncSplitGroups };

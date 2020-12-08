@@ -115,7 +115,6 @@ Separate an iterable into multiple iterables
 [split](#split) ([async](#asyncsplit))  
 [splitAt](#splitat) ([async](#asyncsplitat))  
 [splitGroups](#splitgroups) ([async](#asyncsplitgroups))  
-[splitGroupsBy](#splitgroupsby) ([async](#asyncsplitgroupsby))  
 [splitOn](#spliton) ([async](#asyncspliton))  
 [splitOnAny](#splitonany) ([async](#asyncsplitonany))  
 [splitOnAnySeq](#splitonanyseq) ([async](#asyncsplitonanyseq))  
@@ -1039,37 +1038,18 @@ lastThree; // AsyncIterable[7, 8, 9]
 
 ### splitGroups
 
-**splitGroups([iterable](#sourceiterable))**  
-**__splitGroups([iterable](#iterable))**  
+**splitGroups(getKey, [source](#sourceiterable))**  
+**splitGroups([source](#sourceiterable))**  
+**__splitGroups([source](#iterable), ?getKey)**  
 
-Eqivalent to `splitGroupsBy(_ => _, source)`. For more information see [splitGroupsBy](#splitgroupsby).
+Defaults:
 
-```js
-splitGroups([1, 1, -1, -1, -1, 4, -1]);
-// Iterable[
-//   [1, Iterable[1, 1]]
-//   [-1, Iterable[-1, -1, -1]]
-//   [4, Iterable[4]]
-//   [-1, Iterable[-1]]
-// ]
-```
-
-### asyncSplitGroups
-
-**asyncSplitGroups([iterable](#asyncsourceiterable))**  
-**__asyncSplitGroups([iterable](#asynciterable))**  
-
-See [splitGroups](#splitgroups)
-
-### splitGroupsBy
-
-**splitGroupsBy(getKey, [source](#sourceiterable))**  
-**__splitGroupsBy([source](#iterable), getKey)**  
+- `getKey`: `(value) => value`
 
 Yields a [PartsIterable](#partsiterable) of [`key`, `group`] pairs from `source`, where `group` is a subsequence of `values` from `source` for which every `value` has the same `key` as returned by `getKey(value, idx)` (as compared with `===`).
 
 ```js
-splitGroupsBy(Math.abs, [1, 1, -1, -1, 4, -1]);
+splitGroups(Math.abs, [1, 1, -1, -1, 4, -1]);
 // Iterable [
 //   [1, Iterable[1, 1, -1, -1]]
 //   [4, Iterable[4]]
@@ -1077,12 +1057,13 @@ splitGroupsBy(Math.abs, [1, 1, -1, -1, 4, -1]);
 // ]
 ```
 
-### asyncSplitGroupsBy
+### asyncSplitGroups
 
-**asyncSplitGroupsBy(getKey, [source](#asyncsourceiterable))**  
-**__asyncSplitGroupsBy([source](#asynciterable), getKey)**  
+**asyncSplitGroups(getKey, [source](#asyncsourceiterable))**  
+**asyncSplitGroups([source](#asyncsourceiterable))**  
+**__asyncSplitGroups([source](#asynciterable), ?getKey)**  
 
-See [splitGroupsBy](#splitgroupsby)
+See [splitGroups](#splitgroups)
 
 ### splitOn
 
