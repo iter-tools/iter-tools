@@ -7,7 +7,7 @@ describe($`consume (deprecated)`, () => {
   it(
     'consumes an iterable with a callback',
     $async(() => {
-      const arr: Array<number> = [];
+      const arr = [];
       $await(
         $consume(
           $async((value) => arr.push(value)),

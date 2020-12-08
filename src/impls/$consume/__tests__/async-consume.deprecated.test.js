@@ -11,7 +11,7 @@ import { asyncWrap } from '../../../test/async-helpers.js';
 
 describe('asyncConsume (deprecated)', () => {
   it('consumes an iterable with a callback', async () => {
-    const arr: Array<number> = [];
+    const arr = [];
     await asyncConsume(async (value) => arr.push(value), asyncWrap([1, 2, 3]));
     await asyncConsume(async (value) => arr.push(value), asyncWrap([1, 2, 3]));
     expect(arr).toEqual([1, 2, 3, 1, 2, 3]);

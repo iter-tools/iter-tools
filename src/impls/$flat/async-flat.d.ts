@@ -60,6 +60,14 @@ declare function asyncFlat(
   iter: AsyncSourceIterable<any>,
 ): AsyncResultIterable<any>;
 
+declare function asyncFlat(
+  options: {
+    shouldFlat: (value: any) => boolean | Promise<boolean>;
+    depth?: number;
+  },
+  iter: AsyncSourceIterable<any>,
+): AsyncResultIterable<any>;
+
 declare function asyncFlat(source: AsyncSourceIterable<any>): AsyncResultIterable<any>;
 declare function asyncFlat(
   depth: number,

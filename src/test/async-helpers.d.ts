@@ -8,4 +8,3 @@
 
 export { asyncWrap, asyncWrapDeep } from './$wrap/async-wrap';
 export { asyncUnwrap, asyncUnwrapDeep } from './$unwrap/async-unwrap';
-export { anyType } from './any-type';

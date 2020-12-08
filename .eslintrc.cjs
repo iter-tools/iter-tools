@@ -44,7 +44,7 @@ module.exports = {
       },
     },
     {
-      files: ['*.ts', '**/*.test.js'],
+      files: ['*.ts'],
       parser: '@typescript-eslint/parser',
       extends: ['plugin:@typescript-eslint/recommended'],
       rules: {
@@ -57,26 +57,20 @@ module.exports = {
       },
     },
     {
-      files: ['src/methods/$interleave/**/*'],
-      rules: {
-        'require-yield': 'off',
-      },
-    },
-    {
-      files: ['$*.js'],
+      files: ['$*'],
       rules: {
         'no-unused-expressions': 'off',
       },
     },
     {
-      files: ['**/__tests__/**/$*.test.js'],
+      files: ['**/__tests__/**/$*.test.{js,ts}'],
       rules: {
         'jest/valid-title': 'off',
         // 'jest/valid-describe': 'off',
       },
     },
     {
-      files: ['**/__tests__/**/*.test.js'],
+      files: ['**/__tests__/**/*.test.{js,ts}'],
       env: {
         node: true,
         jest: true,
@@ -86,6 +80,7 @@ module.exports = {
         'no-self-compare': 'off',
         'jest/no-focused-tests': 'error',
         'no-empty': ['error', { allowEmptyCatch: true }],
+        '@typescript-eslint/no-non-null-assertion': 'off',
       },
     },
     {

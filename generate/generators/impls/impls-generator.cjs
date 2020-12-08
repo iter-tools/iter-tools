@@ -11,7 +11,7 @@ class ImplsGenerator extends BaseAsyncGenerator {
   constructor(options) {
     super(options);
 
-    this.glob = ['src/**/$*.js'];
+    this.glob = ['src/**/$*.{js,ts}'];
   }
 
   getDestName(basename, extname) {
