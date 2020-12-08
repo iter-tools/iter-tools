@@ -7,10 +7,37 @@
  */
 
 import { iterableCurry } from '../../internal/iterable.js';
-import { __splitGroupsBy } from '../$split-groups-by/split-groups-by.js';
+import { __spliterateGrouped } from '../$spliterate-grouped/spliterate-grouped.js';
+import { __peekerate } from '../$peekerate/peekerate.js';
 
-export function __splitGroups(iterable) {
-  return __splitGroupsBy(iterable, (_) => _);
+const initialKey = Symbol('initial group key');
+
+function* groupingSpliterator(split, { getKey }, source) {
+  const peekr = __peekerate(source);
+  let key = initialKey;
+  let idx = 0;
+
+  while (!peekr.done) {
+    const lastKey = key;
+
+    key = getKey(peekr.value, idx++);
+
+    if (lastKey !== key) {
+      yield split;
+      yield key;
+    }
+
+    yield peekr.value;
+
+    peekr.advance();
+  }
 }
 
-export const splitGroups = /*#__PURE__*/ iterableCurry(__splitGroups);
+export function __splitGroups(source, getKey = (value) => value) {
+  return __spliterateGrouped(source, groupingSpliterator, { getKey });
+}
+
+export const splitGroups = /*#__PURE__*/ iterableCurry(__splitGroups, {
+  minArgs: 0,
+  maxArgs: 1,
+});

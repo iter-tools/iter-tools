@@ -7,10 +7,18 @@
  */
 
 import assert from 'static-type-assert';
-import { AsyncIterable, AsyncResultIterable } from '../../../types/async-iterable';
 import { asyncSplitGroups } from 'iter-tools-es';
+import { AsyncIterable, AsyncResultIterable } from '../../../types/async-iterable';
 
 declare const Ø: never;
+
+assert<AsyncResultIterable<[string, AsyncResultIterable<number>]>>(
+  asyncSplitGroups(Ø as (x: number) => Promise<string>)(Ø as AsyncIterable<number>),
+);
+
+assert<AsyncResultIterable<[string, AsyncResultIterable<number>]>>(
+  asyncSplitGroups(Ø as (x: number) => Promise<string>, Ø as AsyncIterable<number>),
+);
 
 assert<AsyncResultIterable<[string, AsyncResultIterable<string>]>>(asyncSplitGroups(Ø as string));
 

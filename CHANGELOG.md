@@ -17,6 +17,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
  - `asyncFlatMapParallel`
  - `asyncMapParallel` (Instead use `asyncBuffer(n, asyncMap(fn, iterable))`)
  - `asyncFilterParallel` (Instead use `asyncBuffer(n, asyncFilter(fn, iterable))`)
+ - `group`, `asyncGroup` (`splitGroups` is a drop-in replacement)
 
 **Arguments**
  - `n` from `fork` and `asyncFork`. Use destructuring or call `return()` on the forks iterable.
@@ -26,7 +27,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 **Overloads**
  - `{ size, filler }` from `leadingWindow`, `asyncLeadingWindow`, `trailingWindow`, `asyncTrailingWindow`. Instead use e.g. `leadingWindow(size, { filler })`.
- - `splitGroupsBy(null)`, `asyncSplitGroupsBy(null)`. (Use `splitGroups`)
+ - `splitGroups(null)`, `asyncSplitGroups(null)`. (Use `splitGroups(iterable)`)
 
 ## Renamed
 **Folders**
@@ -36,8 +37,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 **Methods**
  - `last`, `asyncLast` to `takeLast`, `asyncTakeLast`
  - `lastOr`, `asyncLastOr` to `takeLastOr`, `asyncTakeLastOr`
- - `group`, `asyncGroup` to `splitGroups`, `asyncSplitGroups`
- - `groupBy`, `asyncGroupBy` to `splitGroupsBy`, `asyncSplitGroupsBy`
+ - `groupBy`, `asyncGroupBy` to `splitGroups`, `asyncSplitGroups`
  - `*subseq` to `*seq`
    - `startsWithSubseq`, `asyncStartsWithSubseq` to `startsWithSeq`, `asyncStartsWithSeq`
    - `startsWithAnySubseq`, `asyncStartsWithAnySubseq` to `startsWithAnySeq`, `asyncStartsWithAnySeq`
