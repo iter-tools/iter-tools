@@ -1,5 +1,3 @@
-const { resolve } = require('path');
-
 module.exports = {
   comments: true,
   plugins: [
@@ -7,7 +5,7 @@ module.exports = {
     /**
      * Remove when /jest/issues/10883 is resolved
      */
-    resolve(__dirname, 'plugins/self-import.cjs'),
+    'babel-plugin-transform-package-self-reference',
     /**
      * Eventually there will be no need for this as Jest has added support for
      * testing native modules. This currently was tested working with the

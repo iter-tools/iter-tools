@@ -10,11 +10,5 @@ module.exports = {
         printWidth: 60,
       },
     },
-    {
-      files: 'COOKBOOK.md',
-      options: {
-        printWidth: 80,
-      },
-    },
   ],
 };
