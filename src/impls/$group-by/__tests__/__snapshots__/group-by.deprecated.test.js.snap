@@ -1,9 +1,0 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
-
-exports[`groupBy (deprecated) returns source values grouped by identity 1`] = `
-Array [
-  Array [
-    "\`groupBy(null, iterable)\` is deprecated and will be removed in iter-tools@8. Instead use group(iterable)",
-  ],
-]
-`;

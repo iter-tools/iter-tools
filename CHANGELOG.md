@@ -26,6 +26,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 **Overloads**
  - `{ size, filler }` from `leadingWindow`, `asyncLeadingWindow`, `trailingWindow`, `asyncTrailingWindow`. Instead use e.g. `leadingWindow(size, { filler })`.
+ - `splitGroupsBy(null)`, `asyncSplitGroupsBy(null)`. (Use `splitGroups`)
 
 ## Renamed
 **Folders**
@@ -35,6 +36,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 **Methods**
  - `last`, `asyncLast` to `takeLast`, `asyncTakeLast`
  - `lastOr`, `asyncLastOr` to `takeLastOr`, `asyncTakeLastOr`
+ - `group`, `asyncGroup` to `splitGroups`, `asyncSplitGroups`
+ - `groupBy`, `asyncGroupBy` to `splitGroupsBy`, `asyncSplitGroupsBy`
  - `*subseq` to `*seq`
    - `startsWithSubseq`, `asyncStartsWithSubseq` to `startsWithSeq`, `asyncStartsWithSeq`
    - `startsWithAnySubseq`, `asyncStartsWithAnySubseq` to `startsWithAnySeq`, `asyncStartsWithAnySeq`

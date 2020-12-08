@@ -1,8 +1,8 @@
 Facilitates the creation of methods which split a `source` iterable into multiple keyed groups. The `strategy` generator yield a flat output containing values from `source` as well as special `split` sentinel values. `spliterate` decorates the values yielded from `strategy()`. Each instance of the `split` sentinel starts a new group. The value immediately following a `split` is the key for the group. This means that a `strategy` which yields `split` `n` times, `n` groups will be yielded.
 
-[groupBy](#groupby) is implemented using `spliterateGrouped` under the hood. It is expected that most use cases will be served by using that method instead.
+[splitGroupsBy](#splitgroupsby) is implemented using `spliterateGrouped` under the hood. It is expected that most use cases will be served by using that method instead.
 
-Included as an example is a lightly edited version of the implementation of `groupBy`. It is expected that in the vast majority of circumstances it will be correct to use the actual [groupBy](#groupby) method and not this one.
+Included as an example is a lightly edited version of the implementation of `splitGroupsBy`. It is expected that in the vast majority of circumstances it will be correct to use the actual [splitGroupsBy](#splitgroupsby) method and not this one.
 
 <!-- prettier-ignore -->
 ```js
@@ -26,7 +26,7 @@ function* groupingSpliterator(split, { getKey }, source) {
   }
 }
 
-function groupBy(source, getKey) {
+function splitGroupsBy(source, getKey) {
   return spliterateGrouped({ getKey }, source);
 }
 ```
@@ -42,7 +42,7 @@ function* groupingSpliterator<T>(
   // implementation is unchanged
 }
 
-function groupBy<K, T>(
+function splitGroupsBy<K, T>(
   getKey: (value: T) => K,
   source: Iterable<T>,
 ): IterableIterator<[K, IterableIterator<T>]> {
