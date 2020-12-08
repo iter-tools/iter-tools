@@ -6,15 +6,19 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { asyncZip } from '../$zip/async-zip.js';
+import { asyncEnsureIterable } from '../../internal/async-iterable.js';
+import { curry } from '../../internal/curry.js';
+import { __asyncZip } from '../$zip/async-zip.js';
 import { __asyncFilter } from '../$filter/async-filter.js';
 import { __asyncMap } from '../$map/async-map.js';
 
 export function __asyncCompress(source, included) {
   return __asyncMap(
-    __asyncFilter(asyncZip(source, included), (entry) => entry[1]),
-    (entry) => entry[0],
+    __asyncFilter(__asyncZip([source, included]), ([, isIncluded]) => isIncluded),
+    ([value]) => value,
   );
 }
 
-export const asyncCompress = __asyncCompress;
+export const asyncCompress = /*#__PURE__*/ curry(function $compress(source, included) {
+  return __asyncCompress(asyncEnsureIterable(source), asyncEnsureIterable(included));
+});
