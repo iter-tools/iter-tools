@@ -7,3 +7,5 @@
 /report.*
 
 /test.*
+
+/yarn*.log

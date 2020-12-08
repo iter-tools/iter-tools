@@ -1824,6 +1824,13 @@ babel-plugin-tester@^10.0.0:
     prettier "^2.0.1"
     strip-indent "^3.0.0"
 
+babel-plugin-transform-package-self-reference@^0.1.0:
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/babel-plugin-transform-package-self-reference/-/babel-plugin-transform-package-self-reference-0.1.0.tgz#942dc212de8767727a23e27248be06b6f6d3df52"
+  integrity sha512-+lyKOrr+MR/5jkuAVfAGthVXEOssilcjhZqH6eKu8f3KSkmwdw6fVBQjiVIhfkOhbGVNbM1oeGXhyxrKgG1efg==
+  dependencies:
+    read-pkg-up "^7.0.1"
+
 babel-preset-current-node-syntax@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/babel-preset-current-node-syntax/-/babel-preset-current-node-syntax-1.0.0.tgz#cf5feef29551253471cfa82fc8e0f5063df07a77"
