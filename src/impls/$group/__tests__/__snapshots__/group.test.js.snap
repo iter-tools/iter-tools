@@ -1,3 +1,0 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
-
-exports[`group when groups are consumed out of order throws 1`] = `[Error: Cannot take from this split part. It is no longer the active part.]`;

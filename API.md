@@ -112,10 +112,10 @@ Transform a single iterable
 Separate an iterable into multiple iterables
 
 [batch](#batch) ([async](#asyncbatch))  
-[group](#group) ([async](#asyncgroup))  
-[groupBy](#groupby) ([async](#asyncgroupby))  
 [split](#split) ([async](#asyncsplit))  
 [splitAt](#splitat) ([async](#asyncsplitat))  
+[splitGroups](#splitgroups) ([async](#asyncsplitgroups))  
+[splitGroupsBy](#splitgroupsby) ([async](#asyncsplitgroupsby))  
 [splitOn](#spliton) ([async](#asyncspliton))  
 [splitOnAny](#splitonany) ([async](#asyncsplitonany))  
 [splitOnAnySeq](#splitonanyseq) ([async](#asyncsplitonanyseq))  
@@ -979,53 +979,6 @@ batch(2, range(5)); // [0, 1], [2, 3], [4]
 
 See [batch](#batch)
 
-### group
-
-**group([iterable](#sourceiterable))**  
-**__group([iterable](#iterable))**  
-
-Eqivalent to `groupBy(_ => _, source)`. For more information see [groupBy](#groupby).
-
-```js
-group([1, 1, -1, -1, -1, 4, -1]);
-// Iterable[
-//   [1, Iterable[1, 1]]
-//   [-1, Iterable[-1, -1, -1]]
-//   [4, Iterable[4]]
-//   [-1, Iterable[-1]]
-// ]
-```
-
-### asyncGroup
-
-**asyncGroup([iterable](#asyncsourceiterable))**  
-**__asyncGroup([iterable](#asynciterable))**  
-
-See [group](#group)
-
-### groupBy
-
-**groupBy(getKey, [source](#sourceiterable))**  
-**__groupBy([source](#iterable), getKey)**  
-
-Yields a [PartsIterable](#partsiterable) of [`key`, `group`] pairs from `source`, where `group` is a subsequence of `values` from `source` for which every `value` has the same `key` as returned by `getKey(value, idx)` (as compared with `===`).
-
-```js
-groupBy(Math.abs, [1, 1, -1, -1, 4, -1]);
-// Iterable [
-//   [1, Iterable[1, 1, -1, -1]]
-//   [4, Iterable[4]]
-//   [1, Iterable[-1]]
-// ]
-```
-
-### asyncGroupBy
-
-**asyncGroupBy(getKey, [source](#asyncsourceiterable))**  
-**__asyncGroupBy([source](#asynciterable), getKey)**  
-
-See [groupBy](#groupby)
-
 ### split
 
 **split([source](#sourceiterable))**  
@@ -1083,6 +1036,53 @@ if (!othersNeeded) await others.return();
 const [, lastThree] = asyncSplitAt(-3, range(10));
 lastThree; // AsyncIterable[7, 8, 9]
 ```
+
+### splitGroups
+
+**splitGroups([iterable](#sourceiterable))**  
+**__splitGroups([iterable](#iterable))**  
+
+Eqivalent to `splitGroupsBy(_ => _, source)`. For more information see [splitGroupsBy](#splitgroupsby).
+
+```js
+splitGroups([1, 1, -1, -1, -1, 4, -1]);
+// Iterable[
+//   [1, Iterable[1, 1]]
+//   [-1, Iterable[-1, -1, -1]]
+//   [4, Iterable[4]]
+//   [-1, Iterable[-1]]
+// ]
+```
+
+### asyncSplitGroups
+
+**asyncSplitGroups([iterable](#asyncsourceiterable))**  
+**__asyncSplitGroups([iterable](#asynciterable))**  
+
+See [splitGroups](#splitgroups)
+
+### splitGroupsBy
+
+**splitGroupsBy(getKey, [source](#sourceiterable))**  
+**__splitGroupsBy([source](#iterable), getKey)**  
+
+Yields a [PartsIterable](#partsiterable) of [`key`, `group`] pairs from `source`, where `group` is a subsequence of `values` from `source` for which every `value` has the same `key` as returned by `getKey(value, idx)` (as compared with `===`).
+
+```js
+splitGroupsBy(Math.abs, [1, 1, -1, -1, 4, -1]);
+// Iterable [
+//   [1, Iterable[1, 1, -1, -1]]
+//   [4, Iterable[4]]
+//   [1, Iterable[-1]]
+// ]
+```
+
+### asyncSplitGroupsBy
+
+**asyncSplitGroupsBy(getKey, [source](#asyncsourceiterable))**  
+**__asyncSplitGroupsBy([source](#asynciterable), getKey)**  
+
+See [splitGroupsBy](#splitgroupsby)
 
 ### splitOn
 
@@ -2972,9 +2972,9 @@ See [spliterate](#spliterate)
 
 Facilitates the creation of methods which split a `source` iterable into multiple keyed groups. The `strategy` generator yield a flat output containing values from `source` as well as special `split` sentinel values. `spliterate` decorates the values yielded from `strategy()`. Each instance of the `split` sentinel starts a new group. The value immediately following a `split` is the key for the group. This means that a `strategy` which yields `split` `n` times, `n` groups will be yielded.
 
-[groupBy](#groupby) is implemented using `spliterateGrouped` under the hood. It is expected that most use cases will be served by using that method instead.
+[splitGroupsBy](#splitgroupsby) is implemented using `spliterateGrouped` under the hood. It is expected that most use cases will be served by using that method instead.
 
-Included as an example is a lightly edited version of the implementation of `groupBy`. It is expected that in the vast majority of circumstances it will be correct to use the actual [groupBy](#groupby) method and not this one.
+Included as an example is a lightly edited version of the implementation of `splitGroupsBy`. It is expected that in the vast majority of circumstances it will be correct to use the actual [splitGroupsBy](#splitgroupsby) method and not this one.
 
 <!-- prettier-ignore -->
 ```js
@@ -2998,7 +2998,7 @@ function* groupingSpliterator(split, { getKey }, source) {
   }
 }
 
-function groupBy(source, getKey) {
+function splitGroupsBy(source, getKey) {
   return spliterateGrouped({ getKey }, source);
 }
 ```
@@ -3014,7 +3014,7 @@ function* groupingSpliterator<T>(
   // implementation is unchanged
 }
 
-function groupBy<K, T>(
+function splitGroupsBy<K, T>(
   getKey: (value: T) => K,
   source: Iterable<T>,
 ): IterableIterator<[K, IterableIterator<T>]> {
