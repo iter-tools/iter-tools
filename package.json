@@ -67,7 +67,14 @@
     "streaming",
     "async"
   ],
-  "repository": "git@github.com:iter-tools/iter-tools.git",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/iter-tools/iter-tools.git"
+  },
+  "bugs": {
+    "url": "https://github.com/iter-tools/iter-tools/issues"
+  },
+  "homepage": "https://github.com/iter-tools/iter-tools#readme",
   "author": "Maurizio Lupo <maurizio.lupo@gmail.com>",
   "contributors": [
     "Conrad Buck <conartist6@gmail.com>"
