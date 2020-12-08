@@ -8,4 +8,3 @@
 
 export { asyncWrap, asyncWrapDeep } from './$wrap/async-wrap.js';
 export { asyncUnwrap, asyncUnwrapDeep } from './$unwrap/async-unwrap.js';
-export { anyType } from './any-type.js';

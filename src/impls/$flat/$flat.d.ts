@@ -50,6 +50,14 @@ declare function $flat(
   iter: $SourceIterable<any>,
 ): $ResultIterable<any>;
 
+declare function $flat(
+  options: {
+    shouldFlat: (value: any) => $MaybePromise<boolean>;
+    depth?: number;
+  },
+  iter: $SourceIterable<any>,
+): $ResultIterable<any>;
+
 declare function $flat(source: $SourceIterable<any>): $ResultIterable<any>;
 declare function $flat(depth: number, source: $SourceIterable<any>): $ResultIterable<any>;
 declare function $flat(depth?: number): (source: $SourceIterable<any>) => $ResultIterable<any>;
