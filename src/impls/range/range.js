@@ -1,6 +1,7 @@
 import { wrapWithResultIterable } from '../../internal/iterable.js';
-import { isObject, isDef } from '../../internal/shapes.js';
 import { isInteger, isIntegerOrInfinite } from '../../internal/number.js';
+import { isObject } from '../is-object/is-object.js';
+import { notUndefined } from '../not-undefined/not-undefined.js';
 
 export function* __range(start = 0, end = Infinity, step = 1) {
   for (let i = start; step > 0 ? i < end : i > end; i += step) {
@@ -24,15 +25,15 @@ export const range = /*#__PURE__*/ wrapWithResultIterable(__range, {
       }
     }
 
-    if (isDef(start) && !isInteger(start)) {
+    if (notUndefined(start) && !isInteger(start)) {
       throw new TypeError('The specified start was not an integer');
     }
 
-    if (isDef(end) && !isIntegerOrInfinite(end)) {
+    if (notUndefined(end) && !isIntegerOrInfinite(end)) {
       throw new TypeError('The specified end was not an integer or infinite');
     }
 
-    if (isDef(step) && !isInteger(step, true)) {
+    if (notUndefined(step) && !isInteger(step, true)) {
       throw new TypeError('The specified step was not a non-zero integer');
     }
 

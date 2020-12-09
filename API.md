@@ -148,7 +148,9 @@ Reduce an iterable to a single value
 [includesAnySeq](#includesanyseq) ([async](#asyncincludesanyseq))  
 [includesSeq](#includesseq) ([async](#asyncincludesseq))  
 [isEmpty](#isempty) ([async](#asyncisempty))  
+[isObject](#isobject)  
 [isSorted](#issorted) ([async](#asyncissorted))  
+[notObject](#notobject)  
 [reduce](#reduce) ([async](#asyncreduce))  
 [size](#size) ([async](#asyncsize))  
 [some](#some) ([async](#asyncsome))  
@@ -1634,6 +1636,25 @@ isEmpty([undefined]); // false
 
 See [isEmpty](#isempty)
 
+### isObject
+
+**isObject(value)**  
+
+Returns `typeof value === 'object' && value !== null`. Note that iterables are objects, so it is expected that the most common way to use this method will to to first eliminate the possibility that `value` is an iterable (e.g. using [notIterable](#notiterable)). Type-safe in typescript.
+
+Note: lodash has a popular method of the same name, which treats functions as objects as well. This method is what lodash calls `isObjectLike`.
+
+```js
+isObject({}); // true
+isObject([]); // true
+isObject(new Date()); // true
+isObject(new (class Foo {})()); // true
+isObject(null); // false
+isObject(undefined); // false
+isObject(Date); // false (function)
+isObject(class Foo {}); // false (function)
+```
+
 ### isSorted
 
 **isSorted([comparator](#comparator), [iterable](#sourceiterable))**  
@@ -1654,6 +1675,23 @@ isSorted((a, b) => b - a, [3, 2, 1]); // true
 **__asyncIsSorted([iterable](#asynciterable), ?[comparator](#comparator))**  
 
 See [isSorted](#issorted)
+
+### notObject
+
+**notObject(value)**  
+
+Returns `true` if `value` is not an object, and `true` otherwise. For details see the method's inverse: [isObject](#isobject). Type-safe in typescript.
+
+```js
+notObject({}); // false
+notObject([]); // false
+notObject(new Date()); // false
+notObject(new (class Foo {})()); // false
+notObject(null); // true
+notObject(undefined); // true
+notObject(Date); // true
+notObject(class Foo {}); // true
+```
 
 ### reduce
 
