@@ -1,5 +1,6 @@
-import { isObject, isDef } from '../../../internal/shapes.js';
 import { isInteger } from '../../../internal/number.js';
+import { isObject } from '../../is-object/is-object.js';
+import { notUndefined } from '../../not-undefined/not-undefined.js';
 
 export const makeValidateArgs = (methodName) =>
   function validateArgs(args) {
@@ -9,7 +10,7 @@ export const makeValidateArgs = (methodName) =>
       args[2] = step;
     }
 
-    if (isDef(args[2])) {
+    if (notUndefined(args[2])) {
       args[2] = Number(args[2]);
       if (!isInteger(args[2], true)) {
         throw new Error(`step argument to ${methodName} must be a non-zero integer`);

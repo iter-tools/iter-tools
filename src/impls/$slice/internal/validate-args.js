@@ -1,5 +1,5 @@
 import { isInteger, isPositiveInteger, isIntegerOrInfinite } from '../../../internal/number.js';
-import { isObject } from '../../../internal/shapes.js';
+import { isObject } from '../../is-object/is-object.js';
 
 export const makeValidateArgs = (methodName) =>
   function validateArgs(args) {

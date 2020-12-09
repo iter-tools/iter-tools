@@ -1,4 +1,4 @@
-import { isObject } from '../../../internal/shapes.js';
+import { isObject } from '../../is-object/is-object.js';
 
 export function validateArgs(args) {
   const depthOrOptions = args[1];

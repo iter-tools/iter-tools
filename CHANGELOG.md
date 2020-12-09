@@ -70,6 +70,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
  - `isNull`, `notNull`
  - `isUndefined`, `notUndefined`
  - `isNil`, `notNil`
+ - `isObject`, `notObject`
  - `isIterable`, `notIterable`, `isAsyncIterable`, `notAsyncIterable`
  - `isWrappable`, `notWrappable`, `isAsyncWrappable`, `notAsyncWrappable`
  - `isLoopable`, `notLoopable`, `isAsyncLoopable`, `notAsyncLoopable`
