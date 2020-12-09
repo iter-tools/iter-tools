@@ -138,7 +138,7 @@
     "rimraf": "^2.6.2",
     "sane": "conartist6/sane.git#micromatch-watchman-parse-glob",
     "static-type-assert": "^3.0.1",
-    "typescript": "^3.9.7",
+    "typescript": "^3.8.2",
     "yeoman-environment": "^2.4.0",
     "yeoman-generator": "^4.0.2"
   },
