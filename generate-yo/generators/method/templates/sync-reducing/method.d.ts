@@ -4,4 +4,4 @@ declare function __method__<T>(
   iterable: SourceIterable<T>,
 ): T;
 
-export default __method__;
+export { __method__ };

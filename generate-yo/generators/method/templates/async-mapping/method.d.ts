@@ -4,4 +4,4 @@ declare function __method__<T>(
   source: AsyncSourceIterable<T>,
 ): AsyncResultIterable<T>;
 
-export default __method__;
+export { __method__ };

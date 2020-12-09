@@ -1,6 +1,6 @@
 import { iterableCurry } from '../../internal/iterable.js';
 
-export function __method__(iterable) {
+export function ____method__(iterable) {
   let _item;
 
   for (const item of iterable) {
@@ -10,6 +10,6 @@ export function __method__(iterable) {
   throw new Error('Dummy implementation');
 }
 
-export default iterableCurry(__method__, {
+export const __method__ = iterableCurry(____method__, {
   reduces: true,
 });

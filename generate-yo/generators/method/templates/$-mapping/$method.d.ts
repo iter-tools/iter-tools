@@ -4,4 +4,4 @@ declare function $__method__<T>(
   source: $SourceIterable<T>,
 ): $ResultIterable<T>;
 
-export default $__method__;
+export { $__method__ };

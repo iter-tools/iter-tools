@@ -3,7 +3,7 @@ import { $async, $await } from '../../../generate/async.macro.cjs';
 import { $iterableCurry } from '../../internal/$iterable.js';
 
 $async;
-export function $__method__(iterable) {
+export function $____method__(iterable) {
   let _item;
 
   $await;
@@ -14,6 +14,6 @@ export function $__method__(iterable) {
   throw new Error('Dummy implementation');
 }
 
-export default $iterableCurry($__method__, {
+export const $__method__ = $iterableCurry($____method__, {
   reduces: true,
 });

@@ -1,6 +1,6 @@
 import { iterableCurry } from '../../internal/iterable.js';
 
-export function* __method__(source) {
+export function* ____method__(source) {
   for (const item of source) {
     yield item;
   }
@@ -8,4 +8,4 @@ export function* __method__(source) {
   throw new Error('Dummy implementation');
 }
 
-export default iterableCurry(__method__);
+export const __method__ = iterableCurry(____method__);

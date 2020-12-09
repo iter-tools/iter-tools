@@ -1,6 +1,6 @@
 import { asyncIterableCurry } from '../../internal/async-iterable.js';
 
-export async function* __method__(source) {
+export async function* ____method__(source) {
   for await (const item of source) {
     yield item;
   }
@@ -8,4 +8,4 @@ export async function* __method__(source) {
   throw new Error('Dummy implementation');
 }
 
-export default asyncIterableCurry(__method__);
+export const __method__ = asyncIterableCurry(____method__);
