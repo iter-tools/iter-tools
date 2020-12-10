@@ -7,13 +7,17 @@
  */
 
 import { iterableCurry } from '../../internal/iterable.js';
-import { __includesAny } from '../$includes-any/includes-any.js';
+import { __findOr } from '../$find-or/find-or.js';
 
-export function __includes(iterable, value) {
-  return __includesAny(iterable, [value]);
+const none = Symbol('none');
+
+export function __includes(iterable, value, same = Object.is) {
+  return __findOr(iterable, none, (v) => same(value, v)) !== none;
 }
 
 export const includes = /*#__PURE__*/ iterableCurry(__includes, {
+  minArgs: 1,
+  maxArgs: 2,
   reduces: true,
   validateArgs(args) {
     if (true && typeof args[0] === 'string') {

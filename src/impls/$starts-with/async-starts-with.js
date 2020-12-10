@@ -7,13 +7,19 @@
  */
 
 import { asyncIterableCurry } from '../../internal/async-iterable.js';
-import { __asyncStartsWithAny } from '../$starts-with-any/async-starts-with-any.js';
+import { __asyncFirstOr } from '../$first-or/async-first-or.js';
 
-export function __asyncStartsWith(iterable, values) {
-  return __asyncStartsWithAny(iterable, [values]);
+const none = Symbol('none');
+
+export async function __asyncStartsWith(iterable, value, same = Object.is) {
+  const first = await __asyncFirstOr(iterable, none);
+  if (first === none) return false;
+  return same(value, first);
 }
 
 export const asyncStartsWith = /*#__PURE__*/ asyncIterableCurry(__asyncStartsWith, {
+  minArgs: 1,
+  maxArgs: 2,
   reduces: true,
   validateArgs(args) {},
 });

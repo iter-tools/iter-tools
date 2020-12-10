@@ -1,6 +1,11 @@
-Returns `true` if all `iterables` are equal to each other, and `false` otherwise. Only considers the values yielded by the iterables, which it compares with `===`.
+Defaults:
+
+- `same`: `Object.is`
+
+Returns `true` if all `iterables` consist of the same sequence of values. Otherwise returns `false`. Two values are considered to be the same if the result of `same(a, b)` is truthy.
 
 ```js
-equals([1, 2, 3], [1, 2, 3], [1, 2, 3]); // true
-equals([1, 2, 3], [3, 2, 1]); // false
+equal([1, 2, 3], [1, 2, 3], [1, 2, 3]); // true
 ```
+
+Note: If `source` is a string you should instead use [startsWithSeq](#startswithseq). A warning will be emitted if you do not.

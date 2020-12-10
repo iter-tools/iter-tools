@@ -6,7 +6,7 @@ If you aren't already familiar with the technical definition of an iterable and 
 
 ### Iterable
 
-An object implementing the iterable protocol, which is to say possessing a `[Symbol.iterator]()` method.
+An object implementing the iterable protocol, which is to say possessing a `Symbol.iterator` method.
 
 ### Wrappable
 
@@ -28,7 +28,7 @@ An [IterableIterator](#IterableIterator) of [SingletonIterableIterators](#single
 
 ### AsyncIterable
 
-An object implementing the async iterable protocol, which is to say possessing a `[Symbol.asyncIterator]()` method
+An object implementing the async iterable protocol, which is to say possessing a `Symbol.asyncIterator` method
 
 ### AsyncWrappable
 
@@ -48,16 +48,14 @@ The async version of a [PartsIterable](#partsiterable), which is to say an [Asyn
 
 ## Other types
 
-### Comparator
+### compare
 
-A comparator is used to determine sort order. Comparators in iter-tools exactly match the comparator API expected by `Array.prototype.sort`. Comparators are always sync functions, even when sorting async iterables.
+A `compare` callback is used to determine sort order. These methods have the same API the callback used in `Array.prototype.sort`. `compare` callbacks must always return synchronously, even when sorting async iterables.
 
-#### The Default Comparator
-
-The default comparator is the same as that used by `Array.prototype.sort`:
+A default value is always provided, again the same as is used by `Array.prototype.sort`:
 
 ```js
 (a, b) => (a > b ? 1 : b > a ? -1 : 0);
 ```
 
-It will sort numbers by their value, and strings lexicographically.
+This code sorts numbers by their value, and strings lexicographically.

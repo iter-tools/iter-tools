@@ -11,7 +11,7 @@ import { asyncSeqsToArray } from '../../internal/async-any-seq.js';
 import { __asyncLeadingWindow } from '../$leading-window/async-leading-window.js';
 import { __startsWithAnySeq } from '../$starts-with-any-seq/starts-with-any-seq.js';
 
-export async function __asyncIncludesAnySeq(iterable, seqs) {
+export async function __asyncIncludesAnySeq(iterable, seqs, same = Object.is) {
   const seqsArr = await asyncSeqsToArray(seqs);
 
   if (!seqsArr.length) return false;
@@ -20,7 +20,7 @@ export async function __asyncIncludesAnySeq(iterable, seqs) {
   const maxMatchLength = seqsArr.reduce((max, { length }) => Math.max(max, length), 1);
 
   for await (const buffer of __asyncLeadingWindow(iterable, maxMatchLength)) {
-    if (__startsWithAnySeq(buffer, seqsArr)) {
+    if (__startsWithAnySeq(buffer, seqsArr, same)) {
       return true;
     }
   }
@@ -28,5 +28,7 @@ export async function __asyncIncludesAnySeq(iterable, seqs) {
 }
 
 export const asyncIncludesAnySeq = /*#__PURE__*/ asyncIterableCurry(__asyncIncludesAnySeq, {
+  minArgs: 1,
+  maxArgs: 2,
   reduces: true,
 });

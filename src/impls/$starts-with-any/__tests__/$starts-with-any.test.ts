@@ -41,6 +41,17 @@ describe($`startsWithAny`, () => {
     );
   });
 
+  describe('when same function is specified', () => {
+    const same = (a: number, b: number) => Math.abs(a) === Math.abs(b);
+    it(
+      'uses same value to do comparison',
+      $async(() => {
+        expect($await($startsWithAny(same, [-1], $wrap([1, 2, 3])))).toBe(true);
+        expect($await($startsWithAny(() => false, [1], $wrap([1, 2, 3])))).toBe(false);
+      }),
+    );
+  });
+
   if ($isSync) {
     describe('when iterable is a string', () => {
       it(

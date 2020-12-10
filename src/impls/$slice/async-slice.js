@@ -10,7 +10,7 @@ import { CircularBuffer } from '../../internal/circular-buffer.js';
 import { asyncIterableCurry } from '../../internal/async-iterable.js';
 import { makeValidateArgs } from './internal/validate-args.js';
 
-export async function* __asyncSliceFromStart(source, start, end, step = 1) {
+export async function* __asyncSliceFromStart(source, start = 0, end = Infinity, step = 1) {
   let currentPos = 0;
   let nextValidPos = start;
   const bufferSize = Math.abs(end);
@@ -62,7 +62,7 @@ async function asyncBufferedSlice(source, start, end, step) {
   return __asyncSliceFromStart(buffer, 0, newEnd, step);
 }
 
-export async function* __asyncSlice(source, start, end, step = 1) {
+export async function* __asyncSlice(source, start = 0, end = Infinity, step = 1) {
   if (start >= 0) {
     yield* __asyncSliceFromStart(source, start, end, step);
   } else {

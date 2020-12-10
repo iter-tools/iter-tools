@@ -9,11 +9,18 @@
 import { AsyncWrappable, AsyncIterableIterator } from '../../types/async-iterable';
 
 declare function asyncSplitOnAny(
-  separatorValues: Array<any>,
+  same: (a: any, b: any) => boolean,
+  separatorValues: any,
 ): <T>(source: AsyncWrappable<T>) => AsyncIterableIterator<AsyncIterableIterator<T>>;
 
 declare function asyncSplitOnAny<T>(
-  separatorValues: Array<any>,
+  same: (a: any, b: any) => boolean,
+  separatorValues: any,
+  source: AsyncWrappable<T>,
+): AsyncIterableIterator<AsyncIterableIterator<T>>;
+
+declare function asyncSplitOnAny<T>(
+  separatorValues: any,
   source: AsyncWrappable<T>,
 ): AsyncIterableIterator<AsyncIterableIterator<T>>;
 

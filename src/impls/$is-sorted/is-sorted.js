@@ -7,17 +7,17 @@
  */
 
 import { iterableCurry } from '../../internal/iterable.js';
-import { defaultCompare } from '../../internal/compare.js';
+import { defaultCompareOrder } from '../../internal/compare.js';
 import { __peekerate } from '../$peekerate/peekerate.js';
 
-export function __isSorted(iterable, comparator = defaultCompare) {
+export function __isSorted(iterable, compare = defaultCompareOrder) {
   const peekr = __peekerate(iterable);
 
   while (!peekr.done) {
     const { value } = peekr;
     peekr.advance();
 
-    if (!peekr.done && comparator(value, peekr.value) > 0) {
+    if (!peekr.done && compare(value, peekr.value) > 0) {
       peekr.return();
       return false;
     }

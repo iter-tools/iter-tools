@@ -7,11 +7,11 @@
  */
 
 import { iterableCurry } from '../../internal/iterable.js';
-import { defaultCompare } from '../../internal/compare.js';
+import { defaultCompareOrder } from '../../internal/compare.js';
 import { Heap } from './internal/heap.js';
 
-export function* __takeSorted(source, n = Infinity, comparator = defaultCompare) {
-  const heap = new Heap(comparator);
+export function* __takeSorted(source, n = Infinity, compare = defaultCompareOrder) {
+  const heap = new Heap(compare);
 
   for (const value of source) {
     heap.push(value);

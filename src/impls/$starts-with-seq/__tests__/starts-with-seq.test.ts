@@ -47,4 +47,12 @@ describe('startsWithSeq', () => {
       });
     });
   });
+
+  describe('when same function is specified', () => {
+    const same = (a: number, b: number) => Math.abs(a) === Math.abs(b);
+    it('uses same value to do comparison', () => {
+      expect(startsWithSeq(same, wrap([-1]), wrap([1, 2, 3]))).toBe(true);
+      expect(startsWithSeq(() => false, wrap([1]), wrap([1, 2, 3]))).toBe(false);
+    });
+  });
 });

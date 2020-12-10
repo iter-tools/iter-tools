@@ -47,21 +47,20 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
    - `splitOnSubseq`, `asyncSplitOnSubseq` to `splitOnSeq`, `asyncSplitOnSeq`
    - `splitOnAnySubseq`, `asyncSplitOnAnySubseq` to `splitOnAnySeq`, `asyncSplitOnAnySeq`
    - `joinWithSubseq`, `asyncJoinWithSubseq` to `joinWithSeq`, `asyncJoinWithSeq`
-   - `interposeSubseq`, `asyncInterposeSubseq` to `interposeSeq`, `asyncInterposeSeq`
 
 ### Changed
  - `interleave` and `asyncInterleave` now wrap sources with `Peekerator` instead of `InterleaveBuffer`. Change `function* (canTakeAny, ...buffers) { while(canTakeAny()) { ... } }` to `function* (all, ...peekrs) { while(!all.done) { ... } }`.
  - `last` and `lastOr` no longer have O(1) optimizations for array inputs. Instead use `arrayLast` or `arrayLastOr`.
  - `batch`, `asyncBatch` now yield batches which are iterables but not arrays. The batches must be consumed in order. For the old behavior use `map(toArray, batch(...))`.
  - `*any` and `*anySubseq` methods now require the possible values or subseqs to be passed as a non-nullable array. To replicate the old behavior change `startsWithAny(valuesIterable)` to `startsWithAny(wrap([...valuesIterable])`.
- - `includesAny`, `startsWithAny` (and async and subseq variants) now return `false` when nothing is being searched for, e.g. `includesAny([], iterable) === false`.
+ - `includesAny`, `startsWithAny` (and async and seq variants) now return `false` when nothing is being searched for, e.g. `includesAny([], iterable) === false`.
 
 ### Added
 **Methods**
  - `arrayFirst`, `arrayFirstOr`
  - `arrayLast`, `arrayLastOr`
  - `arrayReverse`
- - `interposeSubseq`, `asyncInterposeSubseq`
+ - `interposeSeq`, `asyncInterposeSeq`
  - `peekerate`, `asyncPeekerate`
  - `spliterate`, `asyncSpliterate`
  - `spliterateGrouped`, `asyncSpliterateGrouped`
@@ -75,6 +74,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
  - `isIterable`, `notIterable`, `isAsyncIterable`, `notAsyncIterable`
  - `isWrappable`, `notWrappable`, `isAsyncWrappable`, `notAsyncWrappable`
  - `isLoopable`, `notLoopable`, `isAsyncLoopable`, `notAsyncLoopable`
+ - `deepEqual`, `asyncDeepEqual`
 
 **Aliases**
  - `str` for `stringFrom`, `asyncStr` for `stringFromAsync`
@@ -82,6 +82,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 **Arguments**
  - `useFiller` option for `leadingWindow` and `asyncLeadingWindow`.
  - `proto` passed to `Object.create` for `objectFrom` and `objectFromAsync` (also `toObject` and `asyncToObject`).
+ - `same` to `equal`, `includes`, `includesAny`, `includesSeq`, `includesAnySeq`, `startsWith`, `startsWithAny`, `startsWithSeq`, `startsWithAnySeq`, `splitOn`, `splitOnAny`, `splitOnSeq`, `splitOnAnySeq` (and async variants: `asyncEqual`, `asyncIncludes`, `asyncIncludesAny`, `asyncIncludesSeq`, `asyncIncludesAnySeq`, `asyncStartsWith`, `asyncStartsWithAny`, `asyncStartsWithSeq`, `asyncStartsWithAnySeq`, `asyncSplitOn`, `asyncSplitOnAny`, `asyncSplitOnSeq`, `asyncSplitOnAnySeq`)
 
 **Instance Methods**
  - Peekerator: `asIterator` method

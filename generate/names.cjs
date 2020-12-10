@@ -13,7 +13,7 @@ function rename(name, ASYNC) {
 }
 
 function renameDollar(name, ASYNC) {
-  const match = /\$(__)?(.*)/.exec(name);
+  const match = /\$(__?)?(.*)/.exec(name);
   if (!match) return name;
   const [, __ = '', name_] = match;
 

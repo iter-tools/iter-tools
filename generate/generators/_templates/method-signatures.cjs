@@ -4,8 +4,8 @@ const param = (methodName, { name, isRest, isOptional, isIterable, isAsync, prop
   if (isIterable) {
     const iterableType = methodName.startsWith('__') ? 'iterable' : 'wrappable';
     name = `[${name}](#${isAsync ? 'async' : ''}${iterableType})`;
-  } else if (name === 'comparator') {
-    name = `[${name}](#comparator)`;
+  } else if (name === 'compare') {
+    name = `[${name}](#compare)`;
   }
   let result = name === null ? `{ ${properties.join(', ')} }` : name;
   if (isRest) result = `...${result}`;

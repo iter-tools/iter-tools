@@ -4,12 +4,12 @@ import { $iterableCurry } from '../../internal/$iterable.js';
 import { $__interleave } from '../$interleave/$interleave.js';
 
 $async;
-function* $byComparison({ comparator }, all, ...peekrs) {
+function* $byComparison({ compare }, all, ...peekrs) {
   let candidate;
   while (!all.done) {
     candidate = all.value;
     for (const peekr of peekrs) {
-      if (!peekr.done && comparator(candidate.value, peekr.value) < 0) {
+      if (!peekr.done && compare(candidate.value, peekr.value) < 0) {
         candidate = peekr;
       }
     }
@@ -19,8 +19,8 @@ function* $byComparison({ comparator }, all, ...peekrs) {
   }
 }
 
-export function $__collate(sources, comparator) {
-  return $__interleave(sources, $byComparison, { comparator });
+export function $__collate(sources, compare) {
+  return $__interleave(sources, $byComparison, { compare });
 }
 
 export const $collate = /*#__PURE__*/ $iterableCurry($__collate, {

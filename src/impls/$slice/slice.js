@@ -10,7 +10,7 @@ import { CircularBuffer } from '../../internal/circular-buffer.js';
 import { iterableCurry } from '../../internal/iterable.js';
 import { makeValidateArgs } from './internal/validate-args.js';
 
-export function* __sliceFromStart(source, start, end, step = 1) {
+export function* __sliceFromStart(source, start = 0, end = Infinity, step = 1) {
   let currentPos = 0;
   let nextValidPos = start;
   const bufferSize = Math.abs(end);
@@ -62,7 +62,7 @@ function bufferedSlice(source, start, end, step) {
   return __sliceFromStart(buffer, 0, newEnd, step);
 }
 
-export function* __slice(source, start, end, step = 1) {
+export function* __slice(source, start = 0, end = Infinity, step = 1) {
   if (start >= 0) {
     yield* __sliceFromStart(source, start, end, step);
   } else {

@@ -31,6 +31,14 @@ describe('includes', () => {
     });
   });
 
+  describe('when same function is specified', () => {
+    const same = (a: number, b: number) => Math.abs(a) === Math.abs(b);
+    it('uses same value to do comparison', () => {
+      expect(includes(same, -2, wrap([1, 2, 3]))).toBe(true);
+      expect(includes(() => false, 2, wrap([1, 2, 3]))).toBe(false);
+    });
+  });
+
   describe('when iterable is a string', () => {
     it('warns', () => {
       includes([], 'abc');
