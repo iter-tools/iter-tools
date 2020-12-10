@@ -2,7 +2,7 @@
 
 const param = (methodName, { name, isRest, isOptional, isIterable, isAsync, properties }) => {
   if (isIterable) {
-    const iterableType = methodName.startsWith('__') ? 'iterable' : 'sourceiterable';
+    const iterableType = methodName.startsWith('__') ? 'iterable' : 'wrappable';
     name = `[${name}](#${isAsync ? 'async' : ''}${iterableType})`;
   } else if (name === 'comparator') {
     name = `[${name}](#comparator)`;
