@@ -18,6 +18,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
  - `asyncMapParallel` (Instead use `asyncBuffer(n, asyncMap(fn, iterable))`)
  - `asyncFilterParallel` (Instead use `asyncBuffer(n, asyncFilter(fn, iterable))`)
  - `group`, `asyncGroup` (`splitGroups` is a drop-in replacement)
+ - `combinations`, `combinationsWithReplacement`, `permutations`, `product` (use `@iter-tools/combinatorics`)
 
 **Arguments**
  - `n` from `fork` and `asyncFork`. Use destructuring or call `return()` on the forks iterable.
