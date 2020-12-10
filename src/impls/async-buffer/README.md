@@ -1,4 +1,4 @@
-Returns a [stateful iterable](https://github.com/iter-tools/iter-tools/wiki/stateful-and-stateless-iterables) which yields the same values as `source`. For every value the next `n` values also start their computation in parallel. It may or may not be possible for useful work to be done in parallel depending on the nature of `source`.
+Returns a [singleton async iterable iterator](#singletonasynciterableiterator) which yields the same values as `source`. For every value the next `n` values also start their computation in parallel. It may or may not be possible for useful work to be done in parallel depending on the nature of `source`.
 
 An example of a situation in which it is possible to parallelize is when you have a series of expensive requests to make and you know in advance what they will be:
 

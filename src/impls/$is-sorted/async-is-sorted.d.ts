@@ -6,13 +6,13 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { AsyncSourceIterable } from '../../types/async-iterable';
+import { AsyncWrappable } from '../../types/async-iterable';
 
-declare function asyncIsSorted(iterable: AsyncSourceIterable<any>): Promise<boolean>;
+declare function asyncIsSorted(iterable: AsyncWrappable<any>): Promise<boolean>;
 
 declare function asyncIsSorted<T>(
   comparator: (a: T, b: T) => number,
-  iterable: AsyncSourceIterable<T>,
+  iterable: AsyncWrappable<T>,
 ): Promise<boolean>;
 
 export { asyncIsSorted };

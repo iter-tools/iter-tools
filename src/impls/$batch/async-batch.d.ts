@@ -6,15 +6,12 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { AsyncSourceIterable, AsyncResultIterable } from '../../types/async-iterable';
+import { AsyncWrappable, AsyncIterableIterator } from '../../types/async-iterable';
 
 declare function asyncBatch(
   size: number,
-): <T>(source: AsyncSourceIterable<T>) => AsyncResultIterable<T[]>;
+): <T>(source: AsyncWrappable<T>) => AsyncIterableIterator<T[]>;
 
-declare function asyncBatch<T>(
-  size: number,
-  source: AsyncSourceIterable<T>,
-): AsyncResultIterable<T[]>;
+declare function asyncBatch<T>(size: number, source: AsyncWrappable<T>): AsyncIterableIterator<T[]>;
 
 export { asyncBatch };

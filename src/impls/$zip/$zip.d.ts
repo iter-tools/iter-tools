@@ -1,5 +1,5 @@
-import { $SourceIterable, $ResultIterable } from '../../types/$iterable';
+import { $Wrappable, $IterableIterator } from '../../types/$iterable';
 
-declare function $zip<T>(...sources: Array<$SourceIterable<T>>): $ResultIterable<T[]>;
+declare function $zip<T>(...sources: Array<$Wrappable<T>>): $IterableIterator<T[]>;
 
 export { $zip };

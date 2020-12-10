@@ -7,9 +7,9 @@
  */
 
 import {
-  SourceIterable,
-  ResultIterable,
-  ResultIterable as SyncResultIterable,
+  Wrappable,
+  IterableIterator,
+  IterableIterator as SyncIterableIterator,
 } from '../../types/iterable';
 
 declare function trailingWindow<T, Filler = undefined>(
@@ -17,23 +17,23 @@ declare function trailingWindow<T, Filler = undefined>(
   opts: {
     readonly filler?: Filler;
   },
-  source: SourceIterable<T>,
-): ResultIterable<SyncResultIterable<T | Filler>>;
+  source: Wrappable<T>,
+): IterableIterator<SyncIterableIterator<T | Filler>>;
 
 declare function trailingWindow<T>(
   size: number,
-  source: SourceIterable<T>,
-): ResultIterable<SyncResultIterable<T | undefined>>;
+  source: Wrappable<T>,
+): IterableIterator<SyncIterableIterator<T | undefined>>;
 
 declare function trailingWindow(
   size: number,
   opts: {
     readonly filler: any;
   },
-): <T>(source: SourceIterable<T>) => ResultIterable<SyncResultIterable<T>>;
+): <T>(source: Wrappable<T>) => IterableIterator<SyncIterableIterator<T>>;
 
 declare function trailingWindow(
   size: number,
-): <T>(source: SourceIterable<T>) => ResultIterable<SyncResultIterable<T | undefined>>;
+): <T>(source: Wrappable<T>) => IterableIterator<SyncIterableIterator<T | undefined>>;
 
 export { trailingWindow };

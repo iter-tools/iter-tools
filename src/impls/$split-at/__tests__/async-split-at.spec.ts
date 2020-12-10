@@ -8,16 +8,16 @@
 
 import assert from 'static-type-assert';
 
-import { ResultIterable as SyncResultIterable } from '../../../types/iterable';
-import { AsyncIterable, AsyncResultIterable } from '../../../types/async-iterable';
+import { IterableIterator as SyncIterableIterator } from '../../../types/iterable';
+import { AsyncIterable, AsyncIterableIterator } from '../../../types/async-iterable';
 import { asyncSplitAt } from 'iter-tools-es';
 
 declare const Ø: never;
 
-assert<SyncResultIterable<AsyncResultIterable<number>>>(
+assert<SyncIterableIterator<AsyncIterableIterator<number>>>(
   asyncSplitAt(3, Ø as AsyncIterable<number>),
 );
 
-assert<SyncResultIterable<AsyncResultIterable<number>>>(
+assert<SyncIterableIterator<AsyncIterableIterator<number>>>(
   asyncSplitAt(3)(Ø as AsyncIterable<number>),
 );

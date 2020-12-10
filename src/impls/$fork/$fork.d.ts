@@ -1,6 +1,6 @@
-import { ResultIterable as SyncResultIterable } from '../../types/iterable';
-import { $SourceIterable, $ResultIterable } from '../../types/$iterable';
+import { IterableIterator as SyncIterableIterator } from '../../types/iterable';
+import { $Wrappable, $IterableIterator } from '../../types/$iterable';
 
-declare function $fork<T>(source: $SourceIterable<T>): SyncResultIterable<$ResultIterable<T>>;
+declare function $fork<T>(source: $Wrappable<T>): SyncIterableIterator<$IterableIterator<T>>;
 
 export { $fork };

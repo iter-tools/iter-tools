@@ -1,5 +1,5 @@
-declare function isAsyncWrappable(
-  value: any,
-): value is Iterable<unknown> | AsyncIterable<unknown> | null | undefined;
+import { AsyncWrappable } from '../../types/async-iterable';
+
+declare function isAsyncWrappable(value: any): value is AsyncWrappable<unknown>;
 
 export { isAsyncWrappable };

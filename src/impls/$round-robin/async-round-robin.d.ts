@@ -6,41 +6,41 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { AsyncSourceIterable, AsyncResultIterable } from '../../types/async-iterable';
+import { AsyncWrappable, AsyncIterableIterator } from '../../types/async-iterable';
 
 // prettier-ignore
 declare function asyncRoundRobin<T>(
-  ...sources: Array<AsyncSourceIterable<T>>
-): AsyncResultIterable<T>;
+  ...sources: Array<AsyncWrappable<T>>
+): AsyncIterableIterator<T>;
 
 declare function asyncRoundRobin<T>(
   step: number,
-  ...sources: Array<AsyncSourceIterable<T>>
-): AsyncResultIterable<T>;
+  ...sources: Array<AsyncWrappable<T>>
+): AsyncIterableIterator<T>;
 
 declare function asyncRoundRobin<T>(
   start: number,
   step: number,
-  ...sources: Array<AsyncSourceIterable<T>>
-): AsyncResultIterable<T>;
+  ...sources: Array<AsyncWrappable<T>>
+): AsyncIterableIterator<T>;
 
 declare function asyncRoundRobin<T>(
   options: { start?: number; step?: number },
-  ...sources: Array<AsyncSourceIterable<T>>
-): AsyncResultIterable<T>;
+  ...sources: Array<AsyncWrappable<T>>
+): AsyncIterableIterator<T>;
 
 declare function asyncRoundRobin(
   step: number,
-): <T>(...sources: Array<AsyncSourceIterable<T>>) => AsyncResultIterable<T>;
+): <T>(...sources: Array<AsyncWrappable<T>>) => AsyncIterableIterator<T>;
 
 declare function asyncRoundRobin(
   start: number,
   step: number,
-): <T>(...sources: Array<AsyncSourceIterable<T>>) => AsyncResultIterable<T>;
+): <T>(...sources: Array<AsyncWrappable<T>>) => AsyncIterableIterator<T>;
 
 declare function asyncRoundRobin(options: {
   start?: number;
   step?: number;
-}): <T>(...sources: Array<AsyncSourceIterable<T>>) => AsyncResultIterable<T>;
+}): <T>(...sources: Array<AsyncWrappable<T>>) => AsyncIterableIterator<T>;
 
 export { asyncRoundRobin };

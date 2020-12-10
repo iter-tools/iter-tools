@@ -29,5 +29,6 @@ ${[...generatedPaths]
       }';`,
   )
   .join('\n')}
+
 ${fs.readFileSync(join(__dirname, '../../../src/index-static.d.ts'))}
 `;

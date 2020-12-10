@@ -6,15 +6,12 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { AsyncSourceIterable, AsyncResultIterable } from '../../types/async-iterable';
+import { AsyncWrappable, AsyncIterableIterator } from '../../types/async-iterable';
+
+declare function asyncCycleTimes<T>(n: number, source: AsyncWrappable<T>): AsyncIterableIterator<T>;
 
 declare function asyncCycleTimes<T>(
   n: number,
-  source: AsyncSourceIterable<T>,
-): AsyncResultIterable<T>;
-
-declare function asyncCycleTimes<T>(
-  n: number,
-): (source: AsyncSourceIterable<T>) => AsyncResultIterable<T>;
+): (source: AsyncWrappable<T>) => AsyncIterableIterator<T>;
 
 export { asyncCycleTimes };

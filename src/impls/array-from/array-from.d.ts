@@ -1,5 +1,5 @@
-import { SourceIterable } from '../../types/iterable';
+import { Wrappable } from '../../types/iterable';
 
-declare function arrayFrom<T>(source: SourceIterable<T>): Array<T>;
+declare function arrayFrom<T>(source: Wrappable<T>): Array<T>;
 
 export { arrayFrom };

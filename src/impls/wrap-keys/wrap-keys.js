@@ -1,4 +1,4 @@
-import { wrapWithResultIterable } from '../../internal/iterable.js';
+import { wrapWithIterableIterator } from '../../internal/iterable.js';
 
 export function* __wrapKeys(keysable) {
   if (keysable != null) {
@@ -6,4 +6,4 @@ export function* __wrapKeys(keysable) {
   }
 }
 
-export const wrapKeys = /*#__PURE__*/ wrapWithResultIterable(__wrapKeys);
+export const wrapKeys = /*#__PURE__*/ wrapWithIterableIterator(__wrapKeys);

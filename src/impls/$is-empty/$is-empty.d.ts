@@ -1,7 +1,7 @@
 import { $Promise } from '../../../generate/async.macro.cjs';
 
-import { $SourceIterable } from '../../types/$iterable';
+import { $Wrappable } from '../../types/$iterable';
 
-declare function $isEmpty(iterable: $SourceIterable<any>): $Promise<boolean>;
+declare function $isEmpty(iterable: $Wrappable<any>): $Promise<boolean>;
 
 export { $isEmpty };

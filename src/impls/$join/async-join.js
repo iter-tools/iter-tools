@@ -6,7 +6,10 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { asyncWrapWithResultIterable, asyncEnsureIterable } from '../../internal/async-iterable.js';
+import {
+  asyncWrapWithIterableIterator,
+  asyncEnsureIterable,
+} from '../../internal/async-iterable.js';
 import { __asyncJoinWithSeq } from '../$join-with-seq/async-join-with-seq.js';
 
 const emptySeq = [];
@@ -15,4 +18,4 @@ export function __asyncJoin(source) {
   return __asyncJoinWithSeq(asyncEnsureIterable(source), emptySeq);
 }
 
-export const asyncJoin = /*#__PURE__*/ asyncWrapWithResultIterable(__asyncJoin);
+export const asyncJoin = /*#__PURE__*/ asyncWrapWithIterableIterator(__asyncJoin);

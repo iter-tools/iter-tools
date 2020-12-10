@@ -6,17 +6,17 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { SourceIterable, ResultIterable } from '../../types/iterable';
+import { Wrappable, IterableIterator } from '../../types/iterable';
 
-declare function splitGroups<T>(source: SourceIterable<T>): ResultIterable<[T, ResultIterable<T>]>;
-
-declare function splitGroups<K, T>(
-  key: (value: T, i: number) => K,
-): (source: SourceIterable<T>) => ResultIterable<[K, ResultIterable<T>]>;
+declare function splitGroups<T>(source: Wrappable<T>): IterableIterator<[T, IterableIterator<T>]>;
 
 declare function splitGroups<K, T>(
   key: (value: T, i: number) => K,
-  source: SourceIterable<T>,
-): ResultIterable<[K, ResultIterable<T>]>;
+): (source: Wrappable<T>) => IterableIterator<[K, IterableIterator<T>]>;
+
+declare function splitGroups<K, T>(
+  key: (value: T, i: number) => K,
+  source: Wrappable<T>,
+): IterableIterator<[K, IterableIterator<T>]>;
 
 export { splitGroups };

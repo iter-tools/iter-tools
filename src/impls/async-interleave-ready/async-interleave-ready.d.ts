@@ -1,7 +1,7 @@
-import { AsyncSourceIterable, AsyncResultIterable } from '../../types/async-iterable';
+import { AsyncWrappable, AsyncIterableIterator } from '../../types/async-iterable';
 
 declare function asyncInterleaveReady<T>(
-  ...sources: Array<AsyncSourceIterable<T>>
-): AsyncResultIterable<T>;
+  ...sources: Array<AsyncWrappable<T>>
+): AsyncIterableIterator<T>;
 
 export { asyncInterleaveReady };

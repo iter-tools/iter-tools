@@ -1,7 +1,7 @@
 import { $Promise } from '../../../generate/async.macro.cjs';
 
-import { $SourceIterable } from '../../types/$iterable';
+import { $Wrappable } from '../../types/$iterable';
 
-declare function $equal(...iterables: Array<$SourceIterable<any>>): $Promise<boolean>;
+declare function $equal(...iterables: Array<$Wrappable<any>>): $Promise<boolean>;
 
 export { $equal };

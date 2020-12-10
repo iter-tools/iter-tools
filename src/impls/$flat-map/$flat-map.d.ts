@@ -1,14 +1,14 @@
 import { $MaybePromise } from '../../../generate/async.macro.cjs';
 
-import { $SourceIterable, $ResultIterable } from '../../types/$iterable';
+import { $Wrappable, $IterableIterator } from '../../types/$iterable';
 
 declare function $flatMap<O, T>(
-  func: (value: T, i: number) => $MaybePromise<$SourceIterable<O>>,
-): (source: $SourceIterable<T>) => $ResultIterable<O>;
+  func: (value: T, i: number) => $MaybePromise<$Wrappable<O>>,
+): (source: $Wrappable<T>) => $IterableIterator<O>;
 
 declare function $flatMap<O, T>(
-  func: (value: T, i: number) => $MaybePromise<$SourceIterable<O>>,
-  source: $SourceIterable<T>,
-): $ResultIterable<O>;
+  func: (value: T, i: number) => $MaybePromise<$Wrappable<O>>,
+  source: $Wrappable<T>,
+): $IterableIterator<O>;
 
 export { $flatMap };

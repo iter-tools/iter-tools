@@ -1,7 +1,7 @@
 import { $Promise } from '../../../generate/async.macro.cjs';
 
-import { $SourceIterable } from '../../types/$iterable';
+import { $Wrappable } from '../../types/$iterable';
 
-declare function $takeLast<T>(iterable: $SourceIterable<T>): $Promise<T | undefined>;
+declare function $takeLast<T>(iterable: $Wrappable<T>): $Promise<T | undefined>;
 
 export { $takeLast };

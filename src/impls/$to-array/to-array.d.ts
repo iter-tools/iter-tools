@@ -6,8 +6,8 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { SourceIterable } from '../../types/iterable';
+import { Wrappable } from '../../types/iterable';
 
-declare function toArray<T>(source: SourceIterable<T>): Array<T>;
+declare function toArray<T>(source: Wrappable<T>): Array<T>;
 
 export { toArray };

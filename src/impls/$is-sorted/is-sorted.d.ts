@@ -6,13 +6,10 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { SourceIterable } from '../../types/iterable';
+import { Wrappable } from '../../types/iterable';
 
-declare function isSorted(iterable: SourceIterable<any>): boolean;
+declare function isSorted(iterable: Wrappable<any>): boolean;
 
-declare function isSorted<T>(
-  comparator: (a: T, b: T) => number,
-  iterable: SourceIterable<T>,
-): boolean;
+declare function isSorted<T>(comparator: (a: T, b: T) => number, iterable: Wrappable<T>): boolean;
 
 export { isSorted };

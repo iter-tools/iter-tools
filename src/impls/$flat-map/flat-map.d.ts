@@ -6,15 +6,15 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { SourceIterable, ResultIterable } from '../../types/iterable';
+import { Wrappable, IterableIterator } from '../../types/iterable';
 
 declare function flatMap<O, T>(
-  func: (value: T, i: number) => SourceIterable<O>,
-): (source: SourceIterable<T>) => ResultIterable<O>;
+  func: (value: T, i: number) => Wrappable<O>,
+): (source: Wrappable<T>) => IterableIterator<O>;
 
 declare function flatMap<O, T>(
-  func: (value: T, i: number) => SourceIterable<O>,
-  source: SourceIterable<T>,
-): ResultIterable<O>;
+  func: (value: T, i: number) => Wrappable<O>,
+  source: Wrappable<T>,
+): IterableIterator<O>;
 
 export { flatMap };

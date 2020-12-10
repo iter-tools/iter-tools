@@ -6,8 +6,8 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { SourceIterable, ResultIterable } from '../../types/iterable';
+import { Wrappable, IterableIterator } from '../../types/iterable';
 
-declare function cycle<T>(source: SourceIterable<T>): ResultIterable<T>;
+declare function cycle<T>(source: Wrappable<T>): IterableIterator<T>;
 
 export { cycle };

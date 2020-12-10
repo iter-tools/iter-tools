@@ -6,8 +6,8 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { AsyncSourceIterable, AsyncResultIterable } from '../../types/async-iterable';
+import { AsyncWrappable, AsyncIterableIterator } from '../../types/async-iterable';
 
-declare function asyncReverse<T>(source: AsyncSourceIterable<T>): AsyncResultIterable<T>;
+declare function asyncReverse<T>(source: AsyncWrappable<T>): AsyncIterableIterator<T>;
 
 export { asyncReverse };

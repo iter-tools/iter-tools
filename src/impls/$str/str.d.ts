@@ -6,10 +6,10 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { SourceIterable } from '../../types/iterable';
+import { Wrappable } from '../../types/iterable';
 
-declare function str(strings: SourceIterable<string>): string;
+declare function str(strings: Wrappable<string>): string;
 
-declare function str(strings: SourceIterable<{ toString(): string }>): string;
+declare function str(strings: Wrappable<{ toString(): string }>): string;
 
 export { str };

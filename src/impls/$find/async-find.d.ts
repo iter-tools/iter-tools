@@ -6,24 +6,24 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { AsyncSourceIterable } from '../../types/async-iterable';
+import { AsyncWrappable } from '../../types/async-iterable';
 
 declare function asyncFind<T, S extends T>(
   predicate: (value: T, i: number) => value is S,
-): (iterable: AsyncSourceIterable<T>) => Promise<S | undefined>;
+): (iterable: AsyncWrappable<T>) => Promise<S | undefined>;
 
 declare function asyncFind<T>(
   predicate: (value: T, i: number) => boolean | Promise<boolean>,
-): (iterable: AsyncSourceIterable<T>) => Promise<T | undefined>;
+): (iterable: AsyncWrappable<T>) => Promise<T | undefined>;
 
 declare function asyncFind<T, S extends T>(
   predicate: (value: T, i: number) => value is S,
-  iterable: AsyncSourceIterable<T>,
+  iterable: AsyncWrappable<T>,
 ): Promise<S | undefined>;
 
 declare function asyncFind<T>(
   predicate: (value: T, i: number) => boolean | Promise<boolean>,
-  iterable: AsyncSourceIterable<T>,
+  iterable: AsyncWrappable<T>,
 ): Promise<T | undefined>;
 
 export { asyncFind };

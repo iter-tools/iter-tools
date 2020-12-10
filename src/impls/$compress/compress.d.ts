@@ -6,11 +6,11 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { SourceIterable, ResultIterable } from '../../types/iterable';
+import { Wrappable, IterableIterator } from '../../types/iterable';
 
 declare function compress<T>(
-  source: SourceIterable<T>,
-  included: SourceIterable<boolean>,
-): ResultIterable<T>;
+  source: Wrappable<T>,
+  included: Wrappable<boolean>,
+): IterableIterator<T>;
 
 export { compress };

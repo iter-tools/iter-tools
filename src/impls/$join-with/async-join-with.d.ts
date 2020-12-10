@@ -6,15 +6,15 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { AsyncSourceIterable, AsyncResultIterable } from '../../types/async-iterable';
+import { AsyncWrappable, AsyncIterableIterator } from '../../types/async-iterable';
 
 declare function asyncJoinWith<W, T>(
   separator: W,
-  source: AsyncSourceIterable<AsyncSourceIterable<T>>,
-): AsyncResultIterable<T | W>;
+  source: AsyncWrappable<AsyncWrappable<T>>,
+): AsyncIterableIterator<T | W>;
 
 declare function asyncJoinWith<W>(
   separator: W,
-): <T>(source: AsyncSourceIterable<AsyncSourceIterable<T>>) => AsyncResultIterable<T | W>;
+): <T>(source: AsyncWrappable<AsyncWrappable<T>>) => AsyncIterableIterator<T | W>;
 
 export { asyncJoinWith };

@@ -2,7 +2,7 @@ import { isAsyncIterable } from '../impls/is-async-iterable/is-async-iterable.js
 import { isAsyncLoopable } from '../impls/is-async-loopable/is-async-loopable.js';
 import { isAsyncWrappable } from '../impls/is-async-wrappable/is-async-wrappable.js';
 import { asyncNullableWrap as asyncWrap } from './async-wrap.js';
-import { BaseResultIterable, ResultIterable } from './iterable.js';
+import { BaseIterableIterator, IterableIterator } from './iterable.js';
 import { variadicCurryWithValidation } from './curry.js';
 import { _, __iterate } from './symbols.js';
 
@@ -31,26 +31,29 @@ export function asyncEnsureIterable(value) {
   }
 }
 
-export function AsyncResultIterable(...args) {
-  BaseResultIterable.apply(this, args);
+export function AsyncIterableIterator(...args) {
+  BaseIterableIterator.apply(this, args);
 }
 
-AsyncResultIterable.prototype = Object.assign(Object.create(BaseResultIterable.prototype), {
-  constructor: AsyncResultIterable,
+AsyncIterableIterator.prototype = Object.assign(Object.create(BaseIterableIterator.prototype), {
+  constructor: AsyncIterableIterator,
   [Symbol.asyncIterator]() {
     return this[__iterate]();
   },
 });
 
-function AsyncSimpleResultIterable(...args) {
-  AsyncResultIterable.apply(this, args);
+function AsyncSimpleIterableIterator(...args) {
+  AsyncIterableIterator.apply(this, args);
 }
 
-AsyncSimpleResultIterable.prototype = Object.assign(Object.create(AsyncResultIterable.prototype), {
-  [__iterate]() {
-    return this[_].fn(...this[_].args);
+AsyncSimpleIterableIterator.prototype = Object.assign(
+  Object.create(AsyncIterableIterator.prototype),
+  {
+    [__iterate]() {
+      return this[_].fn(...this[_].args);
+    },
   },
-});
+);
 
 function makeFunctionConfig(fn, fnConfig = {}) {
   const {
@@ -75,20 +78,20 @@ function makeFunctionConfig(fn, fnConfig = {}) {
     isIterable: isAsyncWrappable,
     iterableType: 'asyncIterable',
     applyOnIterableArgs,
-    IterableClass: forceSync ? ResultIterable : AsyncResultIterable,
+    IterableClass: forceSync ? IterableIterator : AsyncIterableIterator,
   };
 }
 
 export async function asyncCache(it) {
   const arr = [];
   for await (const value of it) arr.push(value);
-  return asyncWrapWithResultIterable(asyncWrap)(arr);
+  return asyncWrapWithIterableIterator(asyncWrap)(arr);
 }
 
-export function asyncWrapWithResultIterable(fn, { validateArgs = (_) => _ } = {}) {
+export function asyncWrapWithIterableIterator(fn, { validateArgs = (_) => _ } = {}) {
   return (...args) => {
     validateArgs(args);
-    return new AsyncSimpleResultIterable(fn, args);
+    return new AsyncSimpleIterableIterator(fn, args);
   };
 }
 

@@ -204,6 +204,20 @@ export { default as asyncWindow } from './methods/async-window';
 export { default as asyncWrap } from './methods/async-wrap';
 export { default as asyncZip } from './methods/async-zip';
 export { default as asyncZipAll } from './methods/async-zip-all';
-export { Peekerator } from './impls/$peekerate/peekerate';
-export { AsyncPeekerator } from './impls/$peekerate/async-peekerate';
+
+export type { Peekerator } from './impls/$peekerate/peekerate';
+export type { AsyncPeekerator } from './impls/$peekerate/async-peekerate';
+
+export type {
+  Iterable,
+  Loopable,
+  Wrappable,
+  IterableIterator,
+  SingletonIterableIterator,
+  AsyncIterable,
+  AsyncLoopable,
+  AsyncWrappable,
+  AsyncIterableIterator,
+  SingletonAsyncIterableIterator,
+} from './types';
 

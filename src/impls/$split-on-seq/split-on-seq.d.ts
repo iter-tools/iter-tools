@@ -6,15 +6,15 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { SourceIterable, ResultIterable } from '../../types/iterable';
+import { Wrappable, IterableIterator } from '../../types/iterable';
 
 declare function splitOnSeq(
-  separatorSeq: SourceIterable<any>,
-): <T>(source: SourceIterable<T>) => ResultIterable<ResultIterable<T>>;
+  separatorSeq: Wrappable<any>,
+): <T>(source: Wrappable<T>) => IterableIterator<IterableIterator<T>>;
 
 declare function splitOnSeq<T>(
-  separatorSeq: SourceIterable<any>,
-  source: SourceIterable<T>,
-): ResultIterable<ResultIterable<T>>;
+  separatorSeq: Wrappable<any>,
+  source: Wrappable<T>,
+): IterableIterator<IterableIterator<T>>;
 
 export { splitOnSeq };

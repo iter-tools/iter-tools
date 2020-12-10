@@ -6,11 +6,11 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { AsyncSourceIterable, AsyncResultIterable } from '../../types/async-iterable';
+import { AsyncWrappable, AsyncIterableIterator } from '../../types/async-iterable';
 
 declare function asyncCompress<T>(
-  source: AsyncSourceIterable<T>,
-  included: AsyncSourceIterable<boolean>,
-): AsyncResultIterable<T>;
+  source: AsyncWrappable<T>,
+  included: AsyncWrappable<boolean>,
+): AsyncIterableIterator<T>;
 
 export { asyncCompress };

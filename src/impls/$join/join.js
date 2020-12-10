@@ -6,7 +6,7 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { wrapWithResultIterable, ensureIterable } from '../../internal/iterable.js';
+import { wrapWithIterableIterator, ensureIterable } from '../../internal/iterable.js';
 import { __joinWithSeq } from '../$join-with-seq/join-with-seq.js';
 
 const emptySeq = [];
@@ -15,4 +15,4 @@ export function __join(source) {
   return __joinWithSeq(ensureIterable(source), emptySeq);
 }
 
-export const join = /*#__PURE__*/ wrapWithResultIterable(__join);
+export const join = /*#__PURE__*/ wrapWithIterableIterator(__join);

@@ -1,4 +1,4 @@
-import { wrapWithResultIterable } from '../../internal/iterable.js';
+import { wrapWithIterableIterator } from '../../internal/iterable.js';
 
 export function* __wrapEntries(entriesable) {
   if (entriesable != null) {
@@ -6,4 +6,4 @@ export function* __wrapEntries(entriesable) {
   }
 }
 
-export const wrapEntries = /*#__PURE__*/ wrapWithResultIterable(__wrapEntries);
+export const wrapEntries = /*#__PURE__*/ wrapWithIterableIterator(__wrapEntries);

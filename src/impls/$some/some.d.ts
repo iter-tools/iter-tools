@@ -6,15 +6,12 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { SourceIterable } from '../../types/iterable';
+import { Wrappable } from '../../types/iterable';
 
 declare function some<T>(
   func: (value: T, i: number) => boolean,
-): (iterable: SourceIterable<T>) => boolean;
+): (iterable: Wrappable<T>) => boolean;
 
-declare function some<T>(
-  func: (value: T, i: number) => boolean,
-  iterable: SourceIterable<T>,
-): boolean;
+declare function some<T>(func: (value: T, i: number) => boolean, iterable: Wrappable<T>): boolean;
 
 export { some };

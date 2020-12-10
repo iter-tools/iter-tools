@@ -6,11 +6,11 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { ResultIterable as SyncResultIterable } from '../../types/iterable';
-import { AsyncSourceIterable, AsyncResultIterable } from '../../types/async-iterable';
+import { IterableIterator as SyncIterableIterator } from '../../types/iterable';
+import { AsyncWrappable, AsyncIterableIterator } from '../../types/async-iterable';
 
 declare function asyncSplit<T>(
-  source: AsyncSourceIterable<T>,
-): AsyncResultIterable<SyncResultIterable<T>>;
+  source: AsyncWrappable<T>,
+): AsyncIterableIterator<SyncIterableIterator<T>>;
 
 export { asyncSplit };

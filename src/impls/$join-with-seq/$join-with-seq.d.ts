@@ -1,13 +1,13 @@
-import { SourceIterable as SyncSourceIterable } from '../../types/iterable';
-import { $SourceIterable, $ResultIterable } from '../../types/$iterable';
+import { Wrappable as SyncWrappable } from '../../types/iterable';
+import { $Wrappable, $IterableIterator } from '../../types/$iterable';
 
 declare function $joinWithSeq<W, T>(
-  seq: SyncSourceIterable<W>,
-  source: $SourceIterable<$SourceIterable<T>>,
-): $ResultIterable<T | W>;
+  seq: SyncWrappable<W>,
+  source: $Wrappable<$Wrappable<T>>,
+): $IterableIterator<T | W>;
 
 declare function $joinWithSeq<W>(
-  seq: SyncSourceIterable<W>,
-): <T>(source: $SourceIterable<$SourceIterable<T>>) => $ResultIterable<T | W>;
+  seq: SyncWrappable<W>,
+): <T>(source: $Wrappable<$Wrappable<T>>) => $IterableIterator<T | W>;
 
 export { $joinWithSeq };

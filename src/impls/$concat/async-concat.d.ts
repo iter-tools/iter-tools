@@ -6,8 +6,8 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { AsyncSourceIterable, AsyncResultIterable } from '../../types/async-iterable';
+import { AsyncWrappable, AsyncIterableIterator } from '../../types/async-iterable';
 
-declare function asyncConcat<T>(...sources: Array<AsyncSourceIterable<T>>): AsyncResultIterable<T>;
+declare function asyncConcat<T>(...sources: Array<AsyncWrappable<T>>): AsyncIterableIterator<T>;
 
 export { asyncConcat };

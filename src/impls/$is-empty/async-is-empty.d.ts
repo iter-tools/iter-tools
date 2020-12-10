@@ -6,8 +6,8 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { AsyncSourceIterable } from '../../types/async-iterable';
+import { AsyncWrappable } from '../../types/async-iterable';
 
-declare function asyncIsEmpty(iterable: AsyncSourceIterable<any>): Promise<boolean>;
+declare function asyncIsEmpty(iterable: AsyncWrappable<any>): Promise<boolean>;
 
 export { asyncIsEmpty };

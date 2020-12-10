@@ -25,7 +25,7 @@ export function callReturn(iterator) {
   if ('return' in iterator) iterator.return();
 }
 
-export function BaseResultIterable(fn, args, iterablesArg) {
+export function BaseIterableIterator(fn, args, iterablesArg) {
   this[_] = {
     fn,
     args,
@@ -34,8 +34,8 @@ export function BaseResultIterable(fn, args, iterablesArg) {
   };
 }
 
-Object.assign(BaseResultIterable.prototype, {
-  constructor: BaseResultIterable,
+Object.assign(BaseIterableIterator.prototype, {
+  constructor: BaseIterableIterator,
 
   [__iterate]() {
     const { fn, args } = this[_];
@@ -61,12 +61,12 @@ Object.assign(BaseResultIterable.prototype, {
   },
 });
 
-export function ResultIterable(...args) {
-  BaseResultIterable.apply(this, args);
+export function IterableIterator(...args) {
+  BaseIterableIterator.apply(this, args);
 }
 
-ResultIterable.prototype = Object.assign(Object.create(BaseResultIterable.prototype), {
-  constructor: ResultIterable,
+IterableIterator.prototype = Object.assign(Object.create(BaseIterableIterator.prototype), {
+  constructor: IterableIterator,
   [Symbol.iterator]() {
     return this[__iterate]();
   },
@@ -94,7 +94,7 @@ function makeFunctionConfig(fn, fnConfig = {}) {
     isIterable: isWrappable,
     iterableType: 'iterable',
     applyOnIterableArgs,
-    IterableClass: ResultIterable,
+    IterableClass: IterableIterator,
   };
 }
 
@@ -102,10 +102,10 @@ export function cache(it) {
   return [...it];
 }
 
-export function wrapWithResultIterable(fn, { validateArgs = (_) => _ } = {}) {
+export function wrapWithIterableIterator(fn, { validateArgs = (_) => _ } = {}) {
   return (...args) => {
     validateArgs(args);
-    return new ResultIterable(fn, args);
+    return new IterableIterator(fn, args);
   };
 }
 

@@ -7,9 +7,9 @@
  */
 
 import {
-  SourceIterable,
-  ResultIterable,
-  ResultIterable as SyncResultIterable,
+  Wrappable,
+  IterableIterator,
+  IterableIterator as SyncIterableIterator,
 } from '../../types/iterable';
 
 declare function leadingWindow<T>(
@@ -18,8 +18,8 @@ declare function leadingWindow<T>(
     useFiller: false;
     readonly filler?: any;
   },
-  source: SourceIterable<T>,
-): ResultIterable<SyncResultIterable<T>>;
+  source: Wrappable<T>,
+): IterableIterator<SyncIterableIterator<T>>;
 
 declare function leadingWindow(
   size: number,
@@ -27,7 +27,7 @@ declare function leadingWindow(
     useFiller: false;
     readonly filler?: any;
   },
-): <T>(source: SourceIterable<T>) => ResultIterable<SyncResultIterable<T>>;
+): <T>(source: Wrappable<T>) => IterableIterator<SyncIterableIterator<T>>;
 
 declare function leadingWindow<T, Filler = undefined>(
   size: number,
@@ -35,13 +35,13 @@ declare function leadingWindow<T, Filler = undefined>(
     useFiller?: boolean;
     readonly filler?: Filler;
   },
-  source: SourceIterable<T>,
-): ResultIterable<SyncResultIterable<T | Filler>>;
+  source: Wrappable<T>,
+): IterableIterator<SyncIterableIterator<T | Filler>>;
 
 declare function leadingWindow<T>(
   size: number,
-  source: SourceIterable<T>,
-): ResultIterable<SyncResultIterable<T | undefined>>;
+  source: Wrappable<T>,
+): IterableIterator<SyncIterableIterator<T | undefined>>;
 
 declare function leadingWindow<Filler = undefined>(
   size: number,
@@ -49,6 +49,6 @@ declare function leadingWindow<Filler = undefined>(
     useFiller?: boolean;
     readonly filler?: Filler;
   },
-): <T>(source: SourceIterable<T>) => ResultIterable<SyncResultIterable<T | Filler>>;
+): <T>(source: Wrappable<T>) => IterableIterator<SyncIterableIterator<T | Filler>>;
 
 export { leadingWindow };

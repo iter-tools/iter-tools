@@ -6,12 +6,10 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { SourceIterable } from '../../types/iterable';
+import { Wrappable } from '../../types/iterable';
 
-declare function every<T>(
-  predicate: (value: T) => boolean,
-): (iterable: SourceIterable<T>) => boolean;
+declare function every<T>(predicate: (value: T) => boolean): (iterable: Wrappable<T>) => boolean;
 
-declare function every<T>(predicate: (value: T) => boolean, iterable: SourceIterable<T>): boolean;
+declare function every<T>(predicate: (value: T) => boolean, iterable: Wrappable<T>): boolean;
 
 export { every };

@@ -6,8 +6,8 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { AsyncSourceIterable } from '../../types/async-iterable';
+import { AsyncWrappable } from '../../types/async-iterable';
 
-declare function asyncConsume<T>(iterable: AsyncSourceIterable<T>): Promise<void>;
+declare function asyncConsume<T>(iterable: AsyncWrappable<T>): Promise<void>;
 
 export { asyncConsume };

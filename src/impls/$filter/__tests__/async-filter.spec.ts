@@ -8,30 +8,30 @@
 
 import assert from 'static-type-assert';
 
-import { AsyncIterable, AsyncResultIterable } from '../../../types/async-iterable';
+import { AsyncIterable, AsyncIterableIterator } from '../../../types/async-iterable';
 import { asyncFilter } from 'iter-tools-es';
 
 declare const Ø: never;
 
-assert<AsyncResultIterable<string>>(
+assert<AsyncIterableIterator<string>>(
   asyncFilter(
     Ø as (value: string | number) => value is string,
     Ø as AsyncIterable<string | number>,
   ),
 );
 
-assert<AsyncResultIterable<number>>(
+assert<AsyncIterableIterator<number>>(
   asyncFilter(
     Ø as (value: string | number) => value is number,
     Ø as AsyncIterable<string | number>,
   ),
 );
 
-assert<AsyncResultIterable<0>>(
+assert<AsyncIterableIterator<0>>(
   asyncFilter(Ø as (value: string | number) => value is 0, Ø as AsyncIterable<string | number>),
 );
 
-assert<AsyncResultIterable<string | number>>(
+assert<AsyncIterableIterator<string | number>>(
   asyncFilter(
     Ø as (value: string | number) => boolean,
     Ø as AsyncIterable<string | number> | null | undefined,

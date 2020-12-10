@@ -6,15 +6,15 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { AsyncSourceIterable, AsyncResultIterable } from '../../types/async-iterable';
+import { AsyncWrappable, AsyncIterableIterator } from '../../types/async-iterable';
 
 declare function asyncSplitWith<T>(
   predicate: (value: T, i: number) => any,
-): (source: AsyncSourceIterable<T>) => AsyncResultIterable<AsyncResultIterable<T>>;
+): (source: AsyncWrappable<T>) => AsyncIterableIterator<AsyncIterableIterator<T>>;
 
 declare function asyncSplitWith<T>(
   predicate: (value: T, i: number) => any,
-  source: AsyncSourceIterable<T>,
-): AsyncResultIterable<AsyncResultIterable<T>>;
+  source: AsyncWrappable<T>,
+): AsyncIterableIterator<AsyncIterableIterator<T>>;
 
 export { asyncSplitWith };

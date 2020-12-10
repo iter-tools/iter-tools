@@ -106,7 +106,7 @@ There are some differences in the order in which arguments are passed, but these
 `__` methods are not curried. You must pass all their arguments in a single call
 `__` methods do not treat `null` and `undefined` as iterables.
 `__` methods do not permit sync iterables to be used in place of async iterables (this could change in the future).
-`__` methods return stateful iterators. You can only loop over the results once.
+`__` methods return singleton iterable iterators. You can only loop over the results once.
 `__` methods may expose implementation internals which are not part of the documented public API. Code using undocumented APIs is subject to breakage in **any** release, in accordance with the [semver specification](https://semver.org/).
 `__` methods do not have type definitions.
 
@@ -124,11 +124,7 @@ Some major improvements are still to come. They are:
 
 Some methods in iter-tools consume an entire iterable, such as `arrayFrom`, `last`, or `cycle`. These methods will not terminate if you pass them an infinite iterable such as `range()`. Eventually we may have a better system for warning you in the circumstances when we know you've done something obviously wrong like `cycle(range())`, but this does not exist yet.
 
-It is also important to note that iterables may be stateful or stateless (which is to say whether there is one or more than one underlying iterator), and there is no way that you can necessarily tell which is which. This is a limitation of the underlying technology, not iter-tools itself. Iter-tools iterables are themselves are stateless, except for `PartIterable` instances such as are yielded by methods like `splitOn`, and `groupBy`.
-
-With transforms (like `map`) you are not guaranteed that each iterator returned by `[Symbol.iterator]()` will yield the same values. For example if the source for the transform was an Array, the values in the array may have mutated.
-
-Finally, some of the obvious things you can do with arrays like sorting and shuffling are not possible to do on iterables unless you first store the values in an array. iter-tools will not offer you such methods, instead you should use, for example, `arrayFrom(iterable).sort()`.
+`iter-tools` does not aim to provide all possible operations. If a method only makes sense when its input or output is an array, `iter-tools` probably does not have an implementation. `groupBy` is probably the most common example of this. I may in the future create an `@iter-tools/array` package for such methods if there is sufficient demand.
 
 ## Acknowledgements
 

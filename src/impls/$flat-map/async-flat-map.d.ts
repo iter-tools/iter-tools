@@ -6,15 +6,15 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { AsyncSourceIterable, AsyncResultIterable } from '../../types/async-iterable';
+import { AsyncWrappable, AsyncIterableIterator } from '../../types/async-iterable';
 
 declare function asyncFlatMap<O, T>(
-  func: (value: T, i: number) => AsyncSourceIterable<O> | Promise<AsyncSourceIterable<O>>,
-): (source: AsyncSourceIterable<T>) => AsyncResultIterable<O>;
+  func: (value: T, i: number) => AsyncWrappable<O> | Promise<AsyncWrappable<O>>,
+): (source: AsyncWrappable<T>) => AsyncIterableIterator<O>;
 
 declare function asyncFlatMap<O, T>(
-  func: (value: T, i: number) => AsyncSourceIterable<O> | Promise<AsyncSourceIterable<O>>,
-  source: AsyncSourceIterable<T>,
-): AsyncResultIterable<O>;
+  func: (value: T, i: number) => AsyncWrappable<O> | Promise<AsyncWrappable<O>>,
+  source: AsyncWrappable<T>,
+): AsyncIterableIterator<O>;
 
 export { asyncFlatMap };

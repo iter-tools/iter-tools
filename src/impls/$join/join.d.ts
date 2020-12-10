@@ -6,8 +6,8 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { SourceIterable, ResultIterable } from '../../types/iterable';
+import { Wrappable, IterableIterator } from '../../types/iterable';
 
-declare function join<T>(source: SourceIterable<SourceIterable<T>>): ResultIterable<T>;
+declare function join<T>(source: Wrappable<Wrappable<T>>): IterableIterator<T>;
 
 export { join };

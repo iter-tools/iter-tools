@@ -6,15 +6,13 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { SourceIterable, ResultIterable } from '../../types/iterable';
+import { Wrappable, IterableIterator } from '../../types/iterable';
 
 declare function zipAll<F, T>(
   options: { filler?: F },
-  ...sources: Array<SourceIterable<T>>
-): ResultIterable<Array<T | F>>;
+  ...sources: Array<Wrappable<T>>
+): IterableIterator<Array<T | F>>;
 
-declare function zipAll<T>(
-  ...sources: Array<SourceIterable<T>>
-): ResultIterable<Array<T | undefined>>;
+declare function zipAll<T>(...sources: Array<Wrappable<T>>): IterableIterator<Array<T | undefined>>;
 
 export { zipAll };

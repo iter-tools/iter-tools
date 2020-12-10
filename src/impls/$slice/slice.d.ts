@@ -6,19 +6,19 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { SourceIterable, ResultIterable } from '../../types/iterable';
+import { Wrappable, IterableIterator } from '../../types/iterable';
 
 declare function slice<T>(opts: {
   readonly start?: number;
   readonly end?: number;
   readonly step?: number;
-}): (source: SourceIterable<T>) => ResultIterable<T>;
+}): (source: Wrappable<T>) => IterableIterator<T>;
 
 declare function slice<T>(
   start?: number,
   end?: number,
   step?: number,
-): (source: SourceIterable<T>) => ResultIterable<T>;
+): (source: Wrappable<T>) => IterableIterator<T>;
 
 declare function slice<T>(
   opts: {
@@ -26,18 +26,18 @@ declare function slice<T>(
     readonly end?: number;
     readonly step?: number;
   },
-  source: SourceIterable<T>,
-): ResultIterable<T>;
+  source: Wrappable<T>,
+): IterableIterator<T>;
 
-declare function slice<T>(start: number, source: SourceIterable<T>): ResultIterable<T>;
+declare function slice<T>(start: number, source: Wrappable<T>): IterableIterator<T>;
 
-declare function slice<T>(start: number, end: number, source: SourceIterable<T>): ResultIterable<T>;
+declare function slice<T>(start: number, end: number, source: Wrappable<T>): IterableIterator<T>;
 
 declare function slice<T>(
   start: number,
   end: number,
   step: number,
-  source: SourceIterable<T>,
-): ResultIterable<T>;
+  source: Wrappable<T>,
+): IterableIterator<T>;
 
 export { slice };

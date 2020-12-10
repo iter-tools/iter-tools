@@ -6,15 +6,15 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { SourceIterable, ResultIterable } from '../../types/iterable';
+import { Wrappable, IterableIterator } from '../../types/iterable';
 
 declare function joinWith<W, T>(
   separator: W,
-  source: SourceIterable<SourceIterable<T>>,
-): ResultIterable<T | W>;
+  source: Wrappable<Wrappable<T>>,
+): IterableIterator<T | W>;
 
 declare function joinWith<W>(
   separator: W,
-): <T>(source: SourceIterable<SourceIterable<T>>) => ResultIterable<T | W>;
+): <T>(source: Wrappable<Wrappable<T>>) => IterableIterator<T | W>;
 
 export { joinWith };

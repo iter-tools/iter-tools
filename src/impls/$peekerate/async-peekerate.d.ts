@@ -6,12 +6,16 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { AsyncSourceIterable, AsyncIteratorResult } from '../../types/async-iterable';
+import {
+  AsyncWrappable,
+  AsyncIteratorResult,
+  AsyncNonIterableIterator,
+} from '../../types/async-iterable';
 
 export interface AsyncPeekeratorIterator<T> {
   next(): AsyncIteratorResult<T>;
   return(): AsyncIteratorResult<T>;
-  [Symbol.asyncIterator](): this;
+  [Symbol.asyncIterator](): AsyncNonIterableIterator<T>;
 }
 
 interface AsyncPeekeratorBase<T> {
@@ -38,6 +42,6 @@ interface AsyncValuePeekerator<T> extends AsyncPeekeratorBase<T> {
 
 export type AsyncPeekerator<T> = AsyncDonePeekerator<T> | AsyncValuePeekerator<T>;
 
-declare function asyncPeekerate<T>(source: AsyncSourceIterable<T>): AsyncPeekerator<T>;
+declare function asyncPeekerate<T>(source: AsyncWrappable<T>): AsyncPeekerator<T>;
 
 export { asyncPeekerate };

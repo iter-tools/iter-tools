@@ -6,8 +6,8 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { SourceIterable } from '../../types/iterable';
+import { Wrappable } from '../../types/iterable';
 
-declare function consume<T>(iterable: SourceIterable<T>): void;
+declare function consume<T>(iterable: Wrappable<T>): void;
 
 export { consume };

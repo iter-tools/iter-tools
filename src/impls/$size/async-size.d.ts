@@ -6,9 +6,9 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { AsyncSourceIterable } from '../../types/async-iterable';
+import { AsyncWrappable } from '../../types/async-iterable';
 
-declare function asyncSize<Iter extends AsyncSourceIterable<any>>(
+declare function asyncSize<Iter extends AsyncWrappable<any>>(
   iterable: Iter,
 ): Promise<Iter extends any[] ? Iter['length'] : number>;
 

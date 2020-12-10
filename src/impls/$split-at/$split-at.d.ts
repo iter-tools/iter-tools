@@ -1,13 +1,13 @@
-import { ResultIterable as SyncResultIterable } from '../../types/iterable';
-import { $SourceIterable, $ResultIterable } from '../../types/$iterable';
+import { IterableIterator as SyncIterableIterator } from '../../types/iterable';
+import { $Wrappable, $IterableIterator } from '../../types/$iterable';
 
 declare function $splitAt(
   idx: number,
-): <T>(source: $SourceIterable<T>) => SyncResultIterable<$ResultIterable<T>>;
+): <T>(source: $Wrappable<T>) => SyncIterableIterator<$IterableIterator<T>>;
 
 declare function $splitAt<T>(
   idx: number,
-  source: $SourceIterable<T>,
-): SyncResultIterable<$ResultIterable<T>>;
+  source: $Wrappable<T>,
+): SyncIterableIterator<$IterableIterator<T>>;
 
 export { $splitAt };

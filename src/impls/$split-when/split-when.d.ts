@@ -7,18 +7,18 @@
  */
 
 import {
-  ResultIterable as SyncResultIterable,
-  SourceIterable,
-  ResultIterable,
+  IterableIterator as SyncIterableIterator,
+  Wrappable,
+  IterableIterator,
 } from '../../types/iterable';
 
 declare function splitWhen<T>(
   predicate: (value: T, i: number) => any,
-): (source: SourceIterable<T>) => SyncResultIterable<ResultIterable<T>>;
+): (source: Wrappable<T>) => SyncIterableIterator<IterableIterator<T>>;
 
 declare function splitWhen<T>(
   predicate: (value: T, i: number) => any,
-  source: SourceIterable<T>,
-): SyncResultIterable<ResultIterable<T>>;
+  source: Wrappable<T>,
+): SyncIterableIterator<IterableIterator<T>>;
 
 export { splitWhen };

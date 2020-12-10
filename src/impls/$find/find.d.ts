@@ -6,24 +6,24 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { SourceIterable } from '../../types/iterable';
+import { Wrappable } from '../../types/iterable';
 
 declare function find<T, S extends T>(
   predicate: (value: T, i: number) => value is S,
-): (iterable: SourceIterable<T>) => S | undefined;
+): (iterable: Wrappable<T>) => S | undefined;
 
 declare function find<T>(
   predicate: (value: T, i: number) => boolean,
-): (iterable: SourceIterable<T>) => T | undefined;
+): (iterable: Wrappable<T>) => T | undefined;
 
 declare function find<T, S extends T>(
   predicate: (value: T, i: number) => value is S,
-  iterable: SourceIterable<T>,
+  iterable: Wrappable<T>,
 ): S | undefined;
 
 declare function find<T>(
   predicate: (value: T, i: number) => boolean,
-  iterable: SourceIterable<T>,
+  iterable: Wrappable<T>,
 ): T | undefined;
 
 export { find };

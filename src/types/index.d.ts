@@ -1,15 +1,15 @@
-export type { Peekerator } from './impls/$peekerate/peekerate';
-export type { AsyncPeekerator } from './impls/$peekerate/async-peekerate';
-
-export type {
+export {
   Iterable,
   Loopable,
   Wrappable,
   IterableIterator,
   SingletonIterableIterator,
+} from './iterable';
+
+export {
   AsyncIterable,
   AsyncLoopable,
   AsyncWrappable,
   AsyncIterableIterator,
   SingletonAsyncIterableIterator,
-} from './types';
+} from './async-iterable';

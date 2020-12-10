@@ -1,14 +1,14 @@
 import { $Promise } from '../../../generate/async.macro.cjs';
 
-import { $SourceIterable } from '../../types/$iterable';
+import { $Wrappable } from '../../types/$iterable';
 
 declare function $startsWithAnySeq(
-  valueSeqs: Array<$SourceIterable<any>>,
-): (iterable: $SourceIterable<any>) => $Promise<boolean>;
+  valueSeqs: Array<$Wrappable<any>>,
+): (iterable: $Wrappable<any>) => $Promise<boolean>;
 
 declare function $startsWithAnySeq(
-  valueSeqs: Array<$SourceIterable<any>>,
-  iterable: $SourceIterable<any>,
+  valueSeqs: Array<$Wrappable<any>>,
+  iterable: $Wrappable<any>,
 ): $Promise<boolean>;
 
 export { $startsWithAnySeq };

@@ -1,29 +1,29 @@
-import { $SourceIterable, $ResultIterable } from '../../types/$iterable';
+import { $Wrappable, $IterableIterator } from '../../types/$iterable';
 
-declare function $takeSorted<T>(iterable: $SourceIterable<T>): $ResultIterable<T>;
+declare function $takeSorted<T>(iterable: $Wrappable<T>): $IterableIterator<T>;
 
-declare function $takeSorted<T>(n: number): (source: $SourceIterable<T>) => $ResultIterable<T>;
-
-declare function $takeSorted<T>(
-  n: number,
-  func: (a: T, b: T) => number,
-): (source: $SourceIterable<T>) => $ResultIterable<T>;
-
-declare function $takeSorted<T>(
-  func: (a: T, b: T) => number,
-): (source: $SourceIterable<T>) => $ResultIterable<T>;
-
-declare function $takeSorted<T>(n: number, source: $SourceIterable<T>): $ResultIterable<T>;
+declare function $takeSorted<T>(n: number): (source: $Wrappable<T>) => $IterableIterator<T>;
 
 declare function $takeSorted<T>(
   n: number,
   func: (a: T, b: T) => number,
-  source: $SourceIterable<T>,
-): $ResultIterable<T>;
+): (source: $Wrappable<T>) => $IterableIterator<T>;
 
 declare function $takeSorted<T>(
   func: (a: T, b: T) => number,
-  source: $SourceIterable<T>,
-): $ResultIterable<T>;
+): (source: $Wrappable<T>) => $IterableIterator<T>;
+
+declare function $takeSorted<T>(n: number, source: $Wrappable<T>): $IterableIterator<T>;
+
+declare function $takeSorted<T>(
+  n: number,
+  func: (a: T, b: T) => number,
+  source: $Wrappable<T>,
+): $IterableIterator<T>;
+
+declare function $takeSorted<T>(
+  func: (a: T, b: T) => number,
+  source: $Wrappable<T>,
+): $IterableIterator<T>;
 
 export { $takeSorted };

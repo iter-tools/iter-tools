@@ -1,4 +1,4 @@
-import { Iterable, ResultIterable } from '../../types/iterable';
+import { Iterable, IterableIterator } from '../../types/iterable';
 
 declare function wrapEntries<K, V>(
   entriesable:
@@ -7,6 +7,6 @@ declare function wrapEntries<K, V>(
       }
     | null
     | undefined,
-): ResultIterable<[K, V]>;
+): IterableIterator<[K, V]>;
 
 export { wrapEntries };

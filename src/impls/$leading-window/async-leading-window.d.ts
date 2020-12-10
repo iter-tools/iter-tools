@@ -6,8 +6,8 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { AsyncSourceIterable, AsyncResultIterable } from '../../types/async-iterable';
-import { ResultIterable as SyncResultIterable } from '../../types/iterable';
+import { AsyncWrappable, AsyncIterableIterator } from '../../types/async-iterable';
+import { IterableIterator as SyncIterableIterator } from '../../types/iterable';
 
 declare function asyncLeadingWindow<T>(
   size: number,
@@ -15,8 +15,8 @@ declare function asyncLeadingWindow<T>(
     useFiller: false;
     readonly filler?: any;
   },
-  source: AsyncSourceIterable<T>,
-): AsyncResultIterable<SyncResultIterable<T>>;
+  source: AsyncWrappable<T>,
+): AsyncIterableIterator<SyncIterableIterator<T>>;
 
 declare function asyncLeadingWindow(
   size: number,
@@ -24,7 +24,7 @@ declare function asyncLeadingWindow(
     useFiller: false;
     readonly filler?: any;
   },
-): <T>(source: AsyncSourceIterable<T>) => AsyncResultIterable<SyncResultIterable<T>>;
+): <T>(source: AsyncWrappable<T>) => AsyncIterableIterator<SyncIterableIterator<T>>;
 
 declare function asyncLeadingWindow<T, Filler = undefined>(
   size: number,
@@ -32,13 +32,13 @@ declare function asyncLeadingWindow<T, Filler = undefined>(
     useFiller?: boolean;
     readonly filler?: Filler;
   },
-  source: AsyncSourceIterable<T>,
-): AsyncResultIterable<SyncResultIterable<T | Filler>>;
+  source: AsyncWrappable<T>,
+): AsyncIterableIterator<SyncIterableIterator<T | Filler>>;
 
 declare function asyncLeadingWindow<T>(
   size: number,
-  source: AsyncSourceIterable<T>,
-): AsyncResultIterable<SyncResultIterable<T | undefined>>;
+  source: AsyncWrappable<T>,
+): AsyncIterableIterator<SyncIterableIterator<T | undefined>>;
 
 declare function asyncLeadingWindow<Filler = undefined>(
   size: number,
@@ -46,6 +46,6 @@ declare function asyncLeadingWindow<Filler = undefined>(
     useFiller?: boolean;
     readonly filler?: Filler;
   },
-): <T>(source: AsyncSourceIterable<T>) => AsyncResultIterable<SyncResultIterable<T | Filler>>;
+): <T>(source: AsyncWrappable<T>) => AsyncIterableIterator<SyncIterableIterator<T | Filler>>;
 
 export { asyncLeadingWindow };

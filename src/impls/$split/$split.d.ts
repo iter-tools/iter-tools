@@ -1,6 +1,6 @@
-import { ResultIterable as SyncResultIterable } from '../../types/iterable';
-import { $SourceIterable, $ResultIterable } from '../../types/$iterable';
+import { IterableIterator as SyncIterableIterator } from '../../types/iterable';
+import { $Wrappable, $IterableIterator } from '../../types/$iterable';
 
-declare function $split<T>(source: $SourceIterable<T>): $ResultIterable<SyncResultIterable<T>>;
+declare function $split<T>(source: $Wrappable<T>): $IterableIterator<SyncIterableIterator<T>>;
 
 export { $split };

@@ -6,16 +6,16 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { AsyncSourceIterable, AsyncResultIterable } from '../../types/async-iterable';
-import { ResultIterable as SyncResultIterable } from '../../types/iterable';
+import { AsyncWrappable, AsyncIterableIterator } from '../../types/async-iterable';
+import { IterableIterator as SyncIterableIterator } from '../../types/iterable';
 
 declare function asyncWindow<T>(
   size: number,
-  source: AsyncSourceIterable<T>,
-): AsyncResultIterable<SyncResultIterable<T>>;
+  source: AsyncWrappable<T>,
+): AsyncIterableIterator<SyncIterableIterator<T>>;
 
 declare function asyncWindow(
   size: number,
-): <T>(source: AsyncSourceIterable<T>) => AsyncResultIterable<SyncResultIterable<T>>;
+): <T>(source: AsyncWrappable<T>) => AsyncIterableIterator<SyncIterableIterator<T>>;
 
 export { asyncWindow };
