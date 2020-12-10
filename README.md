@@ -99,12 +99,12 @@ import map from 'iter-tools-es/methods/map';
 
 ### \_\_methods
 
-Methods whose names begin with `__` are safe to use -- they are part of the library's public API. They are intended for use by extenders of the library and in tight loops where performance is critical.
+Methods whose names begin with `__` are safe to use – they are part of the library's public API. They are intended for use by extenders of the library and in tight loops where performance is critical.
 
 There are some differences in the order in which arguments are passed, but these are documented along with the method's other overloads. Other less visible differences are:
 
 `__` methods are not curried. You must pass all their arguments in a single call  
-`__` methods do not treat `null` and `undefined` as iterables.  
+`__` methods (aside from `__wrap`) do not treat `null` and `undefined` as iterables.  
 `__` methods do not permit sync iterables to be used in place of async iterables (this could change in the future).  
 `__` methods return singleton iterable iterators. You can only loop over the results once.  
 `__` methods may expose implementation internals which are not part of the documented public API. Code using undocumented APIs is subject to breakage in **any** release, in accordance with the [semver specification](https://semver.org/).  
