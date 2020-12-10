@@ -1,6 +1,6 @@
 import { $async } from '../../../generate/async.macro.cjs';
 
-import { $wrapWithResultIterable, $ensureIterable } from '../../internal/$iterable.js';
+import { $wrapWithIterableIterator, $ensureIterable } from '../../internal/$iterable.js';
 
 $async;
 export function* $__concat(...sources) {
@@ -9,4 +9,4 @@ export function* $__concat(...sources) {
   }
 }
 
-export const $concat = /*#__PURE__*/ $wrapWithResultIterable($__concat);
+export const $concat = /*#__PURE__*/ $wrapWithIterableIterator($__concat);

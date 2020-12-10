@@ -1,14 +1,14 @@
-import { $SourceIterable, $ResultIterable } from '../../types/$iterable';
+import { $Wrappable, $IterableIterator } from '../../types/$iterable';
 
-declare function $enumerate<T>(iterable: $SourceIterable<T>): $ResultIterable<[number, T]>;
+declare function $enumerate<T>(iterable: $Wrappable<T>): $IterableIterator<[number, T]>;
 
 declare function $enumerate<T>(
   firstIdx: number,
-  source: $SourceIterable<T>,
-): $ResultIterable<[number, T]>;
+  source: $Wrappable<T>,
+): $IterableIterator<[number, T]>;
 
 declare function $enumerate(
   firstIdx: number,
-): <T>(source: $SourceIterable<T>) => $ResultIterable<[number, T]>;
+): <T>(source: $Wrappable<T>) => $IterableIterator<[number, T]>;
 
 export { $enumerate };

@@ -6,15 +6,15 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { SourceIterable, ResultIterable } from '../../types/iterable';
+import { Wrappable, IterableIterator } from '../../types/iterable';
 
 declare function interposeSeq<V>(
-  seq: SourceIterable<V>,
-): <T>(source: SourceIterable<T>) => ResultIterable<T | V>;
+  seq: Wrappable<V>,
+): <T>(source: Wrappable<T>) => IterableIterator<T | V>;
 
 declare function interposeSeq<V, T>(
-  seq: SourceIterable<V>,
-  source: SourceIterable<T>,
-): ResultIterable<T | V>;
+  seq: Wrappable<V>,
+  source: Wrappable<T>,
+): IterableIterator<T | V>;
 
 export { interposeSeq };

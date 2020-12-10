@@ -6,10 +6,10 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { SourceIterable, ResultIterable } from '../../types/iterable';
+import { Wrappable, IterableIterator } from '../../types/iterable';
 
-declare function take<T>(n: number, iterable: SourceIterable<T>): ResultIterable<T>;
+declare function take<T>(n: number, iterable: Wrappable<T>): IterableIterator<T>;
 
-declare function take<T>(n: number): (iterable: SourceIterable<T>) => ResultIterable<T>;
+declare function take<T>(n: number): (iterable: Wrappable<T>) => IterableIterator<T>;
 
 export { take };

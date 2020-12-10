@@ -1,14 +1,14 @@
 import { $MaybePromise } from '../../../generate/async.macro.cjs';
 
-import { $SourceIterable, $ResultIterable } from '../../types/$iterable';
+import { $Wrappable, $IterableIterator } from '../../types/$iterable';
 
 declare function $dropWhile<T>(
   predicate: (value: T, i: number) => $MaybePromise<boolean>,
-): (source: $SourceIterable<T>) => $ResultIterable<T>;
+): (source: $Wrappable<T>) => $IterableIterator<T>;
 
 declare function $dropWhile<T>(
   predicate: (value: T, i: number) => $MaybePromise<boolean>,
-  source: $SourceIterable<T>,
-): $ResultIterable<T>;
+  source: $Wrappable<T>,
+): $IterableIterator<T>;
 
 export { $dropWhile };

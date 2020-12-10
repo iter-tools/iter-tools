@@ -6,17 +6,17 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { SourceIterable, ResultIterable } from '../../types/iterable';
+import { Wrappable, IterableIterator } from '../../types/iterable';
 
-declare function collate<T>(...sources: Array<SourceIterable<T>>): ResultIterable<T>;
-
-declare function collate<T>(
-  comparator: (a: T, b: T) => number,
-  ...sources: Array<SourceIterable<T>>
-): ResultIterable<T>;
+declare function collate<T>(...sources: Array<Wrappable<T>>): IterableIterator<T>;
 
 declare function collate<T>(
   comparator: (a: T, b: T) => number,
-): (...sources: Array<SourceIterable<T>>) => ResultIterable<T>;
+  ...sources: Array<Wrappable<T>>
+): IterableIterator<T>;
+
+declare function collate<T>(
+  comparator: (a: T, b: T) => number,
+): (...sources: Array<Wrappable<T>>) => IterableIterator<T>;
 
 export { collate };

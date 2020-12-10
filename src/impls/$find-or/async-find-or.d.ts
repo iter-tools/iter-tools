@@ -6,28 +6,28 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { AsyncSourceIterable } from '../../types/async-iterable';
+import { AsyncWrappable } from '../../types/async-iterable';
 
 declare function asyncFindOr<N, T, S extends T>(
   notFoundValue: N,
   predicate: (value: T, i: number) => value is S,
-): (iterable: AsyncSourceIterable<T>) => Promise<S | N>;
+): (iterable: AsyncWrappable<T>) => Promise<S | N>;
 
 declare function asyncFindOr<N, T>(
   notFoundValue: N,
   predicate: (value: T, i: number) => boolean | Promise<boolean>,
-): (iterable: AsyncSourceIterable<T>) => Promise<T | N>;
+): (iterable: AsyncWrappable<T>) => Promise<T | N>;
 
 declare function asyncFindOr<N, T, S extends T>(
   notFoundValue: N,
   predicate: (value: T, i: number) => value is S,
-  iterable: AsyncSourceIterable<T>,
+  iterable: AsyncWrappable<T>,
 ): Promise<S | N>;
 
 declare function asyncFindOr<N, T>(
   notFoundValue: N,
   predicate: (value: T, i: number) => boolean | Promise<boolean>,
-  iterable: AsyncSourceIterable<T>,
+  iterable: AsyncWrappable<T>,
 ): Promise<T | N>;
 
 export { asyncFindOr };

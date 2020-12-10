@@ -1,14 +1,14 @@
 import { $Promise, $MaybePromise } from '../../../generate/async.macro.cjs';
 
-import { $SourceIterable } from '../../types/$iterable';
+import { $Wrappable } from '../../types/$iterable';
 
 declare function $every<T>(
   predicate: (value: T) => $MaybePromise<boolean>,
-): (iterable: $SourceIterable<T>) => $Promise<boolean>;
+): (iterable: $Wrappable<T>) => $Promise<boolean>;
 
 declare function $every<T>(
   predicate: (value: T) => $MaybePromise<boolean>,
-  iterable: $SourceIterable<T>,
+  iterable: $Wrappable<T>,
 ): $Promise<boolean>;
 
 export { $every };

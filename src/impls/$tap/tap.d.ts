@@ -6,15 +6,15 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { SourceIterable, ResultIterable } from '../../types/iterable';
+import { Wrappable, IterableIterator } from '../../types/iterable';
 
 declare function tap<T>(
   callback: (value: T, i: number) => any,
-): (source: SourceIterable<T>) => ResultIterable<T>;
+): (source: Wrappable<T>) => IterableIterator<T>;
 
 declare function tap<T>(
   callback: (value: T, i: number) => any,
-  source: SourceIterable<T>,
-): ResultIterable<T>;
+  source: Wrappable<T>,
+): IterableIterator<T>;
 
 export { tap };

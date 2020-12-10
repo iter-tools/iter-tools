@@ -6,8 +6,8 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { SourceIterable } from '../../types/iterable';
+import { Wrappable } from '../../types/iterable';
 
-declare function firstOr<E, T>(whenEmpty: E, iterable: SourceIterable<T>): T | E;
+declare function firstOr<E, T>(whenEmpty: E, iterable: Wrappable<T>): T | E;
 
 export { firstOr };

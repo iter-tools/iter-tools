@@ -6,10 +6,10 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { AsyncSourceIterable } from '../../types/async-iterable';
+import { AsyncWrappable } from '../../types/async-iterable';
 
 declare function asyncToObject<V>(
-  iterable: AsyncSourceIterable<[string, V]>,
+  iterable: AsyncWrappable<[string, V]>,
   proto?: any,
 ): Promise<{ [key: string]: V }>;
 

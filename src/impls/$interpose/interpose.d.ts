@@ -6,10 +6,10 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { SourceIterable, ResultIterable } from '../../types/iterable';
+import { Wrappable, IterableIterator } from '../../types/iterable';
 
-declare function interpose<V>(value: V): <T>(source: SourceIterable<T>) => ResultIterable<T | V>;
+declare function interpose<V>(value: V): <T>(source: Wrappable<T>) => IterableIterator<T | V>;
 
-declare function interpose<V, T>(value: V, source: SourceIterable<T>): ResultIterable<T | V>;
+declare function interpose<V, T>(value: V, source: Wrappable<T>): IterableIterator<T | V>;
 
 export { interpose };

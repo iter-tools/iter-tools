@@ -1,5 +1,5 @@
-import { $SourceIterable, $ResultIterable } from '../../types/$iterable';
+import { $Wrappable, $IterableIterator } from '../../types/$iterable';
 
-declare function $reverse<T>(source: $SourceIterable<T>): $ResultIterable<T>;
+declare function $reverse<T>(source: $Wrappable<T>): $IterableIterator<T>;
 
 export { $reverse };

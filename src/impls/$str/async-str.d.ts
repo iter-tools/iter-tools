@@ -6,10 +6,10 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { AsyncSourceIterable } from '../../types/async-iterable';
+import { AsyncWrappable } from '../../types/async-iterable';
 
-declare function asyncStr(strings: AsyncSourceIterable<string>): Promise<string>;
+declare function asyncStr(strings: AsyncWrappable<string>): Promise<string>;
 
-declare function asyncStr(strings: AsyncSourceIterable<{ toString(): string }>): Promise<string>;
+declare function asyncStr(strings: AsyncWrappable<{ toString(): string }>): Promise<string>;
 
 export { asyncStr };

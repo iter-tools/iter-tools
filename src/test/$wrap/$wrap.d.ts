@@ -1,10 +1,10 @@
-import { $SourceIterable, $ResultIterable } from '../../types/$iterable';
+import { $Wrappable, $IterableIterator } from '../../types/$iterable';
 
-declare function $wrap<T>(array: $SourceIterable<T>): $ResultIterable<T>;
-declare function $wrap(string: string): $ResultIterable<string>;
+declare function $wrap<T>(array: $Wrappable<T>): $IterableIterator<T>;
+declare function $wrap(string: string): $IterableIterator<string>;
 
 declare function $wrapDeep<T>(
-  array: $SourceIterable<T | $SourceIterable<T | $SourceIterable<T>>>,
-): $ResultIterable<$ResultIterable<T>>;
+  array: $Wrappable<T | $Wrappable<T | $Wrappable<T>>>,
+): $IterableIterator<$IterableIterator<T>>;
 
 export { $wrap, $wrapDeep };

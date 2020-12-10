@@ -1052,7 +1052,3 @@ src/test/async-helpers.d.ts linguist-generated=true
 src/test/async-helpers.js linguist-generated=true
 src/test/helpers.d.ts linguist-generated=true
 src/test/helpers.js linguist-generated=true
-src/types/async-parts-iterable.d.ts linguist-generated=true
-src/types/async-parts-iterable.js linguist-generated=true
-src/types/parts-iterable.d.ts linguist-generated=true
-src/types/parts-iterable.js linguist-generated=true

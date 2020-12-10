@@ -1,4 +1,4 @@
-import { wrapWithResultIterable } from '../../internal/iterable.js';
+import { wrapWithIterableIterator } from '../../internal/iterable.js';
 
 export function* __repeat(value) {
   while (true) {
@@ -6,4 +6,4 @@ export function* __repeat(value) {
   }
 }
 
-export const repeat = /*#__PURE__*/ wrapWithResultIterable(__repeat);
+export const repeat = /*#__PURE__*/ wrapWithIterableIterator(__repeat);

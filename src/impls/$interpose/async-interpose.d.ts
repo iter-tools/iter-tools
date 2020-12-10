@@ -6,15 +6,15 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { AsyncSourceIterable, AsyncResultIterable } from '../../types/async-iterable';
+import { AsyncWrappable, AsyncIterableIterator } from '../../types/async-iterable';
 
 declare function asyncInterpose<V>(
   value: V,
-): <T>(source: AsyncSourceIterable<T>) => AsyncResultIterable<T | V>;
+): <T>(source: AsyncWrappable<T>) => AsyncIterableIterator<T | V>;
 
 declare function asyncInterpose<V, T>(
   value: V,
-  source: AsyncSourceIterable<T>,
-): AsyncResultIterable<T | V>;
+  source: AsyncWrappable<T>,
+): AsyncIterableIterator<T | V>;
 
 export { asyncInterpose };

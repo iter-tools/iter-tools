@@ -5,6 +5,6 @@
 /src/index.*
 
 CHANGELOG.md
-API.md
+/API.md
 
 generate-yo/generators/*/templates/

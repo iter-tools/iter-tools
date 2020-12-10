@@ -6,8 +6,8 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { AsyncSourceIterable } from '../../types/async-iterable';
+import { AsyncWrappable } from '../../types/async-iterable';
 
-declare function asyncEqual(...iterables: Array<AsyncSourceIterable<any>>): Promise<boolean>;
+declare function asyncEqual(...iterables: Array<AsyncWrappable<any>>): Promise<boolean>;
 
 export { asyncEqual };

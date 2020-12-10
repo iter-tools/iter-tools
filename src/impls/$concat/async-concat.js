@@ -6,7 +6,10 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { asyncWrapWithResultIterable, asyncEnsureIterable } from '../../internal/async-iterable.js';
+import {
+  asyncWrapWithIterableIterator,
+  asyncEnsureIterable,
+} from '../../internal/async-iterable.js';
 
 export async function* __asyncConcat(...sources) {
   for (const iterable of sources) {
@@ -14,4 +17,4 @@ export async function* __asyncConcat(...sources) {
   }
 }
 
-export const asyncConcat = /*#__PURE__*/ asyncWrapWithResultIterable(__asyncConcat);
+export const asyncConcat = /*#__PURE__*/ asyncWrapWithIterableIterator(__asyncConcat);

@@ -6,15 +6,15 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { AsyncSourceIterable } from '../../types/async-iterable';
+import { AsyncWrappable } from '../../types/async-iterable';
 
 declare function asyncStartsWithSeq(
-  valueSeq: AsyncSourceIterable<any>,
-): (iterable: AsyncSourceIterable<any>) => Promise<boolean>;
+  valueSeq: AsyncWrappable<any>,
+): (iterable: AsyncWrappable<any>) => Promise<boolean>;
 
 declare function asyncStartsWithSeq(
-  valueSeq: AsyncSourceIterable<any>,
-  iterable: AsyncSourceIterable<any>,
+  valueSeq: AsyncWrappable<any>,
+  iterable: AsyncWrappable<any>,
 ): Promise<boolean>;
 
 export { asyncStartsWithSeq };

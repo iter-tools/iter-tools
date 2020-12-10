@@ -1,12 +1,12 @@
-import { $SourceIterable, $ResultIterable } from '../../types/$iterable';
+import { $Wrappable, $IterableIterator } from '../../types/$iterable';
 
 declare function $splitOnAny(
   separatorValues: Array<any>,
-): <T>(source: $SourceIterable<T>) => $ResultIterable<$ResultIterable<T>>;
+): <T>(source: $Wrappable<T>) => $IterableIterator<$IterableIterator<T>>;
 
 declare function $splitOnAny<T>(
   separatorValues: Array<any>,
-  source: $SourceIterable<T>,
-): $ResultIterable<$ResultIterable<T>>;
+  source: $Wrappable<T>,
+): $IterableIterator<$IterableIterator<T>>;
 
 export { $splitOnAny };

@@ -6,15 +6,15 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { AsyncSourceIterable } from '../../types/async-iterable';
+import { AsyncWrappable } from '../../types/async-iterable';
 
 declare function asyncStartsWithAny(
   values: Array<any>,
-): (iterable: AsyncSourceIterable<any>) => Promise<boolean>;
+): (iterable: AsyncWrappable<any>) => Promise<boolean>;
 
 declare function asyncStartsWithAny(
   values: Array<any>,
-  iterable: AsyncSourceIterable<any>,
+  iterable: AsyncWrappable<any>,
 ): Promise<boolean>;
 
 export { asyncStartsWithAny };

@@ -1,7 +1,7 @@
 import { $Promise } from '../../../generate/async.macro.cjs';
 
-import { $SourceIterable } from '../../types/$iterable';
+import { $Wrappable } from '../../types/$iterable';
 
-declare function $toArray<T>(source: $SourceIterable<T>): $Promise<Array<T>>;
+declare function $toArray<T>(source: $Wrappable<T>): $Promise<Array<T>>;
 
 export { $toArray };

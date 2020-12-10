@@ -7,18 +7,18 @@
  */
 
 import {
-  ResultIterable as SyncResultIterable,
-  SourceIterable,
-  ResultIterable,
+  IterableIterator as SyncIterableIterator,
+  Wrappable,
+  IterableIterator,
 } from '../../types/iterable';
 
 declare function splitAt(
   idx: number,
-): <T>(source: SourceIterable<T>) => SyncResultIterable<ResultIterable<T>>;
+): <T>(source: Wrappable<T>) => SyncIterableIterator<IterableIterator<T>>;
 
 declare function splitAt<T>(
   idx: number,
-  source: SourceIterable<T>,
-): SyncResultIterable<ResultIterable<T>>;
+  source: Wrappable<T>,
+): SyncIterableIterator<IterableIterator<T>>;
 
 export { splitAt };

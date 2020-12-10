@@ -6,28 +6,28 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { SourceIterable } from '../../types/iterable';
+import { Wrappable } from '../../types/iterable';
 
 declare function findOr<N, T, S extends T>(
   notFoundValue: N,
   predicate: (value: T, i: number) => value is S,
-): (iterable: SourceIterable<T>) => S | N;
+): (iterable: Wrappable<T>) => S | N;
 
 declare function findOr<N, T>(
   notFoundValue: N,
   predicate: (value: T, i: number) => boolean,
-): (iterable: SourceIterable<T>) => T | N;
+): (iterable: Wrappable<T>) => T | N;
 
 declare function findOr<N, T, S extends T>(
   notFoundValue: N,
   predicate: (value: T, i: number) => value is S,
-  iterable: SourceIterable<T>,
+  iterable: Wrappable<T>,
 ): S | N;
 
 declare function findOr<N, T>(
   notFoundValue: N,
   predicate: (value: T, i: number) => boolean,
-  iterable: SourceIterable<T>,
+  iterable: Wrappable<T>,
 ): T | N;
 
 export { findOr };

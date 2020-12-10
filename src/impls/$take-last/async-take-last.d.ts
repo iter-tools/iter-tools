@@ -6,8 +6,8 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { AsyncSourceIterable } from '../../types/async-iterable';
+import { AsyncWrappable } from '../../types/async-iterable';
 
-declare function asyncTakeLast<T>(iterable: AsyncSourceIterable<T>): Promise<T | undefined>;
+declare function asyncTakeLast<T>(iterable: AsyncWrappable<T>): Promise<T | undefined>;
 
 export { asyncTakeLast };

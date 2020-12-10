@@ -6,10 +6,10 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { SourceIterable } from '../../types/iterable';
+import { Wrappable } from '../../types/iterable';
 
-declare function includesSeq(seq: SourceIterable<any>): (iterable: SourceIterable<any>) => boolean;
+declare function includesSeq(seq: Wrappable<any>): (iterable: Wrappable<any>) => boolean;
 
-declare function includesSeq(seq: SourceIterable<any>, iterable: SourceIterable<any>): boolean;
+declare function includesSeq(seq: Wrappable<any>, iterable: Wrappable<any>): boolean;
 
 export { includesSeq };

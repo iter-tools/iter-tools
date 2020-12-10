@@ -6,7 +6,7 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { wrapWithResultIterable, ensureIterable } from '../../internal/iterable.js';
+import { wrapWithIterableIterator, ensureIterable } from '../../internal/iterable.js';
 
 export function* __concat(...sources) {
   for (const iterable of sources) {
@@ -14,4 +14,4 @@ export function* __concat(...sources) {
   }
 }
 
-export const concat = /*#__PURE__*/ wrapWithResultIterable(__concat);
+export const concat = /*#__PURE__*/ wrapWithIterableIterator(__concat);

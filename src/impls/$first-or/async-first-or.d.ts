@@ -6,8 +6,8 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { AsyncSourceIterable } from '../../types/async-iterable';
+import { AsyncWrappable } from '../../types/async-iterable';
 
-declare function asyncFirstOr<E, T>(whenEmpty: E, iterable: AsyncSourceIterable<T>): Promise<T | E>;
+declare function asyncFirstOr<E, T>(whenEmpty: E, iterable: AsyncWrappable<T>): Promise<T | E>;
 
 export { asyncFirstOr };

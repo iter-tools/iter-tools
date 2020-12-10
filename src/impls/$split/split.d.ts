@@ -7,11 +7,11 @@
  */
 
 import {
-  ResultIterable as SyncResultIterable,
-  SourceIterable,
-  ResultIterable,
+  IterableIterator as SyncIterableIterator,
+  Wrappable,
+  IterableIterator,
 } from '../../types/iterable';
 
-declare function split<T>(source: SourceIterable<T>): ResultIterable<SyncResultIterable<T>>;
+declare function split<T>(source: Wrappable<T>): IterableIterator<SyncIterableIterator<T>>;
 
 export { split };

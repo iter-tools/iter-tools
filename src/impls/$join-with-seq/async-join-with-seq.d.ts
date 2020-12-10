@@ -6,16 +6,16 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { SourceIterable as SyncSourceIterable } from '../../types/iterable';
-import { AsyncSourceIterable, AsyncResultIterable } from '../../types/async-iterable';
+import { Wrappable as SyncWrappable } from '../../types/iterable';
+import { AsyncWrappable, AsyncIterableIterator } from '../../types/async-iterable';
 
 declare function asyncJoinWithSeq<W, T>(
-  seq: SyncSourceIterable<W>,
-  source: AsyncSourceIterable<AsyncSourceIterable<T>>,
-): AsyncResultIterable<T | W>;
+  seq: SyncWrappable<W>,
+  source: AsyncWrappable<AsyncWrappable<T>>,
+): AsyncIterableIterator<T | W>;
 
 declare function asyncJoinWithSeq<W>(
-  seq: SyncSourceIterable<W>,
-): <T>(source: AsyncSourceIterable<AsyncSourceIterable<T>>) => AsyncResultIterable<T | W>;
+  seq: SyncWrappable<W>,
+): <T>(source: AsyncWrappable<AsyncWrappable<T>>) => AsyncIterableIterator<T | W>;
 
 export { asyncJoinWithSeq };

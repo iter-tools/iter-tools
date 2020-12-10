@@ -6,37 +6,34 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { AsyncSourceIterable, AsyncResultIterable } from '../../types/async-iterable';
+import { AsyncWrappable, AsyncIterableIterator } from '../../types/async-iterable';
 
-declare function asyncTakeSorted<T>(iterable: AsyncSourceIterable<T>): AsyncResultIterable<T>;
-
-declare function asyncTakeSorted<T>(
-  n: number,
-): (source: AsyncSourceIterable<T>) => AsyncResultIterable<T>;
+declare function asyncTakeSorted<T>(iterable: AsyncWrappable<T>): AsyncIterableIterator<T>;
 
 declare function asyncTakeSorted<T>(
   n: number,
-  func: (a: T, b: T) => number,
-): (source: AsyncSourceIterable<T>) => AsyncResultIterable<T>;
-
-declare function asyncTakeSorted<T>(
-  func: (a: T, b: T) => number,
-): (source: AsyncSourceIterable<T>) => AsyncResultIterable<T>;
-
-declare function asyncTakeSorted<T>(
-  n: number,
-  source: AsyncSourceIterable<T>,
-): AsyncResultIterable<T>;
+): (source: AsyncWrappable<T>) => AsyncIterableIterator<T>;
 
 declare function asyncTakeSorted<T>(
   n: number,
   func: (a: T, b: T) => number,
-  source: AsyncSourceIterable<T>,
-): AsyncResultIterable<T>;
+): (source: AsyncWrappable<T>) => AsyncIterableIterator<T>;
 
 declare function asyncTakeSorted<T>(
   func: (a: T, b: T) => number,
-  source: AsyncSourceIterable<T>,
-): AsyncResultIterable<T>;
+): (source: AsyncWrappable<T>) => AsyncIterableIterator<T>;
+
+declare function asyncTakeSorted<T>(n: number, source: AsyncWrappable<T>): AsyncIterableIterator<T>;
+
+declare function asyncTakeSorted<T>(
+  n: number,
+  func: (a: T, b: T) => number,
+  source: AsyncWrappable<T>,
+): AsyncIterableIterator<T>;
+
+declare function asyncTakeSorted<T>(
+  func: (a: T, b: T) => number,
+  source: AsyncWrappable<T>,
+): AsyncIterableIterator<T>;
 
 export { asyncTakeSorted };

@@ -1,15 +1,15 @@
 import { Repeat } from 'typescript-tuple';
 
 import { InRange8 } from './utility';
-import { SourceIterable } from '../../types/iterable';
+import { Wrappable } from '../../types/iterable';
 
-type CombinationsPermutationsByLength<T, R extends number> = SourceIterable<
+type CombinationsPermutationsByLength<T, R extends number> = Wrappable<
   R extends InRange8 ? Repeat<T, R> : T[]
 > & { readonly size: number };
 
-type CombinationsPermutationsByIterable<
-  Iter extends SourceIterable<any>
-> = Iter extends SourceIterable<infer T>
+type CombinationsPermutationsByIterable<Iter extends Wrappable<any>> = Iter extends Wrappable<
+  infer T
+>
   ? Iter extends T[]
     ? CombinationsPermutationsByLength<T, Iter['length']>
     : Iterable<T[]> & { size: number }
@@ -19,6 +19,6 @@ type CombinationsPermutationsByIterable<
  * Function signature of `permutations` and `combinations`
  */
 export interface CombinationsPermutations {
-  <Iter extends SourceIterable<any>>(source: Iter): CombinationsPermutationsByIterable<Iter>;
-  <T, R extends number>(r: R, source: SourceIterable<T>): CombinationsPermutationsByLength<T, R>;
+  <Iter extends Wrappable<any>>(source: Iter): CombinationsPermutationsByIterable<Iter>;
+  <T, R extends number>(r: R, source: Wrappable<T>): CombinationsPermutationsByLength<T, R>;
 }

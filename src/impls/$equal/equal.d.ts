@@ -6,8 +6,8 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { SourceIterable } from '../../types/iterable';
+import { Wrappable } from '../../types/iterable';
 
-declare function equal(...iterables: Array<SourceIterable<any>>): boolean;
+declare function equal(...iterables: Array<Wrappable<any>>): boolean;
 
 export { equal };

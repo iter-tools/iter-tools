@@ -6,8 +6,8 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { SourceIterable, ResultIterable } from '../../types/iterable';
+import { Wrappable, IterableIterator } from '../../types/iterable';
 
-declare function concat<T>(...sources: Array<SourceIterable<T>>): ResultIterable<T>;
+declare function concat<T>(...sources: Array<Wrappable<T>>): IterableIterator<T>;
 
 export { concat };

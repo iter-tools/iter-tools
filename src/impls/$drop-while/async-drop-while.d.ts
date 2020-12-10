@@ -6,15 +6,15 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { AsyncSourceIterable, AsyncResultIterable } from '../../types/async-iterable';
+import { AsyncWrappable, AsyncIterableIterator } from '../../types/async-iterable';
 
 declare function asyncDropWhile<T>(
   predicate: (value: T, i: number) => boolean | Promise<boolean>,
-): (source: AsyncSourceIterable<T>) => AsyncResultIterable<T>;
+): (source: AsyncWrappable<T>) => AsyncIterableIterator<T>;
 
 declare function asyncDropWhile<T>(
   predicate: (value: T, i: number) => boolean | Promise<boolean>,
-  source: AsyncSourceIterable<T>,
-): AsyncResultIterable<T>;
+  source: AsyncWrappable<T>,
+): AsyncIterableIterator<T>;
 
 export { asyncDropWhile };

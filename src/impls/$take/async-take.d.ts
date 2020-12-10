@@ -6,12 +6,10 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { AsyncSourceIterable, AsyncResultIterable } from '../../types/async-iterable';
+import { AsyncWrappable, AsyncIterableIterator } from '../../types/async-iterable';
 
-declare function asyncTake<T>(n: number, iterable: AsyncSourceIterable<T>): AsyncResultIterable<T>;
+declare function asyncTake<T>(n: number, iterable: AsyncWrappable<T>): AsyncIterableIterator<T>;
 
-declare function asyncTake<T>(
-  n: number,
-): (iterable: AsyncSourceIterable<T>) => AsyncResultIterable<T>;
+declare function asyncTake<T>(n: number): (iterable: AsyncWrappable<T>) => AsyncIterableIterator<T>;
 
 export { asyncTake };

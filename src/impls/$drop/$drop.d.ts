@@ -1,7 +1,7 @@
-import { $SourceIterable, $ResultIterable } from '../../types/$iterable';
+import { $Wrappable, $IterableIterator } from '../../types/$iterable';
 
-declare function $drop<T>(n: number, iterable: $SourceIterable<T>): $ResultIterable<T>;
+declare function $drop<T>(n: number, iterable: $Wrappable<T>): $IterableIterator<T>;
 
-declare function $drop<T>(n: number): (iterable: $SourceIterable<T>) => $ResultIterable<T>;
+declare function $drop<T>(n: number): (iterable: $Wrappable<T>) => $IterableIterator<T>;
 
 export { $drop };

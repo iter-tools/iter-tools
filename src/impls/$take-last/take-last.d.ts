@@ -6,8 +6,8 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { SourceIterable } from '../../types/iterable';
+import { Wrappable } from '../../types/iterable';
 
-declare function takeLast<T>(iterable: SourceIterable<T>): T | undefined;
+declare function takeLast<T>(iterable: Wrappable<T>): T | undefined;
 
 export { takeLast };

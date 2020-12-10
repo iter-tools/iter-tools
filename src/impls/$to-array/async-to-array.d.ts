@@ -6,8 +6,8 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { AsyncSourceIterable } from '../../types/async-iterable';
+import { AsyncWrappable } from '../../types/async-iterable';
 
-declare function asyncToArray<T>(source: AsyncSourceIterable<T>): Promise<Array<T>>;
+declare function asyncToArray<T>(source: AsyncWrappable<T>): Promise<Array<T>>;
 
 export { asyncToArray };

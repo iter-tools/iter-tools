@@ -1,13 +1,13 @@
-import { $SourceIterable, $ResultIterable } from '../../types/$iterable';
-import { ResultIterable as SyncResultIterable } from '../../types/iterable';
+import { $Wrappable, $IterableIterator } from '../../types/$iterable';
+import { IterableIterator as SyncIterableIterator } from '../../types/iterable';
 
 declare function $window<T>(
   size: number,
-  source: $SourceIterable<T>,
-): $ResultIterable<SyncResultIterable<T>>;
+  source: $Wrappable<T>,
+): $IterableIterator<SyncIterableIterator<T>>;
 
 declare function $window(
   size: number,
-): <T>(source: $SourceIterable<T>) => $ResultIterable<SyncResultIterable<T>>;
+): <T>(source: $Wrappable<T>) => $IterableIterator<SyncIterableIterator<T>>;
 
 export { $window };

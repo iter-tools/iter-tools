@@ -6,15 +6,15 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { SourceIterable, ResultIterable } from '../../types/iterable';
+import { Wrappable, IterableIterator } from '../../types/iterable';
 
 declare function map<O, T>(
   func: (value: T, i: number) => O,
-): (source: SourceIterable<T>) => ResultIterable<O>;
+): (source: Wrappable<T>) => IterableIterator<O>;
 
 declare function map<O, T>(
   func: (value: T, i: number) => O,
-  source: SourceIterable<T>,
-): ResultIterable<O>;
+  source: Wrappable<T>,
+): IterableIterator<O>;
 
 export { map };

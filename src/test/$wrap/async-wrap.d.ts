@@ -6,13 +6,13 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { AsyncSourceIterable, AsyncResultIterable } from '../../types/async-iterable';
+import { AsyncWrappable, AsyncIterableIterator } from '../../types/async-iterable';
 
-declare function asyncWrap<T>(array: AsyncSourceIterable<T>): AsyncResultIterable<T>;
-declare function asyncWrap(string: string): AsyncResultIterable<string>;
+declare function asyncWrap<T>(array: AsyncWrappable<T>): AsyncIterableIterator<T>;
+declare function asyncWrap(string: string): AsyncIterableIterator<string>;
 
 declare function asyncWrapDeep<T>(
-  array: AsyncSourceIterable<T | AsyncSourceIterable<T | AsyncSourceIterable<T>>>,
-): AsyncResultIterable<AsyncResultIterable<T>>;
+  array: AsyncWrappable<T | AsyncWrappable<T | AsyncWrappable<T>>>,
+): AsyncIterableIterator<AsyncIterableIterator<T>>;
 
 export { asyncWrap, asyncWrapDeep };

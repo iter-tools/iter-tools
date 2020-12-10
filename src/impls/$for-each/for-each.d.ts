@@ -6,15 +6,12 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { SourceIterable } from '../../types/iterable';
+import { Wrappable } from '../../types/iterable';
 
 declare function forEach<T>(
   callback: (value: T, i: number) => void,
-): (iterable: SourceIterable<T>) => void;
+): (iterable: Wrappable<T>) => void;
 
-declare function forEach<T>(
-  callback: (value: T, i: number) => void,
-  iterable: SourceIterable<T>,
-): void;
+declare function forEach<T>(callback: (value: T, i: number) => void, iterable: Wrappable<T>): void;
 
 export { forEach };

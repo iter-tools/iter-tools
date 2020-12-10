@@ -6,15 +6,15 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { AsyncSourceIterable } from '../../types/async-iterable';
+import { AsyncWrappable } from '../../types/async-iterable';
 
 declare function asyncForEach<T>(
   callback: (value: T, i: number) => void,
-): (iterable: AsyncSourceIterable<T>) => Promise<void>;
+): (iterable: AsyncWrappable<T>) => Promise<void>;
 
 declare function asyncForEach<T>(
   callback: (value: T, i: number) => void,
-  iterable: AsyncSourceIterable<T>,
+  iterable: AsyncWrappable<T>,
 ): Promise<void>;
 
 export { asyncForEach };

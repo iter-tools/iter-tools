@@ -1,11 +1,11 @@
 import { $iteratorSymbol, $Promise } from '../../../generate/async.macro.cjs';
 
-import { $SourceIterable, $IteratorResult } from '../../types/$iterable';
+import { $Wrappable, $IteratorResult, $NonIterableIterator } from '../../types/$iterable';
 
 export interface $PeekeratorIterator<T> {
   next(): $IteratorResult<T>;
   return(): $IteratorResult<T>;
-  [$iteratorSymbol](): this;
+  [$iteratorSymbol](): $NonIterableIterator<T>;
 }
 
 interface $PeekeratorBase<T> {
@@ -32,6 +32,6 @@ interface $ValuePeekerator<T> extends $PeekeratorBase<T> {
 
 export type $Peekerator<T> = $DonePeekerator<T> | $ValuePeekerator<T>;
 
-declare function $peekerate<T>(source: $SourceIterable<T>): $Peekerator<T>;
+declare function $peekerate<T>(source: $Wrappable<T>): $Peekerator<T>;
 
 export { $peekerate };

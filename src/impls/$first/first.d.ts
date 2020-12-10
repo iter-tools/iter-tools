@@ -6,8 +6,8 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { SourceIterable } from '../../types/iterable';
+import { Wrappable } from '../../types/iterable';
 
-declare function first<T>(iterable: SourceIterable<T>): T | undefined;
+declare function first<T>(iterable: Wrappable<T>): T | undefined;
 
 export { first };

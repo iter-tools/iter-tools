@@ -6,15 +6,15 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { SourceIterable, ResultIterable } from '../../types/iterable';
+import { Wrappable, IterableIterator } from '../../types/iterable';
 
 declare function takeWhile<T>(
   predicate: (value: T, i: number) => boolean,
-): (source: SourceIterable<T>) => ResultIterable<T>;
+): (source: Wrappable<T>) => IterableIterator<T>;
 
 declare function takeWhile<T>(
   predicate: (value: T, i: number) => boolean,
-  source: SourceIterable<T>,
-): ResultIterable<T>;
+  source: Wrappable<T>,
+): IterableIterator<T>;
 
 export { takeWhile };

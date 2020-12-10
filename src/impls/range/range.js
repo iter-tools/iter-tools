@@ -1,4 +1,4 @@
-import { wrapWithResultIterable } from '../../internal/iterable.js';
+import { wrapWithIterableIterator } from '../../internal/iterable.js';
 import { isInteger, isIntegerOrInfinite } from '../../internal/number.js';
 import { isObject } from '../is-object/is-object.js';
 import { notUndefined } from '../not-undefined/not-undefined.js';
@@ -9,7 +9,7 @@ export function* __range(start = 0, end = Infinity, step = 1) {
   }
 }
 
-export const range = /*#__PURE__*/ wrapWithResultIterable(__range, {
+export const range = /*#__PURE__*/ wrapWithIterableIterator(__range, {
   growRight: true,
   validateArgs(args) {
     let [optsOrEndOrStart, end = Infinity, step] = args;

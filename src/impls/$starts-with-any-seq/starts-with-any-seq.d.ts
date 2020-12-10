@@ -6,15 +6,15 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { SourceIterable } from '../../types/iterable';
+import { Wrappable } from '../../types/iterable';
 
 declare function startsWithAnySeq(
-  valueSeqs: Array<SourceIterable<any>>,
-): (iterable: SourceIterable<any>) => boolean;
+  valueSeqs: Array<Wrappable<any>>,
+): (iterable: Wrappable<any>) => boolean;
 
 declare function startsWithAnySeq(
-  valueSeqs: Array<SourceIterable<any>>,
-  iterable: SourceIterable<any>,
+  valueSeqs: Array<Wrappable<any>>,
+  iterable: Wrappable<any>,
 ): boolean;
 
 export { startsWithAnySeq };
