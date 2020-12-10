@@ -38,4 +38,12 @@ describe('asyncIncludesAny', () => {
       expect(await asyncIncludesAny([undefined], asyncWrap([]))).toBe(false);
     });
   });
+
+  describe('when same function is specified', () => {
+    const same = (a: number, b: number) => Math.abs(a) === Math.abs(b);
+    it('uses same value to do comparison', async () => {
+      expect(await asyncIncludesAny(same, [-2], asyncWrap([1, 2, 3]))).toBe(true);
+      expect(await asyncIncludesAny(() => false, [2], asyncWrap([1, 2, 3]))).toBe(false);
+    });
+  });
 });

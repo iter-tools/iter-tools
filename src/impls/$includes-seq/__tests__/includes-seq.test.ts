@@ -42,4 +42,12 @@ describe('includesSeq', () => {
       });
     });
   });
+
+  describe('when same function is specified', () => {
+    const same = (a: number, b: number) => Math.abs(a) === Math.abs(b);
+    it('uses same value to do comparison', () => {
+      expect(includesSeq(same, wrap([-2]), wrap([1, 2, 3]))).toBe(true);
+      expect(includesSeq(() => false, wrap([2]), wrap([1, 2, 3]))).toBe(false);
+    });
+  });
 });

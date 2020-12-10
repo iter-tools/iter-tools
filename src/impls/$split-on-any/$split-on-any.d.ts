@@ -1,11 +1,18 @@
 import { $Wrappable, $IterableIterator } from '../../types/$iterable';
 
 declare function $splitOnAny(
-  separatorValues: Array<any>,
+  same: (a: any, b: any) => boolean,
+  separatorValues: any,
 ): <T>(source: $Wrappable<T>) => $IterableIterator<$IterableIterator<T>>;
 
 declare function $splitOnAny<T>(
-  separatorValues: Array<any>,
+  same: (a: any, b: any) => boolean,
+  separatorValues: any,
+  source: $Wrappable<T>,
+): $IterableIterator<$IterableIterator<T>>;
+
+declare function $splitOnAny<T>(
+  separatorValues: any,
   source: $Wrappable<T>,
 ): $IterableIterator<$IterableIterator<T>>;
 

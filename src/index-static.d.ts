@@ -1,3 +1,6 @@
+export { __deepEqual } from './impls/$deep-equal/deep-equal';
+export { __asyncDeepEqual } from './impls/$deep-equal/async-deep-equal';
+
 export type { Peekerator } from './impls/$peekerate/peekerate';
 export type { AsyncPeekerator } from './impls/$peekerate/async-peekerate';
 

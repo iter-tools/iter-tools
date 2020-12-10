@@ -6,7 +6,7 @@ import { $__leadingWindow } from '../$leading-window/$leading-window.js';
 import { __startsWithAnySeq } from '../$starts-with-any-seq/starts-with-any-seq.js';
 
 $async;
-export function $__includesAnySeq(iterable, seqs) {
+export function $__includesAnySeq(iterable, seqs, same = Object.is) {
   const seqsArr = $await($seqsToArray(seqs));
 
   if (!seqsArr.length) return false;
@@ -16,7 +16,7 @@ export function $__includesAnySeq(iterable, seqs) {
 
   $await;
   for (const buffer of $__leadingWindow(iterable, maxMatchLength)) {
-    if (__startsWithAnySeq(buffer, seqsArr)) {
+    if (__startsWithAnySeq(buffer, seqsArr, same)) {
       return true;
     }
   }
@@ -24,5 +24,7 @@ export function $__includesAnySeq(iterable, seqs) {
 }
 
 export const $includesAnySeq = /*#__PURE__*/ $iterableCurry($__includesAnySeq, {
+  minArgs: 1,
+  maxArgs: 2,
   reduces: true,
 });

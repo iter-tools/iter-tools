@@ -34,4 +34,12 @@ describe('asyncStartsWithAny', () => {
       expect(await asyncStartsWithAny([null], asyncWrap([]))).toBe(false);
     });
   });
+
+  describe('when same function is specified', () => {
+    const same = (a: number, b: number) => Math.abs(a) === Math.abs(b);
+    it('uses same value to do comparison', async () => {
+      expect(await asyncStartsWithAny(same, [-1], asyncWrap([1, 2, 3]))).toBe(true);
+      expect(await asyncStartsWithAny(() => false, [1], asyncWrap([1, 2, 3]))).toBe(false);
+    });
+  });
 });

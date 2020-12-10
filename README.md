@@ -115,7 +115,6 @@ There are some differences in the order in which arguments are passed, but these
 Some major improvements are still to come. They are:
 
 - UMD support
-- Configurable equality comparators instead of forcing `===` comparison
 - `@iter-tools/regex` for evaluating regular expressions against iterables
 - `@iter-tools/unicode` for turning strings into iterables of graphemes or extended grapheme clusters
 - Flow types

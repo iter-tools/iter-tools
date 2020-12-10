@@ -9,12 +9,16 @@
 import { Wrappable } from '../../types/iterable';
 
 declare function startsWithAnySeq(
-  valueSeqs: Array<Wrappable<any>>,
+  same: (a: any, b: any) => boolean,
+  seqs: Array<Wrappable<any>>,
 ): (iterable: Wrappable<any>) => boolean;
 
 declare function startsWithAnySeq(
-  valueSeqs: Array<Wrappable<any>>,
+  same: (a: any, b: any) => boolean,
+  seqs: Array<Wrappable<any>>,
   iterable: Wrappable<any>,
 ): boolean;
+
+declare function startsWithAnySeq(seqs: Array<Wrappable<any>>, iterable: Wrappable<any>): boolean;
 
 export { startsWithAnySeq };

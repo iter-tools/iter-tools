@@ -49,4 +49,17 @@ describe('asyncSplitOn', () => {
   it('passes through the empty iterable', async () => {
     expect(await asyncUnwrapDeep(asyncSplitOn(0, null))).toEqual([]);
   });
+
+  describe('when same function is specified', () => {
+    const same = (a: number, b: number) => Math.abs(a) === Math.abs(b);
+    it('uses same value to do comparison', async () => {
+      expect(await asyncUnwrapDeep(asyncSplitOn(same, 2, asyncWrap([1, 2, 3])))).toEqual([
+        [1],
+        [3],
+      ]);
+      expect(await asyncUnwrapDeep(asyncSplitOn(() => false, 2, asyncWrap([1, 2, 3])))).toEqual([
+        [1, 2, 3],
+      ]);
+    });
+  });
 });

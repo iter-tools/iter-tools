@@ -8,14 +8,19 @@
 
 import { asyncIterableCurry } from '../../internal/async-iterable.js';
 import { __asyncFirstOr } from '../$first-or/async-first-or.js';
+import { __includes } from '../$includes/includes.js';
 
 const none = Symbol('none');
 
-export async function __asyncStartsWithAny(iterable, values) {
-  return values.includes(await __asyncFirstOr(iterable, none));
+export async function __asyncStartsWithAny(iterable, values, same = Object.is) {
+  const first = await __asyncFirstOr(iterable, none);
+  if (first === none) return false;
+  return __includes(values, first, (a, b) => same(b, a));
 }
 
 export const asyncStartsWithAny = /*#__PURE__*/ asyncIterableCurry(__asyncStartsWithAny, {
+  minArgs: 1,
+  maxArgs: 2,
   reduces: true,
   validateArgs(args) {},
 });

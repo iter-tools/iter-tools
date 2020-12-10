@@ -12,19 +12,21 @@ import { asyncWrap } from '../../../test/async-helpers.js';
 describe('asyncEqual', () => {
   describe('when there is only one iterable', () => {
     it('returns true', async () => {
-      expect(await asyncEqual(null)).toEqual(true);
-      expect(await asyncEqual(undefined)).toEqual(true);
-      expect(await asyncEqual(asyncWrap([1, 2, 3]))).toEqual(true);
+      expect(await asyncEqual(null)).toBe(true);
+      expect(await asyncEqual(undefined)).toBe(true);
+      expect(await asyncEqual(asyncWrap([1, 2, 3]))).toBe(true);
     });
   });
 
   describe('when all values in all iterables are equal', () => {
-    it('returns true if all contents are equal', async () => {
-      expect(await asyncEqual(asyncWrap([]), asyncWrap([]))).toEqual(true);
-      expect(await asyncEqual(asyncWrap([1, 2, 3]), asyncWrap([1, 2, 3]))).toEqual(true);
+    it('returns true', async () => {
+      expect(await asyncEqual(asyncWrap([]), asyncWrap([]))).toBe(true);
+      expect(await asyncEqual(null, undefined)).toBe(true);
+      expect(await asyncEqual(null, undefined, asyncWrap([]))).toBe(true);
+      expect(await asyncEqual(asyncWrap([1, 2, 3]), asyncWrap([1, 2, 3]))).toBe(true);
       expect(
         await asyncEqual(asyncWrap([1, 2, 3]), asyncWrap([1, 2, 3]), asyncWrap([1, 2, 3])),
-      ).toEqual(true);
+      ).toBe(true);
     });
   });
 
@@ -32,24 +34,24 @@ describe('asyncEqual', () => {
     it('returns false', async () => {
       expect(
         await asyncEqual(asyncWrap([1, 2, 3]), asyncWrap([1, 2, 3]), asyncWrap([1, 2, 4])),
-      ).toEqual(false);
+      ).toBe(false);
       expect(
         await asyncEqual(asyncWrap([1, 2, 3]), asyncWrap([1, 2, 4]), asyncWrap([1, 2, 3])),
-      ).toEqual(false);
+      ).toBe(false);
       expect(
         await asyncEqual(asyncWrap([1, 2, 4]), asyncWrap([1, 2, 3]), asyncWrap([1, 2, 3])),
-      ).toEqual(false);
+      ).toBe(false);
     });
   });
 
   describe('when iterables have the same values but different lengths', () => {
     it('returns false', async () => {
-      expect(await asyncEqual(asyncWrap([1]), asyncWrap([1]), asyncWrap([1, 2]))).toEqual(false);
-      expect(await asyncEqual(asyncWrap([1]), asyncWrap([1, 2]), asyncWrap([1]))).toEqual(false);
-      expect(await asyncEqual(asyncWrap([1, 2]), asyncWrap([1]), asyncWrap([1]))).toEqual(false);
-      expect(await asyncEqual(asyncWrap([]), asyncWrap([]), asyncWrap([1]))).toEqual(false);
-      expect(await asyncEqual(asyncWrap([]), asyncWrap([1]), asyncWrap([]))).toEqual(false);
-      expect(await asyncEqual(asyncWrap([1]), asyncWrap([]), asyncWrap([]))).toEqual(false);
+      expect(await asyncEqual(asyncWrap([1]), asyncWrap([1]), asyncWrap([1, 2]))).toBe(false);
+      expect(await asyncEqual(asyncWrap([1]), asyncWrap([1, 2]), asyncWrap([1]))).toBe(false);
+      expect(await asyncEqual(asyncWrap([1, 2]), asyncWrap([1]), asyncWrap([1]))).toBe(false);
+      expect(await asyncEqual(asyncWrap([]), asyncWrap([]), asyncWrap([1]))).toBe(false);
+      expect(await asyncEqual(asyncWrap([]), asyncWrap([1]), asyncWrap([]))).toBe(false);
+      expect(await asyncEqual(asyncWrap([1]), asyncWrap([]), asyncWrap([]))).toBe(false);
     });
   });
 });

@@ -27,6 +27,19 @@ describe($`splitOnAny`, () => {
     }),
   );
 
+  describe('when same function is specified', () => {
+    const same = (a: number, b: number) => Math.abs(a) === Math.abs(b);
+    it(
+      'uses same value to do comparison',
+      $async(() => {
+        expect($await($unwrapDeep($splitOnAny(same, [2], $wrap([1, 2, 3]))))).toEqual([[1], [3]]);
+        expect($await($unwrapDeep($splitOnAny(() => false, [2], $wrap([1, 2, 3]))))).toEqual([
+          [1, 2, 3],
+        ]);
+      }),
+    );
+  });
+
   if ($isSync) {
     describe('when source is a string', () => {
       it(

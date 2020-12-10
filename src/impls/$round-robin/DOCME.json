@@ -6,7 +6,7 @@
       {
         "name": "sources",
         "isIterable": true,
-        "variadic": true
+        "isRest": true
       }
     ]
   ]

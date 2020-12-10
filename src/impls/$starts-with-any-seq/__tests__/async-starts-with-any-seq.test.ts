@@ -68,4 +68,14 @@ describe('asyncStartsWithAnySeq', () => {
       });
     });
   });
+
+  describe('when same function is specified', () => {
+    const same = (a: number, b: number) => Math.abs(a) === Math.abs(b);
+    it('uses same value to do comparison', async () => {
+      expect(await asyncStartsWithAnySeq(same, [asyncWrap([-1])], asyncWrap([1, 2, 3]))).toBe(true);
+      expect(await asyncStartsWithAnySeq(() => false, [asyncWrap([1])], asyncWrap([1, 2, 3]))).toBe(
+        false,
+      );
+    });
+  });
 });

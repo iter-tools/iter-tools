@@ -11,12 +11,12 @@ import { AsyncWrappable, AsyncIterableIterator } from '../../types/async-iterabl
 declare function asyncCollate<T>(...sources: Array<AsyncWrappable<T>>): AsyncIterableIterator<T>;
 
 declare function asyncCollate<T>(
-  comparator: (a: T, b: T) => number,
+  compare: (a: T, b: T) => number,
   ...sources: Array<AsyncWrappable<T>>
 ): AsyncIterableIterator<T>;
 
 declare function asyncCollate<T>(
-  comparator: (a: T, b: T) => number,
+  compare: (a: T, b: T) => number,
 ): (...sources: Array<AsyncWrappable<T>>) => AsyncIterableIterator<T>;
 
 export { asyncCollate };

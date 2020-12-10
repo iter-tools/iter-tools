@@ -7,7 +7,7 @@ import { $__peekerate } from '../$peekerate/$peekerate.js';
 const none = Symbol('none');
 
 $async;
-export function $__startsWithAnySubseq_(peekr, subseqPeekr) {
+export function $_startsWithAnySeq(peekr, subseqPeekr, same) {
   if (subseqPeekr.done || subseqPeekr.value.includes(none)) return true;
 
   const matches = subseqPeekr.value.map(() => true);
@@ -21,7 +21,7 @@ export function $__startsWithAnySubseq_(peekr, subseqPeekr) {
       if (seqValue[i] === none) {
         return true;
       } else {
-        matches[i] = matches[i] && seqValue[i] === value;
+        matches[i] = same(seqValue[i], value);
       }
     }
     if ($isSync) {
@@ -36,12 +36,12 @@ export function $__startsWithAnySubseq_(peekr, subseqPeekr) {
 }
 
 $async;
-export function $__startsWithAnySeq(iterable, seqs) {
+export function $__startsWithAnySeq(iterable, seqs, same = Object.is) {
   if (!seqs.length) return false;
   const peekr = $await($__peekerate(iterable));
   const subseqPeekr = $await($__peekerate($__zipAll(seqs, { filler: none })));
 
-  const seqFound = $await($__startsWithAnySubseq_(peekr, subseqPeekr));
+  const seqFound = $await($_startsWithAnySeq(peekr, subseqPeekr, same));
 
   $await(subseqPeekr.return());
   $await(peekr.return());
@@ -50,6 +50,8 @@ export function $__startsWithAnySeq(iterable, seqs) {
 }
 
 export const $startsWithAnySeq = /*#__PURE__*/ $iterableCurry($__startsWithAnySeq, {
+  minArgs: 1,
+  maxArgs: 2,
   reduces: true,
   validateArgs(args) {
     args[1] = args[1].map((arg) => $ensureIterable(arg));

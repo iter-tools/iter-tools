@@ -9,11 +9,18 @@
 import { AsyncWrappable } from '../../types/async-iterable';
 
 declare function asyncStartsWithAnySeq(
-  valueSeqs: Array<AsyncWrappable<any>>,
+  same: (a: any, b: any) => boolean,
+  seqs: Array<AsyncWrappable<any>>,
 ): (iterable: AsyncWrappable<any>) => Promise<boolean>;
 
 declare function asyncStartsWithAnySeq(
-  valueSeqs: Array<AsyncWrappable<any>>,
+  same: (a: any, b: any) => boolean,
+  seqs: Array<AsyncWrappable<any>>,
+  iterable: AsyncWrappable<any>,
+): Promise<boolean>;
+
+declare function asyncStartsWithAnySeq(
+  seqs: Array<AsyncWrappable<any>>,
   iterable: AsyncWrappable<any>,
 ): Promise<boolean>;
 

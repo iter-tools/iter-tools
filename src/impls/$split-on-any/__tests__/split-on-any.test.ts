@@ -26,6 +26,14 @@ describe('splitOnAny', () => {
     expect(unwrapDeep(splitOnAny([], null))).toEqual([]);
   });
 
+  describe('when same function is specified', () => {
+    const same = (a: number, b: number) => Math.abs(a) === Math.abs(b);
+    it('uses same value to do comparison', () => {
+      expect(unwrapDeep(splitOnAny(same, [2], wrap([1, 2, 3])))).toEqual([[1], [3]]);
+      expect(unwrapDeep(splitOnAny(() => false, [2], wrap([1, 2, 3])))).toEqual([[1, 2, 3]]);
+    });
+  });
+
   describe('when source is a string', () => {
     it('warns', () => {
       splitOnAny([], 'abc');

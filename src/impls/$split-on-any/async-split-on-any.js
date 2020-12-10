@@ -8,11 +8,14 @@
 
 import { asyncIterableCurry } from '../../internal/async-iterable.js';
 import { __asyncSplitWith } from '../$split-with/async-split-with.js';
+import { __includes } from '../$includes/includes.js';
 
-export function __asyncSplitOnAny(source, separators) {
-  return __asyncSplitWith(source, (value) => separators.includes(value));
+export function __asyncSplitOnAny(source, separators, same = Object.is) {
+  return __asyncSplitWith(source, (value) => __includes(separators, value, (a, b) => same(b, a)));
 }
 
 export const asyncSplitOnAny = /*#__PURE__*/ asyncIterableCurry(__asyncSplitOnAny, {
+  minArgs: 1,
+  maxArgs: 2,
   validateArgs(args) {},
 });

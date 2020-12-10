@@ -6,4 +6,4 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-export { __asyncStartsWithAnySubseq_ as default } from '../impls/$starts-with-any-seq/async-starts-with-any-seq.js';
+export { __asyncStartsWithAnySeq as default } from '../impls/$starts-with-any-seq/async-starts-with-any-seq.js';

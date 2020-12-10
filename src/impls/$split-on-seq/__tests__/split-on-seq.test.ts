@@ -53,4 +53,12 @@ describe('splitOnSeq', () => {
       ]);
     });
   });
+
+  describe('when same function is specified', () => {
+    const same = (a: number, b: number) => Math.abs(a) === Math.abs(b);
+    it('uses same value to do comparison', () => {
+      expect(unwrapDeep(splitOnSeq(same, wrap([2]), wrap([1, 2, 3])))).toEqual([[1], [3]]);
+      expect(unwrapDeep(splitOnSeq(() => false, wrap([2]), wrap([1, 2, 3])))).toEqual([[1, 2, 3]]);
+    });
+  });
 });

@@ -6,4 +6,4 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-export { __startsWithAnySubseq_ as default } from '../impls/$starts-with-any-seq/starts-with-any-seq.js';
+export { __startsWithAnySeq as default } from '../impls/$starts-with-any-seq/starts-with-any-seq.js';

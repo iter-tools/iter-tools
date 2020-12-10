@@ -13,17 +13,13 @@ import { __sliceFromStart } from '../$slice/slice.js';
 const none = Symbol('none');
 const zipAllConfig = { filler: none };
 
-export async function __asyncEqual(iterables) {
-  if (iterables.length <= 1) {
-    return true;
-  }
+export async function __asyncEqual(iterables, same = Object.is) {
+  if (iterables.length <= 1) return true;
 
   for await (const stepValues of __asyncZipAll(iterables, zipAllConfig)) {
     const firstValue = stepValues[0];
-    for (const value of __sliceFromStart(stepValues, 1, Infinity)) {
-      if (value !== firstValue) {
-        return false;
-      }
+    for (const value of __sliceFromStart(stepValues, 1)) {
+      if (!same(value, firstValue)) return false;
     }
   }
 
@@ -31,6 +27,8 @@ export async function __asyncEqual(iterables) {
 }
 
 export const asyncEqual = /*#__PURE__*/ asyncIterableCurry(__asyncEqual, {
-  reduces: true,
+  minArgs: 0,
+  maxArgs: 1,
   variadic: true,
+  reduces: true,
 });

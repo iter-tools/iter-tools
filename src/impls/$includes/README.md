@@ -1,4 +1,8 @@
-Retuns `true` if `iterable` includes the specified `value`, or `false` otherwise. Compares values with `===`.
+Defaults:
+
+- `same`: `Object.is`
+
+Returns `true` if `iterable` includes the specified `value`, or `false` otherwise. Two values are considered to be the same if the result of `same(a, b)` is truthy.
 
 ```js
 includes(2, [1, 2, 3]); // true

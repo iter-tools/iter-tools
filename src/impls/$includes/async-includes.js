@@ -7,13 +7,17 @@
  */
 
 import { asyncIterableCurry } from '../../internal/async-iterable.js';
-import { __asyncIncludesAny } from '../$includes-any/async-includes-any.js';
+import { __asyncFindOr } from '../$find-or/async-find-or.js';
 
-export function __asyncIncludes(iterable, value) {
-  return __asyncIncludesAny(iterable, [value]);
+const none = Symbol('none');
+
+export async function __asyncIncludes(iterable, value, same = Object.is) {
+  return (await __asyncFindOr(iterable, none, (v) => same(value, v))) !== none;
 }
 
 export const asyncIncludes = /*#__PURE__*/ asyncIterableCurry(__asyncIncludes, {
+  minArgs: 1,
+  maxArgs: 2,
   reduces: true,
   validateArgs(args) {},
 });

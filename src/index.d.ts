@@ -22,6 +22,7 @@ export { default as concat } from './methods/concat';
 export { default as consume } from './methods/consume';
 export { default as cycle } from './methods/cycle';
 export { default as cycleTimes } from './methods/cycle-times';
+export { default as deepEqual } from './methods/deep-equal';
 export { default as drop } from './methods/drop';
 export { default as dropWhile } from './methods/drop-while';
 export { default as enumerate } from './methods/enumerate';
@@ -133,6 +134,7 @@ export { default as asyncConcat } from './methods/async-concat';
 export { default as asyncConsume } from './methods/async-consume';
 export { default as asyncCycle } from './methods/async-cycle';
 export { default as asyncCycleTimes } from './methods/async-cycle-times';
+export { default as asyncDeepEqual } from './methods/async-deep-equal';
 export { default as asyncDrop } from './methods/async-drop';
 export { default as asyncDropWhile } from './methods/async-drop-while';
 export { default as asyncEnumerate } from './methods/async-enumerate';
@@ -200,6 +202,9 @@ export { default as asyncWindow } from './methods/async-window';
 export { default as asyncWrap } from './methods/async-wrap';
 export { default as asyncZip } from './methods/async-zip';
 export { default as asyncZipAll } from './methods/async-zip-all';
+
+export { __deepEqual } from './impls/$deep-equal/deep-equal';
+export { __asyncDeepEqual } from './impls/$deep-equal/async-deep-equal';
 
 export type { Peekerator } from './impls/$peekerate/peekerate';
 export type { AsyncPeekerator } from './impls/$peekerate/async-peekerate';

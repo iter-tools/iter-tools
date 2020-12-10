@@ -14,23 +14,23 @@ declare function takeSorted<T>(n: number): (source: Wrappable<T>) => IterableIte
 
 declare function takeSorted<T>(
   n: number,
-  func: (a: T, b: T) => number,
+  compare: (a: T, b: T) => number,
 ): (source: Wrappable<T>) => IterableIterator<T>;
 
 declare function takeSorted<T>(
-  func: (a: T, b: T) => number,
+  compare: (a: T, b: T) => number,
 ): (source: Wrappable<T>) => IterableIterator<T>;
 
 declare function takeSorted<T>(n: number, source: Wrappable<T>): IterableIterator<T>;
 
 declare function takeSorted<T>(
   n: number,
-  func: (a: T, b: T) => number,
+  compare: (a: T, b: T) => number,
   source: Wrappable<T>,
 ): IterableIterator<T>;
 
 declare function takeSorted<T>(
-  func: (a: T, b: T) => number,
+  compare: (a: T, b: T) => number,
   source: Wrappable<T>,
 ): IterableIterator<T>;
 

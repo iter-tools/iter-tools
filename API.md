@@ -14,7 +14,7 @@ If you aren't already familiar with the technical definition of an iterable and 
 
 ### Iterable
 
-An object implementing the iterable protocol, which is to say possessing a `[Symbol.iterator]()` method.
+An object implementing the iterable protocol, which is to say possessing a `Symbol.iterator` method.
 
 ### Wrappable
 
@@ -36,7 +36,7 @@ An [IterableIterator](#IterableIterator) of [SingletonIterableIterators](#single
 
 ### AsyncIterable
 
-An object implementing the async iterable protocol, which is to say possessing a `[Symbol.asyncIterator]()` method
+An object implementing the async iterable protocol, which is to say possessing a `Symbol.asyncIterator` method
 
 ### AsyncWrappable
 
@@ -56,19 +56,17 @@ The async version of a [PartsIterable](#partsiterable), which is to say an [Asyn
 
 ## Other types
 
-### Comparator
+### compare
 
-A comparator is used to determine sort order. Comparators in iter-tools exactly match the comparator API expected by `Array.prototype.sort`. Comparators are always sync functions, even when sorting async iterables.
+A `compare` callback is used to determine sort order. These methods have the same API the callback used in `Array.prototype.sort`. `compare` callbacks must always return synchronously, even when sorting async iterables.
 
-#### The Default Comparator
-
-The default comparator is the same as that used by `Array.prototype.sort`:
+A default value is always provided, again the same as is used by `Array.prototype.sort`:
 
 ```js
 (a, b) => (a > b ? 1 : b > a ? -1 : 0);
 ```
 
-It will sort numbers by their value, and strings lexicographically.
+This code sorts numbers by their value, and strings lexicographically.
 
 
 ## Methods
@@ -145,6 +143,7 @@ Combine multiple iterables
 
 Reduce an iterable to a single value
 
+[deepEqual](#deepequal) ([async](#asyncdeepequal))  
 [equal](#equal) ([async](#asyncequal))  
 [every](#every) ([async](#asyncevery))  
 [find](#find) ([async](#asyncfind))  
@@ -742,11 +741,11 @@ See [take](#take)
 
 ### takeSorted
 
-**takeSorted(n, [comparator](#comparator), [source](#wrappable))**  
+**takeSorted(n, [compare](#compare), [source](#wrappable))**  
 **takeSorted(n, [source](#wrappable))**  
-**takeSorted([comparator](#comparator), [source](#wrappable))**  
+**takeSorted([compare](#compare), [source](#wrappable))**  
 **takeSorted([source](#wrappable))**  
-**__takeSorted([source](#iterable), ?n, ?[comparator](#comparator))**  
+**__takeSorted([source](#iterable), ?n, ?[compare](#compare))**  
 
 Defaults:
 
@@ -762,11 +761,11 @@ takeSorted(3, (a, b) => b - a, [4, 5, 2, 3, 1]); // Iterable[5, 4, 3]
 
 ### asyncTakeSorted
 
-**asyncTakeSorted(n, [comparator](#comparator), [source](#asyncwrappable))**  
+**asyncTakeSorted(n, [compare](#compare), [source](#asyncwrappable))**  
 **asyncTakeSorted(n, [source](#asyncwrappable))**  
-**asyncTakeSorted([comparator](#comparator), [source](#asyncwrappable))**  
+**asyncTakeSorted([compare](#compare), [source](#asyncwrappable))**  
 **asyncTakeSorted([source](#asyncwrappable))**  
-**__asyncTakeSorted([source](#asynciterable), ?n, ?[comparator](#comparator))**  
+**__asyncTakeSorted([source](#asynciterable), ?n, ?[compare](#compare))**  
 
 See [takeSorted](#takesorted)
 
@@ -1063,10 +1062,15 @@ See [splitGroups](#splitgroups)
 
 ### splitOn
 
+**splitOn(same, separator, [source](#wrappable))**  
 **splitOn(separator, [source](#wrappable))**  
-**__splitOn([source](#iterable), separator)**  
+**__splitOn([source](#iterable), separator, ?same)**  
 
-Yields a [PartsIterable](#partsiterable) of parts from `source`, where `separatorValue` is used to mark the boundary between parts in `source`. `separatorValue` will not occur in the output. `separatorValue` is compared using `===`.
+Defaults:
+
+- `same`: `Object.is`
+
+Yields a [PartsIterable](#partsiterable) of parts from `source`, where `separatorValue` is used to mark the boundary between parts in `source`. `separatorValue` will not occur in the output. Two values are considered to be the same if the result of `same(a, b)` is truthy.
 
 ```js
 splitOn(null, [1, null, 2, null, 3]); // Iterable[[1], [2], [3]]
@@ -1076,17 +1080,23 @@ Note: If `source` is a string you should instead use [splitOnSeq](#splitonseq). 
 
 ### asyncSplitOn
 
+**asyncSplitOn(same, separator, [source](#asyncwrappable))**  
 **asyncSplitOn(separator, [source](#asyncwrappable))**  
-**__asyncSplitOn([source](#asynciterable), separator)**  
+**__asyncSplitOn([source](#asynciterable), separator, ?same)**  
 
 See [splitOn](#spliton)
 
 ### splitOnAny
 
+**splitOnAny(same, separators, [source](#wrappable))**  
 **splitOnAny(separators, [source](#wrappable))**  
-**__splitOnAny([source](#iterable), separators)**  
+**__splitOnAny([source](#iterable), separators, ?same)**  
 
-Yields a [PartsIterable](#partsiterable) of parts from `source`, where `separatorValues` are used to mark the boundary between parts in `source`. None of the `separatorValues` will not occur in the output. `separatorValues` are compared using `===`.
+Defaults:
+
+- `same`: `Object.is`
+
+Yields a [PartsIterable](#partsiterable) of parts from `source`, where `separatorValues` are used to mark the boundary between parts in `source`. None of the `separatorValues` will not occur in the output. Two values are considered to be the same if the result of `same(a, b)` is truthy.
 
 ```js
 splitOnAny([null, undefined], [1, null, 2, undefined, 3]); // Iterable[[1], [2], [3]]
@@ -1096,17 +1106,23 @@ Note: If `source` is a string you should instead use [splitOnAnySeq](#splitonany
 
 ### asyncSplitOnAny
 
+**asyncSplitOnAny(same, separators, [source](#asyncwrappable))**  
 **asyncSplitOnAny(separators, [source](#asyncwrappable))**  
-**__asyncSplitOnAny([source](#asynciterable), separators)**  
+**__asyncSplitOnAny([source](#asynciterable), separators, ?same)**  
 
 See [splitOnAny](#splitonany)
 
 ### splitOnAnySeq
 
+**splitOnAnySeq(same, separatorSeqs, [source](#wrappable))**  
 **splitOnAnySeq(separatorSeqs, [source](#wrappable))**  
-**__splitOnAnySeq([source](#iterable), separatorSeqs)**  
+**__splitOnAnySeq([source](#iterable), separatorSeqs, ?same)**  
 
-Yields a [PartsIterable](#partsiterable) of parts from `source`, where `separatorSeqs` are used to mark the boundary between parts in `source`. When any `separatorSeq` in `separatorSeqs` is matched, all matched values are consumed from `source` and will not appear in any `part`, nor may they be part of any other `separatorSeq` match. Matches greedily, which is to say the longest possible separator match will be prioritized. Each value in a `separatorSeq` is compared using `===`.
+Defaults:
+
+- `same`: `Object.is`
+
+Yields a [PartsIterable](#partsiterable) of parts from `source`, where `separatorSeqs` are used to mark the boundary between parts in `source`. When any `separatorSeq` in `separatorSeqs` is matched, all matched values are consumed from `source` and will not appear in any `part`, nor may they be part of any other `separatorSeq` match. Matches greedily, which is to say the longest possible separator match will be prioritized. Two values are considered to be the same if the result of `same(a, b)` is truthy.
 
 ```js
 splitOnAnySeq(
@@ -1117,17 +1133,23 @@ splitOnAnySeq(
 
 ### asyncSplitOnAnySeq
 
+**asyncSplitOnAnySeq(same, separatorSeqs, [source](#asyncwrappable))**  
 **asyncSplitOnAnySeq(separatorSeqs, [source](#asyncwrappable))**  
-**__asyncSplitOnAnySeq([source](#asynciterable), separatorSeqs)**  
+**__asyncSplitOnAnySeq([source](#asynciterable), separatorSeqs, ?same)**  
 
 See [splitOnAnySeq](#splitonanyseq)
 
 ### splitOnSeq
 
+**splitOnSeq(same, separatorSeq, [source](#wrappable))**  
 **splitOnSeq(separatorSeq, [source](#wrappable))**  
-**__splitOnSeq([source](#iterable), separatorSeq)**  
+**__splitOnSeq([source](#iterable), separatorSeq, ?same)**  
 
-Yields a [PartsIterable](#partsiterable) of parts from `source`, where `separatorSeq` is used to mark the boundary between parts in `source`. When `separatorSeq` is matched, all matched values are consumed from `source`. They will not appear in any `part`, nor may they be part of any other `separatorSeq` match. Each value in `separatorSeq` is compared using `===`.
+Defaults:
+
+- `same`: `Object.is`
+
+Yields a [PartsIterable](#partsiterable) of parts from `source`, where `separatorSeq` is used to mark the boundary between parts in `source`. When `separatorSeq` is matched, all matched values are consumed from `source`. They will not appear in any `part`, nor may they be part of any other `separatorSeq` match. Two values are considered to be the same if the result of `same(a, b)` is truthy.
 
 ```js
 splitOnSeq([0, 0], [1, 0, 0, 2, 0, 0, 3]); // Iterable[[1], [2], [3]]
@@ -1138,8 +1160,9 @@ splitOnSeq([0, 0], [0, 0, 0, 1, 2]); // Iterable[[], [0, 1, 2]]
 
 ### asyncSplitOnSeq
 
+**asyncSplitOnSeq(same, separatorSeq, [source](#asyncwrappable))**  
 **asyncSplitOnSeq(separatorSeq, [source](#asyncwrappable))**  
-**__asyncSplitOnSeq([source](#asynciterable), separatorSeq)**  
+**__asyncSplitOnSeq([source](#asynciterable), separatorSeq, ?same)**  
 
 See [splitOnSeq](#splitonseq)
 
@@ -1198,8 +1221,8 @@ See [splitWith](#splitwith)
 
 ### collate
 
-**collate([comparator](#comparator), ...[sources](#wrappable))**  
-**__collate([sources](#iterable), [comparator](#comparator))**  
+**collate([compare](#compare), ...[sources](#wrappable))**  
+**__collate([sources](#iterable), [compare](#compare))**  
 
 Combines values from each `source` in `sources` into a single iterable, peserving the ordering of values within each `source`. Collate uses `comparator` to establish a partial ordering of values at the head of each `source`. At each step it yields the lowest value in the ordering then recomputes the ordering.
 
@@ -1210,8 +1233,8 @@ collate((a, b) => b - a, [6, 5, 2, 1], [4, 3]); // Iterable[6, 5, 4, 3, 2, 1]
 
 ### asyncCollate
 
-**asyncCollate([comparator](#comparator), ...[sources](#asyncwrappable))**  
-**__asyncCollate([sources](#asynciterable), [comparator](#comparator))**  
+**asyncCollate([compare](#compare), ...[sources](#asyncwrappable))**  
+**__asyncCollate([sources](#asynciterable), [compare](#compare))**  
 
 See [collate](#collate)
 
@@ -1392,22 +1415,74 @@ See [zipAll](#zipall)
 
 ## Reduce an iterable to a single value
 
-### equal
+### deepEqual
 
-**equal(...[iterables](#wrappable))**  
-**__equal([iterables](#iterable))**  
+**deepEqual(...values)**  
+**__deepEqual(values, ?same, ?coerceNil)**  
 
-Returns `true` if all `iterables` are equal to each other, and `false` otherwise. Only considers the values yielded by the iterables, which it compares with `===`.
+Defaults:
+
+- `same`: `Object.is`
+- `coerceNil`: `true`
+
+Returns `true` if all `values` are deepEqual to each other and `false` otherwise. Values are considered equal if they are iterables containing the same values, or if the result of `same(a, b, depth)` is truthy. `depth` represents the number of iterables wrapping the value. If `coerceNil` is `true` then `null` and `undefined` are considered to be iterables.
+
+Note: `deepEqual` does not consider strings to be iterables. That would cause infinite recursion.
 
 ```js
-equals([1, 2, 3], [1, 2, 3], [1, 2, 3]); // true
-equals([1, 2, 3], [3, 2, 1]); // false
+deepEqual([1, 2, 3], [1, 2, 3], [1, 2, 3]); // true
+deepEqual([[1, 2, 3]], [[1, 2, 3]], [[1, 2, 3]]); // true
+deepEqual(1, 1, 1); // true
+deepEqual(null, [], ''); // true
+
+deepEqual([1, 2, 3], [3, 2, 1]); // false
 ```
+
+Note that in order to avoid ambiguity `comparator` can only be passed to `__deepEqual`. If you need it just write this:
+
+```js
+function same(a, b) {
+  return a.toUpperCase() === b.toUpperCase();
+}
+
+function myEqual(...values) {
+  return __deepEqual(values, same, false);
+}
+
+myEqual('foo', 'FOO'); // true
+myEqual(null, ''); // false
+```
+
+### asyncDeepEqual
+
+**asyncDeepEqual(...values)**  
+**__asyncDeepEqual(values, ?same, ?coerceNil)**  
+
+See [deepEqual](#deepequal)
+
+### equal
+
+**equal(same, ...[iterables](#wrappable))**  
+**equal(...[iterables](#wrappable))**  
+**__equal([iterables](#iterable), ?same)**  
+
+Defaults:
+
+- `same`: `Object.is`
+
+Returns `true` if all `iterables` consist of the same sequence of values. Otherwise returns `false`. Two values are considered to be the same if the result of `same(a, b)` is truthy.
+
+```js
+equal([1, 2, 3], [1, 2, 3], [1, 2, 3]); // true
+```
+
+Note: If `source` is a string you should instead use [startsWithSeq](#startswithseq). A warning will be emitted if you do not.
 
 ### asyncEqual
 
+**asyncEqual(same, ...[iterables](#asyncwrappable))**  
 **asyncEqual(...[iterables](#asyncwrappable))**  
-**__asyncEqual([iterables](#asynciterable))**  
+**__asyncEqual([iterables](#asynciterable), ?same)**  
 
 See [equal](#equal)
 
@@ -1509,10 +1584,15 @@ See [firstOr](#firstor)
 
 ### includes
 
+**includes(same, value, [iterable](#wrappable))**  
 **includes(value, [iterable](#wrappable))**  
-**__includes([iterable](#iterable), value)**  
+**__includes([iterable](#iterable), value, ?same)**  
 
-Retuns `true` if `iterable` includes the specified `value`, or `false` otherwise. Compares values with `===`.
+Defaults:
+
+- `same`: `Object.is`
+
+Returns `true` if `iterable` includes the specified `value`, or `false` otherwise. Two values are considered to be the same if the result of `same(a, b)` is truthy.
 
 ```js
 includes(2, [1, 2, 3]); // true
@@ -1523,17 +1603,23 @@ Note: If `source` is a string you should instead use [includesSeq](#includesseq)
 
 ### asyncIncludes
 
+**asyncIncludes(same, value, [iterable](#asyncwrappable))**  
 **asyncIncludes(value, [iterable](#asyncwrappable))**  
-**__asyncIncludes([iterable](#asynciterable), value)**  
+**__asyncIncludes([iterable](#asynciterable), value, ?same)**  
 
 See [includes](#includes)
 
 ### includesAny
 
+**includesAny(same, values, [iterable](#wrappable))**  
 **includesAny(values, [iterable](#wrappable))**  
-**__includesAny([iterable](#iterable), values)**  
+**__includesAny([iterable](#iterable), values, ?same)**  
 
-Retuns `true` if `iterable` includes any of the specified `values`, or `false` otherwise. Compares values with `===`.
+Defaults:
+
+- `same`: `Object.is`
+
+Returns `true` if `iterable` includes any of the specified `values`, or `false` otherwise. Two values are considered to be the same if the result of `same(a, b)` is truthy.
 
 ```js
 includesAny([0, 1], [1, 2, 3]); // true
@@ -1544,17 +1630,23 @@ Note: If `source` is a string you should instead use [includesAnySeq](#includesa
 
 ### asyncIncludesAny
 
+**asyncIncludesAny(same, values, [iterable](#asyncwrappable))**  
 **asyncIncludesAny(values, [iterable](#asyncwrappable))**  
-**__asyncIncludesAny([iterable](#asynciterable), values)**  
+**__asyncIncludesAny([iterable](#asynciterable), values, ?same)**  
 
 See [includesAny](#includesany)
 
 ### includesAnySeq
 
+**includesAnySeq(same, seqs, [iterable](#wrappable))**  
 **includesAnySeq(seqs, [iterable](#wrappable))**  
-**__includesAnySeq([iterable](#iterable), seqs)**  
+**__includesAnySeq([iterable](#iterable), seqs, ?same)**  
 
-Retuns `true` if any of the the `seqs` (subsequences) of values can be found somewhere in `iterable`, or `false` otherwise. Compares values with `===`.
+Defaults:
+
+- `same`: `Object.is`
+
+Returns `true` if any of the the `seqs` (subsequences) of values can be found somewhere in `iterable`, or `false` otherwise. Two values are considered to be the same if the result of `same(a, b)` is truthy.
 
 ```js
 includesAnySeq(
@@ -1582,17 +1674,23 @@ includesAnySeq(
 
 ### asyncIncludesAnySeq
 
+**asyncIncludesAnySeq(same, seqs, [iterable](#asyncwrappable))**  
 **asyncIncludesAnySeq(seqs, [iterable](#asyncwrappable))**  
-**__asyncIncludesAnySeq([iterable](#asynciterable), seqs)**  
+**__asyncIncludesAnySeq([iterable](#asynciterable), seqs, ?same)**  
 
 See [includesAnySeq](#includesanyseq)
 
 ### includesSeq
 
+**includesSeq(same, seq, [iterable](#wrappable))**  
 **includesSeq(seq, [iterable](#wrappable))**  
-**__includesSeq([iterable](#iterable), seq)**  
+**__includesSeq([iterable](#iterable), seq, ?same)**  
 
-Retuns `true` if the `seq` (subsequence) of values can be found somewhere in `iterable`, or `false` otherwise. Compares values with `===`.
+Defaults:
+
+- `same`: `Object.is`
+
+Returns `true` if the `seq` (subsequence) of values can be found somewhere in `iterable`, or `false` otherwise. Two values are considered to be the same if the result of `same(a, b)` is truthy.
 
 ```js
 includesSeq([1, 2], [1, 2, 3]); // true
@@ -1602,8 +1700,9 @@ includesSeq([2, 3, 4], [1, 2, 3]); // false
 
 ### asyncIncludesSeq
 
+**asyncIncludesSeq(same, seq, [iterable](#asyncwrappable))**  
 **asyncIncludesSeq(seq, [iterable](#asyncwrappable))**  
-**__asyncIncludesSeq([iterable](#asynciterable), seq)**  
+**__asyncIncludesSeq([iterable](#asynciterable), seq, ?same)**  
 
 See [includesSeq](#includesseq)
 
@@ -1649,9 +1748,9 @@ isObject(class Foo {}); // false (function)
 
 ### isSorted
 
-**isSorted([comparator](#comparator), [iterable](#wrappable))**  
+**isSorted([compare](#compare), [iterable](#wrappable))**  
 **isSorted([iterable](#wrappable))**  
-**__isSorted([iterable](#iterable), ?[comparator](#comparator))**  
+**__isSorted([iterable](#iterable), ?[compare](#compare))**  
 
 Returns `true` if the values in `iterable` are sorted in ascending order according to `comparator`, and `false` otherwise.
 
@@ -1662,9 +1761,9 @@ isSorted((a, b) => b - a, [3, 2, 1]); // true
 
 ### asyncIsSorted
 
-**asyncIsSorted([comparator](#comparator), [iterable](#asyncwrappable))**  
+**asyncIsSorted([compare](#compare), [iterable](#asyncwrappable))**  
 **asyncIsSorted([iterable](#asyncwrappable))**  
-**__asyncIsSorted([iterable](#asynciterable), ?[comparator](#comparator))**  
+**__asyncIsSorted([iterable](#asynciterable), ?[compare](#compare))**  
 
 See [isSorted](#issorted)
 
@@ -1750,10 +1849,15 @@ See [some](#some)
 
 ### startsWith
 
-**startsWith(values, [iterable](#wrappable))**  
-**__startsWith([iterable](#iterable), values)**  
+**startsWith(same, value, [iterable](#wrappable))**  
+**startsWith(value, [iterable](#wrappable))**  
+**__startsWith([iterable](#iterable), value, ?same)**  
 
-Returns `true` if the first value in `source` is `value`, as compared with `===`. Otherwise returns `false`.
+Defaults:
+
+- `same`: `Object.is`
+
+Returns `true` if the first value in `source` is `value`. Otherwise returns `false`. Two values are considered to be the same if the result of `same(a, b)` is truthy.
 
 ```js
 startsWith(1, [1, 2, 3]); // true
@@ -1763,17 +1867,23 @@ Note: If `source` is a string you should instead use [startsWithSeq](#startswith
 
 ### asyncStartsWith
 
-**asyncStartsWith(values, [iterable](#asyncwrappable))**  
-**__asyncStartsWith([iterable](#asynciterable), values)**  
+**asyncStartsWith(same, value, [iterable](#asyncwrappable))**  
+**asyncStartsWith(value, [iterable](#asyncwrappable))**  
+**__asyncStartsWith([iterable](#asynciterable), value, ?same)**  
 
 See [startsWith](#startswith)
 
 ### startsWithAny
 
+**startsWithAny(same, values, [iterable](#wrappable))**  
 **startsWithAny(values, [iterable](#wrappable))**  
-**__startsWithAny([iterable](#iterable), values)**  
+**__startsWithAny([iterable](#iterable), values, ?same)**  
 
-Returns `true` if the first value in `source` is any `value` in `values`, as compared with `===`. Otherwise returns `false`.
+Defaults:
+
+- `same`: `Object.is`
+
+Returns `true` if the first value in `source` is any `value` in `values`. Otherwise returns `false`. Two values are considered to be the same if the result of `same(a, b)` is truthy.
 
 ```js
 startsWithAny([0, 1], [1, 2, 3]); // true
@@ -1783,17 +1893,23 @@ Note: If `source` is a string you should instead use [startsWithAnySeq](#startsw
 
 ### asyncStartsWithAny
 
+**asyncStartsWithAny(same, values, [iterable](#asyncwrappable))**  
 **asyncStartsWithAny(values, [iterable](#asyncwrappable))**  
-**__asyncStartsWithAny([iterable](#asynciterable), values)**  
+**__asyncStartsWithAny([iterable](#asynciterable), values, ?same)**  
 
 See [startsWithAny](#startswithany)
 
 ### startsWithAnySeq
 
+**startsWithAnySeq(same, seqs, [iterable](#wrappable))**  
 **startsWithAnySeq(seqs, [iterable](#wrappable))**  
-**__startsWithAnySeq([iterable](#iterable), seqs)**  
+**__startsWithAnySeq([iterable](#iterable), seqs, ?same)**  
 
-Returns `true` if the first subsequence of values in `source` match any `valueSeq` in `valueSeqs`, where each value is compared with `===`. Otherwise returns `false`.
+Defaults:
+
+- `same`: `Object.is`
+
+Returns `true` if the first subsequence of values in `source` match any `valueSeq` in `valueSeqs`. Otherwise returns `false`. Two values are considered to be the same if the result of `same(a, b)` is truthy.
 
 ```js
 startsWithAnySeq(
@@ -1807,17 +1923,23 @@ startsWithAnySeq(
 
 ### asyncStartsWithAnySeq
 
+**asyncStartsWithAnySeq(same, seqs, [iterable](#asyncwrappable))**  
 **asyncStartsWithAnySeq(seqs, [iterable](#asyncwrappable))**  
-**__asyncStartsWithAnySeq([iterable](#asynciterable), seqs)**  
+**__asyncStartsWithAnySeq([iterable](#asynciterable), seqs, ?same)**  
 
 See [startsWithAnySeq](#startswithanyseq)
 
 ### startsWithSeq
 
+**startsWithSeq(same, seq, [iterable](#wrappable))**  
 **startsWithSeq(seq, [iterable](#wrappable))**  
-**__startsWithSeq([iterable](#iterable), seq)**  
+**__startsWithSeq([iterable](#iterable), seq, ?same)**  
 
-Returns `true` if the first subsequence of values in `source` matches `valueSeq`, where each value is compared with `===`. Otherwise returns `false`.
+Defaults:
+
+- `same`: `Object.is`
+
+Returns `true` if the first subsequence of values in `source` matches `valueSeq`. Otherwise returns `false`. Two values are considered to be the same if the result of `same(a, b)` is truthy.
 
 ```js
 startsWithSeq([1, 2], [1, 2, 3]); // true
@@ -1825,8 +1947,9 @@ startsWithSeq([1, 2], [1, 2, 3]); // true
 
 ### asyncStartsWithSeq
 
+**asyncStartsWithSeq(same, seq, [iterable](#asyncwrappable))**  
 **asyncStartsWithSeq(seq, [iterable](#asyncwrappable))**  
-**__asyncStartsWithSeq([iterable](#asynciterable), seq)**  
+**__asyncStartsWithSeq([iterable](#asynciterable), seq, ?same)**  
 
 See [startsWithSeq](#startswithseq)
 
