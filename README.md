@@ -5,7 +5,7 @@
 [![npm version](https://img.shields.io/npm/v/iter-tools-es)](https://www.npmjs.com/package/iter-tools-es)
 [![chat on gitter](https://img.shields.io/gitter/room/iter-tools/iter-tools)](https://gitter.im/iter-tools/community)
 
-`iter-tools` provides a comprehensive suite of utility methods for working with javascript iterables and async iterables. Iterables offer an abstraction for describing sequences of values. It you're not sure if `iter-tools` is the right library for you, check out our [features](#features).
+`iter-tools` provides a comprehensive suite of utility methods for working with javascript iterables and async iterables. Iterables offer an abstraction for describing sequences of values. If you're not sure if `iter-tools` is the right library for you, check out our [features](#features).
 
 ### Usage
 
@@ -99,15 +99,15 @@ import map from 'iter-tools-es/methods/map';
 
 ### \_\_methods
 
-Methods whose names begin with `__` are safe to use -- they are part of the library's public API. They are intended for use by extenders of the library, and in tight loops where performance is critical.
+Methods whose names begin with `__` are safe to use -- they are part of the library's public API. They are intended for use by extenders of the library and in tight loops where performance is critical.
 
 There are some differences in the order in which arguments are passed, but these are documented along with the method's other overloads. Other less visible differences are:
 
-`__` methods are not curried. You must pass all their arguments in a single call
-`__` methods do not treat `null` and `undefined` as iterables.
-`__` methods do not permit sync iterables to be used in place of async iterables (this could change in the future).
-`__` methods return singleton iterable iterators. You can only loop over the results once.
-`__` methods may expose implementation internals which are not part of the documented public API. Code using undocumented APIs is subject to breakage in **any** release, in accordance with the [semver specification](https://semver.org/).
+`__` methods are not curried. You must pass all their arguments in a single call  
+`__` methods do not treat `null` and `undefined` as iterables.  
+`__` methods do not permit sync iterables to be used in place of async iterables (this could change in the future).  
+`__` methods return singleton iterable iterators. You can only loop over the results once.  
+`__` methods may expose implementation internals which are not part of the documented public API. Code using undocumented APIs is subject to breakage in **any** release, in accordance with the [semver specification](https://semver.org/).  
 `__` methods do not have type definitions.
 
 ## Roadmap
