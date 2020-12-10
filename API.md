@@ -279,8 +279,7 @@ See [cycleTimes](#cycletimes)
 **range(start, end, ?step)**  
 **range(?end)**  
 **range({ start, end, step })**  
-**__range(start, end, step)**  
-**__range(start, end, step)**  
+**__range(?start, ?end, ?step)**  
 
 Defaults:
 
@@ -524,7 +523,6 @@ See [filter](#filter)
 **flat({ shouldFlat, depth }, [source](#sourceiterable))**  
 **flat(depth, [source](#sourceiterable))**  
 **flat([source](#sourceiterable))**  
-**__flat([source](#iterable), depth, shouldFlat)**  
 **__flat([source](#iterable), ?depth, ?shouldFlat)**  
 
 Defaults:
@@ -559,7 +557,6 @@ flat(isString, Infinity, ['Hel', ['lo', '!']]); // Iterable['H', 'e', 'l', 'l', 
 **asyncFlat({ shouldFlat, depth }, [source](#asyncsourceiterable))**  
 **asyncFlat(depth, [source](#asyncsourceiterable))**  
 **asyncFlat([source](#asyncsourceiterable))**  
-**__asyncFlat([source](#asynciterable), depth, shouldFlat)**  
 **__asyncFlat([source](#asynciterable), ?depth, ?shouldFlat)**  
 
 See [flat](#flat)
@@ -682,7 +679,6 @@ Note: Unlike `reverse`, `asyncReverse` will always make a cache of the entire in
 **slice(start, end, [source](#sourceiterable))**  
 **slice(start, [source](#sourceiterable))**  
 **slice({ start, end, step }, [source](#sourceiterable))**  
-**__slice([source](#iterable), start, end, step)**  
 **__slice([source](#iterable), ?start, ?end, ?step)**  
 
 Defaults:
@@ -716,7 +712,6 @@ When no arguments are passed to `slice` it is functionally equivalent to `wrap`.
 **asyncSlice(start, end, [source](#asyncsourceiterable))**  
 **asyncSlice(start, [source](#asyncsourceiterable))**  
 **asyncSlice({ start, end, step }, [source](#asyncsourceiterable))**  
-**__asyncSlice([source](#asynciterable), start, end, step)**  
 **__asyncSlice([source](#asynciterable), ?start, ?end, ?step)**  
 
 See [slice](#slice)
@@ -751,7 +746,6 @@ See [take](#take)
 **takeSorted(n, [source](#sourceiterable))**  
 **takeSorted([comparator](#comparator), [source](#sourceiterable))**  
 **takeSorted([source](#sourceiterable))**  
-**__takeSorted([source](#iterable), n, [comparator](#comparator))**  
 **__takeSorted([source](#iterable), ?n, ?[comparator](#comparator))**  
 
 Defaults:
@@ -772,7 +766,6 @@ takeSorted(3, (a, b) => b - a, [4, 5, 2, 3, 1]); // Iterable[5, 4, 3]
 **asyncTakeSorted(n, [source](#asyncsourceiterable))**  
 **asyncTakeSorted([comparator](#comparator), [source](#asyncsourceiterable))**  
 **asyncTakeSorted([source](#asyncsourceiterable))**  
-**__asyncTakeSorted([source](#asynciterable), n, [comparator](#comparator))**  
 **__asyncTakeSorted([source](#asynciterable), ?n, ?[comparator](#comparator))**  
 
 See [takeSorted](#takesorted)
@@ -1226,7 +1219,6 @@ See [collate](#collate)
 
 **compress([source](#sourceiterable), [included](#sourceiterable))**  
 **__compress(source, included)**  
-**__compress(source, included)**  
 
 Consumes values from `source` and `included` iterables in parallel, at each step yielding the `source` value if the `included` value is truthy.
 
@@ -1238,7 +1230,6 @@ compress([0, 1, 2, 3, 4], cycle([true, false])); // 0, 2, 4
 ### asyncCompress
 
 **asyncCompress([source](#asyncsourceiterable), [included](#asyncsourceiterable))**  
-**__asyncCompress(source, included)**  
 **__asyncCompress(source, included)**  
 
 See [compress](#compress)
@@ -2165,15 +2156,15 @@ See [arrayFromAsync](#arrayfromasync)
 
 ### toObject
 
-**toObject(iterable, proto)**  
-**__toObject(iterable, proto)**  
+**toObject(iterable, ?proto)**  
+**__toObject(iterable, ?proto)**  
 
 See [objectFrom](#objectfrom)
 
 ### asyncToObject
 
-**asyncToObject(iterable, proto)**  
-**__asyncToObject(iterable, proto)**  
+**asyncToObject(iterable, ?proto)**  
+**__asyncToObject(iterable, ?proto)**  
 
 See [objectFromAsync](#objectfromasync)
 
@@ -2461,8 +2452,8 @@ notWrappable(4); // true
 
 ### apply
 
-**apply(fn, args)**  
-**__apply(fn, args)**  
+**apply(fn, ?args)**  
+**__apply(fn, ?args)**  
 
 `apply` is a convenience method. Its implementation is:
 

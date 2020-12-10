@@ -116,10 +116,12 @@ function getSignature(methodName, ast) {
       params = methodDeclaration.params.map((param) => {
         let paramDecl;
         let isRest = false;
+        let isOptional = false;
 
         switch (param.type) {
           case 'AssignmentPattern':
             paramDecl = param.left;
+            isOptional = true;
             break;
           case 'RestElement':
             paramDecl = param.argument;
@@ -133,6 +135,7 @@ function getSignature(methodName, ast) {
           return {
             name: null,
             isRest: false,
+            isOptional,
             properties: paramDecl.properties
               .filter((prop) => prop.shorthand)
               .map((prop) => prop.key.name),
@@ -141,6 +144,7 @@ function getSignature(methodName, ast) {
           return {
             name: paramDecl.name,
             isRest,
+            isOptional,
           };
         }
       });
@@ -155,6 +159,7 @@ function getSignature(methodName, ast) {
 function uncurryParams(params, { variadic, growRight }) {
   let [itParam, ...cfgParams] = params;
   if (variadic) itParam = { ...itParam, isRest: true };
+  cfgParams = cfgParams.map((param) => ({ ...param, isOptional: false }));
   return [...(growRight ? cfgParams : arrayReverse(cfgParams)), itParam];
 }
 
@@ -175,9 +180,6 @@ function getSignatureOverrides(ASYNC, signature, docme) {
       .concat(params.filter((param) => param.isIterable)),
   }));
 
-  if (name.startsWith('__')) {
-    configOverloads.push(signature);
-  }
   return configOverloads;
 }
 
