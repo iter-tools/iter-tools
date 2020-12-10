@@ -111,6 +111,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 **Overloads**
  -  `size({ size })` and `size(array)` (Instead use `getSize`)
  -  `cycle(times, iterable)`, `asyncCycle(times, iterable)` and `repeat(times, value)` (Instead use `cycleTimes(n, iterable)` (or `asyncCycleTimes`), and `repeatTimes(n, iterable)`)
+ -  `consume(callback, iterable)`, `asyncConsume(callback, iterable)` (Instead use `forEach`)
 
 **Aliases**
  -  `count` was an alias for `range`

@@ -1,7 +1,5 @@
 Consumes `iterable`.
 
-`consume(callback, iterable)` is a deprecated alias for `forEach(callback, iterable)`.
-
 ```js
 function* log123() {
   console.log('1');
