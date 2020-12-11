@@ -164,7 +164,7 @@ class MethodGenerator extends BaseGenerator {
         this.destinationPath(
           join(`src/impls/${fileName}`, path.replace(/\bmethod\b/g, dasherizedName)),
         ),
-        this.fs.read(join(template, path)).replace(/\b__method__\b/g, name),
+        this.fs.read(join(template, path)).replace(/__method__/g, name),
       );
     }
   }
