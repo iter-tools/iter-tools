@@ -49,7 +49,7 @@ module.exports = {
           // e.g. require()
           if (!lookup) continue;
           const variable = lookup.resolved;
-          if (!variable.defs.length) continue;
+          if (!variable || !variable.defs.length) continue;
           const calleeDef = variable.defs[0].node;
 
           if (
