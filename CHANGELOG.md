@@ -4,7 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
-## [7.0.0-rc.1] - UNRELEASED
+## [UNRELEASED]
+
+
+## [7.0.0] - 2020-12-12
 ### Removed
 **Folders**
  - `es2015`: It is expected that most users will switch to `import ... from 'iter-tools-es'`.
