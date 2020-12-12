@@ -1,0 +1,1 @@
+Synchronously yields two async `part` subsequences of `source`. This means that it is still possible to use the result with destructuring, e.g. `const [first, second] = asyncBisect(source)`. For more on how the split is performed (and how the result can be used) see [bisect](#bisect).

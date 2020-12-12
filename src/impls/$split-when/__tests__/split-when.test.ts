@@ -10,31 +10,15 @@ import { splitWhen } from 'iter-tools-es';
 import { wrap, unwrapDeep } from '../../../test/helpers.js';
 
 describe('splitWhen', () => {
-  describe('when there are no values', () => {
-    it('yields empty parts', () => {
-      const [first, second] = splitWhen((_, i) => i > 0, wrap([]));
-      expect(unwrapDeep([first, second])).toEqual([[], []]);
-    });
+  it('should split between every value which is equal to the on argument', () => {
+    expect(unwrapDeep(splitWhen((i) => i === null, wrap([1, null, 2, null, 3])))).toEqual([
+      [1],
+      [2],
+      [3],
+    ]);
   });
 
-  describe('when `predicate(value, i)` goes from falsy to truthy', () => {
-    it('puts values in each part', () => {
-      const [first, second] = splitWhen((_, i) => i > 0, wrap([1, 2, 3]));
-      expect(unwrapDeep([first, second])).toEqual([[1], [2, 3]]);
-    });
-  });
-
-  describe('when `predicate(value, i)` is truthy initially', () => {
-    it('puts all the values in the second part', () => {
-      const [first, second] = splitWhen((v) => v > 0, wrap([1, 2, 3]));
-      expect(unwrapDeep([first, second])).toEqual([[], [1, 2, 3]]);
-    });
-  });
-
-  describe('when `predicate(value, i)` is never truthy', () => {
-    it('puts all the values in the first part', () => {
-      const [first, second] = splitWhen((_) => null, wrap([1, 2, 3]));
-      expect(unwrapDeep([first, second])).toEqual([[1, 2, 3], []]);
-    });
+  it('should return no parts if source is empty', () => {
+    expect(unwrapDeep(splitWhen((i) => i, null))).toEqual([]);
   });
 });

@@ -1,13 +1,11 @@
-Yields two `part` subsequences of `source`. The first `part` yields the values where `predicate(value, i)` is falsy. The second `part` yields all the values including and after the first value for which `predicate(value, i)` is truthy.
+Yields a [PartsIterable](#partsiterable) of parts from `source`, a `value` from `source` for which the result of `predicate(value, idx)` is truthy is considered a separator, and will not occur in the output. If `source` is a string you may also specify a regex predicate, in which case the behavior will match `str.split(RegExp)`. This is the only situation in which you will be able to match more than one value from `source` at a time.
 
-`splitAt` is specially designed to work with destructuring, but this comes at a cost: for resources to be released properly you must use the second half of the split. If you only need the first half you would instead use [takeWhen](#takewhen), e.g. by changing `const [seq] = splitWhen(cond, source)` into `const seq = takeWhen((v, i) => !cond(v, i), source)`.
-
+<!-- prettier-ignore -->
 ```js
-const source = [-2, -1, 0, 1, 2];
-const [negatives, positives] = splitWhen(
-  (i) => i >= 0,
-  source,
-);
-negatives; // Iterable[-2, -1]
-positives; // Iterable[0, 1, 2]
+splitWhen(
+  x => x == null,
+  [1, null, 2, undefined, 3]
+); // Iterable[Iterable[1], Iterable[2], Iterable[3]]
+splitWhen(',', 'foo,bar,baz'); // Iterable['foo', 'bar', 'baz']
+splitWhen(/, /, 'foo, bar, baz'); // Iterable['foo', 'bar', 'baz']
 ```
