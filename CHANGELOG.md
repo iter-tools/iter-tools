@@ -39,6 +39,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
  - `last`, `asyncLast` to `takeLast`, `asyncTakeLast`
  - `lastOr`, `asyncLastOr` to `takeLastOr`, `asyncTakeLastOr`
  - `groupBy`, `asyncGroupBy` to `splitGroups`, `asyncSplitGroups`
+ - `splitAt`, `asyncSplitAt` to `bisect`, `asyncBisect`
+ - `splitWith`, `asyncSplitWith` to `splitWhen`, `asyncSplitWhen`
  - `*subseq` to `*seq`
    - `startsWithSubseq`, `asyncStartsWithSubseq` to `startsWithSeq`, `asyncStartsWithSeq`
    - `startsWithAnySubseq`, `asyncStartsWithAnySubseq` to `startsWithAnySeq`, `asyncStartsWithAnySeq`
@@ -66,7 +68,6 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
  - `spliterateGrouped`, `asyncSpliterateGrouped`
  - `window`, `asyncWindow`
  - `stringFrom`, `stringFromAsync`
- - `splitWhen`, `asyncSplitWhen`
  - `isNull`, `notNull`
  - `isUndefined`, `notUndefined`
  - `isNil`, `notNil`
@@ -75,6 +76,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
  - `isWrappable`, `notWrappable`, `isAsyncWrappable`, `notAsyncWrappable`
  - `isLoopable`, `notLoopable`, `isAsyncLoopable`, `notAsyncLoopable`
  - `deepEqual`, `asyncDeepEqual`
+
+**Overloads**
+ - `bisect(predicate)`, `asyncBisect(predicate)`
 
 **Aliases**
  - `str` for `stringFrom`, `asyncStr` for `stringFromAsync`

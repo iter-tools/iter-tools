@@ -67,10 +67,6 @@ export class $Bisector extends IterableIterator {
   return() {
     // If one part is taken but not the other we could never safely call
     // return() on the source in the async version.
-    // TODO could I allow taking only one part if it is done before any
-    // values are consumed from source?
-    // e.g. const [first] = asyncBisectingMethod(...);
-    // Should be unnecessary.. splitAt => slice, splitWhen => takeWhile
     if (this.currentIdx === 1) {
       // Generator syntax will not let you do this.
       // You can't throw an error safely inside a finally block

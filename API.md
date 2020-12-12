@@ -118,15 +118,14 @@ Transform a single iterable
 Separate an iterable into multiple iterables
 
 [batch](#batch) ([async](#asyncbatch))  
+[bisect](#bisect) ([async](#asyncbisect))  
 [split](#split) ([async](#asyncsplit))  
-[splitAt](#splitat) ([async](#asyncsplitat))  
 [splitGroups](#splitgroups) ([async](#asyncsplitgroups))  
 [splitOn](#spliton) ([async](#asyncspliton))  
 [splitOnAny](#splitonany) ([async](#asyncsplitonany))  
 [splitOnAnySeq](#splitonanyseq) ([async](#asyncsplitonanyseq))  
 [splitOnSeq](#splitonseq) ([async](#asyncsplitonseq))  
 [splitWhen](#splitwhen) ([async](#asyncsplitwhen))  
-[splitWith](#splitwith) ([async](#asyncsplitwith))  
 
 Combine multiple iterables
 
@@ -973,6 +972,40 @@ batch(2, range(5)); // [0, 1], [2, 3], [4]
 
 See [batch](#batch)
 
+### bisect
+
+**bisect(at, [source](#wrappable))**  
+**__bisect([source](#iterable), at)**  
+
+Yields two `part` subsequences of `source`. The split position is chosen with `at`. If `at` is a number, the first part will contain that number of values. If `at` is a negative number the second part will contain that number of values. If `at` is a function the split will be before the first `value` for which the result of `at(value, idx)` is truthy.
+
+`bisect` is specially designed to work with destructuring, but this comes at a cost: for resources to be released properly you must use the second half of the split. If you only need the first half you must instead use [take](#take) or [takeWhile](#takewhile). For example instead of `const [seq] = bisect(cond, source)` you must write `const seq = takeWhile((v, i) => !cond(v, i), source)`.
+
+```js
+const source = [-2, -1, 0, 1, 2];
+const [negatives, positives] = bisect(
+  (i) => i >= 0,
+  source,
+);
+negatives; // Iterable[-2, -1]
+positives; // Iterable[0, 1, 2]
+
+const [
+  firstThree, // Iterable[0, 1, 2]
+  others, // Iterable[3, 4, 5, 6, 7, 8, 9]
+] = bisect(3, range(10));
+
+const [, lastThree] = bisect(-3, range(10));
+lastThree; // Iterable[7, 8, 9]
+```
+
+### asyncBisect
+
+**asyncBisect(at, [source](#asyncwrappable))**  
+**__asyncBisect([source](#asynciterable), at)**  
+
+Synchronously yields two async `part` subsequences of `source`. This means that it is still possible to use the result with destructuring, e.g. `const [first, second] = asyncBisect(source)`. For more on how the split is performed (and how the result can be used) see [bisect](#bisect).
+
 ### split
 
 **split([source](#wrappable))**  
@@ -990,46 +1023,6 @@ split([1, 2, 3]); // Iterable[Iterable[1], Iterable[2], Iterable[3]]
 **__asyncSplit([source](#asynciterable))**  
 
 See [split](#split)
-
-### splitAt
-
-**splitAt(idx, [source](#wrappable))**  
-**__splitAt([source](#iterable), idx)**  
-
-Yields two `part` subsequences of `source`. The first `part` yields the values occurring before index `idx` in `source`, the second `part` yields all the values at or after index `idx`. `idx` can also be negative, in which case it refers to an offset from the end of `source`.
-
-`splitAt` is specially designed to work with destructuring, but this comes at a cost: for resources to be released properly you must use the second half of the split. If you only need the first half you would instead use [take](#take), e.g. by changing `const [seq] = splitAt(i, source)` into `const seq = take(i, source)`.
-
-```js
-const [
-  firstThree, // Iterable[0, 1, 2]
-  others, // Iterable[3, 4, 5, 6, 7, 8, 9]
-] = splitAt(3, range(10));
-
-const [, lastThree] = splitAt(-3, range(10));
-lastThree; // Iterable[7, 8, 9]
-```
-
-### asyncSplitAt
-
-**asyncSplitAt(idx, [source](#asyncwrappable))**  
-**__asyncSplitAt([source](#asynciterable), idx)**  
-
-Synchronously yields two async `part` subsequences of `source`. The first `part` yields the values occurring before index `idx` in `source`, the second `part` yields all the values at or after index `idx`. `idx` can also be negative, in which case it refers to an offset from the end of `source`.
-
-Like its sync counterpart, `asyncSplitAt` is also intended for use with destructuring assignment, and does not allow you to destructure only the first part.
-
-```js
-const [
-  firstThree, // AsyncIterable[0, 1, 2]
-  others, // AsyncIterable[3, 4, 5, 6, 7, 8, 9]
-] = asyncSplitAt(3, asyncWrap(range(100)));
-
-if (!othersNeeded) await others.return();
-
-const [, lastThree] = asyncSplitAt(-3, range(10));
-lastThree; // AsyncIterable[7, 8, 9]
-```
 
 ### splitGroups
 
@@ -1171,18 +1164,16 @@ See [splitOnSeq](#splitonseq)
 **splitWhen(predicate, [source](#wrappable))**  
 **__splitWhen([source](#iterable), predicate)**  
 
-Yields two `part` subsequences of `source`. The first `part` yields the values where `predicate(value, i)` is falsy. The second `part` yields all the values including and after the first value for which `predicate(value, i)` is truthy.
+Yields a [PartsIterable](#partsiterable) of parts from `source`, a `value` from `source` for which the result of `predicate(value, idx)` is truthy is considered a separator, and will not occur in the output. If `source` is a string you may also specify a regex predicate, in which case the behavior will match `str.split(RegExp)`. This is the only situation in which you will be able to match more than one value from `source` at a time.
 
-`splitAt` is specially designed to work with destructuring, but this comes at a cost: for resources to be released properly you must use the second half of the split. If you only need the first half you would instead use [takeWhen](#takewhen), e.g. by changing `const [seq] = splitWhen(cond, source)` into `const seq = takeWhen((v, i) => !cond(v, i), source)`.
-
+<!-- prettier-ignore -->
 ```js
-const source = [-2, -1, 0, 1, 2];
-const [negatives, positives] = splitWhen(
-  (i) => i >= 0,
-  source,
-);
-negatives; // Iterable[-2, -1]
-positives; // Iterable[0, 1, 2]
+splitWhen(
+  x => x == null,
+  [1, null, 2, undefined, 3]
+); // Iterable[Iterable[1], Iterable[2], Iterable[3]]
+splitWhen(',', 'foo,bar,baz'); // Iterable['foo', 'bar', 'baz']
+splitWhen(/, /, 'foo, bar, baz'); // Iterable['foo', 'bar', 'baz']
 ```
 
 ### asyncSplitWhen
@@ -1191,30 +1182,6 @@ positives; // Iterable[0, 1, 2]
 **__asyncSplitWhen([source](#asynciterable), predicate)**  
 
 See [splitWhen](#splitwhen)
-
-### splitWith
-
-**splitWith(predicate, [source](#wrappable))**  
-**__splitWith([source](#iterable), predicate)**  
-
-Yields a [PartsIterable](#partsiterable) of parts from `source`, a `value` from `source` for which the result of `predicate(value, idx)` is truthy is considered a separator, and will not occur in the output. If `source` is a string you may also specify a regex predicate, in which case the behavior will match `str.split(RegExp)`. This is the only situation in which you will be able to match more than one value from `source` at a time.
-
-<!-- prettier-ignore -->
-```js
-splitWith(
-  x => x == null,
-  [1, null, 2, undefined, 3]
-); // Iterable[Iterable[1], Iterable[2], Iterable[3]]
-splitWith(',', 'foo,bar,baz'); // Iterable['foo', 'bar', 'baz']
-splitWith(/, /, 'foo, bar, baz'); // Iterable['foo', 'bar', 'baz']
-```
-
-### asyncSplitWith
-
-**asyncSplitWith(predicate, [source](#asyncwrappable))**  
-**__asyncSplitWith([source](#asynciterable), predicate)**  
-
-See [splitWith](#splitwith)
 
 
 ## Combine multiple iterables
@@ -2896,7 +2863,7 @@ asyncPrintValues(asyncWrap([1, 2, 3])); // '1, 2, 3'
 
 Facilitates the creation of methods which split a `source` iterable into multiple parts. The `strategy` generator yield a flat output containing values from `source` as well as special `split` sentinel values. `spliterate` decorates the values yielded from `strategy()`. Each instance of the `split` sentinel will yield a new part. Thus for a `strategy` which yields `split` `n` times, `n + 1` parts will be yielded.
 
-Other methods in the split\* family (e.g. [splitAt](#splitat), [splitOn](#spliton), [splitWith](#splitwith)) are implemented using `spliterate` under the hood. It is expected that most use cases will be served by one of these existing methods. Their implementations also serve as useful examples.
+Other methods in the split\* family (e.g. [splitOn](#spliton), [splitWhen](#splitwhen), and [bisect](#bisect)) are implemented using `spliterate` under the hood. It is expected that most use cases will be served by one of these existing methods. Their implementations also serve as useful examples.
 
 Here is a slightly simplified implementation of [batch](#batch):
 

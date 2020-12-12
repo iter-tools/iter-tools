@@ -7,10 +7,10 @@
  */
 
 import { iterableCurry } from '../../internal/iterable.js';
-import { __splitWith } from '../$split-with/split-with.js';
+import { __splitWhen } from '../$split-when/split-when.js';
 
 export function __splitOn(source, separator, same = Object.is) {
-  return __splitWith(source, (value) => same(separator, value));
+  return __splitWhen(source, (value) => same(separator, value));
 }
 
 export const splitOn = /*#__PURE__*/ iterableCurry(__splitOn, {

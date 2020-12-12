@@ -7,30 +7,17 @@
  */
 
 import { iterableCurry } from '../../internal/iterable.js';
-import { Bisector } from '../../internal/bisector.js';
-import { __wrap } from '../$wrap/wrap.js';
+import { __spliterate } from '../$spliterate/spliterate.js';
 
-export function* conditionStrategy(split, { predicate }, source) {
+function* predicateSpliterator(split, { predicate }, source) {
   let i = 0;
-  let splat = false;
   for (const value of source) {
-    if (!splat && predicate(value, i++)) {
-      yield split;
-      splat = true;
-    }
-    yield value;
+    yield predicate(value, i++) ? split : value;
   }
 }
 
 export function __splitWhen(source, predicate) {
-  return new Bisector(source, conditionStrategy, { predicate });
+  return __spliterate(source, predicateSpliterator, { predicate });
 }
 
-export const splitWhen = /*#__PURE__*/ iterableCurry(
-  function $splitWhen(source, predicate) {
-    return __wrap(__splitWhen(source, predicate));
-  },
-  {
-    forceSync: true,
-  },
-);
+export const splitWhen = /*#__PURE__*/ iterableCurry(__splitWhen);
