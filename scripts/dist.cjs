@@ -17,10 +17,15 @@ const mungeReadme = (content) => {
   }
   content = lines.join('\n');
 
+  content = content.replace(
+    /(#* ?Usage.*\n)(.|\n)*?^(?=#)/gim,
+    (_, m1) => `${m1}\n${fs.readFileSync(`USAGE.${target}.md`, 'utf8')}\n`,
+  );
+
   if (target === 'es5') {
     content = content
-      .replace(/from '@iter-tools\/es/g, "from 'iter-tools")
-      .replace(/= require\('@iter-tools\/es/g, "= require('iter-tools");
+      .replace(/from 'iter-tools-es/g, "from 'iter-tools")
+      .replace(/= require\('iter-tools-es/g, "= require('iter-tools");
   }
 
   return content;
