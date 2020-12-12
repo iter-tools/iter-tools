@@ -1,5 +1,11 @@
 module.exports = {
-  extends: ['standard', 'plugin:prettier/recommended', 'plugin:jest/recommended'],
+  extends: [
+    'standard',
+    'plugin:prettier/recommended',
+    'plugin:jest/recommended',
+    'plugin:import/errors',
+    'plugin:import/warnings',
+  ],
   plugins: ['jest', 'local-rules'],
   parser: '@babel/eslint-parser',
   parserOptions: {
@@ -32,15 +38,17 @@ module.exports = {
       },
     },
     {
-      files: ['*.js'],
+      files: ['src/**.js'],
       rules: {
+        'local-rules/no-impure-calls': 'error',
         'node/file-extension-in-import': ['error', 'always'],
       },
     },
     {
-      files: ['src/**.js', '!src/test', '!**/__tests__/**'],
+      files: ['src/test', '**/__tests__/**'],
       rules: {
-        'local-rules/no-impure-calls': 'error',
+        'local-rules/no-impure-calls': 'off',
+        'import/no-unresolved': 'off',
       },
     },
     {
@@ -54,12 +62,14 @@ module.exports = {
         '@typescript-eslint/no-unused-vars': ['warn', { argsIgnorePattern: '^_' }],
         '@typescript-eslint/class-name-casing': 'off', // can't deal with $PascalCased
         'no-useless-constructor': 'off', // was causing `Cannot read property 'body' of null`
+        'import/no-unresolved': 'off',
       },
     },
     {
       files: ['$*'],
       rules: {
         'no-unused-expressions': 'off',
+        'import/no-unresolved': 'off',
       },
     },
     {

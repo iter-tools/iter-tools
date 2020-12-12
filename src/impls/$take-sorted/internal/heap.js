@@ -1,5 +1,3 @@
-import { defaultCompare } from '../../../internal/compare.js';
-
 // Adapted from sithmel's little-ds-toolkit/lib/heap.js
 
 function swap(arr, x, y) {
@@ -9,7 +7,7 @@ function swap(arr, x, y) {
 }
 
 export class Heap {
-  constructor(compare = defaultCompare) {
+  constructor(compare) {
     this.compare = compare;
     this.data = [];
   }
