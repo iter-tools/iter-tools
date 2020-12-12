@@ -36,12 +36,18 @@ describe('when', () => {
     });
   });
 
+  describe('when value is a funciton', () => {
+    it('is called to produce the value to be spread', () => {
+      expect(when(true, () => iterable)).toBe(iterable);
+    });
+  });
+
   it('throws when value is not object or iterable', () => {
     expect(() => {
       const bad: any = 4;
       when(true, bad);
     }).toThrowErrorMatchingInlineSnapshot(
-      `"Second argument to when must be an object or iterable."`,
+      `"Second argument to when must be an object, iterable, or function."`,
     );
   });
 });
