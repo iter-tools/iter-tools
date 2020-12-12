@@ -139,8 +139,5 @@
     "typescript": "^3.8.2",
     "yeoman-environment": "^2.4.0",
     "yeoman-generator": "^4.0.2"
-  },
-  "resolutions": {
-    "babel-core": "7.0.0-bridge.0"
   }
 }

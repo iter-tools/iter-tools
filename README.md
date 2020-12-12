@@ -19,6 +19,8 @@ import { filter } from 'iter-tools';
 const { filter } = require('iter-tools');
 ```
 
+es5 consumers are responsible for loading `core-js` if their environment does not define `Symbol.iterator`.
+
 ## Documentation
 
 Please read our [API docs](https://github.com/iter-tools/iter-tools/blob/v7.0.0-rc.0/API.md)!
