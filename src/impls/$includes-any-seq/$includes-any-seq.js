@@ -2,7 +2,7 @@ import { $async, $await } from '../../../generate/async.macro.cjs';
 
 import { $iterableCurry } from '../../internal/$iterable.js';
 import { $seqsToArray } from '../../internal/$any-seq.js';
-import { $__leadingWindow } from '../$leading-window/$leading-window.js';
+import { $__windowAhead } from '../$window-ahead/$window-ahead.js';
 import { __startsWithAnySeq } from '../$starts-with-any-seq/starts-with-any-seq.js';
 
 $async;
@@ -15,7 +15,7 @@ export function $__includesAnySeq(iterable, seqs, same = Object.is) {
   const maxMatchLength = seqsArr.reduce((max, { length }) => Math.max(max, length), 1);
 
   $await;
-  for (const buffer of $__leadingWindow(iterable, maxMatchLength)) {
+  for (const buffer of $__windowAhead(iterable, maxMatchLength)) {
     if (__startsWithAnySeq(buffer, seqsArr, same)) {
       return true;
     }

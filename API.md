@@ -111,8 +111,8 @@ Transform a single iterable
 [takeWhile](#takewhile) ([async](#asynctakewhile))  
 [tap](#tap) ([async](#asynctap))  
 [window](#window) ([async](#asyncwindow))  
-[leadingWindow](#leadingwindow) ([async](#asyncleadingwindow))  
-[trailingWindow](#trailingwindow) ([async](#asynctrailingwindow))  
+[windowAhead](#windowahead) ([async](#asyncwindowahead))  
+[windowBehind](#windowbehind) ([async](#asyncwindowbehind))  
 [wrap](#wrap) ([async](#asyncwrap))  
 
 Separate an iterable into multiple iterables
@@ -815,7 +815,7 @@ See [tap](#tap)
 **window(size, [source](#wrappable))**  
 **__window([source](#iterable), size)**  
 
-For values in `source`, yields a `window` iterable of size `size` which starts with that value and also contains the next values from `source`. The `window` instance is the same on every iteration. Only emits full windows, which means fewer windows will be emitted than there are values in `source`. If you need a window for every value in `source`, use [leadingWindow](#leadingwindow) or [trailingWindow](#trailingwindow).
+For values in `source`, yields a `window` iterable of size `size` which starts with that value and also contains the next values from `source`. The `window` instance is the same on every iteration. Only emits full windows, which means fewer windows will be emitted than there are values in `source`. If you need a window for every value in `source`, use [windowAhead](#windowAhead) or [windowBehind](#windowBehind).
 
 ```js
 window(3, [1, 2, 3, 4, 5]);
@@ -836,11 +836,11 @@ window(5, [1, 2, 3]);
 
 See [window](#window)
 
-### leadingWindow
+### windowAhead
 
-**leadingWindow(size, { filler, useFiller }, [source](#wrappable))**  
-**leadingWindow(size, [source](#wrappable))**  
-**__leadingWindow([source](#iterable), size, ?{ filler, useFiller })**  
+**windowAhead({ filler, useFiller }, size, [source](#wrappable))**  
+**windowAhead(size, [source](#wrappable))**  
+**__windowAhead([source](#iterable), size, ?{ filler, useFiller })**  
 
 Defaults:
 
@@ -850,7 +850,7 @@ Defaults:
 For every value in `source`, yields an iterable `window` of size `size` which starts with that value and also contains the next values from `source`. The `window` instance is the same on every iteration. When there are not enough additional values in `source` to fill the window, `filler` will be used in place of the missing values. Alternatively if `useFiller` is `false`, missing values will create windows smaller than `size`.
 
 ```js
-leadingWindow(3, [1, 2, 3, 4, 5]);
+windowAhead(3, [1, 2, 3, 4, 5]);
 // Iterable[
 //   Iterable[1, 2, 3],
 //   Iterable[2, 3, 4]
@@ -859,7 +859,7 @@ leadingWindow(3, [1, 2, 3, 4, 5]);
 //   Iterable[5, undefined, undefined]
 // ]
 
-leadingWindow(3, { filler: Infinity }, [1, 2, 3, 4, 5]);
+windowAhead(3, { filler: Infinity }, [1, 2, 3, 4, 5]);
 // Iterable[
 //   Iterable[1, 2, 3],
 //   Iterable[2, 3, 4]
@@ -868,7 +868,7 @@ leadingWindow(3, { filler: Infinity }, [1, 2, 3, 4, 5]);
 //   Iterable[5, Infinity, Infinity]
 // ]
 
-leadingWindow(3, { useFiller: false }, [1, 2, 3, 4, 5]);
+windowAhead(3, { useFiller: false }, [1, 2, 3, 4, 5]);
 // Iterable[
 //   Iterable[1, 2, 3],
 //   Iterable[2, 3, 4]
@@ -878,19 +878,19 @@ leadingWindow(3, { useFiller: false }, [1, 2, 3, 4, 5]);
 // ]
 ```
 
-### asyncLeadingWindow
+### asyncWindowAhead
 
-**asyncLeadingWindow(size, { filler, useFiller }, [source](#asyncwrappable))**  
-**asyncLeadingWindow(size, [source](#asyncwrappable))**  
-**__asyncLeadingWindow([source](#asynciterable), size, ?{ filler, useFiller })**  
+**asyncWindowAhead({ filler, useFiller }, size, [source](#asyncwrappable))**  
+**asyncWindowAhead(size, [source](#asyncwrappable))**  
+**__asyncWindowAhead([source](#asynciterable), size, ?{ filler, useFiller })**  
 
-See [leadingWindow](#leadingwindow)
+See [windowAhead](#windowahead)
 
-### trailingWindow
+### windowBehind
 
-**trailingWindow(size, { filler }, [source](#wrappable))**  
-**trailingWindow(size, [source](#wrappable))**  
-**__trailingWindow([source](#iterable), size, ?{ filler })**  
+**windowBehind({ filler }, size, [source](#wrappable))**  
+**windowBehind(size, [source](#wrappable))**  
+**__windowBehind([source](#iterable), size, ?{ filler })**  
 
 Defaults:
 
@@ -899,7 +899,7 @@ Defaults:
 For every value in `source`, yields a `window` iterable of size `size` which contains the values leading up to and including that value. The `window` instance is the same on every iteration. When there are not enough prior values to fill the window, `filler` will be used in place of the missing values.
 
 ```js
-trailingWindow(3, [1, 2, 3, 4, 5]);
+windowBehind(3, [1, 2, 3, 4, 5]);
 // Iterable[
 //   Iterable[undefined, undefined, 1],
 //   Iterable[undefined, 1, 2]
@@ -908,7 +908,7 @@ trailingWindow(3, [1, 2, 3, 4, 5]);
 //   Iterable[3, 4, 5]
 // ]
 
-trailingWindow(3, { filler: 0 }, [1, 2, 3, 4, 5]);
+windowBehind(3, { filler: 0 }, [1, 2, 3, 4, 5]);
 // Iterable[
 //   Iterable[0, 0, 1]
 //   Iterable[0, 1, 2]
@@ -918,13 +918,13 @@ trailingWindow(3, { filler: 0 }, [1, 2, 3, 4, 5]);
 // ]
 ```
 
-### asyncTrailingWindow
+### asyncWindowBehind
 
-**asyncTrailingWindow(size, { filler }, [source](#asyncwrappable))**  
-**asyncTrailingWindow(size, [source](#asyncwrappable))**  
-**__asyncTrailingWindow([source](#asynciterable), size, ?{ filler })**  
+**asyncWindowBehind({ filler }, size, [source](#asyncwrappable))**  
+**asyncWindowBehind(size, [source](#asyncwrappable))**  
+**__asyncWindowBehind([source](#asynciterable), size, ?{ filler })**  
 
-See [trailingWindow](#trailingwindow)
+See [windowBehind](#windowbehind)
 
 ### wrap
 

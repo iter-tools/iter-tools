@@ -9,7 +9,7 @@
 import { iterableCurry } from '../../internal/iterable.js';
 import { seqsToArray } from '../../internal/any-seq.js';
 import { __startsWithSeq } from '../$starts-with-seq/starts-with-seq.js';
-import { __leadingWindow } from '../$leading-window/leading-window.js';
+import { __windowAhead } from '../$window-ahead/window-ahead.js';
 import { __spliterate } from '../$spliterate/spliterate.js';
 
 function getMatchingLength(buffer, separatorSeqs, same) {
@@ -27,7 +27,7 @@ function* anySeqspliterator(split, { separatorSeqs, same }, source) {
 
   let skip = 0;
 
-  for (const buffer of __leadingWindow(source, maxMatchLength, { useFiller: false })) {
+  for (const buffer of __windowAhead(source, maxMatchLength, { useFiller: false })) {
     if (skip > 0) {
       skip--;
       continue;
