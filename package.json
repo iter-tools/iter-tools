@@ -18,7 +18,7 @@
     "test:types": "tsc",
     "test": "run-s test:*",
     "benchmarks": "yarn clean && yarn build:es-cjs && node benchmarks",
-    "coverage": "yarn test:js -- --coverage",
+    "coverage": "yarn test:js --coverage",
     "coverage:upload": "codecov",
     "clean": "run-p clean:*",
     "clean:dist": "rimraf dist",
