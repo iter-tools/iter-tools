@@ -80,9 +80,7 @@
     "Conrad Buck <conartist6@gmail.com>"
   ],
   "license": "MIT",
-  "dependencies": {
-    "typescript-tuple": "^2.1.0"
-  },
+  "dependencies": {},
   "devDependencies": {
     "@babel/cli": "^7.12.8",
     "@babel/core": "^7.12.9",
