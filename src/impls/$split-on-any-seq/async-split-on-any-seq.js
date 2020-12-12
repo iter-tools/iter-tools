@@ -9,7 +9,7 @@
 import { asyncIterableCurry } from '../../internal/async-iterable.js';
 import { asyncSeqsToArray } from '../../internal/async-any-seq.js';
 import { __startsWithSeq } from '../$starts-with-seq/starts-with-seq.js';
-import { __asyncLeadingWindow } from '../$leading-window/async-leading-window.js';
+import { __asyncWindowAhead } from '../$window-ahead/async-window-ahead.js';
 import { __asyncSpliterate } from '../$spliterate/async-spliterate.js';
 
 function getMatchingLength(buffer, separatorSeqs, same) {
@@ -27,7 +27,7 @@ async function* asyncAnySeqspliterator(split, { separatorSeqs, same }, source) {
 
   let skip = 0;
 
-  for await (const buffer of __asyncLeadingWindow(source, maxMatchLength, { useFiller: false })) {
+  for await (const buffer of __asyncWindowAhead(source, maxMatchLength, { useFiller: false })) {
     if (skip > 0) {
       skip--;
       continue;

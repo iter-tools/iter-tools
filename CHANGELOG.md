@@ -19,6 +19,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
  - `asyncFilterParallel` (Instead use `asyncBuffer(n, asyncFilter(fn, iterable))`)
  - `group`, `asyncGroup` (`splitGroups` is a drop-in replacement)
  - `combinations`, `combinationsWithReplacement`, `permutations`, `product` (use `@iter-tools/combinatorics`)
+ - `leadingWindow`, `asyncLeadingWindow` (Instead use `windowAhead`. Only arg order changed)
+ - `trailingWindow`, `asyncTrailingWindow` (Instead use `windowBehind`. Only arg order changed)
 
 **Arguments**
  - `n` from `fork` and `asyncFork`. Use destructuring or call `return()` on the forks iterable.
@@ -56,6 +58,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
  - `batch`, `asyncBatch` now yield batches which are iterables but not arrays. The batches must be consumed in order. For the old behavior use `map(toArray, batch(...))`.
  - `*any` and `*anySubseq` methods now require the possible values or subseqs to be passed as a non-nullable array. To replicate the old behavior change `startsWithAny(valuesIterable)` to `startsWithAny(wrap([...valuesIterable])`.
  - `includesAny`, `startsWithAny` (and async and seq variants) now return `false` when nothing is being searched for, e.g. `includesAny([], iterable) === false`.
+ - `windowAhead`
 
 ### Added
 **Methods**
@@ -76,6 +79,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
  - `isWrappable`, `notWrappable`, `isAsyncWrappable`, `notAsyncWrappable`
  - `isLoopable`, `notLoopable`, `isAsyncLoopable`, `notAsyncLoopable`
  - `deepEqual`, `asyncDeepEqual`
+ - `windowAhead`, `windowBehind` ,`asyncWindowAhead`, `asyncWindowBehind`
 
 **Overloads**
  - `bisect(predicate)`, `asyncBisect(predicate)`

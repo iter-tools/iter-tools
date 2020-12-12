@@ -1,3 +1,0 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
-
-exports[`leadingWindow when arguments are invalid throws 1`] = `"leadingWindow must be passed a numeric size"`;
