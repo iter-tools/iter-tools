@@ -7,6 +7,7 @@
  */
 
 import { iterableCurry, callReturn } from '../../internal/iterable.js';
+import { IterableIterator } from '../../internal/iterable-iterator.js';
 import { parallelEach } from '../../internal/parallel-each.js';
 import { Peekerator } from '../../internal/peekerator.js';
 import { __map } from '../$map/map.js';
@@ -84,8 +85,9 @@ export class InputSummary {
   }
 }
 
-class Interleaver {
+class Interleaver extends IterableIterator {
   constructor(sources, strategy, options) {
+    super();
     this.sources = sources;
     this.strategy = strategy;
     this.options = options;
