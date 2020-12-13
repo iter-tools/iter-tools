@@ -7,6 +7,7 @@
  */
 
 import { asyncIterableCurry, asyncCallReturn } from '../../internal/async-iterable.js';
+import { AsyncIterableIterator } from '../../internal/async-iterable-iterator.js';
 import { asyncParallelEach } from '../../internal/async-parallel-each.js';
 import { AsyncPeekerator } from '../../internal/async-peekerator.js';
 import { __asyncMap } from '../$map/async-map.js';
@@ -84,8 +85,9 @@ export class AsyncInputSummary {
   }
 }
 
-class AsyncInterleaver {
+class AsyncInterleaver extends AsyncIterableIterator {
   constructor(sources, strategy, options) {
+    super();
     this.sources = sources;
     this.strategy = strategy;
     this.options = options;
