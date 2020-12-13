@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ## [UNRELEASED]
 
 
+## [7.0.1] - 2020-12-12
+### Fixed
+`require('iter-tools')` in node 12+ (`ERR_REQUIRE_ESM`)
+
+
 ## [7.0.0] - 2020-12-12
 ### Removed
 **Folders**
