@@ -5,8 +5,12 @@
   "type": "module",
   "main": "src/index.js",
   "exports": {
-    ".": "./src/index.js",
-    "./methods/*": "./src/methods/*.js",
+    ".": {
+      "import": "./src/index.js"
+    },
+    "./methods/*": {
+      "import": "./src/methods/*.js"
+    },
     "./explode.macro": "./src/explode.macro.cjs",
     "./package.json": "./package.json"
   },
@@ -99,7 +103,7 @@
     "babel-plugin-minify-dead-code-elimination": "^0.5.0",
     "babel-plugin-recast": "^0.1.2",
     "babel-plugin-tester": "^10.0.0",
-    "babel-plugin-transform-package-self-reference": "^0.1.2",
+    "babel-plugin-transform-package-self-reference": "^0.1.4",
     "benchmark": "^2.1.4",
     "camelize": "^1.0.0",
     "codecov": "^3.7.2",

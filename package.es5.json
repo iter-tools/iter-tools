@@ -4,8 +4,14 @@
   "type": "commonjs",
   "jsnext:main": "index.mjs",
   "exports": {
-    ".": "./index.mjs",
-    "./methods/*": "./methods/*.mjs",
+    ".": {
+      "import": "./index.mjs",
+      "require": "./index.js"
+    },
+    "./methods/*": {
+      "import": "./methods/*.mjs",
+      "require": "./methods/*.js"
+    },
     "./explode.macro": "./explode.macro.js",
     "./package.json": "./package.json"
   },

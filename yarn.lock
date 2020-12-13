@@ -1723,11 +1723,6 @@ axios@^0.18.0:
     follow-redirects "1.5.10"
     is-buffer "^2.0.2"
 
-babel-core@7.0.0-bridge.0:
-  version "7.0.0-bridge.0"
-  resolved "https://registry.yarnpkg.com/babel-core/-/babel-core-7.0.0-bridge.0.tgz#95a492ddd90f9b4e9a4a1da14eb335b87b634ece"
-  integrity sha512-poPX9mZH/5CSanm50Q+1toVci6pv5KSRv/5TWCwtzQS5XEwn40BcCrgIeMFWP9CKKIniKXNxoIOnOq4VVlGXhg==
-
 babel-helper-evaluate-path@^0.5.0:
   version "0.5.0"
   resolved "https://registry.yarnpkg.com/babel-helper-evaluate-path/-/babel-helper-evaluate-path-0.5.0.tgz#a62fa9c4e64ff7ea5cea9353174ef023a900a67c"
@@ -1824,10 +1819,10 @@ babel-plugin-tester@^10.0.0:
     prettier "^2.0.1"
     strip-indent "^3.0.0"
 
-babel-plugin-transform-package-self-reference@^0.1.2:
-  version "0.1.2"
-  resolved "https://registry.yarnpkg.com/babel-plugin-transform-package-self-reference/-/babel-plugin-transform-package-self-reference-0.1.2.tgz#cf2677174a6c815d36d7424f086ae9eb4701d7cb"
-  integrity sha512-V0lrbeKYHDaj5HGohyzLXT4C3VWY+Yti1WRXNFJLZOuxJhMFSXFDAlo4hP0Vpl2d17egEIdPEn813FenJCAJyA==
+babel-plugin-transform-package-self-reference@^0.1.4:
+  version "0.1.4"
+  resolved "https://registry.yarnpkg.com/babel-plugin-transform-package-self-reference/-/babel-plugin-transform-package-self-reference-0.1.4.tgz#0e60c547fba626e6c73538480ed5b7f097528193"
+  integrity sha512-lwdIHcCqh2/uIplvQX62RLpg9WscmWsxYYv3fPhKTdJEuFs2fmJPYbEFI0aBh4dAIijzJ8cAIS8ZOqBsr9xWQw==
   dependencies:
     read-pkg-up "^7.0.1"
 
