@@ -130,51 +130,31 @@ We are happy to review and merge PRs. To be accepted a change must have test cov
 
 Please ask in the PR if you need any help.
 
-## Prerelease checks
-
-If you want to publish on npm and you have the credentials, you need to:
-
-- Update the **README** to link to API.md in the tree for the release's tag
-- Update the **CHANGELOG** with the date and number of the release
-
-## Publish a prerelease
-
-You need to bump the version:
-
-```
-yarn version prerelease --preid=next
-```
-
-Then push:
-
-```
-git push
-git push --tags
-```
-
-and then publish:
-
-```
-yarn publish --tag next
-```
-
 ## Publish a new release
 
-You need to bump the version according to [SEMVER](https://semver.org/):
+For the sake of example we will assume we are releasing `v1.2.3`.
 
-```
-yarn version [major | minor | patch]
-```
+First make the release commit on the `trunk` branch. At the moment none of the changes described below can be validated by our CI process.
 
-Then push:
+In `README.md` update the "API docs" link with the tag for the version being released. The link would be to `https://github.com/iter-tools/iter-tools/blob/v1.2.3/API.md`. This prevents users seeing documentation for unreleased features.
 
-```
-git push
-git push --tags
-```
+In `CHANGELOG.md` fill in the version and date of the release, and make sure there is a new blank `UNRELEASED` section at the top of the file.
 
-and then publish:
+In `package.json` update the `version` field.
 
-```
-yarn publish
-```
+`git commit -am 1.2.3 && git tag v1.2.3`
+
+`git push && git push --tags`
+
+Now to publish on NPM. First build the packages to be published. We do not publish from the project root. I have hardcoded an error should you attempt to do that. So:
+
+`yarn build`
+
+`pushd dist/es5`
+`yarn publish` (You can leave the version input empty)
+`popd`
+`pushd dist/es`
+`yarn publish`
+`popd`
+
+And that's it!

@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ## [UNRELEASED]
 
 
+## [7.0.2] - 2020-12-13
+### Fixed
+Make iterator returned by `__interleave`, `__roundRobin`, `__collate` iterable (and `__asyncInterleave`, `__asyncRoundRobin`, `__asyncCollate` now return async iterables).
+
+
 ## [7.0.1] - 2020-12-12
 ### Fixed
 `require('iter-tools')` in node 12+ (`ERR_REQUIRE_ESM`)
