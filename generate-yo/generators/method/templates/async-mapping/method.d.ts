@@ -1,7 +1,7 @@
-import { AsyncSourceIterable, AsyncResultIterable } from '../../types/async-iterable';
+import { AsyncWrappable, AsyncIterableIterator } from '../../types/async-iterable';
 
 declare function __method__<T>(
-  source: AsyncSourceIterable<T>,
-): AsyncResultIterable<T>;
+  source: AsyncWrappable<T>,
+): AsyncIterableIterator<T>;
 
 export { __method__ };

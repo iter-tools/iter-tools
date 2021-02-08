@@ -1,9 +1,9 @@
 import { $Promise } from '../../../generate/async.macro.cjs';
 
-import { $SourceIterable } from '../../types/$iterable';
+import { $Wrappable } from '../../types/$iterable';
 
 declare function $__method__<T>(
-  iterable: $SourceIterable<T>,
+  iterable: $Wrappable<T>,
 ): $Promise<T>;
 
 export { $__method__ };
