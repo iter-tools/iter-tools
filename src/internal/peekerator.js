@@ -64,12 +64,12 @@ export class Peekerator {
 
   advance() {
     const this_ = this[_];
-    const { current, iterator } = this_;
 
-    if (current.done) return;
+    if (!this_.current.done) {
+      this_.index++;
+      this_.current = this_.iterator.next();
+    }
 
-    this_.index++;
-    this_.current = iterator.next();
     return this;
   }
 

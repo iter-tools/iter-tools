@@ -64,12 +64,12 @@ export class AsyncPeekerator {
 
   async advance() {
     const this_ = this[_];
-    const { current, iterator } = this_;
 
-    if (current.done) return;
+    if (!this_.current.done) {
+      this_.index++;
+      this_.current = await this_.iterator.next();
+    }
 
-    this_.index++;
-    this_.current = await iterator.next();
     return this;
   }
 

@@ -42,6 +42,6 @@ interface AsyncValuePeekerator<T> extends AsyncPeekeratorBase<T> {
 
 export type AsyncPeekerator<T> = AsyncDonePeekerator<T> | AsyncValuePeekerator<T>;
 
-declare function asyncPeekerate<T>(source: AsyncWrappable<T>): AsyncPeekerator<T>;
+declare function asyncPeekerate<T>(source: AsyncWrappable<T>): Promise<AsyncPeekerator<T>>;
 
 export { asyncPeekerate };
