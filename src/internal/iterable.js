@@ -25,11 +25,10 @@ export function callReturn(iterator) {
   if ('return' in iterator) iterator.return();
 }
 
-export function BaseIterableIterator(fn, args, iterablesArg) {
+export function BaseIterableIterator(fn, args) {
   this[_] = {
     fn,
     args,
-    iterablesArg,
     staticIterator: null,
   };
 }
