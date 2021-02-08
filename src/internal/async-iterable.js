@@ -4,7 +4,7 @@ import { isAsyncWrappable } from '../impls/is-async-wrappable/is-async-wrappable
 import { asyncNullableWrap as asyncWrap } from './async-wrap.js';
 import { BaseIterableIterator, IterableIterator } from './iterable.js';
 import { variadicCurryWithValidation } from './curry.js';
-import { _, __iterate } from './symbols.js';
+import { __iterate } from './symbols.js';
 
 export {
   asyncWrap,
@@ -42,19 +42,6 @@ AsyncIterableIterator.prototype = Object.assign(Object.create(BaseIterableIterat
   },
 });
 
-function AsyncSimpleIterableIterator(...args) {
-  AsyncIterableIterator.apply(this, args);
-}
-
-AsyncSimpleIterableIterator.prototype = Object.assign(
-  Object.create(AsyncIterableIterator.prototype),
-  {
-    [__iterate]() {
-      return this[_].fn(...this[_].args);
-    },
-  },
-);
-
 function makeFunctionConfig(fn, fnConfig = {}) {
   const {
     validateArgs = (_) => {},
@@ -91,7 +78,7 @@ export async function asyncCache(it) {
 export function asyncWrapWithIterableIterator(fn, { validateArgs = (_) => _ } = {}) {
   return (...args) => {
     validateArgs(args);
-    return new AsyncSimpleIterableIterator(fn, args);
+    return new AsyncIterableIterator(fn, args);
   };
 }
 

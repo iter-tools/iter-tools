@@ -101,7 +101,7 @@ import map from 'iter-tools-es/methods/map';
 
 ### \_\_methods
 
-Methods whose names begin with `__` are safe to use – they are part of the library's public API. They are intended for use by extenders of the library and in tight loops where performance is critical.
+Methods whose names begin with `__` (double underscore) are safe to use – they are part of the library's public API. They are intended for use by extenders of the library and in tight loops where performance is critical.
 
 There are some differences in the order in which arguments are passed, but these are documented along with the method's other overloads. Other less visible differences are:
 
