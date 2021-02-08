@@ -6,88 +6,20 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { asyncIterableCurry, asyncCallReturn } from '../../internal/async-iterable.js';
-import { Exchange } from './internal/exchange.js';
+import { asyncIterableCurry } from '../../internal/async-iterable.js';
+import { AsyncExchange } from '../../internal/async-fork.js';
 
-function fetch(state) {
-  const { exchange, iterator } = state;
+export function* __asyncFork(source) {
+  const exchange = new AsyncExchange(source[Symbol.asyncIterator]());
 
-  return new Promise((resolve, reject) => {
-    iterator
-      .next()
-      .then((step) => {
-        if (step.done) {
-          state.done = true;
-          state.doneValue = step.value;
-          return resolve();
-        } else {
-          exchange.push(step.value);
-          return resolve();
-        }
-      })
-      .catch((err) => reject(err));
-  });
-}
-
-async function returnIterator(state) {
-  const { exchange, iterableCounter, iterator } = state;
-
-  if (!exchange.hasRoot() && iterableCounter === 0) {
-    await asyncCallReturn(iterator);
-  }
-}
-
-async function* generateFork(state, consumer) {
-  try {
-    state.iterableCounter++;
-    yield 'ensure finally';
-    while (true) {
-      if (!consumer.isEmpty()) {
-        yield consumer.shift();
-      } else if (state.done) {
-        return state.doneValue;
-      } else {
-        await fetch(state);
-      }
-    }
-  } finally {
-    state.iterableCounter--;
-    await returnIterator(state);
-  }
-}
-
-function* generateForks(source, state) {
-  const { exchange } = state;
-
-  state.iterator = source[Symbol.asyncIterator]();
+  // Ensure we don't return the source if more forks can be made
+  const dummyFork = exchange.fork();
 
   try {
-    while (true) {
-      const fork = generateFork(state, exchange.spawnConsumerAtRoot());
-      // this first call to "next" allows to initiate the function generator
-      // this ensures that "iterableCounter" will be always increased and decreased
-      //
-      // the default behaviour of a generator is that finally clause is only called
-      // if next was called at least once
-      fork.next(); // ensure finally
-      yield fork;
-    }
+    while (true) yield exchange.fork();
   } finally {
-    exchange.discardRoot();
-    returnIterator(state);
+    dummyFork.return();
   }
-}
-
-export function __asyncFork(source) {
-  const state = {
-    iterator: null,
-    iterableCounter: 0,
-    exchange: new Exchange(),
-    done: false,
-    doneValue: undefined,
-  };
-
-  return generateForks(source, state);
 }
 
 export const asyncFork = /*#__PURE__*/ asyncIterableCurry(__asyncFork, {

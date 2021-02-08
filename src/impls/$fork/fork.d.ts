@@ -9,9 +9,9 @@
 import {
   IterableIterator as SyncIterableIterator,
   Wrappable,
-  IterableIterator,
+  SingletonIterableIterator,
 } from '../../types/iterable';
 
-declare function fork<T>(source: Wrappable<T>): SyncIterableIterator<IterableIterator<T>>;
+declare function fork<T>(source: Wrappable<T>): SyncIterableIterator<SingletonIterableIterator<T>>;
 
 export { fork };
