@@ -7,10 +7,10 @@
  */
 
 import { IterableIterator as SyncIterableIterator } from '../../types/iterable';
-import { AsyncWrappable, AsyncIterableIterator } from '../../types/async-iterable';
+import { AsyncWrappable, AsyncSingletonIterableIterator } from '../../types/async-iterable';
 
 declare function asyncFork<T>(
   source: AsyncWrappable<T>,
-): SyncIterableIterator<AsyncIterableIterator<T>>;
+): SyncIterableIterator<AsyncSingletonIterableIterator<T>>;
 
 export { asyncFork };
