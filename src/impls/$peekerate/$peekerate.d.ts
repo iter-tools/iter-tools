@@ -32,6 +32,6 @@ interface $ValuePeekerator<T> extends $PeekeratorBase<T> {
 
 export type $Peekerator<T> = $DonePeekerator<T> | $ValuePeekerator<T>;
 
-declare function $peekerate<T>(source: $Wrappable<T>): $Peekerator<T>;
+declare function $peekerate<T>(source: $Wrappable<T>): $Promise<$Peekerator<T>>;
 
 export { $peekerate };
