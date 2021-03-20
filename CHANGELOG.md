@@ -5,9 +5,15 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## [UNRELEASED]
+
+
+## [7.1.0] - 2021-3-20
 ### Added
 **Methods**
  - `forkerate`, `asyncForkerate`
+
+### Fixed
+Methods expecting Wrappables now permit iterables of promises in TS. This was already legal at runtime.
 
 
 ## [7.0.2] - 2020-12-13
