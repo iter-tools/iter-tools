@@ -1,7 +1,7 @@
 // eslint-disable-next-line spaced-comment
 /// <reference lib="esnext.asynciterable" />
 
-export type AsyncLoopable<T> = AsyncIterable<T> | Iterable<T>;
+export type AsyncLoopable<T> = AsyncIterable<T> | Iterable<T> | Iterable<Promise<T>>;
 export type AsyncWrappable<T> = null | undefined | AsyncLoopable<T>;
 
 type _AsyncIterable<T> = AsyncIterable<T>;
