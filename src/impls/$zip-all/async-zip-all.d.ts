@@ -8,6 +8,30 @@
 
 import { AsyncWrappable, AsyncIterableIterator } from '../../types/async-iterable';
 
+declare function asyncZipAll<F, T, U>(
+  options: { filler?: F },
+  source1: AsyncWrappable<T>,
+  source2: AsyncWrappable<U>,
+): AsyncIterableIterator<[T | F, U | F]>;
+
+declare function asyncZipAll<T, U>(
+  source1: AsyncWrappable<T>,
+  source2: AsyncWrappable<U>,
+): AsyncIterableIterator<[T | undefined, U | undefined]>;
+
+declare function asyncZipAll<F, T, U, V>(
+  options: { filler?: F },
+  source1: AsyncWrappable<T>,
+  source2: AsyncWrappable<U>,
+  source3: AsyncWrappable<V>,
+): AsyncIterableIterator<[T | F, U | F, V | F]>;
+
+declare function asyncZipAll<T, U, V>(
+  source1: AsyncWrappable<T>,
+  source2: AsyncWrappable<U>,
+  source3: AsyncWrappable<V>,
+): AsyncIterableIterator<[T | undefined, U | undefined, V | undefined]>;
+
 declare function asyncZipAll<F, T>(
   options: { filler?: F },
   ...sources: Array<AsyncWrappable<T>>
