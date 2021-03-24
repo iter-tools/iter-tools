@@ -157,10 +157,10 @@ Now to publish on NPM. First build the packages to be published. We do not publi
 `yarn publish`
 `popd`
 
-On [gitter](https://gitter.im/iter-tools/community) post a message of the following form:
+On [gitter](https://gitter.im/iter-tools/community) post a message of the following form (replacing the changelog link with a link to the new version's section in [CHANGELOG.md](https://github.com/iter-tools/iter-tools/blob/trunk/CHANGELOG.md)):
 
 ```
-`v1.2.3` is released. See [CHANGELOG.md](https://github.com/iter-tools/iter-tools/blob/trunk/CHANGELOG.md) for details.
+`v1.2.3` is released. See [CHANGELOG.md](https://github.com/iter-tools/iter-tools/blob/trunk/CHANGELOG.md#123---2020-2-20) for details.
 ```
 
 And that's it!
