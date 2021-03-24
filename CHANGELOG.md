@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ## [UNRELEASED]
 
 
+## [7.1.1] - 2021-3-24
+### Added
+**Type Overloads**
+`zip` and `zipAll` 2-3 source tuple types (e.g. type of `zip(as: Iterable<A>, bs: Iterable<B>)` becomes `IterableIterator<[A, B]>` instead of `IterableIterator<Array<A|B>>`)
+
+
 ## [7.1.0] - 2021-3-20
 ### Added
 **Methods**
