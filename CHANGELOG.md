@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ## [UNRELEASED]
 
 
-## [7.1.1] - 2021-3-24
+## [7.1.2] - 2021-04-01
 ### Added
 **Type Overloads**
 `zip` and `zipAll` 2-3 source tuple types (e.g. type of `zip(as: Iterable<A>, bs: Iterable<B>)` becomes `IterableIterator<[A, B]>` instead of `IterableIterator<Array<A|B>>`)
@@ -16,7 +16,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 **Types Definitions**
 `AsyncWrappable` type captures unwrapping of promise values (e.g. `wrap(source: AsyncWrappable<Promise<T>>)` returns type `IterableIterator<T>` instead of `IterableIterator<Promise<T>>`)
 
-## [7.1.0] - 2021-3-20
+## [7.1.0] - 2021-03-20
 ### Added
 **Methods**
  - `forkerate`, `asyncForkerate`
@@ -256,7 +256,7 @@ Make iterator returned by `__interleave`, `__roundRobin`, `__collate` iterable (
 
 
 
-## [6.2.3] - 2019-1-23
+## [6.2.3] - 2019-01-23
 ### Added
 **Methods**
  -  `flat`, `asyncFlat`
@@ -294,17 +294,17 @@ Make iterator returned by `__interleave`, `__roundRobin`, `__collate` iterable (
  -  Removed clone-regexp dependency
 
 
-## [6.1.4] - 2018-9-22
+## [6.1.4] - 2018-09-22
 ### Fixed
  -  Typescript definitions
 
 
-## [6.1.3] - 2018-9-12
+## [6.1.3] - 2018-09-12
 ### Fixed
  -  Typescript definitions
 
 
-## [6.1.0] - 2018-9-9
+## [6.1.0] - 2018-09-09
 ### Removed
 **Methods**
  -  `asyncMapBatch`
@@ -342,7 +342,7 @@ Make iterator returned by `__interleave`, `__roundRobin`, `__collate` iterable (
 -  [optional] `initial` for `reduce` and `asyncReduce`. If no initial value is specified, the first item will be used.
 
 
-## [5.0.0] - 2018-6-20
+## [5.0.0] - 2018-06-20
 ### Added
 **Methods**
  -  `keys`, `values`, `entries`
@@ -357,7 +357,7 @@ Make iterator returned by `__interleave`, `__roundRobin`, `__collate` iterable (
  -  `iter({next: 'foo'})` now returns `Iterator[[next, 'foo']]` not `{next: 'foo'}`. This is particular to objects having any property named next.
 
 
-## [4.1.0] - 2018-6-12
+## [4.1.0] - 2018-06-12
 ### Added
 **Methods**
  -  `consume`, `asyncConsume`
@@ -365,7 +365,7 @@ Make iterator returned by `__interleave`, `__roundRobin`, `__collate` iterable (
  -  `regexpExecIter`, `asyncRegexpExecIter`
  -  `asyncThrottle`
 
-## [4.0.0] - 2018-6-2
+## [4.0.0] - 2018-06-02
 ### Changed
  -  Changed **the whole way the library is imported.** Very breaking.
 
