@@ -1,9 +1,7 @@
 // eslint-disable-next-line spaced-comment
 /// <reference lib="esnext.asynciterable" />
 
-type UnwrapPromise<T> = T extends PromiseLike<infer U> ? U : T;
-
-export type AsyncLoopable<T> = AsyncIterable<T> | Iterable<T> | Iterable<Promise<T>>;
+export type AsyncLoopable<T> = AsyncIterable<T | Promise<T>> | Iterable<T | Promise<T>>;
 export type AsyncWrappable<T> = null | undefined | AsyncLoopable<T>;
 
 type _AsyncIterable<T> = AsyncIterable<T>;
@@ -27,9 +25,8 @@ export interface SingletonAsyncIterableIterator<T> extends AsyncIterator<T> {
 }
 export type AsyncSingletonIterableIterator<T> = SingletonAsyncIterableIterator<T>;
 
-export interface AsyncIterableIterator<T, Unwrapped = UnwrapPromise<T>>
-  extends AsyncIterator<Unwrapped> {
-  [Symbol.asyncIterator](): SingletonAsyncIterableIterator<Unwrapped>;
+export interface AsyncIterableIterator<T> extends AsyncIterator<T> {
+  [Symbol.asyncIterator](): SingletonAsyncIterableIterator<T>;
 }
 
 export type AsyncPartsIterable<T> = AsyncIterableIterator<SingletonAsyncIterableIterator<T>>;
