@@ -157,4 +157,10 @@ Now to publish on NPM. First build the packages to be published. We do not publi
 `yarn publish`
 `popd`
 
+On [gitter](https://gitter.im/iter-tools/community) post a message of the following form:
+
+```
+`v1.2.3` is released. See [CHANGELOG.md](https://github.com/iter-tools/iter-tools/blob/trunk/CHANGELOG.md) for details.
+```
+
 And that's it!
