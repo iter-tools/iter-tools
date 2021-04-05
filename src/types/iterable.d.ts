@@ -7,6 +7,8 @@ export { _Iterable as Iterable };
 export type Loopable<T> = Iterable<T>;
 export type Wrappable<T> = Loopable<T> | null | undefined;
 
+export type Unwrap<T> = T extends Wrappable<infer U> ? U : never;
+
 type _IteratorResult<T> = IteratorResult<T>;
 export { _IteratorResult as IteratorResult };
 
