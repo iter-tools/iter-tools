@@ -14,7 +14,7 @@ function* byComparison({ compare }, all, ...peekrs) {
   while (!all.done) {
     candidate = all.value;
     for (const peekr of peekrs) {
-      if (!peekr.done && compare(candidate.value, peekr.value) < 0) {
+      if (!peekr.done && compare(peekr.value, candidate.value) < 0) {
         candidate = peekr;
       }
     }

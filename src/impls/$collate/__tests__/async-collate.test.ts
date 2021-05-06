@@ -12,7 +12,7 @@ import { asyncWrap, asyncUnwrap } from '../../../test/async-helpers.js';
 describe('asyncCollate', () => {
   it('output is sorted if passed a comparator', async () => {
     const iter = asyncCollate(
-      (a, b) => b - a,
+      (a, b) => a - b,
       asyncWrap([1, 8, 9]),
       asyncWrap([4, 6, 7]),
       asyncWrap([2, 3, 5]),
@@ -21,7 +21,7 @@ describe('asyncCollate', () => {
   });
 
   it('works with input iterables of different lengths', async () => {
-    const iter = asyncCollate((a, b) => b - a, asyncWrap([]), asyncWrap([2, 3]), asyncWrap([1]));
+    const iter = asyncCollate((a, b) => a - b, asyncWrap([]), asyncWrap([2, 3]), asyncWrap([1]));
     expect(await asyncUnwrap(iter)).toEqual([1, 2, 3]);
   });
 });

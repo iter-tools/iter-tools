@@ -11,12 +11,12 @@ import { wrap, unwrap } from '../../../test/helpers.js';
 
 describe('collate', () => {
   it('output is sorted if passed a comparator', () => {
-    const iter = collate((a, b) => b - a, wrap([1, 8, 9]), wrap([4, 6, 7]), wrap([2, 3, 5]));
+    const iter = collate((a, b) => a - b, wrap([1, 8, 9]), wrap([4, 6, 7]), wrap([2, 3, 5]));
     expect(unwrap(iter)).toEqual([1, 2, 3, 4, 5, 6, 7, 8, 9]);
   });
 
   it('works with input iterables of different lengths', () => {
-    const iter = collate((a, b) => b - a, wrap([]), wrap([2, 3]), wrap([1]));
+    const iter = collate((a, b) => a - b, wrap([]), wrap([2, 3]), wrap([1]));
     expect(unwrap(iter)).toEqual([1, 2, 3]);
   });
 });
