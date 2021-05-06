@@ -138,7 +138,7 @@ First make the release commit on the `trunk` branch. At the moment none of the c
 
 In `README.md` update the "API docs" link with the tag for the version being released. The link would be to `https://github.com/iter-tools/iter-tools/blob/v1.2.3/API.md`. This prevents users seeing documentation for unreleased features.
 
-In `CHANGELOG.md` fill in the version and date of the release, and make sure there is a new blank `UNRELEASED` section at the top of the file.
+In `CHANGELOG.md` fill in the version and date of the release, and make sure there is a new blank `UNRELEASED` section at the top of the file. Patch releases generally should not require changelog updates -- that is what the issue tracker is for.
 
 In `package.json` update the `version` field.
 

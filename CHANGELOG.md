@@ -6,28 +6,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [UNRELEASED]
 
-
-## [7.1.2] - 2021-04-01
-### Added
-**Type Overloads**
-`zip` and `zipAll` 2-3 source tuple types (e.g. type of `zip(as: Iterable<A>, bs: Iterable<B>)` becomes `IterableIterator<[A, B]>` instead of `IterableIterator<Array<A|B>>`)
-
-### Fixed
-**Types Definitions**
-`AsyncWrappable` type captures unwrapping of promise values (e.g. `wrap(source: AsyncWrappable<Promise<T>>)` returns type `IterableIterator<T>` instead of `IterableIterator<Promise<T>>`)
-
 ## [7.1.0] - 2021-03-20
 ### Added
 **Methods**
  - `forkerate`, `asyncForkerate`
-
-### Fixed
-Methods expecting Wrappables now permit iterables of promises in TS. This was already legal at runtime.
-
-
-## [7.0.2] - 2020-12-13
-### Fixed
-Make iterator returned by `__interleave`, `__roundRobin`, `__collate` iterable (and `__asyncInterleave`, `__asyncRoundRobin`, `__asyncCollate` now return async iterables).
 
 
 ## [7.0.1] - 2020-12-12
