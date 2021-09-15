@@ -23,14 +23,9 @@ describe('takeSorted', () => {
   });
 
   it('yields values from the iterable sorted with a comparator', () => {
-    const smallest2 = takeSorted(2, (a, b) => a.length - b.length, [
-      'abc',
-      'a',
-      'abcd',
-      'abcd',
-      'abcdef',
-      'ab',
-    ]);
-    expect(unwrap(smallest2)).toEqual(['abcd', 'abcdef']);
+    expect(unwrap(takeSorted((a, b) => a - b, wrap([2, 1, 3])))).toEqual([1, 2, 3]);
+    expect(unwrap(takeSorted((a, b) => b - a, wrap([2, 1, 3])))).toEqual([3, 2, 1]);
+    expect(unwrap(takeSorted(2, (a, b) => a - b, wrap([2, 1, 3])))).toEqual([2, 3]);
+    expect(unwrap(takeSorted(2, (a, b) => b - a, wrap([2, 1, 3])))).toEqual([2, 1]);
   });
 });
