@@ -25,9 +25,10 @@ export const $takeSorted = /*#__PURE__*/ $iterableCurry($__takeSorted, {
   minArgs: 0,
   maxArgs: 2,
   validateArgs(args) {
-    if (typeof args[2] === 'number') {
-      args[1] = args[2];
-      args[2] = undefined;
+    if (typeof args[1] === 'function') {
+      const temp = args[2];
+      args[2] = args[1];
+      args[1] = temp;
     }
   },
 });
