@@ -21,15 +21,17 @@ const { filter } = require('iter-tools');
 
 es5 consumers are responsible for loading `core-js` if their environment does not define `Symbol.iterator`.
 
-## Documentation
+## API
 
-Please read our [API docs](https://github.com/iter-tools/iter-tools/blob/v7.1.4/API.md)!
+**Please read our [API docs](https://github.com/iter-tools/iter-tools/blob/v7.1.4/API.md)!**
 
 Historical docs are markdown files on github. For 6.x docs look at tags on the history of [README.md](https://github.com/iter-tools/iter-tools/blob/6.x/README.md). For 7.x versions look at tags on the history of [API.md](https://github.com/iter-tools/iter-tools/blob/trunk/API.md).
 
-Some information is present also in the github [wiki](https://github.com/iter-tools/iter-tools/wiki), including a [cookbook](https://github.com/iter-tools/iter-tools/wiki/the-cookbook) providing author and user-submitted examples of ways to use the library to accomplish common tasks.
+## The high level
 
-For more high level information, read on!
+If you're not already familiar with what iterator tools can offer you and why you may want to use them, read on.
+
+While I try to include the most important concepts here, additional content is present also in the github [wiki](https://github.com/iter-tools/iter-tools/wiki), including a [cookbook](https://github.com/iter-tools/iter-tools/wiki/the-cookbook) providing author and user-submitted examples of ways to use the library to accomplish common tasks.
 
 ### Why use iterables?
 
