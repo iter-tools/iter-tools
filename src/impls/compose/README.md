@@ -1,4 +1,4 @@
-Allows nested calls to be flattened out for improved readability. `compose(a, b, c)` is equivalent to `a(b(c))`, where `a`, `b`, and `c`, are functions. `compose` is usually combined with curryied forms of other methods so that the `source` (or `iterable`) argument is passed between the composed methods.
+Allows nested calls to be flattened out for improved readability. `compose(a, b, c)(x)` is equivalent to `a(b(c(x)))`, where `a`, `b`, and `c`, are functions. `compose` is usually combined with curryied forms of other methods so that the `source` (or `iterable`) argument is passed between the composed methods.
 
 ```js
 const filterMap = compose(

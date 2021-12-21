@@ -1,4 +1,4 @@
-Allows nested calls to be flattened out for improved readability. `pipe(a, b, c)` is equivalent to `c(b(a))`, where `a`, `b`, and `c`, are functions. `pipe` is usually combined with curryied forms of other methods so that the `source` (or `iterable`) argument is passed between the composed methods.
+Allows nested calls to be flattened out for improved readability. `pipe(a, b, c)(x)` is equivalent to `c(b(a(x)))`, where `a`, `b`, and `c`, are functions. `pipe` is usually combined with curryied forms of other methods so that the `source` (or `iterable`) argument is passed between the composed methods.
 
 ```js
 const filterMap = pipe(
