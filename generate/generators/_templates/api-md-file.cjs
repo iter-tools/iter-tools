@@ -148,7 +148,9 @@ module.exports = (typesDoc, methodsWithDollars, aliasMap) => {
 
 [![Documentation is automatically generated](https://img.shields.io/static/v1?label=docs&message=generated&color=informational)](https://github.com/iter-tools/iter-tools/blob/master/CONTRIBUTING.md#the-code-generator)
 
-The API documentation is split into to main sections: [types](#types) and [methods](#methods).
+**The API documentation is split into these sections:**
+ - **[Types](#types)**
+ - **[Methods](#methods)**
 
 ## Types
 
