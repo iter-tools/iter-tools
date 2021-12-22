@@ -1,4 +1,4 @@
-Returns `false` if `value` is `null` and `true` otherwise. Type-safe in typescript.
+Returns `true` if `value` is not `null` and `false` otherwise. Type-safe in typescript.
 
 ```js
 notNull(undefined); // true

@@ -1,4 +1,4 @@
-Returns `false` if `value` has a `Symbol.asyncIterator` or `Symbol.iterator` property and `true` otherwise. When `notAsyncLoopable(value)`, using value as the subject of a `for await..of` loop will throw an error.
+Returns `true` if `value` is [notIterable](#notiterable) and [notAsyncIterable](#notasynciterable), otherwise `false`. When `notAsyncLoopable(value)`, using value as the subject of a `for await..of` loop will throw an error.
 
 ```js
 notAsyncLoopable((async function* () {})()); // false

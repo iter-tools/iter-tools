@@ -1,4 +1,4 @@
-Returns `false` if `value` is `undefined` and `true` otherwise. Implemented using `typeof`. Type-safe in typescript.
+Returns `true` if `value` is not `undefined` and `false` otherwise. Implemented using `typeof`. Type-safe in typescript.
 
 ```js
 notUndefined(null); // true

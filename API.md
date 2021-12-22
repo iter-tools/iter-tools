@@ -200,6 +200,7 @@ Predicates (test a value)
 [isNil](#isnil)  
 [isNull](#isnull)  
 [isObject](#isobject)  
+[isString](#isstring)  
 [isUndefined](#isundefined)  
 [isWrappable](#iswrappable)  
 [notAsyncIterable](#notasynciterable)  
@@ -210,6 +211,7 @@ Predicates (test a value)
 [notNil](#notnil)  
 [notNull](#notnull)  
 [notObject](#notobject)  
+[notString](#notstring)  
 [notUndefined](#notundefined)  
 [notWrappable](#notwrappable)  
 
@@ -2387,6 +2389,19 @@ isObject(Date); // false (function)
 isObject(class Foo {}); // false (function)
 ```
 
+### isString
+
+**isString(value)**  
+
+Returns `true` if `typeof value` is `'string'` and `false` otherwise. Type-safe in typescript.
+
+```js
+isString('foo'); // true
+isString(''); // true
+isString(4); // false
+isString(undefined); // false
+```
+
 ### isUndefined
 
 **isUndefined(value)**  
@@ -2430,7 +2445,7 @@ notAsyncIterable(null); // true
 
 **notAsyncLoopable(value)**  
 
-Returns `false` if `value` has a `Symbol.asyncIterator` or `Symbol.iterator` property and `true` otherwise. When `notAsyncLoopable(value)`, using value as the subject of a `for await..of` loop will throw an error.
+Returns `true` if `value` is [notIterable](#notiterable) and [notAsyncIterable](#notasynciterable), otherwise `false`. When `notAsyncLoopable(value)`, using value as the subject of a `for await..of` loop will throw an error.
 
 ```js
 notAsyncLoopable((async function* () {})()); // false
@@ -2445,7 +2460,7 @@ notAsyncLoopable({}); // true
 
 **notAsyncWrappable(value)**  
 
-Returns `false` if `value` [isAsyncIterable](#isasynciterable), [isIterable](#isiterable), or [isNil](#isnil) (and `true` otherwise). When `notAsyncWrappable(value)`, passing `value` to [asyncWrap](#asyncwrap) (or any other method which expects a [AsyncWrappable](#asyncWrappable)) will throw an error.
+Returns `true` if `value` [notAsyncIterable](#notasynciterable), [notIterable](#notiterable), and [notNil](#notnil) (and `false` otherwise). When `notAsyncWrappable(value)`, passing `value` to [asyncWrap](#asyncwrap) (or any other method which expects a [AsyncWrappable](#asyncWrappable)) will throw an error.
 
 ```js
 notAsyncWrappable([]); // false
@@ -2461,7 +2476,7 @@ notAsyncWrappable(4); // true
 
 **notIterable(value)**  
 
-Returns `false` if `value` is iterable (has a `Symbol.iterator` property) and `true` otherwise. For more details see the method's inverse: [isIterable](#isiterable). Type-safe in typescript.
+Returns `false` if `value` has a `Symbol.iterator` property and `true` otherwise. For more details see the method's inverse: [isIterable](#isiterable). Type-safe in typescript.
 
 ```js
 notIterable({}); // true
@@ -2479,7 +2494,7 @@ See [notIterable](#notiterable). For sync iterables these methods share the same
 
 **notNil(value)**  
 
-Returns `false` if `value` is `null` or `undefined` and `true` otherwise. Type-safe in typescript.
+Returns `true` if `value` is not `null` or `undefined` and `false` otherwise. Type-safe in typescript.
 
 ```js
 notNil(0); // true
@@ -2491,7 +2506,7 @@ notNil(null); // false
 
 **notNull(value)**  
 
-Returns `false` if `value` is `null` and `true` otherwise. Type-safe in typescript.
+Returns `true` if `value` is not `null` and `false` otherwise. Type-safe in typescript.
 
 ```js
 notNull(undefined); // true
@@ -2502,7 +2517,7 @@ notNull(null); // false
 
 **notObject(value)**  
 
-Returns `true` if `value` is not an object, and `true` otherwise. For details see the method's inverse: [isObject](#isobject). Type-safe in typescript.
+Returns `true` if `value` is not an object, and `false` otherwise. For details see the method's inverse: [isObject](#isobject). Type-safe in typescript.
 
 ```js
 notObject({}); // false
@@ -2515,11 +2530,24 @@ notObject(Date); // true
 notObject(class Foo {}); // true
 ```
 
+### notString
+
+**notString(value)**  
+
+Returns `true` if `typeof value` is not `'string'` and `false` otherwise. Type-safe in typescript.
+
+```js
+notString(4); // true
+notString(undefined); // true
+notString('foo'); // false
+notString(''); // false
+```
+
 ### notUndefined
 
 **notUndefined(value)**  
 
-Returns `false` if `value` is `undefined` and `true` otherwise. Implemented using `typeof`. Type-safe in typescript.
+Returns `true` if `value` is not `undefined` and `false` otherwise. Implemented using `typeof`. Type-safe in typescript.
 
 ```js
 notUndefined(null); // true
@@ -2530,7 +2558,7 @@ notUndefined(undefined); // false
 
 **notWrappable(value)**  
 
-Returns `false` if `value` [isIterable](#isiterable) or `value` [isNil](#isnil) (and `true` otherwise). When `notWrappable(value)`, passing `value` to [wrap](#wrap) (or any other method which expects a [Wrappable](#Wrappable)) will throw an error.
+Returns `true` if `value` is [notIterable](#notiterable) and [notNil](#notnil), otherwise `false`. When `notWrappable(value)`, passing `value` to [wrap](#wrap) (or any other method which expects a [Wrappable](#Wrappable)) will throw an error.
 
 ```js
 notWrappable([]); // false
