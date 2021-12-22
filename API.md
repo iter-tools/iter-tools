@@ -192,6 +192,7 @@ Consume an iterable
 
 Predicates (test a value)
 
+[isArray](#isarray)  
 [isAsyncIterable](#isasynciterable)  
 [isAsyncLoopable](#isasyncloopable)  
 [isAsyncWrappable](#isasyncwrappable)  
@@ -203,6 +204,7 @@ Predicates (test a value)
 [isString](#isstring)  
 [isUndefined](#isundefined)  
 [isWrappable](#iswrappable)  
+[notArray](#notarray)  
 [notAsyncIterable](#notasynciterable)  
 [notAsyncLoopable](#notasyncloopable)  
 [notAsyncWrappable](#notasyncwrappable)  
@@ -2230,6 +2232,19 @@ See [objectFromAsync](#objectfromasync)
 
 ## Predicates (test a value)
 
+### isArray
+
+**isArray(value)**  
+
+Returns `Array.isArray(value)`. Type-safe in typescript.
+
+```js
+isArray(['foo']); // true
+isArray([]); // true
+isArray(4); // false
+isArray(undefined); // false
+```
+
 ### isAsyncIterable
 
 **isAsyncIterable(value)**  
@@ -2424,6 +2439,19 @@ isWrappable([]); // true
 isWrappable(undefined); // true
 isWrappable(null); // true
 isWrappable({}); // false
+```
+
+### notArray
+
+**notArray(value)**  
+
+Returns `!Array.isArray(value)`. Type-safe in typescript.
+
+```js
+notArray(4); // true
+notArray(undefined); // true
+notArray(['foo']); // false
+notArray([]); // false
 ```
 
 ### notAsyncIterable
