@@ -1,4 +1,4 @@
-Returns `true` if `value` is not an object, and `true` otherwise. For details see the method's inverse: [isObject](#isobject). Type-safe in typescript.
+Returns `true` if `value` is not an object, and `false` otherwise. For details see the method's inverse: [isObject](#isobject). Type-safe in typescript.
 
 ```js
 notObject({}); // false
