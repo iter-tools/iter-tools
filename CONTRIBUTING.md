@@ -134,13 +134,19 @@ Please ask in the PR if you need any help.
 
 For the sake of example we will assume we are releasing `v1.2.3`.
 
-First make the release commit on the `trunk` branch. At the moment none of the changes described below can be validated by our CI process.
+First make the release commit manually from the `trunk` branch.
+
+Choose whether to make a major, minor, or patch release in accordance with the semver spec.
+
+In `package.json` update the `version` field.
 
 In `README.md` update the "API docs" link with the tag for the version being released. The link would be to `https://github.com/iter-tools/iter-tools/blob/v1.2.3/API.md`. This prevents users seeing documentation for unreleased features.
 
 In `CHANGELOG.md` fill in the version and date of the release, and make sure there is a new blank `UNRELEASED` section at the top of the file. Patch releases generally should not require changelog updates -- that is what the issue tracker is for.
 
-In `package.json` update the `version` field.
+If there are any changes to the release process or you found the instructions unclear, feel free to add changes to this file.
+
+Double check everything. You are pushing to trunk, so no take-backs. CI cannot help you validate this process yet. When you are ready run:
 
 `git commit -am 1.2.3 && git tag v1.2.3`
 
