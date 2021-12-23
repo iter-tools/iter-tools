@@ -22,7 +22,7 @@ const iterableOrEmpty = (value) => (value == null ? empty() : value);
 export function _deepEqual(values, same, isIterable, depth = 0) {
   if (__every(values, (value) => typeof value !== 'string' && isIterable(value))) {
     for (const stepValues of __zipAll(__map(values, iterableOrEmpty), zipAllConfig)) {
-      if (!__deepEqual(stepValues, same, isIterable, depth + 1)) return false;
+      if (!_deepEqual(stepValues, same, isIterable, depth + 1)) return false;
     }
   } else {
     const firstValue = values[0];

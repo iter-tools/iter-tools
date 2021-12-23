@@ -18,7 +18,7 @@ export function $_deepEqual(values, same, isIterable, depth = 0) {
   if (__every(values, (value) => typeof value !== 'string' && isIterable(value))) {
     $await;
     for (const stepValues of $__zipAll(__map(values, $iterableOrEmpty), zipAllConfig)) {
-      if (!$await($__deepEqual(stepValues, same, isIterable, depth + 1))) return false;
+      if (!$await($_deepEqual(stepValues, same, isIterable, depth + 1))) return false;
     }
   } else {
     const firstValue = values[0];

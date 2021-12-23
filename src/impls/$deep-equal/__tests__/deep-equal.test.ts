@@ -61,6 +61,13 @@ describe('__deepEqual', () => {
   it('uses same value to do comparison', () => {
     expect(__deepEqual([wrap([-1, -2, -3]), wrap([1, 2, 3])], same)).toBe(true);
     expect(__deepEqual([wrap([1, 2, 3]), wrap([1, 2, 3])], () => false)).toBe(false);
+
+    expect(
+      __deepEqual(
+        [wrap([1, wrap([2, wrap([3])])]), wrap([1, wrap([2, wrap([4])])])],
+        (a: number, b: number, depth: number) => (depth > 1 ? true : Object.is(a, b)),
+      ),
+    ).toBe(true);
   });
 
   describe('when coerceNil is false', () => {
