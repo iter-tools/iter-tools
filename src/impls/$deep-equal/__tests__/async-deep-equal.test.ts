@@ -73,6 +73,16 @@ describe('async__deepEqual', () => {
     expect(await __asyncDeepEqual([asyncWrap([1, 2, 3]), asyncWrap([1, 2, 3])], () => false)).toBe(
       false,
     );
+
+    expect(
+      await __asyncDeepEqual(
+        [
+          asyncWrap([1, asyncWrap([2, asyncWrap([3])])]),
+          asyncWrap([1, asyncWrap([2, asyncWrap([4])])]),
+        ],
+        (a: number, b: number, depth: number) => (depth > 1 ? true : Object.is(a, b)),
+      ),
+    ).toBe(true);
   });
 
   describe('when coerceNil is false', () => {

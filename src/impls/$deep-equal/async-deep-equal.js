@@ -25,7 +25,7 @@ export async function _asyncDeepEqual(values, same, isIterable, depth = 0) {
       __map(values, asyncIterableOrEmpty),
       zipAllConfig,
     )) {
-      if (!(await __asyncDeepEqual(stepValues, same, isIterable, depth + 1))) return false;
+      if (!(await _asyncDeepEqual(stepValues, same, isIterable, depth + 1))) return false;
     }
   } else {
     const firstValue = values[0];
