@@ -1,10 +1,10 @@
 import { iterableCurry } from '../../internal/iterable.js';
 
 export function ____method__(iterable) {
-  let _item;
+  let _value;
 
-  for (const item of iterable) {
-    _item = item;
+  for (const value of iterable) {
+    _value = value;
   }
 
   throw new Error('Dummy implementation');

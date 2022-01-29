@@ -1,8 +1,8 @@
 import { asyncIterableCurry } from '../../internal/async-iterable.js';
 
 export async function* ____method__(source) {
-  for await (const item of source) {
-    yield item;
+  for await (const value of source) {
+    yield value;
   }
 
   throw new Error('Dummy implementation');
