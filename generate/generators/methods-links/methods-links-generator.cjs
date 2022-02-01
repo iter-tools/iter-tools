@@ -1,18 +1,16 @@
 'use strict';
 
-const { dirname, basename, relative, join, normalize } = require('path');
+const { dirname, basename, join, normalize } = require('path');
 const completeExtname = require('path-complete-extname');
 
 const BaseGenerator = require('../base-generator.cjs');
-const generatedFunctionFile = require('../_templates/generated-function-file.cjs');
-const generationErrorFile = require('../_templates/generation-error-file.cjs');
 const { camelize } = require('../../names.cjs');
 
 class MethodsLinksGenerator extends BaseGenerator {
   constructor(options) {
     super(options);
 
-    this.glob = ['src/impls/*/[^$]*.{js,d.ts}'];
+    this.include = ['src/impls/*/[^$]*.{js,d.ts}'];
   }
 
   getDestPath(implPath) {
@@ -22,27 +20,20 @@ class MethodsLinksGenerator extends BaseGenerator {
     return normalize(join(dir, '../../methods', file));
   }
 
-  generatePath(implPath, destPath) {
-    let content;
-    const generatedFrom = relative(dirname(destPath), implPath);
-    const extName = completeExtname(implPath);
-    const moduleName = basename(implPath, extName);
-    const methodDirName = basename(dirname(implPath));
+  async map(api, change) {
+    const { path } = change;
 
-    const impl = `export { ${camelize(
-      moduleName,
-    )} as default } from '../impls/${methodDirName}/${moduleName}${
-      extName === '.js' ? '.js' : ''
-    }';`;
+    await api.generate(this.getDestPath(path), async () => {
+      const extName = completeExtname(path);
+      const moduleName = basename(path, extName);
+      const methodDirName = basename(dirname(path));
 
-    try {
-      content = generatedFunctionFile(impl, generatedFrom);
-    } catch (e) {
-      console.warn(`Failed generating ${implPath}`);
-      content = generationErrorFile(e, generatedFrom);
-    }
-
-    return content;
+      return `export { ${camelize(
+        moduleName,
+      )} as default } from '../impls/${methodDirName}/${moduleName}${
+        extName === '.js' ? '.js' : ''
+      }';\n`;
+    });
   }
 }
 

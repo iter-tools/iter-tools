@@ -2,13 +2,15 @@
 
 const prettier = require('prettier');
 
-const Generator = require('../generator/index.cjs');
+class BaseGenerator {
+  constructor(options) {
+    this.options = options;
+  }
 
-class BaseGenerator extends Generator {
-  getPrettierOptions(filepath) {
+  async getPrettierOptions(filepath) {
     return {
       filepath,
-      ...prettier.resolveConfig.sync(this.resolve(filepath)),
+      ...(await prettier.resolveConfig(filepath)),
     };
   }
 }

@@ -1,24 +1,20 @@
 'use strict';
 
 const { basename, dirname, join } = require('path');
-const fs = require('fs');
 const babylon = require('@babel/parser');
 const fullExtname = require('path-complete-extname');
-const Generator = require('../../generator/index.cjs');
-const apiMdFile = require('../_templates/api-md-file.cjs');
+
 const { camelize, renameDollar } = require('../../names.cjs');
+const apiMdFile = require('./template.cjs');
 const extractMethodSignatures = require('./extract-method-signatures.cjs');
+const BaseGenerator = require('../base-generator.cjs');
 
-const { REMOVE } = Generator;
-
-class MonoliticGenerator extends Generator {
+class ApiMdGenerator extends BaseGenerator {
   constructor(options) {
     super(options);
 
-    this.docsChanged = this.debounce(this.docsChanged);
-
-    this.glob = ['src/impls/*/{README.md,README.async.md,DOCME.json}', 'src/impls/*/*.js'];
-    this.ignored = ['src/impls/*/$*.js'];
+    this.include = ['src/impls/*/{README.md,README.async.md,DOCME.json}', 'src/impls/*/*.js'];
+    this.exclude = ['src/impls/*/$*.js'];
 
     this.files = new Map();
     this.aliases = new Map();
@@ -48,22 +44,6 @@ class MonoliticGenerator extends Generator {
     return camelize(basename(path));
   }
 
-  recordOperation(path, operation) {
-    if (operation === REMOVE) {
-      this.files.delete(path);
-    } else {
-      const content = fs.readFileSync(this.resolve(path), 'utf8');
-      const parsedContent = this.parse(path, content);
-      if (basename(path) === 'DOCME.json' && parsedContent.aliases) {
-        for (const alias of parsedContent.aliases) {
-          this.aliases.set(alias, this.getNameForDir(dirname(path)));
-        }
-      }
-      this.files.set(path, parsedContent);
-    }
-    this.docsChanged();
-  }
-
   extractMethodSignatures(dir, docme, type) {
     const path = this.getImplPath(dir, type);
     const methodName = renameDollar(this.getNameForDir(dir), !!type);
@@ -75,28 +55,40 @@ class MonoliticGenerator extends Generator {
     return extractMethodSignatures(methodName, file, docme);
   }
 
-  buildMethods() {
-    return [...this.files]
-      .filter(([file]) => basename(file) === 'DOCME.json')
-      .map(([path, docme]) => {
-        const dir = dirname(path);
-        const name = this.getNameForDir(dirname(path));
-        return {
-          name,
-          aliasFor: this.aliases.get(name),
-          docme,
-          readme: this.files.get(join(dir, 'README.md')),
-          asyncReadme: this.files.get(join(dir, 'README.async.md')),
-          signatures: this.extractMethodSignatures(dir, docme),
-          asyncSignatures: this.extractMethodSignatures(dir, docme, 'async'),
-        };
-      });
+  async map(api, change) {
+    const content = await api.read(change.path);
+    const parsedContent = this.parse(change.path, content);
+    if (basename(change.path) === 'DOCME.json' && parsedContent.aliases) {
+      for (const alias of parsedContent.aliases) {
+        this.aliases.set(alias, this.getNameForDir(dirname(change.path)));
+      }
+    }
+    return parsedContent;
   }
 
-  docsChanged() {
-    const typesDoc = fs.readFileSync(this.resolve('src/types/API.md'), 'utf8');
-    this.writeMonolithic('API.md', apiMdFile(typesDoc, this.buildMethods(), this.aliases));
+  async reduce(api, mappings) {
+    await api.generate('API.md', async () => {
+      const typesDoc = await api.read('src/types/API.md');
+
+      const methods = [...mappings]
+        .filter(([file]) => basename(file) === 'DOCME.json')
+        .map(([path, docme]) => {
+          const dir = dirname(path);
+          const name = this.getNameForDir(dirname(path));
+          return {
+            name,
+            aliasFor: this.aliases.get(name),
+            docme,
+            readme: mappings.get(join(dir, 'README.md')),
+            asyncReadme: mappings.get(join(dir, 'README.async.md')),
+            signatures: this.extractMethodSignatures(dir, docme),
+            asyncSignatures: this.extractMethodSignatures(dir, docme, 'async'),
+          };
+        });
+
+      return apiMdFile(typesDoc, methods, this.aliases);
+    });
   }
 }
 
-module.exports = MonoliticGenerator;
+module.exports = ApiMdGenerator;

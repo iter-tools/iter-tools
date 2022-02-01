@@ -1,23 +1,15 @@
 'use strict';
 
-const { dirname, relative, join, basename } = require('path');
+const { dirname, join, basename } = require('path');
 const babel = require('@babel/core');
 const prettier = require('prettier');
 const completeExtname = require('path-complete-extname');
 
-const generatedFunctionFile = require('./_templates/generated-function-file.cjs');
-const generationErrorFile = require('./_templates/generation-error-file.cjs');
-
 const BaseGenerator = require('./base-generator.cjs');
 
 class BaseAsyncGenerator extends BaseGenerator {
-  constructor(options) {
-    super(options);
-
-    this.configurations = [{ ASYNC: true }, { ASYNC: false }];
-  }
-
-  getDestPath(templatePath, { ASYNC }) {
+  getDestPath(templatePath) {
+    const { ASYNC } = this.options;
     const dir = dirname(templatePath);
     const ext = completeExtname(templatePath);
     const base = basename(templatePath, ext);
@@ -29,33 +21,17 @@ class BaseAsyncGenerator extends BaseGenerator {
     return `${starMatch.slice(1)}${ext}`;
   }
 
-  generatePath(templatePath, destPath, { ASYNC }) {
-    let content;
-    const generatedFrom = relative(dirname(destPath), templatePath);
+  async map(api, change) {
+    const { ASYNC } = this.options;
 
-    try {
-      const { code: impl } = babel.transformFileSync(templatePath, {
+    await api.generate(this.getDestPath(change.path), async (destPath) => {
+      const { code: impl } = await babel.transformFileAsync(change.path, {
         caller: { name: ASYNC ? 'generateAsync' : 'generateSync', ASYNC },
         configFile: this.getBabelConfigPath(),
       });
 
-      const templateOutput = this.applyTemplate(impl, generatedFrom);
-
-      content = prettier.format(templateOutput, this.getPrettierOptions(destPath));
-    } catch (e) {
-      console.warn(`Failed generating ${templatePath}`);
-      content = this.applyErrorTemplate(e, generatedFrom);
-    }
-
-    return content;
-  }
-
-  applyTemplate(source, generatedFrom) {
-    return generatedFunctionFile(source, generatedFrom);
-  }
-
-  applyErrorTemplate(error, generatedFrom) {
-    return generationErrorFile(error, generatedFrom);
+      return prettier.format(impl, await this.getPrettierOptions(api.resolve(destPath)));
+    });
   }
 
   getBabelConfigPath() {

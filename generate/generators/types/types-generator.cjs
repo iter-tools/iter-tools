@@ -8,7 +8,7 @@ class TypesGenerator extends BaseAsyncGenerator {
   constructor(options) {
     super(options);
 
-    this.glob = ['src/**/$*.d.ts', 'src/**/__tests__/$*.spec.ts'];
+    this.include = ['src/**/$*.d.ts', 'src/**/__tests__/$*.spec.ts'];
   }
 
   getDestName(basename, ext) {

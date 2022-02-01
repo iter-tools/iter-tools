@@ -23,7 +23,7 @@ const { getOnlyArgument } = require('./macro-utils.cjs');
 
 const { ast } = expression;
 
-function asyncMacro({ references, babel, _state, config: { ASYNC } }) {
+function testMacro({ references, babel, config: { ASYNC } }) {
   const t = babel.types;
 
   const { $awaitError = [] } = references;
@@ -52,4 +52,4 @@ function asyncMacro({ references, babel, _state, config: { ASYNC } }) {
   }
 }
 
-module.exports = createMacro(asyncMacro, { configName: 'async' });
+module.exports = createMacro(testMacro, { configName: 'async' });
