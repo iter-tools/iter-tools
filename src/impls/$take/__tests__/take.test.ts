@@ -24,10 +24,7 @@ describe('take', () => {
           (function* twoItemsThenNever() {
             yield 1;
             yield 2;
-            while (true) {
-              // Never ends
-            }
-            yield 3;
+            throw new Error('Should not yield after `2`');
           })(),
         ),
       ),

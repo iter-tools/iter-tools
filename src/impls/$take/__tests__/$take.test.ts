@@ -1,4 +1,4 @@
-import { $, $async, $await, $isAsync } from '../../../../generate/async.macro.cjs';
+import { $, $async, $await } from '../../../../generate/async.macro.cjs';
 
 import { $take } from 'iter-tools-es';
 import { $wrap, $unwrap } from '../../../test/$helpers.js';
@@ -23,15 +23,7 @@ describe($`take`, () => {
       function* twoItemsThenNever() {
         yield 1;
         yield 2;
-        // Never yields 3.
-        if ($isAsync) {
-          $await(new Promise(() => undefined));
-        } else {
-          while (true) {
-            // Never ends
-          }
-        }
-        yield 3;
+        throw new Error('Should not yield after `2`');
       }
       expect($await($unwrap($take(2, twoItemsThenNever())))).toEqual([1, 2]);
     }),

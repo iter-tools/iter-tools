@@ -24,8 +24,7 @@ describe('asyncTake', () => {
           (async function* twoItemsThenNever() {
             yield 1;
             yield 2;
-            await new Promise(() => undefined);
-            yield 3;
+            throw new Error('Should not yield after `2`');
           })(),
         ),
       ),
