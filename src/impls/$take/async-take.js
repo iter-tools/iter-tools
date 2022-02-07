@@ -9,6 +9,7 @@
 import { asyncIterableCurry } from '../../internal/async-iterable.js';
 
 export async function* __asyncTake(iterable, n) {
+  if (n === 0) return;
   let i = 0;
   for await (const value of iterable) {
     yield value;

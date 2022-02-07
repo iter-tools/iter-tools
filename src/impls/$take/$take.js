@@ -4,6 +4,7 @@ import { $iterableCurry } from '../../internal/$iterable.js';
 
 $async;
 export function* $__take(iterable, n) {
+  if (n === 0) return;
   let i = 0;
   $await;
   for (const value of iterable) {

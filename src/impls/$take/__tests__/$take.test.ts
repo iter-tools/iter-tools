@@ -11,6 +11,12 @@ describe($`take`, () => {
     }),
   );
   it(
+    'completes immediately if requesting 0 (or less) items',
+    $async(() => {
+      expect($await($unwrap($take(0, $wrap([1, 2, 3]))))).toEqual([]);
+    }),
+  );
+  it(
     'completes immediately after taking the first n values',
     $async(() => {
       $async;

@@ -13,6 +13,9 @@ describe('take', () => {
   it('takes the first n values', () => {
     expect(unwrap(take(2, wrap([1, 2, 3])))).toEqual([1, 2]);
   });
+  it('completes immediately if requesting 0 (or less) items', () => {
+    expect(unwrap(take(0, wrap([1, 2, 3])))).toEqual([]);
+  });
   it('completes immediately after taking the first n values', () => {
     expect(
       unwrap(
