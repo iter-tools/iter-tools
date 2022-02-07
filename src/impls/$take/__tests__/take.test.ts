@@ -13,4 +13,21 @@ describe('take', () => {
   it('takes the first n values', () => {
     expect(unwrap(take(2, wrap([1, 2, 3])))).toEqual([1, 2]);
   });
+  it('completes immediately after taking the first n values', () => {
+    expect(
+      unwrap(
+        take(
+          2,
+          (function* twoItemsThenNever() {
+            yield 1;
+            yield 2;
+            while (true) {
+              // Never ends
+            }
+            yield 3;
+          })(),
+        ),
+      ),
+    ).toEqual([1, 2]);
+  });
 });

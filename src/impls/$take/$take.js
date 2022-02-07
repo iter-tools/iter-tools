@@ -7,8 +7,8 @@ export function* $__take(iterable, n) {
   let i = 0;
   $await;
   for (const value of iterable) {
-    if (i++ === n) break;
     yield value;
+    if (++i === n) break;
   }
 }
 

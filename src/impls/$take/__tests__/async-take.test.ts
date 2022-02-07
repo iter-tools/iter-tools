@@ -13,4 +13,19 @@ describe('asyncTake', () => {
   it('takes the first n values', async () => {
     expect(await asyncUnwrap(asyncTake(2, asyncWrap([1, 2, 3])))).toEqual([1, 2]);
   });
+  it('completes immediately after taking the first n values', async () => {
+    expect(
+      await asyncUnwrap(
+        asyncTake(
+          2,
+          (async function* twoItemsThenNever() {
+            yield 1;
+            yield 2;
+            await new Promise(() => undefined);
+            yield 3;
+          })(),
+        ),
+      ),
+    ).toEqual([1, 2]);
+  });
 });
