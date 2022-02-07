@@ -9,10 +9,11 @@
 import { iterableCurry } from '../../internal/iterable.js';
 
 export function* __take(iterable, n) {
+  if (n === 0) return;
   let i = 0;
   for (const value of iterable) {
-    if (i++ === n) break;
     yield value;
+    if (++i === n) break;
   }
 }
 
