@@ -4,6 +4,7 @@ We welcome contributions! Please read this document. It can save you work!
 
 [Etiquette](#etiquette)  
 [What you need](#what-you-need)  
+[What code should you change](#what-code-should-you-change)  
 [Creating a new method](#creating-a-new-method)  
 [Repository structure](#repository-structure)  
 [Code formatting](#code-formatting)  
@@ -27,6 +28,10 @@ The project is actively maintained, so your issues and PRs will definitely be se
 ## What you need
 
 To contribute you will need `node@>12`. You will also need the [yarn package manager](https://classic.yarnpkg.com/en/docs/install/).
+
+## What code should you change
+
+When writing a feature of bug fix you must first find the correct file to change. Most bug fixes and improvments will be changes to files in `src/impls`. If the particular method you need to change lives in a folder beginning with `$`, like `src/impls/$append`, that means that a single file, `src/impls/$append.js` is used to generate `src/impls/append.js` and `src/impls/async-append.js`. Thus you should make your changes in `src/impls/$append.js` and then use [the code generator](#the-code-generator) to update the other files. For more details on what you can do in $ files, see [the definition of async.macro](https://github.com/iter-tools/iter-tools/blob/trunk/generate/async.macro.cjs). Note that since files beginning with `$` are essentially written in a metaprogramming language, so your IDE will not fully understand their contents. If the non-$ files contain no errors or warnings and the generator runs, there should be no real problems.
 
 ### The code generator
 
