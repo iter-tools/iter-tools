@@ -46,6 +46,7 @@ class $Fork extends $IterableIterator {
     const { done, exchange } = this;
 
     if (!done) $await(exchange.return());
+    return { value: undefined, done: true };
   }
 }
 
@@ -79,5 +80,6 @@ export class $Exchange {
     if (this.forks === 0) {
       $await($callReturn(this.iterator));
     }
+    return { value: undefined, done: true };
   }
 }

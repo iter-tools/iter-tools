@@ -50,6 +50,7 @@ class Fork extends IterableIterator {
     const { done, exchange } = this;
 
     if (!done) exchange.return();
+    return { value: undefined, done: true };
   }
 }
 
@@ -81,5 +82,6 @@ export class Exchange {
     if (this.forks === 0) {
       callReturn(this.iterator);
     }
+    return { value: undefined, done: true };
   }
 }

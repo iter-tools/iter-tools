@@ -50,6 +50,7 @@ class AsyncFork extends AsyncIterableIterator {
     const { done, exchange } = this;
 
     if (!done) await exchange.return();
+    return { value: undefined, done: true };
   }
 }
 
@@ -81,5 +82,6 @@ export class AsyncExchange {
     if (this.forks === 0) {
       await asyncCallReturn(this.iterator);
     }
+    return { value: undefined, done: true };
   }
 }

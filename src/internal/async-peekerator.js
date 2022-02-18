@@ -24,6 +24,7 @@ class AsyncPeekeratorIterator {
 
   async return() {
     await this.peekr.return();
+    return { value: undefined, done: true };
   }
 
   [Symbol.asyncIterator]() {

@@ -24,6 +24,7 @@ class PeekeratorIterator {
 
   return() {
     this.peekr.return();
+    return { value: undefined, done: true };
   }
 
   [Symbol.iterator]() {

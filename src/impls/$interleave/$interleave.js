@@ -125,6 +125,7 @@ class $Interleaver extends $IterableIterator {
   return() {
     $await($callReturn(this.iterator));
     $await(this.returnBuffers());
+    return { value: undefined, done: true };
   }
 }
 
