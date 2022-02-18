@@ -122,6 +122,7 @@ class Interleaver extends IterableIterator {
   return() {
     callReturn(this.iterator);
     this.returnBuffers();
+    return { value: undefined, done: true };
   }
 }
 

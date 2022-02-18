@@ -20,6 +20,7 @@ class $PeekeratorIterator {
   @$async
   return() {
     $await(this.peekr.return());
+    return { value: undefined, done: true };
   }
 
   [$iteratorSymbol]() {

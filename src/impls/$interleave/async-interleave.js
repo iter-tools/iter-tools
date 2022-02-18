@@ -122,6 +122,7 @@ class AsyncInterleaver extends AsyncIterableIterator {
   async return() {
     await asyncCallReturn(this.iterator);
     await this.returnBuffers();
+    return { value: undefined, done: true };
   }
 }
 
