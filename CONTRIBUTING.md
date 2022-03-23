@@ -153,13 +153,13 @@ If there are any changes to the release process or you found the instructions un
 
 Double check everything. You are pushing to trunk, so no take-backs. CI cannot help you validate this process yet. When you are ready run:
 
+`yarn build`
+
 `git commit -am 1.2.3 && git tag v1.2.3`
 
 `git push && git push --tags`
 
 Now to publish on NPM. First build the packages to be published. We do not publish from the project root. I have hardcoded an error should you attempt to do that. So:
-
-`yarn build`
 
 `pushd dist/es5`
 `yarn publish` (You can leave the version input empty)
