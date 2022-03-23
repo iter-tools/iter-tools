@@ -802,7 +802,7 @@ See [takeWhile](#takewhile)
 For each value in `source`, executes `callback(value, idx)` and yields the value (unmodified). Note that while this looks similar to what a `for..of` loop or `forEach` method might do, the key difference is that `tap` does not force evaluation of the iterable.
 
 ```js
-pipeExec(
+execPipe(
   [0, 1, 2],
   filter((value) => !!value),
   tap((value) => console.log(value)),
@@ -1171,7 +1171,7 @@ See [splitOnSeq](#splitonseq)
 **splitWhen(predicate, [source](#wrappable))**  
 **__splitWhen([source](#iterable), predicate)**  
 
-Yields a [PartsIterable](#partsiterable) of parts from `source`, a `value` from `source` for which the result of `predicate(value, idx)` is truthy is considered a separator, and will not occur in the output. If `source` is a string you may also specify a regex predicate, in which case the behavior will match `str.split(RegExp)`. This is the only situation in which you will be able to match more than one value from `source` at a time.
+Yields a [PartsIterable](#partsiterable) of parts from `source`, a `value` from `source` for which the result of `predicate(value, idx)` is truthy is considered a separator, and will not occur in the output.
 
 <!-- prettier-ignore -->
 ```js
@@ -2863,7 +2863,7 @@ alternatingInterleave({ count: 2 }, a, b); // [1, 2, 3, 4, 5, 6, 7]
 
 Note: This method has only cursory Typecript support because Typescript lacks the power to describe it. Instead you should include your own type definitions. The example code with typedefs might look like this:
 
-```js
+```ts
 function* alternatingStrategy<T>(
   options: { count: number },
   all: Peekerator<Peekerator<T>>,

@@ -34,7 +34,7 @@ alternatingInterleave({ count: 2 }, a, b); // [1, 2, 3, 4, 5, 6, 7]
 
 Note: This method has only cursory Typecript support because Typescript lacks the power to describe it. Instead you should include your own type definitions. The example code with typedefs might look like this:
 
-```js
+```ts
 function* alternatingStrategy<T>(
   options: { count: number },
   all: Peekerator<Peekerator<T>>,
