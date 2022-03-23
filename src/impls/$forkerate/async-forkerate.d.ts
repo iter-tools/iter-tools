@@ -27,6 +27,7 @@ interface AsyncForkeratorBase<T> {
   /* eslint-enaable no-use-before-define */
   fork(): AsyncForkeratorIterator<T>;
   asIterator(): AsyncForkeratorIterator<T>;
+  [Symbol.asyncIterator](): AsyncForkeratorIterator<T>;
 }
 
 interface AsyncDoneForkerator<T> extends AsyncForkeratorBase<T> {

@@ -35,6 +35,10 @@ class Forkerator extends Peekerator {
   fork() {
     return this[_].exchange.fork();
   }
+
+  [Symbol.iterator]() {
+    return this[_].exchange.fork();
+  }
 }
 
 export function __forkerate(source) {

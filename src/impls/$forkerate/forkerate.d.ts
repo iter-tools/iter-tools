@@ -23,6 +23,7 @@ interface ForkeratorBase<T> {
   /* eslint-enaable no-use-before-define */
   fork(): ForkeratorIterator<T>;
   asIterator(): ForkeratorIterator<T>;
+  [Symbol.iterator](): ForkeratorIterator<T>;
 }
 
 interface DoneForkerator<T> extends ForkeratorBase<T> {
