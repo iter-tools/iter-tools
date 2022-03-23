@@ -22,7 +22,7 @@ interface AsyncForkeratorBase<T> {
   readonly index: number;
 
   /* eslint-disable no-use-before-define */
-  advance(): Promise<AsyncForkerator<T>>;
+  advance(n?: number): Promise<AsyncForkerator<T>>;
   return(): Promise<AsyncForkerator<T>>;
   /* eslint-enaable no-use-before-define */
   fork(): AsyncForkeratorIterator<T>;

@@ -18,7 +18,7 @@ interface ForkeratorBase<T> {
   readonly index: number;
 
   /* eslint-disable no-use-before-define */
-  advance(): Forkerator<T>;
+  advance(n?: number): Forkerator<T>;
   return(): Forkerator<T>;
   /* eslint-enaable no-use-before-define */
   fork(): ForkeratorIterator<T>;

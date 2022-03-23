@@ -40,6 +40,14 @@ describe('forkerate', () => {
 
       expect(forkr.fork().next()).toEqual({ value: undefined, done: true });
     });
+
+    it('can be advanced more than one value at a time', () => {
+      const forkr = forkerate(wrap([1, 2, 3]));
+
+      forkr.advance(2);
+
+      expect(unwrap(forkr)).toEqual([3]);
+    });
   });
 
   it('can be used to strip comments', () => {

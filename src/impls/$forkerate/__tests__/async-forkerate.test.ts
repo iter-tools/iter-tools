@@ -44,6 +44,14 @@ describe('asyncForkerate', () => {
 
       expect(await forkr.fork().next()).toEqual({ value: undefined, done: true });
     });
+
+    it('can be advanced more than one value at a time', async () => {
+      const forkr = await asyncForkerate(asyncWrap([1, 2, 3]));
+
+      await forkr.advance(2);
+
+      expect(await asyncUnwrap(forkr)).toEqual([3]);
+    });
   });
 
   it('can be used to strip comments', async () => {

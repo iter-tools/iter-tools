@@ -44,6 +44,17 @@ describe($`forkerate`, () => {
         expect($await(forkr.fork().next())).toEqual({ value: undefined, done: true });
       }),
     );
+
+    it(
+      'can be advanced more than one value at a time',
+      $async(() => {
+        const forkr = $await($forkerate($wrap([1, 2, 3])));
+
+        $await(forkr.advance(2));
+
+        expect($await($unwrap(forkr))).toEqual([3]);
+      }),
+    );
   });
 
   it(
