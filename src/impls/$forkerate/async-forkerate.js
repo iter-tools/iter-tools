@@ -35,6 +35,10 @@ class AsyncForkerator extends AsyncPeekerator {
   fork() {
     return this[_].exchange.fork();
   }
+
+  [Symbol.asyncIterator]() {
+    return this[_].exchange.fork();
+  }
 }
 
 export function __asyncForkerate(source) {

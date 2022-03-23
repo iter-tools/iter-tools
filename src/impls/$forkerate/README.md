@@ -12,6 +12,12 @@ interface Forkerator<T> extends Peekerator<T> {
    * The forked iterator yields values starting from the current position.
    */
   fork(): SingletonIterableIterator;
+
+  /**
+   * Makes it possible to use forkr as an iterable
+   * The iterator returned is equivalent to calling forkr.fork()
+   */
+  [Symbol.iterator](): SingletonIterableIterator;
 }
 ```
 
@@ -24,7 +30,7 @@ export function* stripComments(source) {
   const forkr = forkerate(source);
 
   while (true) {
-    const isComment = startsWithSeq('//', forkr.fork());
+    const isComment = startsWithSeq('//', forkr);
 
     while (forkr.value !== '\n') {
       if (!isComment) yield forkr.value;

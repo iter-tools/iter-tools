@@ -21,22 +21,22 @@ describe('forkerate', () => {
       const forkr = forkerate(wrap([1, 2, 3]));
 
       expect(unwrap(forkr.fork())).toEqual([1, 2, 3]);
-      expect(unwrap(forkr.fork())).toEqual([1, 2, 3]);
+      expect(unwrap(forkr)).toEqual([1, 2, 3]);
 
       forkr.advance();
 
       expect(unwrap(forkr.fork())).toEqual([2, 3]);
-      expect(unwrap(forkr.fork())).toEqual([2, 3]);
+      expect(unwrap(forkr)).toEqual([2, 3]);
 
       forkr.advance();
 
       expect(unwrap(forkr.fork())).toEqual([3]);
-      expect(unwrap(forkr.fork())).toEqual([3]);
+      expect(unwrap(forkr)).toEqual([3]);
 
       forkr.advance();
 
       expect(unwrap(forkr.fork())).toEqual([]);
-      expect(unwrap(forkr.fork())).toEqual([]);
+      expect(unwrap(forkr)).toEqual([]);
 
       expect(forkr.fork().next()).toEqual({ value: undefined, done: true });
     });

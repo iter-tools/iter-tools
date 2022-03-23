@@ -25,22 +25,22 @@ describe('asyncForkerate', () => {
       const forkr = await asyncForkerate(asyncWrap([1, 2, 3]));
 
       expect(await asyncUnwrap(forkr.fork())).toEqual([1, 2, 3]);
-      expect(await asyncUnwrap(forkr.fork())).toEqual([1, 2, 3]);
+      expect(await asyncUnwrap(forkr)).toEqual([1, 2, 3]);
 
       await forkr.advance();
 
       expect(await asyncUnwrap(forkr.fork())).toEqual([2, 3]);
-      expect(await asyncUnwrap(forkr.fork())).toEqual([2, 3]);
+      expect(await asyncUnwrap(forkr)).toEqual([2, 3]);
 
       await forkr.advance();
 
       expect(await asyncUnwrap(forkr.fork())).toEqual([3]);
-      expect(await asyncUnwrap(forkr.fork())).toEqual([3]);
+      expect(await asyncUnwrap(forkr)).toEqual([3]);
 
       await forkr.advance();
 
       expect(await asyncUnwrap(forkr.fork())).toEqual([]);
-      expect(await asyncUnwrap(forkr.fork())).toEqual([]);
+      expect(await asyncUnwrap(forkr)).toEqual([]);
 
       expect(await forkr.fork().next()).toEqual({ value: undefined, done: true });
     });

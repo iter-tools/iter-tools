@@ -24,22 +24,22 @@ describe($`forkerate`, () => {
         const forkr = $await($forkerate($wrap([1, 2, 3])));
 
         expect($await($unwrap(forkr.fork()))).toEqual([1, 2, 3]);
-        expect($await($unwrap(forkr.fork()))).toEqual([1, 2, 3]);
+        expect($await($unwrap(forkr))).toEqual([1, 2, 3]);
 
         $await(forkr.advance());
 
         expect($await($unwrap(forkr.fork()))).toEqual([2, 3]);
-        expect($await($unwrap(forkr.fork()))).toEqual([2, 3]);
+        expect($await($unwrap(forkr))).toEqual([2, 3]);
 
         $await(forkr.advance());
 
         expect($await($unwrap(forkr.fork()))).toEqual([3]);
-        expect($await($unwrap(forkr.fork()))).toEqual([3]);
+        expect($await($unwrap(forkr))).toEqual([3]);
 
         $await(forkr.advance());
 
         expect($await($unwrap(forkr.fork()))).toEqual([]);
-        expect($await($unwrap(forkr.fork()))).toEqual([]);
+        expect($await($unwrap(forkr))).toEqual([]);
 
         expect($await(forkr.fork().next())).toEqual({ value: undefined, done: true });
       }),

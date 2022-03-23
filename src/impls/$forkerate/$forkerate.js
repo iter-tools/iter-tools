@@ -31,6 +31,10 @@ class $Forkerator extends $Peekerator {
   fork() {
     return this[_].exchange.fork();
   }
+
+  [$iteratorSymbol]() {
+    return this[_].exchange.fork();
+  }
 }
 
 export function $__forkerate(source) {
