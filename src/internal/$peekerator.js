@@ -1,4 +1,4 @@
-import { $iteratorSymbol, $async, $await } from '../../generate/async.macro.cjs';
+import { $isSync, $iteratorSymbol, $async, $await } from '../../generate/async.macro.cjs';
 
 import { $ensureIterable, $callReturn } from './$iterable.js';
 
@@ -60,16 +60,18 @@ export class $Peekerator {
     return this[_].index;
   }
 
-  @$async
   advance() {
-    const this_ = this[_];
+    if ($isSync) {
+      const this_ = this[_];
 
-    if (!this_.current.done) {
-      this_.index++;
-      this_.current = $await(this_.iterator.next());
+      if (!this_.current.done) {
+        this_.current = $await(this_.iterator.next());
+        this_.index++;
+      }
+
+      return this;
+    } else {
     }
-
-    return this;
   }
 
   @$async

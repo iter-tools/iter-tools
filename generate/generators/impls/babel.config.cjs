@@ -13,6 +13,7 @@ module.exports = (api) => {
       '@babel/plugin-syntax-typescript',
       ['@babel/plugin-syntax-decorators', { decoratorsBeforeExport: false }],
       ['macros', { async: { ASYNC } }],
+      join(__dirname, 'babel-plugin-asyncish-generators.cjs'),
       [join(__dirname, 'babel-plugin-$-identifiers-and-imports.cjs'), { ASYNC }],
       // use dead code elimination to clean up if(false) {} and if(true) {}
       ['minify-dead-code-elimination', { keepFnName: true, keepFnArgs: true, keepClassName: true }],

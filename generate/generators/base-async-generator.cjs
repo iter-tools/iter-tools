@@ -24,7 +24,8 @@ class BaseAsyncGenerator extends BaseGenerator {
   async map(api, change) {
     const { ASYNC } = this.options;
 
-    await api.generate(this.getDestPath(change.path), async (destPath) => {
+    const destPath = this.getDestPath(change.path);
+    await api.generate(destPath, async () => {
       const { code: impl } = await babel.transformFileAsync(change.path, {
         caller: { name: ASYNC ? 'generateAsync' : 'generateSync', ASYNC },
         configFile: this.getBabelConfigPath(),
