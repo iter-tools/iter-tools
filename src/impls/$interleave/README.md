@@ -32,7 +32,7 @@ const b = [3, 4, 7];
 alternatingInterleave({ count: 2 }, a, b); // [1, 2, 3, 4, 5, 6, 7]
 ```
 
-Note: This method has only cursory Typecript support because Typescript lacks the power to describe it. Instead you should include your own type definitions. The example code with typedefs might look like this:
+Note: This method has only cursory Typescript support because Typescript lacks the power to describe it. Instead you should include your own type definitions. The example code with typedefs might look like this:
 
 ```ts
 function* alternatingStrategy<T>(
