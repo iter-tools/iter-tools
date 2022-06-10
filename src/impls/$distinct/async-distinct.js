@@ -9,10 +9,6 @@
 import { asyncIterableCurry } from '../../internal/async-iterable.js';
 
 export async function* __asyncDistinct(source, selector) {
-  if (!source) {
-    return;
-  }
-
   const set = new Set();
   for await (const value of source) {
     const key = selector ? selector(value) : value;

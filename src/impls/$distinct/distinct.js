@@ -9,10 +9,6 @@
 import { iterableCurry } from '../../internal/iterable.js';
 
 export function* __distinct(source, selector) {
-  if (!source) {
-    return;
-  }
-
   const set = new Set();
   for (const value of source) {
     const key = selector ? selector(value) : value;

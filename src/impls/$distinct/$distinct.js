@@ -4,10 +4,6 @@ import { $iterableCurry } from '../../internal/$iterable.js';
 
 $async;
 export function* $__distinct(source, selector) {
-  if (!source) {
-    return;
-  }
-
   const set = new Set();
   $await;
   for (const value of source) {
