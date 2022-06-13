@@ -19,5 +19,5 @@ export function* $__distinct(source, selector) {
 
 export const $distinct = $iterableCurry($__distinct, {
   minArgs: 0,
-  maxArgs: 2,
+  maxArgs: 1,
 });
