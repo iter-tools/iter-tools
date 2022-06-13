@@ -18,53 +18,23 @@ describe('asyncDistinct', () => {
     });
   });
 
-  describe('when source has values', () => {
+  describe('when source has only distinct values', () => {
+    it('yield those values', async () => {
+      expect(await asyncUnwrap(asyncDistinct(asyncWrap([1])))).toEqual([1]);
+    });
+  });
+
+  describe('when source has duplicated values', () => {
     it('only yield distinct values', async () => {
-      expect(
-        await asyncUnwrap(asyncDistinct(asyncWrap([3, 1, 4, 1, 5, 9, 2, 6, 5, 3, 5, 8]))),
-      ).toEqual([3, 1, 4, 5, 9, 2, 6, 8]);
+      expect(await asyncUnwrap(asyncDistinct(asyncWrap([1, 2, 3, 2])))).toEqual([1, 2, 3]);
     });
   });
 
   describe('when source has values and a selector is specified', () => {
     it('only yield distinct values based on the selector', async () => {
       expect(
-        await asyncUnwrap(
-          asyncDistinct(
-            (item) => item.content,
-            asyncWrap([
-              {
-                content: 'lorem',
-              },
-              {
-                content: 'ipsum',
-              },
-              {
-                content: 'dolor',
-              },
-              {
-                content: 'ipsum',
-              },
-              {
-                content: 'sit',
-              },
-            ]),
-          ),
-        ),
-      ).toEqual([
-        {
-          content: 'lorem',
-        },
-        {
-          content: 'ipsum',
-        },
-        {
-          content: 'dolor',
-        },
-        {
-          content: 'sit',
-        },
-      ]);
+        await asyncUnwrap(asyncDistinct((x) => x[0], asyncWrap(['apple', 'apricot', 'blueberry']))),
+      ).toEqual(['apple', 'blueberry']);
     });
   });
 });

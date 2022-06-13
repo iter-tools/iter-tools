@@ -15,12 +15,23 @@ describe($`distinct`, () => {
     );
   });
 
-  describe('when source has values', () => {
+  describe('when source has only distinct values', () => {
+    it(
+      'yield those values',
+      $async(() => {
+        const source = [1];
+        const result = [1];
+        expect($await($unwrap($distinct($wrap(source))))).toEqual(result);
+      }),
+    );
+  });
+
+  describe('when source has duplicated values', () => {
     it(
       'only yield distinct values',
       $async(() => {
-        const source = [3, 1, 4, 1, 5, 9, 2, 6, 5, 3, 5, 8];
-        const result = [3, 1, 4, 5, 9, 2, 6, 8];
+        const source = [1, 2, 3, 2];
+        const result = [1, 2, 3];
         expect($await($unwrap($distinct($wrap(source))))).toEqual(result);
       }),
     );
@@ -30,38 +41,9 @@ describe($`distinct`, () => {
     it(
       'only yield distinct values based on the selector',
       $async(() => {
-        const source = [
-          {
-            content: 'lorem',
-          },
-          {
-            content: 'ipsum',
-          },
-          {
-            content: 'dolor',
-          },
-          {
-            content: 'ipsum',
-          },
-          {
-            content: 'sit',
-          },
-        ];
-        const result = [
-          {
-            content: 'lorem',
-          },
-          {
-            content: 'ipsum',
-          },
-          {
-            content: 'dolor',
-          },
-          {
-            content: 'sit',
-          },
-        ];
-        expect($await($unwrap($distinct((item) => item.content, $wrap(source))))).toEqual(result);
+        const source = ['apple', 'apricot', 'blueberry'];
+        const result = ['apple', 'blueberry'];
+        expect($await($unwrap($distinct((x) => x[0], $wrap(source))))).toEqual(result);
       }),
     );
   });

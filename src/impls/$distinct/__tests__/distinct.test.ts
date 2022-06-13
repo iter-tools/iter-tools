@@ -18,59 +18,23 @@ describe('distinct', () => {
     });
   });
 
-  describe('when source has values', () => {
+  describe('when source has only distinct values', () => {
+    it('yield those values', () => {
+      expect(unwrap(distinct(wrap([1])))).toEqual([1]);
+    });
+  });
+
+  describe('when source has duplicated values', () => {
     it('only yield distinct values', () => {
-      expect(unwrap(distinct(wrap([3, 1, 4, 1, 5, 9, 2, 6, 5, 3, 5, 8])))).toEqual([
-        3,
-        1,
-        4,
-        5,
-        9,
-        2,
-        6,
-        8,
-      ]);
+      expect(unwrap(distinct(wrap([1, 2, 3, 2])))).toEqual([1, 2, 3]);
     });
   });
 
   describe('when source has values and a selector is specified', () => {
     it('only yield distinct values based on the selector', () => {
-      expect(
-        unwrap(
-          distinct(
-            (item) => item.content,
-            wrap([
-              {
-                content: 'lorem',
-              },
-              {
-                content: 'ipsum',
-              },
-              {
-                content: 'dolor',
-              },
-              {
-                content: 'ipsum',
-              },
-              {
-                content: 'sit',
-              },
-            ]),
-          ),
-        ),
-      ).toEqual([
-        {
-          content: 'lorem',
-        },
-        {
-          content: 'ipsum',
-        },
-        {
-          content: 'dolor',
-        },
-        {
-          content: 'sit',
-        },
+      expect(unwrap(distinct((x) => x[0], wrap(['apple', 'apricot', 'blueberry'])))).toEqual([
+        'apple',
+        'blueberry',
       ]);
     });
   });
