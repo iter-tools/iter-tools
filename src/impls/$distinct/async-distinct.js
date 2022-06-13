@@ -23,5 +23,5 @@ export async function* __asyncDistinct(source, selector) {
 
 export const asyncDistinct = asyncIterableCurry(__asyncDistinct, {
   minArgs: 0,
-  maxArgs: 2,
+  maxArgs: 1,
 });

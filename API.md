@@ -442,7 +442,6 @@ See [append](#append)
 
 **distinct(selector, [source](#wrappable))**  
 **distinct([source](#wrappable))**  
-**distinct()**  
 **__distinct([source](#iterable), ?selector)**  
 
 Yields only the first occurrance of each value from `source`. An optional `selector` can be used to specify a transform function which returns a key to distinguish the values.
@@ -456,7 +455,6 @@ distinct((x) => x[0], ['apple', 'apricot', 'blueberry']); // Iterable['apple', '
 
 **asyncDistinct(selector, [source](#asyncwrappable))**  
 **asyncDistinct([source](#asyncwrappable))**  
-**asyncDistinct()**  
 **__asyncDistinct([source](#asynciterable), ?selector)**  
 
 See [distinct](#distinct)
