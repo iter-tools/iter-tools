@@ -1,4 +1,4 @@
-import { Wrappable } from 'src/types';
+import { Wrappable } from '../../types';
 
 declare function apply<Return, A>(fn: (...args: Array<A>) => Return, args: Wrappable<A>): Return;
 
