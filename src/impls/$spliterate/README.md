@@ -6,7 +6,7 @@ Here is a slightly simplified implementation of [batch](#batch):
 
 <!-- prettier-ignore -->
 ```js
-function* batchStrategy(split { size }, source) {
+function* batchStrategy(split, { size }, source) {
   for (const [value, i] of enumerate(source)) {
     if (i % size === 0) yield split;
     yield value;
@@ -27,7 +27,7 @@ for (const [idx, letter] of batch({ size: 2 }, iterable)) {
 
 Note: This method has only cursory Typescript support because Typescript lacks the power to describe it. Instead you should include your own type definitions. The example code with typedefs might look like this:
 
-```js
+```ts
 function* batchStrategy<T>(
   split: symbol,
   options: { size: number },

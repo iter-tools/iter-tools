@@ -33,7 +33,7 @@ function splitGroupsBy(source, getKey) {
 
 Note: This method has only cursory Typescript support because Typescript lacks the power to describe it. Instead you should include your own type definitions. The example code with typedefs might look like this:
 
-```js
+```ts
 function* groupingSpliterator<T>(
   split: symbol,
   options: { getKey: Function },
