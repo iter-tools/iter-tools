@@ -50,8 +50,8 @@ describe($`selectBy`, () => {
     it(
       'should return the best value according mapper and selector function',
       $async(() => {
-        expect($await($selectBy(personAge, maxSelector, $wrap(PERSONS)))?.age).toEqual(30);
-        expect($await($selectBy(personAge, minSelector, $wrap(PERSONS)))?.age).toEqual(10);
+        expect($await($selectBy(personAge, maxSelector, $wrap(PERSONS)))).toEqual(PERSONS[2]);
+        expect($await($selectBy(personAge, minSelector, $wrap(PERSONS)))).toEqual(PERSONS[0]);
       }),
     );
   });

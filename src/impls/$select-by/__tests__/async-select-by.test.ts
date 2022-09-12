@@ -48,8 +48,8 @@ describe('asyncSelectBy', () => {
 
   describe('when source has values', () => {
     it('should return the best value according mapper and selector function', async () => {
-      expect((await asyncSelectBy(personAge, maxSelector, asyncWrap(PERSONS)))?.age).toEqual(30);
-      expect((await asyncSelectBy(personAge, minSelector, asyncWrap(PERSONS)))?.age).toEqual(10);
+      expect(await asyncSelectBy(personAge, maxSelector, asyncWrap(PERSONS))).toEqual(PERSONS[2]);
+      expect(await asyncSelectBy(personAge, minSelector, asyncWrap(PERSONS))).toEqual(PERSONS[0]);
     });
   });
 });

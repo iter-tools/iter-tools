@@ -48,8 +48,8 @@ describe('selectBy', () => {
 
   describe('when source has values', () => {
     it('should return the best value according mapper and selector function', () => {
-      expect(selectBy(personAge, maxSelector, wrap(PERSONS))?.age).toEqual(30);
-      expect(selectBy(personAge, minSelector, wrap(PERSONS))?.age).toEqual(10);
+      expect(selectBy(personAge, maxSelector, wrap(PERSONS))).toEqual(PERSONS[2]);
+      expect(selectBy(personAge, minSelector, wrap(PERSONS))).toEqual(PERSONS[0]);
     });
   });
 });
