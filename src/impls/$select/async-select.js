@@ -7,17 +7,24 @@
  */
 
 import { asyncIterableCurry } from '../../internal/async-iterable.js';
+import { __asyncPeekerate } from '../$peekerate/async-peekerate.js';
 
 export async function __asyncSelect(iterable, selector) {
-  let bestValue;
+  const peekr = await __asyncPeekerate(iterable);
 
-  for await (const candidate of iterable) {
-    if (bestValue === undefined || selector(bestValue, candidate)) {
-      bestValue = candidate;
+  if (!peekr.done) {
+    let bestValue = peekr.value;
+
+    await peekr.advance();
+    while (!peekr.done) {
+      const candidate = peekr.value;
+      if (selector(bestValue, candidate)) {
+        bestValue = candidate;
+      }
+      await peekr.advance();
     }
+    return bestValue;
   }
-
-  return bestValue;
 }
 
 export const asyncSelect = asyncIterableCurry(__asyncSelect, {

@@ -7,17 +7,24 @@
  */
 
 import { iterableCurry } from '../../internal/iterable.js';
+import { __peekerate } from '../$peekerate/peekerate.js';
 
 export function __select(iterable, selector) {
-  let bestValue;
+  const peekr = __peekerate(iterable);
 
-  for (const candidate of iterable) {
-    if (bestValue === undefined || selector(bestValue, candidate)) {
-      bestValue = candidate;
+  if (!peekr.done) {
+    let bestValue = peekr.value;
+
+    peekr.advance();
+    while (!peekr.done) {
+      const candidate = peekr.value;
+      if (selector(bestValue, candidate)) {
+        bestValue = candidate;
+      }
+      peekr.advance();
     }
+    return bestValue;
   }
-
-  return bestValue;
 }
 
 export const select = iterableCurry(__select, {
