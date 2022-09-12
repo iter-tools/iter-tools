@@ -160,6 +160,7 @@ Reduce an iterable to a single value
 [isSorted](#issorted) ([async](#asyncissorted))  
 [reduce](#reduce) ([async](#asyncreduce))  
 [select](#select) ([async](#asyncselect))  
+[selectBy](#selectby) ([async](#asyncselectby))  
 [size](#size) ([async](#asyncsize))  
 [some](#some) ([async](#asyncsome))  
 [startsWith](#startswith) ([async](#asyncstartswith))  
@@ -1794,6 +1795,20 @@ See [reduce](#reduce)
 **__asyncSelect([iterable](#asynciterable), selector)**  
 
 See [select](#select)
+
+### selectBy
+
+**selectBy(mapper, selector, [iterable](#wrappable))**  
+**__selectBy([iterable](#iterable), selector, mapper)**  
+
+`selectBy` is undocumented.
+
+### asyncSelectBy
+
+**asyncSelectBy(mapper, selector, [iterable](#asyncwrappable))**  
+**__asyncSelectBy([iterable](#asynciterable), selector, mapper)**  
+
+See [selectBy](#selectby)
 
 ### size
 
