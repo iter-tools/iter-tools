@@ -159,6 +159,7 @@ Reduce an iterable to a single value
 [isEmpty](#isempty) ([async](#asyncisempty))  
 [isSorted](#issorted) ([async](#asyncissorted))  
 [reduce](#reduce) ([async](#asyncreduce))  
+[select](#select) ([async](#asyncselect))  
 [size](#size) ([async](#asyncsize))  
 [some](#some) ([async](#asyncsome))  
 [startsWith](#startswith) ([async](#asyncstartswith))  
@@ -1779,6 +1780,20 @@ reduce((result, v) => result + v, [1, 2, 3]); // 6
 **__asyncReduce([iterable](#asynciterable), reducer, ?initial)**  
 
 See [reduce](#reduce)
+
+### select
+
+**select(selector, [iterable](#wrappable))**  
+**__select([iterable](#iterable), selector)**  
+
+`select` is undocumented.
+
+### asyncSelect
+
+**asyncSelect(selector, [iterable](#asyncwrappable))**  
+**__asyncSelect([iterable](#asynciterable), selector)**  
+
+See [select](#select)
 
 ### size
 
