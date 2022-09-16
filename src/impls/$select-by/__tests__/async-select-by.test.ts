@@ -14,21 +14,20 @@ const personAge = (p: Person) => p.age;
 const maxSelector = (a: number, b: number) => b > a;
 const minSelector = (a: number, b: number) => b < a;
 
-// Sample data
-const PERSONS = [
-  {
-    name: 'a',
-    age: 10,
-  },
-  {
-    name: 'b',
-    age: 20,
-  },
-  {
-    name: 'c',
-    age: 30,
-  },
-];
+const youngest = {
+  name: 'a',
+  age: 10,
+};
+const middle = {
+  name: 'b',
+  age: 20,
+};
+const oldest = {
+  name: 'c',
+  age: 30,
+};
+
+const people = [youngest, middle, oldest];
 
 describe('asyncSelectBy', () => {
   describe('when source is empty', () => {
@@ -48,8 +47,8 @@ describe('asyncSelectBy', () => {
 
   describe('when source has values', () => {
     it('should return the best value according mapper and selector function', async () => {
-      expect(await asyncSelectBy(personAge, maxSelector, asyncWrap(PERSONS))).toEqual(PERSONS[2]);
-      expect(await asyncSelectBy(personAge, minSelector, asyncWrap(PERSONS))).toEqual(PERSONS[0]);
+      expect(await asyncSelectBy(personAge, maxSelector, asyncWrap(people))).toEqual(oldest);
+      expect(await asyncSelectBy(personAge, minSelector, asyncWrap(people))).toEqual(youngest);
     });
   });
 });

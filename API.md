@@ -158,8 +158,8 @@ Reduce an iterable to a single value
 [includesSeq](#includesseq) ([async](#asyncincludesseq))  
 [isEmpty](#isempty) ([async](#asyncisempty))  
 [isSorted](#issorted) ([async](#asyncissorted))  
+[max](#max) ([async](#asyncmax))  
 [reduce](#reduce) ([async](#asyncreduce))  
-[select](#select) ([async](#asyncselect))  
 [selectBy](#selectby) ([async](#asyncselectby))  
 [size](#size) ([async](#asyncsize))  
 [some](#some) ([async](#asyncsome))  
@@ -1756,6 +1756,22 @@ isSorted((a, b) => b - a, [3, 2, 1]); // true
 
 See [isSorted](#issorted)
 
+### max
+
+**max([compare](#compare), [iterable](#wrappable))**  
+**max([iterable](#wrappable))**  
+**__max([iterable](#iterable), ?[compare](#compare))**  
+
+`max` is undocumented.
+
+### asyncMax
+
+**asyncMax([compare](#compare), [iterable](#asyncwrappable))**  
+**asyncMax([iterable](#asyncwrappable))**  
+**__asyncMax([iterable](#asynciterable), ?[compare](#compare))**  
+
+See [max](#max)
+
 ### reduce
 
 **reduce(initial, reducer, [iterable](#wrappable))**  
@@ -1781,20 +1797,6 @@ reduce((result, v) => result + v, [1, 2, 3]); // 6
 **__asyncReduce([iterable](#asynciterable), reducer, ?initial)**  
 
 See [reduce](#reduce)
-
-### select
-
-**select(selector, [iterable](#wrappable))**  
-**__select([iterable](#iterable), selector)**  
-
-`select` is undocumented.
-
-### asyncSelect
-
-**asyncSelect(selector, [iterable](#asyncwrappable))**  
-**__asyncSelect([iterable](#asynciterable), selector)**  
-
-See [select](#select)
 
 ### selectBy
 
