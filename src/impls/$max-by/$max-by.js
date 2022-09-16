@@ -8,20 +8,20 @@ export function $__maxBy(iterable, mapper, compare = defaultCompareOrder) {
   const peekr = $await($__peekerate(iterable));
 
   if (!peekr.done) {
-    let bestValue = peekr.value;
-    let bestMappedValue = $await(mapper(bestValue));
+    let maxValue = peekr.value;
+    let maxMappedValue = $await(mapper(maxValue));
 
     $await(peekr.advance());
     while (!peekr.done) {
-      const candidate = peekr.value;
-      const candidateMappedValue = $await(mapper(candidate));
-      if (compare(bestMappedValue, candidateMappedValue) < 0) {
-        bestValue = candidate;
-        bestMappedValue = candidateMappedValue;
+      const value = peekr.value;
+      const mappedValue = $await(mapper(value));
+      if (compare(maxMappedValue, mappedValue) < 0) {
+        maxValue = value;
+        maxMappedValue = mappedValue;
       }
       $await(peekr.advance());
     }
-    return bestValue;
+    return maxValue;
   }
 }
 

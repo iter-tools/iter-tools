@@ -15,17 +15,17 @@ export function __max(iterable, compare = defaultCompareOrder) {
   const peekr = __peekerate(iterable);
 
   if (!peekr.done) {
-    let bestValue = peekr.value;
+    let maxValue = peekr.value;
 
     peekr.advance();
     while (!peekr.done) {
-      const candidate = peekr.value;
-      if (compare(bestValue, candidate) < 0) {
-        bestValue = candidate;
+      const value = peekr.value;
+      if (compare(maxValue, value) < 0) {
+        maxValue = value;
       }
       peekr.advance();
     }
-    return bestValue;
+    return maxValue;
   }
 }
 

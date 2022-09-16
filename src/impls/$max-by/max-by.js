@@ -14,20 +14,20 @@ export function __maxBy(iterable, mapper, compare = defaultCompareOrder) {
   const peekr = __peekerate(iterable);
 
   if (!peekr.done) {
-    let bestValue = peekr.value;
-    let bestMappedValue = mapper(bestValue);
+    let maxValue = peekr.value;
+    let maxMappedValue = mapper(maxValue);
 
     peekr.advance();
     while (!peekr.done) {
-      const candidate = peekr.value;
-      const candidateMappedValue = mapper(candidate);
-      if (compare(bestMappedValue, candidateMappedValue) < 0) {
-        bestValue = candidate;
-        bestMappedValue = candidateMappedValue;
+      const value = peekr.value;
+      const mappedValue = mapper(value);
+      if (compare(maxMappedValue, mappedValue) < 0) {
+        maxValue = value;
+        maxMappedValue = mappedValue;
       }
       peekr.advance();
     }
-    return bestValue;
+    return maxValue;
   }
 }
 

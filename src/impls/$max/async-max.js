@@ -15,17 +15,17 @@ export async function __asyncMax(iterable, compare = defaultCompareOrder) {
   const peekr = await __asyncPeekerate(iterable);
 
   if (!peekr.done) {
-    let bestValue = peekr.value;
+    let maxValue = peekr.value;
 
     await peekr.advance();
     while (!peekr.done) {
-      const candidate = peekr.value;
-      if (compare(bestValue, candidate) < 0) {
-        bestValue = candidate;
+      const value = peekr.value;
+      if (compare(maxValue, value) < 0) {
+        maxValue = value;
       }
       await peekr.advance();
     }
-    return bestValue;
+    return maxValue;
   }
 }
 
