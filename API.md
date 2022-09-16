@@ -159,8 +159,8 @@ Reduce an iterable to a single value
 [isEmpty](#isempty) ([async](#asyncisempty))  
 [isSorted](#issorted) ([async](#asyncissorted))  
 [max](#max) ([async](#asyncmax))  
+[maxBy](#maxby) ([async](#asyncmaxby))  
 [reduce](#reduce) ([async](#asyncreduce))  
-[selectBy](#selectby) ([async](#asyncselectby))  
 [size](#size) ([async](#asyncsize))  
 [some](#some) ([async](#asyncsome))  
 [startsWith](#startswith) ([async](#asyncstartswith))  
@@ -1772,6 +1772,22 @@ See [isSorted](#issorted)
 
 See [max](#max)
 
+### maxBy
+
+**maxBy(mapper, [compare](#compare), [iterable](#wrappable))**  
+**maxBy(mapper, [iterable](#wrappable))**  
+**__maxBy([iterable](#iterable), mapper, ?[compare](#compare))**  
+
+`maxBy` is undocumented.
+
+### asyncMaxBy
+
+**asyncMaxBy(mapper, [compare](#compare), [iterable](#asyncwrappable))**  
+**asyncMaxBy(mapper, [iterable](#asyncwrappable))**  
+**__asyncMaxBy([iterable](#asynciterable), mapper, ?[compare](#compare))**  
+
+See [maxBy](#maxby)
+
 ### reduce
 
 **reduce(initial, reducer, [iterable](#wrappable))**  
@@ -1797,20 +1813,6 @@ reduce((result, v) => result + v, [1, 2, 3]); // 6
 **__asyncReduce([iterable](#asynciterable), reducer, ?initial)**  
 
 See [reduce](#reduce)
-
-### selectBy
-
-**selectBy(mapper, selector, [iterable](#wrappable))**  
-**__selectBy([iterable](#iterable), selector, mapper)**  
-
-`selectBy` is undocumented.
-
-### asyncSelectBy
-
-**asyncSelectBy(mapper, selector, [iterable](#asyncwrappable))**  
-**__asyncSelectBy([iterable](#asynciterable), selector, mapper)**  
-
-See [selectBy](#selectby)
 
 ### size
 
