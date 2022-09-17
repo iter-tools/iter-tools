@@ -160,6 +160,7 @@ Reduce an iterable to a single value
 [isSorted](#issorted) ([async](#asyncissorted))  
 [max](#max) ([async](#asyncmax))  
 [maxBy](#maxby) ([async](#asyncmaxby))  
+[min](#min) ([async](#asyncmin))  
 [reduce](#reduce) ([async](#asyncreduce))  
 [size](#size) ([async](#asyncsize))  
 [some](#some) ([async](#asyncsome))  
@@ -1787,6 +1788,22 @@ See [max](#max)
 **__asyncMaxBy([iterable](#asynciterable), mapper, ?[compare](#compare))**  
 
 See [maxBy](#maxby)
+
+### min
+
+**min([compare](#compare), [iterable](#wrappable))**  
+**min([iterable](#wrappable))**  
+**__min([iterable](#iterable), ?[compare](#compare))**  
+
+`min` is undocumented.
+
+### asyncMin
+
+**asyncMin([compare](#compare), [iterable](#asyncwrappable))**  
+**asyncMin([iterable](#asyncwrappable))**  
+**__asyncMin([iterable](#asynciterable), ?[compare](#compare))**  
+
+See [min](#min)
 
 ### reduce
 
