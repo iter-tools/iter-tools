@@ -1,0 +1,1 @@
+`minBy` is undocumented.
