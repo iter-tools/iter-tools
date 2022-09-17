@@ -41,7 +41,7 @@ describe('asyncMin', () => {
   });
 
   describe('when source has values', () => {
-    it('should return the maximum value, according to comparator function', async () => {
+    it('should return the minimum value, according to comparator function', async () => {
       expect(await asyncMin(asyncWrap([1, 3, 2]))).toEqual(1);
       expect(await asyncMin((a, b) => b - a, asyncWrap([1, 3, 2]))).toEqual(3);
       expect(await asyncMin((a, b) => a.age - b.age, asyncWrap(people))).toEqual(youngest);

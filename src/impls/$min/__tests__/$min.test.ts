@@ -42,7 +42,7 @@ describe($`min`, () => {
 
   describe('when source has values', () => {
     it(
-      'should return the maximum value, according to comparator function',
+      'should return the minimum value, according to comparator function',
       $async(() => {
         expect($await($min($wrap([1, 3, 2])))).toEqual(1);
         expect($await($min((a, b) => b - a, $wrap([1, 3, 2])))).toEqual(3);

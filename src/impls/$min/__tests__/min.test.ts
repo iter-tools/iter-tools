@@ -41,7 +41,7 @@ describe('min', () => {
   });
 
   describe('when source has values', () => {
-    it('should return the maximum value, according to comparator function', () => {
+    it('should return the minimum value, according to comparator function', () => {
       expect(min(wrap([1, 3, 2]))).toEqual(1);
       expect(min((a, b) => b - a, wrap([1, 3, 2]))).toEqual(3);
       expect(min((a, b) => a.age - b.age, wrap(people))).toEqual(youngest);
