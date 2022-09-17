@@ -49,7 +49,7 @@ describe($`maxBy`, () => {
 
   describe('when source has values', () => {
     it(
-      'should return the best value according mapper and selector function',
+      'should return the maximum value according to mapper and compare function',
       $async(() => {
         expect($await($maxBy(personAge, $wrap(people)))).toEqual(oldest);
         expect($await($maxBy(personAge, ascendingOrder, $wrap(people)))).toEqual(oldest);

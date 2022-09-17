@@ -48,7 +48,7 @@ describe('maxBy', () => {
   });
 
   describe('when source has values', () => {
-    it('should return the best value according mapper and selector function', () => {
+    it('should return the maximum value according to mapper and compare function', () => {
       expect(maxBy(personAge, wrap(people))).toEqual(oldest);
       expect(maxBy(personAge, ascendingOrder, wrap(people))).toEqual(oldest);
       expect(maxBy(personAge, descendingOrder, wrap(people))).toEqual(youngest);

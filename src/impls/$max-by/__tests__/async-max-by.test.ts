@@ -48,7 +48,7 @@ describe('asyncMaxBy', () => {
   });
 
   describe('when source has values', () => {
-    it('should return the best value according mapper and selector function', async () => {
+    it('should return the maximum value according to mapper and compare function', async () => {
       expect(await asyncMaxBy(personAge, asyncWrap(people))).toEqual(oldest);
       expect(await asyncMaxBy(personAge, ascendingOrder, asyncWrap(people))).toEqual(oldest);
       expect(await asyncMaxBy(personAge, descendingOrder, asyncWrap(people))).toEqual(youngest);
