@@ -8,8 +8,6 @@
 
 import { Wrappable } from '../../types/iterable';
 
-declare function max<T>(): (iterable: Wrappable<T>) => T | undefined;
-
 declare function max<T>(iterable: Wrappable<T>): T | undefined;
 
 declare function max<T>(compare: (a: T, b: T) => number): (iterable: Wrappable<T>) => T | undefined;

@@ -8,8 +8,6 @@
 
 import { AsyncWrappable } from '../../types/async-iterable';
 
-declare function asyncMin<T>(): (iterable: AsyncWrappable<T>) => Promise<T | undefined>;
-
 declare function asyncMin<T>(iterable: AsyncWrappable<T>): Promise<T | undefined>;
 
 declare function asyncMin<T>(

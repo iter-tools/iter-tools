@@ -8,8 +8,6 @@
 
 import { AsyncWrappable } from '../../types/async-iterable';
 
-declare function asyncMax<T>(): (iterable: AsyncWrappable<T>) => Promise<T | undefined>;
-
 declare function asyncMax<T>(iterable: AsyncWrappable<T>): Promise<T | undefined>;
 
 declare function asyncMax<T>(
