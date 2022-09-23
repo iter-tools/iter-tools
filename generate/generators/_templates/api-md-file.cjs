@@ -51,6 +51,8 @@ const sections = new Map(
     ['cache', 'Cache an iterable'],
     ['consume', 'Consume an iterable'],
     ['predicate', 'Predicates (test a value)'],
+    ['find-comparer', 'Compare values and return true or false'],
+    // ['sort-comparer', 'Compare values and return -1, 0, or 1'],
     ['utility', 'Utilities'],
     ['higher-order', 'Generator helpers'],
     [undefined, 'Uncategorized'],

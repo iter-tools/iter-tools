@@ -1,1 +1,0 @@
-`select` is undocumented.

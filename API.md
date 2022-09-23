@@ -149,6 +149,8 @@ Reduce an iterable to a single value
 [equal](#equal) ([async](#asyncequal))  
 [every](#every) ([async](#asyncevery))  
 [find](#find) ([async](#asyncfind))  
+[findBest](#findbest) ([async](#asyncfindbest))  
+[findBestOr](#findbestor) ([async](#asyncfindbestor))  
 [findOr](#findor) ([async](#asyncfindor))  
 [first](#first) ([async](#asyncfirst))  
 [firstOr](#firstor) ([async](#asyncfirstor))  
@@ -159,8 +161,6 @@ Reduce an iterable to a single value
 [isEmpty](#isempty) ([async](#asyncisempty))  
 [isSorted](#issorted) ([async](#asyncissorted))  
 [reduce](#reduce) ([async](#asyncreduce))  
-[select](#select) ([async](#asyncselect))  
-[selectBy](#selectby) ([async](#asyncselectby))  
 [size](#size) ([async](#asyncsize))  
 [some](#some) ([async](#asyncsome))  
 [startsWith](#startswith) ([async](#asyncstartswith))  
@@ -219,6 +219,13 @@ Predicates (test a value)
 [notString](#notstring)  
 [notUndefined](#notundefined)  
 [notWrappable](#notwrappable)  
+
+Compare values and return true or false
+
+[firstHighest](#firsthighest)  
+[firstLowest](#firstlowest)  
+[lastHighest](#lasthighest)  
+[lastLowest](#lastlowest)  
 
 Utilities
 
@@ -1534,6 +1541,62 @@ find((animal) => animal.kind === 'dog', [
 
 See [find](#find)
 
+### findBest
+
+**findBest(comparer, mapper, [iterable](#wrappable))**  
+**findBest(comparer, [iterable](#wrappable))**  
+**__findBest([iterable](#iterable), comparer, ?mapper)**  
+
+Returns a value from `iterable`. Calls `valueIsBest = comparer(mapper(best), mapper(value))` for each value in iterable, making `value` the new `best` if `valueIsBest` is truthy. If `iterable` contains only a single value that value will always be the best, and `comparer` will not be called. If array is empty, returns `undefined`.
+
+For additional examples see [findBestOr](#findbestor).
+
+### asyncFindBest
+
+**asyncFindBest(comparer, mapper, [iterable](#asyncwrappable))**  
+**asyncFindBest(comparer, [iterable](#asyncwrappable))**  
+**__asyncFindBest([iterable](#asynciterable), comparer, ?mapper)**  
+
+See [findBest](#findbest)
+
+### findBestOr
+
+**findBestOr(notFoundValue, comparer, mapper, [iterable](#wrappable))**  
+**findBestOr(notFoundValue, comparer, [iterable](#wrappable))**  
+**__findBestOr([iterable](#iterable), notFoundValue, comparer, ?mapper)**  
+
+Returns a value from `iterable`. Calls `valueIsBest = comparer(mapper(best), mapper(value))` for each value in iterable, making `value` the new `best` if `valueIsBest` is truthy. If `iterable` contains only a single value that value will always be the best, and `comparer` will not be called. If `iterable` is empty returns `notFoundValue`.
+
+<!-- prettier-ignore -->
+```js
+const people = wrap([
+  { name: 'Veruca Salt', age: 11 },
+  { name: 'Charlie Bucket', age: 11 },
+  { name: 'William Bucket', age: 44 }, 
+  { name: 'Grandpa Joe', age: 96.5 },
+]);
+
+findBestOr((best, v) => v.age < best.age, people); // Veruca
+findBestOr((best, v) => v.age <= best.age, people); // Charlie
+findBestOr((best, v) => v.age > best.age, people); // Joe
+```
+
+This method can also be used in conjunction with the provided helper methods: [firstLowest](#firstlowest), [lastLowest](#lastlowest), [#firstHighest](#firsthighest), and [lastHighest](#lasthighest).
+
+```js
+findBestOr(firstLowest, (p) => p.age, people); // Veruca
+findBestOr(lastLowest, (p) => p.age, people); // Charlie
+findBestOr(lastHighest, (p) => p.age, people); // Joe
+```
+
+### asyncFindBestOr
+
+**asyncFindBestOr(notFoundValue, comparer, mapper, [iterable](#asyncwrappable))**  
+**asyncFindBestOr(notFoundValue, comparer, [iterable](#asyncwrappable))**  
+**__asyncFindBestOr([iterable](#asynciterable), notFoundValue, comparer, ?mapper)**  
+
+See [findBestOr](#findbestor)
+
 ### findOr
 
 **findOr(notFoundValue, func, [iterable](#wrappable))**  
@@ -1781,34 +1844,6 @@ reduce((result, v) => result + v, [1, 2, 3]); // 6
 **__asyncReduce([iterable](#asynciterable), reducer, ?initial)**  
 
 See [reduce](#reduce)
-
-### select
-
-**select(selector, [iterable](#wrappable))**  
-**__select([iterable](#iterable), selector)**  
-
-`select` is undocumented.
-
-### asyncSelect
-
-**asyncSelect(selector, [iterable](#asyncwrappable))**  
-**__asyncSelect([iterable](#asynciterable), selector)**  
-
-See [select](#select)
-
-### selectBy
-
-**selectBy(mapper, selector, [iterable](#wrappable))**  
-**__selectBy([iterable](#iterable), selector, mapper)**  
-
-`selectBy` is undocumented.
-
-### asyncSelectBy
-
-**asyncSelectBy(mapper, selector, [iterable](#asyncwrappable))**  
-**__asyncSelectBy([iterable](#asynciterable), selector, mapper)**  
-
-See [selectBy](#selectby)
 
 ### size
 
@@ -2656,6 +2691,49 @@ notWrappable(undefined); // false
 notWrappable(null); // false
 notWrappable({}); // true
 notWrappable(4); // true
+```
+
+
+## Compare values and return true or false
+
+### firstHighest
+
+**firstHighest(best, value)**  
+
+Used in conjunction with `findBest` to return the maximum value in an iterable. If multiple values are equally maximal `firstHighest` will find the first. Implemented as:
+
+```js
+const firstHighest = (best, value) => value > best;
+```
+
+### firstLowest
+
+**firstLowest(best, value)**  
+
+Used in conjunction with `findBest` to return the minimum value in an iterable. If multiple values are equally minimal `firstLowest` will find the first. Implemented as:
+
+```js
+const firstLowest = (best, value) => value < best;
+```
+
+### lastHighest
+
+**lastHighest(best, value)**  
+
+Used in conjunction with `findBest` to return the maximum value in an iterable. If multiple values are equally maximal `lastHighest` will find the last. Implemented as:
+
+```js
+const lastHighest = (best, value) => value >= best;
+```
+
+### lastLowest
+
+**lastLowest(best, value)**  
+
+Used in conjunction with `findBest` to return the minimum value in an iterable. If multiple values are equally minimal `firstHighest` will find the last. Implemented as:
+
+```js
+const firstHighest = (best, value) => value <= best;
 ```
 
 
