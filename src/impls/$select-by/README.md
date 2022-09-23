@@ -1,1 +1,0 @@
-`selectBy` is undocumented.
