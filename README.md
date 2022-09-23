@@ -2,6 +2,7 @@
 
 [![build status](https://img.shields.io/github/workflow/status/iter-tools/iter-tools/verify)](https://github.com/iter-tools/iter-tools/actions?query=branch%3Atrunk+workflow%3Averify)
 [![line coverage](https://codecov.io/gh/iter-tools/iter-tools/branch/trunk/graph/badge.svg)](https://codecov.io/gh/iter-tools/iter-tools)
+[![semver](https://img.shields.io/static/v1?label=versioning&message=semver&color=informational)](https://semver.org/#semantic-versioning-200)
 [![npm version](https://img.shields.io/npm/v/iter-tools-es)](https://www.npmjs.com/package/iter-tools-es)
 [![chat on gitter](https://img.shields.io/gitter/room/iter-tools/iter-tools?color=blue)](https://gitter.im/iter-tools/community)
 
@@ -23,7 +24,7 @@ es5 consumers are responsible for loading `core-js` if their environment does no
 
 ## API
 
-**Please read our [API docs](https://github.com/iter-tools/iter-tools/blob/v7.4.0/API.md)!**
+**Please read our [API docs](https://github.com/iter-tools/iter-tools/blob/v7.5.0/API.md)!**
 
 Historical docs are markdown files on github. For 6.x docs look at tags on the history of [README.md](https://github.com/iter-tools/iter-tools/blob/6.x/README.md). For 7.x versions look at tags on the history of [API.md](https://github.com/iter-tools/iter-tools/blob/trunk/API.md).
 
