@@ -11,6 +11,9 @@
     "./methods/*": {
       "import": "./src/methods/*.js"
     },
+    "./__methods/*": {
+      "import": "./src/__methods/*.js"
+    },
     "./explode.macro": "./src/explode.macro.cjs",
     "./package.json": "./package.json"
   },
