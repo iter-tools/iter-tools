@@ -5,11 +5,13 @@
   "exports": {
     ".": {
       "import": "./index.mjs",
-      "require": "./index.js"
+      "require": "./index.js",
+      "types": "./index.d.ts"
     },
     "./methods/*": {
       "import": "./methods/*.mjs",
-      "require": "./methods/*.js"
+      "require": "./methods/*.js",
+      "types": "./methods/*.d.ts"
     },
     "./__methods/*": {
       "require": "./__methods/*.js"
