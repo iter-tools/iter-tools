@@ -6,10 +6,12 @@
   "main": "src/index.js",
   "exports": {
     ".": {
-      "import": "./src/index.js"
+      "import": "./src/index.js",
+      "types": "./src/index.d.ts"
     },
     "./methods/*": {
-      "import": "./src/methods/*.js"
+      "import": "./src/methods/*.js",
+      "types": "./src/methods/*.d.ts"
     },
     "./__methods/*": {
       "import": "./src/__methods/*.js"
