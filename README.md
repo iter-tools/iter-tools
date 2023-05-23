@@ -24,7 +24,7 @@ es5 consumers are responsible for loading `core-js` if their environment does no
 
 ## API
 
-**Please read our [API docs](https://github.com/iter-tools/iter-tools/blob/v7.5.0/API.md)!**
+**Please read our [API docs](https://github.com/iter-tools/iter-tools/blob/d7.5.0/API.md)!**
 
 Historical docs are markdown files on github. For 6.x docs look at tags on the history of [README.md](https://github.com/iter-tools/iter-tools/blob/6.x/README.md). For 7.x versions look at tags on the history of [API.md](https://github.com/iter-tools/iter-tools/blob/trunk/API.md).
 
