@@ -1,6 +1,6 @@
 # iter-tools
 
-[![build status](https://img.shields.io/github/workflow/status/iter-tools/iter-tools/verify)](https://github.com/iter-tools/iter-tools/actions?query=branch%3Atrunk+workflow%3Averify)
+[![build status](https://img.shields.io/github/actions/workflow/status/iter-tools/iter-tools/.github/workflows/verify.yaml?branch=trunk)](https://github.com/iter-tools/iter-tools/actions?query=branch%3Atrunk+workflow%3Averify)
 [![line coverage](https://codecov.io/gh/iter-tools/iter-tools/branch/trunk/graph/badge.svg)](https://codecov.io/gh/iter-tools/iter-tools)
 [![semver](https://img.shields.io/static/v1?label=versioning&message=semver&color=informational)](https://semver.org/#semantic-versioning-200)
 [![npm version](https://img.shields.io/npm/v/iter-tools-es)](https://www.npmjs.com/package/iter-tools-es)
