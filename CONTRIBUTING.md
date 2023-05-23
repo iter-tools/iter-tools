@@ -145,9 +145,9 @@ Choose whether to make a major, minor, or patch release in accordance with the s
 
 In `package.json` update the `version` field.
 
-In `README.md` update the "API docs" link with the tag for the version being released. The link would be to `https://github.com/iter-tools/iter-tools/blob/d1.2.3/API.md`. This prevents users seeing documentation for unreleased features.
+In `README.md` update the "API docs" link with the tag for the version being released. The link would be to `https://github.com/iter-tools/iter-tools/blob/d1.2/API.md`. This prevents users seeing documentation for unreleased features.
 
-In `CHANGELOG.md` fill in the version and date of the release, and make sure there is a new blank `UNRELEASED` section at the top of the file. Patch releases generally should not require changelog updates -- that is what the issue tracker is for.
+In `CHANGELOG.md` fill in the version and date of the release, and make sure there is a new blank `UNRELEASED` section at the top of the file. Patch releases generally do not require changelog updates -- that is what the issue tracker is for.
 
 If there are any changes to the release process or you found the instructions unclear, feel free to add changes to this file.
 
@@ -155,7 +155,7 @@ Double check everything. You are pushing to trunk, so no take-backs. CI cannot h
 
 `yarn build`
 
-`git commit -am 1.2.3 && git tag v1.2.3 && git tag d1.2.3`
+`git commit -am 1.2.3 && git tag v1.2.3 && git push origin v1.2.3:d1.2`
 
 `git push && git push --tags`
 

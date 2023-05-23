@@ -1,6 +1,6 @@
 {
   "name": "iter-tools-es",
-  "version": "7.5.2",
+  "version": "7.5.3",
   "description": "The iterable toolbox",
   "type": "module",
   "main": "src/index.js",
