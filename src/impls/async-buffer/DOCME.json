@@ -1,3 +1,4 @@
 {
-  "type": "temporal"
+  "type": "temporal",
+  "signatures": [[{ "name": "n" }, { "name": "source" }]]
 }
