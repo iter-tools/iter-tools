@@ -1,10 +1,10 @@
 # iter-tools
 
-[![build status](https://img.shields.io/github/actions/workflow/status/iter-tools/iter-tools/.github/workflows/verify.yaml?branch=trunk)](https://github.com/iter-tools/iter-tools/actions?query=branch%3Atrunk+workflow%3Averify)
-[![line coverage](https://codecov.io/gh/iter-tools/iter-tools/branch/trunk/graph/badge.svg)](https://codecov.io/gh/iter-tools/iter-tools)
-[![semver](https://img.shields.io/static/v1?label=versioning&message=semver&color=informational)](https://semver.org/#semantic-versioning-200)
-[![npm version](https://img.shields.io/npm/v/iter-tools-es)](https://www.npmjs.com/package/iter-tools-es)
-[![chat on gitter](https://img.shields.io/gitter/room/iter-tools/iter-tools?color=blue)](https://gitter.im/iter-tools/community)
+[![build is passing most days](https://img.shields.io/github/actions/workflow/status/iter-tools/iter-tools/.github/workflows/verify.yaml?branch=trunk)](https://github.com/iter-tools/iter-tools/actions?query=branch%3Atrunk+workflow%3Averify)
+[![coverage is nearly 100%](https://img.shields.io/codecov/c/github/iter-tools/iter-tools/trunk?token=M0viLyjueT)](https://codecov.io/gh/iter-tools/iter-tools)
+[![semver compliant](https://img.shields.io/static/v1?label=versioning&message=semver&color=informational)](https://semver.org/#semantic-versioning-200)
+[![published on npm](https://img.shields.io/npm/v/iter-tools-es)](https://www.npmjs.com/package/iter-tools-es)
+[![come say hi on discord!](https://img.shields.io/discord/1110684681277550692?logo=discord&label=discord&color=blue)](https://discord.gg/x2tctgYn)
 
 `iter-tools` provides a comprehensive suite of utility methods for working with javascript iterables and async iterables. Iterables offer an abstraction for describing sequences of values. If you're not sure if `iter-tools` is the right library for you, check out our [features](#features).
 
