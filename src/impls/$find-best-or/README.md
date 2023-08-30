@@ -14,7 +14,7 @@ findBestOr((best, v) => v.age <= best.age, people); // Charlie
 findBestOr((best, v) => v.age > best.age, people); // Joe
 ```
 
-This method can also be used in conjunction with the provided helper methods: [firstLowest](#firstlowest), [lastLowest](#lastlowest), [#firstHighest](#firsthighest), and [lastHighest](#lasthighest).
+This method can also be used in conjunction with the provided helper methods: [firstLowest](#firstlowest), [lastLowest](#lastlowest), [firstHighest](#firsthighest), and [lastHighest](#lasthighest).
 
 ```js
 findBestOr(firstLowest, (p) => p.age, people); // Veruca
