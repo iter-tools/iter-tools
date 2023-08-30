@@ -9,21 +9,21 @@
 import { Wrappable } from '../../types/iterable';
 
 declare function findBest<T>(
-  comparer: (value: T, i: number) => boolean,
+  comparer: (best: T, value: T) => boolean,
 ): (iterable: Wrappable<T>) => T | undefined;
 
 declare function findBest<T>(
-  comparer: (value: T, i: number) => boolean,
+  comparer: (best: T, value: T) => boolean,
   iterable: Wrappable<T>,
 ): T | undefined;
 
 declare function findBest<T, S>(
-  comparer: (value: S, i: number) => boolean,
+  comparer: (best: S, value: S) => boolean,
   mapper: (value: T, i: number) => S,
 ): (iterable: Wrappable<T>) => T | undefined;
 
 declare function findBest<T, S>(
-  comparer: (value: S, i: number) => boolean,
+  comparer: (best: S, value: S) => boolean,
   mapper: (value: T, i: number) => S,
   iterable: Wrappable<T>,
 ): T | undefined;

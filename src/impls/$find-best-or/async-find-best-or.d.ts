@@ -10,24 +10,24 @@ import { AsyncWrappable } from '../../types/async-iterable';
 
 declare function asyncFindBestOr<N, T>(
   notFoundValue: N,
-  comparer: (value: T, i: number) => boolean,
+  comparer: (best: T, value: T) => boolean,
 ): (iterable: AsyncWrappable<T>) => Promise<T | N>;
 
 declare function asyncFindBestOr<N, T>(
   notFoundValue: N,
-  comparer: (value: T, i: number) => boolean,
+  comparer: (best: T, value: T) => boolean,
   iterable: AsyncWrappable<T>,
 ): Promise<T | N>;
 
 declare function asyncFindBestOr<N, T, S>(
   notFoundValue: N,
-  comparer: (value: S, i: number) => boolean,
+  comparer: (best: S, value: S) => boolean,
   mapper: (value: T, i: number) => S | Promise<S>,
 ): (iterable: AsyncWrappable<T>) => Promise<T | N>;
 
 declare function asyncFindBestOr<N, T, S>(
   notFoundValue: N,
-  comparer: (value: S, i: number) => boolean,
+  comparer: (best: S, value: S) => boolean,
   mapper: (value: T, i: number) => S | Promise<S>,
   iterable: AsyncWrappable<T>,
 ): Promise<T | N>;

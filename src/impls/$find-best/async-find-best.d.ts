@@ -9,21 +9,21 @@
 import { AsyncWrappable } from '../../types/async-iterable';
 
 declare function asyncFindBest<T>(
-  comparer: (value: T, i: number) => boolean,
+  comparer: (best: T, value: T) => boolean,
 ): (iterable: AsyncWrappable<T>) => Promise<T | undefined>;
 
 declare function asyncFindBest<T>(
-  comparer: (value: T, i: number) => boolean,
+  comparer: (best: T, value: T) => boolean,
   iterable: AsyncWrappable<T>,
 ): Promise<T | undefined>;
 
 declare function asyncFindBest<T, S>(
-  comparer: (value: S, i: number) => boolean,
+  comparer: (best: S, value: S) => boolean,
   mapper: (value: T, i: number) => S | Promise<S>,
 ): (iterable: AsyncWrappable<T>) => Promise<T | undefined>;
 
 declare function asyncFindBest<T, S>(
-  comparer: (value: S, i: number) => boolean,
+  comparer: (best: S, value: S) => boolean,
   mapper: (value: T, i: number) => S | Promise<S>,
   iterable: AsyncWrappable<T>,
 ): Promise<T | undefined>;
