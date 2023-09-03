@@ -6,39 +6,19 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { AsyncWrappable, AsyncIterableIterator } from '../../types/async-iterable';
+import { AsyncWrappable, AsyncIterableIterator, AsyncUnwrap } from '../../types/async-iterable';
 
-declare function asyncZipAll<F, T, U>(
+type ZipAll<Sources extends AsyncWrappable<unknown>[], Filler> = {
+  [index in keyof Sources]: AsyncUnwrap<Sources[index]> | Filler;
+};
+
+declare function asyncZipAll<F, Sources extends AsyncWrappable<unknown>[]>(
   options: { filler?: F },
-  source1: AsyncWrappable<T>,
-  source2: AsyncWrappable<U>,
-): AsyncIterableIterator<[T | F, U | F]>;
+  ...sources: Sources
+): AsyncIterableIterator<ZipAll<Sources, F>>;
 
-declare function asyncZipAll<T, U>(
-  source1: AsyncWrappable<T>,
-  source2: AsyncWrappable<U>,
-): AsyncIterableIterator<[T | undefined, U | undefined]>;
-
-declare function asyncZipAll<F, T, U, V>(
-  options: { filler?: F },
-  source1: AsyncWrappable<T>,
-  source2: AsyncWrappable<U>,
-  source3: AsyncWrappable<V>,
-): AsyncIterableIterator<[T | F, U | F, V | F]>;
-
-declare function asyncZipAll<T, U, V>(
-  source1: AsyncWrappable<T>,
-  source2: AsyncWrappable<U>,
-  source3: AsyncWrappable<V>,
-): AsyncIterableIterator<[T | undefined, U | undefined, V | undefined]>;
-
-declare function asyncZipAll<F, T>(
-  options: { filler?: F },
-  ...sources: Array<AsyncWrappable<T>>
-): AsyncIterableIterator<Array<T | F>>;
-
-declare function asyncZipAll<T>(
-  ...sources: Array<AsyncWrappable<T>>
-): AsyncIterableIterator<Array<T | undefined>>;
+declare function asyncZipAll<Sources extends AsyncWrappable<unknown>[]>(
+  ...sources: Sources
+): AsyncIterableIterator<ZipAll<Sources, undefined>>;
 
 export { asyncZipAll };

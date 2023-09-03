@@ -4,6 +4,8 @@
 export type AsyncLoopable<T> = AsyncIterable<T | Promise<T>> | Iterable<T | Promise<T>>;
 export type AsyncWrappable<T> = null | undefined | AsyncLoopable<T>;
 
+export type AsyncUnwrap<T> = T extends AsyncWrappable<infer U> ? U : never;
+
 type _AsyncIterable<T> = AsyncIterable<T>;
 export { _AsyncIterable as AsyncIterable };
 
