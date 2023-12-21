@@ -96,6 +96,7 @@ Use iterables from data structures
 Transform a single iterable
 
 [append](#append) ([async](#asyncappend))  
+[batch](#batch) ([async](#asyncbatch))  
 [distinct](#distinct) ([async](#asyncdistinct))  
 [drop](#drop) ([async](#asyncdrop))  
 [dropWhile](#dropwhile) ([async](#asyncdropwhile))  
@@ -120,7 +121,6 @@ Transform a single iterable
 
 Separate an iterable into multiple iterables
 
-[batch](#batch) ([async](#asyncbatch))  
 [bisect](#bisect) ([async](#asyncbisect))  
 [split](#split) ([async](#asyncsplit))  
 [splitGroups](#splitgroups) ([async](#asyncsplitgroups))  
