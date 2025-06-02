@@ -6,14 +6,14 @@
  * More information can be found in CONTRIBUTING.md
  */
 
-import { Wrappable, IterableIterator } from '../../types/iterable';
+import { Wrappable, IterableIterator, Unwrap } from '../../types/iterable';
 
-declare function zip<T, U>(source1: Wrappable<T>, source2: Wrappable<U>): IterableIterator<[T, U]>;
-declare function zip<T, U, V>(
-  source1: Wrappable<T>,
-  source2: Wrappable<U>,
-  source3: Wrappable<V>,
-): IterableIterator<[T, U, V]>;
-declare function zip<T>(...sources: Array<Wrappable<T>>): IterableIterator<T[]>;
+type Zip<Sources extends Wrappable<unknown>[]> = {
+  [index in keyof Sources]: Unwrap<Sources[index]>;
+};
+
+declare function zip<Sources extends Wrappable<unknown>[]>(
+  ...sources: Sources
+): IterableIterator<Zip<Sources>>;
 
 export { zip };
