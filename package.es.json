@@ -14,7 +14,8 @@
       "types": "./methods/*.d.ts"
     },
     "./__methods/*": {
-      "require": "./__methods/*.js"
+      "require": "./__methods/*.js",
+      "import": "./__methods/*.js"
     },
     "./explode.macro": "./explode.macro.js",
     "./package.json": "./package.json"
